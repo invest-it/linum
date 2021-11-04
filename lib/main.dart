@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
@@ -27,24 +30,72 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  /// The future is part of the state of our widget. We should not call `initializeApp`
+  /// directly inside [build].
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      // Initialize FlutterFire:
+      future: _initialization,
+      builder: (context, snapshot) {
+        // Check for errors
+        if (snapshot.hasError) {
+          return Scaffold(body: Center(child: Text("Something went wrong")));
+        }
+
+        // Once complete, show your application
+        if (snapshot.connectionState == ConnectionState.done) {
+          return MainScreen(title: widget.title);
+        }
+
+        // Otherwise, show something whilst waiting for initialization to complete
+        return Scaffold(body: Center(child: Text("Loading")));
+      },
+    );
+  }
+}
+
+class MainScreen extends StatelessWidget {
+  const MainScreen({
+    Key? key,
+    required this.title,
+  }) : super(key: key);
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    CollectionReference balance =
+        FirebaseFirestore.instance.collection('balance');
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have opened Linum',
-            ),
-          ],
+        child: StreamBuilder(
+          stream: balance.snapshots(),
+          builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
+            return ListView(
+                children: snapshot.data == null
+                    ? [Text("Error")]
+                    : snapshot.data!.docs.map((singleBalance) {
+                        return ListTile(
+                          title:
+                              Text(singleBalance["singleBalance"].toString()),
+                          onLongPress: () {
+                            singleBalance.reference.delete();
+                          },
+                        );
+                      }).toList());
+          },
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          balance.add({"text": "Second Test Text"});
+        },
         child: Icon(Icons.adaptive.share_rounded),
       ),
     );
