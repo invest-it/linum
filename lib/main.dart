@@ -94,7 +94,7 @@ class MainScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          balance.add({"text": "Second Test Text"});
+          balance.add({"singleBalance": "Second Test Text"});
         },
         child: Icon(Icons.adaptive.share_rounded),
       ),
