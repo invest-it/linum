@@ -43,6 +43,10 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.adaptive.share_rounded),
+      ),
     );
   }
 }
