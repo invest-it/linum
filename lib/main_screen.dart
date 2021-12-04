@@ -1,19 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({
     Key? key,
     required this.title,
+    required this.monthlyBudget,
   }) : super(key: key);
 
   final String title;
+  final double monthlyBudget;
 
   @override
   Widget build(BuildContext context) {
     CollectionReference balance =
         FirebaseFirestore.instance.collection('balance');
     return Scaffold(
+      backgroundColor: Colors.green[400],
       body: Center(
         child: StreamBuilder(
           stream: balance.snapshots(),
@@ -27,7 +31,7 @@ class MainScreen extends StatelessWidget {
                     Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.20,
-                      color: Colors.grey,
+                      color: Colors.white,
                     ),
                   ],
                 ),
@@ -37,11 +41,41 @@ class MainScreen extends StatelessWidget {
                   right: 10,
                   child: Column(
                     children: [
-                      Container(
-                        width: 150,
-                        height: 100,
-                        color: Colors.grey,
-                        child: Text("Your Button"),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.85,
+                          height: MediaQuery.of(context).size.height * 0.20,
+                          color: Colors.grey[100],
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                'Aktueller Kontostand',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              Text('Datum'),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    monthlyBudget.toString(),
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                  Container(
+                                    width: 1,
+                                  ),
+                                  Text(
+                                    '€',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),

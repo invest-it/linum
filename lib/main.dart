@@ -47,7 +47,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
-          return MainScreen(title: widget.title);
+          return MainScreen(
+            title: widget.title,
+            monthlyBudget: 420.69,
+          );
         }
 
         // Otherwise, show something whilst waiting for initialization to complete
