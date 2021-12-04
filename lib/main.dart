@@ -1,6 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/main_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,51 +53,6 @@ class _MyHomePageState extends State<MyHomePage> {
         // Otherwise, show something whilst waiting for initialization to complete
         return Scaffold(body: Center(child: Text("Loading")));
       },
-    );
-  }
-}
-
-class MainScreen extends StatelessWidget {
-  const MainScreen({
-    Key? key,
-    required this.title,
-  }) : super(key: key);
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    CollectionReference balance =
-        FirebaseFirestore.instance.collection('balance');
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: Center(
-        child: StreamBuilder(
-          stream: balance.snapshots(),
-          builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
-            return ListView(
-                children: snapshot.data == null
-                    ? [Text("Error")]
-                    : snapshot.data!.docs.map((singleBalance) {
-                        return ListTile(
-                          title:
-                              Text(singleBalance["singleBalance"].toString()),
-                          onLongPress: () {
-                            singleBalance.reference.delete();
-                          },
-                        );
-                      }).toList());
-          },
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          balance.add({"singleBalance": "Second Test Text"});
-        },
-        child: Icon(Icons.adaptive.share_rounded),
-      ),
     );
   }
 }
