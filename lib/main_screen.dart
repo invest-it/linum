@@ -18,7 +18,6 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   PageController _myPage = PageController(initialPage: 0);
-
   @override
   Widget build(BuildContext context) {
     CollectionReference balance =
