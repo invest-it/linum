@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
   const MainScreen({
     Key? key,
     required this.title,
@@ -13,11 +13,45 @@ class MainScreen extends StatelessWidget {
   final double monthlyBudget;
 
   @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  PageController _myPage = PageController(initialPage: 0);
+
+  @override
   Widget build(BuildContext context) {
     CollectionReference balance =
         FirebaseFirestore.instance.collection('balance');
     return Scaffold(
-      backgroundColor: Colors.green[400],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          balance.add({"singleBalance": "Second Test Text"});
+        },
+        child: Icon(Icons.add),
+      ),
+      bottomNavigationBar: BottomAppBar(
+          notchMargin: 5,
+          shape: CircularNotchedRectangle(),
+          color: Colors.white,
+          child: Row(
+            children: <Widget>[
+              IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.ac_unit_outlined),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.dashboard_customize),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.aspect_ratio),
+              ),
+            ],
+          )),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      backgroundColor: Colors.white,
       body: Center(
         child: StreamBuilder(
           stream: balance.snapshots(),
@@ -51,12 +85,6 @@ class MainScreen extends StatelessWidget {
                       }).toList());*/
           },
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          balance.add({"singleBalance": "Second Test Text"});
-        },
-        child: Icon(Icons.add),
       ),
     );
   }
