@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/main_screen.dart';
+import 'package:linum/screens/main_screen.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:provider/provider.dart';
 import 'dart:developer';
