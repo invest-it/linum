@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/widgets/fab.dart';
+import 'package:linum/widgets/home_screen_card.dart';
 import 'package:linum/widgets/test_implementation.dart';
 import 'package:provider/provider.dart';
 
@@ -36,29 +37,33 @@ class _MainScreenState extends State<MainScreen> {
         child: StreamBuilder(
           stream: balance.snapshots(),
           builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
-            return Container(); /*Stack(
+            return Stack(
               children: <Widget>[
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.20,
-                      color: Colors.white,
+                    ClipRRect(
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.zero,
+                        bottom: Radius.circular(40),
+                      ),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.20,
+                        color: createMaterialColor(
+                          Color(0xFF82B915),
+                        ),
+                      ),
                     ),
                   ],
                 ),
+                HomeScreenCard(monthlyBudget: 4.20),
                 balanceDataProvider.fillListViewWithData(TestListView()),
               ],
             );
-            floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          balance.add({"singleBalance": "Second Test Text"});
-        },
-        child: Icon(Icons.add),
-      ),
-            ListView(
+
+            /* ListView(
                 children: snapshot.data == null
                     ? [Text("Error")]
                     : snapshot.data!.docs.map((singleBalance) {
@@ -78,14 +83,16 @@ class _MainScreenState extends State<MainScreen> {
         onPressed: () {},
         child: Icon(Icons.add),
         elevation: 2.0,
-        backgroundColor: Colors.black,
+        backgroundColor: createMaterialColor(
+          Color(0xFF505050),
+        ),
       ),
       bottomNavigationBar: FABBottomAppBar(
         items: [
-          BottomAppBarItem(iconData: Icons.menu, text: 'This'),
-          BottomAppBarItem(iconData: Icons.layers, text: 'Is'),
-          BottomAppBarItem(iconData: Icons.dashboard, text: 'Bottom'),
-          BottomAppBarItem(iconData: Icons.info, text: 'Bar'),
+          BottomAppBarItem(iconData: Icons.home, text: 'Home'),
+          BottomAppBarItem(iconData: Icons.book, text: 'Statistics'),
+          BottomAppBarItem(iconData: Icons.account_balance, text: 'Budget'),
+          BottomAppBarItem(iconData: Icons.account_box, text: 'Account'),
         ],
         backgroundColor: createMaterialColor(
           Color(0xFF82B915),
@@ -94,7 +101,9 @@ class _MainScreenState extends State<MainScreen> {
         color: createMaterialColor(
           Color(0xFFF0F0F0),
         ),
-        selectedColor: Colors.black,
+        selectedColor: createMaterialColor(
+          Color(0xFF505050),
+        ),
         notchedShape: CircularNotchedRectangle(),
         onTabSelected: (int value) {},
       ),
