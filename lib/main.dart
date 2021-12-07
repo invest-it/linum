@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:linum/main_screen.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:provider/provider.dart';
+import 'dart:developer';
 
 void main() {
+  log("test");
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
@@ -39,16 +41,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    log("starting build...");
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<AuthenticationService>(
           create: (_) {
-            print("starting create");
+            log("starting create");
             AuthenticationService auth =
                 AuthenticationService(FirebaseAuth.instance);
             auth
                 .signUp("Soencke.Evers@investit-academy.de", "initialPassword1")
-                .then((value) => print(value));
+                .then((value) => log(value));
             return auth;
           },
         ),
