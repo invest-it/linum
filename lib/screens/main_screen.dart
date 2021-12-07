@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
+import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/widgets/fab.dart';
 import 'package:linum/widgets/test_implementation.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({
@@ -25,6 +27,10 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     CollectionReference balance =
         FirebaseFirestore.instance.collection('balance');
+
+    BalanceDataProvider balanceDataProvider =
+        Provider.of<BalanceDataProvider>(context);
+
     return Scaffold(
       body: Center(
         child: StreamBuilder(
@@ -43,6 +49,7 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                   ],
                 ),
+                balanceDataProvider.fillListViewWithData(TestListView()),
               ],
             );
             floatingActionButton: FloatingActionButton(
