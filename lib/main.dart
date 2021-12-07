@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import 'dart:developer';
 
 void main() {
-  log("test");
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
@@ -41,8 +40,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    log("starting build...");
-
     return FutureBuilder(
       // Initialize FlutterFire:
       future: _initialization,
@@ -58,13 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
             providers: [
               ChangeNotifierProvider<AuthenticationService>(
                 create: (_) {
-                  log("starting create");
-                  AuthenticationService auth =
-                      AuthenticationService(FirebaseAuth.instance);
-                  // auth
-                  //     .signUp("Soencke.Evers@investit-academy.de", "initialPassword1")
-                  //     .then((value) => log(value));
-                  return auth;
+                  return AuthenticationService(FirebaseAuth.instance);
                 },
                 lazy: false,
               ),
