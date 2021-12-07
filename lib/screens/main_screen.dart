@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/frontend_functions/materialcolor_creator.dart';
+import 'package:linum/widgets/fab.dart';
 import 'package:linum/widgets/test_implementation.dart';
 
 class MainScreen extends StatefulWidget {
@@ -24,39 +26,11 @@ class _MainScreenState extends State<MainScreen> {
     CollectionReference balance =
         FirebaseFirestore.instance.collection('balance');
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          balance.add({"singleBalance": "Second Test Text"});
-        },
-        child: Icon(Icons.add),
-      ),
-      bottomNavigationBar: BottomAppBar(
-          notchMargin: 5,
-          shape: CircularNotchedRectangle(),
-          color: Colors.white,
-          child: Row(
-            children: <Widget>[
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.ac_unit_outlined),
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.dashboard_customize),
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.aspect_ratio),
-              ),
-            ],
-          )),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      backgroundColor: Colors.white,
       body: Center(
         child: StreamBuilder(
           stream: balance.snapshots(),
           builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
-            return Stack(
+            return Container(); /*Stack(
               children: <Widget>[
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -71,7 +45,13 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ],
             );
-            /*ListView(
+            floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          balance.add({"singleBalance": "Second Test Text"});
+        },
+        child: Icon(Icons.add),
+      ),
+            ListView(
                 children: snapshot.data == null
                     ? [Text("Error")]
                     : snapshot.data!.docs.map((singleBalance) {
@@ -85,6 +65,31 @@ class _MainScreenState extends State<MainScreen> {
                       }).toList());*/
           },
         ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.add),
+        elevation: 2.0,
+        backgroundColor: Colors.black,
+      ),
+      bottomNavigationBar: FABBottomAppBar(
+        items: [
+          BottomAppBarItem(iconData: Icons.menu, text: 'This'),
+          BottomAppBarItem(iconData: Icons.layers, text: 'Is'),
+          BottomAppBarItem(iconData: Icons.dashboard, text: 'Bottom'),
+          BottomAppBarItem(iconData: Icons.info, text: 'Bar'),
+        ],
+        backgroundColor: createMaterialColor(
+          Color(0xFF82B915),
+        ),
+        centerItemText: '',
+        color: createMaterialColor(
+          Color(0xFFF0F0F0),
+        ),
+        selectedColor: Colors.black,
+        notchedShape: CircularNotchedRectangle(),
+        onTabSelected: (int value) {},
       ),
     );
   }
