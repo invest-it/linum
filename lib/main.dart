@@ -1,12 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/screens/main_screen.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:provider/provider.dart';
 import 'dart:developer';
 
 void main() {
+  log("main");
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
@@ -58,6 +60,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   return AuthenticationService(FirebaseAuth.instance);
                 },
                 lazy: false,
+              ),
+              ChangeNotifierProvider<BalanceDataProvider>(
+                create: (_) {
+                  return BalanceDataProvider();
+                },
               ),
             ],
             child: MainScreen(
