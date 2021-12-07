@@ -42,10 +42,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     log("starting build...");
-    AuthenticationService auth = AuthenticationService(FirebaseAuth.instance);
-    auth
-        .signUp("Soencke.Evers@investit-academy.de", "initialPassword1")
-        .then((value) => log(value));
 
     return MultiProvider(
       providers: [
@@ -54,11 +50,12 @@ class _MyHomePageState extends State<MyHomePage> {
             log("starting create");
             AuthenticationService auth =
                 AuthenticationService(FirebaseAuth.instance);
-            auth
-                .signUp("Soencke.Evers@investit-academy.de", "initialPassword1")
-                .then((value) => log(value));
+            // auth
+            //     .signUp("Soencke.Evers@investit-academy.de", "initialPassword1")
+            //     .then((value) => log(value));
             return auth;
           },
+          lazy: false,
         ),
       ],
       child: FutureBuilder(
