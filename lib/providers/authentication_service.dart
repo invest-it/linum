@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 class AuthenticationService extends ChangeNotifier {
   final FirebaseAuth _firebaseAuth;
 
-  AuthenticationService(this._firebaseAuth);
+  AuthenticationService(this._firebaseAuth) {
+    print("created Service");
+  }
 
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 

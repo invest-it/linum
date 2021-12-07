@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/main_screen.dart';
+import 'package:linum/providers/authentication_service.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,26 +39,41 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      // Initialize FlutterFire:
-      future: _initialization,
-      builder: (context, snapshot) {
-        // Check for errors
-        if (snapshot.hasError) {
-          return Scaffold(body: Center(child: Text("Something went wrong")));
-        }
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<AuthenticationService>(
+          create: (_) {
+            print("starting create");
+            AuthenticationService auth =
+                AuthenticationService(FirebaseAuth.instance);
+            auth
+                .signUp("Soencke.Evers@investit-academy.de", "initialPassword1")
+                .then((value) => print(value));
+            return auth;
+          },
+        ),
+      ],
+      child: FutureBuilder(
+        // Initialize FlutterFire:
+        future: _initialization,
+        builder: (context, snapshot) {
+          // Check for errors
+          if (snapshot.hasError) {
+            return Scaffold(body: Center(child: Text("Something went wrong")));
+          }
 
-        // Once complete, show your application
-        if (snapshot.connectionState == ConnectionState.done) {
-          return MainScreen(
-            title: widget.title,
-            monthlyBudget: 420.69,
-          );
-        }
+          // Once complete, show your application
+          if (snapshot.connectionState == ConnectionState.done) {
+            return MainScreen(
+              title: widget.title,
+              monthlyBudget: 420.69,
+            );
+          }
 
-        // Otherwise, show something whilst waiting for initialization to complete
-        return Scaffold(body: Center(child: Text("Loading")));
-      },
+          // Otherwise, show something whilst waiting for initialization to complete
+          return Scaffold(body: Center(child: Text("Loading")));
+        },
+      ),
     );
   }
 }
