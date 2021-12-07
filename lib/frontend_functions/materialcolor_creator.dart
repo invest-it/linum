@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+//creates a custom material color (color system in dart)
+
 //use like this:
 //primarySwatch: createMaterialColor(Color(0xFF174378))
 
