@@ -43,6 +43,7 @@ class _MainScreenState extends State<MainScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
+                    //the top, green lip
                     ClipRRect(
                       borderRadius: BorderRadius.vertical(
                         top: Radius.zero,
@@ -56,26 +57,15 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                   ],
                 ),
+                //where the balance is shown to the user
                 HomeScreenCard(monthlyBudget: 4.20),
                 balanceDataProvider.fillListViewWithData(TestListView()),
               ],
             );
-
-            /* ListView(
-                children: snapshot.data == null
-                    ? [Text("Error")]
-                    : snapshot.data!.docs.map((singleBalance) {
-                        return ListTile(
-                          title:
-                              Text(singleBalance["singleBalance"].toString()),
-                          onLongPress: () {
-                            singleBalance.reference.delete();
-                          },
-                        );
-                      }).toList());*/
           },
         ),
       ),
+      //floatingactionbutton with bottomnavbar
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
@@ -95,8 +85,30 @@ class _MainScreenState extends State<MainScreen> {
         color: Theme.of(context).colorScheme.background,
         selectedColor: Theme.of(context).colorScheme.secondary,
         notchedShape: CircularNotchedRectangle(),
-        onTabSelected: (int value) {},
+        onTabSelected: (int value) {
+          if (value == 0) {
+            print("Home");
+          } else if (value == 1) {
+            print("Stats");
+          } else if (value == 2) {
+            print("Budget");
+          } else
+            print("Account");
+        },
       ),
     );
   }
 }
+
+/* ListView(
+                children: snapshot.data == null
+                    ? [Text("Error")]
+                    : snapshot.data!.docs.map((singleBalance) {
+                        return ListTile(
+                          title:
+                              Text(singleBalance["singleBalance"].toString()),
+                          onLongPress: () {
+                            singleBalance.reference.delete();
+                          },
+                        );
+                      }).toList());*/
