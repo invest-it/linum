@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/screens/main_screen.dart';
 import 'package:linum/providers/authentication_service.dart';
@@ -19,8 +20,26 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+          //This is the colorScheme where we store the colors
+          //the names should be self explaining
+          //all those that are not custom are just fillers as ColorScheme lists
+          //them all as required
+
+          //use like this: Theme.of(context).colorScheme.NAME_OF_COLOR_STYLE
+          colorScheme: ColorScheme(
+              primary: createMaterialColor(Color(0xFF82B915)),
+              primaryVariant: Colors.green,
+              secondary: createMaterialColor(Color(0xFF505050)),
+              secondaryVariant: Colors.green,
+              surface: Colors.red,
+              background: createMaterialColor(Color(0xFFFAFAFA)),
+              error: Colors.black12,
+              onPrimary: Colors.amber,
+              onSecondary: createMaterialColor(Color(0xFFFAFAFA)),
+              onSurface: Colors.lightBlue,
+              onBackground: Colors.tealAccent,
+              onError: Colors.white38,
+              brightness: Brightness.light)),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }

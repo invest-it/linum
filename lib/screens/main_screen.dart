@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/providers/balance_data_provider.dart';
-import 'package:linum/widgets/fab.dart';
+import 'package:linum/widgets/bottom_app_bar.dart';
 import 'package:linum/widgets/home_screen_card.dart';
 import 'package:linum/widgets/test_implementation.dart';
 import 'package:provider/provider.dart';
@@ -51,9 +51,7 @@ class _MainScreenState extends State<MainScreen> {
                       child: Container(
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height * 0.20,
-                        color: createMaterialColor(
-                          Color(0xFF82B915),
-                        ),
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                   ],
@@ -83,9 +81,7 @@ class _MainScreenState extends State<MainScreen> {
         onPressed: () {},
         child: Icon(Icons.add),
         elevation: 2.0,
-        backgroundColor: createMaterialColor(
-          Color(0xFF505050),
-        ),
+        backgroundColor: Theme.of(context).colorScheme.secondary,
       ),
       bottomNavigationBar: FABBottomAppBar(
         items: [
@@ -94,16 +90,10 @@ class _MainScreenState extends State<MainScreen> {
           BottomAppBarItem(iconData: Icons.account_balance, text: 'Budget'),
           BottomAppBarItem(iconData: Icons.account_box, text: 'Account'),
         ],
-        backgroundColor: createMaterialColor(
-          Color(0xFF82B915),
-        ),
+        backgroundColor: Theme.of(context).colorScheme.primary,
         centerItemText: '',
-        color: createMaterialColor(
-          Color(0xFFF0F0F0),
-        ),
-        selectedColor: createMaterialColor(
-          Color(0xFF505050),
-        ),
+        color: Theme.of(context).colorScheme.background,
+        selectedColor: Theme.of(context).colorScheme.secondary,
         notchedShape: CircularNotchedRectangle(),
         onTabSelected: (int value) {},
       ),
