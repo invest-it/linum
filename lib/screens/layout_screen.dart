@@ -9,8 +9,8 @@ import 'package:linum/screens/statistics_screen.dart';
 import 'package:linum/widgets/bottom_app_bar.dart';
 import 'package:provider/provider.dart';
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({
+class LayoutScreen extends StatefulWidget {
+  const LayoutScreen({
     Key? key,
     required this.title,
     required this.monthlyBudget,
@@ -20,10 +20,10 @@ class MainScreen extends StatefulWidget {
   final double monthlyBudget;
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  State<LayoutScreen> createState() => _LayoutScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _LayoutScreenState extends State<LayoutScreen> {
   int page_index = 0;
 
   @override
@@ -34,7 +34,8 @@ class _MainScreenState extends State<MainScreen> {
     BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
 
-    List<Widget> _pages = <Widget>[
+    //list with all the "screens"
+    List<Widget> _page = <Widget>[
       HomeScreen(),
       StatisticsScreen(),
       BudgetScreen(),
@@ -46,8 +47,8 @@ class _MainScreenState extends State<MainScreen> {
         child: StreamBuilder(
           stream: balance.snapshots(),
           builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
-            return _pages.elementAt(page_index);
-            /**/
+            //returns the page at the current index
+            return _page.elementAt(page_index);
           },
         ),
       ),
@@ -71,6 +72,8 @@ class _MainScreenState extends State<MainScreen> {
         color: Theme.of(context).colorScheme.background,
         selectedColor: Theme.of(context).colorScheme.secondary,
         notchedShape: CircularNotchedRectangle(),
+        //gives the page_index the value (the current selected index in the
+        //bottom navigation bar)
         onTabSelected: (int value) {
           setState(() {
             page_index = value;
