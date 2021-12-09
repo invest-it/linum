@@ -12,7 +12,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text("HELLO"),
+        child: Text("Settings"),
       ),
     );
   }

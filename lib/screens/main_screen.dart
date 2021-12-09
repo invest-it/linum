@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/providers/balance_data_provider.dart';
+import 'package:linum/screens/budget_screen.dart';
+import 'package:linum/screens/home_screen.dart';
+import 'package:linum/screens/settings_screen.dart';
+import 'package:linum/screens/statistics_screen.dart';
 import 'package:linum/widgets/bottom_app_bar.dart';
-import 'package:linum/widgets/home_screen_card.dart';
-import 'package:linum/widgets/test_implementation.dart';
 import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
@@ -23,7 +24,8 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  PageController _myPage = PageController(initialPage: 0);
+  int page_index = 0;
+
   @override
   Widget build(BuildContext context) {
     CollectionReference balance =
@@ -32,36 +34,20 @@ class _MainScreenState extends State<MainScreen> {
     BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
 
+    List<Widget> _pages = <Widget>[
+      HomeScreen(),
+      StatisticsScreen(),
+      BudgetScreen(),
+      SettingsScreen(),
+    ];
+
     return Scaffold(
       body: Center(
         child: StreamBuilder(
           stream: balance.snapshots(),
           builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
-            return Stack(
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    //the top, green lip
-                    ClipRRect(
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.zero,
-                        bottom: Radius.circular(40),
-                      ),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.20,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    ),
-                  ],
-                ),
-                //where the balance is shown to the user
-                HomeScreenCard(monthlyBudget: 4.20),
-                balanceDataProvider.fillListViewWithData(TestListView()),
-              ],
-            );
+            return _pages.elementAt(page_index);
+            /**/
           },
         ),
       ),
@@ -86,29 +72,11 @@ class _MainScreenState extends State<MainScreen> {
         selectedColor: Theme.of(context).colorScheme.secondary,
         notchedShape: CircularNotchedRectangle(),
         onTabSelected: (int value) {
-          if (value == 0) {
-            print("Home");
-          } else if (value == 1) {
-            print("Stats");
-          } else if (value == 2) {
-            print("Budget");
-          } else
-            print("Account");
+          setState(() {
+            page_index = value;
+          });
         },
       ),
     );
   }
 }
-
-/* ListView(
-                children: snapshot.data == null
-                    ? [Text("Error")]
-                    : snapshot.data!.docs.map((singleBalance) {
-                        return ListTile(
-                          title:
-                              Text(singleBalance["singleBalance"].toString()),
-                          onLongPress: () {
-                            singleBalance.reference.delete();
-                          },
-                        );
-                      }).toList());*/
