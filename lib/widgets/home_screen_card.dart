@@ -21,7 +21,7 @@ class HomeScreenCard extends StatelessWidget {
               height: MediaQuery.of(context).size.height * 0.20,
               color: Colors.grey[100],
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(
