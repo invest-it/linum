@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/screens/budget_screen.dart';
+import 'package:linum/screens/enter_screen.dart';
 import 'package:linum/screens/home_screen.dart';
 import 'package:linum/screens/settings_screen.dart';
 import 'package:linum/screens/statistics_screen.dart';
@@ -55,7 +56,14 @@ class _LayoutScreenState extends State<LayoutScreen> {
       //floatingactionbutton with bottomnavbar
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => EnterScreen(),
+            ),
+          );
+        },
         child: Icon(Icons.add),
         elevation: 2.0,
         backgroundColor: Theme.of(context).colorScheme.secondary,
