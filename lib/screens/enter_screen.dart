@@ -9,171 +9,176 @@ class EnterScreen extends StatefulWidget {
 }
 
 class _EnterScreenState extends State<EnterScreen> {
-  bool isExpenses = false;
+  TextEditingController myController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    myController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    myController.dispose();
+    super.dispose();
+  }
+
+  bool isExpenses = true;
 
   bool isIncome = false;
 
   bool isTransaction = false;
 
-  //the current value shown at the top and which is the value of the expense
-  //or income
-  //saved in the textfield whenever it is changed
-  double transactionValue = 0.00;
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              //the top, green lip
-              ClipRRect(
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.zero,
-                  bottom: Radius.circular(40),
-                ),
-                child: GestureDetector(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.20,
-                    color: Theme.of(context).colorScheme.primary,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.06,
-                        ),
-                        //TO DO: elimante the small bubble below the disabled color
-                        //Change background color to have a better view
-                        TextField(
-                          showCursor: false,
-                          keyboardType: TextInputType.number,
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            focusedBorder: InputBorder.none,
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        body: Stack(
+          children: <Widget>[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                //the top, green lip
+                ClipRRect(
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.zero,
+                    bottom: Radius.circular(40),
+                  ),
+                  child: GestureDetector(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.20,
+                      color: Theme.of(context).colorScheme.primary,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.06,
                           ),
-                          style: TextStyle(
-                              color:
-                                  _colorPicker(isExpenses, isIncome, context),
-                              fontSize: 30),
-                          onChanged: (value) {
-                            transactionValue = double.parse(value);
-                            print(transactionValue);
-                          },
-                        ),
-                        /*Text(
-                          transactionValue.toString(),
-                          style: TextStyle(
-                              color:
-                                  _colorPicker(isExpenses, isIncome, context),
-                              fontSize: 20),
-                        ),*/
-
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.75,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isExpenses = true;
-                                    isIncome = false;
-                                    isTransaction = false;
-                                  });
-                                },
-                                child: Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.25,
-                                  child: isExpenses
-                                      ? TextContainer(
-                                          context: context,
-                                          transactionClass: "Expenses",
-                                          isExpenses: isExpenses,
-                                          isIncome: isIncome,
-                                        )
-                                      : Center(
-                                          child: Text(
-                                          "Expenses",
-                                          style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .background),
-                                        )),
-                                ),
+                          //TO DO: elimante the small bubble below the disabled color
+                          //Change background color to have a better view
+                          TextField(
+                            controller: myController,
+                            showCursor: false,
+                            keyboardType: TextInputType.number,
+                            textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                              hintText: "0.0",
+                              hintStyle: TextStyle(
+                                color:
+                                    _colorPicker(isExpenses, isIncome, context),
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isExpenses = false;
-                                    isIncome = true;
-                                    isTransaction = false;
-                                  });
-                                },
-                                child: Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.25,
-                                  child: isIncome
-                                      ? TextContainer(
-                                          context: context,
-                                          transactionClass: "Income",
-                                          isExpenses: isExpenses,
-                                          isIncome: isIncome,
-                                        )
-                                      : Center(
-                                          child: Text(
-                                          "Income",
-                                          style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .background),
-                                        )),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isExpenses = false;
-                                    isIncome = false;
-                                    isTransaction = true;
-                                  });
-                                },
-                                child: Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.25,
-                                  child: isTransaction
-                                      ? TextContainer(
-                                          context: context,
-                                          transactionClass: "Transaction",
-                                          isExpenses: isExpenses,
-                                          isIncome: isIncome,
-                                        )
-                                      : Center(
-                                          child: Text(
-                                            "Transaction",
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                            ),
+                            style: TextStyle(
+                                color:
+                                    _colorPicker(isExpenses, isIncome, context),
+                                fontSize: 30),
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.75,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      isExpenses = true;
+                                      isIncome = false;
+                                      isTransaction = false;
+                                    });
+                                  },
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.25,
+                                    child: isExpenses
+                                        ? TextContainer(
+                                            context: context,
+                                            transactionClass: "Expenses",
+                                            isExpenses: isExpenses,
+                                            isIncome: isIncome,
+                                          )
+                                        : Center(
+                                            child: Text(
+                                            "Expenses",
                                             style: TextStyle(
                                                 color: Theme.of(context)
                                                     .colorScheme
                                                     .background),
-                                          ),
-                                        ),
+                                          )),
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      isExpenses = false;
+                                      isIncome = true;
+                                      isTransaction = false;
+                                    });
+                                  },
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.25,
+                                    child: isIncome
+                                        ? TextContainer(
+                                            context: context,
+                                            transactionClass: "Income",
+                                            isExpenses: isExpenses,
+                                            isIncome: isIncome,
+                                          )
+                                        : Center(
+                                            child: Text(
+                                            "Income",
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .background),
+                                          )),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      isExpenses = false;
+                                      isIncome = false;
+                                      isTransaction = true;
+                                    });
+                                  },
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.25,
+                                    child: isTransaction
+                                        ? TextContainer(
+                                            context: context,
+                                            transactionClass: "Transaction",
+                                            isExpenses: isExpenses,
+                                            isIncome: isIncome,
+                                          )
+                                        : Center(
+                                            child: Text(
+                                              "Transaction",
+                                              style: TextStyle(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .background),
+                                            ),
+                                          ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
