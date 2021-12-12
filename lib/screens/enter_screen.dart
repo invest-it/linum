@@ -1,7 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:linum/widgets/text_container.dart';
 
-class EnterScreen extends StatelessWidget {
-  const EnterScreen({Key? key}) : super(key: key);
+class EnterScreen extends StatefulWidget {
+  EnterScreen({Key? key}) : super(key: key);
+
+  @override
+  State<EnterScreen> createState() => _EnterScreenState();
+}
+
+class _EnterScreenState extends State<EnterScreen> {
+  bool isExpenses = false;
+
+  bool isIncome = false;
+
+  bool isTransaction = false;
+
+  double transactionValue = 0.00;
 
   @override
   Widget build(BuildContext context) {
@@ -18,41 +32,131 @@ class EnterScreen extends StatelessWidget {
                   top: Radius.zero,
                   bottom: Radius.circular(40),
                 ),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.20,
-                  color: Theme.of(context).colorScheme.primary,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.08,
-                      ),
-                      Text("0€"),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            _textContainer(
-                                context: context, transactionClass: "Expenses"),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(5),
-                              child: Container(
-                                  //width: sizeExpenses.width + 10,
-                                  //height: sizeExpenses.height + 10,
-                                  color: Colors.green,
-                                  child: Center(child: Text("Expenses"))),
-                            ),
-                            Text("Income"),
-                            Text("Transaction")
-                          ],
+                child: GestureDetector(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.20,
+                    color: Theme.of(context).colorScheme.primary,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.08,
                         ),
-                      )
-                    ],
+                        TextField(
+                          keyboardType: TextInputType.number,
+                          textAlign: TextAlign.center,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                          ),
+                          style: TextStyle(
+                              color:
+                                  _colorPicker(isExpenses, isIncome, context)),
+                        ),
+                        /*Text(
+                          transactionValue.toString(),
+                          style: TextStyle(
+                              color:
+                                  _colorPicker(isExpenses, isIncome, context),
+                              fontSize: 20),
+                        ),*/
+
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.75,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    isExpenses = true;
+                                    isIncome = false;
+                                    isTransaction = false;
+                                  });
+                                },
+                                child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.25,
+                                  child: isExpenses
+                                      ? TextContainer(
+                                          context: context,
+                                          transactionClass: "Expenses",
+                                          isExpenses: isExpenses,
+                                          isIncome: isIncome,
+                                        )
+                                      : Center(
+                                          child: Text(
+                                          "Expenses",
+                                          style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .background),
+                                        )),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    isExpenses = false;
+                                    isIncome = true;
+                                    isTransaction = false;
+                                  });
+                                },
+                                child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.25,
+                                  child: isIncome
+                                      ? TextContainer(
+                                          context: context,
+                                          transactionClass: "Income",
+                                          isExpenses: isExpenses,
+                                          isIncome: isIncome,
+                                        )
+                                      : Center(
+                                          child: Text(
+                                          "Income",
+                                          style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .background),
+                                        )),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    isExpenses = false;
+                                    isIncome = false;
+                                    isTransaction = true;
+                                  });
+                                },
+                                child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.25,
+                                  child: isTransaction
+                                      ? TextContainer(
+                                          context: context,
+                                          transactionClass: "Transaction",
+                                          isExpenses: isExpenses,
+                                          isIncome: isIncome,
+                                        )
+                                      : Center(
+                                          child: Text(
+                                            "Transaction",
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .background),
+                                          ),
+                                        ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -64,25 +168,20 @@ class EnterScreen extends StatelessWidget {
   }
 }
 
-Widget _textContainer({
-  required var context,
-  required transactionClass,
-}) {
-  var context;
-  String transactionClass;
-
-  final Size sizeExpenses = (TextPainter(
-          text: TextSpan(text: "Expenses"),
-          maxLines: 1,
-          textScaleFactor: MediaQuery.of(context).textScaleFactor,
-          textDirection: TextDirection.ltr)
-        ..layout())
-      .size;
-  return ClipRRect(
-      borderRadius: BorderRadius.circular(5),
-      child: Container(
-          width: sizeExpenses.width + 10,
-          height: sizeExpenses.height + 10,
-          color: Colors.green,
-          child: Center(/*child: Text(transactionClass*/)));
+_colorPicker(bool isExpenses, bool isIncome, context) {
+  if (isExpenses) {
+    return Theme.of(context).colorScheme.error;
+  } else if (isIncome) {
+    return Theme.of(context).colorScheme.primary;
+  }
+  return Theme.of(context).colorScheme.secondary;
 }
+
+/*ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                              child: Container(
+                                  //width: sizeExpenses.width + 10,
+                                  //height: sizeExpenses.height + 10,
+                                  color: Colors.green,
+                                  child: Center(child: Text("Expenses"))),
+                            ),*/
