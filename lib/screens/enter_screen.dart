@@ -15,6 +15,9 @@ class _EnterScreenState extends State<EnterScreen> {
 
   bool isTransaction = false;
 
+  //the current value shown at the top and which is the value of the expense
+  //or income
+  //saved in the textfield whenever it is changed
   double transactionValue = 0.00;
 
   @override
@@ -41,9 +44,12 @@ class _EnterScreenState extends State<EnterScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.08,
+                          height: MediaQuery.of(context).size.height * 0.06,
                         ),
+                        //TO DO: elimante the small bubble below the disabled color
+                        //Change background color to have a better view
                         TextField(
+                          showCursor: false,
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
@@ -52,7 +58,12 @@ class _EnterScreenState extends State<EnterScreen> {
                           ),
                           style: TextStyle(
                               color:
-                                  _colorPicker(isExpenses, isIncome, context)),
+                                  _colorPicker(isExpenses, isIncome, context),
+                              fontSize: 30),
+                          onChanged: (value) {
+                            transactionValue = double.parse(value);
+                            print(transactionValue);
+                          },
                         ),
                         /*Text(
                           transactionValue.toString(),
