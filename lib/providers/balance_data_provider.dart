@@ -17,32 +17,28 @@ class BalanceDataProvider extends ChangeNotifier {
   /// Creates the BalanceDataProvider. Inparticular it sets [_balance] correctly
   BalanceDataProvider(BuildContext ctx) {
     _uid = Provider.of<AuthenticationService>(ctx, listen: false).uid;
-    FirebaseFirestore.instance
-        .collection('balance')
-        .doc("documentToUser")
-        .get()
-        .then((documentToUser) {
-      if (documentToUser.exists) {
-        log(documentToUser.toString());
-        Map<String, dynamic>? data = documentToUser.data();
-        log(data == null ? data.toString() : "data is null");
-        if (data != null) {
-          List<String>? docs = data[_uid];
-          log("docs: " + docs.toString());
-          if (docs != null) {
-            // TODO: Future support multiple docs per user
-            _balance =
-                FirebaseFirestore.instance.collection('balance').doc(docs[0]);
-          } else {
-            log("no docs found for user: " + _uid);
-          }
-        } else {
-          log("no data found in documentToUser");
-        }
+    asynConstructor();
+  }
+
+  asynConstructor() async {
+    DocumentSnapshot<Map<String, dynamic>> documentToUser =
+        await FirebaseFirestore.instance
+            .collection('balance')
+            .doc("documentToUser")
+            .get();
+    if (documentToUser.exists) {
+      List<dynamic>? docs = documentToUser.get(_uid);
+      if (docs != null) {
+        // TODO: Future support multiple docs per user
+        _balance =
+            FirebaseFirestore.instance.collection('balance').doc(docs[0]);
+        notifyListeners();
       } else {
-        log("Error couldn't find 'documentToUser'");
+        log("no docs found for user: " + _uid);
       }
-    });
+    } else {
+      log("no data found in documentToUser");
+    }
   }
 
   /// Get the document-datastream. Maybe in the future it might be a public function
@@ -55,12 +51,16 @@ class BalanceDataProvider extends ChangeNotifier {
     return StreamBuilder(
       stream: _dataStream,
       builder: (ctx, AsyncSnapshot<dynamic> snapshot) {
+        //log("snapshot: " + snapshot.data);
         if (snapshot.data == null) {
-          blistview.addBalanceData(["Error"]);
+          blistview.addBalanceData([
+            {
+              "Error": "snapshot.data == null",
+            }
+          ]);
           return blistview.listview;
         } else {
-          blistview.addBalanceData(
-              snapshot.data!.docs.map((doc) => doc.data()).toList());
+          blistview.addBalanceData(snapshot.data["balanceData"]);
           return blistview.listview;
         }
       },
