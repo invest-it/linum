@@ -14,15 +14,17 @@ class TestListView implements BalanceDataListView {
 
   @override
   addBalanceData(List<dynamic> balanceData) {
-    if (balanceData[0] != "Error") {
+    if (balanceData[0] != null && balanceData[0]["Error"] != null) {
       balanceData.forEach((arrayElement) {
         arrayElement.forEach((key, element) {
-          //log("key:  " + key);
-          //log("value: " + element.toString());
+          if (key == "name") {
+            // log("key:  " + key);
+            // log("value: " + element.toString());
+          }
         });
       });
     } else {
-      log("Error");
+      log(balanceData[0]["Error"].toString());
     }
   }
 

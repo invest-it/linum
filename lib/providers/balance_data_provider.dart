@@ -29,7 +29,7 @@ class BalanceDataProvider extends ChangeNotifier {
     if (documentToUser.exists) {
       List<dynamic>? docs = documentToUser.get(_uid);
       if (docs != null) {
-        // TODO: Future support multiple docs per user
+        // Future support multiple docs per user
         _balance =
             FirebaseFirestore.instance.collection('balance').doc(docs[0]);
         notifyListeners();
@@ -51,7 +51,6 @@ class BalanceDataProvider extends ChangeNotifier {
     return StreamBuilder(
       stream: _dataStream,
       builder: (ctx, AsyncSnapshot<dynamic> snapshot) {
-        //log("snapshot: " + snapshot.data);
         if (snapshot.data == null) {
           blistview.addBalanceData([
             {
@@ -60,7 +59,11 @@ class BalanceDataProvider extends ChangeNotifier {
           ]);
           return blistview.listview;
         } else {
-          blistview.addBalanceData(snapshot.data["balanceData"]);
+          List<dynamic> balanceData = snapshot.data["balanceData"];
+          // Future there could be an sort algorithm provider
+          // (and possibly also a filter algorithm provided)
+          balanceData.sort((a, b) => a["time"].compareTo(b["time"]));
+          blistview.addBalanceData(balanceData);
           return blistview.listview;
         }
       },
