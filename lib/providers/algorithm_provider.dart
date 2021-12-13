@@ -76,11 +76,11 @@ class AlgorithmProvider extends ChangeNotifier {
         (a.compareTo(timestamp1) <= 0) && (a.compareTo(timestamp2) >= 0);
   }
 
-  static Function amountMoreThan(num amount) {
+  static bool Function(dynamic) amountMoreThan(num amount) {
     return (dynamic a) => (a.compareTo(amount) >= 0);
   }
 
-  static Function amountLessThan(num amount) {
+  static bool Function(dynamic) amountLessThan(num amount) {
     return (dynamic a) => (a.compareTo(amount) <= 0);
   }
 }
