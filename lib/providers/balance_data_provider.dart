@@ -91,8 +91,8 @@ class BalanceDataProvider extends ChangeNotifier {
           StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(balanceData as List<Map<String, dynamic>>);
           statisticPanel.addStatisticData({
-            "sum": statisticsCalculations.sum,
-            "averageCost": statisticsCalculations.averageCost,
+            "sumBalance": statisticsCalculations.sumBalance,
+            "averageBalance": statisticsCalculations.averageBalance,
           });
           return statisticPanel.widget;
         }

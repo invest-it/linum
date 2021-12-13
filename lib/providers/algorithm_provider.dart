@@ -77,10 +77,18 @@ class AlgorithmProvider extends ChangeNotifier {
   }
 
   static bool Function(dynamic) amountMoreThan(num amount) {
+    return (dynamic a) => (a.compareTo(amount) > 0);
+  }
+
+  static bool Function(dynamic) amountAtLeast(num amount) {
     return (dynamic a) => (a.compareTo(amount) >= 0);
   }
 
   static bool Function(dynamic) amountLessThan(num amount) {
+    return (dynamic a) => (a.compareTo(amount) < 0);
+  }
+
+  static bool Function(dynamic) amountAtMost(num amount) {
     return (dynamic a) => (a.compareTo(amount) <= 0);
   }
 }
