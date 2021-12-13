@@ -116,4 +116,37 @@ class BalanceDataProvider extends ChangeNotifier {
     }
     return false;
   }
+
+  Future<bool> updateSingleBalance({
+    required num amount,
+    required String category,
+    required String currency,
+    required String name,
+    required Timestamp time,
+  }) async {
+    if (_balance == null) {
+      log("_balance is null");
+      return false;
+    }
+    bool isEdited = false;
+    DocumentSnapshot<Map<String, dynamic>> snapshot = await _balance!.get();
+    dynamic data = snapshot.data();
+    List<dynamic> ff;
+    data["balanceData"].forEach((value) {
+      if (value["name"] == name && value["time"] == time) {
+        isEdited = !(value["amount"] == amount &&
+            value["category"] == category &&
+            value["currency"] == currency);
+        if (isEdited) {
+          value["amount"] = amount;
+          value["category"] = category;
+          value["currency"] = currency;
+        }
+      }
+    });
+    if (isEdited) {
+      _balance!.set(data);
+    }
+    return isEdited;
+  }
 }
