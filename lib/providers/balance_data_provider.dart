@@ -16,18 +16,29 @@ class BalanceDataProvider extends ChangeNotifier {
 
   /// Creates the BalanceDataProvider. Inparticular it sets [_balance] correctly
   BalanceDataProvider(BuildContext ctx) {
-    _uid = Provider.of<AuthenticationService>(ctx).uid;
+    _uid = Provider.of<AuthenticationService>(ctx, listen: false).uid;
     FirebaseFirestore.instance
         .collection('balance')
         .doc("documentToUser")
         .get()
         .then((documentToUser) {
       if (documentToUser.exists) {
+        log(documentToUser.toString());
         Map<String, dynamic>? data = documentToUser.data();
-        List<String> docs = data?[_uid];
-        // TODO: Future support multiple docs per user
-        _balance =
-            FirebaseFirestore.instance.collection('balance').doc(docs[0]);
+        log(data == null ? data.toString() : "data is null");
+        if (data != null) {
+          List<String>? docs = data[_uid];
+          log("docs: " + docs.toString());
+          if (docs != null) {
+            // TODO: Future support multiple docs per user
+            _balance =
+                FirebaseFirestore.instance.collection('balance').doc(docs[0]);
+          } else {
+            log("no docs found for user: " + _uid);
+          }
+        } else {
+          log("no data found in documentToUser");
+        }
       } else {
         log("Error couldn't find 'documentToUser'");
       }

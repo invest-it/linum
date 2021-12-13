@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 import 'dart:developer';
 
 void main() {
-  log("main");
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
@@ -76,14 +75,25 @@ class _MyHomePageState extends State<MyHomePage> {
             providers: [
               ChangeNotifierProvider<AuthenticationService>(
                 create: (_) {
-                  return AuthenticationService(FirebaseAuth.instance);
+                  AuthenticationService auth =
+                      AuthenticationService(FirebaseAuth.instance);
+                  auth
+                      .signIn("Soencke.Evers@investit-academy.de",
+                          "tempPassword123")
+                      .then((value) => log(value));
+                  return auth;
                 },
                 lazy: false,
               ),
-              ChangeNotifierProvider<BalanceDataProvider>(
+              ChangeNotifierProxyProvider<AuthenticationService,
+                  BalanceDataProvider>(
                 create: (ctx) {
                   return BalanceDataProvider(ctx);
                 },
+                update: (ctx, _, __) {
+                  return BalanceDataProvider(ctx);
+                },
+                lazy: false,
               ),
             ],
             child: LayoutScreen(
