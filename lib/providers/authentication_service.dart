@@ -46,4 +46,16 @@ class AuthenticationService extends ChangeNotifier {
     }
     return "";
   }
+
+  /// tells firebase that [email] wants to reset the password
+  Future<String> resetPassword(String email) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+      return "Successfully send password reset request to Firebase";
+    } on FirebaseAuthException catch (e) {
+      return e.message != null
+          ? e.message!
+          : "Firebase Error with null message";
+    }
+  }
 }
