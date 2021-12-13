@@ -6,12 +6,17 @@ import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
 import 'package:provider/provider.dart';
 
+/// Provides the balance data from the database using the uid.
 class BalanceDataProvider extends ChangeNotifier {
+  /// _balance is the documentReference to get the balance data from the database. It will be null if the constructor isnt ready yet
   DocumentReference<Map<String, dynamic>>? _balance;
-  late String uid;
 
+  /// The uid of the user
+  late String _uid;
+
+  /// Creates the BalanceDataProvider. Inparticular it sets [_balance] correctly
   BalanceDataProvider(BuildContext ctx) {
-    uid = Provider.of<AuthenticationService>(ctx).uid;
+    _uid = Provider.of<AuthenticationService>(ctx).uid;
     FirebaseFirestore.instance
         .collection('balance')
         .doc("documentToUser")
@@ -19,7 +24,8 @@ class BalanceDataProvider extends ChangeNotifier {
         .then((documentToUser) {
       if (documentToUser.exists) {
         Map<String, dynamic>? data = documentToUser.data();
-        List<String> docs = data?[uid];
+        List<String> docs = data?[_uid];
+        // TODO: Future support multiple docs per user
         _balance =
             FirebaseFirestore.instance.collection('balance').doc(docs[0]);
       } else {
@@ -28,10 +34,12 @@ class BalanceDataProvider extends ChangeNotifier {
     });
   }
 
+  /// Get the document-datastream. Maybe in the future it might be a public function
   Stream<DocumentSnapshot<Map<String, dynamic>>>? get _dataStream {
     return _balance?.snapshots();
   }
 
+  /// Returns a StreamBuilder that builds the ListView from the document-datastream
   StreamBuilder fillListViewWithData(BalanceDataListView blistview) {
     return StreamBuilder(
       stream: _dataStream,
