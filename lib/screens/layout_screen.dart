@@ -25,7 +25,7 @@ class LayoutScreen extends StatefulWidget {
 }
 
 class _LayoutScreenState extends State<LayoutScreen> {
-  int page_index = 0;
+  int pageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
           stream: balance.snapshots(),
           builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
             //returns the page at the current index
-            return _page.elementAt(page_index);
+            return _page.elementAt(pageIndex);
           },
         ),
       ),
@@ -80,11 +80,11 @@ class _LayoutScreenState extends State<LayoutScreen> {
         color: Theme.of(context).colorScheme.background,
         selectedColor: Theme.of(context).colorScheme.secondary,
         notchedShape: CircularNotchedRectangle(),
-        //gives the page_index the value (the current selected index in the
+        //gives the pageIndex the value (the current selected index in the
         //bottom navigation bar)
         onTabSelected: (int value) {
           setState(() {
-            page_index = value;
+            pageIndex = value;
           });
         },
       ),

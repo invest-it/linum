@@ -95,7 +95,7 @@ class _EnterScreenState extends State<EnterScreen> {
                                         0.25,
                                     child: isExpenses
                                         ? TextContainer(
-                                            context: context,
+                                            //context: context,
                                             transactionClass: "Expenses",
                                             isExpenses: isExpenses,
                                             isIncome: isIncome,
@@ -123,7 +123,7 @@ class _EnterScreenState extends State<EnterScreen> {
                                         0.25,
                                     child: isIncome
                                         ? TextContainer(
-                                            context: context,
+                                            //context: context,
                                             transactionClass: "Income",
                                             isExpenses: isExpenses,
                                             isIncome: isIncome,
@@ -151,7 +151,7 @@ class _EnterScreenState extends State<EnterScreen> {
                                         0.25,
                                     child: isTransaction
                                         ? TextContainer(
-                                            context: context,
+                                            //context: context,
                                             transactionClass: "Transaction",
                                             isExpenses: isExpenses,
                                             isIncome: isIncome,

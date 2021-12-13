@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class EnterScreenList extends StatelessWidget {
-  bool isExpenses;
-  bool isIncome;
+  final bool isExpenses;
+  final bool isIncome;
   EnterScreenList({Key? key, required this.isExpenses, required this.isIncome})
       : super(key: key);
 

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class TextContainer extends StatelessWidget {
   final String transactionClass;
-  var context;
-  bool isExpenses;
-  bool isIncome;
+  //var context;
+  final bool isExpenses;
+  final bool isIncome;
 
   TextContainer(
       {Key? key,
-      required this.context,
+      // required this.context,
       required this.transactionClass,
       required this.isExpenses,
       required this.isIncome})
