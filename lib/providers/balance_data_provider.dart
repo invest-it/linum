@@ -2,8 +2,10 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/backend_functions/statistic_calculations.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
+import 'package:linum/widgets/abstract/abstract_statistic_panel.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
 import 'package:provider/provider.dart';
 
@@ -69,6 +71,27 @@ class BalanceDataProvider extends ChangeNotifier {
           balanceData.removeWhere(_algorithmProvider.currentFilter);
           blistview.addBalanceData(balanceData);
           return blistview.listview;
+        }
+      },
+    );
+  }
+
+  /// Returns a StreamBuilder that builds the ListView from the document-datastream
+  StreamBuilder fillStatisticPanelWithData(
+      AbstractStatisticPanel statisticPanel) {
+    return StreamBuilder(
+      stream: _dataStream,
+      builder: (ctx, AsyncSnapshot<dynamic> snapshot) {
+        if (snapshot.data == null) {
+          statisticPanel.addStatisticData({"Error": "snapshot.data == null"});
+          return statisticPanel.widget;
+        } else {
+          List<dynamic> balanceData = snapshot.data["balanceData"];
+          balanceData.removeWhere(_algorithmProvider.currentFilter);
+          StatisticsCalculations statisticsCalculations =
+              StatisticsCalculations(balanceData as List<Map<String, dynamic>>);
+          statisticPanel.addStatisticData({});
+          return statisticPanel.widget;
         }
       },
     );
