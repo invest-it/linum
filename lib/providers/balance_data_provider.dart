@@ -90,7 +90,10 @@ class BalanceDataProvider extends ChangeNotifier {
           balanceData.removeWhere(_algorithmProvider.currentFilter);
           StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(balanceData as List<Map<String, dynamic>>);
-          statisticPanel.addStatisticData({});
+          statisticPanel.addStatisticData({
+            "sum": statisticsCalculations.sum,
+            "averageCost": statisticsCalculations.averageCost,
+          });
           return statisticPanel.widget;
         }
       },
