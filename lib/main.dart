@@ -81,8 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 lazy: false,
               ),
               ChangeNotifierProvider<BalanceDataProvider>(
-                create: (_) {
-                  return BalanceDataProvider();
+                create: (ctx) {
+                  return BalanceDataProvider(ctx);
                 },
               ),
             ],

@@ -32,4 +32,11 @@ class AuthenticationService extends ChangeNotifier {
           : "Firebase Error with null message";
     }
   }
+
+  String get uid {
+    if (_firebaseAuth.currentUser != null) {
+      return _firebaseAuth.currentUser!.uid;
+    }
+    return "";
+  }
 }
