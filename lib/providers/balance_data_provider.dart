@@ -71,6 +71,7 @@ class BalanceDataProvider extends ChangeNotifier {
     );
   }
 
+  /// add a single Balance and upload it
   void addSingleBalance({
     required num amount,
     required String category,
@@ -95,6 +96,7 @@ class BalanceDataProvider extends ChangeNotifier {
     _balance!.set(data);
   }
 
+  /// remove a single Balance and upload it (identified using the name and time)
   Future<bool> removeSingleBalance({
     required String name,
     required Timestamp time,
@@ -117,6 +119,7 @@ class BalanceDataProvider extends ChangeNotifier {
     return false;
   }
 
+  /// update a single Balance and upload it (identified using the name and time)
   Future<bool> updateSingleBalance({
     required num amount,
     required String category,
