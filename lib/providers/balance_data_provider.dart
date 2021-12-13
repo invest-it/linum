@@ -65,6 +65,7 @@ class BalanceDataProvider extends ChangeNotifier {
           // Future there could be an sort algorithm provider
           // (and possibly also a filter algorithm provided)
           balanceData.sort(AlgorithmProvider.categoryAlphabetically);
+          balanceData.removeWhere(AlgorithmProvider.noFilter);
           blistview.addBalanceData(balanceData);
           return blistview.listview;
         }

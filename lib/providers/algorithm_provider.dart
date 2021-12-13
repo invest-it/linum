@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 /// gives sort algorithm (later it will probably also have filter algorithm) and
@@ -34,5 +35,30 @@ class AlgorithmProvider extends ChangeNotifier {
 
   static int timeOldToNew(dynamic b, dynamic a) {
     return a["time"].compareTo(b["time"]);
+  }
+
+  static bool noFilter(dynamic a) {
+    return false;
+  }
+
+  static Function newerThan(Timestamp timestamp) {
+    return (dynamic a) => (a.compareTo(timestamp) >= 0);
+  }
+
+  static Function olderThan(Timestamp timestamp) {
+    return (dynamic a) => (a.compareTo(timestamp) <= 0);
+  }
+
+  static Function inBetween(Timestamp timestamp1, Timestamp timestamp2) {
+    return (dynamic a) =>
+        (a.compareTo(timestamp1) <= 0) && (a.compareTo(timestamp2) >= 0);
+  }
+
+  static Function costsMoreThan(num amount) {
+    return (dynamic a) => (a.compareTo(amount) >= 0);
+  }
+
+  static Function costsLessThan(num amount) {
+    return (dynamic a) => (a.compareTo(amount) <= 0);
   }
 }
