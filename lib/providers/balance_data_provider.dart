@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
 import 'package:provider/provider.dart';
@@ -63,7 +64,7 @@ class BalanceDataProvider extends ChangeNotifier {
           List<dynamic> balanceData = snapshot.data["balanceData"];
           // Future there could be an sort algorithm provider
           // (and possibly also a filter algorithm provided)
-          balanceData.sort((a, b) => a["time"].compareTo(b["time"]));
+          balanceData.sort(AlgorithmProvider.categoryAlphabetically);
           blistview.addBalanceData(balanceData);
           return blistview.listview;
         }
