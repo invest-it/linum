@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
+import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/screens/layout_screen.dart';
 import 'package:linum/providers/authentication_service.dart';
@@ -85,12 +86,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
                 lazy: false,
               ),
-              ChangeNotifierProxyProvider<AuthenticationService,
-                  BalanceDataProvider>(
+              ChangeNotifierProvider<AlgorithmProvider>(
+                create: (_) => AlgorithmProvider(),
+                lazy: false,
+              ),
+              ChangeNotifierProxyProvider2<AuthenticationService,
+                  AlgorithmProvider, BalanceDataProvider>(
                 create: (ctx) {
                   return BalanceDataProvider(ctx);
                 },
-                update: (ctx, _, __) {
+                update: (ctx, auth, algo, _) {
                   return BalanceDataProvider(ctx);
                 },
                 lazy: false,

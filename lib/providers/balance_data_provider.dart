@@ -15,9 +15,12 @@ class BalanceDataProvider extends ChangeNotifier {
   /// The uid of the user
   late String _uid;
 
+  late final AlgorithmProvider _algorithmProvider;
+
   /// Creates the BalanceDataProvider. Inparticular it sets [_balance] correctly
-  BalanceDataProvider(BuildContext ctx) {
-    _uid = Provider.of<AuthenticationService>(ctx, listen: false).uid;
+  BalanceDataProvider(BuildContext context) {
+    _uid = Provider.of<AuthenticationService>(context, listen: false).uid;
+    _algorithmProvider = Provider.of<AlgorithmProvider>(context, listen: false);
     asynConstructor();
   }
 
@@ -55,17 +58,15 @@ class BalanceDataProvider extends ChangeNotifier {
       builder: (ctx, AsyncSnapshot<dynamic> snapshot) {
         if (snapshot.data == null) {
           blistview.addBalanceData([
-            {
-              "Error": "snapshot.data == null",
-            }
+            {"Error": "snapshot.data == null"}
           ]);
           return blistview.listview;
         } else {
           List<dynamic> balanceData = snapshot.data["balanceData"];
           // Future there could be an sort algorithm provider
           // (and possibly also a filter algorithm provided)
-          balanceData.sort(AlgorithmProvider.categoryAlphabetically);
-          balanceData.removeWhere(AlgorithmProvider.noFilter);
+          balanceData.sort(_algorithmProvider.currentSorter);
+          balanceData.removeWhere(_algorithmProvider.currentFilter);
           blistview.addBalanceData(balanceData);
           return blistview.listview;
         }

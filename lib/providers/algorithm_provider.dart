@@ -5,6 +5,27 @@ import 'package:flutter/material.dart';
 /// all algorithm will have an active version instead of being static
 /// so it is possible to have dynamic sort and filter algorithm
 class AlgorithmProvider extends ChangeNotifier {
+  late int Function(dynamic, dynamic) _currentSorter;
+
+  late bool Function(dynamic) _currentFilter;
+
+  bool Function(dynamic) get currentFilter => _currentFilter;
+
+  int Function(dynamic, dynamic) get currentSorter => _currentSorter;
+
+  AlgorithmProvider() {
+    _currentSorter = timeNewToOld;
+    _currentFilter = noFilter;
+  }
+
+  setCurrentSortAlgorithm(int Function(dynamic, dynamic) sorter) {
+    _currentSorter = sorter;
+  }
+
+  setCurrentFilterAlgorithm(bool Function(dynamic) filter) {
+    _currentFilter = filter;
+  }
+
   static int amountLeastToMost(dynamic a, dynamic b) {
     return a["amount"].compareTo(b["amount"]);
   }
@@ -41,15 +62,16 @@ class AlgorithmProvider extends ChangeNotifier {
     return false;
   }
 
-  static Function newerThan(Timestamp timestamp) {
+  static bool Function(dynamic) newerThan(Timestamp timestamp) {
     return (dynamic a) => (a.compareTo(timestamp) >= 0);
   }
 
-  static Function olderThan(Timestamp timestamp) {
+  static bool Function(dynamic) olderThan(Timestamp timestamp) {
     return (dynamic a) => (a.compareTo(timestamp) <= 0);
   }
 
-  static Function inBetween(Timestamp timestamp1, Timestamp timestamp2) {
+  static bool Function(dynamic) inBetween(
+      Timestamp timestamp1, Timestamp timestamp2) {
     return (dynamic a) =>
         (a.compareTo(timestamp1) <= 0) && (a.compareTo(timestamp2) >= 0);
   }
