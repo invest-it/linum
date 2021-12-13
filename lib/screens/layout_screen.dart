@@ -57,6 +57,12 @@ class _LayoutScreenState extends State<LayoutScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          // balanceDataProvider.addSingleBalance(
+          //     amount: 5.24,
+          //     category: "food",
+          //     currency: "EUR",
+          //     name: "Fast Food Menu",
+          //     time: Timestamp.fromDate(DateTime.now()));
           Navigator.push(
             context,
             MaterialPageRoute(

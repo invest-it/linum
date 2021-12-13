@@ -80,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   auth
                       .signIn("Soencke.Evers@investit-academy.de",
                           "tempPassword123")
-                      .then((value) => log(value));
+                      .then((value) => log("login status: " + value));
                   return auth;
                 },
                 lazy: false,

@@ -24,7 +24,7 @@ class TestListView implements BalanceDataListView {
         });
       });
     } else {
-      log(balanceData[0]["Error"].toString());
+      log("TestListView: " + balanceData[0]["Error"].toString());
     }
   }
 

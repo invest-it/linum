@@ -70,4 +70,28 @@ class BalanceDataProvider extends ChangeNotifier {
       },
     );
   }
+
+  void addSingleBalance({
+    required num amount,
+    required String category,
+    required String currency,
+    required String name,
+    required Timestamp time,
+  }) async {
+    if (_balance == null) {
+      log("_balance is null");
+      return;
+    }
+    Map<String, dynamic> singleBalance = {
+      "amount": amount,
+      "category": category,
+      "currency": currency,
+      "name": name,
+      "time": time,
+    };
+    DocumentSnapshot<Map<String, dynamic>> snapshot = await _balance!.get();
+    dynamic data = snapshot.data();
+    data["balanceData"].add(singleBalance);
+    _balance!.set(data);
+  }
 }
