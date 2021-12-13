@@ -28,7 +28,6 @@ class AuthenticationService extends ChangeNotifier {
 
   /// Tries to sign the user up
   Future<String> signUp(String email, String password) async {
-    print("starting sign up");
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
