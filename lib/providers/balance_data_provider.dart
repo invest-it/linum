@@ -94,4 +94,26 @@ class BalanceDataProvider extends ChangeNotifier {
     data["balanceData"].add(singleBalance);
     _balance!.set(data);
   }
+
+  Future<bool> removeSingleBalance({
+    required String name,
+    required Timestamp time,
+  }) async {
+    if (_balance == null) {
+      log("_balance is null");
+      return false;
+    }
+
+    DocumentSnapshot<Map<String, dynamic>> snapshot = await _balance!.get();
+    dynamic data = snapshot.data();
+    int dataLength = data["balanceData"].length;
+    data["balanceData"].removeWhere((value) {
+      return value["name"] == name && value["time"] == time;
+    });
+    if (dataLength > data["balanceData"].length) {
+      _balance!.set(data);
+      return true;
+    }
+    return false;
+  }
 }
