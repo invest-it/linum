@@ -51,25 +51,31 @@ class MyApp extends StatelessWidget {
 
         textTheme: TextTheme(
           headline1: GoogleFonts.dmSans(
-              fontSize: 39.81,
-              fontWeight: FontWeight.w700,
-              letterSpacing: -1.5),
+            fontSize: 39.81,
+            fontWeight: FontWeight.w700,
+            letterSpacing: -1.5,
+            color: createMaterialColor(Color(0xFF303030)),
+          ),
           headline2: GoogleFonts.dmSans(
             fontSize: 33.18,
             fontWeight: FontWeight.w500,
+            color: createMaterialColor(Color(0xFF303030)),
           ),
           headline3: GoogleFonts.dmSans(
             fontSize: 27.65,
             fontWeight: FontWeight.w500,
+            color: createMaterialColor(Color(0xFF303030)),
           ),
           headline4: GoogleFonts.dmSans(
             fontSize: 23.04,
             fontWeight: FontWeight.w500,
             letterSpacing: 0.25,
+            color: createMaterialColor(Color(0xFF303030)),
           ),
           headline5: GoogleFonts.dmSans(
             fontSize: 19.2,
             fontWeight: FontWeight.w500,
+            color: createMaterialColor(Color(0xFF505050)),
           ),
           headline6: GoogleFonts.dmSans(
             fontSize: 50,
@@ -87,15 +93,15 @@ class MyApp extends StatelessWidget {
             letterSpacing: 0.08,
           ),
           overline: GoogleFonts.dmSans(
-            fontSize: 10,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 1.5,
-          ),
+              fontSize: 10,
+              fontWeight: FontWeight.w500,
+              letterSpacing: 1.5,
+              color: createMaterialColor(Color(0xFF505050))),
           button: GoogleFonts.dmSans(
-            fontSize: 19.2,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 0.15,
-          ),
+              fontSize: 19.2,
+              fontWeight: FontWeight.w500,
+              letterSpacing: 0.15,
+              color: createMaterialColor(Color(0xFF505050))),
         ),
       ),
 
@@ -170,7 +176,7 @@ class _MyHomePageState extends State<MyHomePage> {
         }
 
         // Otherwise, show something whilst waiting for initialization to complete
-        return Scaffold(body: Center(child: Text("Loading")));
+        return Scaffold(body: Center(child: Text("Bitte warten...")));
       },
     );
   }

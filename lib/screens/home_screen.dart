@@ -38,7 +38,11 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         //where the balance is shown to the user
-        HomeScreenCard(monthlyBudget: 4.20),
+        HomeScreenCard(
+          balance: 4.20,
+          income: 10.00,
+          expense: 5.80,
+        ),
         balanceDataProvider.fillListViewWithData(TestListView()),
       ],
     );
