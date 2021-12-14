@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
@@ -20,26 +21,86 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-          //This is the colorScheme where we store the colors
-          //the names should be self explaining
-          //all those that are not custom are just fillers as ColorScheme lists
-          //them all as required
+        //This is the colorScheme where we store the colors
+        //the names should be self explaining
+        //all those that are not custom are just fillers as ColorScheme lists
+        //them all as required
 
-          //use like this: Theme.of(context).colorScheme.NAME_OF_COLOR_STYLE
-          colorScheme: ColorScheme(
-              primary: createMaterialColor(Color(0xFF82B915)),
-              primaryVariant: Colors.green,
-              secondary: createMaterialColor(Color(0xFF505050)),
-              secondaryVariant: Colors.green,
-              surface: Colors.red,
-              background: createMaterialColor(Color(0xFFFAFAFA)),
-              error: createMaterialColor(Color(0xFFEB5757)),
-              onPrimary: Colors.amber,
-              onSecondary: createMaterialColor(Color(0xFFFAFAFA)),
-              onSurface: Colors.lightBlue,
-              onBackground: Colors.tealAccent,
-              onError: Colors.black12,
-              brightness: Brightness.light)),
+        //use like this: Theme.of(context).colorScheme.NAME_OF_COLOR_STYLE
+        colorScheme: ColorScheme(
+            primary: createMaterialColor(Color(0xFF82B915)),
+            primaryVariant: Colors.green,
+            secondary: createMaterialColor(Color(0xFF505050)),
+            secondaryVariant: Colors.green,
+            surface: Colors.red,
+            background: createMaterialColor(Color(0xFFFAFAFA)),
+            error: createMaterialColor(Color(0xFFEB5757)),
+            onPrimary: Colors.amber,
+            onSecondary: createMaterialColor(Color(0xFFFAFAFA)),
+            onSurface: Colors.lightBlue,
+            onBackground: Colors.tealAccent,
+            onError: Colors.black12,
+            brightness: Brightness.light),
+
+        // This is the generic textTheme where we store most basic applications
+        // of different text styles. The names should be self-explaining.
+        //use like this: Theme.of(context).textTheme.THEME_TYPE
+
+        //we should discuss as whether to augment bis by adding an own @TODO
+        // e.g. for the HEADLINER function
+
+        textTheme: TextTheme(
+          headline1: GoogleFonts.dmSans(
+              fontSize: 39.81,
+              fontWeight: FontWeight.w700,
+              letterSpacing: -1.5),
+          headline2: GoogleFonts.dmSans(
+            fontSize: 33.18,
+            fontWeight: FontWeight.w500,
+          ),
+          headline3: GoogleFonts.dmSans(
+            fontSize: 27.65,
+            fontWeight: FontWeight.w500,
+          ),
+          headline4: GoogleFonts.dmSans(
+            fontSize: 23.04,
+            fontWeight: FontWeight.w500,
+            letterSpacing: 0.25,
+          ),
+          headline5: GoogleFonts.dmSans(
+            fontSize: 19.2,
+            fontWeight: FontWeight.w500,
+          ),
+          headline6: GoogleFonts.dmSans(
+            fontSize: 50,
+            fontWeight: FontWeight.w800,
+            backgroundColor: Colors.red,
+          ),
+          bodyText1: GoogleFonts.dmSans(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            letterSpacing: 0.16,
+          ),
+          bodyText2: GoogleFonts.dmSans(
+            fontSize: 13.33,
+            fontWeight: FontWeight.w400,
+            letterSpacing: 0.08,
+          ),
+          overline: GoogleFonts.dmSans(
+            fontSize: 10,
+            fontWeight: FontWeight.w500,
+            letterSpacing: 1.5,
+          ),
+          button: GoogleFonts.dmSans(
+            fontSize: 19.2,
+            fontWeight: FontWeight.w500,
+            letterSpacing: 0.15,
+          ),
+        ),
+      ),
+
+      // End of Theme Data.
+
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
