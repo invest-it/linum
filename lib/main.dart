@@ -107,7 +107,7 @@ class MyApp extends StatelessWidget {
 
       // End of Theme Data.
 
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Linum'),
     );
   }
 }
