@@ -32,6 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.20,
+                // TODO change this into a sustainable and responsive design
+
                 color: Theme.of(context).colorScheme.primary,
               ),
             ),
