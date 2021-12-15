@@ -176,6 +176,7 @@ class _MyHomePageState extends State<MyHomePage> {
         }
 
         // Otherwise, show something whilst waiting for initialization to complete
+        // TODO FUTURE let us add a lottie splash screen here after the MVP phase
         return Scaffold(body: Center(child: Text("Bitte warten...")));
       },
     );
