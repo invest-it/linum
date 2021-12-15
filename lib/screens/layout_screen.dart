@@ -96,9 +96,9 @@ class _LayoutScreenState extends State<LayoutScreen> {
       bottomNavigationBar: FABBottomAppBar(
         items: [
           BottomAppBarItem(iconData: Icons.home, text: 'Home'),
-          BottomAppBarItem(iconData: Icons.book, text: 'Statistics'),
-          BottomAppBarItem(iconData: Icons.account_balance, text: 'Budget'),
-          BottomAppBarItem(iconData: Icons.account_box, text: 'Account'),
+          BottomAppBarItem(iconData: Icons.savings_rounded, text: 'Budget'),
+          BottomAppBarItem(iconData: Icons.bar_chart_rounded, text: 'Stats'),
+          BottomAppBarItem(iconData: Icons.person, text: 'Account'),
         ],
         backgroundColor: Theme.of(context).colorScheme.primary,
         centerItemText: '',
