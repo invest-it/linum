@@ -16,24 +16,24 @@ class EnterScreenList extends StatefulWidget {
 
 class _EnterScreenListState extends State<EnterScreenList> {
   final List<Category> _categoriesExpenses = [
-    Category("Category", Icons.ac_unit),
-    Category("Account", Icons.create_new_folder),
-    Category("Date", Icons.access_alarm_outlined),
-    Category("Repeat", Icons.access_time_sharp),
+    Category("Category", Icons.restaurant),
+    Category("Account", Icons.local_atm),
+    Category("Date", Icons.event),
+    Category("Repeat", Icons.loop),
   ];
 
   final List<Category> _categoriesIncome = [
-    Category("Category", Icons.ac_unit),
-    Category("Account", Icons.create_new_folder),
-    Category("Date", Icons.access_alarm_outlined),
-    Category("Repeat", Icons.access_time_sharp),
+    Category("Category", Icons.payments),
+    Category("Account", Icons.local_atm),
+    Category("Date", Icons.event),
+    Category("Repeat", Icons.loop),
   ];
 
   final List<Category> _categoriesTransaction = [
-    Category("Account", Icons.create_new_folder),
-    Category("To Account", Icons.ac_unit),
-    Category("Date", Icons.access_alarm_outlined),
-    Category("Repeat", Icons.access_time_sharp),
+    Category("Account", Icons.local_atm),
+    Category("To Account", Icons.local_atm),
+    Category("Date", Icons.event),
+    Category("Repeat", Icons.loop),
   ];
 
   @override

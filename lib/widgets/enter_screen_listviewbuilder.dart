@@ -32,6 +32,14 @@ class _EnterScreenListViewBuilderState
     "Account 6",
   ];
 
+  final List<String> _categoriesRepeat = [
+    "Every day",
+    "Every week",
+    "Every month on the 1st",
+    "Every quarter",
+    "Every year",
+  ];
+
   String selectedCategory = "";
   String selectedAccount = "";
   String selectedRepetition = "";
@@ -116,31 +124,7 @@ class _EnterScreenListViewBuilderState
               SingleChildScrollView(
                 child: Container(
                   height: 300,
-                  child: index == 0
-                      ? ListView.builder(
-                          itemCount: _categoriesCategory.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ListTile(
-                              leading: Icon(Icons.ac_unit),
-                              title: Text(_categoriesCategory[index]),
-                              onTap: () => _selectCategoryItem(
-                                _categoriesCategory[index],
-                              ),
-                            );
-                          },
-                        )
-                      : ListView.builder(
-                          itemCount: _categoriesAccount.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ListTile(
-                              leading: Icon(Icons.headphones),
-                              title: Text(_categoriesAccount[index]),
-                              onTap: () => _selectAccountItem(
-                                _categoriesAccount[index],
-                              ),
-                            );
-                          },
-                        ),
+                  child: _chooseListViewBuilder(index),
                 ),
               ),
             ],
@@ -148,6 +132,48 @@ class _EnterScreenListViewBuilderState
         );
       },
     );
+  }
+
+  _chooseListViewBuilder(index) {
+    if (index == 0) {
+      return ListView.builder(
+        itemCount: _categoriesCategory.length,
+        itemBuilder: (BuildContext context, int indexBuilder) {
+          return ListTile(
+            leading: Icon(widget.categories[index].icon),
+            title: Text(_categoriesCategory[indexBuilder]),
+            onTap: () => _selectCategoryItem(
+              _categoriesCategory[indexBuilder],
+            ),
+          );
+        },
+      );
+    } else if (index == 1) {
+      return ListView.builder(
+        itemCount: _categoriesAccount.length,
+        itemBuilder: (BuildContext context, int indexBuilder) {
+          return ListTile(
+            leading: Icon(widget.categories[index].icon),
+            title: Text(_categoriesAccount[indexBuilder]),
+            onTap: () => _selectAccountItem(
+              _categoriesAccount[indexBuilder],
+            ),
+          );
+        },
+      );
+    } else
+      return ListView.builder(
+        itemCount: _categoriesRepeat.length,
+        itemBuilder: (BuildContext context, int indexBuilder) {
+          return ListTile(
+            leading: Icon(widget.categories[index].icon),
+            title: Text(_categoriesRepeat[indexBuilder]),
+            onTap: () => _selectAccountItem(
+              _categoriesRepeat[indexBuilder],
+            ),
+          );
+        },
+      );
   }
 
   void _selectCategoryItem(String name) {
