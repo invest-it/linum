@@ -33,6 +33,15 @@ class _EnterScreenListState extends State<EnterScreenList> {
     Category("Repeat", Icons.access_time_sharp),
   ];
 
+  List<String> _categoriesCategory = [
+    "Option 1",
+    "Option 2",
+    "Option 3",
+    "Option 4",
+    "Option 5",
+    "Option 6",
+  ];
+
   String _selectedItem = "";
 
   @override
@@ -189,36 +198,40 @@ class _EnterScreenListState extends State<EnterScreenList> {
       builder: (context) {
         return Container(
           height: 200,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                ListTile(
-                  leading: Icon(Icons.ac_unit_outlined),
-                  title: Text("cooling"),
-                  onTap: () => _selectItem('hello'),
-                ),
-                ListTile(
-                  leading: Icon(Icons.ac_unit_outlined),
-                  title: Text("cooling"),
-                  onTap: () => _selectItem('hello'),
-                ),
-                ListTile(
-                  leading: Icon(Icons.ac_unit_outlined),
-                  title: Text("cooling"),
-                  onTap: () => _selectItem('hello'),
-                ),
-                ListTile(
-                  leading: Icon(Icons.ac_unit_outlined),
-                  title: Text("cooling"),
-                  onTap: () => _selectItem('hello'),
-                ),
-                ListTile(
-                  leading: Icon(Icons.ac_unit_outlined),
-                  title: Text("cooling"),
-                  onTap: () => _selectItem('hello'),
-                ),
-              ],
-            ),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                    child: Container(
+                      child: Icon(Icons.access_alarm_outlined),
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Text("Account"),
+                      Text("Creditcard"),
+                    ],
+                  ),
+                ],
+              ),
+              SingleChildScrollView(
+                  child: Container(
+                height: 200,
+                child: ListView.builder(
+                    itemCount: _categoriesCategory.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                        leading: Icon(Icons.ac_unit_outlined),
+                        title: Text(_categoriesCategory[index]),
+                        onTap: () => _selectItem(
+                          _categoriesCategory[index],
+                        ),
+                      );
+                    }),
+              )),
+            ],
           ),
         );
       },
