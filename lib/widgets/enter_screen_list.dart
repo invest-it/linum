@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 class EnterScreenList extends StatefulWidget {
@@ -57,7 +59,7 @@ class _EnterScreenListState extends State<EnterScreenList> {
               itemCount: _categoriesExpenses.length,
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
-                  onTap: () => _onCategoryPressed(),
+                  onTap: () => _onCategoryPressed(index),
                   child: Container(
                     height: 50,
                     child: Row(
@@ -192,7 +194,8 @@ class _EnterScreenListState extends State<EnterScreenList> {
       );
   }
 
-  void _onCategoryPressed() {
+  void _onCategoryPressed(int index) {
+    log(index.toString());
     showModalBottomSheet(
       context: context,
       builder: (context) {
