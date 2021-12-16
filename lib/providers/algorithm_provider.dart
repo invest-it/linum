@@ -26,6 +26,63 @@ class AlgorithmProvider extends ChangeNotifier {
     _currentFilter = filter;
   }
 
+  /// returns a new sort algorithm. It sorts using the first
+  /// sort algorithm, but if the sort algorithm says 0 the next
+  /// sort algorithm will be used and so one. If every
+  /// sort algorithm says 0, it will return 0.
+  static int Function(dynamic, dynamic) combineSorter(
+      List<int Function(dynamic, dynamic)> sorterList) {
+    if (sorterList.length == 0) {
+      return (a, b) => 0;
+    }
+    int Function(dynamic, dynamic) returnFunc = (a, b) {
+      for (int i = 0; i < sorterList.length; i++) {
+        if (sorterList[i](a, b) != 0) {
+          return sorterList[i](a, b);
+        }
+      }
+      return 0;
+    };
+
+    return returnFunc;
+  }
+
+  /// Returns a filter that will remove an element if one filter doesnt let it pass
+  static bool Function(dynamic) combineFilterStrict(
+      List<bool Function(dynamic)> filterList) {
+    if (filterList.length == 0) {
+      return (a) => false;
+    }
+    bool Function(dynamic) returnFunc = (a) {
+      for (int i = 0; i < filterList.length; i++) {
+        if (filterList[i](a)) {
+          return true;
+        }
+      }
+      return false;
+    };
+
+    return returnFunc;
+  }
+
+  /// Returns a filter that will remove an element only if every filter doesnt let it pass
+  static bool Function(dynamic) combineFilterGentle(
+      List<bool Function(dynamic)> filterList) {
+    if (filterList.length == 0) {
+      return (a) => false;
+    }
+    bool Function(dynamic) returnFunc = (a) {
+      for (int i = 0; i < filterList.length; i++) {
+        if (!filterList[i](a)) {
+          return false;
+        }
+      }
+      return true;
+    };
+
+    return returnFunc;
+  }
+
   static int amountLeastToMost(dynamic a, dynamic b) {
     return a["amount"].compareTo(b["amount"]);
   }
