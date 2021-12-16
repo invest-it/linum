@@ -34,6 +34,7 @@ class _EnterScreenState extends State<EnterScreen> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -175,7 +176,7 @@ class _EnterScreenState extends State<EnterScreen> {
                   ),
                 ),
               ),
-              EnterScreenList(isExpenses: isExpenses, isIncome: isIncome)
+              EnterScreenList(isExpenses: isExpenses, isIncome: isIncome),
             ],
           ),
         ),
