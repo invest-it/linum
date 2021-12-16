@@ -57,31 +57,31 @@ class _LayoutScreenState extends State<LayoutScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Timestamp time = Timestamp.fromDate(DateTime.now());
-          balanceDataProvider.addSingleBalance(
-            amount: -5.24,
-            category: "food",
-            currency: "EUR",
-            name: "Fast Food Menu",
-            time: time,
-          );
+          // Timestamp time = Timestamp.fromDate(DateTime.now());
+          // balanceDataProvider.addSingleBalance(
+          //   amount: -5.24,
+          //   category: "food",
+          //   currency: "EUR",
+          //   name: "Fast Food Menu",
+          //   time: time,
+          // );
 
-          Future.delayed(const Duration(seconds: 2), () {}).then((_) {
-            balanceDataProvider
-                .updateSingleBalance(
-              amount: -5.48,
-              category: "food",
-              currency: "EUR",
-              name: "Fast Food Menu",
-              time: time,
-            )
-                .then((_) {
-              Future.delayed(const Duration(seconds: 2), () {}).then((_) {
-                balanceDataProvider.removeSingleBalance(
-                    name: "Fast Food Menu", time: time);
-              });
-            });
-          });
+          // Future.delayed(const Duration(seconds: 2), () {}).then((_) {
+          //   balanceDataProvider
+          //       .updateSingleBalance(
+          //     amount: -5.48,
+          //     category: "food",
+          //     currency: "EUR",
+          //     name: "Fast Food Menu",
+          //     time: time,
+          //   )
+          //       .then((_) {
+          //     Future.delayed(const Duration(seconds: 2), () {}).then((_) {
+          //       balanceDataProvider.removeSingleBalance(
+          //           name: "Fast Food Menu", time: time);
+          //     });
+          //   });
+          // });
           Navigator.push(
             context,
             MaterialPageRoute(

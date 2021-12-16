@@ -83,17 +83,14 @@ class BalanceDataProvider extends ChangeNotifier {
       stream: _dataStream,
       builder: (ctx, AsyncSnapshot<dynamic> snapshot) {
         if (snapshot.data == null) {
-          statisticPanel.addStatisticData({"Error": "snapshot.data == null"});
+          statisticPanel.addStatisticData(null);
           return statisticPanel.widget;
         } else {
           List<dynamic> balanceData = snapshot.data["balanceData"];
           balanceData.removeWhere(_algorithmProvider.currentFilter);
           StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(balanceData as List<Map<String, dynamic>>);
-          statisticPanel.addStatisticData({
-            "sumBalance": statisticsCalculations.sumBalance,
-            "averageBalance": statisticsCalculations.averageBalance,
-          });
+          statisticPanel.addStatisticData(statisticsCalculations);
           return statisticPanel.widget;
         }
       },
