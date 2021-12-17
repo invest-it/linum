@@ -82,6 +82,10 @@ class _EnterScreenListViewBuilderState
                       width: 20,
                     ),
                     Text(widget.categories[index].type + ":"),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    _selectText(index),
                   ],
                 ),
               ),
@@ -176,6 +180,19 @@ class _EnterScreenListViewBuilderState
       );
   }
 
+  _selectText(index) {
+    if (index == 0) {
+      return Text(selectedCategory);
+    } else if (index == 1) {
+      return Text(selectedAccount);
+    } else if (index == 2) {
+      return Text("Date");
+    } else if (index == 3) {
+      return Text(selectedRepetition);
+    } else
+      return Text("Trash");
+  }
+
   void _selectCategoryItem(String name) {
     Navigator.pop(context);
     setState(() {
@@ -187,6 +204,13 @@ class _EnterScreenListViewBuilderState
     Navigator.pop(context);
     setState(() {
       selectedAccount = name;
+    });
+  }
+
+  void _selectRepeatItem(String name) {
+    Navigator.pop(context);
+    setState(() {
+      selectedRepetition = name;
     });
   }
 }
