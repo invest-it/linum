@@ -65,7 +65,6 @@ class _LayoutScreenState extends State<LayoutScreen> {
           //   name: "Fast Food Menu",
           //   time: time,
           // );
-
           // Future.delayed(const Duration(seconds: 2), () {}).then((_) {
           //   balanceDataProvider
           //       .updateSingleBalance(
