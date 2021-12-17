@@ -1,7 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:linum/widgets/enter_screen_listviewbuilder.dart';
+import 'package:linum/widgets/enter_screen/enter_screen_listviewbuilder.dart';
 
 class EnterScreenList extends StatefulWidget {
   final bool isExpenses;
