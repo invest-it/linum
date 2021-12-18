@@ -18,7 +18,8 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return _wrapWithBanner(MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         //This is the colorScheme where we store the colors
@@ -108,7 +109,7 @@ class MyApp extends StatelessWidget {
       // End of Theme Data.
 
       home: MyHomePage(title: 'Linum'),
-    );
+    ));
   }
 }
 
@@ -181,4 +182,26 @@ class _MyHomePageState extends State<MyHomePage> {
       },
     );
   }
+}
+
+// Defines the State of the App (in our MVP test phase, this will be "ALPHA" according
+// to the principles of versioning)
+
+Widget _wrapWithBanner(Widget child) {
+  return Directionality(
+    textDirection: TextDirection.ltr,
+    child: Banner(
+      child: child,
+      location: BannerLocation.topEnd,
+      message: 'ALPHA',
+      color: Colors.white.withOpacity(1),
+      textStyle: TextStyle(
+        fontWeight: FontWeight.w700,
+        fontSize: 12.0,
+        letterSpacing: 1.0,
+        color: Color(0xFF79BC4E),
+      ),
+      textDirection: TextDirection.ltr,
+    ),
+  );
 }
