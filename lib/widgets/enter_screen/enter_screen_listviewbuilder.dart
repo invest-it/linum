@@ -43,6 +43,11 @@ class _EnterScreenListViewBuilderState
   String selectedCategory = "";
   String selectedAccount = "";
   String selectedRepetition = "";
+
+  DateTime selectedDate = DateTime.now();
+  final firstDate = DateTime(2020,1);
+  final lastDate = DateTime(2025,12);
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -102,7 +107,9 @@ class _EnterScreenListViewBuilderState
     print(
       index.toString(),
     );
-    showModalBottomSheet(
+    if(index == 2){
+      _openDatePicker();
+    } else showModalBottomSheet(
       context: context,
       builder: (context) {
         return Container(
@@ -172,7 +179,7 @@ class _EnterScreenListViewBuilderState
           return ListTile(
             leading: Icon(widget.categories[index].icon),
             title: Text(_categoriesRepeat[indexBuilder]),
-            onTap: () => _selectAccountItem(
+            onTap: () => _selectRepeatItem(
               _categoriesRepeat[indexBuilder],
             ),
           );
@@ -186,7 +193,7 @@ class _EnterScreenListViewBuilderState
     } else if (index == 1) {
       return Text(selectedAccount);
     } else if (index == 2) {
-      return Text("Date");
+      return Text(selectedDate.toString().split(' ')[0]);
     } else if (index == 3) {
       return Text(selectedRepetition);
     } else
@@ -213,4 +220,12 @@ class _EnterScreenListViewBuilderState
       selectedRepetition = name;
     });
   }
-}
+  _openDatePicker() async {
+    final Future<DateTime?> date = showDatePicker(context: context, initialDate: selectedDate, firstDate: firstDate, lastDate: lastDate,);
+    setState(() {
+      selectedDate = date as DateTime;
+    });
+    print(date);
+    }
+  }
+
