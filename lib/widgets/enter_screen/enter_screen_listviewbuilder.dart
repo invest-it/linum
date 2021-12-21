@@ -108,7 +108,7 @@ class _EnterScreenListViewBuilderState
       index.toString(),
     );
     if(index == 2){
-      _openDatePicker();
+      _openDatePicker(context);
     } else showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -220,12 +220,12 @@ class _EnterScreenListViewBuilderState
       selectedRepetition = name;
     });
   }
-  _openDatePicker() async {
+
+  _openDatePicker(BuildContext context) async {
     final Future<DateTime?> date = showDatePicker(context: context, initialDate: selectedDate, firstDate: firstDate, lastDate: lastDate,);
     setState(() {
       selectedDate = date as DateTime;
     });
-    print(date);
     }
   }
 
