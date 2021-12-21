@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/widgets/enter_screen/enter_screen_list.dart';
 import 'package:linum/widgets/enter_screen/enter_screen_top_input_field.dart';
+import 'package:provider/provider.dart';
 
 class EnterScreen extends StatefulWidget {
   EnterScreen({Key? key}) : super(key: key);
@@ -18,6 +20,8 @@ class _EnterScreenState extends State<EnterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    BalanceDataProvider balanceDataProvider =
+        Provider.of<BalanceDataProvider>(context);
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -51,7 +55,9 @@ class _EnterScreenState extends State<EnterScreen> {
                         onPrimary: Theme.of(context).colorScheme.background,
                         onSurface: Colors.white,
                         fixedSize: Size(300, 40)),
-                    onPressed: () {Navigator.of(context).pop();},
+                    onPressed: () {Navigator.of(context).pop();
+                    //balanceDataProvider.addSingleBalance(amount: amount, category: category, currency: currency, name: name, time: time)
+                    },
                     child: Text("Save transaction"),
                   ),
                 ],

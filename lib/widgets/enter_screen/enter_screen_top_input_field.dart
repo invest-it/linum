@@ -50,7 +50,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.06,
               ),
-              //TO DO: elimante the small bubble below the disabled color
+              //TODO eliminate the small bubble below the disabled color
               //Change background color to have a better view
               TextField(
                 controller: myController,

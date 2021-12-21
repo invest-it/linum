@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:linum/providers/balance_data_provider.dart';
+import 'package:linum/widgets/test_implementation.dart';
+import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -10,9 +13,12 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
+    BalanceDataProvider balanceDataProvider =
+        Provider.of<BalanceDataProvider>(context);
     return Scaffold(
       body: Center(
-        child: Text("Account"),
+        child:       balanceDataProvider.fillListViewWithData(TestListView()),
+
       ),
     );
   }
