@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
           income: 10.00,
           expense: 5.80,
         ),
-        balanceDataProvider.fillListViewWithData(TestListView()),
+        
       ],
     );
   }
