@@ -51,7 +51,7 @@ class _EnterScreenState extends State<EnterScreen> {
                         onPrimary: Theme.of(context).colorScheme.background,
                         onSurface: Colors.white,
                         fixedSize: Size(300, 40)),
-                    onPressed: () {},
+                    onPressed: () {Navigator.of(context).pop();},
                     child: Text("Save transaction"),
                   ),
                 ],
@@ -76,4 +76,3 @@ class _EnterScreenState extends State<EnterScreen> {
   }*/
 }
 
-//kurzer comment
