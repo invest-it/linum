@@ -109,6 +109,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                           widget.isExpenses = false;
                           widget.isIncome = true;
                           widget.isTransaction = false;
+                       
                         });
                       },
                       child: Container(
@@ -136,6 +137,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                           widget.isExpenses = false;
                           widget.isIncome = false;
                           widget.isTransaction = true;
+                       
                         });
                       },
                       child: Container(

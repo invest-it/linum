@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:linum/widgets/enter_screen/enter_screen_listviewbuilder.dart';
 
 class EnterScreenList extends StatefulWidget {
-  final bool isExpenses;
-  final bool isIncome;
+   bool isExpenses;
+   bool isIncome;
 
   EnterScreenList({Key? key, required this.isExpenses, required this.isIncome})
       : super(key: key);
@@ -22,7 +22,7 @@ class _EnterScreenListState extends State<EnterScreenList> {
 
   final List<Category> _categoriesIncome = [
     Category("Category", Icons.payments),
-    Category("Account", Icons.local_atm),
+    Category("To Category", Icons.local_atm),
     Category("Date", Icons.event),
     Category("Repeat", Icons.loop),
   ];
@@ -38,7 +38,7 @@ class _EnterScreenListState extends State<EnterScreenList> {
   Widget build(BuildContext context) {
     if (widget.isExpenses)
       return EnterScreenListViewBuilder(
-          categories: _categoriesExpenses,
+          categories: _categoriesExpenses, 
           categoriesExpenses: _categoriesExpenses);
     else if (widget.isIncome)
       return EnterScreenListViewBuilder(

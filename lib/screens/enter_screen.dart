@@ -57,7 +57,7 @@ class _EnterScreenState extends State<EnterScreen> {
                 ],
               ),
               SizedBox(
-                height: 20,
+                height: 30,
               ),
             ],
           ),
