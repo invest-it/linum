@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/widgets/home_screen_card.dart';
-import 'package:linum/widgets/test_implementation.dart';
+import 'package:linum/widgets/home_screen_listview.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -45,7 +45,11 @@ class _HomeScreenState extends State<HomeScreen> {
           income: 10.00,
           expense: 5.80,
         ),
-        
+        Container(
+            height: 400,
+            child: balanceDataProvider.fillListViewWithData(
+              HomeScreenListView(),
+            )),
       ],
     );
   }
