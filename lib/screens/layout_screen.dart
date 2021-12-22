@@ -5,12 +5,12 @@ import 'package:linum/screens/statistics_screen.dart';
 import 'package:linum/screens/enter_screen.dart';
 import 'package:linum/screens/home_screen.dart';
 import 'package:linum/screens/account_screen.dart';
-import 'package:linum/screens/buget_screen.dart';
+import 'package:linum/screens/budget_screen.dart';
 import 'package:linum/widgets/bottom_app_bar.dart';
 import 'package:provider/provider.dart';
 
 class LayoutScreen extends StatefulWidget {
-  const LayoutScreen({
+  LayoutScreen({
     Key? key,
     required this.title,
     required this.monthlyBudget,
