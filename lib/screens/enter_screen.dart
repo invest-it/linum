@@ -20,8 +20,6 @@ class _EnterScreenState extends State<EnterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    BalanceDataProvider balanceDataProvider =
-        Provider.of<BalanceDataProvider>(context);
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -55,8 +53,9 @@ class _EnterScreenState extends State<EnterScreen> {
                         onPrimary: Theme.of(context).colorScheme.background,
                         onSurface: Colors.white,
                         fixedSize: Size(300, 40)),
-                    onPressed: () {Navigator.of(context).pop();
-                    //balanceDataProvider.addSingleBalance(amount: amount, category: category, currency: currency, name: name, time: time)
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      //balanceDataProvider.addSingleBalance(amount: amount, category: category, currency: currency, name: name, time: time)
                     },
                     child: Text("Save transaction"),
                   ),
@@ -81,4 +80,3 @@ class _EnterScreenState extends State<EnterScreen> {
       saveType = "Transaction";
   }*/
 }
-

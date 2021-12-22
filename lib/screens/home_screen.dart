@@ -37,6 +37,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Theme.of(context).colorScheme.primary,
               ),
             ),
+            //placeholder --> covers exactly the space that the HomeScreenCard covers
+            //give it a different color to see it's effect
+            Container(
+              height: MediaQuery.of(context).size.height * 0.19,
+              color: Theme.of(context).colorScheme.background,
+            ),
+            Expanded(
+              child: balanceDataProvider.fillListViewWithData(
+                HomeScreenListView(),
+              ),
+            ),
           ],
         ),
         //where the balance is shown to the user
@@ -45,11 +56,6 @@ class _HomeScreenState extends State<HomeScreen> {
           income: 10.00,
           expense: 5.80,
         ),
-        Container(
-            height: 400,
-            child: balanceDataProvider.fillListViewWithData(
-              HomeScreenListView(),
-            )),
       ],
     );
   }
