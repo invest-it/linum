@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 class SizeGuide {
   static late MediaQueryData _mediaQueryData;
@@ -17,6 +16,13 @@ class SizeGuide {
 }
 
 // Get the proportionate height as per screen size
+// USAGE:
+// 1. Call the Init Function in the build Function of your file
+// e.g. "SizeGuide.init(context)"
+//
+// 2. Whenever you need widths or heights, always use the Functions provided
+// e.g. for Width: "width: proportionateScreenWidth(275)" --> Returns 0.73334 per vw-pixel
+// e.g. for height: "height: proportionateScreenHeight(406)" --> Returns 0.5000 per vh-pixel
 
 double proportionateScreenHeight(double inputHeight) {
   double screenHeight = SizeGuide.screenHeight;
