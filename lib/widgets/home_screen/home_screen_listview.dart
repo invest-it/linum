@@ -32,27 +32,6 @@ class HomeScreenListView implements BalanceDataListView {
                   trailing: Text(arrayElement["amount"].toString()),
                 ),
               );
-              // list.add(
-              //   Container(
-              //     height: 60,
-              //     child: Row(
-              //       children: [
-              //         Container(
-              //           width: 50,
-              //           height: 50,
-              //           color: Colors.red,
-              //         ),
-              //         Column(
-              //           children: [
-              //             Text(arrayElement["category"]),
-              //             Text(arrayElement["time"].toString().split(' ')[0]),
-              //           ],
-              //         ),
-              //         Text(arrayElement["amount"].toString()),
-              //       ],
-              //     ),
-              //   ),
-              // );
             },
           );
         },

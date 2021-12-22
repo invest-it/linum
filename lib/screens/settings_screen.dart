@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:linum/providers/balance_data_provider.dart';
-import 'package:linum/widgets/home_screen_listview.dart';
 import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
