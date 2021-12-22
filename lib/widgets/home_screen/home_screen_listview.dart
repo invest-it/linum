@@ -2,6 +2,7 @@
 
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
 
@@ -20,8 +21,8 @@ class HomeScreenListView implements BalanceDataListView {
         (arrayElement) {
           arrayElement.forEach(
             (key, element) {
-              log("key:  " + key);
-              log("value: " + element.toString());
+              // log("key:  " + key);
+              // log("value: " + element.toString());
               //list.add(Text(key + ": " + element.toString()));
 
               //list.add(ListTile(title: ),);
@@ -30,8 +31,8 @@ class HomeScreenListView implements BalanceDataListView {
                   onTap: () => print(arrayElement["amount"].toString()),
                   child: ListTile(
                     title: Text(arrayElement["name"]),
-                    subtitle: Text(arrayElement["time"].toString()),
-                    trailing: Text(arrayElement["amount"].toString()),
+                    subtitle: Text((arrayElement["time"].toDate()).toString()),
+                    trailing: Text(arrayElement["amount"].toString() + "€"),
                   ),
                 ),
               );
