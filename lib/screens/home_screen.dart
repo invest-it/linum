@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:linum/frontend_functions/materialcolor_creator.dart';
+import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/widgets/home_screen/home_screen_card.dart';
 import 'package:linum/widgets/home_screen/home_screen_listview.dart';
@@ -17,6 +16,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    // initialize Size Guide for responsive design
+    SizeGuide().init(context);
+
     BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
 
@@ -33,8 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 bottom: Radius.circular(40),
               ),
               child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.20,
+                width: proportionateScreenWidth(375),
+                height: proportionateScreenHeight(164),
                 // TODO change this into a sustainable and responsive design
 
                 color: Theme.of(context).colorScheme.primary,
@@ -55,8 +57,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text("Neueste Transaktionen",
                       style: Theme.of(context).textTheme.headline5),
                   Text(
-                    "Mehr",
-                    style: Theme.of(context).textTheme.bodyText2,
+                    "MEHR",
+                    style: Theme.of(context).textTheme.overline?.copyWith(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontSize: 14,
+                        ),
                   ),
                 ],
               ),
@@ -71,6 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
+        // TODO integrate this into UpperLip Widget
         Positioned(
           top: 30,
           left: 50,
