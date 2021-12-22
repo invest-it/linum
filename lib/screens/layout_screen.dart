@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/providers/balance_data_provider.dart';
-import 'package:linum/screens/budget_screen.dart';
+import 'package:linum/screens/statistics_screen.dart';
 import 'package:linum/screens/enter_screen.dart';
 import 'package:linum/screens/home_screen.dart';
-import 'package:linum/screens/settings_screen.dart';
-import 'package:linum/screens/statistics_screen.dart';
+import 'package:linum/screens/account_screen.dart';
+import 'package:linum/screens/buget_screen.dart';
 import 'package:linum/widgets/bottom_app_bar.dart';
 import 'package:provider/provider.dart';
 

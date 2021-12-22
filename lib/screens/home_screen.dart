@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:linum/providers/balance_data_provider.dart';
-import 'package:linum/widgets/home_screen_card.dart';
-import 'package:linum/widgets/home_screen_listview.dart';
+import 'package:linum/widgets/home_screen/home_screen_card.dart';
+import 'package:linum/widgets/home_screen/home_screen_listview.dart';
+
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -43,12 +44,39 @@ class _HomeScreenState extends State<HomeScreen> {
               height: MediaQuery.of(context).size.height * 0.19,
               color: Theme.of(context).colorScheme.background,
             ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text("Neueste Transaktionen",
+                      style: Theme.of(context).textTheme.headline5),
+                  Text(
+                    "Mehr",
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
+                ],
+              ),
+            ),
             Expanded(
-              child: balanceDataProvider.fillListViewWithData(
-                HomeScreenListView(),
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                child: balanceDataProvider.fillListViewWithData(
+                  HomeScreenListView(),
+                ),
               ),
             ),
           ],
+        ),
+        Positioned(
+          top: 80,
+          left: 50,
+          right: 10,
+          child: Text(
+            "Home",
+            style: TextStyle(fontSize: 50, color: Colors.green),
+          ),
         ),
         //where the balance is shown to the user
         HomeScreenCard(

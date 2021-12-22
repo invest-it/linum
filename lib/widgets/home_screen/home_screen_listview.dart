@@ -26,10 +26,13 @@ class HomeScreenListView implements BalanceDataListView {
 
               //list.add(ListTile(title: ),);
               list.add(
-                ListTile(
-                  title: Text(arrayElement["name"]),
-                  subtitle: Text(arrayElement["time"].toString()),
-                  trailing: Text(arrayElement["amount"].toString()),
+                GestureDetector(
+                  onTap: () => print(arrayElement["amount"].toString()),
+                  child: ListTile(
+                    title: Text(arrayElement["name"]),
+                    subtitle: Text(arrayElement["time"].toString()),
+                    trailing: Text(arrayElement["amount"].toString()),
+                  ),
                 ),
               );
             },
