@@ -78,10 +78,13 @@ class MyApp extends StatelessWidget {
             fontWeight: FontWeight.w500,
             color: createMaterialColor(Color(0xFF505050)),
           ),
+          //the text theme for the big headlines telling the page's name
           headline6: GoogleFonts.dmSans(
-            fontSize: 50,
-            fontWeight: FontWeight.w800,
-            backgroundColor: Colors.red,
+            fontSize: 96,
+            fontWeight: FontWeight.w700,
+            color: createMaterialColor(
+              Color(0xFFC1E695),
+            ),
           ),
           bodyText1: GoogleFonts.dmSans(
             fontSize: 16,

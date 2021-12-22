@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/widgets/home_screen/home_screen_card.dart';
 import 'package:linum/widgets/home_screen/home_screen_listview.dart';
@@ -70,12 +72,13 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         Positioned(
-          top: 80,
+          top: 30,
           left: 50,
-          right: 10,
-          child: Text(
-            "Home",
-            style: TextStyle(fontSize: 50, color: Colors.green),
+          right: 50,
+          child: Column(
+            children: [
+              Text("Home", style: Theme.of(context).textTheme.headline6),
+            ],
           ),
         ),
         //where the balance is shown to the user
