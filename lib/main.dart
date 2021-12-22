@@ -29,19 +29,20 @@ class MyApp extends StatelessWidget {
 
         //use like this: Theme.of(context).colorScheme.NAME_OF_COLOR_STYLE
         colorScheme: ColorScheme(
-            primary: createMaterialColor(Color(0xFF82B915)),
-            primaryVariant: Colors.green,
-            secondary: createMaterialColor(Color(0xFF505050)),
-            secondaryVariant: Colors.orange,
-            surface: Colors.red,
-            background: createMaterialColor(Color(0xFFFAFAFA)),
-            error: createMaterialColor(Color(0xFFEB5757)),
-            onPrimary: createMaterialColor(Color(0xFFFAFAFA)),
-            onSecondary: createMaterialColor(Color(0xFFFAFAFA)),
-            onSurface: createMaterialColor(Color(0xFF505050)),
-            onBackground: Colors.black12,
-            onError: Colors.teal,
-            brightness: Brightness.light),
+          primary: createMaterialColor(Color(0xFF82B915)),
+          primaryVariant: Colors.green,
+          secondary: createMaterialColor(Color(0xFF505050)),
+          secondaryVariant: Colors.orange,
+          surface: Colors.red,
+          background: createMaterialColor(Color(0xFFFAFAFA)),
+          error: createMaterialColor(Color(0xFFEB5757)),
+          onPrimary: createMaterialColor(Color(0xFFFAFAFA)),
+          onSecondary: createMaterialColor(Color(0xFFFAFAFA)),
+          onSurface: createMaterialColor(Color(0xFF505050)),
+          onBackground: Colors.black12,
+          onError: Colors.teal,
+          brightness: Brightness.light,
+        ),
 
         // This is the generic textTheme where we store most basic applications
         // of different text styles. The names should be self-explaining.
@@ -80,7 +81,8 @@ class MyApp extends StatelessWidget {
           ),
           //the text theme for the big headlines telling the page's name
           headline6: GoogleFonts.dmSans(
-            fontSize: 96,
+            fontSize: 84,
+            letterSpacing: -1.5,
             fontWeight: FontWeight.w700,
             color: createMaterialColor(
               Color(0xFFC1E695),
