@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/widgets/text_container.dart';
+import 'package:provider/provider.dart';
 
 class EnterScreenTopInputField extends StatefulWidget {
   bool isExpenses;
@@ -109,7 +111,6 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                           widget.isExpenses = false;
                           widget.isIncome = true;
                           widget.isTransaction = false;
-                       
                         });
                       },
                       child: Container(
@@ -137,7 +138,6 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                           widget.isExpenses = false;
                           widget.isIncome = false;
                           widget.isTransaction = true;
-                       
                         });
                       },
                       child: Container(

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/providers/balance_data_provider.dart';
+import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/screens/statistics_screen.dart';
 import 'package:linum/screens/enter_screen.dart';
 import 'package:linum/screens/home_screen.dart';
@@ -28,6 +29,8 @@ class _LayoutScreenState extends State<LayoutScreen> {
 
   @override
   Widget build(BuildContext context) {
+    EnterScreenProvider enterScreenProvider =
+        Provider.of<EnterScreenProvider>(context);
     CollectionReference balance =
         FirebaseFirestore.instance.collection('balance');
 

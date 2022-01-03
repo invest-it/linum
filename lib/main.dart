@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
+import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/screens/layout_screen.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:provider/provider.dart';
@@ -173,6 +174,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
                 lazy: false,
               ),
+              ChangeNotifierProvider(
+                create: (_) => EnterScreenProvider(),
+              )
             ],
             child: LayoutScreen(
               title: widget.title,
