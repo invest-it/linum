@@ -174,7 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
                 lazy: false,
               ),
-              ChangeNotifierProvider(
+              ChangeNotifierProvider<EnterScreenProvider>(
                 create: (_) => EnterScreenProvider(),
               )
             ],
