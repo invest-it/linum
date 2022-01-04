@@ -108,7 +108,7 @@ class AlgorithmProvider extends ChangeNotifier {
   }
 
   static int timeNewToOld(dynamic a, dynamic b) {
-    return a["time"].compareTo(b["time"]);
+    return b["time"].compareTo(a["time"]);
   }
 
   static int timeOldToNew(dynamic b, dynamic a) {

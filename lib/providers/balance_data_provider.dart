@@ -119,7 +119,7 @@ class BalanceDataProvider extends ChangeNotifier {
     DocumentSnapshot<Map<String, dynamic>> snapshot = await _balance!.get();
     dynamic data = snapshot.data();
     data["balanceData"].add(singleBalance);
-    _balance!.set(data);
+    await _balance!.set(data);
   }
 
   /// remove a single Balance and upload it (identified using the name and time)
@@ -139,7 +139,7 @@ class BalanceDataProvider extends ChangeNotifier {
       return value["name"] == name && value["time"] == time;
     });
     if (dataLength > data["balanceData"].length) {
-      _balance!.set(data);
+      await _balance!.set(data);
       return true;
     }
     return false;
@@ -174,7 +174,7 @@ class BalanceDataProvider extends ChangeNotifier {
       }
     });
     if (isEdited) {
-      _balance!.set(data);
+      await _balance!.set(data);
     }
     return isEdited;
   }

@@ -1,3 +1,6 @@
+import 'dart:developer' as dev;
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/providers/balance_data_provider.dart';
@@ -82,6 +85,8 @@ class _LayoutScreenState extends State<LayoutScreen> {
           //     });
           //   });
           // });
+          // createRandomData(context);
+
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) {
@@ -117,5 +122,25 @@ class _LayoutScreenState extends State<LayoutScreen> {
         },
       ),
     );
+  }
+
+  void createRandomData(BuildContext context) async {
+    BalanceDataProvider balanceDataProvider =
+        Provider.of<BalanceDataProvider>(context, listen: false);
+    const List<String> categories = ["food", "clothing", "computer games"];
+    Random rand = Random();
+    for (int i = 0; i < 365 * 5 * 4; i++) {
+      Timestamp time = Timestamp.fromDate(
+          DateTime.now().subtract(Duration(days: rand.nextInt(365 * 5))));
+      balanceDataProvider.addSingleBalance(
+        amount: ((rand.nextDouble() * -10000).round()) / 100.0,
+        category: categories[rand.nextInt(categories.length)],
+        currency: "EUR",
+        name: "Random Item Number: " + i.toString(),
+        time: time,
+      );
+      dev.log(i.toString() + ". Hochgeladen");
+      await Future.delayed(Duration(milliseconds: 200));
+    }
   }
 }
