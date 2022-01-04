@@ -14,14 +14,10 @@ class EnterScreen extends StatefulWidget {
 }
 
 class _EnterScreenState extends State<EnterScreen> {
-  bool isExpenses = true;
-
-  bool isIncome = false;
-
-  bool isTransaction = false;
-
   @override
   Widget build(BuildContext context) {
+    EnterScreenProvider enterScreenProvider =
+        Provider.of<EnterScreenProvider>(context);
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -32,15 +28,8 @@ class _EnterScreenState extends State<EnterScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               //the top, green lip
-              EnterScreenTopInputField(
-                isTransaction: isTransaction,
-                isIncome: isIncome,
-                isExpenses: isExpenses,
-              ),
-              EnterScreenList(
-                isExpenses: isExpenses,
-                isIncome: isIncome,
-              ),
+              EnterScreenTopInputField(),
+              EnterScreenList(),
               Expanded(
                 child:
                     Container(color: Theme.of(context).colorScheme.background),

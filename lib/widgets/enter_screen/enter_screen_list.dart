@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/widgets/enter_screen/enter_screen_listviewbuilder.dart';
+import 'package:provider/provider.dart';
 
 class EnterScreenList extends StatefulWidget {
-   bool isExpenses;
-   bool isIncome;
-
-  EnterScreenList({Key? key, required this.isExpenses, required this.isIncome})
-      : super(key: key);
+  EnterScreenList({Key? key}) : super(key: key);
 
   @override
   State<EnterScreenList> createState() => _EnterScreenListState();
@@ -36,11 +34,13 @@ class _EnterScreenListState extends State<EnterScreenList> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.isExpenses)
+    EnterScreenProvider enterScreenProvider =
+        Provider.of<EnterScreenProvider>(context);
+    if (enterScreenProvider.isExpenses)
       return EnterScreenListViewBuilder(
-          categories: _categoriesExpenses, 
+          categories: _categoriesExpenses,
           categoriesExpenses: _categoriesExpenses);
-    else if (widget.isIncome)
+    else if (enterScreenProvider.isIncome)
       return EnterScreenListViewBuilder(
         categories: _categoriesIncome,
         categoriesExpenses: _categoriesExpenses,

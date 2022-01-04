@@ -4,15 +4,8 @@ import 'package:linum/widgets/text_container.dart';
 import 'package:provider/provider.dart';
 
 class EnterScreenTopInputField extends StatefulWidget {
-  bool isExpenses;
-  bool isIncome;
-  bool isTransaction;
-
   EnterScreenTopInputField({
     Key? key,
-    required this.isTransaction,
-    required this.isIncome,
-    required this.isExpenses,
   }) : super(key: key);
 
   @override
@@ -36,6 +29,8 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
 
   @override
   Widget build(BuildContext context) {
+    EnterScreenProvider enterScreenProvider =
+        Provider.of<EnterScreenProvider>(context);
     return ClipRRect(
       borderRadius: BorderRadius.vertical(
         top: Radius.zero,
@@ -60,17 +55,17 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                 keyboardType: TextInputType.number,
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
-                  hintText: widget.isExpenses ? "-" + " 0.0" : "+" + " 0.0",
+                  hintText: enterScreenProvider.isExpenses
+                      ? "-" + " 0.0"
+                      : "+" + " 0.0",
                   hintStyle: TextStyle(
-                    color: _colorPicker(
-                        widget.isExpenses, widget.isIncome, context),
+                    color: _colorPicker(enterScreenProvider, context),
                   ),
                   border: InputBorder.none,
                   focusedBorder: InputBorder.none,
                 ),
                 style: TextStyle(
-                    color: _colorPicker(
-                        widget.isExpenses, widget.isIncome, context),
+                    color: _colorPicker(enterScreenProvider, context),
                     fontSize: 30),
               ),
               Container(
@@ -81,19 +76,17 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                     GestureDetector(
                       onTap: () {
                         setState(() {
-                          widget.isExpenses = true;
-                          widget.isIncome = false;
-                          widget.isTransaction = false;
+                          enterScreenProvider.setIsExpenses(true);
+                          enterScreenProvider.setIsIncome(false);
+                          enterScreenProvider.setIsTransaction(false);
                         });
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.25,
-                        child: widget.isExpenses
+                        child: enterScreenProvider.isExpenses
                             ? TextContainer(
                                 //context: context,
                                 transactionClass: "Expenses",
-                                isExpenses: widget.isExpenses,
-                                isIncome: widget.isIncome,
                               )
                             : Center(
                                 child: Text(
@@ -108,19 +101,17 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                     GestureDetector(
                       onTap: () {
                         setState(() {
-                          widget.isExpenses = false;
-                          widget.isIncome = true;
-                          widget.isTransaction = false;
+                          enterScreenProvider.setIsExpenses(false);
+                          enterScreenProvider.setIsIncome(true);
+                          enterScreenProvider.setIsTransaction(false);
                         });
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.25,
-                        child: widget.isIncome
+                        child: enterScreenProvider.isIncome
                             ? TextContainer(
                                 //context: context,
                                 transactionClass: "Income",
-                                isExpenses: widget.isExpenses,
-                                isIncome: widget.isIncome,
                               )
                             : Center(
                                 child: Text(
@@ -135,20 +126,17 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                     GestureDetector(
                       onTap: () {
                         setState(() {
-                          widget.isExpenses = false;
-                          widget.isIncome = false;
-                          widget.isTransaction = true;
+                          enterScreenProvider.setIsExpenses(false);
+                          enterScreenProvider.setIsIncome(false);
+                          enterScreenProvider.setIsTransaction(true);
                         });
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.25,
-                        child: widget.isTransaction
+                        child: enterScreenProvider.isTransaction
                             ? TextContainer(
                                 //context: context,
                                 transactionClass: "Transaction",
-
-                                isExpenses: widget.isExpenses,
-                                isIncome: widget.isIncome,
                               )
                             : Center(
                                 child: Text(
@@ -171,10 +159,10 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
     );
   }
 
-  _colorPicker(bool isExpenses, bool isIncome, context) {
-    if (isExpenses) {
+  _colorPicker(EnterScreenProvider enterScreenProvider, context) {
+    if (enterScreenProvider.isExpenses) {
       return Theme.of(context).colorScheme.error;
-    } else if (isIncome) {
+    } else if (enterScreenProvider.isIncome) {
       return Theme.of(context).colorScheme.background;
     }
     return Theme.of(context).colorScheme.secondary;

@@ -31,7 +31,8 @@ class _LayoutScreenState extends State<LayoutScreen> {
   Widget build(BuildContext context) {
     CollectionReference balance =
         FirebaseFirestore.instance.collection('balance');
-
+    EnterScreenProvider enterScreenProvider =
+        Provider.of<EnterScreenProvider>(context);
     BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
 
@@ -83,7 +84,12 @@ class _LayoutScreenState extends State<LayoutScreen> {
           // });
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => EnterScreen()),
+            MaterialPageRoute(builder: (context) {
+              return ChangeNotifierProvider.value(
+                  value: enterScreenProvider, child: EnterScreen());
+            }
+                //=> EnterScreen()),
+                ),
           );
         },
         child: Icon(Icons.add),

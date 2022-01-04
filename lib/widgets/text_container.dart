@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:linum/providers/enter_screen_provider.dart';
+import 'package:provider/provider.dart';
 
 class TextContainer extends StatelessWidget {
   final String transactionClass;
   //var context;
-  final bool isExpenses;
-  final bool isIncome;
 
-  TextContainer(
-      {Key? key,
-      // required this.context,
-      required this.transactionClass,
-      required this.isExpenses,
-      required this.isIncome})
-      : super(key: key);
+  TextContainer({
+    Key? key,
+    // required this.context,
+    required this.transactionClass,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    EnterScreenProvider enterScreenProvider =
+        Provider.of<EnterScreenProvider>(context);
     //calculation of the size (width and height) of a text - here it
     //is "Expenses"
     //use like this: variable.width or variable.height
@@ -35,7 +35,7 @@ class TextContainer extends StatelessWidget {
           child: Text(
             transactionClass,
             style: TextStyle(
-              color: _colorPicker(isExpenses, isIncome, context),
+              color: _colorPicker(enterScreenProvider, context),
             ),
           ),
         ),
@@ -44,10 +44,10 @@ class TextContainer extends StatelessWidget {
   }
 }
 
-_colorPicker(bool isExpenses, bool isIncome, context) {
-  if (isExpenses) {
+_colorPicker(enterScreenProvider, context) {
+  if (enterScreenProvider.isExpenses) {
     return Theme.of(context).colorScheme.error;
-  } else if (isIncome) {
+  } else if (enterScreenProvider.isIncome) {
     return Theme.of(context).colorScheme.primary;
   }
   return Theme.of(context).colorScheme.secondary;
