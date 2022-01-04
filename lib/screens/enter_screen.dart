@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:linum/providers/enter_screen_provider.dart';
+
 import 'package:linum/widgets/enter_screen/enter_screen_list.dart';
 import 'package:linum/widgets/enter_screen/enter_screen_top_input_field.dart';
-import 'package:provider/provider.dart';
 
 class EnterScreen extends StatefulWidget {
   EnterScreen({
@@ -16,8 +15,6 @@ class EnterScreen extends StatefulWidget {
 class _EnterScreenState extends State<EnterScreen> {
   @override
   Widget build(BuildContext context) {
-    EnterScreenProvider enterScreenProvider =
-        Provider.of<EnterScreenProvider>(context);
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
