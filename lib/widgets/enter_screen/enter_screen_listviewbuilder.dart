@@ -45,8 +45,8 @@ class _EnterScreenListViewBuilderState
   String selectedRepetition = "";
 
   DateTime selectedDate = DateTime.now();
-  final firstDate = DateTime(2020,1);
-  final lastDate = DateTime(2025,12);
+  final firstDate = DateTime(2020, 1);
+  final lastDate = DateTime(2025, 12);
 
   @override
   Widget build(BuildContext context) {
@@ -107,42 +107,43 @@ class _EnterScreenListViewBuilderState
     print(
       index.toString(),
     );
-    if(index == 2){
+    if (index == 2) {
       _openDatePicker(context);
-    } else showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return Container(
-          height: 400,
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-                    child: Container(
-                      child: Icon(categoriesExpenses.elementAt(index).icon),
+    } else
+      showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Container(
+            height: 400,
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                      child: Container(
+                        child: Icon(categoriesExpenses.elementAt(index).icon),
+                      ),
                     ),
-                  ),
-                  Column(
-                    children: [
-                      Text(categoriesExpenses.elementAt(index).type),
-                      Text("Hello"),
-                    ],
-                  ),
-                ],
-              ),
-              SingleChildScrollView(
-                child: Container(
-                  height: 300,
-                  child: _chooseListViewBuilder(index),
+                    Column(
+                      children: [
+                        Text(categoriesExpenses.elementAt(index).type),
+                        Text("Hello"),
+                      ],
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
+                SingleChildScrollView(
+                  child: Container(
+                    height: 300,
+                    child: _chooseListViewBuilder(index),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      );
   }
 
   _chooseListViewBuilder(index) {
@@ -222,10 +223,14 @@ class _EnterScreenListViewBuilderState
   }
 
   _openDatePicker(BuildContext context) async {
-    final Future<DateTime?> date = showDatePicker(context: context, initialDate: selectedDate, firstDate: firstDate, lastDate: lastDate,);
+    final Future<DateTime?> date = showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: firstDate,
+      lastDate: lastDate,
+    );
     setState(() {
       selectedDate = date as DateTime;
     });
-    }
   }
-
+}
