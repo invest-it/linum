@@ -33,6 +33,8 @@ class _LayoutScreenState extends State<LayoutScreen> {
         FirebaseFirestore.instance.collection('balance');
     EnterScreenProvider enterScreenProvider =
         Provider.of<EnterScreenProvider>(context);
+    BalanceDataProvider balanceDataProvider =
+        Provider.of<BalanceDataProvider>(context);
 
     //list with all the "screens"
     List<Widget> _page = <Widget>[
