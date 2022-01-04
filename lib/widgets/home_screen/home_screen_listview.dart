@@ -14,7 +14,7 @@ class HomeScreenListView implements BalanceDataListView {
 
   @override
   addBalanceData(List<dynamic> balanceData) {
-    log(balanceData.toString());
+    //log(balanceData.toString());
     List<Widget> list = [];
     if (balanceData[0] != null && balanceData[0]["Error"] == null) {
       balanceData.forEach(
