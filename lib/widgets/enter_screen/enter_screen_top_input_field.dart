@@ -69,6 +69,14 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                 style: TextStyle(
                     color: _colorPicker(enterScreenProvider, context),
                     fontSize: 30),
+                onChanged: (String _) {
+                  setState(() {
+                    enterScreenProvider
+                        .setAmount(double.parse(myController.text));
+                  });
+                  //print(myController.text);
+                  print(enterScreenProvider.amount);
+                },
               ),
               Container(
                 width: MediaQuery.of(context).size.width * 0.75,

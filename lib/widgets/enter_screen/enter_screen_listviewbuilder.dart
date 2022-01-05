@@ -113,7 +113,7 @@ class _EnterScreenListViewBuilderState
       index.toString(),
     );
     if (index == 2) {
-      _openDatePicker(context);
+      _openDatePicker(enterScreenProvider);
     } else
       showModalBottomSheet(
         context: context,
@@ -197,7 +197,7 @@ class _EnterScreenListViewBuilderState
     } else if (index == 1) {
       return Text(selectedAccount);
     } else if (index == 2) {
-      return Text(selectedDate.toString().split(' ')[0]);
+      return Text(enterScreenProvider.selectedDate.toString().split(' ')[0]);
     } else if (index == 3) {
       return Text(selectedRepetition);
     } else
@@ -225,15 +225,33 @@ class _EnterScreenListViewBuilderState
     });
   }
 
-  _openDatePicker(BuildContext context) async {
-    final Future<DateTime?> date = showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: firstDate,
-      lastDate: lastDate,
-    );
-    setState(() {
-      selectedDate = date as DateTime;
+  // _openDatePicker(BuildContext context, enterScreenProvider) async {
+  //   final Future<DateTime?> date = showDatePicker(
+  //     context: context,
+  //     initialDate: selectedDate,
+  //     firstDate: firstDate,
+  //     lastDate: lastDate,
+  //   );
+  // }
+  void _openDatePicker(EnterScreenProvider enterScreenProvider) {
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            //which date will display when user open the picker
+            firstDate: firstDate,
+            //what will be the previous supported year in picker
+            lastDate:
+                lastDate) //what will be the up to supported date in picker
+        .then((pickedDate) {
+      //then usually do the future job
+      if (pickedDate == null) {
+        //if user tap cancel then this function will stop
+        return;
+      }
+      setState(() {
+        //for rebuilding the ui
+        enterScreenProvider.setSelectedDate(pickedDate);
+      });
     });
   }
 }

@@ -53,11 +53,12 @@ class _EnterScreenState extends State<EnterScreen> {
                     onPressed: () {
                       Navigator.of(context).pop();
                       balanceDataProvider.addSingleBalance(
-                          amount: 0,
+                          amount: enterScreenProvider.amount,
                           category: enterScreenProvider.category,
                           currency: "EUR",
-                          name: "Example",
-                          time: time);
+                          name: enterScreenProvider.category,
+                          time: Timestamp.fromDate(
+                              enterScreenProvider.selectedDate));
                     },
                     child: Text("Save transaction"),
                   ),
