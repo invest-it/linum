@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
-import 'package:linum/screens/enter_screen.dart';
 import 'package:linum/widgets/text_container.dart';
 import 'package:provider/provider.dart';
 
@@ -47,7 +45,17 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.06,
+                height: MediaQuery.of(context).size.height * 0.05,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: IconButton(
+                  padding: EdgeInsets.only(left: 50),
+                  constraints: BoxConstraints(),
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: Icon(Icons.close),
+                  color: Colors.white,
+                ),
               ),
               //TODO eliminate the small bubble below the disabled color
               //Change background color to have a better view
