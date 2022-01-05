@@ -50,60 +50,101 @@ class _EnterScreenListViewBuilderState
   final firstDate = DateTime(2020, 1);
   final lastDate = DateTime(2025, 12);
 
+  TextEditingController myController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    myController = TextEditingController(text: "");
+  }
+
+  @override
+  void dispose() {
+    myController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     EnterScreenProvider enterScreenProvider =
         Provider.of<EnterScreenProvider>(context);
     return Center(
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.8,
-        child: ListView.separated(
-          shrinkWrap: true,
-          padding: const EdgeInsets.all(8),
-          itemCount: widget.categories.length,
-          itemBuilder: (BuildContext context, int index) {
-            return GestureDetector(
-              onTap: () => _onCategoryPressed(
-                  index, widget.categoriesExpenses, enterScreenProvider),
-              child: Container(
-                height: 50,
-                child: Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(8.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                            color: Theme.of(context).colorScheme.background),
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey,
-                            blurRadius: 2.0,
-                            spreadRadius: 0.0,
-                            offset: Offset(
-                                0.5, 2.0), // shadow direction: bottom right
-                          )
-                        ],
-                      ),
-                      child: Icon(widget.categories[index].icon),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Text(widget.categories[index].type + ":"),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    _selectText(index, enterScreenProvider),
-                  ],
-                ),
+      child: Column(
+        children: [
+          SizedBox(
+            height: 50,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.75,
+            child: TextField(
+              controller: myController,
+              showCursor: true,
+              textAlign: TextAlign.start,
+              decoration: InputDecoration(
+                hintText: enterScreenProvider.isExpenses
+                    ? "What did you buy?"
+                    : "Give the income a name",
+                hintStyle: TextStyle(),
+                border: InputBorder.none,
+                focusedBorder: InputBorder.none,
               ),
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) =>
-              const Divider(),
-        ),
+              style: TextStyle(fontSize: 20),
+              onChanged: (String _) {
+                enterScreenProvider.setName(myController.text);
+              },
+            ),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: ListView.separated(
+              shrinkWrap: true,
+              padding: const EdgeInsets.all(8),
+              itemCount: widget.categories.length,
+              itemBuilder: (BuildContext context, int index) {
+                return GestureDetector(
+                  onTap: () => _onCategoryPressed(
+                      index, widget.categoriesExpenses, enterScreenProvider),
+                  child: Container(
+                    height: 50,
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(8.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(
+                                color:
+                                    Theme.of(context).colorScheme.background),
+                            borderRadius: BorderRadius.circular(5),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey,
+                                blurRadius: 2.0,
+                                spreadRadius: 0.0,
+                                offset: Offset(
+                                    0.5, 2.0), // shadow direction: bottom right
+                              )
+                            ],
+                          ),
+                          child: Icon(widget.categories[index].icon),
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(widget.categories[index].type + ":"),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        _selectText(index, enterScreenProvider),
+                      ],
+                    ),
+                  ),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) =>
+                  const Divider(),
+            ),
+          ),
+        ],
       ),
     );
   }

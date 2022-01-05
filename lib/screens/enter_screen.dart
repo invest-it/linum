@@ -56,7 +56,9 @@ class _EnterScreenState extends State<EnterScreen> {
                           amount: enterScreenProvider.amount,
                           category: enterScreenProvider.category,
                           currency: "EUR",
-                          name: enterScreenProvider.category,
+                          name: enterScreenProvider.name == ""
+                              ? enterScreenProvider.category
+                              : enterScreenProvider.name,
                           time: Timestamp.fromDate(
                               enterScreenProvider.selectedDate));
                     },
