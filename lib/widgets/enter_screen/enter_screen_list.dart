@@ -21,7 +21,7 @@ class _EnterScreenListState extends State<EnterScreenList> {
 
   final List<Category> _categoriesIncome = [
     Category("Category", Icons.payments),
-    Category("To Category", Icons.local_atm),
+    Category("Account", Icons.local_atm),
     Category("Date", Icons.event),
     Category("Repeat", Icons.loop),
   ];

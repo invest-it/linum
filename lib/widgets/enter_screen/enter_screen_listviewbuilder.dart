@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:linum/providers/enter_screen_provider.dart';
+import 'package:provider/provider.dart';
 
 class EnterScreenListViewBuilder extends StatefulWidget {
   List categories;
@@ -50,6 +52,8 @@ class _EnterScreenListViewBuilderState
 
   @override
   Widget build(BuildContext context) {
+    EnterScreenProvider enterScreenProvider =
+        Provider.of<EnterScreenProvider>(context);
     return Center(
       child: Container(
         width: MediaQuery.of(context).size.width * 0.8,
@@ -59,7 +63,8 @@ class _EnterScreenListViewBuilderState
           itemCount: widget.categories.length,
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
-              onTap: () => _onCategoryPressed(index, widget.categoriesExpenses),
+              onTap: () => _onCategoryPressed(
+                  index, widget.categoriesExpenses, enterScreenProvider),
               child: Container(
                 height: 50,
                 child: Row(
@@ -90,7 +95,7 @@ class _EnterScreenListViewBuilderState
                     SizedBox(
                       width: 5,
                     ),
-                    _selectText(index),
+                    _selectText(index, enterScreenProvider),
                   ],
                 ),
               ),
@@ -103,7 +108,7 @@ class _EnterScreenListViewBuilderState
     );
   }
 
-  void _onCategoryPressed(int index, categoriesExpenses) {
+  void _onCategoryPressed(int index, categoriesExpenses, enterScreenProvider) {
     print(
       index.toString(),
     );
@@ -128,7 +133,6 @@ class _EnterScreenListViewBuilderState
                     Column(
                       children: [
                         Text(categoriesExpenses.elementAt(index).type),
-                        Text("Hello"),
                       ],
                     ),
                   ],
@@ -136,7 +140,7 @@ class _EnterScreenListViewBuilderState
                 SingleChildScrollView(
                   child: Container(
                     height: 300,
-                    child: _chooseListViewBuilder(index),
+                    child: _chooseListViewBuilder(index, enterScreenProvider),
                   ),
                 ),
               ],
@@ -146,7 +150,7 @@ class _EnterScreenListViewBuilderState
       );
   }
 
-  _chooseListViewBuilder(index) {
+  _chooseListViewBuilder(index, enterScreenProvider) {
     if (index == 0) {
       return ListView.builder(
         itemCount: _categoriesCategory.length,
@@ -155,8 +159,7 @@ class _EnterScreenListViewBuilderState
             leading: Icon(widget.categories[index].icon),
             title: Text(_categoriesCategory[indexBuilder]),
             onTap: () => _selectCategoryItem(
-              _categoriesCategory[indexBuilder],
-            ),
+                _categoriesCategory[indexBuilder], enterScreenProvider),
           );
         },
       );
@@ -188,9 +191,9 @@ class _EnterScreenListViewBuilderState
       );
   }
 
-  _selectText(index) {
+  _selectText(index, enterScreenProvider) {
     if (index == 0) {
-      return Text(selectedCategory);
+      return Text(enterScreenProvider.category);
     } else if (index == 1) {
       return Text(selectedAccount);
     } else if (index == 2) {
@@ -201,10 +204,10 @@ class _EnterScreenListViewBuilderState
       return Text("Trash");
   }
 
-  void _selectCategoryItem(String name) {
+  void _selectCategoryItem(String name, enterScreenProvider) {
     Navigator.pop(context);
     setState(() {
-      selectedCategory = name;
+      enterScreenProvider.setCategory(name);
     });
   }
 
