@@ -173,14 +173,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 create: (ctx) {
                   return BalanceDataProvider(ctx);
                 },
-                update: (ctx, auth, algo, _) {
-                  return BalanceDataProvider(ctx);
+                update: (ctx, auth, algo, oldBalance) {
+                  if (oldBalance != null) {
+                    oldBalance.updateAuth(auth);
+                    return oldBalance..updateAlgorithmProvider(algo);
+                  } else {
+                    return BalanceDataProvider(ctx);
+                  }
                 },
                 lazy: false,
               ),
-              ChangeNotifierProvider<EnterScreenProvider>(
-                create: (_) => EnterScreenProvider(),
-              )
             ],
             child: LayoutScreen(
               title: widget.title,

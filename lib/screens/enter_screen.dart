@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
@@ -19,8 +21,8 @@ class _EnterScreenState extends State<EnterScreen> {
   Widget build(BuildContext context) {
     EnterScreenProvider enterScreenProvider =
         Provider.of<EnterScreenProvider>(context);
-    // BalanceDataProvider balanceDataProvider =
-    //     Provider.of<BalanceDataProvider>(context);
+    BalanceDataProvider balanceDataProvider =
+        Provider.of<BalanceDataProvider>(context);
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
