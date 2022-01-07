@@ -13,9 +13,6 @@ class LipSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //initialize Responsive Behaviour
-    SizeGuide().init(context);
-
     return isInverted
         ? ClipRRect(
             child: Container(

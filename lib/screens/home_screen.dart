@@ -16,9 +16,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    // initialize Size Guide for responsive design
-    SizeGuide().init(context);
-
     BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
 

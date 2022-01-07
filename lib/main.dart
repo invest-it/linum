@@ -136,6 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Initialize Size Guide for responsive behaviour
     SizeGuide().init(context);
 
     return FutureBuilder(
