@@ -62,7 +62,7 @@ class _EnterScreenState extends State<EnterScreen> {
                           time: Timestamp.fromDate(
                               enterScreenProvider.selectedDate));
                     },
-                    child: Text("Save transaction"),
+                    child: Text("Eintrag speichern"),
                   ),
                 ],
               ),

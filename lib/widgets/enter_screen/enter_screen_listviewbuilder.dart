@@ -17,12 +17,12 @@ class EnterScreenListViewBuilder extends StatefulWidget {
 class _EnterScreenListViewBuilderState
     extends State<EnterScreenListViewBuilder> {
   final List<String> _categoriesCategory = [
-    "Category 1",
-    "Category 2",
-    "Category 3",
-    "Category 4",
-    "Category 5",
-    "Category 6",
+    "Kategorie 1",
+    "Kategorie 2",
+    "Kategorie 3",
+    "Kategorie 4",
+    "Kategorie 5",
+    "Kategorie 6",
   ];
 
   final List<String> _categoriesAccount = [
@@ -35,11 +35,11 @@ class _EnterScreenListViewBuilderState
   ];
 
   final List<String> _categoriesRepeat = [
-    "Every day",
-    "Every week",
-    "Every month on the 1st",
-    "Every quarter",
-    "Every year",
+    "Täglich",
+    "Wöchentlich",
+    "Monatlich zum 1.",
+    "Zum Quartalsbeginn",
+    "Jährlich",
   ];
 
   String selectedCategory = "";
@@ -81,8 +81,8 @@ class _EnterScreenListViewBuilderState
               textAlign: TextAlign.start,
               decoration: InputDecoration(
                 hintText: enterScreenProvider.isExpenses
-                    ? "What did you buy?"
-                    : "Give the income a name",
+                    ? "Was hast du eingekauft?"
+                    : "Titel deines Einkommens",
                 hintStyle: TextStyle(),
                 border: InputBorder.none,
                 focusedBorder: InputBorder.none,
