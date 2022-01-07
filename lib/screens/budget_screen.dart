@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:linum/widgets/screen_skeleton.dart';
+import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 
 class StatisticsScreen extends StatelessWidget {
   const StatisticsScreen({Key? key}) : super(key: key);
@@ -11,6 +11,6 @@ class StatisticsScreen extends StatelessWidget {
         body: Center(
           child: Text('It works!'),
         ),
-        isInverted: true);
+        isInverted: false);
   }
 }

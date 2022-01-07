@@ -25,13 +25,13 @@ class BodySection extends StatelessWidget {
                 child: Container(
                   height: proportionateScreenHeight(250),
                   color: Theme.of(context).colorScheme.background,
-                  child: Center(
-                    child: Text("Hi"),
-                  ),
+                  child: body,
                 ),
               ),
             ),
           )
-        : body;
+        : Expanded(
+            child: body,
+          );
   }
 }
