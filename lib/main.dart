@@ -145,7 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return FutureBuilder(
       // Initialize FlutterFire:
       future: _initialization,
-      builder: (context, snapshot) {
+      builder: (innerContext, snapshot) {
         // Check for errors
         if (snapshot.hasError) {
           return Scaffold(body: Center(child: Text("Something went wrong")));
@@ -159,10 +159,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 create: (_) {
                   AuthenticationService auth =
                       AuthenticationService(FirebaseAuth.instance);
-                  auth
-                      .signIn("Soencke.Evers@investit-academy.de",
-                          "tempPassword123")
-                      .then((value) => log("login status: " + value));
+                  auth.signOut();
+                  // auth
+                  //     .signIn("Soencke.Evers@investit-academy.de",
+                  //         "tempPassword123")
+                  //     .then((value) => log("login status: " + value));
                   // auth
                   //     .signIn(
                   //         "linum.debug@investit-academy.de", "F8q^5w!F9S4#!")
@@ -191,12 +192,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 lazy: false,
               ),
             ],
-            child: isLoggedIn
-                ? LayoutScreen(
-                    title: widget.title,
-                    monthlyBudget: 420.69,
-                  )
-                : OnboardingPage(),
+            child: OnBoardingOrLayoutScreen(),
           );
         }
 
@@ -228,4 +224,18 @@ Widget _wrapWithBanner(Widget child) {
       textDirection: TextDirection.ltr,
     ),
   );
+}
+
+class OnBoardingOrLayoutScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    AuthenticationService auth = Provider.of<AuthenticationService>(context);
+
+    return auth.isLoggedIn
+        ? LayoutScreen(
+            title: "Linum",
+            monthlyBudget: 420.69,
+          )
+        : OnboardingPage();
+  }
 }

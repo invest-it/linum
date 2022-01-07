@@ -13,6 +13,8 @@ class AuthenticationService extends ChangeNotifier {
   /// Returns the authStateChanges Stream from the FirebaseAuth
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
+  bool get isLoggedIn => uid != "";
+
   /// Tries to sign the user in
   Future<String> signIn(String email, String password) async {
     try {
@@ -57,5 +59,10 @@ class AuthenticationService extends ChangeNotifier {
           ? e.message!
           : "Firebase Error with null message";
     }
+  }
+
+  signOut() async {
+    await _firebaseAuth.signOut();
+    notifyListeners();
   }
 }
