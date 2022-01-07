@@ -44,11 +44,11 @@ class _EnterScreenListViewBuilderState
   ];
 
   final List<String> _categoriesRepeat = [
-    "Every day",
-    "Every week",
-    "Every month on the 1st",
-    "Every quarter",
-    "Every year",
+    "Täglich",
+    "Wöchentlich",
+    "Monatlich zum 1.",
+    "Zum Quartalsbeginn",
+    "Jährlich",
   ];
 
   String selectedCategory = "";

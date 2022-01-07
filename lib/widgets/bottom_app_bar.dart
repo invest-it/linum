@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linum/frontend_functions/size_guide.dart';
 
 class BottomAppBarItem {
   BottomAppBarItem({required this.iconData, required this.text});
@@ -10,8 +11,6 @@ class FABBottomAppBar extends StatefulWidget {
   FABBottomAppBar({
     required this.items,
     required this.centerItemText,
-    this.height: 60.0,
-    this.iconSize: 24.0,
     required this.backgroundColor,
     required this.color,
     required this.selectedColor,
@@ -22,8 +21,8 @@ class FABBottomAppBar extends StatefulWidget {
   }
   final List<BottomAppBarItem> items;
   final String centerItemText;
-  final double height;
-  final double iconSize;
+  final double height = proportionateScreenHeight(64);
+  final double iconSize = proportionateScreenHeight(24);
   final Color backgroundColor;
   final Color color;
   final Color selectedColor;
@@ -105,7 +104,8 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
                 Icon(item.iconData, color: color, size: widget.iconSize),
                 Text(
                   item.text,
-                  style: TextStyle(color: color),
+                  style: TextStyle(
+                      color: color, fontSize: proportionateScreenHeight(12)),
                 )
               ],
             ),
