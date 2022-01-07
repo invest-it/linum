@@ -44,9 +44,6 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
         color: Theme.of(context).colorScheme.primary,
         child: GestureDetector(
           child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.20,
-            color: Theme.of(context).colorScheme.primary,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -85,11 +82,12 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                       fontSize: 30),
                   onChanged: (String _) {
                     setState(() {
-                      enterScreenProvider
-                          .setAmount(double.parse(myController.text));
+                      enterScreenProvider.setAmount(
+                          double.tryParse(myController.text) == null
+                              ? 0.0
+                              : double.tryParse(myController.text)!);
                     });
-                    //print(myController.text);
-                    print(enterScreenProvider.amount);
+                    //print(enterScreenProvider.amount);
                   },
                 ),
                 Container(
