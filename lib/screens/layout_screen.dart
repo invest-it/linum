@@ -8,7 +8,7 @@ import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/screens/statistics_screen.dart';
 import 'package:linum/screens/enter_screen.dart';
 import 'package:linum/screens/home_screen.dart';
-import 'package:linum/screens/account_screen.dart';
+import 'package:linum/screens/settings_screen.dart';
 import 'package:linum/screens/budget_screen.dart';
 import 'package:linum/widgets/bottom_app_bar.dart';
 import 'package:provider/provider.dart';
@@ -42,8 +42,8 @@ class _LayoutScreenState extends State<LayoutScreen> {
     //list with all the "screens"
     List<Widget> _page = <Widget>[
       HomeScreen(),
-      StatisticsScreen(),
       BudgetScreen(),
+      StatisticsScreen(),
       SettingsScreen(),
     ];
 
