@@ -16,22 +16,30 @@ class EnterScreenListViewBuilder extends StatefulWidget {
 
 class _EnterScreenListViewBuilderState
     extends State<EnterScreenListViewBuilder> {
-  final List<String> _categoriesCategory = [
-    "Kategorie 1",
-    "Kategorie 2",
-    "Kategorie 3",
-    "Kategorie 4",
-    "Kategorie 5",
-    "Kategorie 6",
+  final List<String> _categoriesCategoryExpenses = [
+    "Essen & Trinken",
+    "Freizeit",
+    "Haus",
+    "Lebensstil",
+    "Auto/Nahverkehr",
+    "Diverses",
+  ];
+
+  final List<String> _categoriesCategoryIncome = [
+    "Gehalt",
+    "Taschengeld",
+    "Nebenjob",
+    "Investitionen",
+    "Kindergeld",
+    "Zinsen",
+    "Diverses",
   ];
 
   final List<String> _categoriesAccount = [
-    "Account 1",
-    "Account 2",
-    "Account 3",
-    "Account 4",
-    "Account 5",
-    "Account 6",
+    "Debitkarte",
+    "Kreditkarte",
+    "Bargeld",
+    "Depot",
   ];
 
   final List<String> _categoriesRepeat = [
@@ -40,6 +48,7 @@ class _EnterScreenListViewBuilderState
     "Monatlich zum 1.",
     "Zum Quartalsbeginn",
     "Jährlich",
+    "Frei auswählen"
   ];
 
   String selectedCategory = "";
@@ -81,14 +90,14 @@ class _EnterScreenListViewBuilderState
               textAlign: TextAlign.start,
               decoration: InputDecoration(
                 hintText: enterScreenProvider.isExpenses
-                    ? "Was hast du eingekauft?"
-                    : "Titel deines Einkommens",
+                    ? "Was hast du gekauft?"
+                    : "Wie hast du Geld verdient?",
                 hintStyle: TextStyle(),
                 border: InputBorder.none,
                 focusedBorder: InputBorder.none,
               ),
               style: TextStyle(fontSize: 20),
-              onChanged: (String _) {
+              onChanged: (_) {
                 enterScreenProvider.setName(myController.text);
               },
             ),
@@ -191,16 +200,107 @@ class _EnterScreenListViewBuilderState
       );
   }
 
-  _chooseListViewBuilder(index, enterScreenProvider) {
+  _chooseListViewBuilder(enterScreenProvider, index) {
+    if (enterScreenProvider.isExpenses) {
+      return _listViewBuilderExpenses(index, enterScreenProvider);
+    } else if (enterScreenProvider.isIncome) {
+      return _listViewBuilderIncome(index, enterScreenProvider);
+    }
+    return _listViewBuilderTransaction(index, enterScreenProvider);
+  }
+
+  _listViewBuilderExpenses(index, enterScreenProvider) {
     if (index == 0) {
       return ListView.builder(
-        itemCount: _categoriesCategory.length,
+        itemCount: _categoriesCategoryExpenses.length,
         itemBuilder: (BuildContext context, int indexBuilder) {
           return ListTile(
             leading: Icon(widget.categories[index].icon),
-            title: Text(_categoriesCategory[indexBuilder]),
+            title: Text(_categoriesCategoryExpenses[indexBuilder]),
             onTap: () => _selectCategoryItem(
-                _categoriesCategory[indexBuilder], enterScreenProvider),
+                _categoriesCategoryExpenses[indexBuilder], enterScreenProvider),
+          );
+        },
+      );
+    } else if (index == 1) {
+      return ListView.builder(
+        itemCount: _categoriesAccount.length,
+        itemBuilder: (BuildContext context, int indexBuilder) {
+          return ListTile(
+            leading: Icon(widget.categories[index].icon),
+            title: Text(_categoriesAccount[indexBuilder]),
+            onTap: () => _selectAccountItem(
+              _categoriesAccount[indexBuilder],
+            ),
+          );
+        },
+      );
+    } else
+      return ListView.builder(
+        itemCount: _categoriesRepeat.length,
+        itemBuilder: (BuildContext context, int indexBuilder) {
+          return ListTile(
+            leading: Icon(widget.categories[index].icon),
+            title: Text(_categoriesRepeat[indexBuilder]),
+            onTap: () => _selectRepeatItem(
+              _categoriesRepeat[indexBuilder],
+            ),
+          );
+        },
+      );
+  }
+
+  _listViewBuilderIncome(index, enterScreenProvider) {
+    if (index == 0) {
+      return ListView.builder(
+        itemCount: _categoriesCategoryIncome.length,
+        itemBuilder: (BuildContext context, int indexBuilder) {
+          return ListTile(
+            leading: Icon(widget.categories[index].icon),
+            title: Text(_categoriesCategoryIncome[indexBuilder]),
+            onTap: () => _selectCategoryItem(
+                _categoriesCategoryIncome[indexBuilder], enterScreenProvider),
+          );
+        },
+      );
+    } else if (index == 1) {
+      return ListView.builder(
+        itemCount: _categoriesAccount.length,
+        itemBuilder: (BuildContext context, int indexBuilder) {
+          return ListTile(
+            leading: Icon(widget.categories[index].icon),
+            title: Text(_categoriesAccount[indexBuilder]),
+            onTap: () => _selectAccountItem(
+              _categoriesAccount[indexBuilder],
+            ),
+          );
+        },
+      );
+    } else
+      return ListView.builder(
+        itemCount: _categoriesRepeat.length,
+        itemBuilder: (BuildContext context, int indexBuilder) {
+          return ListTile(
+            leading: Icon(widget.categories[index].icon),
+            title: Text(_categoriesRepeat[indexBuilder]),
+            onTap: () => _selectRepeatItem(
+              _categoriesRepeat[indexBuilder],
+            ),
+          );
+        },
+      );
+  }
+
+  _listViewBuilderTransaction(index, enterScreenProvider) {
+    if (index == 0) {
+      return ListView.builder(
+        itemCount: _categoriesAccount.length,
+        itemBuilder: (BuildContext context, int indexBuilder) {
+          return ListTile(
+            leading: Icon(widget.categories[index].icon),
+            title: Text(_categoriesAccount[indexBuilder]),
+            onTap: () => _selectCategoryItem(
+                _categoriesAccount[indexBuilder], enterScreenProvider),
           );
         },
       );
@@ -266,14 +366,6 @@ class _EnterScreenListViewBuilderState
     });
   }
 
-  // _openDatePicker(BuildContext context, enterScreenProvider) async {
-  //   final Future<DateTime?> date = showDatePicker(
-  //     context: context,
-  //     initialDate: selectedDate,
-  //     firstDate: firstDate,
-  //     lastDate: lastDate,
-  //   );
-  // }
   void _openDatePicker(EnterScreenProvider enterScreenProvider) {
     showDatePicker(
             context: context,

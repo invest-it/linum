@@ -104,11 +104,11 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                         child: enterScreenProvider.isExpenses
                             ? TextContainer(
                                 //context: context,
-                                transactionClass: "Expenses",
+                                transactionClass: "Ausgaben",
                               )
                             : Center(
                                 child: Text(
-                                "Expenses",
+                                "Ausgaben",
                                 style: TextStyle(
                                     color: Theme.of(context)
                                         .colorScheme
@@ -129,11 +129,11 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                         child: enterScreenProvider.isIncome
                             ? TextContainer(
                                 //context: context,
-                                transactionClass: "Income",
+                                transactionClass: "Einkommen",
                               )
                             : Center(
                                 child: Text(
-                                "Income",
+                                "Einkommen",
                                 style: TextStyle(
                                     color: Theme.of(context)
                                         .colorScheme
@@ -154,11 +154,11 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                         child: enterScreenProvider.isTransaction
                             ? TextContainer(
                                 //context: context,
-                                transactionClass: "Transaction",
+                                transactionClass: "Transaktion",
                               )
                             : Center(
                                 child: Text(
-                                  "Transaction",
+                                  "Transaktion",
                                   style: TextStyle(
                                       color: Theme.of(context)
                                           .colorScheme
@@ -186,5 +186,3 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
     return Theme.of(context).colorScheme.secondary;
   }
 }
-
-//asdf
