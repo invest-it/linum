@@ -89,9 +89,7 @@ class _EnterScreenListViewBuilderState
               showCursor: true,
               textAlign: TextAlign.start,
               decoration: InputDecoration(
-                hintText: enterScreenProvider.isExpenses
-                    ? "Was hast du gekauft?"
-                    : "Wie hast du Geld verdient?",
+                hintText: _hintTextChooser(enterScreenProvider),
                 hintStyle: TextStyle(),
                 border: InputBorder.none,
                 focusedBorder: InputBorder.none,
@@ -190,7 +188,7 @@ class _EnterScreenListViewBuilderState
                 SingleChildScrollView(
                   child: Container(
                     height: 300,
-                    child: _chooseListViewBuilder(index, enterScreenProvider),
+                    child: _chooseListViewBuilder(enterScreenProvider, index),
                   ),
                 ),
               ],
@@ -200,13 +198,22 @@ class _EnterScreenListViewBuilderState
       );
   }
 
+  _hintTextChooser(enterScreenProvider) {
+    if (enterScreenProvider.isExpenses) {
+      return "Was hast du gekauft?";
+    } else if (enterScreenProvider.isIncome) {
+      return "Wie heißt dieses Einkommen?";
+    } else
+      return "Wie heißt diese Transaktion?";
+  }
+
   _chooseListViewBuilder(enterScreenProvider, index) {
     if (enterScreenProvider.isExpenses) {
       return _listViewBuilderExpenses(index, enterScreenProvider);
     } else if (enterScreenProvider.isIncome) {
       return _listViewBuilderIncome(index, enterScreenProvider);
-    }
-    return _listViewBuilderTransaction(index, enterScreenProvider);
+    } else
+      return _listViewBuilderTransaction(index, enterScreenProvider);
   }
 
   _listViewBuilderExpenses(index, enterScreenProvider) {
