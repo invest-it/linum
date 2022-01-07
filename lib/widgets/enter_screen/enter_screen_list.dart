@@ -39,17 +39,24 @@ class _EnterScreenListState extends State<EnterScreenList> {
         Provider.of<EnterScreenProvider>(context);
     if (enterScreenProvider.isExpenses)
       return EnterScreenListViewBuilder(
-          categories: _categoriesExpenses,
-          categoriesExpenses: _categoriesExpenses);
+        categories: _categoriesExpenses,
+        categoriesExpenses: _categoriesExpenses,
+        categoriesIncome: _categoriesIncome,
+        categoriesTransaction: _categoriesTransaction,
+      );
     else if (enterScreenProvider.isIncome)
       return EnterScreenListViewBuilder(
         categories: _categoriesIncome,
         categoriesExpenses: _categoriesExpenses,
+        categoriesIncome: _categoriesIncome,
+        categoriesTransaction: _categoriesTransaction,
       );
     else
       return EnterScreenListViewBuilder(
         categories: _categoriesTransaction,
         categoriesExpenses: _categoriesExpenses,
+        categoriesIncome: _categoriesIncome,
+        categoriesTransaction: _categoriesTransaction,
       );
   }
 }

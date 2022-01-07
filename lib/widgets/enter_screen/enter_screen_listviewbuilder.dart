@@ -5,9 +5,15 @@ import 'package:provider/provider.dart';
 class EnterScreenListViewBuilder extends StatefulWidget {
   List categories;
   List categoriesExpenses;
-  EnterScreenListViewBuilder(
-      {Key? key, required this.categories, required this.categoriesExpenses})
-      : super(key: key);
+  List categoriesIncome;
+  List categoriesTransaction;
+  EnterScreenListViewBuilder({
+    Key? key,
+    required this.categories,
+    required this.categoriesExpenses,
+    required this.categoriesIncome,
+    required this.categoriesTransaction,
+  }) : super(key: key);
 
   @override
   _EnterScreenListViewBuilderState createState() =>
@@ -109,7 +115,11 @@ class _EnterScreenListViewBuilderState
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
                   onTap: () => _onCategoryPressed(
-                      index, widget.categoriesExpenses, enterScreenProvider),
+                      index,
+                      widget.categoriesExpenses,
+                      widget.categoriesIncome,
+                      widget.categoriesTransaction,
+                      enterScreenProvider),
                   child: Container(
                     height: 50,
                     child: Row(
@@ -156,7 +166,8 @@ class _EnterScreenListViewBuilderState
     );
   }
 
-  void _onCategoryPressed(int index, categoriesExpenses, enterScreenProvider) {
+  void _onCategoryPressed(int index, categoriesExpenses, categoriesIncome,
+      categoriesTransaction, enterScreenProvider) {
     print(
       index.toString(),
     );
@@ -175,12 +186,18 @@ class _EnterScreenListViewBuilderState
                     Padding(
                       padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
                       child: Container(
-                        child: Icon(categoriesExpenses.elementAt(index).icon),
+                        child: _iconChooser(
+                            enterScreenProvider,
+                            categoriesExpenses,
+                            index,
+                            categoriesIncome,
+                            categoriesTransaction),
                       ),
                     ),
                     Column(
                       children: [
-                        Text(categoriesExpenses.elementAt(index).type),
+                        _typeChooser(enterScreenProvider, categoriesExpenses,
+                            index, categoriesIncome, categoriesTransaction),
                       ],
                     ),
                   ],
@@ -205,6 +222,26 @@ class _EnterScreenListViewBuilderState
       return "Wie heißt dieses Einkommen?";
     } else
       return "Wie heißt diese Transaktion?";
+  }
+
+  _iconChooser(enterScreenProvider, categoriesExpenses, index, categoriesIncome,
+      categoriesTransaction) {
+    if (enterScreenProvider.isExpenses) {
+      return Icon(categoriesExpenses.elementAt(index).icon);
+    } else if (enterScreenProvider.isIncome) {
+      return Icon(categoriesIncome.elementAt(index).icon);
+    } else
+      return Icon(categoriesTransaction.elementAt(index).icon);
+  }
+
+  _typeChooser(enterScreenProvider, categoriesExpenses, index, categoriesIncome,
+      categoriesTransaction) {
+    if (enterScreenProvider.isExpenses) {
+      return Text(categoriesExpenses.elementAt(index).type);
+    } else if (enterScreenProvider.isIncome) {
+      return Text(categoriesIncome.elementAt(index).type);
+    } else
+      return Text(categoriesTransaction.elementAt(index).type);
   }
 
   _chooseListViewBuilder(enterScreenProvider, index) {
