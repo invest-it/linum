@@ -17,8 +17,21 @@ class BodySection extends StatelessWidget {
     SizeGuide().init(context);
 
     return isInverted
-        ? Center(
-            child: Text('Inverted Body (Card)'),
+        ? Container(
+            color: Theme.of(context).colorScheme.primary,
+            child: ClipRRect(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(20),
+                bottom: Radius.zero,
+              ),
+              child: Container(
+                height: proportionateScreenHeight(250),
+                color: Theme.of(context).colorScheme.onBackground,
+                child: Center(
+                  child: Text("Hi"),
+                ),
+              ),
+            ),
           )
         : body;
   }

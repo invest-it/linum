@@ -11,6 +11,6 @@ class StatisticsScreen extends StatelessWidget {
         body: Center(
           child: Text('It works!'),
         ),
-        isInverted: false);
+        isInverted: true);
   }
 }
