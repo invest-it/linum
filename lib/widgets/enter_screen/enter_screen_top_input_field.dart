@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
-import 'package:linum/screens/enter_screen.dart';
 import 'package:linum/widgets/text_container.dart';
 import 'package:provider/provider.dart';
 
@@ -47,7 +45,17 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.06,
+                height: MediaQuery.of(context).size.height * 0.05,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: IconButton(
+                  padding: EdgeInsets.only(left: 50),
+                  constraints: BoxConstraints(),
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: Icon(Icons.close),
+                  color: Colors.white,
+                ),
               ),
               //TODO eliminate the small bubble below the disabled color
               //Change background color to have a better view
@@ -69,6 +77,14 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                 style: TextStyle(
                     color: _colorPicker(enterScreenProvider, context),
                     fontSize: 30),
+                onChanged: (String _) {
+                  setState(() {
+                    enterScreenProvider
+                        .setAmount(double.parse(myController.text));
+                  });
+                  //print(myController.text);
+                  print(enterScreenProvider.amount);
+                },
               ),
               Container(
                 width: MediaQuery.of(context).size.width * 0.75,
@@ -88,11 +104,11 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                         child: enterScreenProvider.isExpenses
                             ? TextContainer(
                                 //context: context,
-                                transactionClass: "Expenses",
+                                transactionClass: "Ausgaben",
                               )
                             : Center(
                                 child: Text(
-                                "Expenses",
+                                "Ausgaben",
                                 style: TextStyle(
                                     color: Theme.of(context)
                                         .colorScheme
@@ -113,11 +129,11 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                         child: enterScreenProvider.isIncome
                             ? TextContainer(
                                 //context: context,
-                                transactionClass: "Income",
+                                transactionClass: "Einkommen",
                               )
                             : Center(
                                 child: Text(
-                                "Income",
+                                "Einkommen",
                                 style: TextStyle(
                                     color: Theme.of(context)
                                         .colorScheme
@@ -138,11 +154,11 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                         child: enterScreenProvider.isTransaction
                             ? TextContainer(
                                 //context: context,
-                                transactionClass: "Transaction",
+                                transactionClass: "Transaktion",
                               )
                             : Center(
                                 child: Text(
-                                  "Transaction",
+                                  "Transaktion",
                                   style: TextStyle(
                                       color: Theme.of(context)
                                           .colorScheme
@@ -170,5 +186,3 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
     return Theme.of(context).colorScheme.secondary;
   }
 }
-
-//asdf

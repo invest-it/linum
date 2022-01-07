@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:linum/providers/enter_screen_provider.dart';
+import 'package:provider/provider.dart';
 
 class EnterScreenListViewBuilder extends StatefulWidget {
   List categories;
@@ -14,30 +16,39 @@ class EnterScreenListViewBuilder extends StatefulWidget {
 
 class _EnterScreenListViewBuilderState
     extends State<EnterScreenListViewBuilder> {
-  final List<String> _categoriesCategory = [
-    "Category 1",
-    "Category 2",
-    "Category 3",
-    "Category 4",
-    "Category 5",
-    "Category 6",
+  final List<String> _categoriesCategoryExpenses = [
+    "Essen & Trinken",
+    "Freizeit",
+    "Haus",
+    "Lebensstil",
+    "Auto/Nahverkehr",
+    "Diverses",
+  ];
+
+  final List<String> _categoriesCategoryIncome = [
+    "Gehalt",
+    "Taschengeld",
+    "Nebenjob",
+    "Investitionen",
+    "Kindergeld",
+    "Zinsen",
+    "Diverses",
   ];
 
   final List<String> _categoriesAccount = [
-    "Account 1",
-    "Account 2",
-    "Account 3",
-    "Account 4",
-    "Account 5",
-    "Account 6",
+    "Debitkarte",
+    "Kreditkarte",
+    "Bargeld",
+    "Depot",
   ];
 
   final List<String> _categoriesRepeat = [
-    "Every day",
-    "Every week",
-    "Every month on the 1st",
-    "Every quarter",
-    "Every year",
+    "Täglich",
+    "Wöchentlich",
+    "Monatlich zum 1.",
+    "Zum Quartalsbeginn",
+    "Jährlich",
+    "Frei auswählen"
   ];
 
   String selectedCategory = "";
@@ -48,67 +59,111 @@ class _EnterScreenListViewBuilderState
   final firstDate = DateTime(2020, 1);
   final lastDate = DateTime(2025, 12);
 
+  TextEditingController myController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    myController = TextEditingController(text: "");
+  }
+
+  @override
+  void dispose() {
+    myController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    EnterScreenProvider enterScreenProvider =
+        Provider.of<EnterScreenProvider>(context);
     return Center(
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.8,
-        child: ListView.separated(
-          shrinkWrap: true,
-          padding: const EdgeInsets.all(8),
-          itemCount: widget.categories.length,
-          itemBuilder: (BuildContext context, int index) {
-            return GestureDetector(
-              onTap: () => _onCategoryPressed(index, widget.categoriesExpenses),
-              child: Container(
-                height: 50,
-                child: Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(8.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                            color: Theme.of(context).colorScheme.background),
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey,
-                            blurRadius: 2.0,
-                            spreadRadius: 0.0,
-                            offset: Offset(
-                                0.5, 2.0), // shadow direction: bottom right
-                          )
-                        ],
-                      ),
-                      child: Icon(widget.categories[index].icon),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Text(widget.categories[index].type + ":"),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    _selectText(index),
-                  ],
-                ),
+      child: Column(
+        children: [
+          SizedBox(
+            height: 50,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.75,
+            child: TextField(
+              controller: myController,
+              showCursor: true,
+              textAlign: TextAlign.start,
+              decoration: InputDecoration(
+                hintText: enterScreenProvider.isExpenses
+                    ? "Was hast du gekauft?"
+                    : "Wie hast du Geld verdient?",
+                hintStyle: TextStyle(),
+                border: InputBorder.none,
+                focusedBorder: InputBorder.none,
               ),
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) =>
-              const Divider(),
-        ),
+              style: TextStyle(fontSize: 20),
+              onChanged: (_) {
+                enterScreenProvider.setName(myController.text);
+              },
+            ),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: ListView.separated(
+              shrinkWrap: true,
+              padding: const EdgeInsets.all(8),
+              itemCount: widget.categories.length,
+              itemBuilder: (BuildContext context, int index) {
+                return GestureDetector(
+                  onTap: () => _onCategoryPressed(
+                      index, widget.categoriesExpenses, enterScreenProvider),
+                  child: Container(
+                    height: 50,
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(8.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(
+                                color:
+                                    Theme.of(context).colorScheme.background),
+                            borderRadius: BorderRadius.circular(5),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey,
+                                blurRadius: 2.0,
+                                spreadRadius: 0.0,
+                                offset: Offset(
+                                    0.5, 2.0), // shadow direction: bottom right
+                              )
+                            ],
+                          ),
+                          child: Icon(widget.categories[index].icon),
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(widget.categories[index].type + ":"),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        _selectText(index, enterScreenProvider),
+                      ],
+                    ),
+                  ),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) =>
+                  const Divider(),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  void _onCategoryPressed(int index, categoriesExpenses) {
+  void _onCategoryPressed(int index, categoriesExpenses, enterScreenProvider) {
     print(
       index.toString(),
     );
     if (index == 2) {
-      _openDatePicker(context);
+      _openDatePicker(enterScreenProvider);
     } else
       showModalBottomSheet(
         context: context,
@@ -128,7 +183,6 @@ class _EnterScreenListViewBuilderState
                     Column(
                       children: [
                         Text(categoriesExpenses.elementAt(index).type),
-                        Text("Hello"),
                       ],
                     ),
                   ],
@@ -136,7 +190,7 @@ class _EnterScreenListViewBuilderState
                 SingleChildScrollView(
                   child: Container(
                     height: 300,
-                    child: _chooseListViewBuilder(index),
+                    child: _chooseListViewBuilder(index, enterScreenProvider),
                   ),
                 ),
               ],
@@ -146,17 +200,25 @@ class _EnterScreenListViewBuilderState
       );
   }
 
-  _chooseListViewBuilder(index) {
+  _chooseListViewBuilder(enterScreenProvider, index) {
+    if (enterScreenProvider.isExpenses) {
+      return _listViewBuilderExpenses(index, enterScreenProvider);
+    } else if (enterScreenProvider.isIncome) {
+      return _listViewBuilderIncome(index, enterScreenProvider);
+    }
+    return _listViewBuilderTransaction(index, enterScreenProvider);
+  }
+
+  _listViewBuilderExpenses(index, enterScreenProvider) {
     if (index == 0) {
       return ListView.builder(
-        itemCount: _categoriesCategory.length,
+        itemCount: _categoriesCategoryExpenses.length,
         itemBuilder: (BuildContext context, int indexBuilder) {
           return ListTile(
             leading: Icon(widget.categories[index].icon),
-            title: Text(_categoriesCategory[indexBuilder]),
+            title: Text(_categoriesCategoryExpenses[indexBuilder]),
             onTap: () => _selectCategoryItem(
-              _categoriesCategory[indexBuilder],
-            ),
+                _categoriesCategoryExpenses[indexBuilder], enterScreenProvider),
           );
         },
       );
@@ -188,23 +250,105 @@ class _EnterScreenListViewBuilderState
       );
   }
 
-  _selectText(index) {
+  _listViewBuilderIncome(index, enterScreenProvider) {
     if (index == 0) {
-      return Text(selectedCategory);
+      return ListView.builder(
+        itemCount: _categoriesCategoryIncome.length,
+        itemBuilder: (BuildContext context, int indexBuilder) {
+          return ListTile(
+            leading: Icon(widget.categories[index].icon),
+            title: Text(_categoriesCategoryIncome[indexBuilder]),
+            onTap: () => _selectCategoryItem(
+                _categoriesCategoryIncome[indexBuilder], enterScreenProvider),
+          );
+        },
+      );
+    } else if (index == 1) {
+      return ListView.builder(
+        itemCount: _categoriesAccount.length,
+        itemBuilder: (BuildContext context, int indexBuilder) {
+          return ListTile(
+            leading: Icon(widget.categories[index].icon),
+            title: Text(_categoriesAccount[indexBuilder]),
+            onTap: () => _selectAccountItem(
+              _categoriesAccount[indexBuilder],
+            ),
+          );
+        },
+      );
+    } else
+      return ListView.builder(
+        itemCount: _categoriesRepeat.length,
+        itemBuilder: (BuildContext context, int indexBuilder) {
+          return ListTile(
+            leading: Icon(widget.categories[index].icon),
+            title: Text(_categoriesRepeat[indexBuilder]),
+            onTap: () => _selectRepeatItem(
+              _categoriesRepeat[indexBuilder],
+            ),
+          );
+        },
+      );
+  }
+
+  _listViewBuilderTransaction(index, enterScreenProvider) {
+    if (index == 0) {
+      return ListView.builder(
+        itemCount: _categoriesAccount.length,
+        itemBuilder: (BuildContext context, int indexBuilder) {
+          return ListTile(
+            leading: Icon(widget.categories[index].icon),
+            title: Text(_categoriesAccount[indexBuilder]),
+            onTap: () => _selectCategoryItem(
+                _categoriesAccount[indexBuilder], enterScreenProvider),
+          );
+        },
+      );
+    } else if (index == 1) {
+      return ListView.builder(
+        itemCount: _categoriesAccount.length,
+        itemBuilder: (BuildContext context, int indexBuilder) {
+          return ListTile(
+            leading: Icon(widget.categories[index].icon),
+            title: Text(_categoriesAccount[indexBuilder]),
+            onTap: () => _selectAccountItem(
+              _categoriesAccount[indexBuilder],
+            ),
+          );
+        },
+      );
+    } else
+      return ListView.builder(
+        itemCount: _categoriesRepeat.length,
+        itemBuilder: (BuildContext context, int indexBuilder) {
+          return ListTile(
+            leading: Icon(widget.categories[index].icon),
+            title: Text(_categoriesRepeat[indexBuilder]),
+            onTap: () => _selectRepeatItem(
+              _categoriesRepeat[indexBuilder],
+            ),
+          );
+        },
+      );
+  }
+
+  _selectText(index, enterScreenProvider) {
+    if (index == 0) {
+      return Text(enterScreenProvider.category);
     } else if (index == 1) {
       return Text(selectedAccount);
     } else if (index == 2) {
-      return Text(selectedDate.toString().split(' ')[0]);
+      return Text(enterScreenProvider.selectedDate.toString().split(' ')[0]);
     } else if (index == 3) {
       return Text(selectedRepetition);
     } else
       return Text("Trash");
   }
 
-  void _selectCategoryItem(String name) {
+  void _selectCategoryItem(String name, enterScreenProvider) {
     Navigator.pop(context);
     setState(() {
-      selectedCategory = name;
+      enterScreenProvider.setCategory(name);
     });
   }
 
@@ -222,15 +366,25 @@ class _EnterScreenListViewBuilderState
     });
   }
 
-  _openDatePicker(BuildContext context) async {
-    final Future<DateTime?> date = showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: firstDate,
-      lastDate: lastDate,
-    );
-    setState(() {
-      selectedDate = date as DateTime;
+  void _openDatePicker(EnterScreenProvider enterScreenProvider) {
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            //which date will display when user open the picker
+            firstDate: firstDate,
+            //what will be the previous supported year in picker
+            lastDate:
+                lastDate) //what will be the up to supported date in picker
+        .then((pickedDate) {
+      //then usually do the future job
+      if (pickedDate == null) {
+        //if user tap cancel then this function will stop
+        return;
+      }
+      setState(() {
+        //for rebuilding the ui
+        enterScreenProvider.setSelectedDate(pickedDate);
+      });
     });
   }
 }

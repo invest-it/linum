@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:linum/widgets/body_section.dart';
-import 'package:linum/widgets/lip_section.dart';
+import 'package:linum/widgets/screen_skeleton/body_section.dart';
+import 'package:linum/widgets/screen_skeleton/lip_section.dart';
 
 class ScreenSkeleton extends StatelessWidget {
   final String head;

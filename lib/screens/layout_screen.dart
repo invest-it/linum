@@ -34,10 +34,10 @@ class _LayoutScreenState extends State<LayoutScreen> {
   Widget build(BuildContext context) {
     CollectionReference balance =
         FirebaseFirestore.instance.collection('balance');
-    EnterScreenProvider enterScreenProvider =
-        Provider.of<EnterScreenProvider>(context);
-    BalanceDataProvider balanceDataProvider =
-        Provider.of<BalanceDataProvider>(context);
+    // EnterScreenProvider enterScreenProvider =
+    //     Provider.of<EnterScreenProvider>(context);
+    // BalanceDataProvider balanceDataProvider =
+    //     Provider.of<BalanceDataProvider>(context);
 
     //list with all the "screens"
     List<Widget> _page = <Widget>[
@@ -86,12 +86,28 @@ class _LayoutScreenState extends State<LayoutScreen> {
           //   });
           // });
           // createRandomData(context);
-
+          BalanceDataProvider balanceDataProvider =
+              Provider.of<BalanceDataProvider>(context, listen: false);
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) {
-              return ChangeNotifierProvider.value(
-                  value: enterScreenProvider, child: EnterScreen());
+            MaterialPageRoute(builder: (innerContext) {
+              return MultiProvider(
+                providers: [
+                  ChangeNotifierProvider<EnterScreenProvider>(
+                    create: (_) {
+                      return EnterScreenProvider();
+                    },
+                  ),
+                  ChangeNotifierProvider<BalanceDataProvider>(
+                    create: (_) {
+                      return balanceDataProvider..dontDisposeOneTime();
+                    },
+                  ),
+                ],
+                child: EnterScreen(),
+              );
+              // ChangeNotifierProvider.value(
+              // value: enterScreenProvider, child: EnterScreen());
             }
                 //=> EnterScreen()),
                 ),

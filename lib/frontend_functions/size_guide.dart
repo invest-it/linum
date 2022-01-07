@@ -4,7 +4,6 @@ class SizeGuide {
   static late MediaQueryData _mediaQueryData;
   static late double screenWidth;
   static late double screenHeight;
-  static late double defaultSize;
   static late Orientation orientation;
 
   void init(BuildContext context) {
@@ -17,7 +16,7 @@ class SizeGuide {
 
 // Get the proportionate height as per screen size
 // USAGE:
-// 1. Call the Init Function in the build Function of your file
+// 1. Call the Init Function in the main Function of your file (this is already implemented, so please skip this and continue with step 2)
 // e.g. "SizeGuide.init(context)"
 //
 // 2. Whenever you need widths or heights, always use the Functions provided

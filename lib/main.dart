@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
+import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
@@ -135,6 +136,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Initialize Size Guide for responsive behaviour
+    SizeGuide().init(context);
+
     return FutureBuilder(
       // Initialize FlutterFire:
       future: _initialization,
@@ -152,14 +156,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 create: (_) {
                   AuthenticationService auth =
                       AuthenticationService(FirebaseAuth.instance);
-                  // auth
-                  //     .signIn("Soencke.Evers@investit-academy.de",
-                  //         "tempPassword123")
-                  //     .then((value) => log("login status: " + value));
                   auth
-                      .signIn(
-                          "linum.debug@investit-academy.de", "F8q^5w!F9S4#!")
+                      .signIn("Soencke.Evers@investit-academy.de",
+                          "tempPassword123")
                       .then((value) => log("login status: " + value));
+                  // auth
+                  //     .signIn(
+                  //         "linum.debug@investit-academy.de", "F8q^5w!F9S4#!")
+                  //     .then((value) => log("login status: " + value));
                   return auth;
                 },
                 lazy: false,
@@ -173,14 +177,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 create: (ctx) {
                   return BalanceDataProvider(ctx);
                 },
-                update: (ctx, auth, algo, _) {
-                  return BalanceDataProvider(ctx);
+                update: (ctx, auth, algo, oldBalance) {
+                  if (oldBalance != null) {
+                    oldBalance.updateAuth(auth);
+                    return oldBalance..updateAlgorithmProvider(algo);
+                  } else {
+                    return BalanceDataProvider(ctx);
+                  }
                 },
                 lazy: false,
               ),
-              ChangeNotifierProvider<EnterScreenProvider>(
-                create: (_) => EnterScreenProvider(),
-              )
             ],
             child: LayoutScreen(
               title: widget.title,

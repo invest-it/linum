@@ -17,7 +17,9 @@ class BalanceDataProvider extends ChangeNotifier {
   /// The uid of the user
   late String _uid;
 
-  late final AlgorithmProvider _algorithmProvider;
+  late AlgorithmProvider _algorithmProvider;
+
+  num _dontDispose = 0;
 
   /// Creates the BalanceDataProvider. Inparticular it sets [_balance] correctly
   BalanceDataProvider(BuildContext context) {
@@ -45,6 +47,20 @@ class BalanceDataProvider extends ChangeNotifier {
       }
     } else {
       log("no data found in documentToUser");
+    }
+  }
+
+  void updateAuth(AuthenticationService? auth) {
+    if (auth != null) {
+      _uid = auth.uid;
+      asynConstructor();
+    }
+  }
+
+  void updateAlgorithmProvider(AlgorithmProvider? algorithm) {
+    if (algorithm != null) {
+      _algorithmProvider = algorithm;
+      asynConstructor();
     }
   }
 
@@ -177,5 +193,16 @@ class BalanceDataProvider extends ChangeNotifier {
       await _balance!.set(data);
     }
     return isEdited;
+  }
+
+  void dontDisposeOneTime() {
+    _dontDispose++;
+  }
+
+  @override
+  dispose() {
+    if (_dontDispose-- == 0) {
+      super.dispose();
+    }
   }
 }

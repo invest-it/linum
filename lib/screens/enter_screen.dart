@@ -1,3 +1,5 @@
+import 'dart:developer';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
@@ -17,10 +19,11 @@ class EnterScreen extends StatefulWidget {
 class _EnterScreenState extends State<EnterScreen> {
   @override
   Widget build(BuildContext context) {
+    Timestamp time = Timestamp.fromDate(DateTime.now());
     EnterScreenProvider enterScreenProvider =
         Provider.of<EnterScreenProvider>(context);
-    // BalanceDataProvider balanceDataProvider =
-    //     Provider.of<BalanceDataProvider>(context);
+    BalanceDataProvider balanceDataProvider =
+        Provider.of<BalanceDataProvider>(context);
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -49,9 +52,17 @@ class _EnterScreenState extends State<EnterScreen> {
                         fixedSize: Size(300, 40)),
                     onPressed: () {
                       Navigator.of(context).pop();
-                      //balanceDataProvider.addSingleBalance(amount: amount, category: category, currency: currency, name: name, time: time)
+                      balanceDataProvider.addSingleBalance(
+                          amount: enterScreenProvider.amount,
+                          category: enterScreenProvider.category,
+                          currency: "EUR",
+                          name: enterScreenProvider.name == ""
+                              ? enterScreenProvider.category
+                              : enterScreenProvider.name,
+                          time: Timestamp.fromDate(
+                              enterScreenProvider.selectedDate));
                     },
-                    child: Text("Save transaction"),
+                    child: Text("Eintrag speichern"),
                   ),
                 ],
               ),
