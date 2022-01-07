@@ -13,22 +13,21 @@ class BodySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //initialize Responsive Behaviour
-    SizeGuide().init(context);
-
     return isInverted
-        ? Container(
-            color: Theme.of(context).colorScheme.primary,
-            child: ClipRRect(
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(20),
-                bottom: Radius.zero,
-              ),
-              child: Container(
-                height: proportionateScreenHeight(250),
-                color: Theme.of(context).colorScheme.onBackground,
-                child: Center(
-                  child: Text("Hi"),
+        ? Expanded(
+            child: Container(
+              color: Theme.of(context).colorScheme.primary,
+              child: ClipRRect(
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(20),
+                  bottom: Radius.zero,
+                ),
+                child: Container(
+                  height: proportionateScreenHeight(250),
+                  color: Theme.of(context).colorScheme.background,
+                  child: Center(
+                    child: Text("Hi"),
+                  ),
                 ),
               ),
             ),

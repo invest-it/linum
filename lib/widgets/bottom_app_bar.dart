@@ -45,9 +45,6 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    //initialize Responsive Behaviour
-    SizeGuide().init(context);
-
     List<Widget> items = List.generate(widget.items.length, (int index) {
       return _buildTabItem(
         item: widget.items[index],
