@@ -6,9 +6,9 @@ import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
-import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/screens/layout_screen.dart';
 import 'package:linum/providers/authentication_service.dart';
+import 'package:linum/screens/onboarding_screen.dart';
 import 'package:provider/provider.dart';
 import 'dart:developer';
 
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
 
         //use like this: Theme.of(context).colorScheme.NAME_OF_COLOR_STYLE
         colorScheme: ColorScheme(
-          primary: createMaterialColor(Color(0xFF82B915)),
+          primary: createMaterialColor(Color(0xFF97BC4E)),
           primaryVariant: Colors.green,
           secondary: createMaterialColor(Color(0xFF505050)),
           secondaryVariant: Colors.orange,
@@ -134,6 +134,9 @@ class _MyHomePageState extends State<MyHomePage> {
   /// directly inside [build].
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
+  // Possibly temporary solution for defining whether the user is logged in, or not.
+  bool isLoggedIn = true;
+
   @override
   Widget build(BuildContext context) {
     // Initialize Size Guide for responsive behaviour
@@ -142,7 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return FutureBuilder(
       // Initialize FlutterFire:
       future: _initialization,
-      builder: (context, snapshot) {
+      builder: (innerContext, snapshot) {
         // Check for errors
         if (snapshot.hasError) {
           return Scaffold(body: Center(child: Text("Something went wrong")));
@@ -156,6 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 create: (_) {
                   AuthenticationService auth =
                       AuthenticationService(FirebaseAuth.instance);
+                  // auth.signOut();
                   auth
                       .signIn("Soencke.Evers@investit-academy.de",
                           "tempPassword123")
@@ -188,10 +192,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 lazy: false,
               ),
             ],
-            child: LayoutScreen(
-              title: widget.title,
-              monthlyBudget: 420.69,
-            ),
+            child: OnBoardingOrLayoutScreen(),
           );
         }
 
@@ -223,4 +224,18 @@ Widget _wrapWithBanner(Widget child) {
       textDirection: TextDirection.ltr,
     ),
   );
+}
+
+class OnBoardingOrLayoutScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    AuthenticationService auth = Provider.of<AuthenticationService>(context);
+
+    return auth.isLoggedIn
+        ? LayoutScreen(
+            title: "Linum",
+            monthlyBudget: 420.69,
+          )
+        : OnboardingPage();
+  }
 }

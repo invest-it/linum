@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 
-class BudgetScreen extends StatelessWidget {
-  const BudgetScreen({Key? key}) : super(key: key);
+class StatisticsScreen extends StatelessWidget {
+  const StatisticsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text("Statistics"),
-    );
+    return ScreenSkeleton(
+        head: 'Stats',
+        body: Center(
+          child: Text('Statistics coming soon'),
+        ),
+        isInverted: true);
   }
 }

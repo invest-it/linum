@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-// import 'package:linum/providers/balance_data_provider.dart';
-// import 'package:provider/provider.dart';
-// import 'package:linum/frontend_functions/materialcolor_creator.dart';
+//import 'package:linum/providers/balance_data_provider.dart';
+import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
+//import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -17,39 +17,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
   // final Function ontap = CurrencyList();
 
   Widget build(BuildContext context) {
-    //BalanceDataProvider balanceDataProvider =
-    // Provider.of<BalanceDataProvider>(context);
-    return Scaffold(
+    // BalanceDataProvider balanceDataProvider =
+    //     Provider.of<BalanceDataProvider>(context);
+    return ScreenSkeleton(
+        head: 'Account',
+        isInverted: false,
         body: Stack(
-      children: [
-        //Sceleton
-        Column(
-          children: <Widget>[
-            //column including upperLip and body of settings page
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                //the top, green lip
-                ClipRRect(
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.zero,
-                    bottom: Radius.circular(40),
-                  ),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.20,
-                    // TODO change this into a sustainable and responsive design
-
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-              ],
-            ),
-            //body of the settings page
+          children: [
             Column(
               children: [
-                //text: 'settings'
                 Padding(
                   padding: const EdgeInsets.only(
                     top: 40.0,
@@ -62,10 +38,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Settings'),
+                      Text('Währung'),
                       ListTile(
                         // onTap: ontap(),
-                        title: Text('select currency'),
+                        title: Text('Währung auswählen...'),
                         trailing: Icon(
                           Icons.arrow_drop_down,
                           color: Colors.black,
@@ -179,9 +155,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ],
             ),
           ],
-        ),
-        //TODO: Account Logo
-      ],
-    ));
+        ));
   }
 }
