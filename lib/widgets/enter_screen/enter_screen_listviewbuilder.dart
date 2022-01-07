@@ -17,30 +17,29 @@ class EnterScreenListViewBuilder extends StatefulWidget {
 class _EnterScreenListViewBuilderState
     extends State<EnterScreenListViewBuilder> {
   final List<String> _categoriesCategoryExpenses = [
-    "Category 1",
-    "Category 2",
-    "Category 3",
-    "Category 4",
-    "Category 5",
-    "Category 6",
+    "Essen & Trinken",
+    "Freizeit",
+    "Haus",
+    "Lebensstil",
+    "Auto/Nahverkehr",
+    "Diverses",
   ];
 
   final List<String> _categoriesCategoryIncome = [
-    "Category Income1",
-    "Category Income2",
-    "Category Income3",
-    "Category Income4",
-    "Category Income5",
-    "Category Income6",
+    "Gehalt",
+    "Taschengeld",
+    "Nebenjob",
+    "Investitionen",
+    "Kindergeld",
+    "Zinsen",
+    "Diverses",
   ];
 
   final List<String> _categoriesAccount = [
-    "Account 1",
-    "Account 2",
-    "Account 3",
-    "Account 4",
-    "Account 5",
-    "Account 6",
+    "Debitkarte",
+    "Kreditkarte",
+    "Bargeld",
+    "Depot",
   ];
 
   final List<String> _categoriesRepeat = [
@@ -49,6 +48,7 @@ class _EnterScreenListViewBuilderState
     "Monatlich zum 1.",
     "Zum Quartalsbeginn",
     "Jährlich",
+    "Frei auswählen"
   ];
 
   String selectedCategory = "";
@@ -90,8 +90,8 @@ class _EnterScreenListViewBuilderState
               textAlign: TextAlign.start,
               decoration: InputDecoration(
                 hintText: enterScreenProvider.isExpenses
-                    ? "What did you buy?"
-                    : "How did you make money?",
+                    ? "Was hast du gekauft?"
+                    : "Wie hast du Geld verdient?",
                 hintStyle: TextStyle(),
                 border: InputBorder.none,
                 focusedBorder: InputBorder.none,
