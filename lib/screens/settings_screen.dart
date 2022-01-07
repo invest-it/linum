@@ -144,10 +144,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           // onTap: ontap(),
                           title: Text('Schwabenmodus'),
                           value: _toggled,
-                          onChanged: (_toggled) {
-                            setState(() {
-                              _toggled = true;
-                            });
+                          onChanged: (bool value) {
+                            setState((() {
+                              _toggled = value;
+                            }));
                           },
                         ),
                       ]),
