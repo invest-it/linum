@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-//import 'package:linum/providers/balance_data_provider.dart';
+import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
+//import 'package:linum/providers/balance_data_provider.dart';
 //import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -22,7 +23,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return ScreenSkeleton(
         head: 'Account',
         isInverted: false,
-        body: Stack(
+        body: ListView(
           children: [
             Column(
               children: [
@@ -81,29 +82,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Standard Categories'),
+                      Text('Standard Kategorien'),
                       ListTile(
                         // onTap: ontap(),
-                        title: Text('Income'),
+                        title: Text('Einnahmen'),
                         trailing: Icon(
                           Icons.north_east,
-                          color: Colors.black,
+                          color: createMaterialColor(Color(0xFF97BC4E)),
                         ),
                       ),
                       ListTile(
                         // onTap: ontap(),
-                        title: Text('Expenses'),
+                        title: Text('Ausgaben'),
                         trailing: Icon(
                           Icons.south_east,
-                          color: Colors.black,
+                          color: Colors.red,
                         ),
                       ),
                       ListTile(
                         // onTap: ontap(),
-                        title: Text('Transactions'),
+                        title: Text('Transaktionen'),
                         trailing: Icon(
                           Icons.sync_alt,
-                          color: Colors.black,
+                          color: createMaterialColor(Color(0xFF505050)),
                         ),
                       ),
                       //Icons disputable
@@ -139,15 +140,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Special Settings'),
+                        Text('Besondere Einstellungen'),
                         SwitchListTile(
                           // onTap: ontap(),
                           title: Text('Schwabenmodus'),
                           value: _toggled,
-                          onChanged: (_toggled) {
-                            setState(() {
-                              _toggled = true;
-                            });
+                          activeColor: Colors.green,
+                          onChanged: (bool value) {
+                            setState((() {
+                              _toggled = value;
+                            }));
                           },
                         ),
                       ]),
