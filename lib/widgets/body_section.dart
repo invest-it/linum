@@ -19,7 +19,7 @@ class BodySection extends StatelessWidget {
               color: Theme.of(context).colorScheme.primary,
               child: ClipRRect(
                 borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(20),
+                  top: Radius.circular(64),
                   bottom: Radius.zero,
                 ),
                 child: Container(
