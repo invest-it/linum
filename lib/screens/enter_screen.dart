@@ -60,6 +60,8 @@ class _EnterScreenState extends State<EnterScreen> {
                             proportionateScreenHeight(40))),
                     onPressed: () {
                       Navigator.of(context).pop();
+                      //a single balance is added to the balancedataprovider
+                      //with the values of the input from the user
                       balanceDataProvider.addSingleBalance(
                           amount: _amountChooser(enterScreenProvider),
                           category: enterScreenProvider.category,
