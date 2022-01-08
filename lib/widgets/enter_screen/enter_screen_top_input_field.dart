@@ -59,7 +59,9 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: proportionateScreenHeight(50),
+                  height: MediaQuery.of(context).size.height < 690
+                      ? proportionateScreenHeight(35)
+                      : proportionateScreenHeight(50),
                 ),
                 //upper left "x" to close the window
                 Align(

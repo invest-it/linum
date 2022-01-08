@@ -148,9 +148,6 @@ class _EnterScreenListViewBuilderState
   //function executed when one of the categories (category, account, date etc.) is tapped
   void _onCategoryPressed(int index, categoriesExpenses, categoriesIncome,
       categoriesTransaction, enterScreenProvider) {
-    print(
-      index.toString(),
-    );
     if (index == 2) {
       //opens the date picker
       _openDatePicker(enterScreenProvider);
