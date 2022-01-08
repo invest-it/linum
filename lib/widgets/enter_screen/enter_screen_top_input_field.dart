@@ -33,6 +33,16 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
   Widget build(BuildContext context) {
     EnterScreenProvider enterScreenProvider =
         Provider.of<EnterScreenProvider>(context);
+    //calculation of the size (width and height) of a text - here it
+    //is "Expenses"
+    //use like this: variable.width or variable.height
+    final Size sizeMyController = (TextPainter(
+            text: TextSpan(text: myController.text),
+            maxLines: 1,
+            textScaleFactor: MediaQuery.of(context).textScaleFactor,
+            textDirection: TextDirection.ltr)
+          ..layout())
+        .size;
     return ClipRRect(
       borderRadius: BorderRadius.vertical(
         top: Radius.zero,
@@ -75,7 +85,10 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                     isDense: true,
                     hintText: enterScreenProvider.isExpenses ? " 0.0" : " 0.0",
                     prefixIcon: enterScreenProvider.isExpenses
-                        ? Icon(Icons.remove)
+                        ? Padding(
+                            padding: const EdgeInsets.all(0.0),
+                            child: Icon(Icons.remove),
+                          )
                         : Icon(Icons.add),
                     prefixIconColor: Colors.red,
                     hintStyle: TextStyle(

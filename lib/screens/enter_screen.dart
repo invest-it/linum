@@ -28,6 +28,7 @@ class _EnterScreenState extends State<EnterScreen> {
         enterScreenProvider.selectedDate.toString().split(' ')[0];
     DateTime selectedDateDateTimeFormatted =
         DateTime.parse(selectedDateStringFormatted);
+
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -57,7 +58,7 @@ class _EnterScreenState extends State<EnterScreen> {
                     onPressed: () {
                       Navigator.of(context).pop();
                       balanceDataProvider.addSingleBalance(
-                          amount: enterScreenProvider.amount,
+                          amount: _amountChooser(enterScreenProvider),
                           category: enterScreenProvider.category,
                           currency: "EUR",
                           name: enterScreenProvider.name == ""
@@ -78,5 +79,16 @@ class _EnterScreenState extends State<EnterScreen> {
         ),
       ),
     );
+  }
+
+  //if the amount is entered in expenses, it's set to the negative equivalent
+  _amountChooser(EnterScreenProvider enterScreenProvider) {
+    if (enterScreenProvider.isExpenses) {
+      if (enterScreenProvider.amount < 0) {
+        return enterScreenProvider.amount;
+      } else
+        return enterScreenProvider.amount - enterScreenProvider.amount * 2;
+    } else
+      return enterScreenProvider.amount;
   }
 }
