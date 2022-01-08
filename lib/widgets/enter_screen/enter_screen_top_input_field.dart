@@ -59,7 +59,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.05,
+                  height: proportionateScreenHeight(50),
                 ),
                 //upper left "x" to close the window
                 Align(
@@ -120,7 +120,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                 //the user chooses between expenses, income etc.
                 //standard is expenses
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.75,
+                  width: proportionateScreenWidth(282),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -133,7 +133,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                           });
                         },
                         child: Container(
-                          width: MediaQuery.of(context).size.width * 0.25,
+                          width: proportionateScreenWidth(94),
                           child: enterScreenProvider.isExpenses
                               ? TextContainer(
                                   //context: context,
@@ -158,7 +158,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                           });
                         },
                         child: Container(
-                          width: MediaQuery.of(context).size.width * 0.25,
+                          width: proportionateScreenWidth(94),
                           child: enterScreenProvider.isIncome
                               ? TextContainer(
                                   //context: context,
@@ -183,7 +183,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                           });
                         },
                         child: Container(
-                          width: MediaQuery.of(context).size.width * 0.25,
+                          width: proportionateScreenWidth(94),
                           child: enterScreenProvider.isTransaction
                               ? TextContainer(
                                   //context: context,

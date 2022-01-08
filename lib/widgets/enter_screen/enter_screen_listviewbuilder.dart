@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -60,11 +61,11 @@ class _EnterScreenListViewBuilderState
       child: Column(
         children: [
           SizedBox(
-            height: 50,
+            height: proportionateScreenHeight(50),
           ),
           //the text field where the user describes e.g. what he bought
           Container(
-            width: MediaQuery.of(context).size.width * 0.75,
+            width: proportionateScreenWidth(281),
             child: TextField(
               controller: myController,
               showCursor: true,
@@ -75,14 +76,14 @@ class _EnterScreenListViewBuilderState
                 border: InputBorder.none,
                 focusedBorder: InputBorder.none,
               ),
-              style: TextStyle(fontSize: 20),
+              style: Theme.of(context).textTheme.headline5,
               onChanged: (_) {
                 enterScreenProvider.setName(myController.text);
               },
             ),
           ),
           Container(
-            width: MediaQuery.of(context).size.width * 0.8,
+            width: proportionateScreenWidth(300),
             //the list view that contains the different categories
             child: ListView.separated(
               shrinkWrap: true,
@@ -159,7 +160,7 @@ class _EnterScreenListViewBuilderState
         context: context,
         builder: (context) {
           return Container(
-            height: 400,
+            height: proportionateScreenHeight(400),
             child: Column(
               children: [
                 Row(
@@ -187,7 +188,7 @@ class _EnterScreenListViewBuilderState
                 ),
                 SingleChildScrollView(
                   child: Container(
-                    height: 300,
+                    height: proportionateScreenHeight(300),
                     //which list view is displayed depending on which category is tapped
                     child: _chooseListViewBuilder(enterScreenProvider, index),
                   ),
