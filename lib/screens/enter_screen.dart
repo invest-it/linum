@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/widgets/enter_screen/enter_screen_list.dart';
@@ -55,7 +56,8 @@ class _EnterScreenState extends State<EnterScreen> {
                         primary: Theme.of(context).colorScheme.primary,
                         onPrimary: Theme.of(context).colorScheme.background,
                         onSurface: Colors.white,
-                        fixedSize: Size(300, 40)),
+                        fixedSize: Size(proportionateScreenWidth(300),
+                            proportionateScreenHeight(40))),
                     onPressed: () {
                       Navigator.of(context).pop();
                       balanceDataProvider.addSingleBalance(
