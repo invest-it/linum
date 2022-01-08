@@ -19,11 +19,12 @@ class EnterScreen extends StatefulWidget {
 class _EnterScreenState extends State<EnterScreen> {
   @override
   Widget build(BuildContext context) {
-    Timestamp time = Timestamp.fromDate(DateTime.now());
     EnterScreenProvider enterScreenProvider =
         Provider.of<EnterScreenProvider>(context);
     BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
+    //to format the date time it has to be parsed to a string, get formatted
+    //and get parsed back to a date time
     String selectedDateStringFormatted =
         enterScreenProvider.selectedDate.toString().split(' ')[0];
     DateTime selectedDateDateTimeFormatted =
@@ -81,7 +82,8 @@ class _EnterScreenState extends State<EnterScreen> {
     );
   }
 
-  //if the amount is entered in expenses, it's set to the negative equivalent
+  //if the amount is entered in expenses, it's set to the negative equivalent if
+  //the user did not accidentally press the minus
   _amountChooser(EnterScreenProvider enterScreenProvider) {
     if (enterScreenProvider.isExpenses) {
       if (enterScreenProvider.amount < 0) {

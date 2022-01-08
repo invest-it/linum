@@ -12,6 +12,7 @@ class EnterScreenList extends StatefulWidget {
 }
 
 class _EnterScreenListState extends State<EnterScreenList> {
+  //all the lists that are displayed in the enter screen
   final List<Category> _categoriesExpenses = [
     Category("Kategorie", Icons.restaurant),
     Category("Account", Icons.local_atm),
@@ -71,6 +72,7 @@ class _EnterScreenListState extends State<EnterScreenList> {
   Widget build(BuildContext context) {
     EnterScreenProvider enterScreenProvider =
         Provider.of<EnterScreenProvider>(context);
+    //returns a different list view builder depending on the page
     if (enterScreenProvider.isExpenses)
       return EnterScreenListViewBuilder(
         categories: _categoriesExpenses,

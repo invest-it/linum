@@ -61,6 +61,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.05,
                 ),
+                //upper left "x" to close the window
                 Align(
                   alignment: Alignment.centerLeft,
                   child: IconButton(
@@ -71,7 +72,9 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                     color: Colors.white,
                   ),
                 ),
+                //text field
                 Container(
+                  //current solution to "center" the textfield as best as possible
                   width: sizeMyController.width + 120,
                   child: TextField(
                     textAlign: TextAlign.start,
@@ -114,6 +117,8 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                     },
                   ),
                 ),
+                //the user chooses between expenses, income etc.
+                //standard is expenses
                 Container(
                   width: MediaQuery.of(context).size.width * 0.75,
                   child: Row(
@@ -206,6 +211,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
     );
   }
 
+  //which color to show depending on expense or not
   _colorPicker(EnterScreenProvider enterScreenProvider, context) {
     if (enterScreenProvider.isExpenses) {
       return Theme.of(context).colorScheme.error;

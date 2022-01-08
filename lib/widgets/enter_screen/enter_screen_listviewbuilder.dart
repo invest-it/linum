@@ -127,6 +127,8 @@ class _EnterScreenListViewBuilderState
                         SizedBox(
                           width: 5,
                         ),
+                        //displays the selecte option behind the category/repetiton etc.
+                        //e.g. Category : Food <-- Food is the select Text
                         _selectText(index, enterScreenProvider),
                       ],
                     ),
@@ -142,14 +144,17 @@ class _EnterScreenListViewBuilderState
     );
   }
 
+  //function executed when one of the categories (category, account, date etc.) is tapped
   void _onCategoryPressed(int index, categoriesExpenses, categoriesIncome,
       categoriesTransaction, enterScreenProvider) {
     print(
       index.toString(),
     );
     if (index == 2) {
+      //opens the date picker
       _openDatePicker(enterScreenProvider);
     } else
+      //opens a modal bottom sheet
       showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -162,6 +167,7 @@ class _EnterScreenListViewBuilderState
                     Padding(
                       padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
                       child: Container(
+                        //icon depending on the category
                         child: _iconChooser(
                             enterScreenProvider,
                             categoriesExpenses,
@@ -172,6 +178,7 @@ class _EnterScreenListViewBuilderState
                     ),
                     Column(
                       children: [
+                        //text depending on the category
                         _typeChooser(enterScreenProvider, categoriesExpenses,
                             index, categoriesIncome, categoriesTransaction),
                       ],
@@ -181,6 +188,7 @@ class _EnterScreenListViewBuilderState
                 SingleChildScrollView(
                   child: Container(
                     height: 300,
+                    //which list view is displayed depending on which category is tapped
                     child: _chooseListViewBuilder(enterScreenProvider, index),
                   ),
                 ),
@@ -191,6 +199,7 @@ class _EnterScreenListViewBuilderState
       );
   }
 
+  //which hint text at the upper text field is shown
   _hintTextChooser(enterScreenProvider) {
     if (enterScreenProvider.isExpenses) {
       return "Was hast du gekauft?";
@@ -200,6 +209,7 @@ class _EnterScreenListViewBuilderState
       return "Wie heißt diese Transaktion?";
   }
 
+  //which icon will displayed depending on expense etc.
   _iconChooser(enterScreenProvider, categoriesExpenses, index, categoriesIncome,
       categoriesTransaction) {
     if (enterScreenProvider.isExpenses) {
@@ -210,6 +220,7 @@ class _EnterScreenListViewBuilderState
       return Icon(categoriesTransaction.elementAt(index).icon);
   }
 
+  //which text will displayed depending on expense etc.
   _typeChooser(enterScreenProvider, categoriesExpenses, index, categoriesIncome,
       categoriesTransaction) {
     if (enterScreenProvider.isExpenses) {
@@ -220,6 +231,7 @@ class _EnterScreenListViewBuilderState
       return Text(categoriesTransaction.elementAt(index).type);
   }
 
+  //which lists view is built depending on expense etc.
   _chooseListViewBuilder(enterScreenProvider, index) {
     if (enterScreenProvider.isExpenses) {
       return _listViewBuilderExpenses(index, enterScreenProvider);
@@ -229,6 +241,7 @@ class _EnterScreenListViewBuilderState
       return _listViewBuilderTransaction(index, enterScreenProvider);
   }
 
+  //which list view is built depending on the tapped category at EXPENSES
   _listViewBuilderExpenses(index, enterScreenProvider) {
     if (index == 0) {
       return ListView.builder(
@@ -237,6 +250,7 @@ class _EnterScreenListViewBuilderState
           return ListTile(
             leading: Icon(widget.categories[index].icon),
             title: Text(widget.categoriesCategoryExpenses[indexBuilder]),
+            //selects the item as the categories value
             onTap: () => _selectCategoryItem(
                 widget.categoriesCategoryExpenses[indexBuilder],
                 enterScreenProvider),
@@ -250,6 +264,7 @@ class _EnterScreenListViewBuilderState
           return ListTile(
             leading: Icon(widget.categories[index].icon),
             title: Text(widget.categoriesAccount[indexBuilder]),
+            //selects the item as the account value
             onTap: () => _selectAccountItem(
               widget.categoriesAccount[indexBuilder],
             ),
@@ -263,6 +278,7 @@ class _EnterScreenListViewBuilderState
           return ListTile(
             leading: Icon(widget.categories[index].icon),
             title: Text(widget.categoriesRepeat[indexBuilder]),
+            //selects the item as the repeat value
             onTap: () => _selectRepeatItem(
               widget.categoriesRepeat[indexBuilder],
             ),
@@ -270,6 +286,7 @@ class _EnterScreenListViewBuilderState
         },
       );
   }
+  //which list view is built depending on the tapped category at INCOME
 
   _listViewBuilderIncome(index, enterScreenProvider) {
     if (index == 0) {
@@ -312,6 +329,7 @@ class _EnterScreenListViewBuilderState
         },
       );
   }
+  //which list view is built depending on the tapped category at TRANSACTION
 
   _listViewBuilderTransaction(index, enterScreenProvider) {
     if (index == 0) {
@@ -354,6 +372,7 @@ class _EnterScreenListViewBuilderState
       );
   }
 
+  //returns the selected value as a text
   _selectText(index, enterScreenProvider) {
     if (index == 0) {
       return Text(enterScreenProvider.category);
@@ -367,6 +386,7 @@ class _EnterScreenListViewBuilderState
       return Text("Trash");
   }
 
+//functions that set the category, account item etc when tapped
   void _selectCategoryItem(String name, enterScreenProvider) {
     Navigator.pop(context);
     setState(() {
