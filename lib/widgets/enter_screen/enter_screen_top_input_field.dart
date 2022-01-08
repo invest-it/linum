@@ -71,47 +71,49 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                     color: Colors.white,
                   ),
                 ),
-                //TODO eliminate the small bubble below the disabled color
-
-                TextField(
-                  textAlign: TextAlign.start,
-                  textAlignVertical: TextAlignVertical.center,
-                  controller: myController,
-                  showCursor: false,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    fillColor: Colors.blue,
-                    filled: true,
-                    isDense: true,
-                    hintText: enterScreenProvider.isExpenses ? " 0.0" : " 0.0",
-                    prefixIcon: enterScreenProvider.isExpenses
-                        ? Padding(
-                            padding: const EdgeInsets.all(0.0),
-                            child: Icon(Icons.remove),
-                          )
-                        : Icon(Icons.add),
-                    prefixIconColor: Colors.red,
-                    hintStyle: TextStyle(
-                      color: _colorPicker(enterScreenProvider, context),
+                Container(
+                  width: sizeMyController.width + 120,
+                  child: TextField(
+                    textAlign: TextAlign.start,
+                    textAlignVertical: TextAlignVertical.center,
+                    controller: myController,
+                    showCursor: false,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      isCollapsed: true,
+                      isDense: true,
+                      hintText:
+                          enterScreenProvider.isExpenses ? " 0.0" : " 0.0",
+                      prefixIcon: enterScreenProvider.isExpenses
+                          ? Padding(
+                              padding: const EdgeInsets.all(0.0),
+                              child: Icon(Icons.remove,
+                                  color: Theme.of(context).colorScheme.error),
+                            )
+                          : Icon(Icons.add,
+                              color: enterScreenProvider.isIncome
+                                  ? Theme.of(context).colorScheme.background
+                                  : Theme.of(context).colorScheme.secondary),
+                      hintStyle: TextStyle(
+                        color: _colorPicker(enterScreenProvider, context),
+                      ),
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
                     ),
-                    border: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    contentPadding: EdgeInsets.all(0),
+                    style: TextStyle(
+                        color: _colorPicker(enterScreenProvider, context),
+                        fontSize: 30),
+                    onChanged: (String _) {
+                      setState(() {
+                        enterScreenProvider.setAmount(
+                            double.tryParse(myController.text) == null
+                                ? 0.0
+                                : double.tryParse(myController.text)!);
+                      });
+                      //print(enterScreenProvider.amount);
+                    },
                   ),
-                  style: TextStyle(
-                      color: _colorPicker(enterScreenProvider, context),
-                      fontSize: 30),
-                  onChanged: (String _) {
-                    setState(() {
-                      enterScreenProvider.setAmount(
-                          double.tryParse(myController.text) == null
-                              ? 0.0
-                              : double.tryParse(myController.text)!);
-                    });
-                    //print(enterScreenProvider.amount);
-                  },
                 ),
-
                 Container(
                   width: MediaQuery.of(context).size.width * 0.75,
                   child: Row(
