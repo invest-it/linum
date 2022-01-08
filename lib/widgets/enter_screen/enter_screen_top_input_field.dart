@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/widgets/text_container.dart';
@@ -61,21 +62,28 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                   ),
                 ),
                 //TODO eliminate the small bubble below the disabled color
-                //Change background color to have a better view
+
                 TextField(
+                  textAlign: TextAlign.start,
+                  textAlignVertical: TextAlignVertical.center,
                   controller: myController,
                   showCursor: false,
                   keyboardType: TextInputType.number,
-                  textAlign: TextAlign.center,
                   decoration: InputDecoration(
-                    hintText: enterScreenProvider.isExpenses
-                        ? "-" + " 0.0"
-                        : "+" + " 0.0",
+                    fillColor: Colors.blue,
+                    filled: true,
+                    isDense: true,
+                    hintText: enterScreenProvider.isExpenses ? " 0.0" : " 0.0",
+                    prefixIcon: enterScreenProvider.isExpenses
+                        ? Icon(Icons.remove)
+                        : Icon(Icons.add),
+                    prefixIconColor: Colors.red,
                     hintStyle: TextStyle(
                       color: _colorPicker(enterScreenProvider, context),
                     ),
                     border: InputBorder.none,
                     focusedBorder: InputBorder.none,
+                    contentPadding: EdgeInsets.all(0),
                   ),
                   style: TextStyle(
                       color: _colorPicker(enterScreenProvider, context),
@@ -90,6 +98,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                     //print(enterScreenProvider.amount);
                   },
                 ),
+
                 Container(
                   width: MediaQuery.of(context).size.width * 0.75,
                   child: Row(

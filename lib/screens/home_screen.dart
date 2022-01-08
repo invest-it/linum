@@ -14,10 +14,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+ 
   @override
   Widget build(BuildContext context) {
     BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
+
 
     return Stack(
       children: <Widget>[

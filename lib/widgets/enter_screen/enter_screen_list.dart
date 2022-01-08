@@ -32,6 +32,40 @@ class _EnterScreenListState extends State<EnterScreenList> {
     Category("Datum", Icons.event),
     Category("Wiederholen", Icons.loop),
   ];
+  final List<String> _categoriesCategoryExpenses = [
+    "Essen & Trinken",
+    "Freizeit",
+    "Haus",
+    "Lebensstil",
+    "Auto/Nahverkehr",
+    "Diverses",
+  ];
+
+  final List<String> _categoriesCategoryIncome = [
+    "Gehalt",
+    "Taschengeld",
+    "Nebenjob",
+    "Investitionen",
+    "Kindergeld",
+    "Zinsen",
+    "Diverses",
+  ];
+
+  final List<String> _categoriesAccount = [
+    "Debitkarte",
+    "Kreditkarte",
+    "Bargeld",
+    "Depot",
+  ];
+
+  final List<String> _categoriesRepeat = [
+    "Täglich",
+    "Wöchentlich",
+    "Monatlich zum 1.",
+    "Zum Quartalsbeginn",
+    "Jährlich",
+    "Frei auswählen"
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +77,10 @@ class _EnterScreenListState extends State<EnterScreenList> {
         categoriesExpenses: _categoriesExpenses,
         categoriesIncome: _categoriesIncome,
         categoriesTransaction: _categoriesTransaction,
+        categoriesAccount: _categoriesAccount,
+        categoriesCategoryExpenses: _categoriesCategoryExpenses,
+        categoriesCategoryIncome: _categoriesCategoryIncome,
+        categoriesRepeat: _categoriesRepeat,
       );
     else if (enterScreenProvider.isIncome)
       return EnterScreenListViewBuilder(
@@ -50,6 +88,10 @@ class _EnterScreenListState extends State<EnterScreenList> {
         categoriesExpenses: _categoriesExpenses,
         categoriesIncome: _categoriesIncome,
         categoriesTransaction: _categoriesTransaction,
+        categoriesAccount: _categoriesAccount,
+        categoriesCategoryExpenses: _categoriesCategoryExpenses,
+        categoriesCategoryIncome: _categoriesCategoryIncome,
+        categoriesRepeat: _categoriesRepeat,
       );
     else
       return EnterScreenListViewBuilder(
@@ -57,6 +99,10 @@ class _EnterScreenListState extends State<EnterScreenList> {
         categoriesExpenses: _categoriesExpenses,
         categoriesIncome: _categoriesIncome,
         categoriesTransaction: _categoriesTransaction,
+        categoriesAccount: _categoriesAccount,
+        categoriesCategoryExpenses: _categoriesCategoryExpenses,
+        categoriesCategoryIncome: _categoriesCategoryIncome,
+        categoriesRepeat: _categoriesRepeat,
       );
   }
 }

@@ -24,6 +24,10 @@ class _EnterScreenState extends State<EnterScreen> {
         Provider.of<EnterScreenProvider>(context);
     BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
+    String selectedDateStringFormatted =
+        enterScreenProvider.selectedDate.toString().split(' ')[0];
+    DateTime selectedDateDateTimeFormatted =
+        DateTime.parse(selectedDateStringFormatted);
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -60,7 +64,7 @@ class _EnterScreenState extends State<EnterScreen> {
                               ? enterScreenProvider.category
                               : enterScreenProvider.name,
                           time: Timestamp.fromDate(
-                              enterScreenProvider.selectedDate));
+                              selectedDateDateTimeFormatted));
                     },
                     child: Text("Eintrag speichern"),
                   ),
@@ -75,13 +79,4 @@ class _EnterScreenState extends State<EnterScreen> {
       ),
     );
   }
-
-  /*_textPicker(bool isExpenses, bool isIncome, String saveType) {
-    if (isExpenses) {
-      saveType = "Expense";
-    } else if (isIncome) {
-      saveType = "Income";
-    } else
-      saveType = "Transaction";
-  }*/
 }

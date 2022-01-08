@@ -3,16 +3,25 @@ import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:provider/provider.dart';
 
 class EnterScreenListViewBuilder extends StatefulWidget {
+  //all the lists from the enter_screen_list.dart file
   List categories;
   List categoriesExpenses;
   List categoriesIncome;
   List categoriesTransaction;
+  List categoriesCategoryExpenses;
+  List categoriesCategoryIncome;
+  List categoriesAccount;
+  List categoriesRepeat;
   EnterScreenListViewBuilder({
     Key? key,
     required this.categories,
     required this.categoriesExpenses,
     required this.categoriesIncome,
     required this.categoriesTransaction,
+    required this.categoriesAccount,
+    required this.categoriesCategoryExpenses,
+    required this.categoriesCategoryIncome,
+    required this.categoriesRepeat,
   }) : super(key: key);
 
   @override
@@ -22,41 +31,6 @@ class EnterScreenListViewBuilder extends StatefulWidget {
 
 class _EnterScreenListViewBuilderState
     extends State<EnterScreenListViewBuilder> {
-  final List<String> _categoriesCategoryExpenses = [
-    "Essen & Trinken",
-    "Freizeit",
-    "Haus",
-    "Lebensstil",
-    "Auto/Nahverkehr",
-    "Diverses",
-  ];
-
-  final List<String> _categoriesCategoryIncome = [
-    "Gehalt",
-    "Taschengeld",
-    "Nebenjob",
-    "Investitionen",
-    "Kindergeld",
-    "Zinsen",
-    "Diverses",
-  ];
-
-  final List<String> _categoriesAccount = [
-    "Debitkarte",
-    "Kreditkarte",
-    "Bargeld",
-    "Depot",
-  ];
-
-  final List<String> _categoriesRepeat = [
-    "Täglich",
-    "Wöchentlich",
-    "Monatlich zum 1.",
-    "Zum Quartalsbeginn",
-    "Jährlich",
-    "Frei auswählen"
-  ];
-
   String selectedCategory = "";
   String selectedAccount = "";
   String selectedRepetition = "";
@@ -88,6 +62,7 @@ class _EnterScreenListViewBuilderState
           SizedBox(
             height: 50,
           ),
+          //the text field where the user describes e.g. what he bought
           Container(
             width: MediaQuery.of(context).size.width * 0.75,
             child: TextField(
@@ -108,6 +83,7 @@ class _EnterScreenListViewBuilderState
           ),
           Container(
             width: MediaQuery.of(context).size.width * 0.8,
+            //the list view that contains the different categories
             child: ListView.separated(
               shrinkWrap: true,
               padding: const EdgeInsets.all(8),
@@ -256,38 +232,39 @@ class _EnterScreenListViewBuilderState
   _listViewBuilderExpenses(index, enterScreenProvider) {
     if (index == 0) {
       return ListView.builder(
-        itemCount: _categoriesCategoryExpenses.length,
+        itemCount: widget.categoriesCategoryExpenses.length,
         itemBuilder: (BuildContext context, int indexBuilder) {
           return ListTile(
             leading: Icon(widget.categories[index].icon),
-            title: Text(_categoriesCategoryExpenses[indexBuilder]),
+            title: Text(widget.categoriesCategoryExpenses[indexBuilder]),
             onTap: () => _selectCategoryItem(
-                _categoriesCategoryExpenses[indexBuilder], enterScreenProvider),
+                widget.categoriesCategoryExpenses[indexBuilder],
+                enterScreenProvider),
           );
         },
       );
     } else if (index == 1) {
       return ListView.builder(
-        itemCount: _categoriesAccount.length,
+        itemCount: widget.categoriesAccount.length,
         itemBuilder: (BuildContext context, int indexBuilder) {
           return ListTile(
             leading: Icon(widget.categories[index].icon),
-            title: Text(_categoriesAccount[indexBuilder]),
+            title: Text(widget.categoriesAccount[indexBuilder]),
             onTap: () => _selectAccountItem(
-              _categoriesAccount[indexBuilder],
+              widget.categoriesAccount[indexBuilder],
             ),
           );
         },
       );
     } else
       return ListView.builder(
-        itemCount: _categoriesRepeat.length,
+        itemCount: widget.categoriesRepeat.length,
         itemBuilder: (BuildContext context, int indexBuilder) {
           return ListTile(
             leading: Icon(widget.categories[index].icon),
-            title: Text(_categoriesRepeat[indexBuilder]),
+            title: Text(widget.categoriesRepeat[indexBuilder]),
             onTap: () => _selectRepeatItem(
-              _categoriesRepeat[indexBuilder],
+              widget.categoriesRepeat[indexBuilder],
             ),
           );
         },
@@ -297,38 +274,39 @@ class _EnterScreenListViewBuilderState
   _listViewBuilderIncome(index, enterScreenProvider) {
     if (index == 0) {
       return ListView.builder(
-        itemCount: _categoriesCategoryIncome.length,
+        itemCount: widget.categoriesCategoryIncome.length,
         itemBuilder: (BuildContext context, int indexBuilder) {
           return ListTile(
             leading: Icon(widget.categories[index].icon),
-            title: Text(_categoriesCategoryIncome[indexBuilder]),
+            title: Text(widget.categoriesCategoryIncome[indexBuilder]),
             onTap: () => _selectCategoryItem(
-                _categoriesCategoryIncome[indexBuilder], enterScreenProvider),
+                widget.categoriesCategoryIncome[indexBuilder],
+                enterScreenProvider),
           );
         },
       );
     } else if (index == 1) {
       return ListView.builder(
-        itemCount: _categoriesAccount.length,
+        itemCount: widget.categoriesAccount.length,
         itemBuilder: (BuildContext context, int indexBuilder) {
           return ListTile(
             leading: Icon(widget.categories[index].icon),
-            title: Text(_categoriesAccount[indexBuilder]),
+            title: Text(widget.categoriesAccount[indexBuilder]),
             onTap: () => _selectAccountItem(
-              _categoriesAccount[indexBuilder],
+              widget.categoriesAccount[indexBuilder],
             ),
           );
         },
       );
     } else
       return ListView.builder(
-        itemCount: _categoriesRepeat.length,
+        itemCount: widget.categoriesRepeat.length,
         itemBuilder: (BuildContext context, int indexBuilder) {
           return ListTile(
             leading: Icon(widget.categories[index].icon),
-            title: Text(_categoriesRepeat[indexBuilder]),
+            title: Text(widget.categoriesRepeat[indexBuilder]),
             onTap: () => _selectRepeatItem(
-              _categoriesRepeat[indexBuilder],
+              widget.categoriesRepeat[indexBuilder],
             ),
           );
         },
@@ -338,38 +316,38 @@ class _EnterScreenListViewBuilderState
   _listViewBuilderTransaction(index, enterScreenProvider) {
     if (index == 0) {
       return ListView.builder(
-        itemCount: _categoriesAccount.length,
+        itemCount: widget.categoriesAccount.length,
         itemBuilder: (BuildContext context, int indexBuilder) {
           return ListTile(
             leading: Icon(widget.categories[index].icon),
-            title: Text(_categoriesAccount[indexBuilder]),
+            title: Text(widget.categoriesAccount[indexBuilder]),
             onTap: () => _selectCategoryItem(
-                _categoriesAccount[indexBuilder], enterScreenProvider),
+                widget.categoriesAccount[indexBuilder], enterScreenProvider),
           );
         },
       );
     } else if (index == 1) {
       return ListView.builder(
-        itemCount: _categoriesAccount.length,
+        itemCount: widget.categoriesAccount.length,
         itemBuilder: (BuildContext context, int indexBuilder) {
           return ListTile(
             leading: Icon(widget.categories[index].icon),
-            title: Text(_categoriesAccount[indexBuilder]),
+            title: Text(widget.categoriesAccount[indexBuilder]),
             onTap: () => _selectAccountItem(
-              _categoriesAccount[indexBuilder],
+              widget.categoriesAccount[indexBuilder],
             ),
           );
         },
       );
     } else
       return ListView.builder(
-        itemCount: _categoriesRepeat.length,
+        itemCount: widget.categoriesRepeat.length,
         itemBuilder: (BuildContext context, int indexBuilder) {
           return ListTile(
             leading: Icon(widget.categories[index].icon),
-            title: Text(_categoriesRepeat[indexBuilder]),
+            title: Text(widget.categoriesRepeat[indexBuilder]),
             onTap: () => _selectRepeatItem(
-              _categoriesRepeat[indexBuilder],
+              widget.categoriesRepeat[indexBuilder],
             ),
           );
         },
