@@ -135,10 +135,6 @@ class _MyHomePageState extends State<MyHomePage> {
   /// The future is part of the state of our widget. We should not call `initializeApp`
   /// directly inside [build].
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
-
-  // Possibly temporary solution for defining whether the user is logged in, or not.
-  bool isLoggedIn = false;
-
   @override
   Widget build(BuildContext context) {
     // Initialize Size Guide for responsive behaviour
@@ -162,10 +158,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   AuthenticationService auth =
                       AuthenticationService(FirebaseAuth.instance);
                   auth.signOut();
-                  // auth
-                  //     .signIn("Soencke.Evers@investit-academy.de",
-                  //         "tempPassword123")
-                  //     .then((value) => log("login status: " + value));
+                  auth
+                      .signIn("Soencke.Evers@investit-academy.de",
+                          "tempPassword123")
+                      .then((value) => log("login status: " + value));
                   // auth
                   //     .signIn(
                   //         "linum.debug@investit-academy.de", "F8q^5w!F9S4#!")
