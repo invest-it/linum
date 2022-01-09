@@ -1,3 +1,6 @@
+// Even if VSCode should mark this as unused, DO NOT remove developer from the import list. Thanks.
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +13,6 @@ import 'package:linum/screens/layout_screen.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/screens/onboarding_screen.dart';
 import 'package:provider/provider.dart';
-import 'dart:developer';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -79,7 +81,7 @@ class MyApp extends StatelessWidget {
           headline5: GoogleFonts.dmSans(
             fontSize: 19.2,
             fontWeight: FontWeight.w500,
-            color: createMaterialColor(Color(0xFF505050)),
+            color: createMaterialColor(Color(0xFF202020)),
           ),
           //the text theme for the big headlines telling the page's name
           headline6: GoogleFonts.dmSans(
@@ -135,7 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
   // Possibly temporary solution for defining whether the user is logged in, or not.
-  bool isLoggedIn = true;
+  bool isLoggedIn = false;
 
   @override
   Widget build(BuildContext context) {
@@ -159,11 +161,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 create: (_) {
                   AuthenticationService auth =
                       AuthenticationService(FirebaseAuth.instance);
-                  // auth.signOut();
-                  auth
-                      .signIn("Soencke.Evers@investit-academy.de",
-                          "tempPassword123")
-                      .then((value) => log("login status: " + value));
+                  auth.signOut();
+                  // auth
+                  //     .signIn("Soencke.Evers@investit-academy.de",
+                  //         "tempPassword123")
+                  //     .then((value) => log("login status: " + value));
                   // auth
                   //     .signIn(
                   //         "linum.debug@investit-academy.de", "F8q^5w!F9S4#!")
