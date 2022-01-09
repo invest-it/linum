@@ -42,19 +42,26 @@ class ScreenSkeleton extends StatelessWidget {
             BodySection(
               body: body,
               isInverted: isInverted,
+              hasHomeScreenCard: hasHomeScreenCard,
             ),
           ],
         ),
-        Positioned(
-          top: proportionateScreenHeight(164 - 25),
-          left: 0,
-          right: 0,
-          child: HomeScreenCard(
-            balance: 1081.46,
-            income: 1200.00,
-            expense: 1200 - 1081.46,
-          ),
-        ),
+        hasHomeScreenCard
+            ? Positioned(
+                top: proportionateScreenHeight(164 - 25),
+                left: 0,
+                right: 0,
+                child: HomeScreenCard(
+                  balance: 1081.46,
+                  income: 1200.00,
+                  expense: 1200 - 1081.46,
+                ),
+              )
+            : Container(
+                // to make sure we'd actually notice fuck-ups with this
+                color: Colors.red,
+                height: 0,
+              ),
       ],
     );
   }
