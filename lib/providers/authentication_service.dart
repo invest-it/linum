@@ -20,6 +20,8 @@ class AuthenticationService extends ChangeNotifier {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
+      notifyListeners();
+
       return "Successfully signed in to Firebase";
     } on FirebaseAuthException catch (e) {
       return e.message != null
@@ -33,6 +35,7 @@ class AuthenticationService extends ChangeNotifier {
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
+      notifyListeners();
       return "Successfully signed in to Firebase";
     } on FirebaseAuthException catch (e) {
       return e.message != null
