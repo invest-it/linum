@@ -194,9 +194,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 lazy: false,
               ),
             ],
-            child: LayoutScreen(
-                title: "Linum",
-                monthlyBudget: 12.12), //OnBoardingOrLayoutScreen(),
+            child: OnBoardingOrLayoutScreen(),
           );
         }
 
