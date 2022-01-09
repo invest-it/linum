@@ -27,8 +27,10 @@ class BodySection extends StatelessWidget {
                 child: Container(
                   color: Theme.of(context).colorScheme.background,
                   child: Padding(
-                    padding: EdgeInsets.only(
-                        top: proportionateScreenHeight(196 - 25)),
+                    padding: hasHomeScreenCard
+                        ? EdgeInsets.only(
+                            top: proportionateScreenHeight(196 - 25))
+                        : EdgeInsets.zero,
                     child: body,
                   ),
                 ),
@@ -37,8 +39,9 @@ class BodySection extends StatelessWidget {
           )
         : Expanded(
             child: Padding(
-              padding:
-                  EdgeInsets.only(top: proportionateScreenHeight(196 - 25)),
+              padding: hasHomeScreenCard
+                  ? EdgeInsets.only(top: proportionateScreenHeight(196 - 25))
+                  : EdgeInsets.zero,
               child: body,
             ),
           );

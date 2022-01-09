@@ -9,7 +9,7 @@ class BudgetScreen extends StatelessWidget {
     return ScreenSkeleton(
         head: 'Budget',
         body: Center(
-          child: Text('It works!'),
+          child: Text('Budget Screen coming soon'),
         ),
         isInverted: false);
   }
