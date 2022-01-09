@@ -4,11 +4,13 @@ import 'package:linum/frontend_functions/size_guide.dart';
 class BodySection extends StatelessWidget {
   final Widget body;
   final bool isInverted;
+  final bool hasHomeScreenCard;
 
   const BodySection({
     Key? key,
     required this.body,
     required this.isInverted,
+    this.hasHomeScreenCard = false,
   }) : super(key: key);
 
   @override
@@ -23,15 +25,22 @@ class BodySection extends StatelessWidget {
                   bottom: Radius.zero,
                 ),
                 child: Container(
-                  height: proportionateScreenHeight(250),
                   color: Theme.of(context).colorScheme.background,
-                  child: body,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        top: proportionateScreenHeight(196 - 25)),
+                    child: body,
+                  ),
                 ),
               ),
             ),
           )
         : Expanded(
-            child: body,
+            child: Padding(
+              padding:
+                  EdgeInsets.only(top: proportionateScreenHeight(196 - 25)),
+              child: body,
+            ),
           );
   }
 }

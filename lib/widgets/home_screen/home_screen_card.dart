@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linum/frontend_functions/size_guide.dart';
 
 class HomeScreenCard extends StatelessWidget {
   const HomeScreenCard(
@@ -15,8 +16,8 @@ class HomeScreenCard extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: Container(
-            width: MediaQuery.of(context).size.width * 0.85,
-            height: MediaQuery.of(context).size.height * 0.26,
+            width: proportionateScreenWidth(345),
+            height: proportionateScreenHeight(196),
             color: Colors.grey[100],
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -30,6 +31,7 @@ class HomeScreenCard extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline3,
                     ),
                     Text(
+                      // TODO make the fake buttons actual buttons, OR add some gestureFields for interaction
                       ' < November 2021 >',
                       style: Theme.of(context).textTheme.bodyText1,
                     ),

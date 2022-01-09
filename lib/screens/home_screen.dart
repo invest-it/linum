@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:linum/providers/balance_data_provider.dart';
-import 'package:linum/widgets/home_screen/home_screen_card.dart';
 import 'package:linum/widgets/home_screen/home_screen_listview.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 
@@ -22,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return ScreenSkeleton(
       head: 'Home',
       isInverted: true,
+      hasHomeScreenCard: true,
       body: Stack(
         children: [
           Column(
@@ -54,33 +54,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          Positioned(
-            left: 0,
-            right: 0,
-            top: 0,
-            child: Container(
-              transform: Matrix4.translationValues(0, -100, 100),
-              child: HomeScreenCard(
-                balance: 1081.46,
-                income: 1200.00,
-                expense: 1200 - 1081.46,
-              ),
-            ),
-          ),
         ],
       ),
     );
   }
 }
-/* ListView(
-                children: snapshot.data == null
-                    ? [Text("Error")]
-                    : snapshot.data!.docs.map((singleBalance) {
-                        return ListTile(
-                          title:
-                              Text(singleBalance["singleBalance"].toString()),
-                          onLongPress: () {
-                            singleBalance.reference.delete();
-                          },
-                        );
-                      }).toList());*/
