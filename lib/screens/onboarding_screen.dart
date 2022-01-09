@@ -76,7 +76,9 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                 style: Theme.of(context).textTheme.overline,
               ),
               onPressed: () => {},
-              // onPressed: launchURL(slide.freepikURL),
+              // onPressed: () => {
+              //   launchURL(slide.freepikURL),
+              // },
             ),
           ),
         ),
