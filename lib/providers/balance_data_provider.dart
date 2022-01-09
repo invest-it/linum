@@ -176,7 +176,7 @@ class BalanceDataProvider extends ChangeNotifier {
     bool isEdited = false;
     DocumentSnapshot<Map<String, dynamic>> snapshot = await _balance!.get();
     dynamic data = snapshot.data();
-    List<dynamic> ff;
+    // List<dynamic> ff;
     data["balanceData"].forEach((value) {
       if (value["name"] == name && value["time"] == time) {
         isEdited = !(value["amount"] == amount &&
