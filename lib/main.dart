@@ -214,7 +214,7 @@ Widget _wrapWithBanner(Widget child) {
     textDirection: TextDirection.ltr,
     child: Banner(
       child: child,
-      location: BannerLocation.topEnd,
+      location: BannerLocation.bottomEnd,
       message: 'ALPHA',
       color: Colors.white.withOpacity(1),
       textStyle: TextStyle(
