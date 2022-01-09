@@ -19,20 +19,13 @@ class _HomeScreenState extends State<HomeScreen> {
     BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
 
-    return Stack(
-      children: <Widget>[
-        ScreenSkeleton(
-          head: 'Home',
-          isInverted: true,
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              HomeScreenCard(
-                balance: 1081.46,
-                income: 1200.00,
-                expense: 1200 - 1081.46,
-              ),
+    return ScreenSkeleton(
+      head: 'Home',
+      isInverted: true,
+      body: Stack(
+        children: [
+          Column(
+            children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
                 child: Row(
@@ -61,8 +54,21 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-        ),
-      ],
+          Positioned(
+            left: 0,
+            right: 0,
+            top: 0,
+            child: Container(
+              transform: Matrix4.translationValues(0, -100, 100),
+              child: HomeScreenCard(
+                balance: 1081.46,
+                income: 1200.00,
+                expense: 1200 - 1081.46,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
