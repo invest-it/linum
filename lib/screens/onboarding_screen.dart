@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -75,10 +77,10 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                 'Illustrations by Freepik',
                 style: Theme.of(context).textTheme.overline,
               ),
-              onPressed: () => {},
-              // onPressed: () => {
-              //   launchURL(slide.freepikURL),
-              // },
+              onPressed: () => {
+                launchURL(slide.freepikURL)
+                    .then((value) => log(value.toString())),
+              },
             ),
           ),
         ),
