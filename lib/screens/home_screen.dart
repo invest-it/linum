@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/widgets/home_screen/home_screen_card.dart';
 import 'package:linum/widgets/home_screen/home_screen_listview.dart';
+import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 
 import 'package:provider/provider.dart';
 
@@ -14,83 +14,53 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
- 
   @override
   Widget build(BuildContext context) {
     BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
 
-
     return Stack(
       children: <Widget>[
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            //the top, green lip
-            ClipRRect(
-              borderRadius: BorderRadius.vertical(
-                top: Radius.zero,
-                bottom: Radius.circular(40),
+        ScreenSkeleton(
+          head: 'Home',
+          isInverted: true,
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              HomeScreenCard(
+                balance: 1081.46,
+                income: 1200.00,
+                expense: 1200 - 1081.46,
               ),
-              child: Container(
-                width: proportionateScreenWidth(375),
-                height: proportionateScreenHeight(164),
-                // TODO change this into a sustainable and responsive design
-
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
-            //placeholder --> covers exactly the space that the HomeScreenCard covers
-            //give it a different color to see it's effect
-            Container(
-              height: MediaQuery.of(context).size.height * 0.19,
-              color: Theme.of(context).colorScheme.background,
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text("Neueste Transaktionen",
-                      style: Theme.of(context).textTheme.headline5),
-                  Text(
-                    "MEHR",
-                    style: Theme.of(context).textTheme.overline?.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontSize: 14,
-                        ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                child: balanceDataProvider.fillListViewWithData(
-                  HomeScreenListView(),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text("Neueste Transaktionen",
+                        style: Theme.of(context).textTheme.headline5),
+                    Text(
+                      "MEHR",
+                      style: Theme.of(context).textTheme.overline?.copyWith(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontSize: 14,
+                          ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ],
-        ),
-        // TODO integrate this into UpperLip Widget
-        Positioned(
-          top: 30,
-          left: 50,
-          right: 50,
-          child: Column(
-            children: [
-              Text("Home", style: Theme.of(context).textTheme.headline6),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                  child: balanceDataProvider.fillListViewWithData(
+                    HomeScreenListView(),
+                  ),
+                ),
+              ),
             ],
           ),
-        ),
-        //where the balance is shown to the user
-        HomeScreenCard(
-          balance: 4.20,
-          income: 10.00,
-          expense: 5.80,
         ),
       ],
     );
