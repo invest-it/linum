@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
+import 'package:linum/backend_functions/url-handler.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/widgets/onboarding/onboarding_slide.dart';
@@ -33,7 +35,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
         heading: 'Tracke dein Geld',
         freepikURL: 'https://storyset.com/device',
         description:
-            'So einfach war’s noch nie: Mit unserer Tracking-Funktion weißt du immer genau, wie viel Geld du gerade hast.',
+            'So einfach war\'s noch nie: Mit unserer Tracking-Funktion weißt du immer genau, wie viel Geld du gerade hast.',
       ),
       OnboardingSlide(
         imageURL: 'assets/svg/video-files.svg',
@@ -62,6 +64,25 @@ class _OnboardingScreenState extends State<OnboardingPage> {
   Widget _createSingleSlide(OnboardingSlide slide) {
     return Column(
       children: [
+        Container(
+          width: double.infinity,
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: proportionateScreenHeight(16),
+            ),
+            child: CupertinoButton(
+              child: Text(
+                'Illustrations by Freepik',
+                style: Theme.of(context).textTheme.overline,
+              ),
+              onPressed: () => {},
+              // onPressed: launchURL(slide.freepikURL),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 16,
+        ),
         Expanded(
           child: Container(
             margin: EdgeInsets.all(32),
@@ -184,6 +205,16 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                     ),
                   ),
                 ),
+                SizedBox(
+                  height: proportionateScreenHeight(10),
+                ),
+                CupertinoButton(
+                    child: Text(
+                      'Ich habe einen Account',
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurface),
+                    ),
+                    onPressed: () => {}),
               ],
             ),
           ),
