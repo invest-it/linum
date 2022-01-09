@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
@@ -23,26 +24,31 @@ class _OnboardingScreenState extends State<OnboardingPage> {
     _currentPage = 0;
     _slides = [
       OnboardingSlide(
-        imageURL: 'assets/images/InvestIt-Logo-Standardfarbe-Web.png',
-        heading: 'Herzlich willkommen!',
-      ),
+          imageURL: 'assets/svg/mobile-login.svg',
+          heading: 'Herzlich willkommen!',
+          freepikURL: 'https://storyset.com/phone',
+          description: 'Dein neuer Budgeting-Assistent wartet schon auf dich.'),
       OnboardingSlide(
-        imageURL: 'assets/images/InvestIt-Logo-Standardfarbe-Web.png',
+        imageURL: 'assets/svg/refund.svg',
         heading: 'Tracke dein Geld',
+        freepikURL: 'https://storyset.com/device',
         description:
             'So einfach war’s noch nie: Mit unserer Tracking-Funktion weißt du immer genau, wie viel Geld du gerade hast.',
       ),
       OnboardingSlide(
-        imageURL: 'assets/images/InvestIt-Logo-Standardfarbe-Web.png',
+        imageURL: 'assets/svg/video-files.svg',
         heading: 'Sei bestens vorbereitet',
         description:
             'Über unser Academy-Feature bekommst du eine große Auswahl an kostenlosen Videos zu vielen Themen aus der Finanzwelt!',
+        freepikURL: 'https://storyset.com/technology',
       ),
       OnboardingSlide(
-          imageURL: 'assets/images/InvestIt-Logo-Standardfarbe-Web.png',
-          heading: 'Behalte den Überblick',
-          description:
-              'Linum generiert ganz automatisch relevante Statistiken für dich. So kannst du nachvollziehen, wie du mit deinem Budget umgehst.'),
+        imageURL: 'assets/svg/financial-data.svg',
+        heading: 'Behalte den Überblick',
+        description:
+            'Linum generiert ganz automatisch relevante Statistiken für dich. So kannst du nachvollziehen, wie du mit deinem Budget umgehst.',
+        freepikURL: 'https://storyset.com/data',
+      ),
     ];
     _pageController = PageController(initialPage: _currentPage);
     super.initState();
@@ -59,10 +65,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
         Expanded(
           child: Container(
             margin: EdgeInsets.all(32),
-            child: Image.asset(
-              slide.imageURL,
-              fit: BoxFit.contain,
-            ),
+            child: SvgPicture.asset(slide.imageURL),
           ),
         ),
         Padding(
