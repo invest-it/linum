@@ -157,7 +157,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 create: (_) {
                   AuthenticationService auth =
                       AuthenticationService(FirebaseAuth.instance);
-                  auth.signOut();
                   auth
                       .signIn("Soencke.Evers@investit-academy.de",
                           "tempPassword123")
