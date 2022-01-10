@@ -16,7 +16,8 @@ abstract class BalanceDataListView {
   ///   name: <String>
   ///   time: <Timestamp>
   /// }
-  setBalanceData(List<dynamic> balanceData, {required BuildContext context});
+  void setBalanceData(List<dynamic> balanceData,
+      {required BuildContext context});
 
   /// Return the styled ListView that contains all the balanceData
   ListView get listview;
