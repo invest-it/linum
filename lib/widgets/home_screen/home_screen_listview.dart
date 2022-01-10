@@ -1,6 +1,7 @@
 // ignore_for_file: implementation_imports
 
 import 'dart:developer';
+import 'dart:math' as Math;
 
 import 'package:flutter/material.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
@@ -27,6 +28,19 @@ class HomeScreenListView implements BalanceDataListView {
             GestureDetector(
               onTap: () => print(arrayElement["amount"].toString()),
               child: ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                  child: Text(
+                    arrayElement["category"]
+                        .substring(0,
+                            Math.min<num>(3, arrayElement["category"].length))
+                        .toUpperCase(),
+                    style: Theme.of(context).textTheme.overline?.copyWith(
+                          color: Theme.of(context).colorScheme.background,
+                          fontSize: 12,
+                        ),
+                  ),
+                ),
                 title: Text(
                   arrayElement["name"],
                   style: Theme.of(context).textTheme.bodyText1,
