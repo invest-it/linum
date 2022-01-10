@@ -18,11 +18,11 @@ class AlgorithmProvider extends ChangeNotifier {
     _currentFilter = noFilter;
   }
 
-  setCurrentSortAlgorithm(int Function(dynamic, dynamic) sorter) {
+  void setCurrentSortAlgorithm(int Function(dynamic, dynamic) sorter) {
     _currentSorter = sorter;
   }
 
-  setCurrentFilterAlgorithm(bool Function(dynamic) filter) {
+  void setCurrentFilterAlgorithm(bool Function(dynamic) filter) {
     _currentFilter = filter;
   }
 
