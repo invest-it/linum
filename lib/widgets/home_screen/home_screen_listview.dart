@@ -4,9 +4,13 @@ import 'dart:developer';
 import 'dart:math' as Math;
 
 import 'package:flutter/material.dart';
+import 'package:linum/providers/balance_data_provider.dart';
+import 'package:linum/providers/enter_screen_provider.dart';
+import 'package:linum/screens/enter_screen.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreenListView implements BalanceDataListView {
   late ListView _listview;
@@ -27,7 +31,33 @@ class HomeScreenListView implements BalanceDataListView {
         (arrayElement) {
           list.add(
             GestureDetector(
-              onTap: () => print(arrayElement["amount"].toString()),
+              onTap: () {
+                BalanceDataProvider balanceDataProvider =
+                    Provider.of<BalanceDataProvider>(context, listen: false);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (innerContext) {
+                      return MultiProvider(
+                        providers: [
+                          ChangeNotifierProvider<EnterScreenProvider>(
+                            create: (_) {
+                              return EnterScreenProvider();
+                            },
+                          ),
+                          ChangeNotifierProvider<BalanceDataProvider>(
+                            create: (_) {
+                              return balanceDataProvider..dontDisposeOneTime();
+                            },
+                          ),
+                        ],
+                        child: EnterScreen(),
+                      );
+                    },
+                  ),
+                );
+              },
+              //print(arrayElement["amount"].toString()),
               child: ListTile(
                 leading: CircleAvatar(
                   backgroundColor: Theme.of(context).colorScheme.secondary,
