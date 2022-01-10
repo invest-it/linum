@@ -16,7 +16,7 @@ class HomeScreenListView implements BalanceDataListView {
   }
 
   @override
-  addBalanceData(List<dynamic> balanceData, {required BuildContext context}) {
+  setBalanceData(List<dynamic> balanceData, {required BuildContext context}) {
     initializeDateFormatting();
     DateFormat formatter = DateFormat('EEEE, dd. MMMM yyyy', 'de');
     //log(balanceData.toString());

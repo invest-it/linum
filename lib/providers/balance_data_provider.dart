@@ -29,7 +29,7 @@ class BalanceDataProvider extends ChangeNotifier {
   }
 
   /// Async part of the constructor (so notifyListeners will be used after loading)
-  asynConstructor() async {
+  void asynConstructor() async {
     DocumentSnapshot<Map<String, dynamic>> documentToUser =
         await FirebaseFirestore.instance
             .collection('balance')
@@ -76,7 +76,7 @@ class BalanceDataProvider extends ChangeNotifier {
       stream: _dataStream,
       builder: (ctx, AsyncSnapshot<dynamic> snapshot) {
         if (snapshot.data == null) {
-          blistview.addBalanceData([
+          blistview.setBalanceData([
             {"Error": "snapshot.data == null"}
           ], context: context);
           return blistview.listview;
@@ -86,7 +86,7 @@ class BalanceDataProvider extends ChangeNotifier {
           // (and possibly also a filter algorithm provided)
           balanceData.sort(_algorithmProvider.currentSorter);
           balanceData.removeWhere(_algorithmProvider.currentFilter);
-          blistview.addBalanceData(balanceData, context: context);
+          blistview.setBalanceData(balanceData, context: context);
           return blistview.listview;
         }
       },
@@ -201,7 +201,7 @@ class BalanceDataProvider extends ChangeNotifier {
   }
 
   @override
-  dispose() {
+  void dispose() {
     if (_dontDispose-- == 0) {
       super.dispose();
     }
