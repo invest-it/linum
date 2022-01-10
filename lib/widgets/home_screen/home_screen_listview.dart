@@ -4,6 +4,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class HomeScreenListView implements BalanceDataListView {
   late ListView _listview;
@@ -13,7 +15,9 @@ class HomeScreenListView implements BalanceDataListView {
   }
 
   @override
-  addBalanceData(List<dynamic> balanceData) {
+  addBalanceData(List<dynamic> balanceData, {required BuildContext context}) {
+    initializeDateFormatting();
+    DateFormat formatter = DateFormat('EEEE, dd. MMMM yyyy', 'de');
     //log(balanceData.toString());
     List<Widget> list = [];
     if (balanceData[0] != null && balanceData[0]["Error"] == null) {
@@ -23,9 +27,28 @@ class HomeScreenListView implements BalanceDataListView {
             GestureDetector(
               onTap: () => print(arrayElement["amount"].toString()),
               child: ListTile(
-                title: Text(arrayElement["name"]),
-                subtitle: Text((arrayElement["time"].toDate()).toString()),
-                trailing: Text(arrayElement["amount"].toString() + "€"),
+                title: Text(
+                  arrayElement["name"],
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                subtitle: Text(
+                  formatter
+                      .format(
+                        arrayElement["time"].toDate(),
+                      )
+                      .toUpperCase(),
+                  style: Theme.of(context).textTheme.overline,
+                ),
+                trailing: Text(
+                  arrayElement["amount"].toStringAsFixed(2) + "€",
+                  style: arrayElement["amount"] < 0
+                      ? Theme.of(context)
+                          .textTheme
+                          .bodyText1
+                          ?.copyWith(color: Theme.of(context).colorScheme.error)
+                      : Theme.of(context).textTheme.bodyText1?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurface),
+                ),
               ),
             ),
           );

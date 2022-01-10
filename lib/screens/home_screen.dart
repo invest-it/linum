@@ -49,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
                   child: balanceDataProvider.fillListViewWithData(
                     HomeScreenListView(),
+                    context: context,
                   ),
                 ),
               ),

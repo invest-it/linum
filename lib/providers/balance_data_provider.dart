@@ -70,14 +70,15 @@ class BalanceDataProvider extends ChangeNotifier {
   }
 
   /// Returns a StreamBuilder that builds the ListView from the document-datastream
-  StreamBuilder fillListViewWithData(BalanceDataListView blistview) {
+  StreamBuilder fillListViewWithData(BalanceDataListView blistview,
+      {required BuildContext context}) {
     return StreamBuilder(
       stream: _dataStream,
       builder: (ctx, AsyncSnapshot<dynamic> snapshot) {
         if (snapshot.data == null) {
           blistview.addBalanceData([
             {"Error": "snapshot.data == null"}
-          ]);
+          ], context: context);
           return blistview.listview;
         } else {
           List<dynamic> balanceData = snapshot.data["balanceData"];
@@ -85,7 +86,7 @@ class BalanceDataProvider extends ChangeNotifier {
           // (and possibly also a filter algorithm provided)
           balanceData.sort(_algorithmProvider.currentSorter);
           balanceData.removeWhere(_algorithmProvider.currentFilter);
-          blistview.addBalanceData(balanceData);
+          blistview.addBalanceData(balanceData, context: context);
           return blistview.listview;
         }
       },
