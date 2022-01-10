@@ -162,10 +162,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       .signIn("Soencke.Evers@investit-academy.de",
                           "tempPassword123")
                       .then((value) => log("login status: " + value));
-                  auth
-                      .signIn(
-                          "linum.debug@investit-academy.de", "F8q^5w!F9S4#!")
-                      .then((value) => log("login status: " + value));
+                  // auth
+                  //     .signIn(
+                  //         "linum.debug@investit-academy.de", "F8q^5w!F9S4#!")
+                  //     .then((value) => log("login status: " + value));
                   return auth;
                 },
                 lazy: false,
