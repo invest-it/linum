@@ -15,7 +15,7 @@ class AlgorithmProvider extends ChangeNotifier {
 
   AlgorithmProvider() {
     _currentSorter = timeNewToOld;
-    _currentFilter = noFilter;
+    _currentFilter = olderThan(Timestamp.fromDate(DateTime.now()));
   }
 
   void setCurrentSortAlgorithm(int Function(dynamic, dynamic) sorter) {
@@ -120,17 +120,18 @@ class AlgorithmProvider extends ChangeNotifier {
   }
 
   static bool Function(dynamic) newerThan(Timestamp timestamp) {
-    return (dynamic a) => (a.compareTo(timestamp) >= 0);
+    return (dynamic a) => (a["time"].compareTo(timestamp) <= 0);
   }
 
   static bool Function(dynamic) olderThan(Timestamp timestamp) {
-    return (dynamic a) => (a.compareTo(timestamp) <= 0);
+    return (dynamic a) => (a["time"].compareTo(timestamp) >= 0);
   }
 
   static bool Function(dynamic) inBetween(
       Timestamp timestamp1, Timestamp timestamp2) {
     return (dynamic a) =>
-        (a.compareTo(timestamp1) <= 0) && (a.compareTo(timestamp2) >= 0);
+        (a["time"].compareTo(timestamp1) <= 0) &&
+        (a["time"].compareTo(timestamp2) >= 0);
   }
 
   static bool Function(dynamic) amountMoreThan(num amount) {
