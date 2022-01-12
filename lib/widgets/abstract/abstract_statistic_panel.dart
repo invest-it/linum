@@ -8,5 +8,5 @@ abstract class AbstractStatisticPanel {
   addStatisticData(StatisticsCalculations? statData);
 
   /// return the widget to display the data
-  Widget get widget;
+  Widget get returnWidget;
 }

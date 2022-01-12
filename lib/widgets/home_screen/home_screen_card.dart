@@ -1,13 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:linum/backend_functions/statistic_calculations.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/widgets/abstract/abstract_statistic_panel.dart';
 
-class HomeScreenCard extends StatelessWidget {
-  const HomeScreenCard(
-      {required this.balance, required this.income, required this.expense});
-
-  final double balance;
-  final double income;
-  final double expense;
+class HomeScreenCard extends StatelessWidget implements AbstractStatisticPanel {
+  double balance = 0;
+  double income = 0;
+  double expense = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class HomeScreenCard extends StatelessWidget {
                     ),
                     Text(
                       // TODO make the fake buttons actual buttons, OR add some gestureFields for interaction
-                      ' < November 2021 >',
+                      '< November 2021 >',
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                   ],
@@ -142,4 +143,22 @@ class HomeScreenCard extends StatelessWidget {
       ],
     );
   }
+
+  @override
+  addStatisticData(StatisticsCalculations? statData) {
+    if (statData != null) {
+      income = statData.sumIncomes as double;
+      expense = statData.sumCosts as double;
+      balance = statData.sumBalance as double;
+      log('Income:' +
+          income.toString() +
+          ' Expense:' +
+          expense.toString() +
+          ' Balance:' +
+          balance.toString());
+    }
+  }
+
+  @override
+  Widget get returnWidget => this;
 }

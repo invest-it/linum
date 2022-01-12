@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/widgets/home_screen/home_screen_card.dart';
 import 'package:linum/widgets/screen_skeleton/body_section.dart';
 import 'package:linum/widgets/screen_skeleton/lip_section.dart';
+import 'package:provider/provider.dart';
 
 // ScreenSkeleton(required head, required body, required isInverted, hasHomeScreenCard)
 //
@@ -31,6 +33,8 @@ class ScreenSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BalanceDataProvider balanceDataProvider =
+        Provider.of<BalanceDataProvider>(context);
     return Stack(
       children: [
         Column(
@@ -51,11 +55,8 @@ class ScreenSkeleton extends StatelessWidget {
                 top: proportionateScreenHeight(164 - 25),
                 left: 0,
                 right: 0,
-                child: HomeScreenCard(
-                  balance: 1081.46,
-                  income: 1200.00,
-                  expense: 1200 - 1081.46,
-                ),
+                child: balanceDataProvider
+                    .fillStatisticPanelWithData(HomeScreenCard()),
               )
             : Container(
                 // to make sure we'd actually notice fuck-ups with this
