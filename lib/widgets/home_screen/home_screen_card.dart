@@ -148,7 +148,7 @@ class HomeScreenCard extends StatelessWidget implements AbstractStatisticPanel {
   addStatisticData(StatisticsCalculations? statData) {
     if (statData != null) {
       income = statData.sumIncomes;
-      expense = statData.sumCosts;
+      expense = -(statData.sumCosts);
       balance = statData.sumBalance;
       // log('Income:' +
       //     income.toString() +
