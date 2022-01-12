@@ -45,11 +45,11 @@ class HomeScreenListView implements BalanceDataListView {
               DateTime.now().year, DateTime.now().month, DateTime.now().day)
           .subtract(Duration(days: 7, microseconds: 1))
     },
-    {
-      "widget": TimeWidget(displayValue: 'Älter'),
-      "time": DateTime(DateTime.now().year, DateTime.now().month)
-          .subtract(Duration(days: 0, microseconds: 1))
-    },
+    // {
+    //   "widget": TimeWidget(displayValue: 'Älter'),
+    //   "time": DateTime(DateTime.now().year, DateTime.now().month)
+    //       .subtract(Duration(days: 0, microseconds: 1))
+    // },
   ];
 
   @override
@@ -58,10 +58,13 @@ class HomeScreenListView implements BalanceDataListView {
     initializeDateFormatting();
     DateFormat formatter = DateFormat('EEEE, dd. MMMM yyyy', 'de');
 
+    DateFormat monthFormatter = DateFormat('MMMM', 'de');
+    DateFormat monthAndYearFormatter = DateFormat('MMMM yyyy', 'de');
+
     // remember last used index in the list
     int currentIndex = 0;
-
-    log(_timeWidgets.toString());
+    DateTime currentTime = DateTime(DateTime.now().year, DateTime.now().month)
+        .subtract(Duration(days: 0, microseconds: 1));
 
     //log(balanceData.toString());
     List<Widget> list = [];
@@ -75,10 +78,14 @@ class HomeScreenListView implements BalanceDataListView {
                 date.isBefore(_timeWidgets[currentIndex + 1]["time"])) {
               currentIndex++;
             }
-
             list.add(_timeWidgets[currentIndex]["widget"]);
-
             currentIndex++;
+          } else if (date.isBefore(currentTime)) {
+            list.add(TimeWidget(
+                displayValue: currentTime.year == DateTime.now().year
+                    ? monthFormatter.format(currentTime)
+                    : monthAndYearFormatter.format(currentTime)));
+            currentTime = DateTime(currentTime.year, currentTime.month - 1);
           }
 
           list.add(
