@@ -95,7 +95,7 @@ class HomeScreenCard extends StatelessWidget {
                               SizedBox(
                                 height: 5,
                               ),
-                              Text('\€' + income.toStringAsFixed(2),
+                              Text(income.toStringAsFixed(2) + '\ €',
                                   style: TextStyle(
                                       color: Colors.grey[700],
                                       fontWeight: FontWeight.bold)),
@@ -135,7 +135,7 @@ class HomeScreenCard extends StatelessWidget {
                                 height: 5,
                               ),
                               Text(
-                                '\€' + expense.toStringAsFixed(2),
+                                expense.toStringAsFixed(2) + ' \€ ',
                                 style: TextStyle(
                                   color: Colors.grey[700],
                                   fontWeight: FontWeight.bold,
