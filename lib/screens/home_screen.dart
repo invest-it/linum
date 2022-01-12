@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/widgets/home_screen/home_screen_listview.dart';
@@ -21,6 +23,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
     BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
+
+    AlgorithmProvider algorithmProvider =
+        Provider.of<AlgorithmProvider>(context);
+
+    algorithmProvider.setCurrentFilterAlgorithm(
+        AlgorithmProvider.olderThan(Timestamp.fromDate(DateTime.now())));
 
     return ScreenSkeleton(
       head: 'Home',
