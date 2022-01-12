@@ -39,13 +39,16 @@ class _HomeScreenState extends State<HomeScreen> {
           Column(
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
+                padding: const EdgeInsets.fromLTRB(5, 10, 25, 5),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text("Neueste Transaktionen",
-                        style: Theme.of(context).textTheme.headline5),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15.0),
+                      child: Text("Neueste Transaktionen",
+                          style: Theme.of(context).textTheme.headline5),
+                    ),
                     TextButton(
                       onPressed: () => screenIndexProvider.setPageIndex(1),
                       child: Text(
