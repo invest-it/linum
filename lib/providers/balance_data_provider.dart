@@ -22,7 +22,7 @@ class BalanceDataProvider extends ChangeNotifier {
 
   num _dontDispose = 0;
 
-  static const Duration FUTURE_DURATION = Duration(days: 365 * 10);
+  static const Duration FUTURE_DURATION = Duration(days: 365 * 3);
 
   /// Creates the BalanceDataProvider. Inparticular it sets [_balance] correctly
   BalanceDataProvider(BuildContext context) {
