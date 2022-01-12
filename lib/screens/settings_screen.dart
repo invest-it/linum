@@ -94,10 +94,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           },
                           items: <String>[
                             'Währung auswählen',
-                            'Euro',
-                            'Dollar',
-                            'Pfund',
-                            'Yen',
+                            'Euro (EUR, €)',
+                            'Dollar (USD, \$)',
+                            'Pfund (GBP, £)',
+                            'Yen (JPY, ¥)',
                           ].map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
