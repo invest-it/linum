@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linum/frontend_functions/size_guide.dart';
 
 class TimeWidget extends StatelessWidget {
   TimeWidget({required this.displayValue});
@@ -8,7 +9,17 @@ class TimeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text(displayValue),
+      width: double.infinity,
+      height: proportionateScreenHeight(48),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          displayValue,
+          style: Theme.of(context).textTheme.overline?.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
+        ),
+      ),
     );
   }
 }

@@ -22,25 +22,25 @@ class HomeScreenListView implements BalanceDataListView {
 
   List<Map<String, dynamic>> _timeWidgets = [
     {
-      "widget": TimeWidget(displayValue: 'Heute'),
+      "widget": TimeWidget(displayValue: '-HEUTE-'),
       "time": DateTime(
               DateTime.now().year, DateTime.now().month, DateTime.now().day)
           .add(Duration(days: 1, microseconds: -1))
     },
     {
-      "widget": TimeWidget(displayValue: 'Gestern'),
+      "widget": TimeWidget(displayValue: '-GESTERN-'),
       "time": DateTime(
               DateTime.now().year, DateTime.now().month, DateTime.now().day)
           .subtract(Duration(days: 0, microseconds: 1))
     },
     {
-      "widget": TimeWidget(displayValue: 'Letzte Woche'),
+      "widget": TimeWidget(displayValue: '-LETZTE WOCHE-'),
       "time": DateTime(
               DateTime.now().year, DateTime.now().month, DateTime.now().day)
           .subtract(Duration(days: 1, microseconds: 1))
     },
     {
-      "widget": TimeWidget(displayValue: 'Diesen Monat'),
+      "widget": TimeWidget(displayValue: '-DIESEN MONAT-'),
       "time": DateTime(
               DateTime.now().year, DateTime.now().month, DateTime.now().day)
           .subtract(Duration(days: 7, microseconds: 1))
