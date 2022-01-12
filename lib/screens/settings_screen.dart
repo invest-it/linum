@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
-import 'package:linum/widgets/enter_screen/enter_screen_list.dart';
-//import 'package:linum/providers/balance_data_provider.dart';
-//import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({
