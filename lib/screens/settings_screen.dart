@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
+import 'package:linum/widgets/enter_screen/enter_screen_list.dart';
 //import 'package:linum/providers/balance_data_provider.dart';
 //import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
+  const SettingsScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
@@ -13,6 +16,39 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _toggled = false;
+
+  final List<String> _categoriesCategoryExpenses = [
+    "Essen & Trinken",
+    "Freizeit",
+    "Haus",
+    "Lebensstil",
+    "Auto/Nahverkehr",
+    "Diverses",
+  ];
+
+  final List<String> _categoriesCategoryIncome = [
+    "Gehalt",
+    "Taschengeld",
+    "Nebenjob",
+    "Investitionen",
+    "Kindergeld",
+    "Zinsen",
+    "Diverses",
+  ];
+
+  final List<String> _categoriesAccount = [
+    "Debitkarte",
+    "Kreditkarte",
+    "Bargeld",
+    "Depot",
+  ];
+
+  final List<String> _currency = [
+    "Euro",
+    "Dollar",
+    "Japanese Yen",
+    "Pound",
+  ];
 
   @override
   // final Function ontap = CurrencyList();
@@ -40,12 +76,38 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Währung'),
-                      ListTile(
-                        // onTap: ontap(),
-                        title: Text('Währung auswählen...'),
-                        trailing: Icon(
-                          Icons.arrow_drop_down,
-                          color: Colors.black,
+                      GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.5,
+                                color: createMaterialColor(Color(0xFFFAFAFA)),
+                                child: Column(children: [
+                                  ListTile(
+                                    title: Text('Währungen'),
+                                  ),
+                                  Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.4,
+                                    child: _currencyChange(
+                                      _currency,
+                                    ),
+                                  ),
+                                ]),
+                              );
+                            },
+                          );
+                        },
+                        child: ListTile(
+                          // onTap: ontap(),
+                          title: Text('Währung auswählen...'),
+                          trailing: Icon(
+                            Icons.arrow_drop_down,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                     ],
@@ -83,30 +145,111 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Standard Kategorien'),
-                      ListTile(
-                        // onTap: ontap(),
-                        title: Text('Einnahmen'),
-                        trailing: Icon(
-                          Icons.north_east,
-                          color: createMaterialColor(Color(0xFF97BC4E)),
+                      GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.5,
+                                color: createMaterialColor(Color(0xFFFAFAFA)),
+                                child: Column(children: [
+                                  ListTile(
+                                    title: Text('Einnahmen'),
+                                  ),
+                                  Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.4,
+                                    child: _incomeListViewBuilder(
+                                      _categoriesCategoryIncome,
+                                    ),
+                                  ),
+                                ]),
+                              );
+                            },
+                          );
+                        },
+                        child: ListTile(
+                          // onTap: ontap(),
+                          title: Text('Einnahmen'),
+                          trailing: Icon(
+                            Icons.north_east,
+                            color: createMaterialColor(Color(0xFF97BC4E)),
+                          ),
                         ),
                       ),
-                      ListTile(
-                        // onTap: ontap(),
-                        title: Text('Ausgaben'),
-                        trailing: Icon(
-                          Icons.south_east,
-                          color: Colors.red,
+                      //Ende Einnahmen ListTile
+                      GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.5,
+                                color: createMaterialColor(Color(0xFFFAFAFA)),
+                                child: Column(children: [
+                                  ListTile(
+                                    title: Text('Ausgaben'),
+                                  ),
+                                  Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.4,
+                                    child: _incomeListViewBuilder(
+                                      _categoriesCategoryExpenses,
+                                    ),
+                                  ),
+                                ]),
+                              );
+                            },
+                          );
+                        },
+                        child: ListTile(
+                          // onTap: ontap(),
+                          title: Text('Augaben'),
+                          trailing: Icon(
+                            Icons.south_east,
+                            color: Colors.red,
+                          ),
                         ),
                       ),
-                      ListTile(
-                        // onTap: ontap(),
-                        title: Text('Transaktionen'),
-                        trailing: Icon(
-                          Icons.sync_alt,
-                          color: createMaterialColor(Color(0xFF505050)),
+                      //Ende GestureDetector Ausgaben
+                      GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.5,
+                                color: createMaterialColor(Color(0xFFFAFAFA)),
+                                child: Column(children: [
+                                  ListTile(
+                                    title: Text('Accounts'),
+                                  ),
+                                  Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.4,
+                                    child: _incomeListViewBuilder(
+                                      _categoriesAccount,
+                                    ),
+                                  ),
+                                ]),
+                              );
+                            },
+                          );
+                        },
+                        child: ListTile(
+                          // onTap: ontap(),
+                          title: Text('Transaktionen'),
+                          trailing: Icon(
+                            Icons.swap_horiz,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
+                      //Einde GestureDetector Accounts
                       //Icons disputable
                     ],
                   ),
@@ -158,5 +301,71 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ],
         ));
+  }
+
+  //ListView.builder für Standard Kategorien
+
+  _incomeListViewBuilder(_categoriesCategoryIncome) {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: _categoriesCategoryIncome.length,
+      itemBuilder: (BuildContext context, int indexBuilder) {
+        return ListTile(
+          //leading: Icon(widget.categories[index].icon),
+          title: Text(_categoriesCategoryIncome[indexBuilder]),
+          // onTap: () => _selectCategoryItem(
+          //     widget.categoriesCategoryIncome[indexBuilder],
+          //     enterScreenProvider),
+        );
+      },
+    );
+  }
+
+  _expensesListViewBuilder(_categoriesCategoryExpenses) {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: _categoriesCategoryExpenses.length,
+      itemBuilder: (BuildContext context, int indexBuilder) {
+        return ListTile(
+          //leading: Icon(widget.categories[index].icon),
+          title: Text(_categoriesCategoryExpenses[indexBuilder]),
+          // onTap: () => _selectCategoryItem(
+          //     widget.categoriesCategoryIncome[indexBuilder],
+          //     enterScreenProvider),
+        );
+      },
+    );
+  }
+
+  _accountListViewBuilder(_categoriesAccount) {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: _categoriesAccount.length,
+      itemBuilder: (BuildContext context, int indexBuilder) {
+        return ListTile(
+          //leading: Icon(widget.categories[index].icon),
+          title: Text(_categoriesAccount[indexBuilder]),
+          // onTap: () => _selectCategoryItem(
+          //     widget.categoriesCategoryIncome[indexBuilder],
+          //     enterScreenProvider),
+        );
+      },
+    );
+  }
+
+  _currencyChange(_currency) {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: _currency.length,
+      itemBuilder: (BuildContext context, int indexBuilder) {
+        return ListTile(
+          //leading: Icon(widget.categories[index].icon),
+          title: Text(_currency[indexBuilder]),
+          // onTap: () => _selectCategoryItem(
+          //     widget.categoriesCategoryIncome[indexBuilder],
+          //     enterScreenProvider),
+        );
+      },
+    );
   }
 }
