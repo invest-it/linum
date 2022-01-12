@@ -6,9 +6,9 @@ import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/widgets/abstract/abstract_statistic_panel.dart';
 
 class HomeScreenCard extends StatelessWidget implements AbstractStatisticPanel {
-  double balance = 0;
-  double income = 0;
-  double expense = 0;
+  num balance = 0;
+  num income = 0;
+  num expense = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -147,15 +147,15 @@ class HomeScreenCard extends StatelessWidget implements AbstractStatisticPanel {
   @override
   addStatisticData(StatisticsCalculations? statData) {
     if (statData != null) {
-      income = statData.sumIncomes as double;
-      expense = statData.sumCosts as double;
-      balance = statData.sumBalance as double;
-      log('Income:' +
-          income.toString() +
-          ' Expense:' +
-          expense.toString() +
-          ' Balance:' +
-          balance.toString());
+      income = statData.sumIncomes;
+      expense = statData.sumCosts;
+      balance = statData.sumBalance;
+      // log('Income:' +
+      //     income.toString() +
+      //     ' Expense:' +
+      //     expense.toString() +
+      //     ' Balance:' +
+      //     balance.toString());
     }
   }
 

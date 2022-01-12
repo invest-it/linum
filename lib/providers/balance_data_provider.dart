@@ -112,10 +112,12 @@ class BalanceDataProvider extends ChangeNotifier {
           statisticPanel.addStatisticData(null);
           return statisticPanel.returnWidget;
         } else {
-          List<dynamic> balanceData = snapshot.data["balanceData"];
+          dynamic data = snapshot.data.data();
+          List<dynamic> balanceData = data["balanceData"];
+
           balanceData.removeWhere(_algorithmProvider.currentFilter);
           StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(balanceData as List<Map<String, dynamic>>);
+              StatisticsCalculations(balanceData);
           statisticPanel.addStatisticData(statisticsCalculations);
           return statisticPanel.returnWidget;
         }
