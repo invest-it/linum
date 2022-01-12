@@ -406,25 +406,32 @@ class _EnterScreenListViewBuilderState
     });
   }
 
-  void _openDatePicker(EnterScreenProvider enterScreenProvider) {
-    showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            //which date will display when user open the picker
-            firstDate: firstDate,
-            //what will be the previous supported year in picker
-            lastDate:
-                lastDate) //what will be the up to supported date in picker
-        .then((pickedDate) {
-      //then usually do the future job
-      if (pickedDate == null) {
-        //if user tap cancel then this function will stop
-        return;
-      }
-      setState(() {
-        //for rebuilding the ui
-        enterScreenProvider.setSelectedDate(pickedDate);
-      });
-    });
+  void _openDatePicker(EnterScreenProvider enterScreenProvider) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: enterScreenProvider.selectedDate,
+      //which date will display when user open the picker
+      firstDate: firstDate,
+      //what will be the previous supported year in picker
+      lastDate: lastDate,
+    ); //what will be the up to supported date in picker
+
+    //then usually do the future job
+    if (pickedDate == null) {
+      //if user tap cancel then this function will stop
+      return;
+    }
+    TimeOfDay? timeOfDay =
+        await showTimePicker(context: context, initialTime: TimeOfDay.now());
+    if (timeOfDay != null) {
+      enterScreenProvider.setSelectedDate(
+        pickedDate.add(
+          Duration(
+            hours: timeOfDay.hour,
+            minutes: timeOfDay.minute,
+          ),
+        ),
+      );
+    }
   }
 }
