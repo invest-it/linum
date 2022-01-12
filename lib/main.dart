@@ -9,6 +9,7 @@ import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
+import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/screens/layout_screen.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/screens/onboarding_screen.dart';
@@ -184,6 +185,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
                 lazy: false,
               ),
+              ChangeNotifierProvider<ScreenIndexProvider>(
+                create: (_) => ScreenIndexProvider(),
+                lazy: false,
+              )
             ],
             child: OnBoardingOrLayoutScreen(),
           );

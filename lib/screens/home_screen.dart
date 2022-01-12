@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:linum/providers/balance_data_provider.dart';
+import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/widgets/home_screen/home_screen_listview.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 
@@ -15,6 +16,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    ScreenIndexProvider screenIndexProvider =
+        Provider.of<ScreenIndexProvider>(context);
+
     BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
 
@@ -34,12 +38,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Text("Neueste Transaktionen",
                         style: Theme.of(context).textTheme.headline5),
-                    Text(
-                      "MEHR",
-                      style: Theme.of(context).textTheme.overline?.copyWith(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontSize: 14,
-                          ),
+                    TextButton(
+                      onPressed: () => screenIndexProvider.setPageIndex(1),
+                      child: Text(
+                        "MEHR",
+                        style: Theme.of(context).textTheme.overline?.copyWith(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontSize: 14,
+                            ),
+                      ),
                     ),
                   ],
                 ),
