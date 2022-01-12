@@ -20,21 +20,35 @@ class HomeScreenListView implements BalanceDataListView {
     _listview = new ListView();
   }
 
-  static List<Map<String, dynamic>> _timeWidgets = [
+  List<Map<String, dynamic>> _timeWidgets = [
     {
       "widget": TimeWidget(displayValue: 'Heute'),
+      "time": DateTime(
+              DateTime.now().year, DateTime.now().month, DateTime.now().day)
+          .add(Duration(days: 1, microseconds: -1))
     },
     {
       "widget": TimeWidget(displayValue: 'Gestern'),
+      "time": DateTime(
+              DateTime.now().year, DateTime.now().month, DateTime.now().day)
+          .subtract(Duration(days: 0, microseconds: 1))
     },
     {
       "widget": TimeWidget(displayValue: 'Letzte Woche'),
+      "time": DateTime(
+              DateTime.now().year, DateTime.now().month, DateTime.now().day)
+          .subtract(Duration(days: 1, microseconds: 1))
     },
     {
       "widget": TimeWidget(displayValue: 'Diesen Monat'),
+      "time": DateTime(
+              DateTime.now().year, DateTime.now().month, DateTime.now().day)
+          .subtract(Duration(days: 7, microseconds: 1))
     },
     {
       "widget": TimeWidget(displayValue: 'Älter'),
+      "time": DateTime(DateTime.now().year, DateTime.now().month)
+          .subtract(Duration(days: 0, microseconds: 1))
     },
   ];
 
@@ -45,13 +59,28 @@ class HomeScreenListView implements BalanceDataListView {
     DateFormat formatter = DateFormat('EEEE, dd. MMMM yyyy', 'de');
 
     // remember last used index in the list
-    int lastIndex = -1;
+    int currentIndex = 0;
+
+    log(_timeWidgets.toString());
 
     //log(balanceData.toString());
     List<Widget> list = [];
     if (balanceData[0] != null && balanceData[0]["Error"] == null) {
       balanceData.forEach(
         (arrayElement) {
+          DateTime date = arrayElement["time"].toDate() as DateTime;
+          if (currentIndex < _timeWidgets.length &&
+              date.isBefore(_timeWidgets[currentIndex]["time"])) {
+            while (currentIndex < (_timeWidgets.length - 1) &&
+                date.isBefore(_timeWidgets[currentIndex + 1]["time"])) {
+              currentIndex++;
+            }
+
+            list.add(_timeWidgets[currentIndex]["widget"]);
+
+            currentIndex++;
+          }
+
           list.add(
             GestureDetector(
               onTap: () {
