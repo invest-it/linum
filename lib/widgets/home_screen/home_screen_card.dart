@@ -5,10 +5,19 @@ import 'package:linum/backend_functions/statistic_calculations.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/widgets/abstract/abstract_statistic_panel.dart';
 
-class HomeScreenCard extends StatelessWidget implements AbstractStatisticPanel {
-  num balance = 0;
-  num income = 0;
-  num expense = 0;
+class HomeScreenCard extends StatelessWidget {
+  final num balance;
+
+  final num income;
+
+  final num expense;
+
+  const HomeScreenCard(
+      {Key? key,
+      required this.balance,
+      required this.income,
+      required this.expense})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -125,10 +134,13 @@ class HomeScreenCard extends StatelessWidget implements AbstractStatisticPanel {
                               SizedBox(
                                 height: 5,
                               ),
-                              Text('\€' + expense.toStringAsFixed(2),
-                                  style: TextStyle(
-                                      color: Colors.grey[700],
-                                      fontWeight: FontWeight.bold)),
+                              Text(
+                                '\€' + expense.toStringAsFixed(2),
+                                style: TextStyle(
+                                  color: Colors.grey[700],
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ],
                           )
                         ],
@@ -143,22 +155,25 @@ class HomeScreenCard extends StatelessWidget implements AbstractStatisticPanel {
       ],
     );
   }
+}
+
+class HomeScreenCardManager implements AbstractStatisticPanel {
+  late HomeScreenCard _homeScreenCard;
+  HomeScreenCardManager() {
+    _homeScreenCard = HomeScreenCard(income: 0, expense: 0, balance: 0);
+  }
 
   @override
   addStatisticData(StatisticsCalculations? statData) {
     if (statData != null) {
-      income = statData.sumIncomes;
-      expense = -(statData.sumCosts);
-      balance = statData.sumBalance;
-      // log('Income:' +
-      //     income.toString() +
-      //     ' Expense:' +
-      //     expense.toString() +
-      //     ' Balance:' +
-      //     balance.toString());
+      num income = statData.sumIncomes;
+      num expense = -(statData.sumCosts);
+      num balance = statData.sumBalance;
+      _homeScreenCard =
+          HomeScreenCard(income: income, expense: expense, balance: balance);
     }
   }
 
   @override
-  Widget get returnWidget => this;
+  Widget get returnWidget => _homeScreenCard;
 }

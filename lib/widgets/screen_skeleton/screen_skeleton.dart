@@ -56,7 +56,7 @@ class ScreenSkeleton extends StatelessWidget {
                 left: 0,
                 right: 0,
                 child: balanceDataProvider
-                    .fillStatisticPanelWithData(HomeScreenCard()),
+                    .fillStatisticPanelWithData(HomeScreenCardManager()),
               )
             : Container(
                 // to make sure we'd actually notice fuck-ups with this
