@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
+import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
+import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({
@@ -49,8 +51,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   // final Function ontap = CurrencyList();
 
   Widget build(BuildContext context) {
-    // BalanceDataProvider balanceDataProvider =
-    //     Provider.of<BalanceDataProvider>(context);
+    AuthenticationService auth = Provider.of<AuthenticationService>(context);
     return ScreenSkeleton(
         head: 'Account',
         isInverted: false,
@@ -289,6 +290,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           },
                         ),
                       ]),
+                ),
+                ElevatedButton(
+                  onPressed: () => {auth.signOut()},
+                  child: Text('Ausloggen'),
                 ),
               ],
             ),

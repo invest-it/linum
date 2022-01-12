@@ -14,14 +14,7 @@ import 'package:linum/widgets/bottom_app_bar.dart';
 import 'package:provider/provider.dart';
 
 class LayoutScreen extends StatefulWidget {
-  LayoutScreen({
-    Key? key,
-    required this.title,
-    required this.monthlyBudget,
-  }) : super(key: key);
-
-  final String title;
-  final double monthlyBudget;
+  LayoutScreen(Key? key) : super(key: key);
 
   @override
   State<LayoutScreen> createState() => _LayoutScreenState();

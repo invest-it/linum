@@ -7,7 +7,9 @@ import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:linum/backend_functions/url-handler.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/widgets/onboarding/onboarding_slide.dart';
+import 'package:provider/provider.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({Key? key}) : super(key: key);
@@ -162,6 +164,8 @@ class _OnboardingScreenState extends State<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
+    AuthenticationService auth = Provider.of<AuthenticationService>(context);
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Stack(
@@ -218,7 +222,12 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(
                           color: Theme.of(context).colorScheme.onSurface),
                     ),
-                    onPressed: () => {}),
+                    onPressed: () => {
+                          auth
+                              .signIn("Soencke.Evers@investit-academy.de",
+                                  "tempPassword123")
+                              .then((value) => log("login status: " + value))
+                        }),
               ],
             ),
           ),
