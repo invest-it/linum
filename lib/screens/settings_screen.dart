@@ -17,38 +17,36 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _toggled = false;
 
-  final List<String> _categoriesCategoryExpenses = [
-    "Essen & Trinken",
-    "Freizeit",
-    "Haus",
-    "Lebensstil",
-    "Auto/Nahverkehr",
-    "Diverses",
-  ];
+  final Map<StandardExpense, String> _categoriesCategoryExpenses = {
+    StandardExpense.None: "Kein",
+    StandardExpense.Food: "Essen & Trinken",
+    StandardExpense.FreeTime: "Freizeit",
+    StandardExpense.House: "Haus",
+    StandardExpense.Lifestyle: "Lebensstil",
+    StandardExpense.Car: "Auto/Nahverkehr",
+    StandardExpense.Diversified: "Diverses",
+  };
 
-  final List<String> _categoriesCategoryIncome = [
-    "Gehalt",
-    "Taschengeld",
-    "Nebenjob",
-    "Investitionen",
-    "Kindergeld",
-    "Zinsen",
-    "Diverses",
-  ];
+  final Map<StandardIncome, String> _categoriesCategoryIncome = {
+    StandardIncome.None: "Kein",
+    StandardIncome.Income: "Gehalt",
+    StandardIncome.Allowance: "Taschengeld",
+    StandardIncome.SideJob: "Nebenjob",
+    StandardIncome.Investments: "Investitionen",
+    StandardIncome.ChildSupport: "Kindergeld",
+    StandardIncome.Interest: "Zinsen",
+    StandardIncome.Diversified: "Diverses",
+  };
 
-  final List<String> _categoriesAccount = [
-    "Debitkarte",
-    "Kreditkarte",
-    "Bargeld",
-    "Depot",
-  ];
+  final Map<StandardAccount, String> _categoriesAccount = {
+    StandardAccount.None: "Kein",
+    StandardAccount.Debit: "Debitkarte",
+    StandardAccount.Credit: "Kreditkarte",
+    StandardAccount.Cash: "Bargeld",
+    StandardAccount.Depot: "Depot",
+  };
 
-  final List<String> _currency = [
-    "Euro",
-    "Dollar",
-    "Japanese Yen",
-    "Pound",
-  ];
+  String dropdownValue = 'Währung auswählen';
 
   @override
   // final Function ontap = CurrencyList();
@@ -76,40 +74,38 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Währung'),
-                      GestureDetector(
-                        onTap: () {
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (context) {
-                              return Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.5,
-                                color: createMaterialColor(Color(0xFFFAFAFA)),
-                                child: Column(children: [
-                                  ListTile(
-                                    title: Text('Währungen'),
-                                  ),
-                                  Container(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.4,
-                                    child: _currencyChange(
-                                      _currency,
-                                    ),
-                                  ),
-                                ]),
-                              );
-                            },
-                          );
-                        },
-                        child: ListTile(
-                          // onTap: ontap(),
-                          title: Text('Währung auswählen...'),
-                          trailing: Icon(
-                            Icons.arrow_drop_down,
-                            color: Colors.black,
-                          ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 8.0,
+                          left: 8.0,
+                          right: 8.0,
+                          bottom: 0,
                         ),
-                      ),
+                        child: DropdownButtonFormField<String>(
+                          decoration: InputDecoration(border: InputBorder.none),
+                          value: dropdownValue,
+                          icon: const Icon(Icons.arrow_drop_down),
+                          elevation: 16,
+                          style: const TextStyle(color: Colors.black),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              dropdownValue = newValue!;
+                            });
+                          },
+                          items: <String>[
+                            'Währung auswählen',
+                            'Euro',
+                            'Dollar',
+                            'Pfund',
+                            'Yen',
+                          ].map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -196,7 +192,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   Container(
                                     height: MediaQuery.of(context).size.height *
                                         0.4,
-                                    child: _incomeListViewBuilder(
+                                    child: _expensesListViewBuilder(
                                       _categoriesCategoryExpenses,
                                     ),
                                   ),
@@ -231,7 +227,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   Container(
                                     height: MediaQuery.of(context).size.height *
                                         0.4,
-                                    child: _incomeListViewBuilder(
+                                    child: _accountListViewBuilder(
                                       _categoriesAccount,
                                     ),
                                   ),
@@ -290,9 +286,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           value: _toggled,
                           activeColor: Colors.green,
                           onChanged: (bool value) {
-                            setState((() {
+                            setState(() {
                               _toggled = value;
-                            }));
+                            });
                           },
                         ),
                       ]),
@@ -305,67 +301,119 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   //ListView.builder für Standard Kategorien
 
-  _incomeListViewBuilder(_categoriesCategoryIncome) {
+  StandardIncome selectedIncome = StandardIncome.None;
+  StandardExpense selectedExpense = StandardExpense.None;
+  StandardAccount selectedAccount = StandardAccount.None;
+
+  ListView _incomeListViewBuilder(
+      Map<StandardIncome, String> _categoriesCategoryIncome) {
     return ListView.builder(
       shrinkWrap: true,
-      itemCount: _categoriesCategoryIncome.length,
+      itemCount: StandardIncome.values.length,
       itemBuilder: (BuildContext context, int indexBuilder) {
         return ListTile(
-          //leading: Icon(widget.categories[index].icon),
-          title: Text(_categoriesCategoryIncome[indexBuilder]),
-          // onTap: () => _selectCategoryItem(
-          //     widget.categoriesCategoryIncome[indexBuilder],
-          //     enterScreenProvider),
-        );
+            //leading: Icon(widget.categories[index].icon),
+            title: Text(_categoriesCategoryIncome[
+                    StandardIncome.values[indexBuilder]] ??
+                ""),
+            selected: selectedIncome == StandardIncome.values[indexBuilder],
+            onTap: () {
+              setState(() {
+                selectedIncome = StandardIncome.values[indexBuilder];
+              });
+              Navigator.pop(context);
+            }
+            // trailing: ,
+            );
       },
     );
   }
 
-  _expensesListViewBuilder(_categoriesCategoryExpenses) {
+  ListView _expensesListViewBuilder(
+      Map<StandardExpense, String> _categoriesCategoryExpenses) {
     return ListView.builder(
       shrinkWrap: true,
-      itemCount: _categoriesCategoryExpenses.length,
+      itemCount: StandardExpense.values.length,
       itemBuilder: (BuildContext context, int indexBuilder) {
         return ListTile(
-          //leading: Icon(widget.categories[index].icon),
-          title: Text(_categoriesCategoryExpenses[indexBuilder]),
-          // onTap: () => _selectCategoryItem(
-          //     widget.categoriesCategoryIncome[indexBuilder],
-          //     enterScreenProvider),
-        );
+            //leading: Icon(widget.categories[index].icon),
+            title: Text(_categoriesCategoryExpenses[
+                    StandardExpense.values[indexBuilder]] ??
+                ""),
+            selected: selectedExpense == StandardExpense.values[indexBuilder],
+            onTap: () {
+              setState(() {
+                selectedExpense = StandardExpense.values[indexBuilder];
+              });
+              Navigator.pop(context);
+            });
       },
     );
   }
 
-  _accountListViewBuilder(_categoriesAccount) {
+  ListView _accountListViewBuilder(
+      Map<StandardAccount, String> _categoriesAccount) {
     return ListView.builder(
       shrinkWrap: true,
-      itemCount: _categoriesAccount.length,
+      itemCount: StandardAccount.values.length,
       itemBuilder: (BuildContext context, int indexBuilder) {
         return ListTile(
           //leading: Icon(widget.categories[index].icon),
-          title: Text(_categoriesAccount[indexBuilder]),
-          // onTap: () => _selectCategoryItem(
-          //     widget.categoriesCategoryIncome[indexBuilder],
-          //     enterScreenProvider),
+          title: Text(
+              _categoriesAccount[StandardAccount.values[indexBuilder]] ?? ""),
+          selected: selectedAccount == StandardAccount.values[indexBuilder],
+          onTap: () {
+            setState(() {
+              selectedAccount = StandardAccount.values[indexBuilder];
+            });
+            Navigator.pop(context);
+          },
         );
       },
     );
   }
+}
 
-  _currencyChange(_currency) {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: _currency.length,
-      itemBuilder: (BuildContext context, int indexBuilder) {
-        return ListTile(
-          //leading: Icon(widget.categories[index].icon),
-          title: Text(_currency[indexBuilder]),
-          // onTap: () => _selectCategoryItem(
-          //     widget.categoriesCategoryIncome[indexBuilder],
-          //     enterScreenProvider),
-        );
-      },
-    );
-  }
+ListView _currencyChange(_currency) {
+  return ListView.builder(
+    shrinkWrap: true,
+    itemCount: _currency.length,
+    itemBuilder: (BuildContext context, int indexBuilder) {
+      return ListTile(
+        //leading: Icon(widget.categories[index].icon),
+        title: Text(_currency[indexBuilder]),
+        // onTap: () => _selectCategoryItem(
+        //     widget.categoriesCategoryIncome[indexBuilder],
+        //     enterScreenProvider),
+      );
+    },
+  );
+}
+
+enum StandardIncome {
+  None,
+  Income,
+  Allowance,
+  SideJob,
+  Investments,
+  ChildSupport,
+  Interest,
+  Diversified,
+}
+
+enum StandardExpense {
+  None,
+  Food,
+  FreeTime,
+  House,
+  Lifestyle,
+  Car,
+  Diversified,
+}
+enum StandardAccount {
+  None,
+  Debit,
+  Credit,
+  Cash,
+  Depot,
 }
