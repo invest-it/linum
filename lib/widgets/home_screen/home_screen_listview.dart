@@ -10,6 +10,7 @@ import 'package:linum/screens/enter_screen.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:linum/widgets/budget_screen/time_widget.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreenListView implements BalanceDataListView {
@@ -19,11 +20,33 @@ class HomeScreenListView implements BalanceDataListView {
     _listview = new ListView();
   }
 
+  static List<Map<String, dynamic>> _timeWidgets = [
+    {
+      "widget": TimeWidget(displayValue: 'Heute'),
+    },
+    {
+      "widget": TimeWidget(displayValue: 'Gestern'),
+    },
+    {
+      "widget": TimeWidget(displayValue: 'Letzte Woche'),
+    },
+    {
+      "widget": TimeWidget(displayValue: 'Diesen Monat'),
+    },
+    {
+      "widget": TimeWidget(displayValue: 'Älter'),
+    },
+  ];
+
   @override
   void setBalanceData(List<dynamic> balanceData,
       {required BuildContext context}) {
     initializeDateFormatting();
     DateFormat formatter = DateFormat('EEEE, dd. MMMM yyyy', 'de');
+
+    // remember last used index in the list
+    int lastIndex = -1;
+
     //log(balanceData.toString());
     List<Widget> list = [];
     if (balanceData[0] != null && balanceData[0]["Error"] == null) {
