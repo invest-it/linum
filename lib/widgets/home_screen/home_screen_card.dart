@@ -66,7 +66,7 @@ class HomeScreenCard extends StatelessWidget {
       onTap: () {
         Fluttertoast.showToast(
           msg:
-              "Swipe nach links und rechts, um vorige oder kommende Monate anzusehen.",
+              "Swipe nach links und rechts, um vorige oder kommende Monate anzusehen. Doppelt tippen, um in den aktuellen Monat zurückzukehren.",
           toastLength: Toast.LENGTH_SHORT,
         );
 
