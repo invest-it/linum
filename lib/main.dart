@@ -159,11 +159,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   AuthenticationService auth =
                       AuthenticationService(FirebaseAuth.instance);
 
-                  // NOTE: The sign-in service is now functional, no need to change anything here unless you want to access the testing account.
-                  // auth
-                  //     .signIn(
-                  //         "linum.debug@investit-academy.de", "F8q^5w!F9S4#!")
-                  //     .then((value) => log("login status: " + value));
+                  // NOTE: The sign-in service is now functional, no need to change anything here.
+
                   return auth;
                 },
                 lazy: false,

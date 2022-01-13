@@ -162,76 +162,258 @@ class _OnboardingScreenState extends State<OnboardingPage> {
     );
   }
 
+  // States: 0 = normal onboarding, 1 = login page, 2 = register page
+  int _pageState = 0;
+
+  double _loginYOffset = 0;
+  double _loginXOffset = 0;
+  double _registerYOffset = 0;
+  double _loginWidth = 0;
+  double _registerWidth = 0;
+  double _loginOpacity = 1;
+  double windowWidth = realScreenWidth();
+  double windowHeight = realScreenHeight();
+
   @override
   Widget build(BuildContext context) {
     AuthenticationService auth = Provider.of<AuthenticationService>(context);
 
+    switch (_pageState) {
+      case 0:
+        _loginYOffset = windowHeight;
+        _registerYOffset = windowHeight;
+        _loginXOffset = 0;
+        _loginWidth = windowWidth;
+        _registerWidth = windowWidth;
+        _loginOpacity = 1;
+        break;
+      case 1:
+        _loginYOffset = 200;
+        _registerYOffset = windowHeight;
+        _loginXOffset = 0;
+        _loginWidth = windowWidth;
+        _registerWidth = windowWidth;
+        _loginOpacity = 1;
+        break;
+      case 2:
+        _loginYOffset = 170;
+        _registerYOffset = 200;
+        _loginXOffset = 20;
+        _loginWidth = windowWidth - 40;
+        _registerWidth = windowWidth;
+        _loginOpacity = 0.80;
+    }
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Stack(
-        children: [
-          PageView(
-            controller: _pageController,
-            onPageChanged: _handleOnPageChanged,
-            // For now, standard physics will do the trick. TODO-FUTURE improve the looks of this
-            physics: PageScrollPhysics(),
-            children: [
-              ..._builtSlides(),
-            ],
-          ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: Column(
+      body: GestureDetector(
+        onTap: () => setState(() {
+          _pageState = 0;
+        }),
+        child: Stack(
+          children: [
+            PageView(
+              controller: _pageController,
+              onPageChanged: _handleOnPageChanged,
+              // For now, standard physics will do the trick. TODO-FUTURE improve the looks of this
+              physics: PageScrollPhysics(),
               children: [
-                _buildPageIndicator(),
-                SizedBox(
-                  height: proportionateScreenHeight(32),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 32),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: GradientButton(
-                      child: Text(
-                        'Jetzt registrieren!',
-                        style: Theme.of(context).textTheme.headline5,
-                      ),
-                      callback: () => {},
-                      gradient: LinearGradient(
-                        colors: [
-                          Theme.of(context).colorScheme.primary,
-                          createMaterialColor(Color(0xFFC1E695)),
-                        ],
-                      ),
-                      elevation: 0,
-                      increaseHeightBy: proportionateScreenHeight(56 - 24),
-                      increaseWidthBy: double.infinity,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: proportionateScreenHeight(10),
-                ),
-                CupertinoButton(
-                    child: Text(
-                      'Ich habe einen Account',
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurface),
-                    ),
-                    onPressed: () => {
-                          auth
-                              .signIn("Soencke.Evers@investit-academy.de",
-                                  "tempPassword123")
-                              .then((value) => log("login status: " + value))
-                        }),
+                ..._builtSlides(),
               ],
             ),
-          ),
-        ],
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: Column(
+                children: [
+                  _buildPageIndicator(),
+                  SizedBox(
+                    height: proportionateScreenHeight(32),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 32),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: GradientButton(
+                        child: Text(
+                          'Jetzt registrieren!',
+                          style: Theme.of(context).textTheme.headline5,
+                        ),
+                        callback: () => {
+                          setState(() {
+                            _pageState = 2;
+                          })
+                        },
+                        gradient: LinearGradient(
+                          colors: [
+                            Theme.of(context).colorScheme.primary,
+                            createMaterialColor(Color(0xFFC1E695)),
+                          ],
+                        ),
+                        elevation: 0,
+                        increaseHeightBy: proportionateScreenHeight(56 - 24),
+                        increaseWidthBy: double.infinity,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8)),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: proportionateScreenHeight(10),
+                  ),
+                  CupertinoButton(
+                      child: Text(
+                        'Ich habe einen Account',
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                            color: Theme.of(context).colorScheme.onSurface),
+                      ),
+                      onPressed: () => {
+                            setState(() {
+                              _pageState = 1;
+                            })
+                          }),
+                ],
+              ),
+            ),
+// remove this in case it does not work
+
+            GestureDetector(
+              onTap: () => setState(() {
+                _pageState = 1;
+              }),
+              child: AnimatedContainer(
+                width: _loginWidth,
+                curve: Curves.fastLinearToSlowEaseIn,
+                duration: Duration(milliseconds: 600),
+                transform:
+                    Matrix4.translationValues(_loginXOffset, _loginYOffset, 1),
+                decoration: BoxDecoration(
+                  color: Theme.of(context)
+                      .colorScheme
+                      .background
+                      .withOpacity(_loginOpacity),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(32),
+                    topRight: Radius.circular(32),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withAlpha(135),
+                      blurRadius: 16,
+                    ),
+                  ],
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    AnimatedSize(
+                      curve: Curves.fastLinearToSlowEaseIn,
+                      duration: Duration(milliseconds: 600),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.only(
+                          topLeft: _pageState == 3
+                              ? Radius.circular(32)
+                              : Radius.circular(0),
+                          topRight: _pageState == 3
+                              ? Radius.circular(32)
+                              : Radius.circular(0),
+                        ),
+                        child: Container(
+                          width: double.infinity,
+                          height: _pageState == 3 ? 32 : 0,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () => {
+                        auth
+                            .signIn("Soencke.Evers@investit-academy.de",
+                                "tempPassword123")
+                            .then(
+                              (value) => log("login status: " + value),
+                            ),
+                      },
+                      child: Text('Login Bypass (Dev Phase)'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () => {
+                        auth
+                            .signIn("linum.debug@investit-academy.de",
+                                "F8q^5w!F9S4#!")
+                            .then(
+                              (value) => log("login status: " + value),
+                            ),
+                      },
+                      child: Text('Login Bypass (Dev Phase) - Stress Test'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () => {
+                        setState(() {
+                          _pageState <= 2 ? _pageState = 3 : _pageState = 1;
+                        })
+                      },
+                      child: Text('Animation Test'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () => setState(() {
+                _pageState = 1;
+              }),
+              child: AnimatedContainer(
+                  curve: Curves.fastLinearToSlowEaseIn,
+                  duration: Duration(milliseconds: 600),
+                  transform: Matrix4.translationValues(0, _registerYOffset, 0),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.background,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(32),
+                      topRight: Radius.circular(32),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withAlpha(80),
+                        blurRadius: 16,
+                      ),
+                    ],
+                  ),
+                  child: Container(
+                    width: double.infinity,
+                    child: Column(
+                      children: [
+                        Text('I am the register page!'),
+                        ElevatedButton(
+                          onPressed: () => {
+                            setState(() {
+                              _pageState <= 2 ? _pageState = 3 : _pageState = 2;
+                            })
+                          },
+                          child: Text('Animation Test'),
+                        ),
+                        ElevatedButton(
+                          onPressed: () => {
+                            setState(() {
+                              _pageState = 1;
+                            })
+                          },
+                          child: Text('To Login'),
+                        ),
+                      ],
+                    ),
+                  )),
+            ),
+          ],
+        ),
       ),
     );
   }
