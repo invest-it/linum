@@ -30,6 +30,8 @@ class _EnterScreenState extends State<EnterScreen> {
     DateTime selectedDateDateTimeFormatted =
         DateTime.parse(selectedDateStringFormatted);
 
+    final formKey = enterScreenProvider.formKey;
+
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -58,6 +60,10 @@ class _EnterScreenState extends State<EnterScreen> {
                         fixedSize: Size(proportionateScreenWidth(300),
                             proportionateScreenHeight(40))),
                     onPressed: () {
+                      // if (!enterScreenProvider.formKey.currentState
+                      //     .validate()) {
+                      //   return;
+                      // }
                       Navigator.of(context).pop();
                       //a single balance is added to the balancedataprovider
                       //with the values of the input from the user

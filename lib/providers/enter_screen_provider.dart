@@ -9,6 +9,7 @@ class EnterScreenProvider with ChangeNotifier {
   String _category = "";
   String _currency = "";
   DateTime _selectedDate = DateTime.now();
+  final _formKey = GlobalKey<FormState>();
   //amount: amount, category: category, currency: currency, name: name, time: time
 
   setIsExpenses(bool isExpenses) {
@@ -81,5 +82,9 @@ class EnterScreenProvider with ChangeNotifier {
 
   get selectedDate {
     return _selectedDate;
+  }
+
+  get formKey {
+    return _formKey;
   }
 }
