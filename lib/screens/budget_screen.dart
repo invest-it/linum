@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linum/frontend_functions/silent-scroll.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/widgets/home_screen/home_screen_listview.dart';
@@ -21,14 +22,45 @@ class BudgetScreen extends StatelessWidget {
     }
     return ScreenSkeleton(
         head: 'Budget',
-        body: Expanded(
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-            child: balanceDataProvider.fillListViewWithData(
-              HomeScreenListView(),
-              context: context,
+        body: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0),
+                  child: Text("Alle Transaktionen",
+                      style: Theme.of(context).textTheme.headline5),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 15.0),
+                  child: TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      "FILTER",
+                      style: Theme.of(context).textTheme.overline?.copyWith(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontSize: 14,
+                          ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                child: ScrollConfiguration(
+                  behavior: SilentScroll(),
+                  child: balanceDataProvider.fillListViewWithData(
+                    HomeScreenListView(),
+                    context: context,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
         isInverted: false);
   }

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/frontend_functions/silent-scroll.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/screen_index_provider.dart';
@@ -78,9 +79,12 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                  child: balanceDataProvider.fillListViewWithData(
-                    HomeScreenListView(),
-                    context: context,
+                  child: ScrollConfiguration(
+                    behavior: SilentScroll(),
+                    child: balanceDataProvider.fillListViewWithData(
+                      HomeScreenListView(),
+                      context: context,
+                    ),
                   ),
                 ),
               ),
