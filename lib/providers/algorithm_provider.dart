@@ -13,6 +13,25 @@ class AlgorithmProvider extends ChangeNotifier {
 
   int Function(dynamic, dynamic) get currentSorter => _currentSorter;
 
+  DateTime _currentShownMonth =
+      DateTime(DateTime.now().year, DateTime.now().month);
+
+  DateTime get currentShownMonth => _currentShownMonth;
+
+  void setCurrentShownMonth(DateTime inputMonth) {
+    _currentShownMonth = DateTime(inputMonth.year, inputMonth.month);
+  }
+
+  void nextMonth() {
+    _currentShownMonth =
+        DateTime(_currentShownMonth.year, _currentShownMonth.month + 1);
+  }
+
+  void previousMonth() {
+    _currentShownMonth =
+        DateTime(_currentShownMonth.year, _currentShownMonth.month - 1);
+  }
+
   AlgorithmProvider() {
     _currentSorter = timeNewToOld;
     _currentFilter = olderThan(Timestamp.fromDate(DateTime.now()));
