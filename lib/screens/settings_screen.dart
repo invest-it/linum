@@ -56,6 +56,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         head: 'Account',
         isInverted: false,
         body: ListView(
+          padding: EdgeInsets.zero,
           children: [
             Column(
               children: [
