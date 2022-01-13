@@ -45,7 +45,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     StandardAccount.Depot: "Depot",
   };
 
-  String dropdownValue = 'Währung auswählen';
+  String dropdownValue = 'Euro (EUR, €)';
 
   @override
   // final Function ontap = CurrencyList();
@@ -71,7 +71,30 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Währung'),
+                      Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        spacing: 8,
+                        children: [
+                          Text('STANDARD-WÄHRUNG',
+                              style: Theme.of(context).textTheme.overline),
+                          Tooltip(
+                            child: Align(
+                              heightFactor: 1,
+                              widthFactor: 1,
+                              child: Icon(
+                                Icons.help_outline_rounded,
+                                size: 10 * 1.8,
+                              ),
+                            ),
+                            message:
+                                'Diese Währung wird standardmäßig bei jeder neuen Transaktion genutzt. Du kannst diese auch individuell ändern.',
+                            triggerMode: TooltipTriggerMode.tap,
+                            padding: EdgeInsets.all(8.0),
+                            enableFeedback: false,
+                            preferBelow: false,
+                          ),
+                        ],
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(
                           top: 8.0,
@@ -91,7 +114,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             });
                           },
                           items: <String>[
-                            'Währung auswählen',
                             'Euro (EUR, €)',
                             'Dollar (USD, \$)',
                             'Pfund (GBP, £)',
@@ -138,7 +160,30 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Standard Kategorien'),
+                      Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        spacing: 8,
+                        children: [
+                          Text('STANDARD-KATEGORIEN',
+                              style: Theme.of(context).textTheme.overline),
+                          Tooltip(
+                            child: Align(
+                              heightFactor: 1,
+                              widthFactor: 1,
+                              child: Icon(
+                                Icons.help_outline_rounded,
+                                size: 10 * 1.8,
+                              ),
+                            ),
+                            message:
+                                'Diese Kategorien werden standardmäßig bei jeder neuen Einnahme/Ausgabe/Transaktion genutzt. Du kannst diese auch individuell ändern.',
+                            triggerMode: TooltipTriggerMode.tap,
+                            padding: EdgeInsets.all(8.0),
+                            enableFeedback: false,
+                            preferBelow: false,
+                          ),
+                        ],
+                      ),
                       GestureDetector(
                         onTap: () {
                           showModalBottomSheet(
@@ -277,7 +322,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Besondere Einstellungen'),
+                        Text('BESONDERE EINSTELLUNGEN',
+                            style: Theme.of(context).textTheme.overline),
                         SwitchListTile(
                           // onTap: ontap(),
                           title: Text('Schwabenmodus'),
