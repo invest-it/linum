@@ -105,7 +105,7 @@ class MyApp extends StatelessWidget {
           ),
           overline: GoogleFonts.dmSans(
               fontSize: 10,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w700,
               letterSpacing: 1.5,
               color: createMaterialColor(Color(0xFF505050))),
           button: GoogleFonts.dmSans(
