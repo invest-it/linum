@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linum/frontend_functions/decimal_text_input_formatter.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/widgets/text_container.dart';
@@ -77,13 +78,18 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                 Container(
                   //current solution to "center" the textfield as best as possible
                   width: sizeMyController.width + 120,
-                  child: TextField(
+                  child: TextFormField(
+                    inputFormatters: [
+                      DecimalTextInputFormatter(decimalRange: 2)
+                    ],
+                    maxLength: 7,
                     textAlign: TextAlign.start,
                     textAlignVertical: TextAlignVertical.center,
                     controller: myController,
                     showCursor: false,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
+                      counter: SizedBox.shrink(),
                       isCollapsed: true,
                       isDense: true,
                       hintText:

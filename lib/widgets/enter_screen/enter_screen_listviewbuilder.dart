@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linum/frontend_functions/decimal_text_input_formatter.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:provider/provider.dart';
@@ -67,12 +68,14 @@ class _EnterScreenListViewBuilderState
           Container(
             width: proportionateScreenWidth(281),
             child: TextField(
+              maxLength: 18,
               controller: myController,
               showCursor: true,
               textAlign: TextAlign.start,
               decoration: InputDecoration(
                 hintText: _hintTextChooser(enterScreenProvider),
                 hintStyle: TextStyle(),
+                counter: SizedBox.shrink(),
                 border: InputBorder.none,
                 focusedBorder: InputBorder.none,
               ),
@@ -433,5 +436,13 @@ class _EnterScreenListViewBuilderState
         ),
       );
     }
+  }
+
+  String validateMyInput(String value) {
+    RegExp regex = new RegExp(r'^(?=\D*(?:\d\D*){1,12}$)\d+(?:\.\d{1,4})?$');
+    if (!regex.hasMatch(value))
+      return 'Enter Valid Number';
+    else
+      return 'Nothing';
   }
 }
