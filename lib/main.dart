@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
           primaryVariant: Colors.green,
           secondary: createMaterialColor(Color(0xFF505050)),
           secondaryVariant: Colors.white,
-          surface: Colors.red,
+          surface: createMaterialColor(Color(0xFFC1E695)),
           background: createMaterialColor(Color(0xFFFAFAFA)),
           error: createMaterialColor(Color(0xFFEB5757)),
           onPrimary: createMaterialColor(Color(0xFFFAFAFA)),
@@ -112,7 +112,7 @@ class MyApp extends StatelessWidget {
               fontSize: 19.2,
               fontWeight: FontWeight.w500,
               letterSpacing: 0.15,
-              color: createMaterialColor(Color(0xFF505050))),
+              color: createMaterialColor(Color(0xFFFAFAFA))),
         ),
       ),
 
