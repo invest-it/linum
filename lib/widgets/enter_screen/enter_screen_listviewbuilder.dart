@@ -35,7 +35,6 @@ class _EnterScreenListViewBuilderState
     extends State<EnterScreenListViewBuilder> {
   String selectedCategory = "";
   String selectedAccount = "";
-  String selectedRepetition = "";
 
   DateTime selectedDate = DateTime.now();
   final firstDate = DateTime(2020, 1);
@@ -281,8 +280,7 @@ class _EnterScreenListViewBuilderState
             title: Text(widget.categoriesRepeat[indexBuilder]),
             //selects the item as the repeat value
             onTap: () => _selectRepeatItem(
-              widget.categoriesRepeat[indexBuilder],
-            ),
+                widget.categoriesRepeat[indexBuilder], enterScreenProvider),
           );
         },
       );
@@ -324,8 +322,7 @@ class _EnterScreenListViewBuilderState
             leading: Icon(widget.categories[index].icon),
             title: Text(widget.categoriesRepeat[indexBuilder]),
             onTap: () => _selectRepeatItem(
-              widget.categoriesRepeat[indexBuilder],
-            ),
+                widget.categoriesRepeat[indexBuilder], enterScreenProvider),
           );
         },
       );
@@ -366,8 +363,7 @@ class _EnterScreenListViewBuilderState
             leading: Icon(widget.categories[index].icon),
             title: Text(widget.categoriesRepeat[indexBuilder]),
             onTap: () => _selectRepeatItem(
-              widget.categoriesRepeat[indexBuilder],
-            ),
+                widget.categoriesRepeat[indexBuilder], enterScreenProvider),
           );
         },
       );
@@ -382,7 +378,7 @@ class _EnterScreenListViewBuilderState
     } else if (index == 2) {
       return Text(enterScreenProvider.selectedDate.toString().split(' ')[0]);
     } else if (index == 3) {
-      return Text(selectedRepetition);
+      return Text(enterScreenProvider.repeat);
     } else
       return Text("Trash");
   }
@@ -402,10 +398,10 @@ class _EnterScreenListViewBuilderState
     });
   }
 
-  void _selectRepeatItem(String name) {
+  void _selectRepeatItem(String name, enterScreenProvider) {
     Navigator.pop(context);
     setState(() {
-      selectedRepetition = name;
+      enterScreenProvider.setRepeat(name);
     });
   }
 

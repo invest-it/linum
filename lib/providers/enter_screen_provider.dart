@@ -8,7 +8,9 @@ class EnterScreenProvider with ChangeNotifier {
   double _amount = 0.0;
   String _category = "";
   String _currency = "";
+  String _repeat = "Niemals";
   DateTime _selectedDate = DateTime.now();
+
   final _formKey = GlobalKey<FormState>();
   //amount: amount, category: category, currency: currency, name: name, time: time
 
@@ -52,6 +54,11 @@ class EnterScreenProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  setRepeat(String repeat) {
+    _repeat = repeat;
+    notifyListeners();
+  }
+
   get isExpenses {
     return _isExpenses;
   }
@@ -86,5 +93,9 @@ class EnterScreenProvider with ChangeNotifier {
 
   get formKey {
     return _formKey;
+  }
+
+  get repeat {
+    return _repeat;
   }
 }
