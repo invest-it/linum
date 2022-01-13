@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -111,7 +109,6 @@ class HomeScreenCard extends StatelessWidget {
                         style: Theme.of(context).textTheme.headline3,
                       ),
                       Text(
-                        // TODO make the fake buttons actual buttons, OR add some gestureFields for interaction
                         '< ' +
                             dateFormat
                                 .format(algorithmProvider.currentShownMonth) +
