@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/providers/algorithm_provider.dart';
@@ -24,11 +26,14 @@ class _HomeScreenState extends State<HomeScreen> {
     BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
 
-    AlgorithmProvider algorithmProvider =
-        Provider.of<AlgorithmProvider>(context);
+    // AlgorithmProvider algorithmProvider =
+    //     Provider.of<AlgorithmProvider>(context, listen: false);
 
-    algorithmProvider.setCurrentFilterAlgorithm(
-        AlgorithmProvider.olderThan(Timestamp.fromDate(DateTime.now())));
+    // if (!algorithmProvider.currentFilter(
+    //     {"time": Timestamp.fromDate(DateTime.now().add(Duration(days: 1)))})) {
+    //   algorithmProvider.setCurrentFilterAlgorithm(
+    //       AlgorithmProvider.olderThan(Timestamp.fromDate(DateTime.now())));
+    // }
 
     return ScreenSkeleton(
       head: 'Home',
@@ -50,7 +55,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: Theme.of(context).textTheme.headline5),
                     ),
                     TextButton(
-                      onPressed: () => screenIndexProvider.setPageIndex(1),
+                      onPressed: () {
+                        Provider.of<AlgorithmProvider>(context, listen: false)
+                            .setCurrentFilterAlgorithmSilently(
+                          AlgorithmProvider.olderThan(
+                            Timestamp.fromDate(DateTime.now()),
+                          ),
+                        );
+                        screenIndexProvider.setPageIndex(1);
+                      },
                       child: Text(
                         "MEHR",
                         style: Theme.of(context).textTheme.overline?.copyWith(

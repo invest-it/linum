@@ -34,7 +34,7 @@ class HomeScreenCard extends StatelessWidget {
     return GestureDetector(
       onHorizontalDragEnd: (DragEndDetails details) {
         // Note: Sensitivity is integer used when you don't want to mess up vertical drag
-        int sensitivity = 8;
+        int sensitivity = 1;
         if (details.primaryVelocity! > sensitivity) {
           // Right Swipe, going back in time
           algorithmProvider.previousMonth();
@@ -51,6 +51,16 @@ class HomeScreenCard extends StatelessWidget {
         } else if (details.primaryVelocity! < -sensitivity) {
           //Left Swipe, going forward in time
           algorithmProvider.nextMonth();
+          algorithmProvider
+              .setCurrentFilterAlgorithm(AlgorithmProvider.inBetween(
+            Timestamp.fromDate(
+              algorithmProvider.currentShownMonth,
+            ),
+            Timestamp.fromDate(DateTime(
+              algorithmProvider.currentShownMonth.year,
+              algorithmProvider.currentShownMonth.month + 1,
+            )),
+          ));
         }
       },
       onTap: () {
