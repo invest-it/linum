@@ -156,8 +156,8 @@ class _OnboardingScreenState extends State<OnboardingPage> {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: index == _currentPage
-            ? Theme.of(context).colorScheme.error
-            : Theme.of(context).colorScheme.onError,
+            ? Theme.of(context).colorScheme.primaryVariant
+            : Theme.of(context).colorScheme.primary,
       ),
     );
   }
@@ -165,14 +165,22 @@ class _OnboardingScreenState extends State<OnboardingPage> {
   // States: 0 = normal onboarding, 1 = login page, 2 = register page
   int _pageState = 0;
 
+  // hides developer login bypasses
+  // TODO BEFORE MVP REMOVE THIS FFS!
+  int devMode = 0;
+
   double _loginYOffset = 0;
   double _loginXOffset = 0;
   double _registerYOffset = 0;
   double _loginWidth = 0;
-  double _registerWidth = 0;
+
   double _loginOpacity = 1;
   double windowWidth = realScreenWidth();
   double windowHeight = realScreenHeight();
+
+  final _mailController = TextEditingController();
+  final _passController = TextEditingController();
+  late final Function logIn;
 
   @override
   Widget build(BuildContext context) {
@@ -184,7 +192,6 @@ class _OnboardingScreenState extends State<OnboardingPage> {
         _registerYOffset = windowHeight;
         _loginXOffset = 0;
         _loginWidth = windowWidth;
-        _registerWidth = windowWidth;
         _loginOpacity = 1;
         break;
       case 1:
@@ -192,7 +199,6 @@ class _OnboardingScreenState extends State<OnboardingPage> {
         _registerYOffset = windowHeight;
         _loginXOffset = 0;
         _loginWidth = windowWidth;
-        _registerWidth = windowWidth;
         _loginOpacity = 1;
         break;
       case 2:
@@ -200,8 +206,18 @@ class _OnboardingScreenState extends State<OnboardingPage> {
         _registerYOffset = 200;
         _loginXOffset = 20;
         _loginWidth = windowWidth - 40;
-        _registerWidth = windowWidth;
         _loginOpacity = 0.80;
+    }
+
+    void logIn(String _mail, String _pass) {
+      auth
+          .signIn(
+            _mail,
+            _pass,
+          )
+          .then(
+            (value) => log("login status: " + value),
+          );
     }
 
     return Scaffold(
@@ -212,6 +228,8 @@ class _OnboardingScreenState extends State<OnboardingPage> {
         }),
         child: Stack(
           children: [
+            // TODO Add the Silent Scroll Handler here -
+            // I was too lazy to stash the thing I was working on when I thought about this
             PageView(
               controller: _pageController,
               onPageChanged: _handleOnPageChanged,
@@ -238,7 +256,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                       child: GradientButton(
                         child: Text(
                           'Jetzt registrieren!',
-                          style: Theme.of(context).textTheme.headline5,
+                          style: Theme.of(context).textTheme.button,
                         ),
                         callback: () => {
                           setState(() {
@@ -276,7 +294,8 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                 ],
               ),
             ),
-// remove this in case it does not work
+
+// Auth Screens
 
             GestureDetector(
               onTap: () => setState(() {
@@ -302,70 +321,355 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                       color: Theme.of(context)
                           .colorScheme
                           .onSurface
-                          .withAlpha(135),
+                          .withAlpha(_pageState == 0 ? 0 : 135),
                       blurRadius: 16,
                     ),
                   ],
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                child: Stack(
                   children: [
-                    AnimatedSize(
-                      curve: Curves.fastLinearToSlowEaseIn,
-                      duration: Duration(milliseconds: 600),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        AnimatedSize(
+                          curve: Curves.fastLinearToSlowEaseIn,
+                          duration: Duration(milliseconds: 800),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              topLeft: _pageState == 2
+                                  ? Radius.circular(32)
+                                  : Radius.circular(0),
+                              topRight: _pageState == 2
+                                  ? Radius.circular(32)
+                                  : Radius.circular(0),
+                            ),
+                            child: Container(
+                              width: double.infinity,
+                              height: _pageState == 2 ? 32 * 1.2 : 0,
+                              color: Theme.of(context).colorScheme.primary,
+                              child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 6.0),
+                                      child: Text(
+                                        'Du hast einen Account? Hier einloggen',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1
+                                            ?.copyWith(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onPrimary),
+                                      ),
+                                    ),
+                                  ]),
+                            ),
+                          ),
+                        ),
+
+                        //CONTENTS OF LOGIN HERE
+
+                        devMode >= 6
+                            ? Wrap(
+                                spacing: 8,
+                                children: [
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      minimumSize: Size.zero,
+                                      padding: EdgeInsets.zero,
+                                      primary:
+                                          Theme.of(context).colorScheme.onError,
+                                    ),
+                                    onPressed: () => {
+                                      auth
+                                          .signIn(
+                                              "Soencke.Evers@investit-academy.de",
+                                              "tempPassword123")
+                                          .then(
+                                            (value) =>
+                                                log("login status: " + value),
+                                          ),
+                                    },
+                                    child: Text(
+                                      'Perform Normal Login',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .overline
+                                          ?.copyWith(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onPrimary),
+                                    ),
+                                  ),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        minimumSize: Size.zero,
+                                        padding: EdgeInsets.zero,
+                                        primary: Theme.of(context)
+                                            .colorScheme
+                                            .error),
+                                    onPressed: () => {
+                                      auth
+                                          .signIn(
+                                              "linum.debug@investit-academy.de",
+                                              "F8q^5w!F9S4#!")
+                                          .then(
+                                            (value) =>
+                                                log("login status: " + value),
+                                          ),
+                                    },
+                                    child: Text(
+                                      'Perform Stress Test',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .overline
+                                          ?.copyWith(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onPrimary),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : Wrap(),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12.0),
+                          child: Text(
+                            "LOGIN",
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(5.0),
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondary,
+                                    borderRadius: BorderRadius.circular(10),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onBackground,
+                                        blurRadius: 20.0,
+                                        offset: Offset(0, 10),
+                                      ),
+                                    ]),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.all(8.0),
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                          bottom: BorderSide(
+                                              color: Colors.grey.shade100),
+                                        ),
+                                      ),
+                                      child: TextField(
+                                        controller: _mailController,
+                                        keyboardType:
+                                            TextInputType.emailAddress,
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: "E-Mail-Adresse",
+                                          hintStyle: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1
+                                              ?.copyWith(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .secondary),
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.all(8.0),
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                          bottom: BorderSide(
+                                              color: Colors.grey.shade100),
+                                        ),
+                                      ),
+                                      child: TextField(
+                                        obscureText: true,
+                                        controller: _passController,
+                                        keyboardType:
+                                            TextInputType.visiblePassword,
+                                        onSubmitted: (_) => {
+                                          setState(
+                                            () {
+                                              logIn(_mailController.text,
+                                                  _passController.text);
+                                            },
+                                          )
+                                        },
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: "Passwort",
+                                          hintStyle: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1
+                                              ?.copyWith(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .secondary),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: proportionateScreenHeight(32),
+                              ),
+                              // Container(
+                              //   height: 50,
+                              //   decoration: BoxDecoration(
+                              //     borderRadius: BorderRadius.circular(10),
+                              //     gradient: LinearGradient(
+                              //       colors: [
+                              //         Theme.of(context).colorScheme.primary,
+                              //         Theme.of(context).colorScheme.surface,
+                              //       ],
+                              //     ),
+                              //   ),
+                              //   child: Center(
+                              //     child: Text(
+                              //       'Einloggen',
+                              //       style: Theme.of(context).textTheme.button,
+                              //     ),
+                              //   ),
+                              // ),
+
+                              GradientButton(
+                                increaseHeightBy: proportionateScreenHeight(16),
+                                child: Text(
+                                  'Anmelden',
+                                  style: Theme.of(context).textTheme.button,
+                                ),
+                                callback: () => {
+                                  setState(
+                                    () {
+                                      logIn(_mailController.text,
+                                          _passController.text);
+                                    },
+                                  )
+                                },
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Theme.of(context).colorScheme.primary,
+                                    createMaterialColor(Color(0xFFC1E695)),
+                                  ],
+                                ),
+                                elevation: 0,
+                                increaseWidthBy: double.infinity,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)),
+                              ),
+                              SizedBox(
+                                height: proportionateScreenHeight(8),
+                              ),
+                              OutlinedButton(
+                                //TODO implement this functionality
+                                onPressed: null,
+                                child: Text(
+                                  'Passwort vergessen?',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .button
+                                      ?.copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSurface),
+                                ),
+                                style: OutlinedButton.styleFrom(
+                                  elevation: 8,
+                                  shadowColor: Theme.of(context)
+                                      .colorScheme
+                                      .onBackground,
+                                  minimumSize: Size(
+                                    double.infinity,
+                                    proportionateScreenHeight(64),
+                                  ),
+                                  backgroundColor:
+                                      Theme.of(context).colorScheme.background,
+                                  side: BorderSide(
+                                    width: 2,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                              ),
+                              IconButton(
+                                color: Colors.grey.shade200,
+                                onPressed: () {
+                                  setState(() {
+                                    devMode++;
+                                    log(
+                                      devMode < 6
+                                          ? 'OK, in ' +
+                                              (6 - devMode).toString() +
+                                              ' Schritten bist du Entwickler.'
+                                          : 'OK, du bist nun Entwickler.',
+                                    );
+                                  });
+                                },
+                                icon: Icon(Icons.developer_board_rounded),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    Positioned(
+                      left: 0,
+                      bottom: 200,
+                      right: 0,
                       child: ClipRRect(
                         borderRadius: BorderRadius.only(
-                          topLeft: _pageState == 3
-                              ? Radius.circular(32)
-                              : Radius.circular(0),
-                          topRight: _pageState == 3
-                              ? Radius.circular(32)
-                              : Radius.circular(0),
+                          topLeft: Radius.circular(32),
+                          topRight: Radius.circular(32),
                         ),
-                        child: Container(
-                          width: double.infinity,
-                          height: _pageState == 3 ? 32 : 0,
-                          color: Theme.of(context).colorScheme.secondary,
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _pageState = 2;
+                            });
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            height: proportionateScreenHeight(42),
+                            color: Theme.of(context).colorScheme.primary,
+                            child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: Text(
+                                      'Noch keinen Account? Hier registrieren',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1
+                                          ?.copyWith(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onPrimary),
+                                    ),
+                                  ),
+                                ]),
+                          ),
                         ),
                       ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => {
-                        auth
-                            .signIn("Soencke.Evers@investit-academy.de",
-                                "tempPassword123")
-                            .then(
-                              (value) => log("login status: " + value),
-                            ),
-                      },
-                      child: Text('Login Bypass (Dev Phase)'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => {
-                        auth
-                            .signIn("linum.debug@investit-academy.de",
-                                "F8q^5w!F9S4#!")
-                            .then(
-                              (value) => log("login status: " + value),
-                            ),
-                      },
-                      child: Text('Login Bypass (Dev Phase) - Stress Test'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => {
-                        setState(() {
-                          _pageState <= 2 ? _pageState = 3 : _pageState = 1;
-                        })
-                      },
-                      child: Text('Animation Test'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => {
-                        setState(() {
-                          _pageState = 2;
-                        })
-                      },
-                      child: Text('To Register'),
                     ),
                   ],
                 ),
@@ -377,7 +681,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
               }),
               child: AnimatedContainer(
                   curve: Curves.fastLinearToSlowEaseIn,
-                  duration: Duration(milliseconds: 600),
+                  duration: Duration(milliseconds: 800),
                   transform: Matrix4.translationValues(0, _registerYOffset, 0),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.background,
@@ -398,24 +702,9 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                   child: Container(
                     width: double.infinity,
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('I am the register page!'),
-                        ElevatedButton(
-                          onPressed: () => {
-                            setState(() {
-                              _pageState <= 2 ? _pageState = 3 : _pageState = 2;
-                            })
-                          },
-                          child: Text('Animation Test'),
-                        ),
-                        ElevatedButton(
-                          onPressed: () => {
-                            setState(() {
-                              _pageState = 1;
-                            })
-                          },
-                          child: Text('To Login'),
-                        ),
+                        Text('I am the register page! Work in Progress.'),
                       ],
                     ),
                   )),
