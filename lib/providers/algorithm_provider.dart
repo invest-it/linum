@@ -39,9 +39,15 @@ class AlgorithmProvider extends ChangeNotifier {
 
   void setCurrentSortAlgorithm(int Function(dynamic, dynamic) sorter) {
     _currentSorter = sorter;
+    notifyListeners();
   }
 
   void setCurrentFilterAlgorithm(bool Function(dynamic) filter) {
+    _currentFilter = filter;
+    notifyListeners();
+  }
+
+  void setCurrentFilterAlgorithmSilently(bool Function(dynamic) filter) {
     _currentFilter = filter;
   }
 
@@ -149,7 +155,7 @@ class AlgorithmProvider extends ChangeNotifier {
   static bool Function(dynamic) inBetween(
       Timestamp timestamp1, Timestamp timestamp2) {
     return (dynamic a) =>
-        (a["time"].compareTo(timestamp1) <= 0) &&
+        (a["time"].compareTo(timestamp1) <= 0) ||
         (a["time"].compareTo(timestamp2) >= 0);
   }
 
