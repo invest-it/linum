@@ -359,6 +359,14 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                       },
                       child: Text('Animation Test'),
                     ),
+                    ElevatedButton(
+                      onPressed: () => {
+                        setState(() {
+                          _pageState = 2;
+                        })
+                      },
+                      child: Text('To Register'),
+                    ),
                   ],
                 ),
               ),
