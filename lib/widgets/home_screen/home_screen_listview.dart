@@ -68,7 +68,9 @@ class HomeScreenListView implements BalanceDataListView {
 
     //log(balanceData.toString());
     List<Widget> list = [];
-    if (balanceData[0] != null && balanceData[0]["Error"] == null) {
+    if (balanceData.length == 0) {
+      list.add(TimeWidget(displayValue: "Keine Einträge bisher"));
+    } else if (balanceData[0] != null && balanceData[0]["Error"] == null) {
       balanceData.forEach(
         (arrayElement) {
           DateTime date = arrayElement["time"].toDate() as DateTime;

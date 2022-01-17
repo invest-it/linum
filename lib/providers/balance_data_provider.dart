@@ -94,7 +94,6 @@ class BalanceDataProvider extends ChangeNotifier {
           // (and possibly also a filter algorithm provided)
           balanceData.sort(_algorithmProvider.currentSorter);
           balanceData.removeWhere(_algorithmProvider.currentFilter);
-
           blistview.setBalanceData(balanceData, context: context);
           return blistview.listview;
         }
