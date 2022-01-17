@@ -1,4 +1,5 @@
 // Even if VSCode should mark this as unused, DO NOT remove developer from the import list. Thanks.
+// ignore: unused_import
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,6 +13,7 @@ import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/screens/layout_screen.dart';
 import 'package:linum/providers/authentication_service.dart';
+import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/screens/onboarding_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -180,6 +182,20 @@ class _MyHomePageState extends State<MyHomePage> {
                     return oldBalance..updateAlgorithmProvider(algo);
                   } else {
                     return BalanceDataProvider(ctx);
+                  }
+                },
+                lazy: false,
+              ),
+              ChangeNotifierProxyProvider<AuthenticationService,
+                  AccountSettingsProvider>(
+                create: (ctx) {
+                  return AccountSettingsProvider(ctx);
+                },
+                update: (ctx, auth, oldAccountSettings) {
+                  if (oldAccountSettings != null) {
+                    return oldAccountSettings..updateAuth(auth);
+                  } else {
+                    return AccountSettingsProvider(ctx);
                   }
                 },
                 lazy: false,
