@@ -56,7 +56,7 @@ class BalanceDataProvider extends ChangeNotifier {
 
       // Future support multiple docs per user
       _balance = FirebaseFirestore.instance.collection('balance').doc(docs[0]);
-      _addRepeatablesToBalanceData();
+      await _addRepeatablesToBalanceData();
       notifyListeners();
     } else {
       log("no data found in documentToUser");
