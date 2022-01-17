@@ -7,6 +7,7 @@ import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:linum/backend_functions/url-handler.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/frontend_functions/user_alert.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/widgets/onboarding/onboarding_slide.dart';
 import 'package:provider/provider.dart';
@@ -208,9 +209,10 @@ class _OnboardingScreenState extends State<OnboardingPage> {
         _loginWidth = windowWidth - 40;
         _loginOpacity = 0.80;
     }
+    UserAlert userAlert = UserAlert(context: context);
 
     void logIn(String _mail, String _pass) {
-      auth.signIn(_mail, _pass);
+      auth.signIn(_mail, _pass, onError: userAlert.showMyDialog);
     }
 
     return Scaffold(
