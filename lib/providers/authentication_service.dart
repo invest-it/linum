@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -16,17 +18,22 @@ class AuthenticationService extends ChangeNotifier {
   bool get isLoggedIn => uid != "";
 
   /// Tries to sign the user in
-  Future<String> signIn(String email, String password) async {
+  Future<void> signIn(
+    String email,
+    String password, {
+    void Function(String)? onComplete = log,
+    void Function(String)? onError = log,
+  }) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-      notifyListeners();
 
-      return "Successfully signed in to Firebase";
+      onComplete!("Successfully signed in to Firebase");
+
+      notifyListeners();
     } on FirebaseAuthException catch (e) {
-      return e.message != null
-          ? e.message!
-          : "Firebase Error with null message";
+      onError!(
+          e.message != null ? e.message! : "Firebase Error with null message");
     }
   }
 

@@ -33,6 +33,9 @@ class BalanceDataProvider extends ChangeNotifier {
 
   /// Async part of the constructor (so notifyListeners will be used after loading)
   void asynConstructor() async {
+    if (_uid == "") {
+      return;
+    }
     DocumentSnapshot<Map<String, dynamic>> documentToUser =
         await FirebaseFirestore.instance
             .collection('balance')

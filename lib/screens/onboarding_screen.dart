@@ -210,14 +210,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
     }
 
     void logIn(String _mail, String _pass) {
-      auth
-          .signIn(
-            _mail,
-            _pass,
-          )
-          .then(
-            (value) => log("login status: " + value),
-          );
+      auth.signIn(_mail, _pass);
     }
 
     return Scaffold(
@@ -383,14 +376,9 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                                           Theme.of(context).colorScheme.onError,
                                     ),
                                     onPressed: () => {
-                                      auth
-                                          .signIn(
-                                              "Soencke.Evers@investit-academy.de",
-                                              "tempPassword123")
-                                          .then(
-                                            (value) =>
-                                                log("login status: " + value),
-                                          ),
+                                      auth.signIn(
+                                          "Soencke.Evers@investit-academy.de",
+                                          "tempPassword123"),
                                     },
                                     child: Text(
                                       'Perform Normal Login',
@@ -411,14 +399,10 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                                             .colorScheme
                                             .error),
                                     onPressed: () => {
-                                      auth
-                                          .signIn(
-                                              "linum.debug@investit-academy.de",
-                                              "F8q^5w!F9S4#!")
-                                          .then(
-                                            (value) =>
-                                                log("login status: " + value),
-                                          ),
+                                      auth.signIn(
+                                        "linum.debug@investit-academy.de",
+                                        "F8q^5w!F9S4#!",
+                                      ),
                                     },
                                     child: Text(
                                       'Perform Stress Test',
