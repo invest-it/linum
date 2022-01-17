@@ -39,19 +39,56 @@ class BalanceDataProvider extends ChangeNotifier {
             .doc("documentToUser")
             .get();
     if (documentToUser.exists) {
-      List<dynamic>? docs = documentToUser.get(_uid);
-      if (docs != null) {
-        // Future support multiple docs per user
-        _balance =
-            FirebaseFirestore.instance.collection('balance').doc(docs[0]);
-        _addRepeatablesToBalanceData();
-        notifyListeners();
-      } else {
-        log("no docs found for user: " + _uid);
+      List<dynamic>? docs;
+      try {
+        docs = documentToUser.get(_uid);
+      } catch (e) {
+        docs = await _createDoc();
       }
+      if (docs == null) {
+        //docs = await _createDoc();
+        log("error getting doc id");
+        return;
+      }
+      if (docs.length == 0) {
+        docs = await _createDoc();
+      }
+
+      // Future support multiple docs per user
+      _balance = FirebaseFirestore.instance.collection('balance').doc(docs[0]);
+      _addRepeatablesToBalanceData();
+      notifyListeners();
     } else {
       log("no data found in documentToUser");
     }
+  }
+
+  Future<List<dynamic>> _createDoc() async {
+    log("creating document");
+    DocumentSnapshot<Map<String, dynamic>> doc = await FirebaseFirestore
+        .instance
+        .collection('balance')
+        .doc("documentToUser")
+        .get();
+    Map<String, dynamic>? docData = doc.data();
+    Map<String, dynamic> docDataNullSafe = {};
+    if (docData != null) {
+      docDataNullSafe = docData;
+    }
+
+    DocumentReference<Map<String, dynamic>> ref = await FirebaseFirestore
+        .instance
+        .collection('balance')
+        .add({"balanceData": []});
+
+    await FirebaseFirestore.instance
+        .collection('balance')
+        .doc("documentToUser")
+        .set(docDataNullSafe
+          ..addAll({
+            _uid: [ref.id]
+          }));
+    return [ref.id];
   }
 
   void updateAuth(AuthenticationService? auth) {
