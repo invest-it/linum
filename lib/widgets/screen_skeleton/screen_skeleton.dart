@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/widgets/home_screen/home_screen_card.dart';
+import 'package:linum/widgets/onboarding/action_lip.dart';
 import 'package:linum/widgets/screen_skeleton/body_section.dart';
 import 'package:linum/widgets/screen_skeleton/lip_section.dart';
 import 'package:provider/provider.dart';
@@ -22,19 +26,32 @@ class ScreenSkeleton extends StatelessWidget {
   final Widget body;
   final bool isInverted;
   final bool hasHomeScreenCard;
+  final ProviderKey? providerKey;
+  final ActionLipStatus initialActionLipStatus;
 
-  const ScreenSkeleton({
-    Key? key,
+  ScreenSkeleton({
     required this.head,
     required this.body,
-    required this.isInverted,
+    this.isInverted = false,
     this.hasHomeScreenCard = false,
-  }) : super(key: key);
+    this.initialActionLipStatus = ActionLipStatus.DISABLED,
+    this.providerKey,
+  });
 
   @override
   Widget build(BuildContext context) {
     BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
+
+    ActionLipStatusProvider actionLipStatusProvider =
+        Provider.of<ActionLipStatusProvider>(context, listen: false);
+
+    if (providerKey != null &&
+        !actionLipStatusProvider.isKeyInitialized(providerKey!)) {
+      actionLipStatusProvider.setActionLip(
+          providerKey: providerKey!, actionLipStatus: initialActionLipStatus);
+    }
+
     return Stack(
       children: [
         Column(
@@ -63,7 +80,18 @@ class ScreenSkeleton extends StatelessWidget {
                 color: Colors.red,
                 height: 0,
               ),
+        if (providerKey != null)
+          ActionLip(
+            providerKey: providerKey!,
+            body: Text('It works!'),
+          ),
       ],
     );
   }
+}
+
+enum ActionLipStatus {
+  HIDDEN,
+  ONVIEWPORT,
+  DISABLED,
 }

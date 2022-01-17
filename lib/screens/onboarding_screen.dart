@@ -304,7 +304,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
               child: AnimatedContainer(
                 width: _loginWidth,
                 curve: Curves.fastLinearToSlowEaseIn,
-                duration: Duration(milliseconds: 600),
+                duration: Duration(milliseconds: 1200),
                 transform:
                     Matrix4.translationValues(_loginXOffset, _loginYOffset, 1),
                 decoration: BoxDecoration(
