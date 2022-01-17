@@ -20,7 +20,7 @@ class UserAlert {
 
   Future<void> showMyDialog(
     String message, {
-    String title = 'Fehler',
+    String title = 'Anmeldung nicht erfolgreich',
     String actionTitle = 'Okay',
     bool userMustDismissWithButton = true,
   }) async {
