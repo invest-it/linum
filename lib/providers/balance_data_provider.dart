@@ -382,10 +382,11 @@ class BalanceDataProvider extends ChangeNotifier {
   /// [id] is the id of the repeatedBalance
   /// [removeType] decides what data should be removed from the balanceData. RemoveType.NONE should only be used for repeatedData with endDate
   /// [time] is required if you want to use RemoveType.ALL_BEFORE or RemoveType.ALL_AFTER
-  Future<bool> removeRepeatedBalance(
-      {required String id,
-      required RemoveType removeType,
-      Timestamp? time}) async {
+  Future<bool> removeRepeatedBalance({
+    required String id,
+    required RemoveType removeType,
+    Timestamp? time,
+  }) async {
     if (_balance == null) {
       log("_balance is null");
       return false;
@@ -514,6 +515,25 @@ class BalanceDataProvider extends ChangeNotifier {
     if (didUpdate) {
       singleRepeatedBalance["lastUpdate"] = Timestamp.fromDate(DateTime.now());
     }
+  }
+
+  Future<void> uploadSettings(Map<String, dynamic> settings) async {
+    if (_balance == null) {
+      log("_balance is null");
+    }
+    DocumentSnapshot<Map<String, dynamic>> snapshot = await _balance!.get();
+    dynamic data = snapshot.data();
+    data["settings"] = settings;
+    await _balance!.set(data);
+  }
+
+  Future<Map<String, dynamic>> getSettings() async {
+    if (_balance == null) {
+      log("_balance is null");
+    }
+    DocumentSnapshot<Map<String, dynamic>> snapshot = await _balance!.get();
+    dynamic data = snapshot.data();
+    return data["settings"];
   }
 }
 
