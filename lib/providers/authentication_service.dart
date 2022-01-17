@@ -44,16 +44,26 @@ class AuthenticationService extends ChangeNotifier {
   }
 
   /// Tries to sign the user up
-  Future<String> signUp(String email, String password) async {
+  Future<void> signUp(
+    String email,
+    String password, {
+    void Function(String)? onComplete = log,
+    void Function(String)? onError = log,
+  }) async {
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
       notifyListeners();
-      return "Successfully signed in to Firebase";
+      onComplete!("Successfully signed in to Firebase");
     } on FirebaseAuthException catch (e) {
-      return e.message != null
-          ? e.message!
-          : "Firebase Error with null message";
+      String? gerMessage = germanErrorVersion["auth/" + e.code];
+      if (gerMessage != null) {
+        onError!(gerMessage);
+      } else {
+        onError!(e.message != null
+            ? e.message!
+            : "Firebase Error with null message");
+      }
     }
   }
 
@@ -66,20 +76,44 @@ class AuthenticationService extends ChangeNotifier {
   }
 
   /// tells firebase that [email] wants to reset the password
-  Future<String> resetPassword(String email) async {
+  Future<void> resetPassword(
+    String email, {
+    void Function(String)? onComplete = log,
+    void Function(String)? onError = log,
+  }) async {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
-      return "Successfully send password reset request to Firebase";
+      onComplete!("Successfully send password reset request to Firebase");
     } on FirebaseAuthException catch (e) {
-      return e.message != null
-          ? e.message!
-          : "Firebase Error with null message";
+      String? gerMessage = germanErrorVersion["auth/" + e.code];
+      if (gerMessage != null) {
+        onError!(gerMessage);
+      } else {
+        onError!(e.message != null
+            ? e.message!
+            : "Firebase Error with null message");
+      }
     }
   }
 
-  Future<void> signOut() async {
-    await _firebaseAuth.signOut();
-    notifyListeners();
+  Future<void> signOut({
+    void Function(String)? onComplete = log,
+    void Function(String)? onError = log,
+  }) async {
+    try {
+      await _firebaseAuth.signOut();
+      notifyListeners();
+      onComplete!("Successfully signed out from Firebase");
+    } on FirebaseAuthException catch (e) {
+      String? gerMessage = germanErrorVersion["auth/" + e.code];
+      if (gerMessage != null) {
+        onError!(gerMessage);
+      } else {
+        onError!(e.message != null
+            ? e.message!
+            : "Firebase Error with null message");
+      }
+    }
   }
 
   static const Map<String, String> germanErrorVersion = {
