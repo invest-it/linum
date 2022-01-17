@@ -76,10 +76,12 @@ class BalanceDataProvider extends ChangeNotifier {
       docDataNullSafe = docData;
     }
 
-    DocumentReference<Map<String, dynamic>> ref = await FirebaseFirestore
-        .instance
-        .collection('balance')
-        .add({"balanceData": []});
+    DocumentReference<Map<String, dynamic>> ref =
+        await FirebaseFirestore.instance.collection('balance').add({
+      "balanceData": [],
+      "repeatedBalance": [],
+      "settings": {},
+    });
 
     await FirebaseFirestore.instance
         .collection('balance')
