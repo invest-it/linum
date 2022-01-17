@@ -137,12 +137,16 @@ class BalanceDataProvider extends ChangeNotifier {
       log("_balance is null");
       return false;
     }
+    if (category == "" || currency == "" || name == "") {
+      return false;
+    }
     Map<String, dynamic> singleBalance = {
       "amount": amount,
       "category": category,
       "currency": currency,
       "name": name,
       "time": time,
+      "id": Uuid().v4(),
     };
     DocumentSnapshot<Map<String, dynamic>> snapshot = await _balance!.get();
     dynamic data = snapshot.data();
@@ -151,11 +155,8 @@ class BalanceDataProvider extends ChangeNotifier {
     return true;
   }
 
-  /// remove a single Balance and upload it (identified using the name and time)
-  Future<bool> removeSingleBalance({
-    required String name,
-    required Timestamp time,
-  }) async {
+  /// remove a single Balance and upload it (identified using id)
+  Future<bool> removeSingleBalance(String id) async {
     if (_balance == null) {
       log("_balance is null");
       return false;
@@ -165,7 +166,7 @@ class BalanceDataProvider extends ChangeNotifier {
     dynamic data = snapshot.data();
     int dataLength = data["balanceData"].length;
     data["balanceData"].removeWhere((value) {
-      return value["name"] == name && value["time"] == time;
+      return value["id"] == id || value["id"] == null; // Auto delete trash data
     });
     if (dataLength > data["balanceData"].length) {
       await _balance!.set(data);
@@ -459,6 +460,7 @@ class BalanceDataProvider extends ChangeNotifier {
         "name": singleRepeatedBalance["name"],
         "time": Timestamp.fromDate(currentTime),
         "repeatId": singleRepeatedBalance["id"],
+        "id": Uuid().v4(),
       });
       // }
 
