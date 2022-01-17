@@ -55,8 +55,6 @@ class AlgorithmProvider extends ChangeNotifier {
   void setCurrentFilterAlgorithm(bool Function(dynamic) filter) {
     _currentFilter = filter;
     notifyListeners();
-    log('Listeners have been notified!');
-    log('Reset to show everything older than' + currentShownMonth.toString());
   }
 
   void setCurrentFilterAlgorithmSilently(bool Function(dynamic) filter) {
