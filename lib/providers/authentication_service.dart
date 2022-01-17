@@ -111,7 +111,7 @@ class AuthenticationService extends ChangeNotifier {
     "auth/invalid-dynamic-link-domain":
         "Die bereitgestellte dynamische Linkdomäne ist für das aktuelle Projekt nicht konfiguriert oder autorisiert.",
     "auth/invalid-email":
-        "Der bereitgestellte Wert für die email - email - Benutzereigenschaft ist ungültig. Es muss sich um eine String-E-Mail-Adresse handeln.",
+        "Der bereitgestellte Wert für die email - Benutzereigenschaft ist ungültig. Es muss sich um eine String-E-Mail-Adresse handeln.",
     "auth/invalid-email-verified":
         "Der bereitgestellte Wert für die emailVerified Benutzereigenschaft ist ungültig. Es muss ein boolescher Wert sein.",
     "auth/invalid-hash-algorithm":
