@@ -27,16 +27,27 @@ class ScreenSkeleton extends StatelessWidget {
   final bool isInverted;
   final bool hasHomeScreenCard;
   final ProviderKey? providerKey;
-  final ActionLipStatus initialActionLipStatus;
+  ActionLipStatus initialActionLipStatus;
+  late final Widget _initialActionLipBody;
 
   ScreenSkeleton({
     required this.head,
     required this.body,
     this.isInverted = false,
     this.hasHomeScreenCard = false,
-    this.initialActionLipStatus = ActionLipStatus.DISABLED,
+    this.initialActionLipStatus = ActionLipStatus.HIDDEN,
     this.providerKey,
-  });
+    initialActionLipBody,
+  }) {
+    if (initialActionLipBody == null) {
+      _initialActionLipBody = Container();
+    } else {
+      _initialActionLipBody = initialActionLipBody;
+    }
+    if (providerKey == null) {
+      initialActionLipStatus = ActionLipStatus.DISABLED;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,11 +58,17 @@ class ScreenSkeleton extends StatelessWidget {
         Provider.of<ActionLipStatusProvider>(context, listen: false);
 
     if (providerKey != null &&
-        !actionLipStatusProvider.isKeyInitialized(providerKey!)) {
+        !actionLipStatusProvider.isActionStatusInitialized(providerKey!)) {
       actionLipStatusProvider.setActionLip(
           providerKey: providerKey!, actionLipStatus: initialActionLipStatus);
     }
 
+    if (providerKey != null &&
+        !actionLipStatusProvider.isBodyInitialized(providerKey!)) {
+      actionLipStatusProvider.setActionLipBody(
+          providerKey: providerKey!, actionLipBody: _initialActionLipBody);
+    }
+    log('message');
     return Stack(
       children: [
         Column(
@@ -83,7 +100,6 @@ class ScreenSkeleton extends StatelessWidget {
         if (providerKey != null)
           ActionLip(
             providerKey: providerKey!,
-            body: Text('It works!'),
           ),
       ],
     );

@@ -57,14 +57,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget build(BuildContext context) {
     ActionLipStatusProvider actionLipStatusProvider =
-        Provider.of<ActionLipStatusProvider>(context);
+        Provider.of<ActionLipStatusProvider>(context, listen: false);
 
     AuthenticationService auth = Provider.of<AuthenticationService>(context);
 
     return ScreenSkeleton(
         head: 'Account',
-        providerKey: ProviderKey.SETTINGS,
-        initialActionLipStatus: ActionLipStatus.ONVIEWPORT,
         body: ScrollConfiguration(
           behavior: SilentScroll(),
           child: ListView(
@@ -356,19 +354,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      setState(() {
-                        // TESTING FOR actionLip
-                        log('Clicky clicky bitch');
-                        actionLipStatusProvider.setActionLip(
-                            providerKey: // SÖNCKE HERE
-                                ProviderKey.SETTINGS,
-                            actionLipStatus: ActionLipStatus.ONVIEWPORT);
+                      auth.signOut().then((_) {
+                        Provider.of<ScreenIndexProvider>(context, listen: false)
+                            .setPageIndex(0);
                       });
-
-                      // auth.signOut().then((_) {
-                      //   Provider.of<ScreenIndexProvider>(context, listen: false)
-                      //       .setPageIndex(0);
-                      // });
                     },
                     child: Text('Ausloggen'),
                   ),

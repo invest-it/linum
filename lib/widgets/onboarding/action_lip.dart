@@ -7,19 +7,17 @@ import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
 class ActionLip extends StatefulWidget {
-  ActionLip({required this.body, required this.providerKey});
+  ActionLip({required this.providerKey});
 
-  final Widget body;
   final ProviderKey providerKey;
 
   @override
-  State<ActionLip> createState() => _ActionLipState(body, providerKey);
+  State<ActionLip> createState() => _ActionLipState(providerKey);
 }
 
 class _ActionLipState extends State<ActionLip> {
-  _ActionLipState(this.body, this.providerKey);
+  _ActionLipState(this.providerKey);
 
-  final Widget body;
   final ProviderKey providerKey;
   double _lipYOffset = realScreenHeight();
 
@@ -75,7 +73,7 @@ class _ActionLipState extends State<ActionLip> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                body,
+                actionLipStatusProvider.getActionLipBody(providerKey),
               ],
             ),
           )),
