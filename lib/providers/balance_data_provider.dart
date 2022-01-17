@@ -22,7 +22,7 @@ class BalanceDataProvider extends ChangeNotifier {
 
   num _dontDispose = 0;
 
-  static const Duration FUTURE_DURATION = Duration(days: 365 * 3);
+  static const Duration FUTURE_DURATION = Duration(days: 30 * 3);
 
   /// Creates the BalanceDataProvider. Inparticular it sets [_balance] correctly
   BalanceDataProvider(BuildContext context) {
@@ -446,10 +446,16 @@ class BalanceDataProvider extends ChangeNotifier {
     DateTime currentTime = singleRepeatedBalance["initialTime"].toDate();
     bool didUpdate = false;
 
+    Duration futureDuration =
+        Duration(seconds: singleRepeatedBalance["repeatDuration"] * 30);
+    if (futureDuration.inSeconds < FUTURE_DURATION.inSeconds) {
+      futureDuration = FUTURE_DURATION;
+    }
+
     // while we are before 10 years after today / before endTime
     while ((singleRepeatedBalance["endTime"] != null)
         ? currentTime.isBefore(singleRepeatedBalance["endTime"].toDate())
-        : currentTime.isBefore(DateTime.now().add(FUTURE_DURATION))) {
+        : currentTime.isBefore(DateTime.now().add(futureDuration))) {
       // if (currentTime.isAfter(
       // (singleRepeatedBalance["lastUpdate"] as Timestamp).toDate())) {
       didUpdate = true;
