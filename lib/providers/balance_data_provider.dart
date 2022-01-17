@@ -340,9 +340,13 @@ class BalanceDataProvider extends ChangeNotifier {
     return isEdited;
   }
 
-  // .
+  /// [id] is the id of the repeatedBalance
+  /// [removeType] decides what data should be removed from the balanceData. RemoveType.NONE should only be used for repeatedData with endDate
+  /// [time] is required if you want to use RemoveType.ALL_BEFORE or RemoveType.ALL_AFTER
   Future<bool> removeRepeatedBalance(
-      {required String id, required RemoveType removeType}) async {
+      {required String id,
+      required RemoveType removeType,
+      Timestamp? time}) async {
     if (_balance == null) {
       log("_balance is null");
       return false;
@@ -350,9 +354,15 @@ class BalanceDataProvider extends ChangeNotifier {
     DocumentSnapshot<Map<String, dynamic>> snapshot = await _balance!.get();
     dynamic data = snapshot.data();
     int length = (data["repeatedBalance"] as List<dynamic>).length;
-    (data["repeatedBalance"] as List<dynamic>)
-        .removeWhere((element) => element["id"] == id);
+    (data["repeatedBalance"] as List<dynamic>).removeWhere((element) {
+      return element["id"] == id;
+    });
     if (length == (data["repeatedBalance"] as List<dynamic>).length) {
+      return false;
+    }
+    if (removeType != RemoveType.ALL &&
+        removeType != RemoveType.NONE &&
+        time == null) {
       return false;
     }
     switch (removeType) {
@@ -360,10 +370,10 @@ class BalanceDataProvider extends ChangeNotifier {
         _deleteAllCopiesOfRepeatableLocally(id, data);
         break;
       case RemoveType.All_BEFORE:
-        // TODO: Handle this case.
+        _deleteAllOlderCopiesOfRepeatableLocally(id, data, time!);
         break;
       case RemoveType.ALL_AFTER:
-        // TODO: Handle this case.
+        _deleteAllNewerCopiesOfRepeatableLocally(id, data, time!);
         break;
       case RemoveType.NONE:
         break;
@@ -388,6 +398,38 @@ class BalanceDataProvider extends ChangeNotifier {
   void _deleteAllCopiesOfRepeatableLocally(String id, dynamic data) {
     (data["balanceData"] as List<dynamic>)
         .removeWhere((element) => element["repeatId"] == id);
+  }
+
+  Future<void> _deleteAllNewerCopiesOfRepeatable(
+      String id, Timestamp time) async {
+    DocumentSnapshot<Map<String, dynamic>> snapshot = await _balance!.get();
+    dynamic data = snapshot.data();
+
+    _deleteAllNewerCopiesOfRepeatableLocally(id, data, time);
+    return _balance!.set(data);
+  }
+
+  void _deleteAllNewerCopiesOfRepeatableLocally(
+      String id, dynamic data, Timestamp time) {
+    (data["balanceData"] as List<dynamic>).removeWhere((element) =>
+        element["repeatId"] == id &&
+        (element["time"] as Timestamp).compareTo(time) >= 0);
+  }
+
+  Future<void> _deleteAllOlderCopiesOfRepeatable(
+      String id, Timestamp time) async {
+    DocumentSnapshot<Map<String, dynamic>> snapshot = await _balance!.get();
+    dynamic data = snapshot.data();
+
+    _deleteAllOlderCopiesOfRepeatableLocally(id, data, time);
+    return _balance!.set(data);
+  }
+
+  void _deleteAllOlderCopiesOfRepeatableLocally(
+      String id, dynamic data, Timestamp time) {
+    (data["balanceData"] as List<dynamic>).removeWhere((element) =>
+        element["repeatId"] == id &&
+        (element["time"] as Timestamp).compareTo(time) <= 0);
   }
 
   Future<void> _addSingleRepeatableToBalanceData(
