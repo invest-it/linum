@@ -28,8 +28,6 @@ class AlgorithmProvider extends ChangeNotifier {
     _currentShownMonth =
         DateTime(DateTime.now().year, (DateTime.now().month) + 1)
             .subtract(Duration(microseconds: 1));
-    log("_currentShownMonth has been reset to: " +
-        _currentShownMonth.toString());
   }
 
   void nextMonth() {
