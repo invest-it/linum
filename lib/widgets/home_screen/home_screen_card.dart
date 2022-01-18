@@ -36,29 +36,63 @@ class HomeScreenCard extends StatelessWidget {
         if (details.primaryVelocity! > sensitivity) {
           // Right Swipe, going back in time
           algorithmProvider.previousMonth();
-          algorithmProvider
-              .setCurrentFilterAlgorithm(AlgorithmProvider.inBetween(
-            Timestamp.fromDate(
-              algorithmProvider.currentShownMonth,
-            ),
-            Timestamp.fromDate(DateTime(
-              algorithmProvider.currentShownMonth.year,
-              algorithmProvider.currentShownMonth.month + 1,
-            )),
-          ));
+          if (algorithmProvider.currentShownMonth.month ==
+                  DateTime.now().month &&
+              algorithmProvider.currentShownMonth.year == DateTime.now().year) {
+            algorithmProvider
+                .setCurrentFilterAlgorithm(AlgorithmProvider.inBetween(
+              Timestamp.fromDate(DateTime(
+                DateTime.now().year,
+                DateTime.now().month,
+              )),
+              Timestamp.fromDate(DateTime(
+                DateTime.now().year,
+                DateTime.now().month,
+                DateTime.now().day,
+              )),
+            ));
+          } else {
+            algorithmProvider
+                .setCurrentFilterAlgorithm(AlgorithmProvider.inBetween(
+              Timestamp.fromDate(
+                algorithmProvider.currentShownMonth,
+              ),
+              Timestamp.fromDate(DateTime(
+                algorithmProvider.currentShownMonth.year,
+                algorithmProvider.currentShownMonth.month + 1,
+              )),
+            ));
+          }
         } else if (details.primaryVelocity! < -sensitivity) {
           //Left Swipe, going forward in time
           algorithmProvider.nextMonth();
-          algorithmProvider
-              .setCurrentFilterAlgorithm(AlgorithmProvider.inBetween(
-            Timestamp.fromDate(
-              algorithmProvider.currentShownMonth,
-            ),
-            Timestamp.fromDate(DateTime(
-              algorithmProvider.currentShownMonth.year,
-              algorithmProvider.currentShownMonth.month + 1,
-            )),
-          ));
+          if (algorithmProvider.currentShownMonth.month ==
+                  DateTime.now().month &&
+              algorithmProvider.currentShownMonth.year == DateTime.now().year) {
+            algorithmProvider
+                .setCurrentFilterAlgorithm(AlgorithmProvider.inBetween(
+              Timestamp.fromDate(DateTime(
+                DateTime.now().year,
+                DateTime.now().month,
+              )),
+              Timestamp.fromDate(DateTime(
+                DateTime.now().year,
+                DateTime.now().month,
+                DateTime.now().day,
+              )),
+            ));
+          } else {
+            algorithmProvider
+                .setCurrentFilterAlgorithm(AlgorithmProvider.inBetween(
+              Timestamp.fromDate(
+                algorithmProvider.currentShownMonth,
+              ),
+              Timestamp.fromDate(DateTime(
+                algorithmProvider.currentShownMonth.year,
+                algorithmProvider.currentShownMonth.month + 1,
+              )),
+            ));
+          }
         }
       },
       onTap: () {
@@ -78,16 +112,17 @@ class HomeScreenCard extends StatelessWidget {
       onDoubleTap: () {
         // Reset to current month
         algorithmProvider.resetCurrentShownMonth();
-        algorithmProvider.setCurrentFilterAlgorithm(
-            AlgorithmProvider.olderThan(Timestamp.fromDate(
-          DateTime(
-                  algorithmProvider.currentShownMonth.year,
-                  algorithmProvider.currentShownMonth.month + 1,
-                  algorithmProvider.currentShownMonth.day)
-              .subtract(
-            Duration(microseconds: 1),
-          ),
-        )));
+        algorithmProvider.setCurrentFilterAlgorithm(AlgorithmProvider.inBetween(
+          Timestamp.fromDate(DateTime(
+            DateTime.now().year,
+            DateTime.now().month,
+          )),
+          Timestamp.fromDate(DateTime(
+            DateTime.now().year,
+            DateTime.now().month,
+            DateTime.now().day,
+          )),
+        ));
       },
       child: Column(
         children: [
