@@ -4,13 +4,15 @@ import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:provider/provider.dart';
 
+import 'enter_screen_list.dart';
+
 class EnterScreenListViewBuilder extends StatefulWidget {
   //all the lists from the enter_screen_list.dart file
   List categories;
   List categoriesExpenses;
   List categoriesIncome;
   List categoriesTransaction;
-  List categoriesCategoryExpenses;
+  List<Category> categoriesCategoryExpenses;
   List categoriesCategoryIncome;
   List categoriesAccount;
   List categoriesRepeat;
@@ -249,10 +251,10 @@ class _EnterScreenListViewBuilderState
         itemBuilder: (BuildContext context, int indexBuilder) {
           return ListTile(
             leading: Icon(widget.categories[index].icon),
-            title: Text(widget.categoriesCategoryExpenses[indexBuilder]),
+            title: Text(widget.categoriesCategoryExpenses[indexBuilder].type),
             //selects the item as the categories value
             onTap: () => _selectCategoryItem(
-                widget.categoriesCategoryExpenses[indexBuilder],
+                widget.categoriesCategoryExpenses[indexBuilder].type,
                 enterScreenProvider),
           );
         },

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/widgets/enter_screen/enter_screen_listviewbuilder.dart';
@@ -32,13 +33,15 @@ class _EnterScreenListState extends State<EnterScreenList> {
     Category("Datum", Icons.event),
     Category("Wiederholen", Icons.loop),
   ];
-  final List<String> _categoriesCategoryExpenses = [
-    "Essen & Trinken",
-    "Freizeit",
-    "Haus",
-    "Lebensstil",
-    "Auto/Nahverkehr",
-    "Diverses",
+  final List<Category> _categoriesCategoryExpenses = [
+    Category("Von Accout", Icons.event),
+    Category("ajdkfja", Icons.local_atm),
+    // "Essen & Trinken",
+    // "Freizeit",
+    // "Haus",
+    // "Lebensstil",
+    // "Auto/Nahverkehr",
+    // "Diverses",
   ];
 
   final List<String> _categoriesCategoryIncome = [

@@ -16,16 +16,18 @@ class EnterScreenTopInputField extends StatefulWidget {
 }
 
 class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
-  TextEditingController myController = TextEditingController();
+  TextEditingController? myController;
   @override
   void initState() {
     super.initState();
-    myController = TextEditingController();
   }
 
   @override
   void dispose() {
-    myController.dispose();
+    if (myController != null) {
+      myController!.dispose();
+    }
+
     super.dispose();
   }
 
@@ -35,11 +37,15 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
   Widget build(BuildContext context) {
     EnterScreenProvider enterScreenProvider =
         Provider.of<EnterScreenProvider>(context);
+    if (myController == null) {
+      myController =
+          TextEditingController(text: enterScreenProvider.amount.toString());
+    }
     //calculation of the size (width and height) of a text - here it
     //is "Expenses"
     //use like this: variable.width or variable.height
     final Size sizeMyController = (TextPainter(
-            text: TextSpan(text: myController.text),
+            text: TextSpan(text: myController!.text),
             maxLines: 1,
             textScaleFactor: MediaQuery.of(context).textScaleFactor,
             textDirection: TextDirection.ltr)
@@ -128,9 +134,9 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                       onChanged: (String _) {
                         setState(() {
                           enterScreenProvider.setAmount(
-                              double.tryParse(myController.text) == null
+                              double.tryParse(myController!.text) == null
                                   ? 0.0
-                                  : double.tryParse(myController.text)!);
+                                  : double.tryParse(myController!.text)!);
                         });
                         //print(enterScreenProvider.amount);
                       },
