@@ -22,7 +22,7 @@ class UserAlert {
     String message, {
     String title = 'Anmeldung nicht erfolgreich',
     String actionTitle = 'Okay',
-    bool userMustDismissWithButton = true,
+    bool userMustDismissWithButton = false,
   }) async {
     return showDialog<void>(
       context: _context,
@@ -30,7 +30,10 @@ class UserAlert {
           !userMustDismissWithButton, // user must tap button if userMustDismissWithButton is true
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(title),
+          title: Text(
+            title,
+            style: Theme.of(context).textTheme.headline5,
+          ),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -40,7 +43,11 @@ class UserAlert {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text(actionTitle),
+              child: Text(actionTitle,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1
+                      ?.copyWith(color: Theme.of(context).colorScheme.primary)),
               onPressed: () {
                 Navigator.of(context).pop();
               },
