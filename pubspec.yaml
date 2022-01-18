@@ -23,6 +23,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  flutter_localizations:
+    sdk: flutter
   
   flutter_svg: ^1.0.0
   url_launcher: ^6.0.17
@@ -81,6 +84,8 @@ flutter:
   assets:
     - assets/images/
     - assets/svg/
+    - lang/de.json
+    # - lang/en.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
