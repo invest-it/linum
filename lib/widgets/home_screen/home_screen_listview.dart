@@ -80,7 +80,10 @@ class HomeScreenListView implements BalanceDataListView {
                 date.isBefore(_timeWidgets[currentIndex + 1]["time"])) {
               currentIndex++;
             }
-            list.add(_timeWidgets[currentIndex]["widget"]);
+            if (date.isBefore(_timeWidgets[currentIndex]["time"]) &&
+                date.isAfter(currentTime)) {
+              list.add(_timeWidgets[currentIndex]["widget"]);
+            }
 
             currentIndex++;
           }
