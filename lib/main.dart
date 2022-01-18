@@ -232,10 +232,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
                 lazy: false,
               ),
-              ChangeNotifierProvider<ScreenIndexProvider>(
-                create: (_) => ScreenIndexProvider(),
-                lazy: false,
-              ),
+              ChangeNotifierProxyProvider<AlgorithmProvider,
+                      ScreenIndexProvider>(
+                  create: (ctx) => ScreenIndexProvider(ctx),
+                  update: (ctx, algo, oldScreenIndexProvider) {
+                    if (oldScreenIndexProvider == null) {
+                      return ScreenIndexProvider(ctx);
+                    } else {
+                      return oldScreenIndexProvider
+                        ..updateAlgorithmProvider(algo);
+                    }
+                  }),
               ChangeNotifierProvider<ActionLipStatusProvider>(
                 create: (_) => ActionLipStatusProvider(),
               ),
