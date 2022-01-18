@@ -112,16 +112,17 @@ class HomeScreenCard extends StatelessWidget {
       onDoubleTap: () {
         // Reset to current month
         algorithmProvider.resetCurrentShownMonth();
-        algorithmProvider.setCurrentFilterAlgorithm(
-            AlgorithmProvider.olderThan(Timestamp.fromDate(
-          DateTime(
-                  algorithmProvider.currentShownMonth.year,
-                  algorithmProvider.currentShownMonth.month + 1,
-                  algorithmProvider.currentShownMonth.day)
-              .subtract(
-            Duration(microseconds: 1),
-          ),
-        )));
+        algorithmProvider.setCurrentFilterAlgorithm(AlgorithmProvider.inBetween(
+          Timestamp.fromDate(DateTime(
+            DateTime.now().year,
+            DateTime.now().month,
+          )),
+          Timestamp.fromDate(DateTime(
+            DateTime.now().year,
+            DateTime.now().month,
+            DateTime.now().day,
+          )),
+        ));
       },
       child: Column(
         children: [
