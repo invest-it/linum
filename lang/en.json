@@ -1,0 +1,25 @@
+{
+
+    "onboarding_screen/card1-title": "Welcome!",
+    "onboarding_screen/card1-description": "Your new budgeting assistant is already waiting for you.",
+    "onboarding_screen/card2-title": "Money Tracker",
+    "onboarding_screen/card2-description": "It couldn’t be any simpler: With our tracking feature, you always know exactly how much money you have right now.",
+    "onboarding_screen/card3-title": "Be well prepared",
+    "onboarding_screen/card3-description": "With our Academy feature you can access a broad selection of free videos on many topics from the world of finance!",
+    "onboarding_screen/card4-title": "Stay on top of things",
+    "onboarding_screen/card4-description": "Linum automatically generates relevant statistics for you. This way you can track how you're doing with your budget.",
+    "onboarding_screen/register-button": "Sign up now!",
+    "onboarding_screen/login-button": "I have an account",
+    "onboarding_screen/svg-credit-label": "Illustrations by Freepik",
+
+    "onboarding_screen/cta-login": "Have an account? Sign in here.",
+    "onboarding_screen/cta-register": "Don't have an account? Sign up here",
+
+    "onboarding_screen/login-lip-title": "LOGIN",
+    "onboarding_screen/login-email-hintlabel": "Email address",
+    "onboarding_screen/login-password-hintlabel": "Password",
+    "onboarding_screen/login-lip-login-button": "Sign in",
+    "onboarding_screen/login-lip-forgot-password-button": "Forgot your password?",
+
+    "home_screen/label-recent-transactions": "Recent transactions"
+}

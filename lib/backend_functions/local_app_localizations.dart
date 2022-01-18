@@ -48,6 +48,7 @@ class _AppLocalizationsDelegate
     // Include all of your supported language codes here
     return [
       'de',
+      'en',
     ].contains(locale.languageCode);
   }
 
