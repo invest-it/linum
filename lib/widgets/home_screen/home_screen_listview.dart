@@ -87,7 +87,6 @@ class HomeScreenListView implements BalanceDataListView {
           if (date.isBefore(DateTime.now()) &&
               (list.length == 0 || list.last.runtimeType != TimeWidget) &&
               date.isBefore(currentTime)) {
-            log(currentIndex.toString());
             list.add(TimeWidget(
                 displayValue: date.year == DateTime.now().year
                     ? monthFormatter.format(date)
