@@ -14,7 +14,7 @@ class TimeWidget extends StatelessWidget {
       child: Align(
         alignment: Alignment.centerLeft,
         child: Text(
-          displayValue,
+          displayValue.toUpperCase(),
           style: Theme.of(context).textTheme.overline?.copyWith(
                 fontWeight: FontWeight.w700,
               ),

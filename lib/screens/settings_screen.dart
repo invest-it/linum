@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/silent-scroll.dart';
+import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
+import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
@@ -52,10 +56,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
   // final Function ontap = CurrencyList();
 
   Widget build(BuildContext context) {
+    ActionLipStatusProvider actionLipStatusProvider =
+        Provider.of<ActionLipStatusProvider>(context, listen: false);
+
     AuthenticationService auth = Provider.of<AuthenticationService>(context);
+
     return ScreenSkeleton(
         head: 'Account',
-        isInverted: false,
         body: ScrollConfiguration(
           behavior: SilentScroll(),
           child: ListView(
@@ -346,7 +353,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ]),
                   ),
                   ElevatedButton(
-                    onPressed: () => {auth.signOut()},
+                    onPressed: () {
+                      auth.signOut().then((_) {
+                        Provider.of<ScreenIndexProvider>(context, listen: false)
+                            .setPageIndex(0);
+                      });
+                    },
                     child: Text('Ausloggen'),
                   ),
                 ],

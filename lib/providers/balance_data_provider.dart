@@ -22,7 +22,7 @@ class BalanceDataProvider extends ChangeNotifier {
 
   num _dontDispose = 0;
 
-  static const Duration FUTURE_DURATION = Duration(days: 365 * 3);
+  static const Duration FUTURE_DURATION = Duration(days: 30 * 3);
 
   /// Creates the BalanceDataProvider. Inparticular it sets [_balance] correctly
   BalanceDataProvider(BuildContext context) {
@@ -33,25 +33,67 @@ class BalanceDataProvider extends ChangeNotifier {
 
   /// Async part of the constructor (so notifyListeners will be used after loading)
   void asynConstructor() async {
+    if (_uid == "") {
+      return;
+    }
     DocumentSnapshot<Map<String, dynamic>> documentToUser =
         await FirebaseFirestore.instance
             .collection('balance')
             .doc("documentToUser")
             .get();
     if (documentToUser.exists) {
-      List<dynamic>? docs = documentToUser.get(_uid);
-      if (docs != null) {
-        // Future support multiple docs per user
-        _balance =
-            FirebaseFirestore.instance.collection('balance').doc(docs[0]);
-        _addRepeatablesToBalanceData();
-        notifyListeners();
-      } else {
-        log("no docs found for user: " + _uid);
+      List<dynamic>? docs;
+      try {
+        docs = documentToUser.get(_uid);
+      } catch (e) {
+        docs = await _createDoc();
       }
+      if (docs == null) {
+        //docs = await _createDoc();
+        log("error getting doc id");
+        return;
+      }
+      if (docs.length == 0) {
+        docs = await _createDoc();
+      }
+
+      // Future support multiple docs per user
+      _balance = FirebaseFirestore.instance.collection('balance').doc(docs[0]);
+      await _addRepeatablesToBalanceData();
+      notifyListeners();
     } else {
       log("no data found in documentToUser");
     }
+  }
+
+  Future<List<dynamic>> _createDoc() async {
+    log("creating document");
+    DocumentSnapshot<Map<String, dynamic>> doc = await FirebaseFirestore
+        .instance
+        .collection('balance')
+        .doc("documentToUser")
+        .get();
+    Map<String, dynamic>? docData = doc.data();
+    Map<String, dynamic> docDataNullSafe = {};
+    if (docData != null) {
+      docDataNullSafe = docData;
+    }
+
+    DocumentReference<Map<String, dynamic>> ref =
+        await FirebaseFirestore.instance.collection('balance').add({
+      "balanceData": [],
+      "repeatedBalance": [],
+      "settings": {},
+    });
+
+    await FirebaseFirestore.instance
+        .collection('balance')
+        .doc("documentToUser")
+        .set(docDataNullSafe
+          ..addAll({
+            _uid: [ref.id]
+          }));
+    return [ref.id];
   }
 
   void updateAuth(AuthenticationService? auth) {
@@ -94,7 +136,6 @@ class BalanceDataProvider extends ChangeNotifier {
           // (and possibly also a filter algorithm provided)
           balanceData.sort(_algorithmProvider.currentSorter);
           balanceData.removeWhere(_algorithmProvider.currentFilter);
-
           blistview.setBalanceData(balanceData, context: context);
           return blistview.listview;
         }
@@ -137,12 +178,16 @@ class BalanceDataProvider extends ChangeNotifier {
       log("_balance is null");
       return false;
     }
+    if (category == "" || currency == "" || name == "") {
+      return false;
+    }
     Map<String, dynamic> singleBalance = {
       "amount": amount,
       "category": category,
       "currency": currency,
       "name": name,
       "time": time,
+      "id": Uuid().v4(),
     };
     DocumentSnapshot<Map<String, dynamic>> snapshot = await _balance!.get();
     dynamic data = snapshot.data();
@@ -151,11 +196,8 @@ class BalanceDataProvider extends ChangeNotifier {
     return true;
   }
 
-  /// remove a single Balance and upload it (identified using the name and time)
-  Future<bool> removeSingleBalance({
-    required String name,
-    required Timestamp time,
-  }) async {
+  /// remove a single Balance and upload it (identified using id)
+  Future<bool> removeSingleBalance(String id) async {
     if (_balance == null) {
       log("_balance is null");
       return false;
@@ -165,7 +207,7 @@ class BalanceDataProvider extends ChangeNotifier {
     dynamic data = snapshot.data();
     int dataLength = data["balanceData"].length;
     data["balanceData"].removeWhere((value) {
-      return value["name"] == name && value["time"] == time;
+      return value["id"] == id || value["id"] == null; // Auto delete trash data
     });
     if (dataLength > data["balanceData"].length) {
       await _balance!.set(data);
@@ -340,9 +382,14 @@ class BalanceDataProvider extends ChangeNotifier {
     return isEdited;
   }
 
-  // .
-  Future<bool> removeRepeatedBalance(
-      {required String id, required RemoveType removeType}) async {
+  /// [id] is the id of the repeatedBalance
+  /// [removeType] decides what data should be removed from the balanceData. RemoveType.NONE should only be used for repeatedData with endDate
+  /// [time] is required if you want to use RemoveType.ALL_BEFORE or RemoveType.ALL_AFTER
+  Future<bool> removeRepeatedBalance({
+    required String id,
+    required RemoveType removeType,
+    Timestamp? time,
+  }) async {
     if (_balance == null) {
       log("_balance is null");
       return false;
@@ -350,9 +397,15 @@ class BalanceDataProvider extends ChangeNotifier {
     DocumentSnapshot<Map<String, dynamic>> snapshot = await _balance!.get();
     dynamic data = snapshot.data();
     int length = (data["repeatedBalance"] as List<dynamic>).length;
-    (data["repeatedBalance"] as List<dynamic>)
-        .removeWhere((element) => element["id"] == id);
+    (data["repeatedBalance"] as List<dynamic>).removeWhere((element) {
+      return element["id"] == id;
+    });
     if (length == (data["repeatedBalance"] as List<dynamic>).length) {
+      return false;
+    }
+    if (removeType != RemoveType.ALL &&
+        removeType != RemoveType.NONE &&
+        time == null) {
       return false;
     }
     switch (removeType) {
@@ -360,10 +413,10 @@ class BalanceDataProvider extends ChangeNotifier {
         _deleteAllCopiesOfRepeatableLocally(id, data);
         break;
       case RemoveType.All_BEFORE:
-        // TODO: Handle this case.
+        _deleteAllOlderCopiesOfRepeatableLocally(id, data, time!);
         break;
       case RemoveType.ALL_AFTER:
-        // TODO: Handle this case.
+        _deleteAllNewerCopiesOfRepeatableLocally(id, data, time!);
         break;
       case RemoveType.NONE:
         break;
@@ -390,6 +443,38 @@ class BalanceDataProvider extends ChangeNotifier {
         .removeWhere((element) => element["repeatId"] == id);
   }
 
+  Future<void> _deleteAllNewerCopiesOfRepeatable(
+      String id, Timestamp time) async {
+    DocumentSnapshot<Map<String, dynamic>> snapshot = await _balance!.get();
+    dynamic data = snapshot.data();
+
+    _deleteAllNewerCopiesOfRepeatableLocally(id, data, time);
+    return _balance!.set(data);
+  }
+
+  void _deleteAllNewerCopiesOfRepeatableLocally(
+      String id, dynamic data, Timestamp time) {
+    (data["balanceData"] as List<dynamic>).removeWhere((element) =>
+        element["repeatId"] == id &&
+        (element["time"] as Timestamp).compareTo(time) >= 0);
+  }
+
+  Future<void> _deleteAllOlderCopiesOfRepeatable(
+      String id, Timestamp time) async {
+    DocumentSnapshot<Map<String, dynamic>> snapshot = await _balance!.get();
+    dynamic data = snapshot.data();
+
+    _deleteAllOlderCopiesOfRepeatableLocally(id, data, time);
+    return _balance!.set(data);
+  }
+
+  void _deleteAllOlderCopiesOfRepeatableLocally(
+      String id, dynamic data, Timestamp time) {
+    (data["balanceData"] as List<dynamic>).removeWhere((element) =>
+        element["repeatId"] == id &&
+        (element["time"] as Timestamp).compareTo(time) <= 0);
+  }
+
   Future<void> _addSingleRepeatableToBalanceData(
       dynamic singleRepeatedBalance) async {
     DocumentSnapshot<Map<String, dynamic>> snapshot = await _balance!.get();
@@ -403,10 +488,16 @@ class BalanceDataProvider extends ChangeNotifier {
     DateTime currentTime = singleRepeatedBalance["initialTime"].toDate();
     bool didUpdate = false;
 
+    Duration futureDuration =
+        Duration(seconds: singleRepeatedBalance["repeatDuration"] * 30);
+    if (futureDuration.inSeconds < FUTURE_DURATION.inSeconds) {
+      futureDuration = FUTURE_DURATION;
+    }
+
     // while we are before 10 years after today / before endTime
     while ((singleRepeatedBalance["endTime"] != null)
         ? currentTime.isBefore(singleRepeatedBalance["endTime"].toDate())
-        : currentTime.isBefore(DateTime.now().add(FUTURE_DURATION))) {
+        : currentTime.isBefore(DateTime.now().add(futureDuration))) {
       // if (currentTime.isAfter(
       // (singleRepeatedBalance["lastUpdate"] as Timestamp).toDate())) {
       didUpdate = true;
@@ -417,6 +508,7 @@ class BalanceDataProvider extends ChangeNotifier {
         "name": singleRepeatedBalance["name"],
         "time": Timestamp.fromDate(currentTime),
         "repeatId": singleRepeatedBalance["id"],
+        "id": Uuid().v4(),
       });
       // }
 
@@ -426,6 +518,25 @@ class BalanceDataProvider extends ChangeNotifier {
     if (didUpdate) {
       singleRepeatedBalance["lastUpdate"] = Timestamp.fromDate(DateTime.now());
     }
+  }
+
+  Future<void> uploadSettings(Map<String, dynamic> settings) async {
+    if (_balance == null) {
+      log("_balance is null");
+    }
+    DocumentSnapshot<Map<String, dynamic>> snapshot = await _balance!.get();
+    dynamic data = snapshot.data();
+    data["settings"] = settings;
+    await _balance!.set(data);
+  }
+
+  Future<Map<String, dynamic>> getSettings() async {
+    if (_balance == null) {
+      log("_balance is null");
+    }
+    DocumentSnapshot<Map<String, dynamic>> snapshot = await _balance!.get();
+    dynamic data = snapshot.data();
+    return data["settings"];
   }
 }
 

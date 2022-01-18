@@ -11,18 +11,19 @@ class StatisticsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenSkeleton(
-        head: 'Stats',
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TopBarActionItem(
-                buttonIcon: Icons.build,
-                onPressedAction: () => log('message'),
-              ),
-            ],
-          ),
+      head: 'Stats',
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TopBarActionItem(
+              buttonIcon: Icons.build,
+              onPressedAction: () => log('message'),
+            ),
+          ],
         ),
-        isInverted: true);
+      ),
+      isInverted: true,
+    );
   }
 }

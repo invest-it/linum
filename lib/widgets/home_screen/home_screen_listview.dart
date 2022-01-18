@@ -63,29 +63,54 @@ class HomeScreenListView implements BalanceDataListView {
 
     // remember last used index in the list
     int currentIndex = 0;
-    DateTime currentTime = DateTime(DateTime.now().year, DateTime.now().month)
-        .subtract(Duration(days: 0, microseconds: 1));
+    DateTime? currentTime;
 
     //log(balanceData.toString());
     List<Widget> list = [];
-    if (balanceData[0] != null && balanceData[0]["Error"] == null) {
+    if (balanceData.length == 0) {
+      list.add(TimeWidget(displayValue: "-KEINE EINTRÄGE BISHER-"));
+    } else if (balanceData[0] != null && balanceData[0]["Error"] == null) {
       balanceData.forEach(
         (arrayElement) {
           DateTime date = arrayElement["time"].toDate() as DateTime;
-          if (currentIndex < _timeWidgets.length &&
+          if (currentTime == null) {
+            currentTime = DateTime(date.year, date.month + 2);
+          }
+          if (date.isAfter(DateTime(
+            DateTime.now().year,
+            DateTime.now().month,
+            DateTime.now().day,
+          ))) {
+            if (date.isBefore(currentTime!)) {
+              list.add(TimeWidget(
+                  displayValue: date.year == DateTime.now().year
+                      ? monthFormatter.format(date)
+                      : monthAndYearFormatter.format(date)));
+              currentTime = DateTime(date.year, date.month);
+            }
+          } else if (currentIndex < _timeWidgets.length &&
               date.isBefore(_timeWidgets[currentIndex]["time"])) {
+            currentTime = DateTime(DateTime.now().year, DateTime.now().month)
+                .subtract(Duration(days: 0, microseconds: 1));
             while (currentIndex < (_timeWidgets.length - 1) &&
                 date.isBefore(_timeWidgets[currentIndex + 1]["time"])) {
               currentIndex++;
             }
-            list.add(_timeWidgets[currentIndex]["widget"]);
+            if (date.isBefore(_timeWidgets[currentIndex]["time"]) &&
+                date.isAfter(currentTime!)) {
+              list.add(_timeWidgets[currentIndex]["widget"]);
+            }
+
             currentIndex++;
-          } else if (date.isBefore(currentTime)) {
+          }
+          if (date.isBefore(DateTime.now()) &&
+              (list.length == 0 || list.last.runtimeType != TimeWidget) &&
+              date.isBefore(currentTime!)) {
             list.add(TimeWidget(
-                displayValue: currentTime.year == DateTime.now().year
-                    ? monthFormatter.format(currentTime)
-                    : monthAndYearFormatter.format(currentTime)));
-            currentTime = DateTime(currentTime.year, currentTime.month - 1);
+                displayValue: date.year == DateTime.now().year
+                    ? monthFormatter.format(date)
+                    : monthAndYearFormatter.format(date)));
+            currentTime = DateTime(date.year, date.month - 1);
           }
 
           list.add(
