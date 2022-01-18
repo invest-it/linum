@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
+import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/backend_functions/url-handler.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
@@ -32,28 +33,25 @@ class _OnboardingScreenState extends State<OnboardingPage> {
     _slides = [
       OnboardingSlide(
           imageURL: 'assets/svg/mobile-login.svg',
-          heading: 'Herzlich willkommen!',
+          heading: 'onboarding_screen/card1-title',
           freepikURL: 'https://storyset.com/phone',
-          description: 'Dein neuer Budgeting-Assistent wartet schon auf dich.'),
+          description: 'onboarding_screen/card1-description'),
       OnboardingSlide(
         imageURL: 'assets/svg/refund.svg',
-        heading: 'Tracke dein Geld',
+        heading: 'onboarding_screen/card2-title',
         freepikURL: 'https://storyset.com/device',
-        description:
-            'So einfach war\'s noch nie: Mit unserer Tracking-Funktion weißt du immer genau, wie viel Geld du gerade hast.',
+        description: 'onboarding_screen/card2-description',
       ),
       OnboardingSlide(
         imageURL: 'assets/svg/video-files.svg',
-        heading: 'Sei bestens vorbereitet',
-        description:
-            'Über unser Academy-Feature bekommst du eine große Auswahl an kostenlosen Videos zu vielen Themen aus der Finanzwelt!',
+        heading: 'onboarding_screen/card3-title',
+        description: 'onboarding_screen/card3-description',
         freepikURL: 'https://storyset.com/technology',
       ),
       OnboardingSlide(
         imageURL: 'assets/svg/financial-data.svg',
-        heading: 'Behalte den Überblick',
-        description:
-            'Linum generiert ganz automatisch relevante Statistiken für dich. So kannst du nachvollziehen, wie du mit deinem Budget umgehst.',
+        heading: 'onboarding_screen/card4-title',
+        description: 'onboarding_screen/card4-description',
         freepikURL: 'https://storyset.com/data',
       ),
     ];
@@ -77,7 +75,8 @@ class _OnboardingScreenState extends State<OnboardingPage> {
             ),
             child: CupertinoButton(
               child: Text(
-                'Illustrations by Freepik',
+                AppLocalizations.of(context)!
+                    .translate('onboarding_screen/svg-credit-label'),
                 style: Theme.of(context).textTheme.overline,
               ),
               onPressed: () => {
@@ -99,7 +98,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 36),
           child: Text(
-            slide.heading,
+            AppLocalizations.of(context)!.translate(slide.heading),
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headline3,
           ),
@@ -108,7 +107,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
             ? Padding(
                 padding: EdgeInsets.symmetric(horizontal: 36, vertical: 16),
                 child: Text(
-                  slide.description,
+                  AppLocalizations.of(context)!.translate(slide.description),
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headline5,
                 ),
@@ -250,7 +249,8 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                       width: double.infinity,
                       child: GradientButton(
                         child: Text(
-                          'Jetzt registrieren!',
+                          AppLocalizations.of(context)!
+                              .translate('onboarding_screen/register-button'),
                           style: Theme.of(context).textTheme.button,
                         ),
                         callback: () => {
@@ -277,7 +277,8 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                   ),
                   CupertinoButton(
                       child: Text(
-                        'Ich habe einen Account',
+                        AppLocalizations.of(context)!
+                            .translate('onboarding_screen/login-button'),
                         style: Theme.of(context).textTheme.bodyText1?.copyWith(
                             color: Theme.of(context).colorScheme.onSurface),
                       ),
@@ -349,7 +350,8 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 6.0),
                                       child: Text(
-                                        'Du hast einen Account? Hier einloggen',
+                                        AppLocalizations.of(context)!.translate(
+                                            'onboarding_screen/cta-login'),
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyText1
@@ -423,7 +425,8 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 12.0),
                           child: Text(
-                            "LOGIN",
+                            AppLocalizations.of(context)!
+                                .translate('onboarding_screen/login-lip-title'),
                             style: Theme.of(context).textTheme.headline5,
                           ),
                         ),
@@ -463,7 +466,10 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                                             TextInputType.emailAddress,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "E-Mail-Adresse",
+                                          hintText: AppLocalizations.of(
+                                                  context)!
+                                              .translate(
+                                                  'onboarding_screen/login-email-hintlabel'),
                                           hintStyle: Theme.of(context)
                                               .textTheme
                                               .bodyText1
@@ -497,7 +503,10 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                                         },
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "Passwort",
+                                          hintText: AppLocalizations.of(
+                                                  context)!
+                                              .translate(
+                                                  'onboarding_screen/login-password-hintlabel'),
                                           hintStyle: Theme.of(context)
                                               .textTheme
                                               .bodyText1
@@ -536,7 +545,8 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                               GradientButton(
                                 increaseHeightBy: proportionateScreenHeight(16),
                                 child: Text(
-                                  'Anmelden',
+                                  AppLocalizations.of(context)!.translate(
+                                      'onboarding_screen/login-lip-login-button'),
                                   style: Theme.of(context).textTheme.button,
                                 ),
                                 callback: () => {
@@ -565,7 +575,8 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                                 //TODO implement this functionality
                                 onPressed: null,
                                 child: Text(
-                                  'Passwort vergessen?',
+                                  AppLocalizations.of(context)!.translate(
+                                      'onboarding_screen/login-lip-forgot-password-button'),
                                   style: Theme.of(context)
                                       .textTheme
                                       .button
@@ -642,7 +653,8 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 8.0),
                                     child: Text(
-                                      'Noch keinen Account? Hier registrieren',
+                                      AppLocalizations.of(context)!.translate(
+                                          'onboarding_screen/cta-register'),
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyText1
