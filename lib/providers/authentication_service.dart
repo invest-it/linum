@@ -118,36 +118,35 @@ class AuthenticationService extends ChangeNotifier {
 
   static const Map<String, String> germanErrorVersion = {
     "auth/claims-too-large":
-        "Die Ansprüche Nutzlast vorgesehen setCustomUserClaims() größer als die maximal zulässige Größe von 1000 Bytes.",
+        "Es gehen mehr Anfragen als zulässig ein. Bitte versuche es später noch einmal.",
     "auth/email-already-exists":
-        "Die angegebene E-Mail wird bereits von einem bestehenden Benutzer verwendet. Jeder Benutzer muss eine eindeutige E-Mail haben.",
-    "auth/id-token-expired":
-        "Das bereitgestellte Firebase-ID-Token ist abgelaufen.",
-    "auth/id-token-revoked": "Das Firebase-ID-Token wurde widerrufen.",
+        "Die angegebene E-Mail wird bereits verwendet.",
+    "auth/id-token-expired": "Das Authentication-ID-Token ist abgelaufen.",
+    "auth/id-token-revoked": "Das Authentication-ID-Token wurde widerrufen.",
     "auth/insufficient-permission":
-        "Die zum Initialisieren des Admin-SDK verwendeten Anmeldeinformationen haben keine ausreichende Berechtigung zum Zugriff auf die angeforderte Authentifizierungsressource. Siehe ein Projekt Firebase einrichten für Dokumentation, wie eine Berechtigung mit dem entsprechenden Berechtigungen zu erzeugen , und es verwendet , um den Admin - SDKs zu authentifizieren.",
+        "Dein Account hat nicht die Berechtigung, sich hier anzumelden. Bitte prüfe deine Anmeldedaten.",
     "auth/internal-error":
-        "Der Authentifizierungsserver hat beim Versuch, die Anforderung zu verarbeiten, einen unerwarteten Fehler festgestellt. Die Fehlermeldung sollte die Antwort des Authentifizierungsservers mit zusätzlichen Informationen enthalten. Wenn der Fehler weiterhin besteht, melden Sie bitte das Problem zu unserem Bug Report Support - Kanal.",
+        "Es ist ein interner Fehler aufgetreten. Bitte melde dich bei support@investit-academy.de",
     "auth/invalid-argument":
-        "Ein ungültiges Argument wurde einer Authentifizierungsmethode bereitgestellt. Die Fehlermeldung sollte zusätzliche Informationen enthalten.",
+        "Du hast eine ungültige Anmeldeangabe gemacht. Bitte melde dich bei support@investit-academy.de",
     "auth/invalid-claims":
-        "Die benutzerdefinierte Anspruch Attribute bereitgestellt setCustomUserClaims() sind ungültig.",
+        "Du hast eine Anmeldeanfrage ausgelöst, die nicht erlaubt ist. Bitte melde dich bei support@investit-academy.de",
     "auth/invalid-continue-uri":
-        "Die Fortsetzungs-URL muss eine gültige URL-Zeichenfolge sein.",
+        "Es ist ein interner Fehler aufgetreten. Bitte versuche es später noch einmal.",
     "auth/invalid-creation-time":
-        "Die Erstellungszeit muss eine gültige UTC-Datumszeichenfolge sein.",
+        "Der Server konnte deine Zeitzone nicht validieren. Bitte prüfe, ob die Zeit auf deinem Handy richtig eingestellt ist.",
     "auth/invalid-credential":
-        "Die zur Authentifizierung der Admin-SDKs verwendeten Anmeldeinformationen können nicht zum Ausführen der gewünschten Aktion verwendet werden. Bestimmte Authentifizierungsverfahren wie createCustomToken() und verifyIdToken() erfordern das SDK mit einem Zertifikat Nachweis für ein Aktualisierungs - Token oder Application Default Credential im Gegensatz initialisiert werden. Siehe Initialisieren des SDK für Dokumentation, wie die Admin SDKs mit einem Zertifikat Anmeldeinformationen zu authentifizieren.",
+        "Die Anmeldeinformationen können nicht für die Anmeldung verwendet werden. Bitte melde dich bei support@investit-academy.de",
     "auth/invalid-disabled-field":
-        "Der bereitgestellte Wert für die disabled Benutzereigenschaft ist unzulässig. Es muss ein boolescher Wert sein.",
+        "Wenn du diesen Fehler siehst, haben wir etwas grundfalsch gemacht. Bitte melde dich bei support@investit-academy.de",
     "auth/invalid-display-name":
         "Der bereitgestellte Wert für die displayName ist ungültig. Es muss eine nicht leere Zeichenfolge sein.",
     "auth/invalid-dynamic-link-domain":
         "Die bereitgestellte dynamische Linkdomäne ist für das aktuelle Projekt nicht konfiguriert oder autorisiert.",
     "auth/invalid-email":
-        "Der bereitgestellte Wert für die email - Benutzereigenschaft ist ungültig. Es muss sich um eine String-E-Mail-Adresse handeln.",
+        "Deine E-Mail-Adresse hat nicht das richtige Format. Vielleicht hast du dich vertippt?",
     "auth/invalid-email-verified":
-        "Der bereitgestellte Wert für die emailVerified Benutzereigenschaft ist ungültig. Es muss ein boolescher Wert sein.",
+        "Deine E-Mail-Adresse konnte nicht verifiziert werden. Vielleicht hast du dich vertippt?",
     "auth/invalid-hash-algorithm":
         "Der Hash-Algorithmus muss mit einer der Zeichenfolgen in der Liste der unterstützten Algorithmen übereinstimmen.",
     "auth/invalid-hash-block-size":
@@ -170,7 +169,7 @@ class AuthenticationService extends ChangeNotifier {
     "auth/invalid-page-token":
         "Die bereitgestellten nächste Seite Token in listUsers() ist ungültig. Es muss sich um eine gültige, nicht leere Zeichenfolge handeln.",
     "auth/invalid-password":
-        "Der angegebene Wert für die password Benutzereigenschaft ist ungültig. Es muss sich um eine Zeichenfolge mit mindestens sechs Zeichen handeln.",
+        "Das eingegebene Passwort ist nicht korrekt. Vielleicht hast du dich vertippt?",
     "auth/invalid-password-hash":
         "Der Passwort-Hash muss ein gültiger Byte-Puffer sein.",
     "auth/invalid-password-salt":
@@ -221,6 +220,6 @@ class AuthenticationService extends ChangeNotifier {
     "auth/unauthorized-continue-uri":
         "Die Domain der Weiter-URL steht nicht auf der Whitelist. Setzen Sie die Domain in der Firebase Console auf die Whitelist.",
     "auth/user-not-found":
-        "Es gibt keinen vorhandenen Benutzerdatensatz, der der bereitgestellten Kennung entspricht.",
+        "Mit dieser E-Mail-Adresse ist kein Account (mehr) verbunden. Du musst dich erst registrieren, um dich anmelden zu können.",
   };
 }
