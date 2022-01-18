@@ -63,8 +63,7 @@ class HomeScreenListView implements BalanceDataListView {
 
     // remember last used index in the list
     int currentIndex = 0;
-    DateTime currentTime = DateTime(DateTime.now().year, DateTime.now().month)
-        .subtract(Duration(days: 0, microseconds: 1));
+    DateTime? currentTime;
 
     //log(balanceData.toString());
     List<Widget> list = [];
@@ -74,14 +73,31 @@ class HomeScreenListView implements BalanceDataListView {
       balanceData.forEach(
         (arrayElement) {
           DateTime date = arrayElement["time"].toDate() as DateTime;
-          if (currentIndex < _timeWidgets.length &&
+          if (currentTime == null) {
+            currentTime = DateTime(date.year, date.month + 2);
+          }
+          if (date.isAfter(DateTime(
+            DateTime.now().year,
+            DateTime.now().month,
+            DateTime.now().day,
+          ))) {
+            if (date.isBefore(currentTime!)) {
+              list.add(TimeWidget(
+                  displayValue: date.year == DateTime.now().year
+                      ? monthFormatter.format(date)
+                      : monthAndYearFormatter.format(date)));
+              currentTime = DateTime(date.year, date.month);
+            }
+          } else if (currentIndex < _timeWidgets.length &&
               date.isBefore(_timeWidgets[currentIndex]["time"])) {
+            currentTime = DateTime(DateTime.now().year, DateTime.now().month)
+                .subtract(Duration(days: 0, microseconds: 1));
             while (currentIndex < (_timeWidgets.length - 1) &&
                 date.isBefore(_timeWidgets[currentIndex + 1]["time"])) {
               currentIndex++;
             }
             if (date.isBefore(_timeWidgets[currentIndex]["time"]) &&
-                date.isAfter(currentTime)) {
+                date.isAfter(currentTime!)) {
               list.add(_timeWidgets[currentIndex]["widget"]);
             }
 
@@ -89,7 +105,7 @@ class HomeScreenListView implements BalanceDataListView {
           }
           if (date.isBefore(DateTime.now()) &&
               (list.length == 0 || list.last.runtimeType != TimeWidget) &&
-              date.isBefore(currentTime)) {
+              date.isBefore(currentTime!)) {
             list.add(TimeWidget(
                 displayValue: date.year == DateTime.now().year
                     ? monthFormatter.format(date)
