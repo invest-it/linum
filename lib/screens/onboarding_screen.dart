@@ -10,6 +10,8 @@ import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/frontend_functions/user_alert.dart';
 import 'package:linum/providers/authentication_service.dart';
+import 'package:linum/widgets/auth/login_form.dart';
+import 'package:linum/widgets/auth/register_form.dart';
 import 'package:linum/widgets/onboarding/onboarding_slide.dart';
 import 'package:provider/provider.dart';
 
@@ -165,10 +167,6 @@ class _OnboardingScreenState extends State<OnboardingPage> {
   // States: 0 = normal onboarding, 1 = login page, 2 = register page
   int _pageState = 0;
 
-  // hides developer login bypasses
-  // TODO BEFORE MVP REMOVE THIS FFS!
-  int devMode = 0;
-
   double _loginYOffset = 0;
   double _loginXOffset = 0;
   double _registerYOffset = 0;
@@ -178,14 +176,8 @@ class _OnboardingScreenState extends State<OnboardingPage> {
   double windowWidth = realScreenWidth();
   double windowHeight = realScreenHeight();
 
-  final _mailController = TextEditingController();
-  final _passController = TextEditingController();
-  late final Function logIn;
-
   @override
   Widget build(BuildContext context) {
-    AuthenticationService auth = Provider.of<AuthenticationService>(context);
-
     switch (_pageState) {
       case 0:
         _loginYOffset = windowHeight;
@@ -207,11 +199,6 @@ class _OnboardingScreenState extends State<OnboardingPage> {
         _loginXOffset = 20;
         _loginWidth = windowWidth - 40;
         _loginOpacity = 0.80;
-    }
-    UserAlert userAlert = UserAlert(context: context);
-
-    void logIn(String _mail, String _pass) {
-      auth.signIn(_mail, _pass, onError: userAlert.showMyDialog);
     }
 
     return Scaffold(
@@ -367,264 +354,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                         ),
 
                         //CONTENTS OF LOGIN HERE
-
-                        devMode >= 6
-                            ? Wrap(
-                                spacing: 8,
-                                children: [
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      minimumSize: Size.zero,
-                                      padding: EdgeInsets.zero,
-                                      primary:
-                                          Theme.of(context).colorScheme.onError,
-                                    ),
-                                    onPressed: () => {
-                                      auth.signIn(
-                                          "Soencke.Evers@investit-academy.de",
-                                          "tempPassword123"),
-                                    },
-                                    child: Text(
-                                      'Perform Normal Login',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .overline
-                                          ?.copyWith(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .onPrimary),
-                                    ),
-                                  ),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        minimumSize: Size.zero,
-                                        padding: EdgeInsets.zero,
-                                        primary: Theme.of(context)
-                                            .colorScheme
-                                            .error),
-                                    onPressed: () => {
-                                      auth.signIn(
-                                        "linum.debug@investit-academy.de",
-                                        "F8q^5w!F9S4#!",
-                                      ),
-                                    },
-                                    child: Text(
-                                      'Perform Stress Test',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .overline
-                                          ?.copyWith(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .onPrimary),
-                                    ),
-                                  ),
-                                ],
-                              )
-                            : Wrap(),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 12.0),
-                          child: Text(
-                            AppLocalizations.of(context)!
-                                .translate('onboarding_screen/login-lip-title'),
-                            style: Theme.of(context).textTheme.headline5,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                          child: Column(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(5.0),
-                                decoration: BoxDecoration(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSecondary,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onBackground,
-                                        blurRadius: 20.0,
-                                        offset: Offset(0, 10),
-                                      ),
-                                    ]),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.all(8.0),
-                                      decoration: BoxDecoration(
-                                        border: Border(
-                                          bottom: BorderSide(
-                                              color: Colors.grey.shade100),
-                                        ),
-                                      ),
-                                      child: TextField(
-                                        controller: _mailController,
-                                        keyboardType:
-                                            TextInputType.emailAddress,
-                                        decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: AppLocalizations.of(
-                                                  context)!
-                                              .translate(
-                                                  'onboarding_screen/login-email-hintlabel'),
-                                          hintStyle: Theme.of(context)
-                                              .textTheme
-                                              .bodyText1
-                                              ?.copyWith(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .secondary),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.all(8.0),
-                                      decoration: BoxDecoration(
-                                        border: Border(
-                                          bottom: BorderSide(
-                                              color: Colors.grey.shade100),
-                                        ),
-                                      ),
-                                      child: TextField(
-                                        obscureText: true,
-                                        controller: _passController,
-                                        keyboardType:
-                                            TextInputType.visiblePassword,
-                                        onSubmitted: (_) => {
-                                          setState(
-                                            () {
-                                              logIn(_mailController.text,
-                                                  _passController.text);
-                                            },
-                                          )
-                                        },
-                                        decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: AppLocalizations.of(
-                                                  context)!
-                                              .translate(
-                                                  'onboarding_screen/login-password-hintlabel'),
-                                          hintStyle: Theme.of(context)
-                                              .textTheme
-                                              .bodyText1
-                                              ?.copyWith(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .secondary),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: proportionateScreenHeight(32),
-                              ),
-                              // Container(
-                              //   height: 50,
-                              //   decoration: BoxDecoration(
-                              //     borderRadius: BorderRadius.circular(10),
-                              //     gradient: LinearGradient(
-                              //       colors: [
-                              //         Theme.of(context).colorScheme.primary,
-                              //         Theme.of(context).colorScheme.surface,
-                              //       ],
-                              //     ),
-                              //   ),
-                              //   child: Center(
-                              //     child: Text(
-                              //       'Einloggen',
-                              //       style: Theme.of(context).textTheme.button,
-                              //     ),
-                              //   ),
-                              // ),
-
-                              GradientButton(
-                                increaseHeightBy: proportionateScreenHeight(16),
-                                child: Text(
-                                  AppLocalizations.of(context)!.translate(
-                                      'onboarding_screen/login-lip-login-button'),
-                                  style: Theme.of(context).textTheme.button,
-                                ),
-                                callback: () => {
-                                  setState(
-                                    () {
-                                      logIn(_mailController.text,
-                                          _passController.text);
-                                    },
-                                  )
-                                },
-                                gradient: LinearGradient(
-                                  colors: [
-                                    Theme.of(context).colorScheme.primary,
-                                    createMaterialColor(Color(0xFFC1E695)),
-                                  ],
-                                ),
-                                elevation: 0,
-                                increaseWidthBy: double.infinity,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8)),
-                              ),
-                              SizedBox(
-                                height: proportionateScreenHeight(8),
-                              ),
-                              OutlinedButton(
-                                //TODO implement this functionality
-                                onPressed: null,
-                                child: Text(
-                                  AppLocalizations.of(context)!.translate(
-                                      'onboarding_screen/login-lip-forgot-password-button'),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .button
-                                      ?.copyWith(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSurface),
-                                ),
-                                style: OutlinedButton.styleFrom(
-                                  elevation: 8,
-                                  shadowColor: Theme.of(context)
-                                      .colorScheme
-                                      .onBackground,
-                                  minimumSize: Size(
-                                    double.infinity,
-                                    proportionateScreenHeight(64),
-                                  ),
-                                  backgroundColor:
-                                      Theme.of(context).colorScheme.background,
-                                  side: BorderSide(
-                                    width: 2,
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                              ),
-                              IconButton(
-                                color: Colors.grey.shade200,
-                                onPressed: () {
-                                  setState(() {
-                                    devMode++;
-                                    log(
-                                      devMode < 6
-                                          ? 'OK, in ' +
-                                              (6 - devMode).toString() +
-                                              ' Schritten bist du Entwickler.'
-                                          : 'OK, du bist nun Entwickler.',
-                                    );
-                                  });
-                                },
-                                icon: Icon(Icons.developer_board_rounded),
-                              ),
-                            ],
-                          ),
-                        ),
+                        LoginForm(),
                       ],
                     ),
                     Positioned(
@@ -675,37 +405,38 @@ class _OnboardingScreenState extends State<OnboardingPage> {
             ),
             GestureDetector(
               onTap: () => setState(() {
-                _pageState = 1;
+                _pageState = 2;
               }),
               child: AnimatedContainer(
-                  curve: Curves.fastLinearToSlowEaseIn,
-                  duration: Duration(milliseconds: 800),
-                  transform: Matrix4.translationValues(0, _registerYOffset, 0),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.background,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(32),
-                      topRight: Radius.circular(32),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onSurface
-                            .withAlpha(80),
-                        blurRadius: 16,
-                      ),
-                    ],
+                curve: Curves.fastLinearToSlowEaseIn,
+                duration: Duration(milliseconds: 800),
+                transform: Matrix4.translationValues(0, _registerYOffset, 0),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.background,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(32),
+                    topRight: Radius.circular(32),
                   ),
-                  child: Container(
-                    width: double.infinity,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                  boxShadow: [
+                    BoxShadow(
+                      color:
+                          Theme.of(context).colorScheme.onSurface.withAlpha(80),
+                      blurRadius: 16,
+                    ),
+                  ],
+                ),
+                child: Stack(
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text('I am the register page! Work in Progress.'),
+                        // CONTENTS OF REGISTER HERE
+                        RegisterForm(),
                       ],
                     ),
-                  )),
+                  ],
+                ),
+              ),
             ),
           ],
         ),

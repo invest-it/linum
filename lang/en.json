@@ -21,5 +21,11 @@
     "onboarding_screen/login-lip-login-button": "Sign in",
     "onboarding_screen/login-lip-forgot-password-button": "Forgot your password?",
 
+    "onboarding_screen/register-lip-title": "SIGN UP",
+    "onboarding_screen/register-email-hintlabel": "Email address",
+    "onboarding_screen/register-password-hintlabel": "Password",
+    "onboarding_screen/register-lip-signup-button": "Sign up",
+    "onboarding_screen/register-lip-forgot-password-button": "Alternative sign-in methods",
+
     "home_screen/label-recent-transactions": "Recent transactions"
 }
