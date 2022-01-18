@@ -68,7 +68,6 @@ class ScreenSkeleton extends StatelessWidget {
       actionLipStatusProvider.setActionLipBody(
           providerKey: providerKey!, actionLipBody: _initialActionLipBody);
     }
-    log('message');
     return Stack(
       children: [
         Column(
