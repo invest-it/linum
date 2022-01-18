@@ -18,7 +18,6 @@ import 'package:linum/screens/layout_screen.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/screens/onboarding_screen.dart';
-import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -129,6 +128,7 @@ class MyApp extends StatelessWidget {
       // Specified Localizations
       supportedLocales: [
         Locale('de', 'DE'),
+        Locale('en', 'EN'),
       ],
 
       localizationsDelegates: [
