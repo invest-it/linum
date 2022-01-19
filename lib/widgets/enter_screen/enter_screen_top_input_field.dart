@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linum/frontend_functions/decimal_text_input_formatter.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/widgets/text_container.dart';
@@ -15,33 +16,42 @@ class EnterScreenTopInputField extends StatefulWidget {
 }
 
 class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
-  TextEditingController myController = TextEditingController();
+  TextEditingController? myController;
   @override
   void initState() {
     super.initState();
-    myController = TextEditingController();
   }
 
   @override
   void dispose() {
-    myController.dispose();
+    if (myController != null) {
+      myController!.dispose();
+    }
+
     super.dispose();
   }
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     EnterScreenProvider enterScreenProvider =
         Provider.of<EnterScreenProvider>(context);
+    if (myController == null) {
+      myController =
+          TextEditingController(text: enterScreenProvider.amount.toString());
+    }
     //calculation of the size (width and height) of a text - here it
     //is "Expenses"
     //use like this: variable.width or variable.height
     final Size sizeMyController = (TextPainter(
-            text: TextSpan(text: myController.text),
+            text: TextSpan(text: myController!.text),
             maxLines: 1,
             textScaleFactor: MediaQuery.of(context).textScaleFactor,
             textDirection: TextDirection.ltr)
           ..layout())
         .size;
+
     return ClipRRect(
       borderRadius: BorderRadius.vertical(
         top: Radius.zero,
@@ -74,48 +84,63 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                   ),
                 ),
                 //text field
-                Container(
-                  //current solution to "center" the textfield as best as possible
-                  width: sizeMyController.width + 120,
-                  child: TextField(
-                    textAlign: TextAlign.start,
-                    textAlignVertical: TextAlignVertical.center,
-                    controller: myController,
-                    showCursor: false,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      isCollapsed: true,
-                      isDense: true,
-                      hintText:
-                          enterScreenProvider.isExpenses ? " 0.0" : " 0.0",
-                      prefixIcon: enterScreenProvider.isExpenses
-                          ? Padding(
-                              padding: const EdgeInsets.all(0.0),
-                              child: Icon(Icons.remove,
-                                  color: Theme.of(context).colorScheme.error),
-                            )
-                          : Icon(Icons.add,
-                              color: enterScreenProvider.isIncome
-                                  ? Theme.of(context).colorScheme.background
-                                  : Theme.of(context).colorScheme.secondary),
-                      hintStyle: TextStyle(
-                        color: _colorPicker(enterScreenProvider, context),
+                Form(
+                  key: enterScreenProvider.formKey,
+                  child: Container(
+                    //current solution to "center" the textfield as best as possible
+                    width: sizeMyController.width + 120,
+                    child: TextFormField(
+                      inputFormatters: [
+                        DecimalTextInputFormatter(decimalRange: 2)
+                      ],
+                      // validator: (value) {
+                      //   if (value!.isNotEmpty && value.length < 8) {
+                      //     return null;
+                      //   } else {
+                      //     return 'Enter a value!';
+                      //   }
+                      // },
+                      maxLength: 7,
+                      textAlign: TextAlign.start,
+                      textAlignVertical: TextAlignVertical.center,
+                      controller: myController,
+                      showCursor: false,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        counter: SizedBox.shrink(),
+                        isCollapsed: true,
+                        isDense: true,
+                        hintText:
+                            enterScreenProvider.isExpenses ? " 0.0" : " 0.0",
+                        prefixIcon: enterScreenProvider.isExpenses
+                            ? Padding(
+                                padding: const EdgeInsets.all(0.0),
+                                child: Icon(Icons.remove,
+                                    color: Theme.of(context).colorScheme.error),
+                              )
+                            : Icon(Icons.add,
+                                color: enterScreenProvider.isIncome
+                                    ? Theme.of(context).colorScheme.background
+                                    : Theme.of(context).colorScheme.secondary),
+                        hintStyle: TextStyle(
+                          color: _colorPicker(enterScreenProvider, context),
+                        ),
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
                       ),
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
+                      style: TextStyle(
+                          color: _colorPicker(enterScreenProvider, context),
+                          fontSize: 30),
+                      onChanged: (String _) {
+                        setState(() {
+                          enterScreenProvider.setAmount(
+                              double.tryParse(myController!.text) == null
+                                  ? 0.0
+                                  : double.tryParse(myController!.text)!);
+                        });
+                        //print(enterScreenProvider.amount);
+                      },
                     ),
-                    style: TextStyle(
-                        color: _colorPicker(enterScreenProvider, context),
-                        fontSize: 30),
-                    onChanged: (String _) {
-                      setState(() {
-                        enterScreenProvider.setAmount(
-                            double.tryParse(myController.text) == null
-                                ? 0.0
-                                : double.tryParse(myController.text)!);
-                      });
-                      //print(enterScreenProvider.amount);
-                    },
                   ),
                 ),
                 //the user chooses between expenses, income etc.

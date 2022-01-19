@@ -44,3 +44,11 @@ double proportionateScreenWidth(double inputWidth) {
   // on EVERY device.
   return (inputWidth / 375.0) * screenWidth;
 }
+
+double realScreenHeight() {
+  return SizeGuide.screenHeight;
+}
+
+double realScreenWidth() {
+  return SizeGuide.screenWidth;
+}

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/providers/screen_index_provider.dart';
+import 'package:provider/provider.dart';
 
 class BottomAppBarItem {
   BottomAppBarItem({required this.iconData, required this.text});
@@ -34,22 +36,17 @@ class FABBottomAppBar extends StatefulWidget {
 }
 
 class FABBottomAppBarState extends State<FABBottomAppBar> {
-  int _selectedIndex = 0;
-
-  _updateIndex(int index) {
-    widget.onTabSelected(index);
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    ScreenIndexProvider screenIndexProvider =
+        Provider.of<ScreenIndexProvider>(context);
+
     List<Widget> items = List.generate(widget.items.length, (int index) {
       return _buildTabItem(
         item: widget.items[index],
         index: index,
-        onPressed: _updateIndex,
+        onPressed: (innerdex) => screenIndexProvider.setPageIndex(innerdex),
+        screenIndexProvider: screenIndexProvider,
       );
     });
     items.insert(items.length >> 1, _buildMiddleTabItem());
@@ -88,8 +85,11 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
     required BottomAppBarItem item,
     required int index,
     required ValueChanged<int> onPressed,
+    required ScreenIndexProvider screenIndexProvider,
   }) {
-    Color color = _selectedIndex == index ? widget.selectedColor : widget.color;
+    Color color = screenIndexProvider.pageIndex == index
+        ? widget.selectedColor
+        : widget.color;
     return Expanded(
       child: SizedBox(
         height: widget.height,

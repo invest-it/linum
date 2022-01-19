@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:linum/providers/algorithm_provider.dart';
 
 class StatisticsCalculations {
@@ -5,17 +7,22 @@ class StatisticsCalculations {
   late List<Map<String, dynamic>> _data;
 
   /// create a new instance and set the data
-  StatisticsCalculations(List<Map<String, dynamic>> data) {
-    _data = data;
+  StatisticsCalculations(List<dynamic> data) {
+    _data = [];
+    for (int i = 0; i < data.length; i++) {
+      _data.add(new Map<String, dynamic>.from(data[i]));
+    }
   }
 
   /// filter the data further down to only include the data with cost information (including 0 cost products)
   List<Map<String, dynamic>> get _costData =>
-      _data..removeWhere(AlgorithmProvider.amountAtMost(0));
+      List<Map<String, dynamic>>.from(_data)
+        ..removeWhere(AlgorithmProvider.amountAtLeast(0));
 
   /// filter the data further down to only include the data with income information (excluding 0 cost products)
   List<Map<String, dynamic>> get _incomeData =>
-      _data..removeWhere(AlgorithmProvider.amountMoreThan(0));
+      List<Map<String, dynamic>>.from(_data)
+        ..removeWhere(AlgorithmProvider.amountAtMost(0));
 
   /// sum up the total data if data is empty = 0
   num get sumBalance {

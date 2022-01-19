@@ -1,8 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/providers/action_lip_status_provider.dart';
+import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/widgets/home_screen/home_screen_card.dart';
+import 'package:linum/widgets/onboarding/action_lip.dart';
 import 'package:linum/widgets/screen_skeleton/body_section.dart';
 import 'package:linum/widgets/screen_skeleton/lip_section.dart';
+import 'package:provider/provider.dart';
 
 // ScreenSkeleton(required head, required body, required isInverted, hasHomeScreenCard)
 //
@@ -20,17 +26,48 @@ class ScreenSkeleton extends StatelessWidget {
   final Widget body;
   final bool isInverted;
   final bool hasHomeScreenCard;
+  final ProviderKey? providerKey;
+  ActionLipStatus initialActionLipStatus;
+  late final Widget _initialActionLipBody;
 
-  const ScreenSkeleton({
-    Key? key,
+  ScreenSkeleton({
     required this.head,
     required this.body,
-    required this.isInverted,
+    this.isInverted = false,
     this.hasHomeScreenCard = false,
-  }) : super(key: key);
+    this.initialActionLipStatus = ActionLipStatus.HIDDEN,
+    this.providerKey,
+    initialActionLipBody,
+  }) {
+    if (initialActionLipBody == null) {
+      _initialActionLipBody = Container();
+    } else {
+      _initialActionLipBody = initialActionLipBody;
+    }
+    if (providerKey == null) {
+      initialActionLipStatus = ActionLipStatus.DISABLED;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    BalanceDataProvider balanceDataProvider =
+        Provider.of<BalanceDataProvider>(context);
+
+    ActionLipStatusProvider actionLipStatusProvider =
+        Provider.of<ActionLipStatusProvider>(context, listen: false);
+
+    if (providerKey != null &&
+        !actionLipStatusProvider.isActionStatusInitialized(providerKey!)) {
+      actionLipStatusProvider.setActionLip(
+          providerKey: providerKey!, actionLipStatus: initialActionLipStatus);
+    }
+
+    if (providerKey != null &&
+        !actionLipStatusProvider.isBodyInitialized(providerKey!)) {
+      actionLipStatusProvider.setActionLipBody(
+          providerKey: providerKey!, actionLipBody: _initialActionLipBody);
+    }
     return Stack(
       children: [
         Column(
@@ -51,18 +88,25 @@ class ScreenSkeleton extends StatelessWidget {
                 top: proportionateScreenHeight(164 - 25),
                 left: 0,
                 right: 0,
-                child: HomeScreenCard(
-                  balance: 1081.46,
-                  income: 1200.00,
-                  expense: 1200 - 1081.46,
-                ),
+                child: balanceDataProvider
+                    .fillStatisticPanelWithData(HomeScreenCardManager()),
               )
             : Container(
                 // to make sure we'd actually notice fuck-ups with this
                 color: Colors.red,
                 height: 0,
               ),
+        if (providerKey != null)
+          ActionLip(
+            providerKey: providerKey!,
+          ),
       ],
     );
   }
+}
+
+enum ActionLipStatus {
+  HIDDEN,
+  ONVIEWPORT,
+  DISABLED,
 }

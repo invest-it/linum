@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +15,31 @@ class AlgorithmProvider extends ChangeNotifier {
 
   int Function(dynamic, dynamic) get currentSorter => _currentSorter;
 
+  DateTime _currentShownMonth =
+      DateTime(DateTime.now().year, DateTime.now().month);
+
+  DateTime get currentShownMonth => _currentShownMonth;
+
+  void setCurrentShownMonth(DateTime inputMonth) {
+    _currentShownMonth = DateTime(inputMonth.year, inputMonth.month);
+  }
+
+  void resetCurrentShownMonth() {
+    _currentShownMonth =
+        DateTime(DateTime.now().year, (DateTime.now().month) + 1)
+            .subtract(Duration(microseconds: 1));
+  }
+
+  void nextMonth() {
+    _currentShownMonth =
+        DateTime(_currentShownMonth.year, _currentShownMonth.month + 1);
+  }
+
+  void previousMonth() {
+    _currentShownMonth =
+        DateTime(_currentShownMonth.year, _currentShownMonth.month - 1);
+  }
+
   AlgorithmProvider() {
     _currentSorter = timeNewToOld;
     _currentFilter = olderThan(Timestamp.fromDate(DateTime.now()));
@@ -20,9 +47,15 @@ class AlgorithmProvider extends ChangeNotifier {
 
   void setCurrentSortAlgorithm(int Function(dynamic, dynamic) sorter) {
     _currentSorter = sorter;
+    notifyListeners();
   }
 
   void setCurrentFilterAlgorithm(bool Function(dynamic) filter) {
+    _currentFilter = filter;
+    notifyListeners();
+  }
+
+  void setCurrentFilterAlgorithmSilently(bool Function(dynamic) filter) {
     _currentFilter = filter;
   }
 
@@ -130,23 +163,23 @@ class AlgorithmProvider extends ChangeNotifier {
   static bool Function(dynamic) inBetween(
       Timestamp timestamp1, Timestamp timestamp2) {
     return (dynamic a) =>
-        (a["time"].compareTo(timestamp1) <= 0) &&
+        (a["time"].compareTo(timestamp1) <= 0) ||
         (a["time"].compareTo(timestamp2) >= 0);
   }
 
   static bool Function(dynamic) amountMoreThan(num amount) {
-    return (dynamic a) => (a.compareTo(amount) > 0);
+    return (dynamic a) => (a["amount"].compareTo(amount) > 0);
   }
 
   static bool Function(dynamic) amountAtLeast(num amount) {
-    return (dynamic a) => (a.compareTo(amount) >= 0);
+    return (dynamic a) => (a["amount"].compareTo(amount) >= 0);
   }
 
   static bool Function(dynamic) amountLessThan(num amount) {
-    return (dynamic a) => (a.compareTo(amount) < 0);
+    return (dynamic a) => (a["amount"].compareTo(amount) < 0);
   }
 
   static bool Function(dynamic) amountAtMost(num amount) {
-    return (dynamic a) => (a.compareTo(amount) <= 0);
+    return (dynamic a) => (a["amount"].compareTo(amount) <= 0);
   }
 }

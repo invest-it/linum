@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
+import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/screens/statistics_screen.dart';
 import 'package:linum/screens/enter_screen.dart';
 import 'package:linum/screens/home_screen.dart';
@@ -14,24 +15,18 @@ import 'package:linum/widgets/bottom_app_bar.dart';
 import 'package:provider/provider.dart';
 
 class LayoutScreen extends StatefulWidget {
-  LayoutScreen({
-    Key? key,
-    required this.title,
-    required this.monthlyBudget,
-  }) : super(key: key);
-
-  final String title;
-  final double monthlyBudget;
+  LayoutScreen(Key? key) : super(key: key);
 
   @override
   State<LayoutScreen> createState() => _LayoutScreenState();
 }
 
 class _LayoutScreenState extends State<LayoutScreen> {
-  int pageIndex = 0;
-
   @override
   Widget build(BuildContext context) {
+    ScreenIndexProvider screenIndexProvider =
+        Provider.of<ScreenIndexProvider>(context);
+
     CollectionReference balance =
         FirebaseFirestore.instance.collection('balance');
     // EnterScreenProvider enterScreenProvider =
@@ -53,7 +48,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
           stream: balance.snapshots(),
           builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
             //returns the page at the current index
-            return _page.elementAt(pageIndex);
+            return _page.elementAt(screenIndexProvider.pageIndex);
           },
         ),
       ),
@@ -132,9 +127,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
         //gives the pageIndex the value (the current selected index in the
         //bottom navigation bar)
         onTabSelected: (int value) {
-          setState(() {
-            pageIndex = value;
-          });
+          screenIndexProvider.setPageIndex(value);
         },
       ),
     );

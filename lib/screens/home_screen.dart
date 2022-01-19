@@ -1,5 +1,12 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/backend_functions/local_app_localizations.dart';
+import 'package:linum/frontend_functions/silent-scroll.dart';
+import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
+import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/widgets/home_screen/home_screen_listview.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 
@@ -15,8 +22,20 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    ScreenIndexProvider screenIndexProvider =
+        Provider.of<ScreenIndexProvider>(context);
+
     BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
+
+    // AlgorithmProvider algorithmProvider =
+    //     Provider.of<AlgorithmProvider>(context, listen: false);
+
+    // if (!algorithmProvider.currentFilter(
+    //     {"time": Timestamp.fromDate(DateTime.now().add(Duration(days: 1)))})) {
+    //   algorithmProvider.setCurrentFilterAlgorithm(
+    //       AlgorithmProvider.olderThan(Timestamp.fromDate(DateTime.now())));
+    // }
 
     return ScreenSkeleton(
       head: 'Home',
@@ -27,19 +46,35 @@ class _HomeScreenState extends State<HomeScreen> {
           Column(
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
+                padding: const EdgeInsets.fromLTRB(5, 10, 25, 5),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text("Neueste Transaktionen",
-                        style: Theme.of(context).textTheme.headline5),
-                    Text(
-                      "MEHR",
-                      style: Theme.of(context).textTheme.overline?.copyWith(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontSize: 14,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15.0),
+                      child: Text(
+                          AppLocalizations.of(context)!.translate(
+                              'home_screen/label-recent-transactions'),
+                          style: Theme.of(context).textTheme.headline5),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Provider.of<AlgorithmProvider>(context, listen: false)
+                            .setCurrentFilterAlgorithmSilently(
+                          AlgorithmProvider.olderThan(
+                            Timestamp.fromDate(DateTime.now()),
                           ),
+                        );
+                        screenIndexProvider.setPageIndex(1);
+                      },
+                      child: Text(
+                        "MEHR",
+                        style: Theme.of(context).textTheme.overline?.copyWith(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontSize: 14,
+                            ),
+                      ),
                     ),
                   ],
                 ),
@@ -47,9 +82,12 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                  child: balanceDataProvider.fillListViewWithData(
-                    HomeScreenListView(),
-                    context: context,
+                  child: ScrollConfiguration(
+                    behavior: SilentScroll(),
+                    child: balanceDataProvider.fillListViewWithData(
+                      HomeScreenListView(),
+                      context: context,
+                    ),
                   ),
                 ),
               ),

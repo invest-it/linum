@@ -10,6 +10,7 @@ import 'package:linum/screens/enter_screen.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:linum/widgets/budget_screen/time_widget.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreenListView implements BalanceDataListView {
@@ -19,16 +20,99 @@ class HomeScreenListView implements BalanceDataListView {
     _listview = new ListView();
   }
 
+  List<Map<String, dynamic>> _timeWidgets = [
+    {
+      "widget": TimeWidget(displayValue: '-HEUTE-'),
+      "time": DateTime(
+              DateTime.now().year, DateTime.now().month, DateTime.now().day)
+          .add(Duration(days: 1, microseconds: -1))
+    },
+    {
+      "widget": TimeWidget(displayValue: '-GESTERN-'),
+      "time": DateTime(
+              DateTime.now().year, DateTime.now().month, DateTime.now().day)
+          .subtract(Duration(days: 0, microseconds: 1))
+    },
+    {
+      "widget": TimeWidget(displayValue: '-LETZTE WOCHE-'),
+      "time": DateTime(
+              DateTime.now().year, DateTime.now().month, DateTime.now().day)
+          .subtract(Duration(days: 1, microseconds: 1))
+    },
+    {
+      "widget": TimeWidget(displayValue: '-DIESEN MONAT-'),
+      "time": DateTime(
+              DateTime.now().year, DateTime.now().month, DateTime.now().day)
+          .subtract(Duration(days: 7, microseconds: 1))
+    },
+    // {
+    //   "widget": TimeWidget(displayValue: 'Älter'),
+    //   "time": DateTime(DateTime.now().year, DateTime.now().month)
+    //       .subtract(Duration(days: 0, microseconds: 1))
+    // },
+  ];
+
   @override
   void setBalanceData(List<dynamic> balanceData,
       {required BuildContext context}) {
     initializeDateFormatting();
     DateFormat formatter = DateFormat('EEEE, dd. MMMM yyyy', 'de');
+
+    DateFormat monthFormatter = DateFormat('MMMM', 'de');
+    DateFormat monthAndYearFormatter = DateFormat('MMMM yyyy', 'de');
+
+    // remember last used index in the list
+    int currentIndex = 0;
+    DateTime? currentTime;
+
     //log(balanceData.toString());
     List<Widget> list = [];
-    if (balanceData[0] != null && balanceData[0]["Error"] == null) {
+    if (balanceData.length == 0) {
+      list.add(TimeWidget(displayValue: "-KEINE EINTRÄGE BISHER-"));
+    } else if (balanceData[0] != null && balanceData[0]["Error"] == null) {
       balanceData.forEach(
         (arrayElement) {
+          DateTime date = arrayElement["time"].toDate() as DateTime;
+          if (currentTime == null) {
+            currentTime = DateTime(date.year, date.month + 2);
+          }
+          if (date.isAfter(DateTime(
+            DateTime.now().year,
+            DateTime.now().month,
+            DateTime.now().day,
+          ))) {
+            if (date.isBefore(currentTime!)) {
+              list.add(TimeWidget(
+                  displayValue: date.year == DateTime.now().year
+                      ? monthFormatter.format(date)
+                      : monthAndYearFormatter.format(date)));
+              currentTime = DateTime(date.year, date.month);
+            }
+          } else if (currentIndex < _timeWidgets.length &&
+              date.isBefore(_timeWidgets[currentIndex]["time"])) {
+            currentTime = DateTime(DateTime.now().year, DateTime.now().month)
+                .subtract(Duration(days: 0, microseconds: 1));
+            while (currentIndex < (_timeWidgets.length - 1) &&
+                date.isBefore(_timeWidgets[currentIndex + 1]["time"])) {
+              currentIndex++;
+            }
+            if (date.isBefore(_timeWidgets[currentIndex]["time"]) &&
+                date.isAfter(currentTime!)) {
+              list.add(_timeWidgets[currentIndex]["widget"]);
+            }
+
+            currentIndex++;
+          }
+          if (date.isBefore(DateTime.now()) &&
+              (list.length == 0 || list.last.runtimeType != TimeWidget) &&
+              date.isBefore(currentTime!)) {
+            list.add(TimeWidget(
+                displayValue: date.year == DateTime.now().year
+                    ? monthFormatter.format(date)
+                    : monthAndYearFormatter.format(date)));
+            currentTime = DateTime(date.year, date.month - 1);
+          }
+
           list.add(
             GestureDetector(
               onTap: () {
@@ -42,7 +126,9 @@ class HomeScreenListView implements BalanceDataListView {
                         providers: [
                           ChangeNotifierProvider<EnterScreenProvider>(
                             create: (_) {
-                              return EnterScreenProvider();
+                              return EnterScreenProvider(
+                                  amount: arrayElement["amount"],
+                                  category: arrayElement["category"]);
                             },
                           ),
                           ChangeNotifierProvider<BalanceDataProvider>(
@@ -102,7 +188,7 @@ class HomeScreenListView implements BalanceDataListView {
     } else {
       log("HomeScreenListView: " + balanceData[0]["Error"].toString());
     }
-    _listview = ListView(children: list);
+    _listview = ListView(children: list, padding: EdgeInsets.zero);
   }
 
   @override

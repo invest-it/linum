@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:linum/frontend_functions/decimal_text_input_formatter.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:provider/provider.dart';
+
+import 'enter_screen_list.dart';
 
 class EnterScreenListViewBuilder extends StatefulWidget {
   //all the lists from the enter_screen_list.dart file
@@ -9,7 +12,7 @@ class EnterScreenListViewBuilder extends StatefulWidget {
   List categoriesExpenses;
   List categoriesIncome;
   List categoriesTransaction;
-  List categoriesCategoryExpenses;
+  List<Category> categoriesCategoryExpenses;
   List categoriesCategoryIncome;
   List categoriesAccount;
   List categoriesRepeat;
@@ -34,7 +37,6 @@ class _EnterScreenListViewBuilderState
     extends State<EnterScreenListViewBuilder> {
   String selectedCategory = "";
   String selectedAccount = "";
-  String selectedRepetition = "";
 
   DateTime selectedDate = DateTime.now();
   final firstDate = DateTime(2020, 1);
@@ -67,12 +69,14 @@ class _EnterScreenListViewBuilderState
           Container(
             width: proportionateScreenWidth(281),
             child: TextField(
+              maxLength: 18,
               controller: myController,
               showCursor: true,
               textAlign: TextAlign.start,
               decoration: InputDecoration(
                 hintText: _hintTextChooser(enterScreenProvider),
                 hintStyle: TextStyle(),
+                counter: SizedBox.shrink(),
                 border: InputBorder.none,
                 focusedBorder: InputBorder.none,
               ),
@@ -247,10 +251,10 @@ class _EnterScreenListViewBuilderState
         itemBuilder: (BuildContext context, int indexBuilder) {
           return ListTile(
             leading: Icon(widget.categories[index].icon),
-            title: Text(widget.categoriesCategoryExpenses[indexBuilder]),
+            title: Text(widget.categoriesCategoryExpenses[indexBuilder].type),
             //selects the item as the categories value
             onTap: () => _selectCategoryItem(
-                widget.categoriesCategoryExpenses[indexBuilder],
+                widget.categoriesCategoryExpenses[indexBuilder].type,
                 enterScreenProvider),
           );
         },
@@ -278,8 +282,7 @@ class _EnterScreenListViewBuilderState
             title: Text(widget.categoriesRepeat[indexBuilder]),
             //selects the item as the repeat value
             onTap: () => _selectRepeatItem(
-              widget.categoriesRepeat[indexBuilder],
-            ),
+                widget.categoriesRepeat[indexBuilder], enterScreenProvider),
           );
         },
       );
@@ -321,8 +324,7 @@ class _EnterScreenListViewBuilderState
             leading: Icon(widget.categories[index].icon),
             title: Text(widget.categoriesRepeat[indexBuilder]),
             onTap: () => _selectRepeatItem(
-              widget.categoriesRepeat[indexBuilder],
-            ),
+                widget.categoriesRepeat[indexBuilder], enterScreenProvider),
           );
         },
       );
@@ -363,8 +365,7 @@ class _EnterScreenListViewBuilderState
             leading: Icon(widget.categories[index].icon),
             title: Text(widget.categoriesRepeat[indexBuilder]),
             onTap: () => _selectRepeatItem(
-              widget.categoriesRepeat[indexBuilder],
-            ),
+                widget.categoriesRepeat[indexBuilder], enterScreenProvider),
           );
         },
       );
@@ -379,7 +380,7 @@ class _EnterScreenListViewBuilderState
     } else if (index == 2) {
       return Text(enterScreenProvider.selectedDate.toString().split(' ')[0]);
     } else if (index == 3) {
-      return Text(selectedRepetition);
+      return Text(enterScreenProvider.repeat);
     } else
       return Text("Trash");
   }
@@ -399,32 +400,47 @@ class _EnterScreenListViewBuilderState
     });
   }
 
-  void _selectRepeatItem(String name) {
+  void _selectRepeatItem(String name, enterScreenProvider) {
     Navigator.pop(context);
     setState(() {
-      selectedRepetition = name;
+      enterScreenProvider.setRepeat(name);
     });
   }
 
-  void _openDatePicker(EnterScreenProvider enterScreenProvider) {
-    showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            //which date will display when user open the picker
-            firstDate: firstDate,
-            //what will be the previous supported year in picker
-            lastDate:
-                lastDate) //what will be the up to supported date in picker
-        .then((pickedDate) {
-      //then usually do the future job
-      if (pickedDate == null) {
-        //if user tap cancel then this function will stop
-        return;
-      }
-      setState(() {
-        //for rebuilding the ui
-        enterScreenProvider.setSelectedDate(pickedDate);
-      });
-    });
+  void _openDatePicker(EnterScreenProvider enterScreenProvider) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: enterScreenProvider.selectedDate,
+      //which date will display when user open the picker
+      firstDate: firstDate,
+      //what will be the previous supported year in picker
+      lastDate: lastDate,
+    ); //what will be the up to supported date in picker
+
+    //then usually do the future job
+    if (pickedDate == null) {
+      //if user tap cancel then this function will stop
+      return;
+    }
+    TimeOfDay? timeOfDay =
+        await showTimePicker(context: context, initialTime: TimeOfDay.now());
+    if (timeOfDay != null) {
+      enterScreenProvider.setSelectedDate(
+        pickedDate.add(
+          Duration(
+            hours: timeOfDay.hour,
+            minutes: timeOfDay.minute,
+          ),
+        ),
+      );
+    }
+  }
+
+  String validateMyInput(String value) {
+    RegExp regex = new RegExp(r'^(?=\D*(?:\d\D*){1,12}$)\d+(?:\.\d{1,4})?$');
+    if (!regex.hasMatch(value))
+      return 'Enter Valid Number';
+    else
+      return 'Nothing';
   }
 }
