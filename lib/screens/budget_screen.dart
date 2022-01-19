@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/frontend_functions/silent-scroll.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
@@ -30,7 +31,9 @@ class BudgetScreen extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 15.0),
-                child: Text("Alle Transaktionen",
+                child: Text(
+                    AppLocalizations.of(context)!
+                        .translate('budget_screen/label-all-transactions'),
                     style: Theme.of(context).textTheme.headline5),
               ),
               Padding(
@@ -38,7 +41,8 @@ class BudgetScreen extends StatelessWidget {
                 child: TextButton(
                   onPressed: () {},
                   child: Text(
-                    "FILTER",
+                    AppLocalizations.of(context)!
+                        .translate('budget_screen/button-filter'),
                     style: Theme.of(context).textTheme.overline?.copyWith(
                           color: Theme.of(context).colorScheme.primary,
                           fontSize: 14,
