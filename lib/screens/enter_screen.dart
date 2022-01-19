@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
@@ -77,7 +78,8 @@ class _EnterScreenState extends State<EnterScreen> {
                           time: Timestamp.fromDate(
                               selectedDateDateTimeFormatted));
                     },
-                    child: Text("Eintrag speichern"),
+                    child: Text(AppLocalizations.of(context)!
+                        .translate('enter_screen/button-save-entry')),
                   ),
                 ],
               ),
