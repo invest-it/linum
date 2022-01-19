@@ -76,10 +76,12 @@
 
     "settings_screen/special-settings/label-title": "BESONDERE EINSTELLUNGEN",
     "settings_screen/special-settings/label-schwabenmodus": "Schwabenmodus",
-    "settings_screen/special-settings/language-selector-de": "Deutsch",
-    "settings_screen/special-settings/language-selector-en": "English",
-    "settings_screen/special-settings/button-forgot-password": "Passwort vergessen?",
-    "settings_screen/special-settings/button-forgot-password-tooltip": "Falls du dein Passwort vergessen hast, kannst du hier ein neues einstellen.",
-    "settings_screen/special-settings/button-signout": "Ausloggen"
+
+    "settings_screen/system-settings/label-title": "DEIN ACCOUNT",
+    "settings_screen/system-settings/language-selector-de": "Deutsch",
+    "settings_screen/system-settings/language-selector-en": "English",
+    "settings_screen/system-settings/button-forgot-password": "Passwort vergessen?",
+    "settings_screen/system-settings/button-forgot-password-tooltip": "Falls du dein Passwort vergessen hast, kannst du hier ein neues einstellen.",
+    "settings_screen/system-settings/button-signout": "Ausloggen"
 
 }

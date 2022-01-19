@@ -76,10 +76,11 @@
 
     "settings_screen/special-settings/label-title": "SPECIAL SETTINGS",
     "settings_screen/special-settings/label-schwabenmodus": "Dagobert Duck Mode",
-    "settings_screen/special-settings/language-selector-de": "Deutsch",
-    "settings_screen/special-settings/language-selector-en": "English",
-    "settings_screen/special-settings/button-forgot-password": "Forgot your password?",
-    "settings_screen/special-settings/button-forgot-password-tooltip": "You can request a password reset here if you forgot your old password.",
-    "settings_screen/special-settings/button-signout": "Sign out"
 
+    "settings_screen/system-settings/label-title": "YOUR ACCOUNT",
+    "settings_screen/system-settings/language-selector-de": "Deutsch",
+    "settings_screen/system-settings/language-selector-en": "English",
+    "settings_screen/system-settings/button-forgot-password": "Forgot your password?",
+    "settings_screen/system-settings/button-forgot-password-tooltip": "You can request a password reset here if you forgot your old password.",
+    "settings_screen/system-settings/button-signout": "Sign out"
 }

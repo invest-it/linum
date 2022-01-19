@@ -8,6 +8,7 @@ import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/screen_index_provider.dart';
+import 'package:linum/widgets/auth/logout_form.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
@@ -84,11 +85,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(
-                    top: 40.0,
+                  padding: EdgeInsets.only(
+                    top: 24.0,
                     left: 40.0,
                     right: 40.0,
-                    bottom: 0,
+                    bottom: 0.0,
                   ),
                   //ListTile for selecting currencies
                   child: Column(
@@ -392,6 +393,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         title: Text(
                           AppLocalizations.of(context)!.translate(
                               'settings_screen/special-settings/label-schwabenmodus'),
+                          style: Theme.of(context).textTheme.bodyText1,
                         ),
                         value: _toggled,
                         activeColor: Colors.green,
@@ -401,48 +403,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           });
                         },
                       ),
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.03,
-                        child: Expanded(
-                          child: Center(
-                            child: ToggleButtons(
-                              children: [
-                                Container(
-                                  child: Center(
-                                    child: Text(
-                                      AppLocalizations.of(context)!.translate(
-                                          'settings_screen/special-settings/language-selector-en'),
-                                    ),
-                                  ),
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.35,
-                                ),
-                                Container(
-                                  child: Center(
-                                    child: Text(
-                                      AppLocalizations.of(context)!.translate(
-                                          'settings_screen/special-settings/language-selector-de'),
-                                    ),
-                                  ),
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.35,
-                                ),
-                              ],
-                              isSelected: _selections,
-                              onPressed: (int index) {
-                                setState(() {
-                                  for (int i = 0; i < _selections.length; i++)
-                                    _selections[i] = i == index;
-                                });
-                              },
-                              borderRadius: BorderRadius.circular(32),
-                            ),
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                 ),
+
                 // Padding(
                 //   padding: const EdgeInsets.only(
                 //     left: 40.0,
@@ -469,50 +433,77 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     bottom: 16.0,
                   ),
                   child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    //height: MediaQuery.of(context).size.height * 0.05,
-
-                    // TODO ARON please change this into a TextButton
-                    child: ListTile(
-                      title: Center(
-                        child: Text(
-                          AppLocalizations.of(context)!.translate(
-                              'settings_screen/special-settings/button-forgot-password'),
-                          style: TextStyle(fontSize: 14),
-                        ),
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.001,
+                    child: const DecoratedBox(
+                      decoration: const BoxDecoration(
+                        color: Colors.grey,
                       ),
-                      trailing: Tooltip(
-                        child: Align(
-                          heightFactor: 1,
-                          widthFactor: 1,
-                          child: Icon(
-                            Icons.help_outline_rounded,
-                            size: 10 * 1.8,
-                            color: Colors.black,
-                          ),
-                        ),
-                        message: AppLocalizations.of(context)!.translate(
-                          'settings_screen/special-settings/button-forgot-password-tooltip',
-                        ),
-                        triggerMode: TooltipTriggerMode.tap,
-                        padding: EdgeInsets.all(8.0),
-                        enableFeedback: false,
-                        preferBelow: false,
-                      ),
-                      onTap: () {},
                     ),
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    auth.signOut().then((_) {
-                      Provider.of<ScreenIndexProvider>(context, listen: false)
-                          .setPageIndex(0);
-                    });
-                  },
-                  child: Text(
-                    AppLocalizations.of(context)!.translate(
-                        'settings_screen/special-settings/button-signout'),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 40.0,
+                    right: 40.0,
+                    top: 0,
+                    bottom: 0.0,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: Text(
+                          AppLocalizations.of(context)!.translate(
+                              'settings_screen/system-settings/label-title'),
+                          style: Theme.of(context).textTheme.overline,
+                        ),
+                      ),
+                      Container(
+                        height: proportionateScreenHeight(48),
+                        child: Expanded(
+                          child: Center(
+                            child: ToggleButtons(
+                              children: [
+                                Container(
+                                  child: Center(
+                                    child: Text(
+                                      AppLocalizations.of(context)!.translate(
+                                          'settings_screen/system-settings/language-selector-en'),
+                                    ),
+                                  ),
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.35,
+                                ),
+                                Container(
+                                  child: Center(
+                                    child: Text(
+                                      AppLocalizations.of(context)!.translate(
+                                          'settings_screen/system-settings/language-selector-de'),
+                                    ),
+                                  ),
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.35,
+                                ),
+                              ],
+                              isSelected: _selections,
+                              onPressed: (int index) {
+                                setState(() {
+                                  for (int i = 0; i < _selections.length; i++)
+                                    _selections[i] = i == index;
+                                });
+                              },
+                              borderRadius: BorderRadius.circular(32),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: proportionateScreenHeight(32),
+                      ),
+                      LogoutForm(),
+                    ],
                   ),
                 ),
                 SizedBox(
