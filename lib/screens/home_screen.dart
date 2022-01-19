@@ -69,7 +69,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         screenIndexProvider.setPageIndex(1);
                       },
                       child: Text(
-                        "MEHR",
+                        AppLocalizations.of(context)!
+                            .translate('home_screen/button-show-more'),
                         style: Theme.of(context).textTheme.overline?.copyWith(
                               color: Theme.of(context).colorScheme.primary,
                               fontSize: 14,

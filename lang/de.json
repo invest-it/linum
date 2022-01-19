@@ -27,5 +27,12 @@
     "onboarding_screen/register-lip-signup-button": "Registrieren",
     "onboarding_screen/register-lip-forgot-password-button": "Alternative sign-in methoden",
 
-    "home_screen/label-recent-transactions": "Neueste Transaktionen"
+    "home_screen/label-recent-transactions": "Neueste Transaktionen",
+    "home_screen/button-show-more": "MEHR",
+
+    "home_screen_card/home-screen-card-toast": "Swipe nach links und rechts, um vorige oder kommende Monate anzusehen. Doppelt tippen, um in den aktuellen Monat zurückzukehren.",
+    "home_screen_card/label-current-balance": "Aktueller Kontostand",
+    "home_screen_card/label-income": "EINNAHMEN",
+    "home_screen_card/label-expenses": "AUSGABEN"
+
 }

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/backend_functions/statistic_calculations.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/algorithm_provider.dart';
@@ -97,17 +98,10 @@ class HomeScreenCard extends StatelessWidget {
       },
       onTap: () {
         Fluttertoast.showToast(
-          msg:
-              "Swipe nach links und rechts, um vorige oder kommende Monate anzusehen. Doppelt tippen, um in den aktuellen Monat zurückzukehren.",
+          msg: AppLocalizations.of(context)!
+              .translate('home_screen_card/home-screen-card-toast'),
           toastLength: Toast.LENGTH_SHORT,
         );
-
-        // The old way of doing this (fallback)
-        // ScaffoldMessenger.of(context).showSnackBar(
-        //   SnackBar(
-        //     content: Text("Swipe it, retard"),
-        //   ),
-        // );
       },
       onDoubleTap: () {
         // Reset to current month
@@ -140,7 +134,8 @@ class HomeScreenCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        'Aktueller Kontostand',
+                        AppLocalizations.of(context)!.translate(
+                            'home_screen_card/label-current-balance'),
                         style: Theme.of(context).textTheme.headline3,
                       ),
                       Text(
@@ -192,7 +187,8 @@ class HomeScreenCard extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'EINNAHMEN',
+                                  AppLocalizations.of(context)!.translate(
+                                      'home_screen_card/label-income'),
                                   style: Theme.of(context)
                                       .textTheme
                                       .overline!
@@ -232,7 +228,8 @@ class HomeScreenCard extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'AUSGABEN',
+                                  AppLocalizations.of(context)!.translate(
+                                      'home_screen_card/label-expenses'),
                                   style: Theme.of(context)
                                       .textTheme
                                       .overline!
