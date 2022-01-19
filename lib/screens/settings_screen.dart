@@ -502,6 +502,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       SizedBox(
                         height: proportionateScreenHeight(32),
                       ),
+                      // All Authentication Actions (including logOut will be handled via widgets/auth from now on.)
                       LogoutForm(),
                     ],
                   ),
