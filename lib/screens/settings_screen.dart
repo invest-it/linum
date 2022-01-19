@@ -1,4 +1,4 @@
-//import 'dart:developer';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
@@ -129,8 +129,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           items: <String>[
                             'Euro (EUR, €)',
                             'Dollar (USD, \$)',
-                            'Pfund (GBP, £)',
+                            'Pound Sterling (GBP, £)',
                             'Yen (JPY, ¥)',
+                            'Krone (DKK, Kr.)',
                           ].map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
