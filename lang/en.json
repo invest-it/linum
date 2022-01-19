@@ -82,5 +82,21 @@
     "settings_screen/system-settings/language-selector-en": "English",
     "settings_screen/system-settings/button-forgot-password": "Forgot your password?",
     "settings_screen/system-settings/button-forgot-password-tooltip": "You can request a password reset here if you forgot your old password.",
-    "settings_screen/system-settings/button-signout": "Sign out"
+    "settings_screen/system-settings/button-signout": "Sign out",
+
+
+    "enter_screen/button-expenses-label": "Expense",
+    "enter_screen/button-income-label": "Income",
+    "enter_screen/button-transaction-label": "Transaction",
+    "enter_screen/button-save-entry": "Save Entry",
+    "enter_screen/expenses-textfield-title": "What did you purchase?",
+    "enter_screen/income-textfield-title": "How is this income called?",
+    "enter_screen/transaction-textfield-title": "How is this transaction called?",
+
+    "enter_screen_attribute_category": "Categorie",
+    "enter_screen_attribute_account": "Account",
+    "enter_screen_attribute_date": "Date",
+    "enter_screen_attribute_repeat": "Repeat",
+    "enter_screen_attribute_account_from": "From Account",
+    "enter_screen_attribute_account_to": "To Account"
 }
