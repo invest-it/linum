@@ -46,7 +46,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     StandardAccount.Depot: "Depot",
   };
 
-  String dropdownValue = 'Währung auswählen';
+  String dropdownValue = 'Euro';
 
   @override
   // final Function ontap = CurrencyList();
@@ -93,10 +93,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             });
                           },
                           items: <String>[
-                            'Währung auswählen',
                             'Euro',
                             'Dollar',
-                            'Pfund',
+                            'Spasten Coin',
                             'Yen',
                           ].map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
