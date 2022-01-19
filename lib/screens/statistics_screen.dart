@@ -20,6 +20,7 @@ class StatisticsScreen extends StatelessWidget {
               buttonIcon: Icons.build,
               onPressedAction: () => log('message'),
             ),
+            Text('Work in progress. Please check back soon.'),
           ],
         ),
       ),
