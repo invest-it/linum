@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/url-handler.dart';
 
 abstract class AppBarAction {
+  //FIXME @SoTBurst ontap is not executed, don't know why
   static final Map<DefaultAction, Widget> _defaultActionButtons = {
     DefaultAction.NOTIFICATION: AppBarAction.fromParameters(
         icon: Icons.notifications,
@@ -28,7 +29,7 @@ abstract class AppBarAction {
     );
   }
 
-  static Widget fromPreset({required DefaultAction preset}) {
+  static Widget fromPreset(DefaultAction preset) {
     return _defaultActionButtons[preset]!;
   }
 }
