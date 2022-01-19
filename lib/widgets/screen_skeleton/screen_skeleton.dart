@@ -26,6 +26,8 @@ class ScreenSkeleton extends StatelessWidget {
   final Widget body;
   final bool isInverted;
   final bool hasHomeScreenCard;
+  final Widget? leadingAction;
+  final List<Widget>? actions;
   final ProviderKey? providerKey;
   ActionLipStatus initialActionLipStatus;
   late final Widget _initialActionLipBody;
@@ -37,6 +39,8 @@ class ScreenSkeleton extends StatelessWidget {
     this.hasHomeScreenCard = false,
     this.initialActionLipStatus = ActionLipStatus.HIDDEN,
     this.providerKey,
+    this.actions,
+    this.leadingAction,
     initialActionLipBody,
   }) {
     if (initialActionLipBody == null) {
@@ -75,6 +79,8 @@ class ScreenSkeleton extends StatelessWidget {
             LipSection(
               lipTitle: head,
               isInverted: isInverted,
+              actions: actions,
+              leadingAction: leadingAction,
             ),
             BodySection(
               body: body,

@@ -8,6 +8,7 @@ import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/widgets/home_screen/home_screen_listview.dart';
+import 'package:linum/widgets/screen_skeleton/app_bar_action.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 
 import 'package:provider/provider.dart';
@@ -41,6 +42,11 @@ class _HomeScreenState extends State<HomeScreen> {
       head: 'Home',
       isInverted: true,
       hasHomeScreenCard: true,
+      leadingAction: AppBarAction.fromPreset(preset: DefaultAction.BACK),
+      actions: [
+        AppBarAction.fromPreset(preset: DefaultAction.NOTIFICATION),
+        AppBarAction.fromPreset(preset: DefaultAction.ACADEMY)
+      ],
       body: Stack(
         children: [
           Column(
