@@ -27,14 +27,59 @@
     "onboarding_screen/register-lip-signup-button": "Sign up",
     "onboarding_screen/register-lip-forgot-password-button": "Alternative sign-in methods",
 
+
     "home_screen/label-recent-transactions": "Recent transactions",
     "home_screen/button-show-more": "SHOW MORE",
+
 
     "home_screen_card/home-screen-card-toast": "Swipe left and right to view previous or upcoming months. Double tap to return to the current month.",
     "home_screen_card/label-current-balance": "Current balance",
     "home_screen_card/label-income": "INCOME",
     "home_screen_card/label-expenses": "EXPENSES",
 
+
     "budget_screen/label-all-transactions": "All Transactions",
-    "budget_screen/button-filter": "FILTER"
+    "budget_screen/button-filter": "FILTER",
+
+
+    "settings_screen/standards-selector-none": "None",
+
+    "settings_screen/standard-expense-selector/label-title": "Income: ",
+    "settings_screen/standard-expense-selector/food": "Food & Drinks",
+    "settings_screen/standard-expense-selector/freetime": "Leisure",
+    "settings_screen/standard-expense-selector/house": "Home & Living",
+    "settings_screen/standard-expense-selector/lifestyle": "Lifestyle",
+    "settings_screen/standard-expense-selector/car": "Transport",
+    "settings_screen/standard-expense-selector/misc": "Miscellaneous",
+
+    "settings_screen/standard-income-selector/label-title": "Expenses: ",
+    "settings_screen/standard-income-selector/salary": "Salary",
+    "settings_screen/standard-income-selector/allowance": "Allowance",
+    "settings_screen/standard-income-selector/sidejob": "Side Job",
+    "settings_screen/standard-income-selector/investments": "Investments",
+    "settings_screen/standard-income-selector/childsupport": "Child Support",
+    "settings_screen/standard-income-selector/interest": "Interest",
+    "settings_screen/standard-income-selector/misc": "Miscellaneous",
+
+    "settings_screen/standard-account-selector/label-title": "Transactions: ",
+    "settings_screen/standard-account-selector/modal-label-title": "Accounts",
+    "settings_screen/standard-account-selector/debit-card": "Debit Card",
+    "settings_screen/standard-account-selector/credit-card": "Credit Card",
+    "settings_screen/standard-account-selector/cash": "Cash",
+    "settings_screen/standard-account-selector/deposit": "Deposit",
+
+    "settings_screen/standard-currency/label-title": "STANDARD CURRENCY",
+    "settings_screen/standard-currency/label-tooltip": "This currency is used by default for every new transaction. You can also change it individually.",
+
+    "settings_screen/standard-category/label-title": "STANDARD CATEGORIES",
+    "settings_screen/standard-category/label-tooltip": "These categories are used by default for each new income/expense/transaction. You can also change it individually.",
+
+    "settings_screen/special-settings/label-title": "SPECIAL SETTINGS",
+    "settings_screen/special-settings/label-schwabenmodus": "Dagobert Duck Mode",
+    "settings_screen/special-settings/language-selector-de": "Deutsch",
+    "settings_screen/special-settings/language-selector-en": "English",
+    "settings_screen/special-settings/button-forgot-password": "Forgot your password?",
+    "settings_screen/special-settings/button-forgot-password-tooltip": "You can request a password reset here if you forgot your old password.",
+    "settings_screen/special-settings/button-signout": "Sign out"
+
 }

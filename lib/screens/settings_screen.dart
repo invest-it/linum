@@ -1,8 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/silent-scroll.dart';
+import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/screen_index_provider.dart';
@@ -22,32 +24,41 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool _toggled = false;
 
   final Map<StandardExpense, String> _categoriesCategoryExpenses = {
-    StandardExpense.None: "keine",
-    StandardExpense.Food: "Essen & Trinken",
-    StandardExpense.FreeTime: "Freizeit",
-    StandardExpense.House: "Haus",
-    StandardExpense.Lifestyle: "Lebensstil",
-    StandardExpense.Car: "Auto/Nahverkehr",
-    StandardExpense.Diversified: "Diverses",
+    StandardExpense.None: "settings_screen/standards-selector-none",
+    StandardExpense.Food: "settings_screen/standard-expense-selector/food",
+    StandardExpense.FreeTime:
+        "settings_screen/standard-expense-selector/freetime",
+    StandardExpense.House: "settings_screen/standard-expense-selector/house",
+    StandardExpense.Lifestyle:
+        "settings_screen/standard-expense-selector/lifestyle",
+    StandardExpense.Car: "settings_screen/standard-expense-selector/car",
+    StandardExpense.Diversified:
+        "settings_screen/standard-expense-selector/misc",
   };
 
   final Map<StandardIncome, String> _categoriesCategoryIncome = {
-    StandardIncome.None: "keine",
-    StandardIncome.Income: "Gehalt",
-    StandardIncome.Allowance: "Taschengeld",
-    StandardIncome.SideJob: "Nebenjob",
-    StandardIncome.Investments: "Investitionen",
-    StandardIncome.ChildSupport: "Kindergeld",
-    StandardIncome.Interest: "Zinsen",
-    StandardIncome.Diversified: "Diverses",
+    StandardIncome.None: "settings_screen/standards-selector-none",
+    StandardIncome.Income: "settings_screen/standard-income-selector/salary",
+    StandardIncome.Allowance:
+        "settings_screen/standard-income-selector/allowance",
+    StandardIncome.SideJob: "settings_screen/standard-income-selector/sidejob",
+    StandardIncome.Investments:
+        "settings_screen/standard-income-selector/investments",
+    StandardIncome.ChildSupport:
+        "settings_screen/standard-income-selector/childsupport",
+    StandardIncome.Interest:
+        "settings_screen/standard-income-selector/interest",
+    StandardIncome.Diversified: "settings-screen/standard-income-selector/misc",
   };
 
   final Map<StandardAccount, String> _categoriesAccount = {
-    StandardAccount.None: "keine",
-    StandardAccount.Debit: "Debitkarte",
-    StandardAccount.Credit: "Kreditkarte",
-    StandardAccount.Cash: "Bargeld",
-    StandardAccount.Depot: "Depot",
+    StandardAccount.None: "settings_screen/standards-selector-none",
+    StandardAccount.Debit:
+        "settings_screen/standard-account-selector/debit-card",
+    StandardAccount.Credit:
+        "settings_screen/standard-account-selector/credit-card",
+    StandardAccount.Cash: "settings_screen/standard-account-selector/cash",
+    StandardAccount.Depot: "settings_screen/standard-account-selector/deposit",
   };
 
   String dropdownValue = 'Euro (EUR, €)';
@@ -88,7 +99,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         crossAxisAlignment: WrapCrossAlignment.center,
                         spacing: 8,
                         children: [
-                          Text('STANDARD-WÄHRUNG',
+                          Text(
+                              AppLocalizations.of(context)!.translate(
+                                  'settings_screen/standard-currency/label-title'),
                               style: Theme.of(context).textTheme.overline),
                           Tooltip(
                             child: Align(
@@ -99,8 +112,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 size: 10 * 1.8,
                               ),
                             ),
-                            message:
-                                'Diese Währung wird standardmäßig bei jeder neuen Transaktion genutzt. Du kannst diese auch individuell ändern.',
+                            message: AppLocalizations.of(context)!.translate(
+                                'settings_screen/standard-currency/label-tooltip'),
                             triggerMode: TooltipTriggerMode.tap,
                             padding: EdgeInsets.all(8.0),
                             enableFeedback: false,
@@ -178,7 +191,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         crossAxisAlignment: WrapCrossAlignment.center,
                         spacing: 8,
                         children: [
-                          Text('STANDARD-KATEGORIEN',
+                          Text(
+                              AppLocalizations.of(context)!.translate(
+                                  'settings_screen/standard-category/label-title'),
                               style: Theme.of(context).textTheme.overline),
                           Tooltip(
                             child: Align(
@@ -189,8 +204,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 size: 10 * 1.8,
                               ),
                             ),
-                            message:
-                                'Diese Kategorien werden standardmäßig bei jeder neuen Einnahme/Ausgabe/Transaktion genutzt. Du kannst diese auch individuell ändern.',
+                            message: AppLocalizations.of(context)!.translate(
+                                'settings_screen/standard-category/label-tooltip'),
                             triggerMode: TooltipTriggerMode.tap,
                             padding: EdgeInsets.all(8.0),
                             enableFeedback: false,
@@ -209,7 +224,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 color: createMaterialColor(Color(0xFFFAFAFA)),
                                 child: Column(children: [
                                   ListTile(
-                                    title: Text('Einnahmen'),
+                                    title: Text(
+                                      AppLocalizations.of(context)!.translate(
+                                          'settings_screen/standard-income-selector/label-title'),
+                                    ),
                                   ),
                                   Container(
                                     height: MediaQuery.of(context).size.height *
@@ -226,8 +244,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         child: ListTile(
                           // onTap: ontap(),
                           title: Text(
-                            'Einnahmen: ' +
-                                _categoriesCategoryIncome[selectedIncome]!,
+                            AppLocalizations.of(context)!.translate(
+                                    'settings_screen/standard-income-selector/label-title') +
+                                AppLocalizations.of(context)!.translate(
+                                    _categoriesCategoryIncome[selectedIncome] ??
+                                        "Category"),
                             style: Theme.of(context).textTheme.bodyText1,
                           ),
 
@@ -249,7 +270,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 color: createMaterialColor(Color(0xFFFAFAFA)),
                                 child: Column(children: [
                                   ListTile(
-                                    title: Text('Ausgaben'),
+                                    title: Text(
+                                      AppLocalizations.of(context)!.translate(
+                                          'settings_screen/standard-expense-selector/label-title'),
+                                    ),
                                   ),
                                   Container(
                                     height: MediaQuery.of(context).size.height *
@@ -266,8 +290,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         child: ListTile(
                           // onTap: ontap(),
                           title: Text(
-                            'Ausgaben: ' +
-                                _categoriesCategoryExpenses[selectedExpense]!,
+                            AppLocalizations.of(context)!.translate(
+                                    'settings_screen/standard-expense-selector/label-title') +
+                                AppLocalizations.of(context)!.translate(
+                                    _categoriesCategoryExpenses[
+                                            selectedExpense] ??
+                                        "Category"),
                             style: Theme.of(context).textTheme.bodyText1,
                           ),
                           trailing: Icon(
@@ -288,7 +316,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 color: createMaterialColor(Color(0xFFFAFAFA)),
                                 child: Column(children: [
                                   ListTile(
-                                    title: Text('Accounts'),
+                                    title: Text(
+                                      AppLocalizations.of(context)!.translate(
+                                          'settings_screen/standard-account-selector/modal-label-title'),
+                                    ),
                                   ),
                                   Container(
                                     height: MediaQuery.of(context).size.height *
@@ -305,8 +336,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         child: ListTile(
                           // onTap: ontap(),
                           title: Text(
-                            'Tranksaktionen: ' +
-                                _categoriesAccount[selectedAccount]!,
+                            AppLocalizations.of(context)!.translate(
+                                    'settings_screen/standard-account-selector/label-title') +
+                                AppLocalizations.of(context)!.translate(
+                                    _categoriesAccount[selectedAccount] ??
+                                        "Category"),
                             style: Theme.of(context).textTheme.bodyText1,
                           ),
                           trailing: Icon(
@@ -349,11 +383,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('BESONDERE EINSTELLUNGEN',
+                      Text(
+                          AppLocalizations.of(context)!.translate(
+                              'settings_screen/special-settings/label-title'),
                           style: Theme.of(context).textTheme.overline),
                       SwitchListTile(
                         // onTap: ontap(),
-                        title: Text('Schwabenmodus'),
+                        title: Text(
+                          AppLocalizations.of(context)!.translate(
+                              'settings_screen/special-settings/label-schwabenmodus'),
+                        ),
                         value: _toggled,
                         activeColor: Colors.green,
                         onChanged: (bool value) {
@@ -370,14 +409,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               children: [
                                 Container(
                                   child: Center(
-                                    child: Text('Eng'),
+                                    child: Text(
+                                      AppLocalizations.of(context)!.translate(
+                                          'settings_screen/special-settings/language-selector-en'),
+                                    ),
                                   ),
                                   width:
                                       MediaQuery.of(context).size.width * 0.35,
                                 ),
                                 Container(
                                   child: Center(
-                                    child: Text('Deu'),
+                                    child: Text(
+                                      AppLocalizations.of(context)!.translate(
+                                          'settings_screen/special-settings/language-selector-de'),
+                                    ),
                                   ),
                                   width:
                                       MediaQuery.of(context).size.width * 0.35,
@@ -426,10 +471,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.5,
                     //height: MediaQuery.of(context).size.height * 0.05,
+
+                    // TODO ARON please change this into a TextButton
                     child: ListTile(
                       title: Center(
                         child: Text(
-                          'Passwort vergessen?',
+                          AppLocalizations.of(context)!.translate(
+                              'settings_screen/special-settings/button-forgot-password'),
                           style: TextStyle(fontSize: 14),
                         ),
                       ),
@@ -443,8 +491,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             color: Colors.black,
                           ),
                         ),
-                        message:
-                            'Falls du dein Passwort vergessen hast, kannst du hier ein neues einstellen.',
+                        message: AppLocalizations.of(context)!.translate(
+                          'settings_screen/special-settings/button-forgot-password-tooltip',
+                        ),
                         triggerMode: TooltipTriggerMode.tap,
                         padding: EdgeInsets.all(8.0),
                         enableFeedback: false,
@@ -461,11 +510,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           .setPageIndex(0);
                     });
                   },
-                  child: Text('Ausloggen'),
+                  child: Text(
+                    AppLocalizations.of(context)!.translate(
+                        'settings_screen/special-settings/button-signout'),
+                  ),
                 ),
-                // SizedBox(
-                //   height: MediaQuery.of(context).size.height * 0.1,
-                // )
+                SizedBox(
+                  height: proportionateScreenHeight(64),
+                )
               ],
             ),
           ],
@@ -488,9 +540,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
       itemBuilder: (BuildContext context, int indexBuilder) {
         return ListTile(
             //leading: Icon(widget.categories[index].icon),
-            title: Text(_categoriesCategoryIncome[
-                    StandardIncome.values[indexBuilder]] ??
-                ""),
+            title: Text(AppLocalizations.of(context)!.translate(
+                _categoriesCategoryIncome[
+                        StandardIncome.values[indexBuilder]] ??
+                    "Category")),
             selected: selectedIncome == StandardIncome.values[indexBuilder],
             onTap: () {
               setState(() {
@@ -512,9 +565,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
       itemBuilder: (BuildContext context, int indexBuilder) {
         return ListTile(
             //leading: Icon(widget.categories[index].icon),
-            title: Text(_categoriesCategoryExpenses[
-                    StandardExpense.values[indexBuilder]] ??
-                ""),
+            title: Text(AppLocalizations.of(context)!.translate(
+                _categoriesCategoryExpenses[
+                        StandardExpense.values[indexBuilder]] ??
+                    "Category")),
             selected: selectedExpense == StandardExpense.values[indexBuilder],
             onTap: () {
               setState(() {
@@ -534,8 +588,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       itemBuilder: (BuildContext context, int indexBuilder) {
         return ListTile(
           //leading: Icon(widget.categories[index].icon),
-          title: Text(
-              _categoriesAccount[StandardAccount.values[indexBuilder]] ?? ""),
+          title: Text(AppLocalizations.of(context)!.translate(
+              _categoriesAccount[StandardAccount.values[indexBuilder]] ??
+                  "Category")),
           selected: selectedAccount == StandardAccount.values[indexBuilder],
           onTap: () {
             setState(() {

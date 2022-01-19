@@ -27,16 +27,59 @@
     "onboarding_screen/register-lip-signup-button": "Registrieren",
     "onboarding_screen/register-lip-forgot-password-button": "Alternative sign-in methoden",
 
+
     "home_screen/label-recent-transactions": "Neueste Transaktionen",
     "home_screen/button-show-more": "MEHR",
+
 
     "home_screen_card/home-screen-card-toast": "Swipe nach links und rechts, um vorige oder kommende Monate anzusehen. Doppelt tippen, um in den aktuellen Monat zurückzukehren.",
     "home_screen_card/label-current-balance": "Aktueller Kontostand",
     "home_screen_card/label-income": "EINNAHMEN",
     "home_screen_card/label-expenses": "AUSGABEN",
 
-    "budget_screen/label-all-transactions": "Alle Transaktionen",
-    "budget_screen/button-filter": "FILTER"
 
+    "budget_screen/label-all-transactions": "Alle Transaktionen",
+    "budget_screen/button-filter": "FILTER",
+
+
+    "settings_screen/standards-selector-none": "Keine",
+
+    "settings_screen/standard-expense-selector/label-title": "Einnahmen: ",
+    "settings_screen/standard-expense-selector/food": "Essen & Trinken",
+    "settings_screen/standard-expense-selector/freetime": "Freizeit",
+    "settings_screen/standard-expense-selector/house": "Haus & Wohnen",
+    "settings_screen/standard-expense-selector/lifestyle": "Lifestyle",
+    "settings_screen/standard-expense-selector/car": "Auto & Transport",
+    "settings_screen/standard-expense-selector/misc": "Verschiedenes",
+
+    "settings_screen/standard-income-selector/label-title": "Ausgaben: ",
+    "settings_screen/standard-income-selector/salary": "Gehalt",
+    "settings_screen/standard-income-selector/allowance": "Taschengeld",
+    "settings_screen/standard-income-selector/sidejob": "Nebenjob",
+    "settings_screen/standard-income-selector/investments": "Investitionen",
+    "settings_screen/standard-income-selector/childsupport": "Kindergeld",
+    "settings_screen/standard-income-selector/interest": "Zinsen",
+    "settings_screen/standard-income-selector/misc": "Verschiedenes",
+
+    "settings_screen/standard-account-selector/label-title": "Transaktionen: ",
+    "settings_screen/standard-account-selector/modal-label-title": "Accounts",
+    "settings_screen/standard-account-selector/debit-card": "Debitkarte",
+    "settings_screen/standard-account-selector/credit-card": "Kreditkarte",
+    "settings_screen/standard-account-selector/cash": "Bargeld",
+    "settings_screen/standard-account-selector/deposit": "Depot",
+
+    "settings_screen/standard-currency/label-title": "STANDARD-WÄHRUNG",
+    "settings_screen/standard-currency/label-tooltip": "Diese Währung wird standardmäßig bei jeder neuen Transaktion genutzt. Du kannst diese auch individuell ändern.",
+
+    "settings_screen/standard-category/label-title": "STANDARD-KATEGORIEN",
+    "settings_screen/standard-category/label-tooltip": "Diese Kategorien werden standardmäßig bei jeder neuen Einnahme/Ausgabe/Transaktion genutzt. Du kannst diese auch individuell ändern.",
+
+    "settings_screen/special-settings/label-title": "BESONDERE EINSTELLUNGEN",
+    "settings_screen/special-settings/label-schwabenmodus": "Schwabenmodus",
+    "settings_screen/special-settings/language-selector-de": "Deutsch",
+    "settings_screen/special-settings/language-selector-en": "English",
+    "settings_screen/special-settings/button-forgot-password": "Passwort vergessen?",
+    "settings_screen/special-settings/button-forgot-password-tooltip": "Falls du dein Passwort vergessen hast, kannst du hier ein neues einstellen.",
+    "settings_screen/special-settings/button-signout": "Ausloggen"
 
 }
