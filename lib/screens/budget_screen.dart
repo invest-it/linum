@@ -4,6 +4,7 @@ import 'package:linum/frontend_functions/silent-scroll.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/widgets/home_screen/home_screen_listview.dart';
+import 'package:linum/widgets/screen_skeleton/app_bar_action.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +24,9 @@ class BudgetScreen extends StatelessWidget {
     }
     return ScreenSkeleton(
       head: 'Budget',
+      actions: [
+        AppBarAction.fromPreset(DefaultAction.ACADEMY),
+      ],
       body: Column(
         children: [
           Row(
