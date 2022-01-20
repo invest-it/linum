@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
-import 'package:provider/provider.dart';
 
 class ActionLipStatusProvider extends ChangeNotifier {
   Map<ProviderKey, ActionLipStatus> _actionLipMap = {};
   Map<ProviderKey, Widget> _actionBodyMap = {};
+  Map<ProviderKey, String> _actionTitleMap = {};
 
-  void setActionLip({
+  void setActionLipStatus({
     required ProviderKey providerKey,
     ActionLipStatus actionLipStatus = ActionLipStatus.HIDDEN,
   }) {
@@ -14,11 +14,25 @@ class ActionLipStatusProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setActionLipBody({
+  void setActionLip({
     required ProviderKey providerKey,
     required Widget actionLipBody,
+    String? actionLipTitle,
+    ActionLipStatus? actionLipStatus,
   }) {
     _actionBodyMap[providerKey] = actionLipBody;
+    if (actionLipStatus != null) {
+      _actionLipMap[providerKey] = actionLipStatus;
+    }
+    if (actionLipTitle != null) {
+      _actionTitleMap[providerKey] = actionLipTitle;
+    }
+    notifyListeners();
+  }
+
+  void setActionLipTitle(
+      {required ProviderKey providerKey, required String actionLipTitle}) {
+    _actionTitleMap[providerKey] = actionLipTitle;
     notifyListeners();
   }
 
@@ -27,6 +41,10 @@ class ActionLipStatusProvider extends ChangeNotifier {
         Center(
           child: Text('Wrong key'),
         );
+  }
+
+  String getActionLipTitle(ProviderKey providerKey) {
+    return _actionTitleMap[providerKey] ?? "Wrong key";
   }
 
   ActionLipStatus getActionLipStatus(ProviderKey providerKey) {
@@ -41,6 +59,10 @@ class ActionLipStatusProvider extends ChangeNotifier {
   bool isBodyInitialized(ProviderKey providerKey) {
     return _actionBodyMap[providerKey] != null;
   }
+
+  bool isTitleInitialized(ProviderKey providerKey) {
+    return _actionTitleMap[providerKey] != null;
+  }
 }
 
 enum ProviderKey {
@@ -48,4 +70,5 @@ enum ProviderKey {
   BUDGET,
   STATS,
   SETTINGS,
+  ONBOARDING,
 }

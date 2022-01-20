@@ -124,15 +124,16 @@ class ScreenSkeleton extends StatelessWidget {
 
     if (providerKey != null &&
         !actionLipStatusProvider.isActionStatusInitialized(providerKey!)) {
-      actionLipStatusProvider.setActionLip(
+      actionLipStatusProvider.setActionLipStatus(
           providerKey: providerKey!, actionLipStatus: initialActionLipStatus);
     }
 
     if (providerKey != null &&
         !actionLipStatusProvider.isBodyInitialized(providerKey!)) {
-      actionLipStatusProvider.setActionLipBody(
+      actionLipStatusProvider.setActionLip(
           providerKey: providerKey!, actionLipBody: _initialActionLipBody);
     }
+
     return Stack(
       children: [
         Column(
@@ -165,7 +166,7 @@ class ScreenSkeleton extends StatelessWidget {
               ),
         if (providerKey != null)
           ActionLip(
-            providerKey: providerKey!,
+            providerKey!,
           ),
       ],
     );
