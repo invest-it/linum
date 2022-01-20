@@ -4,6 +4,7 @@ import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/authentication_service.dart';
+import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/widgets/auth/forgot_password.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +30,10 @@ class _LogoutFormState extends State<LogoutForm> {
           callback: () => {
             setState(
               () {
-                auth.signOut();
+                auth.signOut().then((_) {
+                  Provider.of<ScreenIndexProvider>(context, listen: false)
+                      .setPageIndex(0);
+                });
               },
             )
           },
