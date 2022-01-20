@@ -8,9 +8,11 @@ import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/backend_functions/url-handler.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/widgets/auth/login_form.dart';
 import 'package:linum/widgets/auth/register_form.dart';
 import 'package:linum/widgets/onboarding/onboarding_slide.dart';
+import 'package:provider/provider.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({Key? key}) : super(key: key);
@@ -175,6 +177,9 @@ class _OnboardingScreenState extends State<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
+    ActionLipStatusProvider actionLipStatusProvider =
+        Provider.of<ActionLipStatusProvider>(context);
+
     switch (_pageState) {
       case 0:
         _loginYOffset = windowHeight;
