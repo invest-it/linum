@@ -79,6 +79,7 @@ class LipSection extends StatelessWidget {
                   right: 0,
                   child: SafeArea(
                     child: AppBar(
+                      primary: false,
                       elevation: 0,
                       automaticallyImplyLeading: false,
                       backgroundColor: Colors.transparent,

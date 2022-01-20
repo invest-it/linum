@@ -42,8 +42,12 @@ class _HomeScreenState extends State<HomeScreen> {
       head: 'Home',
       isInverted: true,
       hasHomeScreenCard: true,
+      leadingAction: AppBarAction.fromPreset(DefaultAction.ACADEMY),
       actions: [
-        AppBarAction.fromPreset(DefaultAction.ACADEMY),
+        AppBarAction.fromParameters(
+          icon: Icons.settings,
+          ontap: () => screenIndexProvider.setPageIndex(3),
+        ),
       ],
       body: Stack(
         children: [
