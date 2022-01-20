@@ -36,6 +36,12 @@ class _EnterScreenState extends State<EnterScreen> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: BackButton(),
+        ),
         resizeToAvoidBottomInset: false,
         body: Container(
           child: Column(

@@ -66,22 +66,12 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
           child: Container(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 SizedBox(
                   height: MediaQuery.of(context).size.height < 690
                       ? proportionateScreenHeight(35)
                       : proportionateScreenHeight(50),
-                ),
-                //upper left "x" to close the window
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: IconButton(
-                    padding: EdgeInsets.only(left: 50),
-                    constraints: BoxConstraints(),
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: Icon(Icons.close),
-                    color: Colors.white,
-                  ),
                 ),
                 //text field
                 Form(
@@ -229,6 +219,9 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                     ],
                   ),
                 ),
+                SizedBox(
+                  height: 8,
+                )
               ],
             ),
           ),
