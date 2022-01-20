@@ -7,6 +7,7 @@ import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/backend_functions/url-handler.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
+import 'package:linum/frontend_functions/silent-scroll.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/widgets/auth/login_form.dart';
@@ -211,16 +212,17 @@ class _OnboardingScreenState extends State<OnboardingPage> {
         }),
         child: Stack(
           children: [
-            // TODO Add the Silent Scroll Handler here -
-            // I was too lazy to stash the thing I was working on when I thought about this
-            PageView(
-              controller: _pageController,
-              onPageChanged: _handleOnPageChanged,
-              // For now, standard physics will do the trick. TODO-FUTURE improve the looks of this
-              physics: PageScrollPhysics(),
-              children: [
-                ..._builtSlides(),
-              ],
+            ScrollConfiguration(
+              behavior: SilentScroll(),
+              child: PageView(
+                controller: _pageController,
+                onPageChanged: _handleOnPageChanged,
+                // For now, standard physics will do the trick. TODO-FUTURE improve the looks of this
+                physics: PageScrollPhysics(),
+                children: [
+                  ..._builtSlides(),
+                ],
+              ),
             ),
             Positioned(
               left: 0,
