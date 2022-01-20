@@ -8,6 +8,7 @@ import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/screen_index_provider.dart';
+import 'package:linum/widgets/auth/forgot_password.dart';
 import 'package:linum/widgets/auth/logout_form.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
@@ -70,13 +71,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
   // final Function ontap = CurrencyList();
 
   Widget build(BuildContext context) {
-    ActionLipStatusProvider actionLipStatusProvider =
-        Provider.of<ActionLipStatusProvider>(context, listen: false);
-
-    AuthenticationService auth = Provider.of<AuthenticationService>(context);
-
     return ScreenSkeleton(
       head: 'Account',
+      providerKey: ProviderKey.SETTINGS,
+      initialActionLipStatus: ActionLipStatus.HIDDEN,
+      initialActionLipBody: Container(),
       body: ScrollConfiguration(
         behavior: SilentScroll(),
         child: ListView(
@@ -504,6 +503,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       // All Authentication Actions (including logOut will be handled via widgets/auth from now on.)
                       LogoutForm(),
+                      ForgotPasswordButton(ProviderKey.SETTINGS),
                     ],
                   ),
                 ),

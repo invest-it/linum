@@ -98,6 +98,10 @@
     "enter_screen_attribute_date": "Datum",
     "enter_screen_attribute_repeat": "Wiederholen",
     "enter_screen_attribute_account_from": "Von Account",
-    "enter_screen_attribute_account_to": "Zu Account"
+    "enter_screen_attribute_account_to": "Zu Account",
 
+
+    "action_lip/forgot-password/label-title": "Passwort zurücksetzen",
+    "action_lip/forgot-password/label-description": "Bitte trage deine E-Mail-Adresse ein, die mit deinem Account verbunden ist. Wir schicken die einen Verifizierungscode zu, mit dem du dein Passwort neu setzen kannst.",
+    "action_lip/forgot-password/button-submit": "Code anfordern"
 }

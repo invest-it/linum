@@ -98,5 +98,11 @@
     "enter_screen_attribute_date": "Date",
     "enter_screen_attribute_repeat": "Repeat",
     "enter_screen_attribute_account_from": "From Account",
-    "enter_screen_attribute_account_to": "To Account"
+    "enter_screen_attribute_account_to": "To Account",
+
+
+    "action_lip/forgot-password/label-title": "Reset Password",
+    "action_lip/forgot-password/label-description": "Please enter your email address connected to your Linum account. We will send you a verification code along with instructions on how to reset your password.",
+    "action_lip/forgot-password/button-submit": "Request code"
+
 }

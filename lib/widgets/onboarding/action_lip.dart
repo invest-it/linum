@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
-import 'package:linum/widgets/screen_skeleton/app_bar_action.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
@@ -85,7 +84,7 @@ class _ActionLipState extends State<ActionLip> {
                 ),
               ],
               iconTheme: IconThemeData(color: Colors.black),
-              backgroundColor: Colors.yellow.withAlpha(80),
+              backgroundColor: Colors.transparent,
               elevation: 0,
             ),
             actionLipStatusProvider.getActionLipBody(providerKey),

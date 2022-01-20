@@ -6,7 +6,9 @@ import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/frontend_functions/user_alert.dart';
+import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
+import 'package:linum/widgets/auth/forgot_password.dart';
 import 'package:provider/provider.dart';
 
 class LoginForm extends StatefulWidget {
@@ -208,32 +210,7 @@ class _LoginFormState extends State<LoginForm> {
               SizedBox(
                 height: proportionateScreenHeight(8),
               ),
-              OutlinedButton(
-                //TODO implement this functionality
-                onPressed: null,
-                child: Text(
-                  AppLocalizations.of(context)!.translate(
-                      'onboarding_screen/login-lip-forgot-password-button'),
-                  style: Theme.of(context).textTheme.button?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface),
-                ),
-                style: OutlinedButton.styleFrom(
-                  elevation: 8,
-                  shadowColor: Theme.of(context).colorScheme.onBackground,
-                  minimumSize: Size(
-                    double.infinity,
-                    proportionateScreenHeight(64),
-                  ),
-                  backgroundColor: Theme.of(context).colorScheme.background,
-                  side: BorderSide(
-                    width: 2,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-              ),
+              ForgotPasswordButton(ProviderKey.ONBOARDING),
               IconButton(
                 color: Colors.grey.shade200,
                 onPressed: () {
