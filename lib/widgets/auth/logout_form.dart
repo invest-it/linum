@@ -24,6 +24,7 @@ class _LogoutFormState extends State<LogoutForm> {
             vertical: proportionateScreenHeight(16),
           ),
           child: Text(
+            //TODO localization
             'Angemeldet als ' + auth.uid,
             style: Theme.of(context).textTheme.overline,
           ),
