@@ -33,41 +33,36 @@ class _EnterScreenListState extends State<EnterScreenList> {
     Category("Datum", Icons.event),
     Category("Wiederholen", Icons.loop),
   ];
-  final List<Category> _categoriesCategoryExpenses = [
-    Category("Von Accout", Icons.event),
-    Category("ajdkfja", Icons.local_atm),
-    // "Essen & Trinken",
-    // "Freizeit",
-    // "Haus",
-    // "Lebensstil",
-    // "Auto/Nahverkehr",
-    // "Diverses",
+  final List<Category2> _categoriesCategoryExpenses = [
+    Category2("Essen & Trinken", Icons.food_bank_outlined),
+    Category2("Freizeit", Icons.beach_access),
+    Category2("Haus", Icons.home),
+    Category2("Lebensstil", Icons.soap),
+    Category2("Auto/Nahverkehr", Icons.car_rental),
+    Category2("Diverses", Icons.radio),
   ];
 
-  final List<String> _categoriesCategoryIncome = [
-    "Gehalt",
-    "Taschengeld",
-    "Nebenjob",
-    "Investitionen",
-    "Kindergeld",
-    "Zinsen",
-    "Diverses",
+  final List<Category2> _categoriesCategoryIncome = [
+    Category2("Gehalt", Icons.work),
+    Category2("Taschengeld", Icons.wallet_giftcard),
+    Category2("Nebenjob", Icons.home_work),
+    Category2("Investitionen", Icons.upgrade),
+    Category2("Zinsen", Icons.assignment_return),
+    Category2("Diverses", Icons.money),
   ];
 
-  final List<String> _categoriesAccount = [
-    "Debitkarte",
-    "Kreditkarte",
-    "Bargeld",
-    "Depot",
+  final List<Category2> _categoriesAccount = [
+    Category2("Debitkarte", Icons.card_membership),
+    Category2("Taschengeld", Icons.credit_card),
+    Category2("Bargeld", Icons.money),
+    Category2("Depot", Icons.assignment_return),
   ];
 
-  final List<String> _categoriesRepeat = [
-    "Täglich",
-    "Wöchentlich",
-    "Monatlich zum 1.",
-    "Zum Quartalsbeginn",
-    "Jährlich",
-    "Frei auswählen"
+  final List<Category2> _categoriesRepeat = [
+    Category2("Täglich", Icons.calendar_today),
+    Category2("Wöchentlich", Icons.next_week),
+    Category2("Monatlich zum 1.", Icons.calendar_view_month),
+    Category2("Frei auswählen", Icons.repeat),
   ];
 
   @override
@@ -115,4 +110,10 @@ class Category {
   String type;
   IconData icon;
   Category(this.type, this.icon);
+}
+
+class Category2 {
+  String categoryName;
+  IconData categoryIcon;
+  Category2(this.categoryName, this.categoryIcon);
 }

@@ -12,10 +12,10 @@ class EnterScreenListViewBuilder extends StatefulWidget {
   List categoriesExpenses;
   List categoriesIncome;
   List categoriesTransaction;
-  List<Category> categoriesCategoryExpenses;
-  List categoriesCategoryIncome;
-  List categoriesAccount;
-  List categoriesRepeat;
+  List<Category2> categoriesCategoryExpenses;
+  List<Category2> categoriesCategoryIncome;
+  List<Category2> categoriesAccount;
+  List<Category2> categoriesRepeat;
   EnterScreenListViewBuilder({
     Key? key,
     required this.categories,
@@ -256,11 +256,13 @@ class _EnterScreenListViewBuilderState
         itemCount: widget.categoriesCategoryExpenses.length,
         itemBuilder: (BuildContext context, int indexBuilder) {
           return ListTile(
-            leading: Icon(widget.categories[index].icon),
-            title: Text(widget.categoriesCategoryExpenses[indexBuilder].type),
+            leading: Icon(
+                widget.categoriesCategoryExpenses[indexBuilder].categoryIcon),
+            title: Text(
+                widget.categoriesCategoryExpenses[indexBuilder].categoryName),
             //selects the item as the categories value
             onTap: () => _selectCategoryItem(
-                widget.categoriesCategoryExpenses[indexBuilder].type,
+                widget.categoriesCategoryExpenses[indexBuilder].categoryName,
                 enterScreenProvider),
           );
         },
@@ -270,11 +272,11 @@ class _EnterScreenListViewBuilderState
         itemCount: widget.categoriesAccount.length,
         itemBuilder: (BuildContext context, int indexBuilder) {
           return ListTile(
-            leading: Icon(widget.categories[index].icon),
-            title: Text(widget.categoriesAccount[indexBuilder]),
+            leading: Icon(widget.categoriesAccount[indexBuilder].categoryIcon),
+            title: Text(widget.categoriesAccount[indexBuilder].categoryName),
             //selects the item as the account value
             onTap: () => _selectAccountItem(
-              widget.categoriesAccount[indexBuilder],
+              widget.categoriesAccount[indexBuilder].categoryName,
             ),
           );
         },
@@ -284,11 +286,12 @@ class _EnterScreenListViewBuilderState
         itemCount: widget.categoriesRepeat.length,
         itemBuilder: (BuildContext context, int indexBuilder) {
           return ListTile(
-            leading: Icon(widget.categories[index].icon),
-            title: Text(widget.categoriesRepeat[indexBuilder]),
+            leading: Icon(widget.categoriesRepeat[indexBuilder].categoryIcon),
+            title: Text(widget.categoriesRepeat[indexBuilder].categoryName),
             //selects the item as the repeat value
             onTap: () => _selectRepeatItem(
-                widget.categoriesRepeat[indexBuilder], enterScreenProvider),
+                widget.categoriesRepeat[indexBuilder].categoryName,
+                enterScreenProvider),
           );
         },
       );
@@ -301,10 +304,12 @@ class _EnterScreenListViewBuilderState
         itemCount: widget.categoriesCategoryIncome.length,
         itemBuilder: (BuildContext context, int indexBuilder) {
           return ListTile(
-            leading: Icon(widget.categories[index].icon),
-            title: Text(widget.categoriesCategoryIncome[indexBuilder]),
+            leading: Icon(
+                widget.categoriesCategoryIncome[indexBuilder].categoryIcon),
+            title: Text(
+                widget.categoriesCategoryIncome[indexBuilder].categoryName),
             onTap: () => _selectCategoryItem(
-                widget.categoriesCategoryIncome[indexBuilder],
+                widget.categoriesCategoryIncome[indexBuilder].categoryName,
                 enterScreenProvider),
           );
         },
@@ -314,10 +319,10 @@ class _EnterScreenListViewBuilderState
         itemCount: widget.categoriesAccount.length,
         itemBuilder: (BuildContext context, int indexBuilder) {
           return ListTile(
-            leading: Icon(widget.categories[index].icon),
-            title: Text(widget.categoriesAccount[indexBuilder]),
+            leading: Icon(widget.categoriesAccount[indexBuilder].categoryIcon),
+            title: Text(widget.categoriesAccount[indexBuilder].categoryName),
             onTap: () => _selectAccountItem(
-              widget.categoriesAccount[indexBuilder],
+              widget.categoriesAccount[indexBuilder].categoryName,
             ),
           );
         },
@@ -327,10 +332,11 @@ class _EnterScreenListViewBuilderState
         itemCount: widget.categoriesRepeat.length,
         itemBuilder: (BuildContext context, int indexBuilder) {
           return ListTile(
-            leading: Icon(widget.categories[index].icon),
-            title: Text(widget.categoriesRepeat[indexBuilder]),
+            leading: Icon(widget.categoriesRepeat[indexBuilder].categoryIcon),
+            title: Text(widget.categoriesRepeat[indexBuilder].categoryName),
             onTap: () => _selectRepeatItem(
-                widget.categoriesRepeat[indexBuilder], enterScreenProvider),
+                widget.categoriesRepeat[indexBuilder].categoryName,
+                enterScreenProvider),
           );
         },
       );
@@ -343,10 +349,11 @@ class _EnterScreenListViewBuilderState
         itemCount: widget.categoriesAccount.length,
         itemBuilder: (BuildContext context, int indexBuilder) {
           return ListTile(
-            leading: Icon(widget.categories[index].icon),
-            title: Text(widget.categoriesAccount[indexBuilder]),
+            leading: Icon(widget.categoriesAccount[indexBuilder].categoryIcon),
+            title: Text(widget.categoriesAccount[indexBuilder].categoryName),
             onTap: () => _selectCategoryItem(
-                widget.categoriesAccount[indexBuilder], enterScreenProvider),
+                widget.categoriesAccount[indexBuilder].categoryName,
+                enterScreenProvider),
           );
         },
       );
@@ -355,10 +362,10 @@ class _EnterScreenListViewBuilderState
         itemCount: widget.categoriesAccount.length,
         itemBuilder: (BuildContext context, int indexBuilder) {
           return ListTile(
-            leading: Icon(widget.categories[index].icon),
-            title: Text(widget.categoriesAccount[indexBuilder]),
+            leading: Icon(widget.categoriesAccount[indexBuilder].categoryIcon),
+            title: Text(widget.categoriesAccount[indexBuilder].categoryName),
             onTap: () => _selectAccountItem(
-              widget.categoriesAccount[indexBuilder],
+              widget.categoriesAccount[indexBuilder].categoryName,
             ),
           );
         },
@@ -368,10 +375,11 @@ class _EnterScreenListViewBuilderState
         itemCount: widget.categoriesRepeat.length,
         itemBuilder: (BuildContext context, int indexBuilder) {
           return ListTile(
-            leading: Icon(widget.categories[index].icon),
-            title: Text(widget.categoriesRepeat[indexBuilder]),
+            leading: Icon(widget.categoriesRepeat[indexBuilder].categoryIcon),
+            title: Text(widget.categoriesRepeat[indexBuilder].categoryName),
             onTap: () => _selectRepeatItem(
-                widget.categoriesRepeat[indexBuilder], enterScreenProvider),
+                widget.categoriesRepeat[indexBuilder].categoryName,
+                enterScreenProvider),
           );
         },
       );
