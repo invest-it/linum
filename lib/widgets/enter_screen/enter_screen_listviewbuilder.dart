@@ -37,6 +37,10 @@ class _EnterScreenListViewBuilderState
     extends State<EnterScreenListViewBuilder> {
   String selectedCategory = "";
   String selectedAccount = "";
+  Icon categoriesCategoryExpensesIcon = Icon(Icons.restaurant);
+  Icon categoriesAccountIcon = Icon(Icons.local_atm);
+  Icon categoresCategoryIncomeIcon = Icon(Icons.payments);
+  Icon categoriesRepeatIcon = Icon(Icons.loop);
 
   DateTime selectedDate = DateTime.now();
   final firstDate = DateTime(2020, 1);
@@ -129,7 +133,7 @@ class _EnterScreenListViewBuilderState
                               )
                             ],
                           ),
-                          child: Icon(widget.categories[index].icon),
+                          child: _selectIcon(index),
                         ),
                         SizedBox(
                           width: 20,
@@ -175,14 +179,8 @@ class _EnterScreenListViewBuilderState
                     Padding(
                       padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
                       child: Container(
-                        //icon depending on the category
-                        child: _iconChooser(
-                            enterScreenProvider,
-                            categoriesExpenses,
-                            index,
-                            categoriesIncome,
-                            categoriesTransaction),
-                      ),
+                          //icon depending on the category
+                          child: _selectIcon(index)),
                     ),
                     Column(
                       children: [
@@ -397,6 +395,19 @@ class _EnterScreenListViewBuilderState
       return Text(enterScreenProvider.repeat);
     } else
       return Text("Trash");
+  }
+
+  _selectIcon(index) {
+    if (index == 0) {
+      return categoriesCategoryExpensesIcon;
+    } else if (index == 1) {
+      return categoriesAccountIcon;
+    } else if (index == 2) {
+      return Icon(Icons.event);
+    } else if (index == 3) {
+      return categoriesRepeatIcon;
+    } else
+      return Icon(Icons.error);
   }
 
 //functions that set the category, account item etc when tapped
