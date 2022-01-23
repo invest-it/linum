@@ -42,16 +42,18 @@ class _EnterScreenListViewBuilderState
   final firstDate = DateTime(2020, 1);
   final lastDate = DateTime(2025, 12);
 
-  TextEditingController myController = TextEditingController();
+  TextEditingController? myController;
   @override
   void initState() {
     super.initState();
-    myController = TextEditingController(text: "");
   }
 
   @override
   void dispose() {
-    myController.dispose();
+    if (myController != null) {
+      myController!.dispose();
+    }
+
     super.dispose();
   }
 
@@ -59,6 +61,10 @@ class _EnterScreenListViewBuilderState
   Widget build(BuildContext context) {
     EnterScreenProvider enterScreenProvider =
         Provider.of<EnterScreenProvider>(context);
+    if (myController == null) {
+      myController =
+          TextEditingController(text: enterScreenProvider.name.toString());
+    }
     return Center(
       child: Column(
         children: [
@@ -82,7 +88,7 @@ class _EnterScreenListViewBuilderState
               ),
               style: Theme.of(context).textTheme.headline5,
               onChanged: (_) {
-                enterScreenProvider.setName(myController.text);
+                enterScreenProvider.setName(myController!.text);
               },
             ),
           ),

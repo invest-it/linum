@@ -4,6 +4,7 @@ class EnterScreenProvider with ChangeNotifier {
   bool _isExpenses = true;
   bool _isIncome = false;
   bool _isTransaction = false;
+  bool _isChange = false;
   String _name = "";
   num _amount;
   String _category = "";
@@ -14,10 +15,16 @@ class EnterScreenProvider with ChangeNotifier {
   final _formKey = GlobalKey<FormState>();
 
   EnterScreenProvider({
-    num amount = 1.0,
+    num amount = 0.0,
     String category = "",
+    String name = "",
+    String repeat = "",
+    String currency = "",
   })  : _amount = amount,
-        _category = category;
+        _category = category,
+        _name = name,
+        _repeat = repeat,
+        _currency = currency;
   //amount: amount, category: category, currency: currency, name: name, time: time
 
   setIsExpenses(bool isExpenses) {
@@ -32,6 +39,11 @@ class EnterScreenProvider with ChangeNotifier {
 
   setIsTransaction(bool isTransaction) {
     _isTransaction = isTransaction;
+    notifyListeners();
+  }
+
+  setIsChange(bool isChange) {
+    _isChange = isChange;
     notifyListeners();
   }
 
@@ -75,6 +87,10 @@ class EnterScreenProvider with ChangeNotifier {
 
   get isTransaction {
     return _isTransaction;
+  }
+
+  get isChange {
+    return _isChange;
   }
 
   get name {
