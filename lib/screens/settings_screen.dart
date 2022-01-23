@@ -34,7 +34,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     StandardExpense.Lifestyle:
         "settings_screen/standard-expense-selector/lifestyle",
     StandardExpense.Car: "settings_screen/standard-expense-selector/car",
-    StandardExpense.Diversified:
+    StandardExpense.Miscellaneous:
         "settings_screen/standard-expense-selector/misc",
   };
 
@@ -50,7 +50,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         "settings_screen/standard-income-selector/childsupport",
     StandardIncome.Interest:
         "settings_screen/standard-income-selector/interest",
-    StandardIncome.Diversified: "settings-screen/standard-income-selector/misc",
+    StandardIncome.Miscellaneous:
+        "settings-screen/standard-income-selector/misc",
   };
 
   final Map<StandardAccount, String> _categoriesAccount = {
@@ -620,7 +621,7 @@ enum StandardIncome {
   Investments,
   ChildSupport,
   Interest,
-  Diversified,
+  Miscellaneous,
 }
 
 enum StandardExpense {
@@ -630,7 +631,7 @@ enum StandardExpense {
   House,
   Lifestyle,
   Car,
-  Diversified,
+  Miscellaneous,
 }
 enum StandardAccount {
   None,

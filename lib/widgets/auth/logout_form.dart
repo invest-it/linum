@@ -5,7 +5,6 @@ import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/screen_index_provider.dart';
-import 'package:linum/widgets/auth/forgot_password.dart';
 import 'package:provider/provider.dart';
 
 class LogoutForm extends StatefulWidget {
@@ -20,6 +19,15 @@ class _LogoutFormState extends State<LogoutForm> {
 
     return Column(
       children: [
+        Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: proportionateScreenHeight(16),
+          ),
+          child: Text(
+            'Angemeldet als ' + auth.uid,
+            style: Theme.of(context).textTheme.overline,
+          ),
+        ),
         GradientButton(
           increaseHeightBy: proportionateScreenHeight(16),
           child: Text(
