@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:linum/frontend_functions/decimal_text_input_formatter.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -39,7 +40,7 @@ class _EnterScreenListViewBuilderState
   String selectedAccount = "";
   Icon categoriesCategoryExpensesIcon = Icon(Icons.restaurant);
   Icon categoriesAccountIcon = Icon(Icons.local_atm);
-  Icon categoresCategoryIncomeIcon = Icon(Icons.payments);
+  Icon categoriesCategoryIncomeIcon = Icon(Icons.payments);
   Icon categoriesRepeatIcon = Icon(Icons.loop);
 
   DateTime selectedDate = DateTime.now();
@@ -65,6 +66,8 @@ class _EnterScreenListViewBuilderState
   Widget build(BuildContext context) {
     EnterScreenProvider enterScreenProvider =
         Provider.of<EnterScreenProvider>(context);
+    BalanceDataProvider balanceDataProvider =
+        Provider.of<BalanceDataProvider>(context);
     if (myController == null) {
       myController =
           TextEditingController(text: enterScreenProvider.name.toString());
@@ -96,6 +99,7 @@ class _EnterScreenListViewBuilderState
               },
             ),
           ),
+
           Container(
             width: proportionateScreenWidth(300),
             //the list view that contains the different categories
@@ -259,9 +263,11 @@ class _EnterScreenListViewBuilderState
             title: Text(
                 widget.categoriesCategoryExpenses[indexBuilder].categoryName),
             //selects the item as the categories value
-            onTap: () => _selectCategoryItem(
-                widget.categoriesCategoryExpenses[indexBuilder].categoryName,
-                enterScreenProvider),
+            onTap: () => _selectCategoryItemExpenses(
+              widget.categoriesCategoryExpenses[indexBuilder].categoryName,
+              enterScreenProvider,
+              widget.categoriesCategoryExpenses[indexBuilder].categoryIcon,
+            ),
           );
         },
       );
@@ -275,6 +281,7 @@ class _EnterScreenListViewBuilderState
             //selects the item as the account value
             onTap: () => _selectAccountItem(
               widget.categoriesAccount[indexBuilder].categoryName,
+              widget.categoriesAccount[indexBuilder].categoryIcon,
             ),
           );
         },
@@ -288,8 +295,10 @@ class _EnterScreenListViewBuilderState
             title: Text(widget.categoriesRepeat[indexBuilder].categoryName),
             //selects the item as the repeat value
             onTap: () => _selectRepeatItem(
-                widget.categoriesRepeat[indexBuilder].categoryName,
-                enterScreenProvider),
+              widget.categoriesRepeat[indexBuilder].categoryName,
+              enterScreenProvider,
+              widget.categoriesRepeat[indexBuilder].categoryIcon,
+            ),
           );
         },
       );
@@ -306,9 +315,11 @@ class _EnterScreenListViewBuilderState
                 widget.categoriesCategoryIncome[indexBuilder].categoryIcon),
             title: Text(
                 widget.categoriesCategoryIncome[indexBuilder].categoryName),
-            onTap: () => _selectCategoryItem(
-                widget.categoriesCategoryIncome[indexBuilder].categoryName,
-                enterScreenProvider),
+            onTap: () => _selectCategoryItemIncome(
+              widget.categoriesCategoryIncome[indexBuilder].categoryName,
+              enterScreenProvider,
+              widget.categoriesCategoryIncome[indexBuilder].categoryIcon,
+            ),
           );
         },
       );
@@ -321,6 +332,7 @@ class _EnterScreenListViewBuilderState
             title: Text(widget.categoriesAccount[indexBuilder].categoryName),
             onTap: () => _selectAccountItem(
               widget.categoriesAccount[indexBuilder].categoryName,
+              widget.categoriesAccount[indexBuilder].categoryIcon,
             ),
           );
         },
@@ -333,8 +345,10 @@ class _EnterScreenListViewBuilderState
             leading: Icon(widget.categoriesRepeat[indexBuilder].categoryIcon),
             title: Text(widget.categoriesRepeat[indexBuilder].categoryName),
             onTap: () => _selectRepeatItem(
-                widget.categoriesRepeat[indexBuilder].categoryName,
-                enterScreenProvider),
+              widget.categoriesRepeat[indexBuilder].categoryName,
+              enterScreenProvider,
+              widget.categoriesRepeat[indexBuilder].categoryIcon,
+            ),
           );
         },
       );
@@ -349,9 +363,10 @@ class _EnterScreenListViewBuilderState
           return ListTile(
             leading: Icon(widget.categoriesAccount[indexBuilder].categoryIcon),
             title: Text(widget.categoriesAccount[indexBuilder].categoryName),
-            onTap: () => _selectCategoryItem(
-                widget.categoriesAccount[indexBuilder].categoryName,
-                enterScreenProvider),
+            onTap: () => _selectCategoryItemTransactions(
+              widget.categoriesAccount[indexBuilder].categoryName,
+              enterScreenProvider,
+            ),
           );
         },
       );
@@ -364,6 +379,7 @@ class _EnterScreenListViewBuilderState
             title: Text(widget.categoriesAccount[indexBuilder].categoryName),
             onTap: () => _selectAccountItem(
               widget.categoriesAccount[indexBuilder].categoryName,
+              widget.categoriesAccount[indexBuilder].categoryIcon,
             ),
           );
         },
@@ -376,8 +392,10 @@ class _EnterScreenListViewBuilderState
             leading: Icon(widget.categoriesRepeat[indexBuilder].categoryIcon),
             title: Text(widget.categoriesRepeat[indexBuilder].categoryName),
             onTap: () => _selectRepeatItem(
-                widget.categoriesRepeat[indexBuilder].categoryName,
-                enterScreenProvider),
+              widget.categoriesRepeat[indexBuilder].categoryName,
+              enterScreenProvider,
+              widget.categoriesRepeat[indexBuilder].categoryIcon,
+            ),
           );
         },
       );
@@ -411,24 +429,44 @@ class _EnterScreenListViewBuilderState
   }
 
 //functions that set the category, account item etc when tapped
-  void _selectCategoryItem(String name, enterScreenProvider) {
+  void _selectCategoryItemExpenses(
+      String name, enterScreenProvider, IconData icon) {
+    Navigator.pop(context);
+    setState(() {
+      enterScreenProvider.setCategory(name);
+      categoriesCategoryExpensesIcon = Icon(icon);
+    });
+  }
+
+  void _selectCategoryItemIncome(
+      String name, enterScreenProvider, IconData icon) {
+    Navigator.pop(context);
+    setState(() {
+      enterScreenProvider.setCategory(name);
+      categoriesCategoryIncomeIcon = Icon(icon);
+    });
+  }
+
+  void _selectCategoryItemTransactions(String name, enterScreenProvider) {
     Navigator.pop(context);
     setState(() {
       enterScreenProvider.setCategory(name);
     });
   }
 
-  void _selectAccountItem(String name) {
+  void _selectAccountItem(String name, IconData icon) {
     Navigator.pop(context);
     setState(() {
       selectedAccount = name;
+      categoriesAccountIcon = Icon(icon);
     });
   }
 
-  void _selectRepeatItem(String name, enterScreenProvider) {
+  void _selectRepeatItem(String name, enterScreenProvider, IconData icon) {
     Navigator.pop(context);
     setState(() {
       enterScreenProvider.setRepeat(name);
+      categoriesRepeatIcon = Icon(icon);
     });
   }
 

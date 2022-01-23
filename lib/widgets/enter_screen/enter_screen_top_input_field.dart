@@ -146,6 +146,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                             enterScreenProvider.setIsExpenses(true);
                             enterScreenProvider.setIsIncome(false);
                             enterScreenProvider.setIsTransaction(false);
+                            enterScreenProvider.setCategory("");
                           });
                         },
                         child: Container(
@@ -171,6 +172,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                             enterScreenProvider.setIsExpenses(false);
                             enterScreenProvider.setIsIncome(true);
                             enterScreenProvider.setIsTransaction(false);
+                            enterScreenProvider.setCategory("");
                           });
                         },
                         child: Container(
@@ -196,6 +198,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                             enterScreenProvider.setIsExpenses(false);
                             enterScreenProvider.setIsIncome(false);
                             enterScreenProvider.setIsTransaction(true);
+                            enterScreenProvider.setCategory("");
                           });
                         },
                         child: Container(

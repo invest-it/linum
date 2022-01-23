@@ -67,6 +67,7 @@ class _EnterScreenState extends State<EnterScreen> {
                         fixedSize: Size(proportionateScreenWidth(300),
                             proportionateScreenHeight(40))),
                     onPressed: () {
+                      balanceDataProvider.setIsChange(false);
                       // if (!enterScreenProvider.formKey.currentState
                       //     .validate()) {
                       //   return;
@@ -74,15 +75,25 @@ class _EnterScreenState extends State<EnterScreen> {
                       Navigator.of(context).pop();
                       //a single balance is added to the balancedataprovider
                       //with the values of the input from the user
-                      balanceDataProvider.addSingleBalance(
-                          amount: _amountChooser(enterScreenProvider),
-                          category: enterScreenProvider.category,
-                          currency: "EUR",
-                          name: enterScreenProvider.name == ""
-                              ? enterScreenProvider.category
-                              : enterScreenProvider.name,
-                          time: Timestamp.fromDate(
-                              selectedDateDateTimeFormatted));
+                      balanceDataProvider.isChange
+                          ? balanceDataProvider.updateSingleBalance(
+                              amount: _amountChooser(enterScreenProvider),
+                              category: enterScreenProvider.category,
+                              currency: "EUR",
+                              name: enterScreenProvider.name == ""
+                                  ? enterScreenProvider.category
+                                  : enterScreenProvider.name,
+                              time: Timestamp.fromDate(
+                                  selectedDateDateTimeFormatted))
+                          : balanceDataProvider.addSingleBalance(
+                              amount: _amountChooser(enterScreenProvider),
+                              category: enterScreenProvider.category,
+                              currency: "EUR",
+                              name: enterScreenProvider.name == ""
+                                  ? enterScreenProvider.category
+                                  : enterScreenProvider.name,
+                              time: Timestamp.fromDate(
+                                  selectedDateDateTimeFormatted));
                     },
                     child: Text(AppLocalizations.of(context)!
                         .translate('enter_screen/button-save-entry')),

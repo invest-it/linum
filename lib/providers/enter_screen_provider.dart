@@ -4,7 +4,6 @@ class EnterScreenProvider with ChangeNotifier {
   bool _isExpenses = true;
   bool _isIncome = false;
   bool _isTransaction = false;
-  bool _isChange = false;
   String _name = "";
   num _amount;
   String _category = "";
@@ -39,11 +38,6 @@ class EnterScreenProvider with ChangeNotifier {
 
   setIsTransaction(bool isTransaction) {
     _isTransaction = isTransaction;
-    notifyListeners();
-  }
-
-  setIsChange(bool isChange) {
-    _isChange = isChange;
     notifyListeners();
   }
 
@@ -87,10 +81,6 @@ class EnterScreenProvider with ChangeNotifier {
 
   get isTransaction {
     return _isTransaction;
-  }
-
-  get isChange {
-    return _isChange;
   }
 
   get name {

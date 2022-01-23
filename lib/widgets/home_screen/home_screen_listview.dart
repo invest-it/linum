@@ -143,6 +143,7 @@ class HomeScreenListView implements BalanceDataListView {
                     },
                   ),
                 );
+                balanceDataProvider.setIsChange(true);
               },
               //print(arrayElement["amount"].toString()),
               child: ListTile(
