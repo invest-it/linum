@@ -75,6 +75,54 @@ class AuthenticationService extends ChangeNotifier {
     return "";
   }
 
+  String get userEmail {
+    if (_firebaseAuth.currentUser != null) {
+      return _firebaseAuth.currentUser!.email ?? "No Email found";
+    }
+    return "";
+  }
+
+  /// Shouldn't be found
+  String get displayName {
+    if (_firebaseAuth.currentUser != null) {
+      return _firebaseAuth.currentUser!.displayName ?? "No Displayname found";
+    }
+    return "";
+  }
+
+  bool get isEmailVerified {
+    if (_firebaseAuth.currentUser != null) {
+      return _firebaseAuth.currentUser!.emailVerified;
+    }
+    return false;
+  }
+
+  /// tells firebase that [email] wants to reset the password
+  Future<void> sendVerificationEmail(
+    String email, {
+    void Function(String)? onComplete = log,
+    void Function(String)? onError = log,
+  }) async {
+    try {
+      if (_firebaseAuth.currentUser != null) {
+        await _firebaseAuth.currentUser!.sendEmailVerification();
+      } else {
+        onError!(germanErrorVersion["auth/not-logged-in-to-verify"] ?? "Error");
+        return;
+      }
+      onComplete!("Successfully send Verification Mail request to Firebase");
+    } on FirebaseAuthException catch (e) {
+      String? gerMessage = germanErrorVersion["auth/" + e.code];
+      if (gerMessage != null) {
+        onError!(gerMessage);
+      } else {
+        onError!(e.message != null
+            ? e.message!
+            : "Firebase Error with null message");
+      }
+    }
+  }
+
   /// tells firebase that [email] wants to reset the password
   Future<void> resetPassword(
     String email, {
@@ -221,5 +269,7 @@ class AuthenticationService extends ChangeNotifier {
         "Die Domain der Weiter-URL steht nicht auf der Whitelist. Setzen Sie die Domain in der Firebase Console auf die Whitelist.",
     "auth/user-not-found":
         "Mit dieser E-Mail-Adresse ist kein Account (mehr) verbunden. Du musst dich erst registrieren, um dich anmelden zu können.",
+    "auth/not-logged-in-to-verify":
+        "Du musst angemeldet zu sein um eine Verifikations-email los zu schicken.", // Custom error message
   };
 }
