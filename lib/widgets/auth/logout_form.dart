@@ -24,7 +24,8 @@ class _LogoutFormState extends State<LogoutForm> {
             vertical: proportionateScreenHeight(16),
           ),
           child: Text(
-            //TODO localization
+            // TODO localization
+            // FIXME @Nightmind change "als" to "mit" ?
             'Angemeldet als ' + auth.userEmail,
             style: Theme.of(context).textTheme.overline,
           ),
