@@ -25,7 +25,7 @@ class _LogoutFormState extends State<LogoutForm> {
           ),
           child: Text(
             //TODO localization
-            'Angemeldet als ' + auth.uid,
+            'Angemeldet als ' + auth.userEmail,
             style: Theme.of(context).textTheme.overline,
           ),
         ),
