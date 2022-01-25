@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -95,6 +96,20 @@ class AuthenticationService extends ChangeNotifier {
       return _firebaseAuth.currentUser!.emailVerified;
     }
     return false;
+  }
+
+  DateTime? get lastLogin {
+    if (_firebaseAuth.currentUser != null) {
+      return _firebaseAuth.currentUser!.metadata.lastSignInTime;
+    }
+    return null;
+  }
+
+  DateTime? get creationDate {
+    if (_firebaseAuth.currentUser != null) {
+      return _firebaseAuth.currentUser!.metadata.creationTime;
+    }
+    return null;
   }
 
   /// tells firebase that [email] wants to reset the password
