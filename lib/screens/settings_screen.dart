@@ -6,8 +6,6 @@ import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/silent-scroll.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
-import 'package:linum/providers/authentication_service.dart';
-import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/widgets/auth/forgot_password.dart';
 import 'package:linum/widgets/auth/logout_form.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
