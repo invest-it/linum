@@ -101,9 +101,13 @@
     "enter_screen_attribute_account_to": "To Account",
 
 
-    "action_lip/forgot-password/label-title": "Reset Password",
-    "action_lip/forgot-password/label-description": "Please enter your email address connected to your Linum account. We will send you a verification code along with instructions on how to reset your password.",
-    "action_lip/forgot-password/button-submit": "Request code",
+    "action_lip/forgot-password/logged-out/label-title": "Reset Password",
+    "action_lip/forgot-password/logged-out/label-description": "Please enter your email address connected to your Linum account. We will send you a verification code along with instructions on how to reset your password.",
+    "action_lip/forgot-password/logged-out/button-submit": "Request code",
+
+    "action_lip/forgot-password/logged-in/label-title": "Choose New Password",
+    "action_lip/forgot-password/logged-in/label-description": "Please enter a new password. You cannot use passwords that you have already used before. The new passwort must not contain your e-mail address and needs to have at least 6 characters.",
+    "action_lip/forgot-password/logged-in/button-submit": "Change Password now",
 
 
     "logout_form/label-current-email": "Logged in as:\n"
