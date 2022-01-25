@@ -112,7 +112,34 @@ class AuthenticationService extends ChangeNotifier {
     return null;
   }
 
-  /// tells firebase that [email] wants to reset the password
+  /// tells firebase that user wants to change its password to [newPassword]
+  Future<void> updatePassword(
+    String newPassword, {
+    void Function(String)? onComplete = log,
+    void Function(String)? onError = log,
+  }) async {
+    try {
+      if (_firebaseAuth.currentUser != null) {
+        await _firebaseAuth.currentUser!.updatePassword(newPassword);
+      } else {
+        onError!(germanErrorVersion["auth/not-logged-in-to-update-password"] ??
+            "Error");
+        return;
+      }
+      onComplete!("Successfully updated the password");
+    } on FirebaseAuthException catch (e) {
+      String? gerMessage = germanErrorVersion["auth/" + e.code];
+      if (gerMessage != null) {
+        onError!(gerMessage);
+      } else {
+        onError!(e.message != null
+            ? e.message!
+            : "Firebase Error with null message");
+      }
+    }
+  }
+
+  /// tells firebase that [email] wants to verify itself
   Future<void> sendVerificationEmail(
     String email, {
     void Function(String)? onComplete = log,
@@ -286,5 +313,7 @@ class AuthenticationService extends ChangeNotifier {
         "Mit dieser E-Mail-Adresse ist kein Account (mehr) verbunden. Du musst dich erst registrieren, um dich anmelden zu können.",
     "auth/not-logged-in-to-verify":
         "Du musst angemeldet zu sein um eine Verifikations-email los zu schicken.", // Custom error message
+    "auth/not-logged-in-to-update-password":
+        "Du musst angemeldet zu sein um dein Passwort in der App zu ändern.", // Custom error message
   };
 }
