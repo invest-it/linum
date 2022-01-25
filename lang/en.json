@@ -103,6 +103,8 @@
 
     "action_lip/forgot-password/label-title": "Reset Password",
     "action_lip/forgot-password/label-description": "Please enter your email address connected to your Linum account. We will send you a verification code along with instructions on how to reset your password.",
-    "action_lip/forgot-password/button-submit": "Request code"
+    "action_lip/forgot-password/button-submit": "Request code",
 
+
+    "logout_form/label-current-email": "Logged in as:\n"
 }

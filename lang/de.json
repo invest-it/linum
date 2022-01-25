@@ -103,5 +103,8 @@
 
     "action_lip/forgot-password/label-title": "Passwort zurücksetzen",
     "action_lip/forgot-password/label-description": "Bitte trage deine E-Mail-Adresse ein, die mit deinem Account verbunden ist. Wir schicken die einen Verifizierungscode zu, mit dem du dein Passwort neu setzen kannst.",
-    "action_lip/forgot-password/button-submit": "Code anfordern"
+    "action_lip/forgot-password/button-submit": "Code anfordern",
+
+
+    "logout_form/label-current-email": "Angemeldet als:\n"
 }

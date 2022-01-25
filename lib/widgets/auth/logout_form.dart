@@ -24,10 +24,11 @@ class _LogoutFormState extends State<LogoutForm> {
             vertical: proportionateScreenHeight(16),
           ),
           child: Text(
-            // TODO localization
-            // FIXME @Nightmind change "als" to "mit" ?
-            'Angemeldet als ' + auth.userEmail,
-            style: Theme.of(context).textTheme.overline,
+            AppLocalizations.of(context)!
+                    .translate('logout_form/label-current-email') +
+                auth.userEmail,
+            style: Theme.of(context).textTheme.bodyText1,
+            textAlign: TextAlign.center,
           ),
         ),
         GradientButton(
