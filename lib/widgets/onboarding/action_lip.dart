@@ -35,7 +35,8 @@ class _ActionLipState extends State<ActionLip> {
       case ActionLipStatus.ONVIEWPORT:
         setState(() {
           log('The offset of the card is currently' + _lipYOffset.toString());
-          _lipYOffset = proportionateScreenHeight(200);
+          _lipYOffset =
+              proportionateScreenHeightFraction(ScreenFraction.TWOFIFTHS);
         });
         break;
       case ActionLipStatus.DISABLED:
