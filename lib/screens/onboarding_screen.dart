@@ -13,6 +13,7 @@ import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/widgets/auth/login_form.dart';
 import 'package:linum/widgets/auth/register_form.dart';
 import 'package:linum/widgets/onboarding/onboarding_slide.dart';
+import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -204,8 +205,11 @@ class _OnboardingScreenState extends State<OnboardingPage> {
         _loginOpacity = 0.80;
     }
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+    return ScreenSkeleton(
+      head: '', // will not be displayed anyways
+      contentOverride: true,
+      initialActionLipStatus: ActionLipStatus.HIDDEN,
+      providerKey: ProviderKey.ONBOARDING,
       body: GestureDetector(
         onTap: () => setState(() {
           _pageState = 0;
