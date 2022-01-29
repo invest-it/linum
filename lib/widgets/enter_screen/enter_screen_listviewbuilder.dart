@@ -137,7 +137,7 @@ class _EnterScreenListViewBuilderState
                               )
                             ],
                           ),
-                          child: _selectIcon(index),
+                          child: _selectIcon(index, enterScreenProvider),
                         ),
                         SizedBox(
                           width: 20,
@@ -184,7 +184,7 @@ class _EnterScreenListViewBuilderState
                       padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
                       child: Container(
                           //icon depending on the category
-                          child: _selectIcon(index)),
+                          child: _selectIcon(index, enterScreenProvider)),
                     ),
                     Column(
                       children: [
@@ -415,17 +415,41 @@ class _EnterScreenListViewBuilderState
       return Text("Trash");
   }
 
-  _selectIcon(index) {
-    if (index == 0) {
-      return categoriesCategoryExpensesIcon;
-    } else if (index == 1) {
-      return categoriesAccountIcon;
-    } else if (index == 2) {
-      return Icon(Icons.event);
-    } else if (index == 3) {
-      return categoriesRepeatIcon;
-    } else
-      return Icon(Icons.error);
+  _selectIcon(index, EnterScreenProvider enterScreenProvider) {
+    if (enterScreenProvider.isExpenses) {
+      if (index == 0) {
+        return categoriesCategoryExpensesIcon; //categoriesCategoryExpensesIcon;
+      } else if (index == 1) {
+        return categoriesAccountIcon;
+      } else if (index == 2) {
+        return Icon(Icons.event);
+      } else if (index == 3) {
+        return categoriesRepeatIcon;
+      } else
+        return Icon(Icons.error);
+    } else if (enterScreenProvider.isIncome) {
+      if (index == 0) {
+        return categoriesCategoryIncomeIcon; //categoriesCategoryExpensesIcon;
+      } else if (index == 1) {
+        return categoriesAccountIcon;
+      } else if (index == 2) {
+        return Icon(Icons.event);
+      } else if (index == 3) {
+        return categoriesRepeatIcon;
+      } else
+        return Icon(Icons.error);
+    } else if (enterScreenProvider.isTransaction) {
+      if (index == 0) {
+        return categoriesAccountIcon; //categoriesCategoryExpensesIcon;
+      } else if (index == 1) {
+        return categoriesAccountIcon;
+      } else if (index == 2) {
+        return Icon(Icons.event);
+      } else if (index == 3) {
+        return categoriesRepeatIcon;
+      } else
+        return Icon(Icons.error);
+    }
   }
 
 //functions that set the category, account item etc when tapped

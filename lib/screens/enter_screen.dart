@@ -50,7 +50,20 @@ class _EnterScreenState extends State<EnterScreen> {
             children: <Widget>[
               //the top, green lip
               EnterScreenTopInputField(),
-              EnterScreenList(),
+              enterScreenProvider.isTransaction
+                  ? Center(
+                      child: Column(
+                      children: [
+                        SizedBox(
+                          height: 100,
+                        ),
+                        Text(
+                          "Coming soon",
+                          style: Theme.of(context).textTheme.headline1,
+                        ),
+                      ],
+                    ))
+                  : EnterScreenList(),
               Expanded(
                 child:
                     Container(color: Theme.of(context).colorScheme.background),
