@@ -60,6 +60,8 @@ class HomeScreenListView implements BalanceDataListView {
 
     DateFormat monthFormatter = DateFormat('MMMM', 'de');
     DateFormat monthAndYearFormatter = DateFormat('MMMM yyyy', 'de');
+    BalanceDataProvider balanceDataProvider =
+        Provider.of<BalanceDataProvider>(context);
 
     // remember last used index in the list
     int currentIndex = 0;
@@ -146,41 +148,52 @@ class HomeScreenListView implements BalanceDataListView {
                 balanceDataProvider.setIsChange(true);
               },
               //print(arrayElement["amount"].toString()),
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: Theme.of(context).colorScheme.secondary,
-                  child: Text(
-                    arrayElement["category"]
-                        .substring(0,
-                            Math.min<num>(3, arrayElement["category"].length))
-                        .toUpperCase(),
-                    style: Theme.of(context).textTheme.overline?.copyWith(
-                          color: Theme.of(context).colorScheme.background,
-                          fontSize: 12,
-                        ),
+              child: Dismissible(
+                background: Container(
+                  child: Icon(Icons.delete),
+                  color: Colors.red,
+                ),
+                key: arrayElement["id"] != null
+                    ? Key(arrayElement["id"])
+                    : Key("one"),
+                onDismissed: (DismissDirection direction) {
+                  //_alertDialogFunction();
+                  balanceDataProvider.removeSingleBalance(arrayElement["id"]);
+                },
+                child: ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
+                    child: Text(
+                      arrayElement["category"]
+                          .substring(0,
+                              Math.min<num>(3, arrayElement["category"].length))
+                          .toUpperCase(),
+                      style: Theme.of(context).textTheme.overline?.copyWith(
+                            color: Theme.of(context).colorScheme.background,
+                            fontSize: 12,
+                          ),
+                    ),
                   ),
-                ),
-                title: Text(
-                  arrayElement["name"],
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                subtitle: Text(
-                  formatter
-                      .format(
-                        arrayElement["time"].toDate(),
-                      )
-                      .toUpperCase(),
-                  style: Theme.of(context).textTheme.overline,
-                ),
-                trailing: Text(
-                  arrayElement["amount"].toStringAsFixed(2) + "€",
-                  style: arrayElement["amount"] < 0
-                      ? Theme.of(context)
-                          .textTheme
-                          .bodyText1
-                          ?.copyWith(color: Theme.of(context).colorScheme.error)
-                      : Theme.of(context).textTheme.bodyText1?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurface),
+                  title: Text(
+                    arrayElement["name"],
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  subtitle: Text(
+                    formatter
+                        .format(
+                          arrayElement["time"].toDate(),
+                        )
+                        .toUpperCase(),
+                    style: Theme.of(context).textTheme.overline,
+                  ),
+                  trailing: Text(
+                    arrayElement["amount"].toStringAsFixed(2) + "€",
+                    style: arrayElement["amount"] < 0
+                        ? Theme.of(context).textTheme.bodyText1?.copyWith(
+                            color: Theme.of(context).colorScheme.error)
+                        : Theme.of(context).textTheme.bodyText1?.copyWith(
+                            color: Theme.of(context).colorScheme.onSurface),
+                  ),
                 ),
               ),
             ),
@@ -195,4 +208,12 @@ class HomeScreenListView implements BalanceDataListView {
 
   @override
   ListView get listview => _listview;
+
+  _alertDialogFunction() {
+    return AlertDialog(
+      title: Text("Delete"),
+      content: Text("Do you want to delete this transaction?"),
+      actions: [],
+    );
+  }
 }
