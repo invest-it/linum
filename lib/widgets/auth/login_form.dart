@@ -113,6 +113,7 @@ class _LoginFormState extends State<LoginForm> {
                       child: TextField(
                         controller: _mailController,
                         keyboardType: TextInputType.emailAddress,
+                        autocorrect: false,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: AppLocalizations.of(context)!.translate(
