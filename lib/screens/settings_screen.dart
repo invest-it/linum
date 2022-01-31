@@ -502,8 +502,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       // All Authentication Actions (including logOut will be handled via widgets/auth from now on.)
                       LogoutForm(),
-                      ForgotPasswordButton(ProviderKey
-                          .SETTINGS), // FIXME @Nightmind weird positioning. I don't think we need to be able to reset the password while logged in. And if we do we dont want to reenter our mail for that
+                      ForgotPasswordButton(ProviderKey.SETTINGS),
                     ],
                   ),
                 ),

@@ -34,9 +34,17 @@ class _ActionLipState extends State<ActionLip> {
         break;
       case ActionLipStatus.ONVIEWPORT:
         setState(() {
-          log('The offset of the card is currently' + _lipYOffset.toString());
-          _lipYOffset =
-              proportionateScreenHeightFraction(ScreenFraction.TWOFIFTHS);
+          // log('The offset of the actionLip is currently' +
+          // _lipYOffset.toString());
+          // SizeGuide.keyboardIsOpened
+          // ? log('Because the keyboard is opened, ')
+          // : log('Because the keyboard is not opened,');
+          // log('the offset has been reduced by ' +
+          // (SizeGuide.keyboardHeight / 2).toString());
+          _lipYOffset = SizeGuide.keyboardIsOpened
+              ? proportionateScreenHeightFraction(ScreenFraction.TWOFIFTHS) -
+                  (SizeGuide.keyboardHeight / 2)
+              : proportionateScreenHeightFraction(ScreenFraction.TWOFIFTHS);
         });
         break;
       case ActionLipStatus.DISABLED:
@@ -64,6 +72,7 @@ class _ActionLipState extends State<ActionLip> {
       ),
       child: Container(
         width: double.infinity,
+        height: proportionateScreenHeightFraction(ScreenFraction.THREEFIFTHS),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -78,6 +87,7 @@ class _ActionLipState extends State<ActionLip> {
                 IconButton(
                   icon: Icon(Icons.close),
                   onPressed: () {
+                    FocusManager.instance.primaryFocus?.unfocus();
                     actionLipStatusProvider.setActionLipStatus(
                         providerKey: providerKey,
                         actionLipStatus: ActionLipStatus.HIDDEN);
