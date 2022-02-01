@@ -6,6 +6,7 @@ import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/widgets/enter_screen/enter_screen_list.dart';
 import 'package:linum/widgets/enter_screen/enter_screen_top_input_field.dart';
+import 'package:linum/widgets/top_bar_action_item.dart';
 import 'package:provider/provider.dart';
 
 class EnterScreen extends StatefulWidget {
@@ -53,16 +54,16 @@ class _EnterScreenState extends State<EnterScreen> {
               enterScreenProvider.isTransaction
                   ? Center(
                       child: Column(
-                      children: [
-                        SizedBox(
-                          height: 100,
-                        ),
-                        Text(
-                          "Coming soon",
-                          style: Theme.of(context).textTheme.headline1,
-                        ),
-                      ],
-                    ))
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TopBarActionItem(
+                            buttonIcon: Icons.build,
+                            onPressedAction: () => {},
+                          ),
+                          Text('Work in progress. Please check back soon.'),
+                        ],
+                      ),
+                    )
                   : EnterScreenList(),
               Expanded(
                 child:
