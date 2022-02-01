@@ -1,7 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
+import 'package:linum/frontend_functions/list_divider.dart';
+import 'package:linum/frontend_functions/list_header.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/silent-scroll.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
@@ -21,7 +21,8 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool _toggled = false;
+  bool _schwabenmodus = false;
+  bool _systemlang = true;
 
   final Map<StandardExpense, String> _categoriesCategoryExpenses = {
     StandardExpense.None: "settings_screen/standards-selector-none",
@@ -64,7 +65,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   String dropdownValue = 'Euro (EUR, €)';
 
-  List<bool> _selections = List.generate(2, (index) => false);
+  List<bool> _languageSelection = [false, false];
 
   @override
   // final Function ontap = CurrencyList();
@@ -78,437 +79,300 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: ScrollConfiguration(
         behavior: SilentScroll(),
         child: ListView(
-          padding: EdgeInsets.zero,
+          padding: EdgeInsets.symmetric(
+            horizontal: 40.0,
+            vertical: 24.0,
+          ),
           children: [
+            /// STANDARD CURRENCY
+            /// FUTURE implement this properly, not the fucky-wucky this was before we decided to put it down
+            // ListHeader(
+            // 'settings_screen/standard-currency/label-title',
+            // tooltipMessage: 'settings_screen/standard-currency/label-tooltip',
+            // ),
+            // Column(
+            //   mainAxisAlignment: MainAxisAlignment.start,
+            //   crossAxisAlignment: CrossAxisAlignment.start,
+            //   children: [
+            //     DropdownButtonFormField<String>(
+            //       decoration: InputDecoration(
+            //         border: InputBorder.none,
+            //       ),
+            //       value: dropdownValue,
+            //       icon: const Icon(Icons.arrow_drop_down),
+            //       elevation: 16,
+            //       style: const TextStyle(color: Colors.black),
+            //       onChanged: (String? newValue) {
+            //         setState(() {
+            //           dropdownValue = newValue!;
+            //         });
+            //       },
+            //       items: <String>[
+            //         'Euro (EUR, €)',
+            //         'Dollar (USD, \$)',
+            //         'Pound Sterling (GBP, £)',
+            //         'Yen (JPY, ¥)',
+            //         'Krone (DKK, Kr.)',
+            //       ].map<DropdownMenuItem<String>>((String value) {
+            //         return DropdownMenuItem<String>(
+            //           value: value,
+            //           child: Text(value),
+            //         );
+            //       }).toList(),
+            //     ),
+            //   ],
+            // ),
+            // ListDivider(T: 0),
+
+            /// STANDARD CATEGORY
+            ListHeader(
+              'settings_screen/standard-category/label-title',
+              tooltipMessage: 'settings_screen/standard-category/label-tooltip',
+            ),
+
+            /// TODO this is not lean programming and needs a rework.
             Column(
               children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: 24.0,
-                    left: 40.0,
-                    right: 40.0,
-                    bottom: 0.0,
-                  ),
-                  //ListTile for selecting currencies
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        spacing: 8,
-                        children: [
-                          Text(
-                              AppLocalizations.of(context)!.translate(
-                                  'settings_screen/standard-currency/label-title'),
-                              style: Theme.of(context).textTheme.overline),
-                          Tooltip(
-                            child: Align(
-                              heightFactor: 1,
-                              widthFactor: 1,
-                              child: Icon(
-                                Icons.help_outline_rounded,
-                                size: 10 * 1.8,
+                GestureDetector(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return Container(
+                          height: proportionateScreenHeightFraction(
+                              ScreenFraction.HALF),
+                          color: Theme.of(context).colorScheme.onSecondary,
+                          child: Column(children: [
+                            ListTile(
+                              title: Text(
+                                AppLocalizations.of(context)!.translate(
+                                    'settings_screen/standard-income-selector/label-title'),
                               ),
                             ),
-                            message: AppLocalizations.of(context)!.translate(
-                                'settings_screen/standard-currency/label-tooltip'),
-                            triggerMode: TooltipTriggerMode.tap,
-                            padding: EdgeInsets.all(8.0),
-                            enableFeedback: false,
-                            preferBelow: false,
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: 8.0,
-                          left: 8.0,
-                          right: 8.0,
-                          bottom: 0,
-                        ),
-                        child: DropdownButtonFormField<String>(
-                          decoration: InputDecoration(border: InputBorder.none),
-                          value: dropdownValue,
-                          icon: const Icon(Icons.arrow_drop_down),
-                          elevation: 16,
-                          style: const TextStyle(color: Colors.black),
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              dropdownValue = newValue!;
-                            });
-                          },
-                          items: <String>[
-                            'Euro (EUR, €)',
-                            'Dollar (USD, \$)',
-                            'Pound Sterling (GBP, £)',
-                            'Yen (JPY, ¥)',
-                            'Krone (DKK, Kr.)',
-                          ].map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                //line in between
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 40.0,
-                    right: 40.0,
-                    top: 0,
-                    bottom: 16.0,
-                  ),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.001,
-                    child: const DecoratedBox(
-                      decoration: const BoxDecoration(
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
-                ),
-                //going on...
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 0,
-                    left: 40.0,
-                    right: 40.0,
-                    bottom: 0,
-                  ),
-                  //ListTile for selecting currencies
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        spacing: 8,
-                        children: [
-                          Text(
-                              AppLocalizations.of(context)!.translate(
-                                  'settings_screen/standard-category/label-title'),
-                              style: Theme.of(context).textTheme.overline),
-                          Tooltip(
-                            child: Align(
-                              heightFactor: 1,
-                              widthFactor: 1,
-                              child: Icon(
-                                Icons.help_outline_rounded,
-                                size: 10 * 1.8,
+                            Container(
+                              height: proportionateScreenHeightFraction(
+                                  ScreenFraction.TWOFIFTHS),
+                              child: _incomeListViewBuilder(
+                                _categoriesCategoryIncome,
                               ),
                             ),
-                            message: AppLocalizations.of(context)!.translate(
-                                'settings_screen/standard-category/label-tooltip'),
-                            triggerMode: TooltipTriggerMode.tap,
-                            padding: EdgeInsets.all(8.0),
-                            enableFeedback: false,
-                            preferBelow: false,
-                          ),
-                        ],
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (context) {
-                              return Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.5,
-                                color: createMaterialColor(Color(0xFFFAFAFA)),
-                                child: Column(children: [
-                                  ListTile(
-                                    title: Text(
-                                      AppLocalizations.of(context)!.translate(
-                                          'settings_screen/standard-income-selector/label-title'),
-                                    ),
-                                  ),
-                                  Container(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.4,
-                                    child: _incomeListViewBuilder(
-                                      _categoriesCategoryIncome,
-                                    ),
-                                  ),
-                                ]),
-                              );
-                            },
-                          );
-                        },
-                        child: ListTile(
-                          // onTap: ontap(),
-                          title: Text(
-                            AppLocalizations.of(context)!.translate(
-                                    'settings_screen/standard-income-selector/label-title') +
-                                AppLocalizations.of(context)!.translate(
-                                    _categoriesCategoryIncome[selectedIncome] ??
-                                        "Category"),
-                            style: Theme.of(context).textTheme.bodyText1,
-                          ),
+                          ]),
+                        );
+                      },
+                    );
+                  },
+                  child: ListTile(
+                    // onTap: ontap(),
+                    title: Text(
+                      AppLocalizations.of(context)!.translate(
+                              'settings_screen/standard-income-selector/label-title') +
+                          AppLocalizations.of(context)!.translate(
+                              _categoriesCategoryIncome[selectedIncome] ??
+                                  "Category"),
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
 
-                          trailing: Icon(
-                            Icons.north_east,
-                            color: createMaterialColor(Color(0xFF97BC4E)),
-                          ),
-                        ),
-                      ),
-                      //Ende Einnahmen ListTile
-                      GestureDetector(
-                        onTap: () {
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (context) {
-                              return Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.5,
-                                color: createMaterialColor(Color(0xFFFAFAFA)),
-                                child: Column(children: [
-                                  ListTile(
-                                    title: Text(
-                                      AppLocalizations.of(context)!.translate(
-                                          'settings_screen/standard-expense-selector/label-title'),
-                                    ),
-                                  ),
-                                  Container(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.4,
-                                    child: _expensesListViewBuilder(
-                                      _categoriesCategoryExpenses,
-                                    ),
-                                  ),
-                                ]),
-                              );
-                            },
-                          );
-                        },
-                        child: ListTile(
-                          // onTap: ontap(),
-                          title: Text(
-                            AppLocalizations.of(context)!.translate(
-                                    'settings_screen/standard-expense-selector/label-title') +
-                                AppLocalizations.of(context)!.translate(
-                                    _categoriesCategoryExpenses[
-                                            selectedExpense] ??
-                                        "Category"),
-                            style: Theme.of(context).textTheme.bodyText1,
-                          ),
-                          trailing: Icon(
-                            Icons.south_east,
-                            color: Colors.red,
-                          ),
-                        ),
-                      ),
-                      //Ende GestureDetector Ausgaben
-                      GestureDetector(
-                        onTap: () {
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (context) {
-                              return Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.5,
-                                color: createMaterialColor(Color(0xFFFAFAFA)),
-                                child: Column(children: [
-                                  ListTile(
-                                    title: Text(
-                                      AppLocalizations.of(context)!.translate(
-                                          'settings_screen/standard-account-selector/modal-label-title'),
-                                    ),
-                                  ),
-                                  Container(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.4,
-                                    child: _accountListViewBuilder(
-                                      _categoriesAccount,
-                                    ),
-                                  ),
-                                ]),
-                              );
-                            },
-                          );
-                        },
-                        child: ListTile(
-                          // onTap: ontap(),
-                          title: Text(
-                            AppLocalizations.of(context)!.translate(
-                                    'settings_screen/standard-account-selector/label-title') +
-                                AppLocalizations.of(context)!.translate(
-                                    _categoriesAccount[selectedAccount] ??
-                                        "Category"),
-                            style: Theme.of(context).textTheme.bodyText1,
-                          ),
-                          trailing: Icon(
-                            Icons.swap_horiz,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      //Einde GestureDetector Accounts
-                      //Icons disputable
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 40.0,
-                    right: 40.0,
-                    top: 0,
-                    bottom: 16.0,
-                  ),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.001,
-                    child: const DecoratedBox(
-                      decoration: const BoxDecoration(
-                        color: Colors.grey,
-                      ),
+                    trailing: Icon(
+                      Icons.north_east,
+                      color: createMaterialColor(Color(0xFF97BC4E)),
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 0,
-                    left: 40.0,
-                    right: 40.0,
-                    bottom: 0,
-                  ),
-                  //ListTile for selecting currencies
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
+                //Ende Einnahmen ListTile
+                GestureDetector(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return Container(
+                          height: MediaQuery.of(context).size.height * 0.5,
+                          color: createMaterialColor(Color(0xFFFAFAFA)),
+                          child: Column(children: [
+                            ListTile(
+                              title: Text(
+                                AppLocalizations.of(context)!.translate(
+                                    'settings_screen/standard-expense-selector/label-title'),
+                              ),
+                            ),
+                            Container(
+                              height: MediaQuery.of(context).size.height * 0.4,
+                              child: _expensesListViewBuilder(
+                                _categoriesCategoryExpenses,
+                              ),
+                            ),
+                          ]),
+                        );
+                      },
+                    );
+                  },
+                  child: ListTile(
+                    // onTap: ontap(),
+                    title: Text(
+                      AppLocalizations.of(context)!.translate(
+                              'settings_screen/standard-expense-selector/label-title') +
                           AppLocalizations.of(context)!.translate(
-                              'settings_screen/special-settings/label-title'),
-                          style: Theme.of(context).textTheme.overline),
-                      SwitchListTile(
-                        // onTap: ontap(),
-                        title: Text(
-                          AppLocalizations.of(context)!.translate(
-                              'settings_screen/special-settings/label-schwabenmodus'),
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
-                        value: _toggled,
-                        activeColor: Colors.green,
-                        onChanged: (bool value) {
-                          setState(() {
-                            _toggled = value;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-
-                // Padding(
-                //   padding: const EdgeInsets.only(
-                //     left: 40.0,
-                //     right: 40.0,
-                //     top: 0,
-                //     bottom: 0,
-                //   ),
-                //   child: SizedBox(
-                //     width: MediaQuery.of(context).size.width,
-                //     height: MediaQuery.of(context).size.height * 0.001,
-                //     child: const DecoratedBox(
-                //       decoration: const BoxDecoration(
-                //         color: Colors.grey,
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                // Ende graue Linie
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 40.0,
-                    right: 40.0,
-                    top: 0,
-                    bottom: 16.0,
-                  ),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.001,
-                    child: const DecoratedBox(
-                      decoration: const BoxDecoration(
-                        color: Colors.grey,
-                      ),
+                              _categoriesCategoryExpenses[selectedExpense] ??
+                                  "Category"),
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    trailing: Icon(
+                      Icons.south_east,
+                      color: Colors.red,
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 40.0,
-                    right: 40.0,
-                    top: 0,
-                    bottom: 0.0,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 16.0),
-                        child: Text(
+                //Ende GestureDetector Ausgaben
+                GestureDetector(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return Container(
+                          height: MediaQuery.of(context).size.height * 0.5,
+                          color: createMaterialColor(Color(0xFFFAFAFA)),
+                          child: Column(children: [
+                            ListTile(
+                              title: Text(
+                                AppLocalizations.of(context)!.translate(
+                                    'settings_screen/standard-account-selector/modal-label-title'),
+                              ),
+                            ),
+                            Container(
+                              height: MediaQuery.of(context).size.height * 0.4,
+                              child: _accountListViewBuilder(
+                                _categoriesAccount,
+                              ),
+                            ),
+                          ]),
+                        );
+                      },
+                    );
+                  },
+                  child: ListTile(
+                    // onTap: ontap(),
+                    title: Text(
+                      AppLocalizations.of(context)!.translate(
+                              'settings_screen/standard-account-selector/label-title') +
                           AppLocalizations.of(context)!.translate(
-                              'settings_screen/system-settings/label-title'),
-                          style: Theme.of(context).textTheme.overline,
-                        ),
-                      ),
-                      Container(
-                        height: proportionateScreenHeight(48),
-                        child: Expanded(
+                              _categoriesAccount[selectedAccount] ??
+                                  "Category"),
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    trailing: Icon(
+                      Icons.swap_horiz,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                //Einde GestureDetector Accounts
+                //Icons disputable
+              ],
+            ),
+            ListDivider(),
+
+            /// SPECIAL SETTINGS
+            /// This setting will be hidden until implememted.
+            // ListHeader('settings_screen/special-settings/label-title'),
+            // Column(
+            //   crossAxisAlignment: CrossAxisAlignment.start,
+            //   children: [
+            //     SwitchListTile(
+            //       /// TODO implement schwabenmodus functionality
+            //       title: Text(
+            //         AppLocalizations.of(context)!.translate(
+            //             'settings_screen/special-settings/label-schwabenmodus'),
+            //         style: Theme.of(context).textTheme.bodyText1,
+            //       ),
+            //       value: _schwabenmodus,
+            //       activeColor: Colors.green,
+            //       onChanged: (bool value) {
+            //         setState(() {
+            //           _schwabenmodus = value;
+            //         });
+            //       },
+            //     ),
+            //   ],
+            // ),
+            // ListDivider(),
+
+            /// LANGUAGE SWITCH
+            ListHeader(
+              'settings_screen/language-settings/label-title',
+              //TODO remove this once the syslang functionality is fully implemented
+              tooltipMessage: 'settings_screen/language-settings/label-tooltip',
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SwitchListTile(
+                  /// TODO implement auto language functionality (see the comment on the toggle buttons below)
+                  title: Text(
+                    AppLocalizations.of(context)!.translate(
+                        'settings_screen/language-settings/label-systemlang'),
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  value: _systemlang,
+                  activeColor: Colors.grey[500],
+                  onChanged: (bool value) {
+                    // setState(() {
+                    /// TODO remove this once we won't force the user anymore to use the system language settings
+                    // _systemlang = value;
+                    // _systemlang = _systemlang;
+                    // });
+                  },
+                ),
+                Flex(
+                  direction: Axis.horizontal,
+                  children: [
+                    ToggleButtons(
+                      children: [
+                        Container(
                           child: Center(
-                            child: ToggleButtons(
-                              children: [
-                                Container(
-                                  child: Center(
-                                    child: Text(
-                                      AppLocalizations.of(context)!.translate(
-                                          'settings_screen/system-settings/language-selector-en'),
-                                    ),
-                                  ),
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.35,
-                                ),
-                                Container(
-                                  child: Center(
-                                    child: Text(
-                                      AppLocalizations.of(context)!.translate(
-                                          'settings_screen/system-settings/language-selector-de'),
-                                    ),
-                                  ),
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.35,
-                                ),
-                              ],
-                              isSelected: _selections,
-                              onPressed: (int index) {
-                                setState(() {
-                                  for (int i = 0; i < _selections.length; i++)
-                                    _selections[i] = i == index;
-                                });
-                              },
-                              borderRadius: BorderRadius.circular(32),
+                            child: Text(
+                              AppLocalizations.of(context)!.translate(
+                                  'settings_screen/language-settings/label-en'),
                             ),
                           ),
+                          width: MediaQuery.of(context).size.width * 0.35,
                         ),
-                      ),
-                      SizedBox(
-                        height: proportionateScreenHeight(32),
-                      ),
-                      // All Authentication Actions (including logOut will be handled via widgets/auth from now on.)
-                      LogoutForm(),
-                      ForgotPasswordButton(ProviderKey.SETTINGS),
-                    ],
-                  ),
+                        Container(
+                          child: Center(
+                            child: Text(
+                              AppLocalizations.of(context)!.translate(
+                                  'settings_screen/language-settings/label-de'),
+                            ),
+                          ),
+                          width: MediaQuery.of(context).size.width * 0.35,
+                        ),
+                      ],
+                      isSelected: _languageSelection,
+
+                      /// TODO MVP we need to somehow read out 1. if the system language is used and turn on/off the functionality of this togglebutton,
+                      /// 2. read out which language is being used and mark the corresponding toggle as active, 3. if the syslang switch is off, a press of
+                      /// the toggle should lead to the language being updated.
+
+                      // onPressed: (int index) {
+                      // setState(() {
+                      //   for (int i = 0; i < _languageSelection.length; i++)
+                      //     _languageSelection[i] = i == index;
+                      // });
+                      // },
+                      borderRadius: BorderRadius.circular(32),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  height: proportionateScreenHeight(64),
-                )
+              ],
+            ),
+            ListDivider(),
+
+            /// YOUR ACCOUNT
+            ListHeader('settings_screen/system-settings/label-title'),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // All Authentication Actions (including logOut will be handled via widgets/auth from now on.)
+                LogoutForm(),
+                ForgotPasswordButton(ProviderKey.SETTINGS),
               ],
             ),
           ],

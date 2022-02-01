@@ -157,7 +157,8 @@ double realScreenWidth() {
 }
 
 enum ScreenFraction {
-  /* 100% */ FULL,
+  /// 100%
+  FULL,
   /* 80% */ FOURFITHS,
   /* 75% */ THREEQUARTERS,
   /* 66% */ TWOTHIRDS,

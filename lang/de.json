@@ -77,9 +77,13 @@
     "settings_screen/special-settings/label-title": "BESONDERE EINSTELLUNGEN",
     "settings_screen/special-settings/label-schwabenmodus": "Schwabenmodus",
 
+    "settings_screen/language-settings/label-title": "SPRACHEINSTELLUNGEN",
+    "settings_screen/language-settings/label-systemlang": "Systemsprache verwenden",
+    "settings_screen/language-settings/label-tooltip": "Im Moment kann nur die Systemsprache verwendet werden. Unterstützte Sprachen: Deutsch, Englisch.",
+    "settings_screen/language-settings/label-de": "Englisch",
+    "settings_screen/language-settings/label-en": "Deutsch",
+
     "settings_screen/system-settings/label-title": "DEIN ACCOUNT",
-    "settings_screen/system-settings/language-selector-de": "Deutsch",
-    "settings_screen/system-settings/language-selector-en": "English",
     "settings_screen/system-settings/button-forgot-password": "Passwort vergessen?",
     "settings_screen/system-settings/button-forgot-password-tooltip": "Falls du dein Passwort vergessen hast, kannst du hier ein neues einstellen.",
     "settings_screen/system-settings/button-signout": "Ausloggen",

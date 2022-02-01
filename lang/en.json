@@ -77,9 +77,13 @@
     "settings_screen/special-settings/label-title": "SPECIAL SETTINGS",
     "settings_screen/special-settings/label-schwabenmodus": "Dagobert Duck Mode",
 
+    "settings_screen/language-settings/label-title": "LANGUAGE SETTINGS",
+    "settings_screen/language-settings/label-systemlang": "Use System Language",
+    "settings_screen/language-settings/label-tooltip": "Currently, only the system language is supported. Supported languages: German, English.",
+    "settings_screen/language-settings/label-de": "English",
+    "settings_screen/language-settings/label-en": "German",
+
     "settings_screen/system-settings/label-title": "YOUR ACCOUNT",
-    "settings_screen/system-settings/language-selector-de": "Deutsch",
-    "settings_screen/system-settings/language-selector-en": "English",
     "settings_screen/system-settings/button-forgot-password": "Forgot your password?",
     "settings_screen/system-settings/button-forgot-password-tooltip": "You can request a password reset here if you forgot your old password.",
     "settings_screen/system-settings/button-signout": "Sign out",
