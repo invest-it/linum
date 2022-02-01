@@ -19,6 +19,8 @@ class _RegisterFormState extends State<RegisterForm> {
   final _passController = TextEditingController();
 
   late final Function signUp;
+  bool _agbCheck = false;
+  bool _agbNullCheck = false;
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +118,30 @@ class _RegisterFormState extends State<RegisterForm> {
                 ),
               ),
               SizedBox(
+                height: proportionateScreenHeight(16),
+              ),
+              CheckboxListTile(
+                title: Text(
+                    'Ich habe die AGB und die Erklärung zum Datenschutz gelesen und akzeptiere sie.',
+                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).colorScheme.onSurface)),
+                value: _agbCheck,
+                onChanged: (newVal) {
+                  setState(() {
+                    _agbCheck = newVal!;
+                    newVal == true
+                        ? _agbNullCheck = false
+                        : _agbNullCheck = true;
+                  });
+                },
+                controlAffinity: ListTileControlAffinity.trailing,
+                checkColor: Theme.of(context).colorScheme.onPrimary,
+                activeColor: Theme.of(context).colorScheme.primaryVariant,
+                secondary: Icon(Icons.verified_user_rounded),
+                visualDensity: VisualDensity(horizontal: -4, vertical: 0),
+              ),
+              SizedBox(
                 height: proportionateScreenHeight(32),
               ),
               // Container(
@@ -136,7 +162,15 @@ class _RegisterFormState extends State<RegisterForm> {
               //     ),
               //   ),
               // ),
-
+              Text(
+                _agbNullCheck
+                    ? 'Sie müssen die AGB akzeptieren, bevor Sie sich registrieren können.'
+                    : '',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                    color: Theme.of(context).colorScheme.error,
+                    fontWeight: FontWeight.bold),
+              ),
               GradientButton(
                 increaseHeightBy: proportionateScreenHeight(16),
                 child: Text(
@@ -144,13 +178,18 @@ class _RegisterFormState extends State<RegisterForm> {
                       'onboarding_screen/register-lip-signup-button'),
                   style: Theme.of(context).textTheme.button,
                 ),
-                callback: () => {
-                  setState(
-                    () {
-                      signUp(_mailController.text, _passController.text);
-                    },
-                  )
-                },
+                callback: _agbCheck
+                    ? () => {
+                          setState(
+                            () {
+                              signUp(
+                                  _mailController.text, _passController.text);
+                            },
+                          )
+                        }
+                    : () => setState(() {
+                          _agbNullCheck = true;
+                        }),
                 gradient: LinearGradient(
                   colors: [
                     Theme.of(context).colorScheme.primary,

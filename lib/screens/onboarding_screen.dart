@@ -80,7 +80,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
               child: Text(
                 AppLocalizations.of(context)!
                     .translate('onboarding_screen/svg-credit-label'),
-                style: Theme.of(context).textTheme.overline,
+                style: Theme.of(context).textTheme.caption,
               ),
               onPressed: () => {
                 launchURL(slide.freepikURL)
@@ -191,15 +191,25 @@ class _OnboardingScreenState extends State<OnboardingPage> {
         _loginOpacity = 1;
         break;
       case 1:
-        _loginYOffset = 200;
+        _loginYOffset = SizeGuide.keyboardIsOpened
+            ? proportionateScreenHeightFraction(ScreenFraction.TWOFIFTHS) -
+                (SizeGuide.keyboardHeight / 2)
+            : proportionateScreenHeightFraction(ScreenFraction.TWOFIFTHS);
         _registerYOffset = windowHeight;
         _loginXOffset = 0;
         _loginWidth = windowWidth;
         _loginOpacity = 1;
         break;
       case 2:
-        _loginYOffset = 170;
-        _registerYOffset = 200;
+        _loginYOffset = SizeGuide.keyboardIsOpened
+            ? proportionateScreenHeightFraction(ScreenFraction.TWOFIFTHS) -
+                (SizeGuide.keyboardHeight / 2) -
+                32
+            : proportionateScreenHeightFraction(ScreenFraction.TWOFIFTHS) - 32;
+        _registerYOffset = SizeGuide.keyboardIsOpened
+            ? proportionateScreenHeightFraction(ScreenFraction.TWOFIFTHS) -
+                (SizeGuide.keyboardHeight / 2)
+            : proportionateScreenHeightFraction(ScreenFraction.TWOFIFTHS);
         _loginXOffset = 20;
         _loginWidth = windowWidth - 40;
         _loginOpacity = 0.80;
@@ -213,6 +223,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
       body: GestureDetector(
         onTap: () => setState(() {
           _pageState = 0;
+          FocusManager.instance.primaryFocus?.unfocus();
         }),
         child: Stack(
           children: [
@@ -291,6 +302,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
             GestureDetector(
               onTap: () => setState(() {
                 _pageState = 1;
+                FocusManager.instance.primaryFocus?.unfocus();
               }),
               child: AnimatedContainer(
                 width: _loginWidth,
@@ -367,7 +379,10 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                     ),
                     Positioned(
                       left: 0,
-                      bottom: 200,
+                      bottom: SizeGuide.keyboardIsOpened
+                          ? 0
+                          : proportionateScreenHeightFraction(
+                              ScreenFraction.TWOFIFTHS),
                       right: 0,
                       child: ClipRRect(
                         borderRadius: BorderRadius.only(
@@ -414,6 +429,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
             GestureDetector(
               onTap: () => setState(() {
                 _pageState = 2;
+                FocusManager.instance.primaryFocus?.unfocus();
               }),
               child: AnimatedContainer(
                 curve: Curves.fastLinearToSlowEaseIn,

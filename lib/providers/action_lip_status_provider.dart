@@ -48,7 +48,6 @@ class ActionLipStatusProvider extends ChangeNotifier {
   }
 
   ActionLipStatus getActionLipStatus(ProviderKey providerKey) {
-    // TODO MVP set this to HIDDEN before deploying
     return _actionLipMap[providerKey] ?? ActionLipStatus.DISABLED;
   }
 
