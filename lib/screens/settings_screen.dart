@@ -316,14 +316,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
             /// LANGUAGE SWITCH
             ListHeader(
               'settings_screen/language-settings/label-title',
-              //TODO remove this once the syslang functionality is fully implemented
-              tooltipMessage: 'settings_screen/language-settings/label-tooltip',
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SwitchListTile(
-                  /// TODO implement auto language functionality (see the comment on the toggle buttons below)
                   title: Text(
                     AppLocalizations.of(context)!.translate(
                         'settings_screen/language-settings/label-systemlang'),
@@ -331,7 +328,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   value: accountSettingsProvider.settings['systemLanguage'] ??
                       true,
-                  activeColor: Colors.grey[500],
+                  activeColor: Theme.of(context).colorScheme.primary,
                   onChanged: (bool value) {
                     accountSettingsProvider
                         .updateSettings({'systemLanguage': value});
@@ -366,11 +363,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   'de-DE'
                               ? [true, false]
                               : [false, true],
-
-                      /// TODO MVP we need to somehow read out 1. if the system language is used and turn on/off the functionality of this togglebutton,
-                      /// 2. read out which language is being used and mark the corresponding toggle as active, 3. if the syslang switch is off, a press of
-                      /// the toggle should lead to the language being updated.
-
                       onPressed: accountSettingsProvider
                                   .settings['systemLanguage'] ==
                               false

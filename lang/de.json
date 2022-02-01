@@ -1,4 +1,6 @@
 {
+    "main/label-loading": "Laden...",
+
     "onboarding_screen/card1-title": "Herzlich Willkommen!",
     "onboarding_screen/card1-description": "Dein neuer Budgeting-Assistent wartet schon auf dich.",
     "onboarding_screen/card2-title": "Tracke dein Geld",
