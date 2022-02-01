@@ -67,8 +67,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   String dropdownValue = 'Euro (EUR, €)';
 
-  List<bool> _languageSelection = [false, false];
-
   @override
   // final Function ontap = CurrencyList();
 
@@ -331,14 +329,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         'settings_screen/language-settings/label-systemlang'),
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
-                  value: _systemlang,
+                  value: accountSettingsProvider.settings['systemLanguage'] ??
+                      true,
                   activeColor: Colors.grey[500],
                   onChanged: (bool value) {
-                    // setState(() {
-                    /// TODO remove this once we won't force the user anymore to use the system language settings
-                    // _systemlang = value;
-                    // _systemlang = _systemlang;
-                    // });
+                    accountSettingsProvider
+                        .updateSettings({'systemLanguage': value});
                   },
                 ),
                 Flex(
@@ -365,18 +361,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           width: MediaQuery.of(context).size.width * 0.35,
                         ),
                       ],
-                      isSelected: _languageSelection,
+                      isSelected:
+                          accountSettingsProvider.settings['languageCode'] ==
+                                  'de-DE'
+                              ? [true, false]
+                              : [false, true],
 
                       /// TODO MVP we need to somehow read out 1. if the system language is used and turn on/off the functionality of this togglebutton,
                       /// 2. read out which language is being used and mark the corresponding toggle as active, 3. if the syslang switch is off, a press of
                       /// the toggle should lead to the language being updated.
 
-                      // onPressed: (int index) {
-                      // setState(() {
-                      //   for (int i = 0; i < _languageSelection.length; i++)
-                      //     _languageSelection[i] = i == index;
-                      // });
-                      // },
+                      onPressed: accountSettingsProvider
+                                  .settings['systemLanguage'] ==
+                              false
+                          ? (int index) {
+                              accountSettingsProvider.updateSettings({
+                                'languageCode': index == 0 ? 'de-DE' : 'en-EN'
+                              });
+                            }
+                          : null,
                       borderRadius: BorderRadius.circular(32),
                     ),
                   ],
