@@ -80,7 +80,6 @@ class _EnterScreenState extends State<EnterScreen> {
                         fixedSize: Size(proportionateScreenWidth(300),
                             proportionateScreenHeight(40))),
                     onPressed: () {
-                      balanceDataProvider.setIsChange(false);
                       // if (!enterScreenProvider.formKey.currentState
                       //     .validate()) {
                       //   return;
@@ -88,7 +87,7 @@ class _EnterScreenState extends State<EnterScreen> {
                       Navigator.of(context).pop();
                       //a single balance is added to the balancedataprovider
                       //with the values of the input from the user
-                      balanceDataProvider.isChange
+                      enterScreenProvider.editMode
                           ? balanceDataProvider.updateSingleBalance(
                               amount: _amountChooser(enterScreenProvider),
                               category: enterScreenProvider.category,
@@ -125,12 +124,12 @@ class _EnterScreenState extends State<EnterScreen> {
 
   //if the amount is entered in expenses, it's set to the negative equivalent if
   //the user did not accidentally press the minus
-  _amountChooser(EnterScreenProvider enterScreenProvider) {
+  num _amountChooser(EnterScreenProvider enterScreenProvider) {
     if (enterScreenProvider.isExpenses) {
       if (enterScreenProvider.amount < 0) {
         return enterScreenProvider.amount;
       } else
-        return enterScreenProvider.amount - enterScreenProvider.amount * 2;
+        return -enterScreenProvider.amount;
     } else
       return enterScreenProvider.amount;
   }

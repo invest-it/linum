@@ -9,10 +9,10 @@ import 'enter_screen_list.dart';
 
 class EnterScreenListViewBuilder extends StatefulWidget {
   //all the lists from the enter_screen_list.dart file
-  List categories;
-  List categoriesExpenses;
-  List categoriesIncome;
-  List categoriesTransaction;
+  List<Category> categories;
+  List<Category> categoriesExpenses;
+  List<Category> categoriesIncome;
+  List<Category> categoriesTransaction;
   List<Category2> categoriesCategoryExpenses;
   List<Category2> categoriesCategoryIncome;
   List<Category2> categoriesAccount;
@@ -66,8 +66,8 @@ class _EnterScreenListViewBuilderState
   Widget build(BuildContext context) {
     EnterScreenProvider enterScreenProvider =
         Provider.of<EnterScreenProvider>(context);
-    BalanceDataProvider balanceDataProvider =
-        Provider.of<BalanceDataProvider>(context);
+    // BalanceDataProvider balanceDataProvider =
+    //     Provider.of<BalanceDataProvider>(context);
     if (myController == null) {
       myController =
           TextEditingController(text: enterScreenProvider.name.toString());
@@ -210,7 +210,7 @@ class _EnterScreenListViewBuilderState
   }
 
   //which hint text at the upper text field is shown
-  _hintTextChooser(enterScreenProvider) {
+  String _hintTextChooser(enterScreenProvider) {
     if (enterScreenProvider.isExpenses) {
       return "Was hast du gekauft?";
     } else if (enterScreenProvider.isIncome) {
@@ -220,8 +220,8 @@ class _EnterScreenListViewBuilderState
   }
 
   //which icon will displayed depending on expense etc.
-  _iconChooser(enterScreenProvider, categoriesExpenses, index, categoriesIncome,
-      categoriesTransaction) {
+  Icon _iconChooser(enterScreenProvider, categoriesExpenses, index,
+      categoriesIncome, categoriesTransaction) {
     if (enterScreenProvider.isExpenses) {
       return Icon(categoriesExpenses.elementAt(index).icon);
     } else if (enterScreenProvider.isIncome) {
@@ -231,8 +231,8 @@ class _EnterScreenListViewBuilderState
   }
 
   //which text will displayed depending on expense etc.
-  _typeChooser(enterScreenProvider, categoriesExpenses, index, categoriesIncome,
-      categoriesTransaction) {
+  Text _typeChooser(enterScreenProvider, categoriesExpenses, index,
+      categoriesIncome, categoriesTransaction) {
     if (enterScreenProvider.isExpenses) {
       return Text(categoriesExpenses.elementAt(index).type);
     } else if (enterScreenProvider.isIncome) {
@@ -242,7 +242,7 @@ class _EnterScreenListViewBuilderState
   }
 
   //which lists view is built depending on expense etc.
-  _chooseListViewBuilder(enterScreenProvider, index) {
+  ListView _chooseListViewBuilder(enterScreenProvider, index) {
     if (enterScreenProvider.isExpenses) {
       return _listViewBuilderExpenses(index, enterScreenProvider);
     } else if (enterScreenProvider.isIncome) {
@@ -252,7 +252,7 @@ class _EnterScreenListViewBuilderState
   }
 
   //which list view is built depending on the tapped category at EXPENSES
-  _listViewBuilderExpenses(index, enterScreenProvider) {
+  ListView _listViewBuilderExpenses(index, enterScreenProvider) {
     if (index == 0) {
       return ListView.builder(
         itemCount: widget.categoriesCategoryExpenses.length,
@@ -305,7 +305,7 @@ class _EnterScreenListViewBuilderState
   }
   //which list view is built depending on the tapped category at INCOME
 
-  _listViewBuilderIncome(index, enterScreenProvider) {
+  ListView _listViewBuilderIncome(index, enterScreenProvider) {
     if (index == 0) {
       return ListView.builder(
         itemCount: widget.categoriesCategoryIncome.length,
@@ -355,7 +355,7 @@ class _EnterScreenListViewBuilderState
   }
   //which list view is built depending on the tapped category at TRANSACTION
 
-  _listViewBuilderTransaction(index, enterScreenProvider) {
+  ListView _listViewBuilderTransaction(index, enterScreenProvider) {
     if (index == 0) {
       return ListView.builder(
         itemCount: widget.categoriesAccount.length,
@@ -402,7 +402,7 @@ class _EnterScreenListViewBuilderState
   }
 
   //returns the selected value as a text
-  _selectText(index, enterScreenProvider) {
+  Text _selectText(index, enterScreenProvider) {
     if (index == 0) {
       return Text(enterScreenProvider.category);
     } else if (index == 1) {
@@ -415,7 +415,7 @@ class _EnterScreenListViewBuilderState
       return Text("Trash");
   }
 
-  _selectIcon(index, EnterScreenProvider enterScreenProvider) {
+  Icon _selectIcon(index, EnterScreenProvider enterScreenProvider) {
     if (enterScreenProvider.isExpenses) {
       if (index == 0) {
         return categoriesCategoryExpensesIcon; //categoriesCategoryExpensesIcon;
@@ -425,8 +425,7 @@ class _EnterScreenListViewBuilderState
         return Icon(Icons.event);
       } else if (index == 3) {
         return categoriesRepeatIcon;
-      } else
-        return Icon(Icons.error);
+      }
     } else if (enterScreenProvider.isIncome) {
       if (index == 0) {
         return categoriesCategoryIncomeIcon; //categoriesCategoryExpensesIcon;
@@ -436,8 +435,7 @@ class _EnterScreenListViewBuilderState
         return Icon(Icons.event);
       } else if (index == 3) {
         return categoriesRepeatIcon;
-      } else
-        return Icon(Icons.error);
+      }
     } else if (enterScreenProvider.isTransaction) {
       if (index == 0) {
         return categoriesAccountIcon; //categoriesCategoryExpensesIcon;
@@ -447,9 +445,9 @@ class _EnterScreenListViewBuilderState
         return Icon(Icons.event);
       } else if (index == 3) {
         return categoriesRepeatIcon;
-      } else
-        return Icon(Icons.error);
+      }
     }
+    return Icon(Icons.error);
   }
 
 //functions that set the category, account item etc when tapped
@@ -523,11 +521,11 @@ class _EnterScreenListViewBuilderState
     }
   }
 
-  String validateMyInput(String value) {
-    RegExp regex = new RegExp(r'^(?=\D*(?:\d\D*){1,12}$)\d+(?:\.\d{1,4})?$');
-    if (!regex.hasMatch(value))
-      return 'Enter Valid Number';
-    else
-      return 'Nothing';
-  }
+  // String validateMyInput(String value) {
+  //   RegExp regex = new RegExp(r'^(?=\D*(?:\d\D*){1,12}$)\d+(?:\.\d{1,4})?$');
+  //   if (!regex.hasMatch(value))
+  //     return 'Enter Valid Number';
+  //   else
+  //     return 'Nothing';
+  // }
 }

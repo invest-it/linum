@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class EnterScreenProvider with ChangeNotifier {
@@ -6,10 +7,12 @@ class EnterScreenProvider with ChangeNotifier {
   bool _isTransaction = false;
   String _name = "";
   num _amount;
-  String _category = "";
+  String _expenseCategory = "";
+  String _incomeCategory = "";
   String _currency = "";
   String _repeat = "Niemals";
   DateTime _selectedDate = DateTime.now();
+  bool _editMode;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -19,11 +22,16 @@ class EnterScreenProvider with ChangeNotifier {
     String name = "",
     String repeat = "",
     String currency = "",
+    DateTime? selectedDate,
+    bool editMode = false,
   })  : _amount = amount,
-        _category = category,
+        _expenseCategory = amount <= 0 ? category : "",
+        _incomeCategory = amount > 0 ? category : "",
         _name = name,
         _repeat = repeat,
-        _currency = currency;
+        _currency = currency,
+        _editMode = editMode,
+        _selectedDate = selectedDate ?? DateTime.now();
   //amount: amount, category: category, currency: currency, name: name, time: time
 
   setIsExpenses(bool isExpenses) {
@@ -52,7 +60,11 @@ class EnterScreenProvider with ChangeNotifier {
   }
 
   setCategory(String category) {
-    _category = category;
+    if (amount <= 0) {
+      _expenseCategory = category;
+    } else {
+      _incomeCategory = category;
+    }
     notifyListeners();
   }
 
@@ -71,43 +83,47 @@ class EnterScreenProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  get isExpenses {
+  bool get isExpenses {
     return _isExpenses;
   }
 
-  get isIncome {
+  bool get isIncome {
     return _isIncome;
   }
 
-  get isTransaction {
+  bool get isTransaction {
     return _isTransaction;
   }
 
-  get name {
+  String get name {
     return _name;
   }
 
-  get amount {
+  num get amount {
     return _amount;
   }
 
-  get category {
-    return _category;
+  String get category {
+    return amount <= 0 ? _expenseCategory : _incomeCategory;
   }
 
-  get currency {
+  String get currency {
     return _currency;
   }
 
-  get selectedDate {
+  DateTime get selectedDate {
     return _selectedDate;
   }
 
-  get formKey {
+  GlobalKey<FormState> get formKey {
     return _formKey;
   }
 
-  get repeat {
+  String get repeat {
     return _repeat;
+  }
+
+  bool get editMode {
+    return _editMode;
   }
 }

@@ -3,6 +3,7 @@
 import 'dart:developer';
 import 'dart:math' as Math;
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
@@ -129,9 +130,14 @@ class HomeScreenListView implements BalanceDataListView {
                           ChangeNotifierProvider<EnterScreenProvider>(
                             create: (_) {
                               return EnterScreenProvider(
-                                  amount: arrayElement["amount"],
-                                  category: arrayElement["category"],
-                                  name: arrayElement["name"]);
+                                amount: arrayElement["amount"] * -1,
+                                category: arrayElement["category"],
+                                name: arrayElement["name"],
+                                selectedDate:
+                                    (arrayElement["time"] as Timestamp)
+                                        .toDate(),
+                                editMode: true,
+                              );
                             },
                           ),
                           ChangeNotifierProvider<BalanceDataProvider>(
@@ -145,7 +151,6 @@ class HomeScreenListView implements BalanceDataListView {
                     },
                   ),
                 );
-                balanceDataProvider.setIsChange(true);
               },
               //print(arrayElement["amount"].toString()),
               child: Dismissible(

@@ -22,9 +22,6 @@ class BalanceDataProvider extends ChangeNotifier {
 
   num _dontDispose = 0;
 
-  //whether or not a change to a balance entry is made
-  bool _isChange = false;
-
   static const Duration FUTURE_DURATION = Duration(days: 30 * 3);
 
   /// Creates the BalanceDataProvider. Inparticular it sets [_balance] correctly
@@ -32,15 +29,6 @@ class BalanceDataProvider extends ChangeNotifier {
     _uid = Provider.of<AuthenticationService>(context, listen: false).uid;
     _algorithmProvider = Provider.of<AlgorithmProvider>(context, listen: false);
     asynConstructor();
-  }
-
-  get isChange {
-    return _isChange;
-  }
-
-  setIsChange(bool isChange) {
-    _isChange = isChange;
-    notifyListeners();
   }
 
   /// Async part of the constructor (so notifyListeners will be used after loading)
