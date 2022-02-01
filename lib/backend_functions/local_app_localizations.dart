@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AppLocalizations {
-  late final Locale locale;
+  late final Locale _locale;
 
-  AppLocalizations(this.locale);
+  AppLocalizations(locale) : _locale = locale;
 
   // Helper method to keep the code in the widgets concise
   // Localizations are accessed using an InheritedWidget "of" syntax
@@ -20,10 +20,11 @@ class AppLocalizations {
 
   late Map<String, String> _localizedStrings;
 
-  Future<bool> load() async {
+  Future<bool> load({Locale? locale}) async {
     // Load the language JSON file from the "lang" folder
-    String jsonString =
-        await rootBundle.loadString('lang/${locale.languageCode}.json');
+    String jsonString = await rootBundle.loadString(locale == null
+        ? 'lang/${_locale.languageCode}.json'
+        : 'lang/${locale.languageCode}.json');
     Map<String, dynamic> jsonMap = json.decode(jsonString);
 
     _localizedStrings = jsonMap.map((key, value) {

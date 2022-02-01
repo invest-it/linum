@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:provider/provider.dart';
 
@@ -16,25 +17,26 @@ class AccountSettingsProvider extends ChangeNotifier {
 
   AccountSettingsProvider(BuildContext context) {
     _uid = Provider.of<AuthenticationService>(context, listen: false).uid;
+
     if (_uid != "") {
       _settings =
           FirebaseFirestore.instance.collection('account_settings').doc(_uid);
     }
-    _createAutoUpdate();
+    _createAutoUpdate(context);
   }
 
-  void updateAuth(AuthenticationService auth) {
+  void updateAuth(AuthenticationService auth, BuildContext context) {
     _uid = auth.uid;
 
     if (_uid != "") {
       _settings =
           FirebaseFirestore.instance.collection('account_settings').doc(_uid);
     }
-    _createAutoUpdate();
+    _createAutoUpdate(context);
     notifyListeners();
   }
 
-  Future<void> _createAutoUpdate() async {
+  Future<void> _createAutoUpdate(BuildContext context) async {
     if (_uid == "") {
       return;
     }
@@ -49,6 +51,14 @@ class AccountSettingsProvider extends ChangeNotifier {
         .snapshots()
         .listen((DocumentSnapshot<Map<String, dynamic>> innerSnapshot) {
       lastGrabbedData = innerSnapshot.data() ?? {};
+
+      String? langString = lastGrabbedData["languageCode"];
+      Locale? lang;
+      if (langString != null) {
+        List<String> langArray = langString.split("-");
+        lang = Locale(langArray[0], langArray[1]);
+      }
+      AppLocalizations.of(context)!.load(locale: lang);
       notifyListeners();
     });
   }

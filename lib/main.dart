@@ -207,7 +207,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
                 update: (ctx, auth, oldAccountSettings) {
                   if (oldAccountSettings != null) {
-                    return oldAccountSettings..updateAuth(auth);
+                    return oldAccountSettings..updateAuth(auth, ctx);
                   } else {
                     return AccountSettingsProvider(ctx);
                   }
