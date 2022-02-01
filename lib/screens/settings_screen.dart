@@ -52,7 +52,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     StandardIncome.Interest:
         "settings_screen/standard-income-selector/interest",
     StandardIncome.Miscellaneous:
-        "settings-screen/standard-income-selector/misc",
+        "settings_screen/standard-income-selector/misc",
   };
 
   final Map<StandardAccount, String> _standardAccounts = {
