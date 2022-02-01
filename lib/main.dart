@@ -126,7 +126,7 @@ class MyApp extends StatelessWidget {
 
       // Specified Localizations
       supportedLocales: [
-        Locale('en', 'EN'),
+        Locale('en', 'US'),
         Locale('de', 'DE'),
       ],
 

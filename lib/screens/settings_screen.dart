@@ -368,7 +368,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               false
                           ? (int index) {
                               accountSettingsProvider.updateSettings({
-                                'languageCode': index == 0 ? 'de-DE' : 'en-EN'
+                                'languageCode': index == 0 ? 'de-DE' : 'en-US'
                               });
                             }
                           : null,
