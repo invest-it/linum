@@ -23,25 +23,25 @@ class HomeScreenListView implements BalanceDataListView {
 
   List<Map<String, dynamic>> _timeWidgets = [
     {
-      "widget": TimeWidget(displayValue: '-HEUTE-'),
+      "widget": TimeWidget(displayValue: 'listview/label-today'),
       "time": DateTime(
               DateTime.now().year, DateTime.now().month, DateTime.now().day)
           .add(Duration(days: 1, microseconds: -1))
     },
     {
-      "widget": TimeWidget(displayValue: '-GESTERN-'),
+      "widget": TimeWidget(displayValue: 'listview/label-yesterday'),
       "time": DateTime(
               DateTime.now().year, DateTime.now().month, DateTime.now().day)
           .subtract(Duration(days: 0, microseconds: 1))
     },
     {
-      "widget": TimeWidget(displayValue: '-LETZTE WOCHE-'),
+      "widget": TimeWidget(displayValue: 'listview/label-lastweek'),
       "time": DateTime(
               DateTime.now().year, DateTime.now().month, DateTime.now().day)
           .subtract(Duration(days: 1, microseconds: 1))
     },
     {
-      "widget": TimeWidget(displayValue: '-DIESEN MONAT-'),
+      "widget": TimeWidget(displayValue: 'listview/label-thismonth'),
       "time": DateTime(
               DateTime.now().year, DateTime.now().month, DateTime.now().day)
           .subtract(Duration(days: 7, microseconds: 1))
@@ -71,7 +71,7 @@ class HomeScreenListView implements BalanceDataListView {
     //log(balanceData.toString());
     List<Widget> list = [];
     if (balanceData.length == 0) {
-      list.add(TimeWidget(displayValue: "-KEINE EINTRÄGE BISHER-"));
+      list.add(TimeWidget(displayValue: "listview/label-no-entries"));
     } else if (balanceData[0] != null && balanceData[0]["Error"] == null) {
       balanceData.forEach(
         (arrayElement) {

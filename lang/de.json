@@ -12,27 +12,39 @@
     "onboarding_screen/register-button": "Jetzt registrieren!",
     "onboarding_screen/login-button": "Ich habe einen Account",
     "onboarding_screen/svg-credit-label": "Illustrationen von Freepik",
+
     "onboarding_screen/cta-login": "Du hast einen Account? Hier einloggen",
     "onboarding_screen/cta-register": "Noch keinen Account? Hier registrieren",
+
     "onboarding_screen/login-lip-title": "LOGIN",
     "onboarding_screen/login-email-hintlabel": "E-Mail-Adresse",
     "onboarding_screen/login-password-hintlabel": "Passwort",
     "onboarding_screen/login-lip-login-button": "Anmelden",
     "onboarding_screen/login-lip-forgot-password-button": "Passwort vergessen?",
+
     "onboarding_screen/register-lip-title": "REGISTRIEREN",
     "onboarding_screen/register-email-hintlabel": "E-Mail-Adresse",
     "onboarding_screen/register-password-hintlabel": "Passwort",
     "onboarding_screen/register-lip-signup-button": "Registrieren",
     "onboarding_screen/register-lip-forgot-password-button": "Alternative sign-in methoden",
+
+
     "home_screen/label-recent-transactions": "Neueste Transaktionen",
     "home_screen/button-show-more": "MEHR",
+
+
     "home_screen_card/home-screen-card-toast": "Swipe nach links und rechts, um vorige oder kommende Monate anzusehen. Doppelt tippen, um in den aktuellen Monat zurückzukehren.",
     "home_screen_card/label-current-balance": "Aktueller Kontostand",
     "home_screen_card/label-income": "EINNAHMEN",
     "home_screen_card/label-expenses": "AUSGABEN",
+
+
     "budget_screen/label-all-transactions": "Alle Transaktionen",
     "budget_screen/button-filter": "FILTER",
+
+
     "settings_screen/standards-selector-none": "Keine",
+
     "settings_screen/standard-expense-selector/label-title": "Ausgaben: ",
     "settings_screen/standard-expense-selector/food": "Essen & Trinken",
     "settings_screen/standard-expense-selector/freetime": "Freizeit",
@@ -40,6 +52,7 @@
     "settings_screen/standard-expense-selector/lifestyle": "Lifestyle",
     "settings_screen/standard-expense-selector/car": "Auto & Transport",
     "settings_screen/standard-expense-selector/misc": "Verschiedenes",
+
     "settings_screen/standard-income-selector/label-title": "Einnahmen: ",
     "settings_screen/standard-income-selector/salary": "Gehalt",
     "settings_screen/standard-income-selector/allowance": "Taschengeld",
@@ -48,27 +61,35 @@
     "settings_screen/standard-income-selector/childsupport": "Kindergeld",
     "settings_screen/standard-income-selector/interest": "Zinsen",
     "settings_screen/standard-income-selector/misc": "Verschiedenes",
+
     "settings_screen/standard-account-selector/label-title": "Transaktionen: ",
     "settings_screen/standard-account-selector/modal-label-title": "Accounts",
     "settings_screen/standard-account-selector/debit-card": "Debitkarte",
     "settings_screen/standard-account-selector/credit-card": "Kreditkarte",
     "settings_screen/standard-account-selector/cash": "Bargeld",
     "settings_screen/standard-account-selector/deposit": "Depot",
+
     "settings_screen/standard-currency/label-title": "STANDARD-WÄHRUNG",
     "settings_screen/standard-currency/label-tooltip": "Diese Währung wird standardmäßig bei jeder neuen Transaktion genutzt. Du kannst diese auch individuell ändern.",
+
     "settings_screen/standard-category/label-title": "STANDARD-KATEGORIEN",
     "settings_screen/standard-category/label-tooltip": "Diese Kategorien werden standardmäßig bei jeder neuen Einnahme/Ausgabe/Transaktion genutzt. Du kannst diese auch individuell ändern.",
+
     "settings_screen/special-settings/label-title": "BESONDERE EINSTELLUNGEN",
     "settings_screen/special-settings/label-schwabenmodus": "Schwabenmodus",
+
     "settings_screen/language-settings/label-title": "SPRACHEINSTELLUNGEN",
     "settings_screen/language-settings/label-systemlang": "Systemsprache verwenden",
     "settings_screen/language-settings/label-tooltip": "Im Moment kann nur die Systemsprache verwendet werden. Unterstützte Sprachen: Deutsch, Englisch.",
     "settings_screen/language-settings/label-de": "Englisch",
     "settings_screen/language-settings/label-en": "Deutsch",
+
     "settings_screen/system-settings/label-title": "DEIN ACCOUNT",
     "settings_screen/system-settings/button-forgot-password": "Passwort vergessen?",
     "settings_screen/system-settings/button-forgot-password-tooltip": "Falls du dein Passwort vergessen hast, kannst du hier ein neues einstellen.",
     "settings_screen/system-settings/button-signout": "Ausloggen",
+
+
     "enter_screen/button-expenses-label": "Ausgabe",
     "enter_screen/button-income-label": "Einnahme",
     "enter_screen/button-transaction-label": "Transaktion",
@@ -76,17 +97,30 @@
     "enter_screen/expenses-textfield-title": "Was hast du gekauft?",
     "enter_screen/income-textfield-title": "Wie heißt dieses Einkommen?",
     "enter_screen/transaction-textfield-title": "Wie heißt diese Transaktion?",
+
     "enter_screen_attribute_category": "Kategorie",
     "enter_screen_attribute_account": "Account",
     "enter_screen_attribute_date": "Datum",
     "enter_screen_attribute_repeat": "Wiederholen",
     "enter_screen_attribute_account_from": "Von Account",
     "enter_screen_attribute_account_to": "Zu Account",
+
+
     "action_lip/forgot-password/logged-out/label-title": "Passwort zurücksetzen",
     "action_lip/forgot-password/logged-out/label-description": "Bitte trage deine E-Mail-Adresse ein, die mit deinem Account verbunden ist. Wir schicken die einen Verifizierungscode zu, mit dem du dein Passwort neu setzen kannst.",
     "action_lip/forgot-password/logged-out/button-submit": "Code anfordern",
+
     "action_lip/forgot-password/logged-in/label-title": "Passwort ändern",
     "action_lip/forgot-password/logged-in/label-description": "Bitte trage ein neues Passwort ein. Passwörter, die du bereits verwendet hast, sind nicht zulässig. Ebenso darf deine E-Mail-Adresse nicht darin vorkommen und es muss länger als 6 Zeichen sein.",
     "action_lip/forgot-password/logged-in/button-submit": "Passwort jetzt ändern",
-    "logout_form/label-current-email": "Angemeldet als:\n"
+
+
+    "logout_form/label-current-email": "Angemeldet als:\n",
+
+
+    "listview/label-no-entries": "- Keine Einträge bisher -",
+    "listview/label-today": "Heute",
+    "listview/label-yesterday": "Gestern",
+    "listview/label-lastweek": "Letzte Woche",
+    "listview/label-thismonth": "Diesen Monat"
 }
