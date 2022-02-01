@@ -54,7 +54,7 @@ class AccountSettingsProvider extends ChangeNotifier {
 
       String? langString = lastGrabbedData["languageCode"];
       Locale? lang;
-      if (langString != null) {
+      if (lastGrabbedData["systemLanguage"] == false && langString != null) {
         List<String> langArray = langString.split("-");
         lang = Locale(langArray[0], langArray[1]);
       }
