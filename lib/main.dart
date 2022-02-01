@@ -200,6 +200,20 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
                 lazy: false,
               ),
+              ChangeNotifierProxyProvider<AuthenticationService,
+                  AccountSettingsProvider>(
+                create: (ctx) {
+                  return AccountSettingsProvider(ctx);
+                },
+                update: (ctx, auth, oldAccountSettings) {
+                  if (oldAccountSettings != null) {
+                    return oldAccountSettings..updateAuth(auth);
+                  } else {
+                    return AccountSettingsProvider(ctx);
+                  }
+                },
+                lazy: false,
+              ),
               ChangeNotifierProvider<AlgorithmProvider>(
                 create: (_) => AlgorithmProvider(),
                 lazy: false,
@@ -215,20 +229,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     return oldBalance..updateAlgorithmProvider(algo);
                   } else {
                     return BalanceDataProvider(ctx);
-                  }
-                },
-                lazy: false,
-              ),
-              ChangeNotifierProxyProvider<AuthenticationService,
-                  AccountSettingsProvider>(
-                create: (ctx) {
-                  return AccountSettingsProvider(ctx);
-                },
-                update: (ctx, auth, oldAccountSettings) {
-                  if (oldAccountSettings != null) {
-                    return oldAccountSettings..updateAuth(auth);
-                  } else {
-                    return AccountSettingsProvider(ctx);
                   }
                 },
                 lazy: false,
