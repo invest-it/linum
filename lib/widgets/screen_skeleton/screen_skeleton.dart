@@ -173,6 +173,7 @@ class ScreenSkeleton extends StatelessWidget {
       );
     } else {
       return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
             body,

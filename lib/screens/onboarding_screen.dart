@@ -74,7 +74,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
           width: double.infinity,
           child: Padding(
             padding: EdgeInsets.only(
-              top: proportionateScreenHeight(16),
+              top: proportionateScreenHeight(24),
             ),
             child: CupertinoButton(
               child: Text(
