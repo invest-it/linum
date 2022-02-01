@@ -255,7 +255,7 @@ class ForgotPasswordButton extends StatelessWidget {
         shadowColor: Theme.of(context).colorScheme.onBackground,
         minimumSize: Size(
           double.infinity,
-          proportionateScreenHeight(64),
+          proportionateScreenHeight(48),
         ),
         backgroundColor: Theme.of(context).colorScheme.background,
         side: BorderSide(
