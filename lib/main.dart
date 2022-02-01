@@ -253,20 +253,22 @@ class _MyHomePageState extends State<MyHomePage> {
         }
 
         // Otherwise, show something whilst waiting for initialization to complete
-        // TODO FUTURE let us add a lottie splash screen here after the MVP phase
         return Scaffold(
           body: Center(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: proportionateScreenWidthFraction(
-                          ScreenFraction.ONETHIRD)),
+                  padding: EdgeInsets.symmetric(vertical: 32.0),
                   child: CircularProgressIndicator(
-                      color: Theme.of(context).colorScheme.primary),
+                    value: null,
+                  ),
                 ),
-                Text(AppLocalizations.of(context)!
-                    .translate('main/label-loading')),
+                Text(
+                  AppLocalizations.of(context)!.translate('main/label-loading'),
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline5,
+                ),
               ],
             ),
           ),
