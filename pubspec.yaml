@@ -42,6 +42,7 @@ dependencies:
   firebase_core_web: ^1.4.0
   fluttertoast: ^8.0.8
   uuid: ^3.0.5
+  enum_to_string: ^2.0.1
 
 dev_dependencies:
   flutter_test:
