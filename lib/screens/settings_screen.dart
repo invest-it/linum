@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/frontend_functions/list_divider.dart';
 import 'package:linum/frontend_functions/list_header.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/silent-scroll.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/widgets/auth/forgot_password.dart';
 import 'package:linum/widgets/auth/logout_form.dart';
@@ -24,7 +26,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool _schwabenmodus = false;
   bool _systemlang = true;
 
-  final Map<StandardExpense, String> _categoriesCategoryExpenses = {
+  final Map<StandardExpense, String> _standardExpenses = {
     StandardExpense.None: "settings_screen/standards-selector-none",
     StandardExpense.Food: "settings_screen/standard-expense-selector/food",
     StandardExpense.FreeTime:
@@ -37,7 +39,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         "settings_screen/standard-expense-selector/misc",
   };
 
-  final Map<StandardIncome, String> _categoriesCategoryIncome = {
+  final Map<StandardIncome, String> _standardIncomes = {
     StandardIncome.None: "settings_screen/standards-selector-none",
     StandardIncome.Income: "settings_screen/standard-income-selector/salary",
     StandardIncome.Allowance:
@@ -53,7 +55,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         "settings-screen/standard-income-selector/misc",
   };
 
-  final Map<StandardAccount, String> _categoriesAccount = {
+  final Map<StandardAccount, String> _standardAccounts = {
     StandardAccount.None: "settings_screen/standards-selector-none",
     StandardAccount.Debit:
         "settings_screen/standard-account-selector/debit-card",
@@ -71,6 +73,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
   // final Function ontap = CurrencyList();
 
   Widget build(BuildContext context) {
+    AccountSettingsProvider accountSettingsProvider =
+        Provider.of<AccountSettingsProvider>(context);
+
     return ScreenSkeleton(
       head: 'Account',
       providerKey: ProviderKey.SETTINGS,
@@ -153,7 +158,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               height: proportionateScreenHeightFraction(
                                   ScreenFraction.TWOFIFTHS),
                               child: _incomeListViewBuilder(
-                                _categoriesCategoryIncome,
+                                accountSettingsProvider,
                               ),
                             ),
                           ]),
@@ -166,9 +171,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     title: Text(
                       AppLocalizations.of(context)!.translate(
                               'settings_screen/standard-income-selector/label-title') +
-                          AppLocalizations.of(context)!.translate(
-                              _categoriesCategoryIncome[selectedIncome] ??
-                                  "Category"),
+                          AppLocalizations.of(context)!.translate(_standardIncomes[
+                                  EnumToString.fromString<StandardIncome>(
+                                StandardIncome.values,
+                                (accountSettingsProvider
+                                        .settings["StandardIncome"] ??
+                                    "None"),
+                              )] ??
+                              "ChoosenStandardIncome"), // yeah im sorry that is really complicated code. :( It translates the value from firebase
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
 
@@ -197,7 +207,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             Container(
                               height: MediaQuery.of(context).size.height * 0.4,
                               child: _expensesListViewBuilder(
-                                _categoriesCategoryExpenses,
+                                accountSettingsProvider,
                               ),
                             ),
                           ]),
@@ -210,9 +220,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     title: Text(
                       AppLocalizations.of(context)!.translate(
                               'settings_screen/standard-expense-selector/label-title') +
-                          AppLocalizations.of(context)!.translate(
-                              _categoriesCategoryExpenses[selectedExpense] ??
-                                  "Category"),
+                          AppLocalizations.of(context)!.translate(_standardExpenses[
+                                  EnumToString.fromString<StandardExpense>(
+                                StandardExpense.values,
+                                (accountSettingsProvider
+                                        .settings["StandardExpense"] ??
+                                    "None"),
+                              )] ??
+                              "ChoosenStandardExpense"), // yeah im sorry that is really complicated code. :( It translates the value from firebase
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                     trailing: Icon(
@@ -240,7 +255,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             Container(
                               height: MediaQuery.of(context).size.height * 0.4,
                               child: _accountListViewBuilder(
-                                _categoriesAccount,
+                                accountSettingsProvider,
                               ),
                             ),
                           ]),
@@ -253,9 +268,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     title: Text(
                       AppLocalizations.of(context)!.translate(
                               'settings_screen/standard-account-selector/label-title') +
-                          AppLocalizations.of(context)!.translate(
-                              _categoriesAccount[selectedAccount] ??
-                                  "Category"),
+                          AppLocalizations.of(context)!.translate(_standardAccounts[
+                                  EnumToString.fromString<StandardAccount>(
+                                StandardAccount.values,
+                                (accountSettingsProvider
+                                        .settings["StandardAccount"] ??
+                                    "None"),
+                              )] ??
+                              "ChoosenStandardAccount"), // yeah im sorry that is really complicated code. :( It translates the value from firebase
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                     trailing: Icon(
@@ -383,12 +403,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   //ListView.builder für Standard Kategorien
 
-  StandardIncome selectedIncome = StandardIncome.None;
-  StandardExpense selectedExpense = StandardExpense.None;
-  StandardAccount selectedAccount = StandardAccount.None;
-
   ListView _incomeListViewBuilder(
-      Map<StandardIncome, String> _categoriesCategoryIncome) {
+      AccountSettingsProvider accountSettingsProvider) {
     return ListView.builder(
       shrinkWrap: true,
       itemCount: StandardIncome.values.length,
@@ -396,13 +412,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
         return ListTile(
             //leading: Icon(widget.categories[index].icon),
             title: Text(AppLocalizations.of(context)!.translate(
-                _categoriesCategoryIncome[
-                        StandardIncome.values[indexBuilder]] ??
+                _standardIncomes[StandardIncome.values[indexBuilder]] ??
                     "Category")),
-            selected: selectedIncome == StandardIncome.values[indexBuilder],
+            selected: "StandardIncome." +
+                    (accountSettingsProvider.settings["StandardIncome"] ??
+                        "None") ==
+                StandardIncome.values[indexBuilder].toString(),
             onTap: () {
-              setState(() {
-                selectedIncome = StandardIncome.values[indexBuilder];
+              List<String> stringArr =
+                  StandardIncome.values[indexBuilder].toString().split(".");
+              accountSettingsProvider.updateSettings({
+                stringArr[0]: stringArr[1],
               });
               Navigator.pop(context);
             }
@@ -413,7 +433,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   ListView _expensesListViewBuilder(
-      Map<StandardExpense, String> _categoriesCategoryExpenses) {
+      AccountSettingsProvider accountSettingsProvider) {
     return ListView.builder(
       shrinkWrap: true,
       itemCount: StandardExpense.values.length,
@@ -421,13 +441,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
         return ListTile(
             //leading: Icon(widget.categories[index].icon),
             title: Text(AppLocalizations.of(context)!.translate(
-                _categoriesCategoryExpenses[
-                        StandardExpense.values[indexBuilder]] ??
+                _standardExpenses[StandardExpense.values[indexBuilder]] ??
                     "Category")),
-            selected: selectedExpense == StandardExpense.values[indexBuilder],
+            selected: "StandardExpense." +
+                    (accountSettingsProvider.settings["StandardExpense"] ??
+                        "None") ==
+                StandardExpense.values[indexBuilder].toString(),
             onTap: () {
-              setState(() {
-                selectedExpense = StandardExpense.values[indexBuilder];
+              List<String> stringArr =
+                  StandardExpense.values[indexBuilder].toString().split(".");
+              accountSettingsProvider.updateSettings({
+                stringArr[0]: stringArr[1],
               });
               Navigator.pop(context);
             });
@@ -436,7 +460,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   ListView _accountListViewBuilder(
-      Map<StandardAccount, String> _categoriesAccount) {
+      AccountSettingsProvider accountSettingsProvider) {
     return ListView.builder(
       shrinkWrap: true,
       itemCount: StandardAccount.values.length,
@@ -444,13 +468,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
         return ListTile(
           //leading: Icon(widget.categories[index].icon),
           title: Text(AppLocalizations.of(context)!.translate(
-              _categoriesAccount[StandardAccount.values[indexBuilder]] ??
+              _standardAccounts[StandardAccount.values[indexBuilder]] ??
                   "Category")),
-          selected: selectedAccount == StandardAccount.values[indexBuilder],
+          selected: "StandardAccount." +
+                  (accountSettingsProvider.settings["StandardAccount"] ??
+                      "None") ==
+              StandardAccount.values[indexBuilder].toString(),
           onTap: () {
-            setState(() {
-              selectedAccount = StandardAccount.values[indexBuilder];
+            List<String> stringArr =
+                StandardAccount.values[indexBuilder].toString().split(".");
+            accountSettingsProvider.updateSettings({
+              stringArr[0]: stringArr[1],
             });
+
             Navigator.pop(context);
           },
         );

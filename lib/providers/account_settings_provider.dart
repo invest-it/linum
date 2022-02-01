@@ -20,7 +20,7 @@ class AccountSettingsProvider extends ChangeNotifier {
       _settings =
           FirebaseFirestore.instance.collection('account_settings').doc(_uid);
     }
-    createAutoUpdate();
+    _createAutoUpdate();
   }
 
   void updateAuth(AuthenticationService auth) {
@@ -30,11 +30,11 @@ class AccountSettingsProvider extends ChangeNotifier {
       _settings =
           FirebaseFirestore.instance.collection('account_settings').doc(_uid);
     }
-    createAutoUpdate();
+    _createAutoUpdate();
     notifyListeners();
   }
 
-  Future<void> createAutoUpdate() async {
+  Future<void> _createAutoUpdate() async {
     if (_uid == "") {
       return;
     }
@@ -53,7 +53,7 @@ class AccountSettingsProvider extends ChangeNotifier {
     });
   }
 
-  Map<String, dynamic> getSettings() {
+  Map<String, dynamic> get settings {
     return lastGrabbedData;
   }
 
