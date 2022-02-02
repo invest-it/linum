@@ -86,9 +86,11 @@ class HomeScreenListView implements BalanceDataListView {
           ))) {
             if (date.isBefore(currentTime!)) {
               list.add(TimeWidget(
-                  displayValue: date.year == DateTime.now().year
-                      ? monthFormatter.format(date)
-                      : monthAndYearFormatter.format(date)));
+                displayValue: date.year == DateTime.now().year
+                    ? monthFormatter.format(date)
+                    : monthAndYearFormatter.format(date),
+                isTranslated: false,
+              ));
               currentTime = DateTime(date.year, date.month);
             }
           } else if (currentIndex < _timeWidgets.length &&
@@ -112,7 +114,8 @@ class HomeScreenListView implements BalanceDataListView {
             list.add(TimeWidget(
                 displayValue: date.year == DateTime.now().year
                     ? monthFormatter.format(date)
-                    : monthAndYearFormatter.format(date)));
+                    : monthAndYearFormatter.format(date),
+                isTranslated: false));
             currentTime = DateTime(date.year, date.month - 1);
           }
 

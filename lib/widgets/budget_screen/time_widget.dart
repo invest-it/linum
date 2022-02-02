@@ -3,9 +3,10 @@ import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 
 class TimeWidget extends StatelessWidget {
-  TimeWidget({required this.displayValue});
+  TimeWidget({required this.displayValue, this.isTranslated = true});
 
   final String displayValue;
+  final bool isTranslated;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,11 @@ class TimeWidget extends StatelessWidget {
       child: Align(
         alignment: Alignment.centerLeft,
         child: Text(
-          AppLocalizations.of(context)!.translate(displayValue).toUpperCase(),
+          isTranslated
+              ? AppLocalizations.of(context)!
+                  .translate(displayValue)
+                  .toUpperCase()
+              : displayValue.toUpperCase(),
           style: Theme.of(context).textTheme.overline?.copyWith(
                 fontWeight: FontWeight.w700,
               ),
