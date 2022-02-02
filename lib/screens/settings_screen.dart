@@ -128,18 +128,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       AppLocalizations.of(context)!.translate(
                               'settings_screen/standard-income-selector/label-title') +
                           AppLocalizations.of(context)!.translate(
-                              accountSettingsProvider.standardCategoryIncome[
-                                      EnumToString.fromString<StandardIncome>(
-                                    StandardIncome.values,
+                              accountSettingsProvider
+                                      .standardCategoryIncome[EnumToString
+                                          .fromString<StandardCategoryIncome>(
+                                    StandardCategoryIncome.values,
                                     (accountSettingsProvider.settings[
                                             "StandardCategoryIncome"] ??
                                         "None"),
-                                  )] ??
+                                  )]
+                                      ?.label ??
                                   "ChosenStandardIncome"), // yeah im sorry that is really complicated code. :( It translates the value from firebase
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
 
-                    trailing: Icon(
+                    leading: Icon(
                       Icons.north_east,
                       color: createMaterialColor(Color(0xFF97BC4E)),
                     ),
@@ -178,18 +180,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       AppLocalizations.of(context)!.translate(
                               'settings_screen/standard-expense-selector/label-title') +
                           AppLocalizations.of(context)!.translate(
-                              accountSettingsProvider.standardCategoryExpenses[
-                                      EnumToString.fromString<
-                                          StandardCategoryExpense>(
+                              accountSettingsProvider
+                                      .standardCategoryExpenses[EnumToString
+                                          .fromString<StandardCategoryExpense>(
                                     StandardCategoryExpense.values,
                                     (accountSettingsProvider.settings[
                                             "StandardCategoryExpense"] ??
                                         "None"),
-                                  )] ??
+                                  )]
+                                      ?.label ??
                                   "ChosenStandardExpense"), // yeah im sorry that is really complicated code. :( It translates the value from firebase
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
-                    trailing: Icon(
+                    leading: Icon(
                       Icons.south_east,
                       color: Colors.red,
                     ),
@@ -371,22 +374,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
       AccountSettingsProvider accountSettingsProvider) {
     return ListView.builder(
       shrinkWrap: true,
-      itemCount: StandardIncome.values.length,
+      itemCount: StandardCategoryIncome.values.length,
       itemBuilder: (BuildContext context, int indexBuilder) {
         return ListTile(
             //leading: Icon(widget.categories[index].icon),
             title: Text(AppLocalizations.of(context)!.translate(
-                accountSettingsProvider.standardCategoryIncome[
-                        StandardIncome.values[indexBuilder]] ??
+                accountSettingsProvider
+                        .standardCategoryIncome[
+                            StandardCategoryIncome.values[indexBuilder]]
+                        ?.label ??
                     "Category")),
             selected: "StandardCategoryIncome." +
                     (accountSettingsProvider
                             .settings["StandardCategoryIncome"] ??
                         "None") ==
-                StandardIncome.values[indexBuilder].toString(),
+                StandardCategoryIncome.values[indexBuilder].toString(),
             onTap: () {
-              List<String> stringArr =
-                  StandardIncome.values[indexBuilder].toString().split(".");
+              List<String> stringArr = StandardCategoryIncome
+                  .values[indexBuilder]
+                  .toString()
+                  .split(".");
               accountSettingsProvider.updateSettings({
                 stringArr[0]: stringArr[1],
               });
@@ -407,8 +414,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
         return ListTile(
             //leading: Icon(widget.categories[index].icon),
             title: Text(AppLocalizations.of(context)!.translate(
-                accountSettingsProvider.standardCategoryExpenses[
-                        StandardCategoryExpense.values[indexBuilder]] ??
+                accountSettingsProvider
+                        .standardCategoryExpenses[
+                            StandardCategoryExpense.values[indexBuilder]]
+                        ?.label ??
                     "Category")),
             selected: "StandardCategoryExpense." +
                     (accountSettingsProvider

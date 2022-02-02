@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -105,6 +107,7 @@ class EnterScreenProvider with ChangeNotifier {
   }
 
   String get category {
+    log(_expenseCategory + " " + _incomeCategory);
     return amount <= 0 ? _expenseCategory : _incomeCategory;
   }
 

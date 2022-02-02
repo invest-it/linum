@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/models/entry_category.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/widgets/enter_screen/enter_screen_listviewbuilder.dart';
 import 'package:provider/provider.dart';
@@ -13,47 +14,30 @@ class EnterScreenList extends StatefulWidget {
 
 class _EnterScreenListState extends State<EnterScreenList> {
   //all the lists that are displayed in the enter screen
-  final List<Category> _categoriesExpenses = [
-    Category("Kategorie", Icons.restaurant),
-    Category("Datum", Icons.event),
-    Category("Wiederholen", Icons.loop),
+  final List<EntryCategory> _categoriesExpenses = [
+    EntryCategory(label: "Kategorie", icon: Icons.restaurant),
+    EntryCategory(label: "Datum", icon: Icons.event),
+    EntryCategory(label: "Wiederholen", icon: Icons.loop),
   ];
 
-  final List<Category> _categoriesIncome = [
-    Category("Kategorie", Icons.payments),
-    Category("Datum", Icons.event),
-    Category("Wiederholen", Icons.loop),
+  final List<EntryCategory> _categoriesIncome = [
+    EntryCategory(label: "Kategorie", icon: Icons.payments),
+    EntryCategory(label: "Datum", icon: Icons.event),
+    EntryCategory(label: "Wiederholen", icon: Icons.loop),
   ];
 
-  final List<Category> _categoriesTransaction = [
-    Category("Von Account", Icons.local_atm),
-    Category("Zu Account", Icons.local_atm),
-    Category("Datum", Icons.event),
-    Category("Wiederholen", Icons.loop),
-  ];
-  final List<Category2> _categoriesCategoryExpenses = [
-    Category2("Essen & Trinken", Icons.food_bank_outlined),
-    Category2("Freizeit", Icons.beach_access),
-    Category2("Haus", Icons.home),
-    Category2("Lebensstil", Icons.soap),
-    Category2("Auto/Nahverkehr", Icons.car_rental),
-    Category2("Diverses", Icons.radio),
-  ];
+  // final List<EntryCategory> _categoriesTransaction = [
+  //   EntryCategory("Von Account", Icons.local_atm),
+  //   EntryCategory("Zu Account", Icons.local_atm),
+  //   EntryCategory("Datum", Icons.event),
+  //   EntryCategory("Wiederholen", Icons.loop),
+  // ];
 
-  final List<Category2> _categoriesCategoryIncome = [
-    Category2("Gehalt", Icons.work),
-    Category2("Taschengeld", Icons.wallet_giftcard),
-    Category2("Nebenjob", Icons.home_work),
-    Category2("Investitionen", Icons.upgrade),
-    Category2("Zinsen", Icons.assignment_return),
-    Category2("Diverses", Icons.money),
-  ];
-
-  final List<Category2> _categoriesRepeat = [
-    Category2("Täglich", Icons.calendar_today),
-    Category2("Wöchentlich", Icons.next_week),
-    Category2("Monatlich zum 1.", Icons.calendar_view_month),
-    Category2("Frei auswählen", Icons.repeat),
+  final List<EntryCategory> _categoriesRepeat = [
+    EntryCategory(label: "Täglich", icon: Icons.calendar_today),
+    EntryCategory(label: "Wöchentlich", icon: Icons.next_week),
+    EntryCategory(label: "Monatlich zum 1.", icon: Icons.calendar_view_month),
+    EntryCategory(label: "Frei auswählen", icon: Icons.repeat),
   ];
 
   @override
@@ -66,9 +50,6 @@ class _EnterScreenListState extends State<EnterScreenList> {
         categories: _categoriesExpenses,
         categoriesExpenses: _categoriesExpenses,
         categoriesIncome: _categoriesIncome,
-        categoriesTransaction: _categoriesTransaction,
-        categoriesCategoryExpenses: _categoriesCategoryExpenses,
-        categoriesCategoryIncome: _categoriesCategoryIncome,
         categoriesRepeat: _categoriesRepeat,
       );
     else if (enterScreenProvider.isIncome)
@@ -76,32 +57,18 @@ class _EnterScreenListState extends State<EnterScreenList> {
         categories: _categoriesIncome,
         categoriesExpenses: _categoriesExpenses,
         categoriesIncome: _categoriesIncome,
-        categoriesTransaction: _categoriesTransaction,
-        categoriesCategoryExpenses: _categoriesCategoryExpenses,
-        categoriesCategoryIncome: _categoriesCategoryIncome,
         categoriesRepeat: _categoriesRepeat,
       );
-    else
-      return EnterScreenListViewBuilder(
-        categories: _categoriesTransaction,
-        categoriesExpenses: _categoriesExpenses,
-        categoriesIncome: _categoriesIncome,
-        categoriesTransaction: _categoriesTransaction,
-        categoriesCategoryExpenses: _categoriesCategoryExpenses,
-        categoriesCategoryIncome: _categoriesCategoryIncome,
-        categoriesRepeat: _categoriesRepeat,
-      );
+    // else {
+    //   return EnterScreenListViewBuilder(
+    //     categories: _categoriesTransaction,
+    //     categoriesExpenses: _categoriesExpenses,
+    //     categoriesIncome: _categoriesIncome,
+    //     categoriesRepeat: _categoriesRepeat,
+    //   );
+    // }
+    else {
+      return Text('Unexpected Error');
+    }
   }
-}
-
-class Category {
-  String type;
-  IconData icon;
-  Category(this.type, this.icon);
-}
-
-class Category2 {
-  String categoryName;
-  IconData categoryIcon;
-  Category2(this.categoryName, this.categoryIcon);
 }

@@ -5,6 +5,7 @@ import 'dart:math' as Math;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/screens/enter_screen.dart';
@@ -63,6 +64,9 @@ class HomeScreenListView implements BalanceDataListView {
     DateFormat monthAndYearFormatter = DateFormat('MMMM yyyy', 'de');
     BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
+
+    AccountSettingsProvider accountSettingsProvider =
+        Provider.of<AccountSettingsProvider>(context);
 
     // remember last used index in the list
     int currentIndex = 0;
@@ -146,6 +150,12 @@ class HomeScreenListView implements BalanceDataListView {
                           ChangeNotifierProvider<BalanceDataProvider>(
                             create: (_) {
                               return balanceDataProvider..dontDisposeOneTime();
+                            },
+                          ),
+                          ChangeNotifierProvider<AccountSettingsProvider>(
+                            create: (_) {
+                              return accountSettingsProvider
+                                ..dontDisposeOneTime();
                             },
                           ),
                         ],

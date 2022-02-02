@@ -96,10 +96,10 @@ class _LayoutScreenState extends State<LayoutScreen> {
                     create: (_) {
                       return EnterScreenProvider(
                         category: _accountSettingsProvider
-                                .settings['standardExpense'] ??
+                                .settings['StandardCategoryExpense'] ??
                             "",
                         secondaryCategory: _accountSettingsProvider
-                                .settings['standardIncome'] ??
+                                .settings['StandardCategoryIncome'] ??
                             "",
                       );
                     },
@@ -107,6 +107,11 @@ class _LayoutScreenState extends State<LayoutScreen> {
                   ChangeNotifierProvider<BalanceDataProvider>(
                     create: (_) {
                       return balanceDataProvider..dontDisposeOneTime();
+                    },
+                  ),
+                  ChangeNotifierProvider<AccountSettingsProvider>(
+                    create: (_) {
+                      return _accountSettingsProvider..dontDisposeOneTime();
                     },
                   ),
                 ],
