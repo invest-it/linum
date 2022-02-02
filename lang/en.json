@@ -43,9 +43,9 @@
     "budget_screen/button-filter": "FILTER",
 
 
-    "settings_screen/standards-selector-none": "None",
+    "settings_screen/standards-selector-none": "Uncategorized",
 
-    "settings_screen/standard-expense-selector/label-title": "Income: ",
+    "settings_screen/standard-expense-selector/label-title": "Expenses: ",
     "settings_screen/standard-expense-selector/food": "Food & Drinks",
     "settings_screen/standard-expense-selector/freetime": "Leisure",
     "settings_screen/standard-expense-selector/house": "Home & Living",
@@ -53,7 +53,7 @@
     "settings_screen/standard-expense-selector/car": "Transport",
     "settings_screen/standard-expense-selector/misc": "Miscellaneous",
 
-    "settings_screen/standard-income-selector/label-title": "Expenses: ",
+    "settings_screen/standard-income-selector/label-title": "Income: ",
     "settings_screen/standard-income-selector/salary": "Salary",
     "settings_screen/standard-income-selector/allowance": "Allowance",
     "settings_screen/standard-income-selector/sidejob": "Side Job",

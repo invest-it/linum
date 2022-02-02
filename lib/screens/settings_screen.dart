@@ -131,8 +131,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               accountSettingsProvider.standardCategoryIncome[
                                       EnumToString.fromString<StandardIncome>(
                                     StandardIncome.values,
-                                    (accountSettingsProvider
-                                            .settings["StandardIncome"] ??
+                                    (accountSettingsProvider.settings[
+                                            "StandardCategoryIncome"] ??
                                         "None"),
                                   )] ??
                                   "ChosenStandardIncome"), // yeah im sorry that is really complicated code. :( It translates the value from firebase
@@ -182,8 +182,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       EnumToString.fromString<
                                           StandardCategoryExpense>(
                                     StandardCategoryExpense.values,
-                                    (accountSettingsProvider
-                                            .settings["StandardExpense"] ??
+                                    (accountSettingsProvider.settings[
+                                            "StandardCategoryExpense"] ??
                                         "None"),
                                   )] ??
                                   "ChosenStandardExpense"), // yeah im sorry that is really complicated code. :( It translates the value from firebase
@@ -379,8 +379,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 accountSettingsProvider.standardCategoryIncome[
                         StandardIncome.values[indexBuilder]] ??
                     "Category")),
-            selected: "StandardIncome." +
-                    (accountSettingsProvider.settings["StandardIncome"] ??
+            selected: "StandardCategoryIncome." +
+                    (accountSettingsProvider
+                            .settings["StandardCategoryIncome"] ??
                         "None") ==
                 StandardIncome.values[indexBuilder].toString(),
             onTap: () {
@@ -410,7 +411,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         StandardCategoryExpense.values[indexBuilder]] ??
                     "Category")),
             selected: "StandardCategoryExpense." +
-                    (accountSettingsProvider.settings["StandardExpense"] ??
+                    (accountSettingsProvider
+                            .settings["StandardCategoryExpense"] ??
                         "None") ==
                 StandardCategoryExpense.values[indexBuilder].toString(),
             onTap: () {

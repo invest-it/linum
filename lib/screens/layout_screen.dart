@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/providers/screen_index_provider.dart';
@@ -24,6 +25,9 @@ class LayoutScreen extends StatefulWidget {
 class _LayoutScreenState extends State<LayoutScreen> {
   @override
   Widget build(BuildContext context) {
+    AccountSettingsProvider _accountSettingsProvider =
+        Provider.of<AccountSettingsProvider>(context);
+
     ScreenIndexProvider screenIndexProvider =
         Provider.of<ScreenIndexProvider>(context);
 
@@ -90,7 +94,14 @@ class _LayoutScreenState extends State<LayoutScreen> {
                 providers: [
                   ChangeNotifierProvider<EnterScreenProvider>(
                     create: (_) {
-                      return EnterScreenProvider();
+                      return EnterScreenProvider(
+                        category: _accountSettingsProvider
+                                .settings['standardExpense'] ??
+                            "",
+                        secondaryCategory: _accountSettingsProvider
+                                .settings['standardIncome'] ??
+                            "",
+                      );
                     },
                   ),
                   ChangeNotifierProvider<BalanceDataProvider>(
