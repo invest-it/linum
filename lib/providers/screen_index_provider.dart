@@ -23,16 +23,14 @@ class ScreenIndexProvider extends ChangeNotifier {
     if (_pageIndex == 0) {
       _algorithmProvider.resetCurrentShownMonth();
       _algorithmProvider.setCurrentFilterAlgorithm(AlgorithmProvider.inBetween(
-        Timestamp.fromDate(DateTime(
-          DateTime.now().year,
-          DateTime.now().month,
-        )),
-        Timestamp.fromDate(DateTime(
-          DateTime.now().year,
-          DateTime.now().month,
-          DateTime.now().day,
-        )),
-      ));
+          Timestamp.fromDate(DateTime(
+            DateTime.now().year,
+            DateTime.now().month,
+          )),
+          Timestamp.fromDate(DateTime(
+            DateTime.now().year,
+            DateTime.now().month + 1,
+          ))));
     }
 
     notifyListeners();
