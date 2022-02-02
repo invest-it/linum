@@ -142,12 +142,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          setState(() {
-                            enterScreenProvider.setIsExpenses(true);
-                            enterScreenProvider.setIsIncome(false);
-                            enterScreenProvider.setIsTransaction(false);
-                            enterScreenProvider.setCategory("");
-                          });
+                          enterScreenProvider.setExpense();
                         },
                         child: Container(
                           width: proportionateScreenWidth(94),
@@ -168,12 +163,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          setState(() {
-                            enterScreenProvider.setIsExpenses(false);
-                            enterScreenProvider.setIsIncome(true);
-                            enterScreenProvider.setIsTransaction(false);
-                            enterScreenProvider.setCategory("");
-                          });
+                          enterScreenProvider.setIncome();
                         },
                         child: Container(
                           width: proportionateScreenWidth(94),
@@ -194,12 +184,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          setState(() {
-                            enterScreenProvider.setIsExpenses(false);
-                            enterScreenProvider.setIsIncome(false);
-                            enterScreenProvider.setIsTransaction(true);
-                            enterScreenProvider.setCategory("");
-                          });
+                          enterScreenProvider.setTransaction();
                         },
                         child: Container(
                           width: proportionateScreenWidth(94),
@@ -234,7 +219,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
   }
 
   //which color to show depending on expense or not
-  _colorPicker(EnterScreenProvider enterScreenProvider, context) {
+  Color _colorPicker(EnterScreenProvider enterScreenProvider, context) {
     if (enterScreenProvider.isExpenses) {
       return Theme.of(context).colorScheme.error;
     } else if (enterScreenProvider.isIncome) {

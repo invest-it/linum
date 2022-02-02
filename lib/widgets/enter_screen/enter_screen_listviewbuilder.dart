@@ -174,10 +174,10 @@ class _EnterScreenListViewBuilderState
       // List<EntryCategory> categoriesTransaction,
       EnterScreenProvider enterScreenProvider,
       AccountSettingsProvider accountSettingsProvider) {
-    if (index == 2) {
+    if (index == 1) {
       //opens the date picker
       _openDatePicker(enterScreenProvider);
-    } else
+    } else {
       //opens a modal bottom sheet
       showModalBottomSheet(
         context: context,
@@ -216,6 +216,7 @@ class _EnterScreenListViewBuilderState
           );
         },
       );
+    }
   }
 
   //which hint text at the upper text field is shown
@@ -274,32 +275,63 @@ class _EnterScreenListViewBuilderState
       EnterScreenProvider enterScreenProvider,
       AccountSettingsProvider accountSettingsProvider) {
     if (index == 0) {
-      return ListView.builder(
-        itemCount: accountSettingsProvider.standardCategoryExpenses.length,
-        itemBuilder: (BuildContext context, int indexBuilder) {
-          return ListTile(
-            leading: Icon(accountSettingsProvider
-                .standardCategoryExpenses[
-                    StandardCategoryExpense.values[indexBuilder]]!
-                .icon),
-            title: Text(accountSettingsProvider
-                .standardCategoryExpenses[
-                    StandardCategoryExpense.values[indexBuilder]]!
-                .label),
-            //selects the item as the categories value
-            onTap: () => _selectCategoryItemExpenses(
-              StandardCategoryExpense.values[indexBuilder]
-                  .toString()
-                  .split(".")[1],
-              enterScreenProvider,
-              accountSettingsProvider
+      if (enterScreenProvider.isExpenses) {
+        return ListView.builder(
+          itemCount: accountSettingsProvider.standardCategoryExpenses.length,
+          itemBuilder: (BuildContext context, int indexBuilder) {
+            return ListTile(
+              leading: Icon(accountSettingsProvider
                   .standardCategoryExpenses[
                       StandardCategoryExpense.values[indexBuilder]]!
-                  .icon,
-            ),
-          );
-        },
-      );
+                  .icon),
+              title: Text(AppLocalizations.of(context)!.translate(
+                  accountSettingsProvider
+                      .standardCategoryExpenses[
+                          StandardCategoryExpense.values[indexBuilder]]!
+                      .label)),
+              //selects the item as the categories value
+              onTap: () => _selectCategoryItemExpenses(
+                StandardCategoryExpense.values[indexBuilder]
+                    .toString()
+                    .split(".")[1],
+                enterScreenProvider,
+                accountSettingsProvider
+                    .standardCategoryExpenses[
+                        StandardCategoryExpense.values[indexBuilder]]!
+                    .icon,
+              ),
+            );
+          },
+        );
+      } else {
+        return ListView.builder(
+          itemCount: accountSettingsProvider.standardCategoryExpenses.length,
+          itemBuilder: (BuildContext context, int indexBuilder) {
+            return ListTile(
+              leading: Icon(accountSettingsProvider
+                  .standardCategoryIncome[
+                      StandardCategoryIncome.values[indexBuilder]]!
+                  .icon),
+              title: Text(AppLocalizations.of(context)!.translate(
+                  accountSettingsProvider
+                      .standardCategoryIncome[
+                          StandardCategoryIncome.values[indexBuilder]]!
+                      .label)),
+              //selects the item as the categories value
+              onTap: () => _selectCategoryItemIncome(
+                StandardCategoryIncome.values[indexBuilder]
+                    .toString()
+                    .split(".")[1],
+                enterScreenProvider,
+                accountSettingsProvider
+                    .standardCategoryIncome[
+                        StandardCategoryExpense.values[indexBuilder]]!
+                    .icon,
+              ),
+            );
+          },
+        );
+      }
       // } else if (index == 1) {
       // return ListView.builder(
       //   itemCount: widget.categoriesAccount.length,
@@ -347,10 +379,11 @@ class _EnterScreenListViewBuilderState
                 .standardCategoryIncome[
                     StandardCategoryIncome.values[indexBuilder]]!
                 .icon),
-            title: Text(accountSettingsProvider
-                .standardCategoryIncome[
-                    StandardCategoryIncome.values[indexBuilder]]!
-                .label),
+            title: Text(AppLocalizations.of(context)!.translate(
+                accountSettingsProvider
+                    .standardCategoryIncome[
+                        StandardCategoryIncome.values[indexBuilder]]!
+                    .label)),
             onTap: () => _selectCategoryItemIncome(
               StandardCategoryIncome.values[indexBuilder]
                   .toString()
@@ -447,7 +480,6 @@ class _EnterScreenListViewBuilderState
   Text _selectText(int index, EnterScreenProvider enterScreenProvider,
       AccountSettingsProvider accountSettingsProvider) {
     if (index == 0) {
-      log(enterScreenProvider.category);
       if (enterScreenProvider.isExpenses) {
         if (enterScreenProvider.category == "") {
           return Text(AppLocalizations.of(context)!.translate(
@@ -492,30 +524,24 @@ class _EnterScreenListViewBuilderState
       if (index == 0) {
         return categoriesCategoryExpensesIcon; //categoriesCategoryExpensesIcon;
       } else if (index == 1) {
-        return categoriesAccountIcon;
-      } else if (index == 2) {
         return Icon(Icons.event);
-      } else if (index == 3) {
+      } else if (index == 2) {
         return categoriesRepeatIcon;
       }
     } else if (enterScreenProvider.isIncome) {
       if (index == 0) {
         return categoriesCategoryIncomeIcon; //categoriesCategoryExpensesIcon;
       } else if (index == 1) {
-        return categoriesAccountIcon;
-      } else if (index == 2) {
         return Icon(Icons.event);
-      } else if (index == 3) {
+      } else if (index == 2) {
         return categoriesRepeatIcon;
       }
     } else if (enterScreenProvider.isTransaction) {
       if (index == 0) {
         return categoriesAccountIcon; //categoriesCategoryExpensesIcon;
       } else if (index == 1) {
-        return categoriesAccountIcon;
-      } else if (index == 2) {
         return Icon(Icons.event);
-      } else if (index == 3) {
+      } else if (index == 2) {
         return categoriesRepeatIcon;
       }
     }
