@@ -121,6 +121,8 @@ class HomeScreenListView implements BalanceDataListView {
                     : monthAndYearFormatter.format(date),
                 isTranslated: false));
             currentTime = DateTime(date.year, date.month - 1);
+
+            currentIndex = 4; // idk why exactly but now we are save
           }
 
           list.add(
