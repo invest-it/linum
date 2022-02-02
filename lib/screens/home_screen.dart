@@ -68,12 +68,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Provider.of<AlgorithmProvider>(context, listen: false)
-                            .setCurrentFilterAlgorithmSilently(
-                          AlgorithmProvider.olderThan(
-                            Timestamp.fromDate(DateTime.now()),
-                          ),
-                        );
                         screenIndexProvider.setPageIndex(1);
                       },
                       child: Text(

@@ -48,8 +48,7 @@ class HomeScreenCard extends StatelessWidget {
               )),
               Timestamp.fromDate(DateTime(
                 DateTime.now().year,
-                DateTime.now().month,
-                DateTime.now().day,
+                DateTime.now().month + 1,
               )),
             ));
           } else {
@@ -78,8 +77,7 @@ class HomeScreenCard extends StatelessWidget {
               )),
               Timestamp.fromDate(DateTime(
                 DateTime.now().year,
-                DateTime.now().month,
-                DateTime.now().day,
+                DateTime.now().month + 1,
               )),
             ));
           } else {
@@ -113,8 +111,7 @@ class HomeScreenCard extends StatelessWidget {
           )),
           Timestamp.fromDate(DateTime(
             DateTime.now().year,
-            DateTime.now().month,
-            DateTime.now().day,
+            DateTime.now().month + 1,
           )),
         ));
       },

@@ -15,8 +15,7 @@ class AlgorithmProvider extends ChangeNotifier {
 
   int Function(dynamic, dynamic) get currentSorter => _currentSorter;
 
-  DateTime _currentShownMonth =
-      DateTime(DateTime.now().year, DateTime.now().month);
+  late DateTime _currentShownMonth;
 
   DateTime get currentShownMonth => _currentShownMonth;
 
@@ -41,8 +40,18 @@ class AlgorithmProvider extends ChangeNotifier {
   }
 
   AlgorithmProvider() {
+    resetCurrentShownMonth();
     _currentSorter = timeNewToOld;
-    _currentFilter = olderThan(Timestamp.fromDate(DateTime.now()));
+    _currentFilter = AlgorithmProvider.inBetween(
+      Timestamp.fromDate(DateTime(
+        DateTime.now().year,
+        DateTime.now().month,
+      )),
+      Timestamp.fromDate(DateTime(
+        DateTime.now().year,
+        DateTime.now().month + 1,
+      )),
+    );
   }
 
   void setCurrentSortAlgorithm(int Function(dynamic, dynamic) sorter) {
