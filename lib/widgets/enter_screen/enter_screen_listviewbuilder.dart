@@ -275,32 +275,63 @@ class _EnterScreenListViewBuilderState
       EnterScreenProvider enterScreenProvider,
       AccountSettingsProvider accountSettingsProvider) {
     if (index == 0) {
-      return ListView.builder(
-        itemCount: accountSettingsProvider.standardCategoryExpenses.length,
-        itemBuilder: (BuildContext context, int indexBuilder) {
-          return ListTile(
-            leading: Icon(accountSettingsProvider
-                .standardCategoryExpenses[
-                    StandardCategoryExpense.values[indexBuilder]]!
-                .icon),
-            title: Text(accountSettingsProvider
-                .standardCategoryExpenses[
-                    StandardCategoryExpense.values[indexBuilder]]!
-                .label),
-            //selects the item as the categories value
-            onTap: () => _selectCategoryItemExpenses(
-              StandardCategoryExpense.values[indexBuilder]
-                  .toString()
-                  .split(".")[1],
-              enterScreenProvider,
-              accountSettingsProvider
+      if (enterScreenProvider.isExpenses) {
+        return ListView.builder(
+          itemCount: accountSettingsProvider.standardCategoryExpenses.length,
+          itemBuilder: (BuildContext context, int indexBuilder) {
+            return ListTile(
+              leading: Icon(accountSettingsProvider
                   .standardCategoryExpenses[
                       StandardCategoryExpense.values[indexBuilder]]!
-                  .icon,
-            ),
-          );
-        },
-      );
+                  .icon),
+              title: Text(AppLocalizations.of(context)!.translate(
+                  accountSettingsProvider
+                      .standardCategoryExpenses[
+                          StandardCategoryExpense.values[indexBuilder]]!
+                      .label)),
+              //selects the item as the categories value
+              onTap: () => _selectCategoryItemExpenses(
+                StandardCategoryExpense.values[indexBuilder]
+                    .toString()
+                    .split(".")[1],
+                enterScreenProvider,
+                accountSettingsProvider
+                    .standardCategoryExpenses[
+                        StandardCategoryExpense.values[indexBuilder]]!
+                    .icon,
+              ),
+            );
+          },
+        );
+      } else {
+        return ListView.builder(
+          itemCount: accountSettingsProvider.standardCategoryExpenses.length,
+          itemBuilder: (BuildContext context, int indexBuilder) {
+            return ListTile(
+              leading: Icon(accountSettingsProvider
+                  .standardCategoryIncome[
+                      StandardCategoryIncome.values[indexBuilder]]!
+                  .icon),
+              title: Text(AppLocalizations.of(context)!.translate(
+                  accountSettingsProvider
+                      .standardCategoryIncome[
+                          StandardCategoryIncome.values[indexBuilder]]!
+                      .label)),
+              //selects the item as the categories value
+              onTap: () => _selectCategoryItemIncome(
+                StandardCategoryIncome.values[indexBuilder]
+                    .toString()
+                    .split(".")[1],
+                enterScreenProvider,
+                accountSettingsProvider
+                    .standardCategoryIncome[
+                        StandardCategoryExpense.values[indexBuilder]]!
+                    .icon,
+              ),
+            );
+          },
+        );
+      }
       // } else if (index == 1) {
       // return ListView.builder(
       //   itemCount: widget.categoriesAccount.length,
@@ -348,10 +379,11 @@ class _EnterScreenListViewBuilderState
                 .standardCategoryIncome[
                     StandardCategoryIncome.values[indexBuilder]]!
                 .icon),
-            title: Text(accountSettingsProvider
-                .standardCategoryIncome[
-                    StandardCategoryIncome.values[indexBuilder]]!
-                .label),
+            title: Text(AppLocalizations.of(context)!.translate(
+                accountSettingsProvider
+                    .standardCategoryIncome[
+                        StandardCategoryIncome.values[indexBuilder]]!
+                    .label)),
             onTap: () => _selectCategoryItemIncome(
               StandardCategoryIncome.values[indexBuilder]
                   .toString()

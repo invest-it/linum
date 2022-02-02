@@ -92,8 +92,7 @@ class EnterScreenProvider with ChangeNotifier {
   }
 
   String get category {
-    log(_expenseCategory + " " + _incomeCategory);
-    return amount <= 0 ? _expenseCategory : _incomeCategory;
+    return isExpenses ? _expenseCategory : _incomeCategory;
   }
 
   String get currency {
