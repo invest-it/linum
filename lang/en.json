@@ -85,7 +85,8 @@
     "settings_screen/language-settings/label-systemlang": "Use System Language",
     "settings_screen/language-settings/label-tooltip": "Currently, only the system language is supported. Supported languages: German, English.",
     "settings_screen/language-settings/label-de": "English",
-    "settings_screen/language-settings/label-en": "German",
+    "settings_screen/language-settings/label-en": "Deutsch",
+    "settings_screen/language-settings/label-nl": "Nederlands",
 
     "settings_screen/system-settings/label-title": "YOUR ACCOUNT",
     "settings_screen/system-settings/button-forgot-password": "Forgot your password?",

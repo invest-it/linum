@@ -86,6 +86,7 @@
     "settings_screen/language-settings/label-tooltip": "Currently, only the system language is supported. Supported languages: German, English.",
     "settings_screen/language-settings/label-de": "English",
     "settings_screen/language-settings/label-en": "Deutsch",
+    "settings_screen/language-settings/label-nl": "Nederlands",
 
     "settings_screen/system-settings/label-title": "UW ACCOUNT",
     "settings_screen/system-settings/button-forgot-password": "Wachtwoord vergeten?",

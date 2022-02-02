@@ -84,8 +84,9 @@
     "settings_screen/language-settings/label-title": "SPRACHEINSTELLUNGEN",
     "settings_screen/language-settings/label-systemlang": "Systemsprache verwenden",
     "settings_screen/language-settings/label-tooltip": "Im Moment kann nur die Systemsprache verwendet werden. Unterstützte Sprachen: Deutsch, Englisch.",
-    "settings_screen/language-settings/label-de": "Englisch",
+    "settings_screen/language-settings/label-de": "English",
     "settings_screen/language-settings/label-en": "Deutsch",
+    "settings_screen/language-settings/label-nl": "Nederlands",
 
     "settings_screen/system-settings/label-title": "DEIN ACCOUNT",
     "settings_screen/system-settings/button-forgot-password": "Passwort vergessen?",

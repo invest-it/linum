@@ -318,7 +318,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   'settings_screen/language-settings/label-en'),
                             ),
                           ),
-                          width: MediaQuery.of(context).size.width * 0.35,
+                          width: MediaQuery.of(context).size.width * 0.25,
                         ),
                         Container(
                           child: Center(
@@ -327,23 +327,48 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   'settings_screen/language-settings/label-de'),
                             ),
                           ),
-                          width: MediaQuery.of(context).size.width * 0.35,
+                          width: MediaQuery.of(context).size.width * 0.25,
+                        ),
+                        Container(
+                          child: Center(
+                            child: Text(
+                              AppLocalizations.of(context)!.translate(
+                                  'settings_screen/language-settings/label-nl'),
+                            ),
+                          ),
+                          width: MediaQuery.of(context).size.width * 0.25,
                         ),
                       ],
-                      isSelected:
-                          accountSettingsProvider.settings['languageCode'] ==
-                                  'de-DE'
-                              ? [true, false]
-                              : [false, true],
-                      onPressed: accountSettingsProvider
-                                  .settings['systemLanguage'] ==
-                              false
-                          ? (int index) {
-                              accountSettingsProvider.updateSettings({
-                                'languageCode': index == 0 ? 'de-DE' : 'en-US'
-                              });
-                            }
-                          : null,
+                      isSelected: [
+                        accountSettingsProvider.settings['languageCode'] ==
+                            'de-DE',
+                        accountSettingsProvider.settings['languageCode'] ==
+                            'en-US',
+                        accountSettingsProvider.settings['languageCode'] ==
+                            'nl-NL'
+                      ],
+                      onPressed:
+                          accountSettingsProvider.settings['systemLanguage'] ==
+                                  false
+                              ? (int index) {
+                                  String langSelector;
+                                  switch (index) {
+                                    case 0:
+                                      langSelector = 'de-DE';
+                                      break;
+                                    case 1:
+                                      langSelector = 'en-US';
+                                      break;
+                                    case 2:
+                                      langSelector = 'nl-NL';
+                                      break;
+                                    default:
+                                      langSelector = 'en-US';
+                                  }
+                                  accountSettingsProvider.updateSettings(
+                                      {'languageCode': langSelector});
+                                }
+                              : null,
                       borderRadius: BorderRadius.circular(32),
                     ),
                   ],
