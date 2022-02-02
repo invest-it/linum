@@ -37,32 +37,17 @@ class EnterScreenProvider with ChangeNotifier {
         _selectedDate = selectedDate ?? DateTime.now();
   //amount: amount, category: category, currency: currency, name: name, time: time
 
-  setIsExpenses(bool isExpenses) {
-    _isExpenses = isExpenses;
-    notifyListeners();
-  }
-
-  setIsIncome(bool isIncome) {
-    _isIncome = isIncome;
-    notifyListeners();
-  }
-
-  setIsTransaction(bool isTransaction) {
-    _isTransaction = isTransaction;
-    notifyListeners();
-  }
-
-  setName(String name) {
+  void setName(String name) {
     _name = name;
     notifyListeners();
   }
 
-  setAmount(double amount) {
+  void setAmount(double amount) {
     _amount = amount;
     notifyListeners();
   }
 
-  setCategory(String category) {
+  void setCategory(String category) {
     if (amount <= 0) {
       _expenseCategory = category;
     } else {
@@ -71,17 +56,17 @@ class EnterScreenProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  setCurrency(String currency) {
+  void setCurrency(String currency) {
     _currency = currency;
     notifyListeners();
   }
 
-  setSelectedDate(DateTime selectedDate) {
+  void setSelectedDate(DateTime selectedDate) {
     _selectedDate = selectedDate;
     notifyListeners();
   }
 
-  setRepeat(String repeat) {
+  void setRepeat(String repeat) {
     _repeat = repeat;
     notifyListeners();
   }
@@ -129,5 +114,26 @@ class EnterScreenProvider with ChangeNotifier {
 
   bool get editMode {
     return _editMode;
+  }
+
+  void setExpense() {
+    _isExpenses = true;
+    _isIncome = false;
+    _isTransaction = false;
+    notifyListeners();
+  }
+
+  void setIncome() {
+    _isExpenses = false;
+    _isIncome = true;
+    _isTransaction = false;
+    notifyListeners();
+  }
+
+  void setTransaction() {
+    _isExpenses = false;
+    _isIncome = false;
+    _isTransaction = true;
+    notifyListeners();
   }
 }

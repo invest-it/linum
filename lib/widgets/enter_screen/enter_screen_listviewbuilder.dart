@@ -174,10 +174,10 @@ class _EnterScreenListViewBuilderState
       // List<EntryCategory> categoriesTransaction,
       EnterScreenProvider enterScreenProvider,
       AccountSettingsProvider accountSettingsProvider) {
-    if (index == 2) {
+    if (index == 1) {
       //opens the date picker
       _openDatePicker(enterScreenProvider);
-    } else
+    } else {
       //opens a modal bottom sheet
       showModalBottomSheet(
         context: context,
@@ -216,6 +216,7 @@ class _EnterScreenListViewBuilderState
           );
         },
       );
+    }
   }
 
   //which hint text at the upper text field is shown
@@ -447,7 +448,6 @@ class _EnterScreenListViewBuilderState
   Text _selectText(int index, EnterScreenProvider enterScreenProvider,
       AccountSettingsProvider accountSettingsProvider) {
     if (index == 0) {
-      log(enterScreenProvider.category);
       if (enterScreenProvider.isExpenses) {
         if (enterScreenProvider.category == "") {
           return Text(AppLocalizations.of(context)!.translate(
@@ -492,30 +492,24 @@ class _EnterScreenListViewBuilderState
       if (index == 0) {
         return categoriesCategoryExpensesIcon; //categoriesCategoryExpensesIcon;
       } else if (index == 1) {
-        return categoriesAccountIcon;
-      } else if (index == 2) {
         return Icon(Icons.event);
-      } else if (index == 3) {
+      } else if (index == 2) {
         return categoriesRepeatIcon;
       }
     } else if (enterScreenProvider.isIncome) {
       if (index == 0) {
         return categoriesCategoryIncomeIcon; //categoriesCategoryExpensesIcon;
       } else if (index == 1) {
-        return categoriesAccountIcon;
-      } else if (index == 2) {
         return Icon(Icons.event);
-      } else if (index == 3) {
+      } else if (index == 2) {
         return categoriesRepeatIcon;
       }
     } else if (enterScreenProvider.isTransaction) {
       if (index == 0) {
         return categoriesAccountIcon; //categoriesCategoryExpensesIcon;
       } else if (index == 1) {
-        return categoriesAccountIcon;
-      } else if (index == 2) {
         return Icon(Icons.event);
-      } else if (index == 3) {
+      } else if (index == 2) {
         return categoriesRepeatIcon;
       }
     }
