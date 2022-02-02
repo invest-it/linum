@@ -15,14 +15,12 @@ class _EnterScreenListState extends State<EnterScreenList> {
   //all the lists that are displayed in the enter screen
   final List<Category> _categoriesExpenses = [
     Category("Kategorie", Icons.restaurant),
-    Category("Account", Icons.local_atm),
     Category("Datum", Icons.event),
     Category("Wiederholen", Icons.loop),
   ];
 
   final List<Category> _categoriesIncome = [
     Category("Kategorie", Icons.payments),
-    Category("Account", Icons.local_atm),
     Category("Datum", Icons.event),
     Category("Wiederholen", Icons.loop),
   ];
@@ -51,13 +49,6 @@ class _EnterScreenListState extends State<EnterScreenList> {
     Category2("Diverses", Icons.money),
   ];
 
-  final List<Category2> _categoriesAccount = [
-    Category2("Debitkarte", Icons.card_membership),
-    Category2("Taschengeld", Icons.credit_card),
-    Category2("Bargeld", Icons.money),
-    Category2("Depot", Icons.assignment_return),
-  ];
-
   final List<Category2> _categoriesRepeat = [
     Category2("Täglich", Icons.calendar_today),
     Category2("Wöchentlich", Icons.next_week),
@@ -76,7 +67,6 @@ class _EnterScreenListState extends State<EnterScreenList> {
         categoriesExpenses: _categoriesExpenses,
         categoriesIncome: _categoriesIncome,
         categoriesTransaction: _categoriesTransaction,
-        categoriesAccount: _categoriesAccount,
         categoriesCategoryExpenses: _categoriesCategoryExpenses,
         categoriesCategoryIncome: _categoriesCategoryIncome,
         categoriesRepeat: _categoriesRepeat,
@@ -87,7 +77,6 @@ class _EnterScreenListState extends State<EnterScreenList> {
         categoriesExpenses: _categoriesExpenses,
         categoriesIncome: _categoriesIncome,
         categoriesTransaction: _categoriesTransaction,
-        categoriesAccount: _categoriesAccount,
         categoriesCategoryExpenses: _categoriesCategoryExpenses,
         categoriesCategoryIncome: _categoriesCategoryIncome,
         categoriesRepeat: _categoriesRepeat,
@@ -98,7 +87,6 @@ class _EnterScreenListState extends State<EnterScreenList> {
         categoriesExpenses: _categoriesExpenses,
         categoriesIncome: _categoriesIncome,
         categoriesTransaction: _categoriesTransaction,
-        categoriesAccount: _categoriesAccount,
         categoriesCategoryExpenses: _categoriesCategoryExpenses,
         categoriesCategoryIncome: _categoriesCategoryIncome,
         categoriesRepeat: _categoriesRepeat,

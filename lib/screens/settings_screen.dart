@@ -23,48 +23,6 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool _schwabenmodus = false;
-  bool _systemlang = true;
-
-  final Map<StandardExpense, String> _standardExpenses = {
-    StandardExpense.None: "settings_screen/standards-selector-none",
-    StandardExpense.Food: "settings_screen/standard-expense-selector/food",
-    StandardExpense.FreeTime:
-        "settings_screen/standard-expense-selector/freetime",
-    StandardExpense.House: "settings_screen/standard-expense-selector/house",
-    StandardExpense.Lifestyle:
-        "settings_screen/standard-expense-selector/lifestyle",
-    StandardExpense.Car: "settings_screen/standard-expense-selector/car",
-    StandardExpense.Miscellaneous:
-        "settings_screen/standard-expense-selector/misc",
-  };
-
-  final Map<StandardIncome, String> _standardIncomes = {
-    StandardIncome.None: "settings_screen/standards-selector-none",
-    StandardIncome.Income: "settings_screen/standard-income-selector/salary",
-    StandardIncome.Allowance:
-        "settings_screen/standard-income-selector/allowance",
-    StandardIncome.SideJob: "settings_screen/standard-income-selector/sidejob",
-    StandardIncome.Investments:
-        "settings_screen/standard-income-selector/investments",
-    StandardIncome.ChildSupport:
-        "settings_screen/standard-income-selector/childsupport",
-    StandardIncome.Interest:
-        "settings_screen/standard-income-selector/interest",
-    StandardIncome.Miscellaneous:
-        "settings_screen/standard-income-selector/misc",
-  };
-
-  final Map<StandardAccount, String> _standardAccounts = {
-    StandardAccount.None: "settings_screen/standards-selector-none",
-    StandardAccount.Debit:
-        "settings_screen/standard-account-selector/debit-card",
-    StandardAccount.Credit:
-        "settings_screen/standard-account-selector/credit-card",
-    StandardAccount.Cash: "settings_screen/standard-account-selector/cash",
-    StandardAccount.Depot: "settings_screen/standard-account-selector/deposit",
-  };
-
   String dropdownValue = 'Euro (EUR, €)';
 
   @override
@@ -169,14 +127,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     title: Text(
                       AppLocalizations.of(context)!.translate(
                               'settings_screen/standard-income-selector/label-title') +
-                          AppLocalizations.of(context)!.translate(_standardIncomes[
-                                  EnumToString.fromString<StandardIncome>(
-                                StandardIncome.values,
-                                (accountSettingsProvider
-                                        .settings["StandardIncome"] ??
-                                    "None"),
-                              )] ??
-                              "ChoosenStandardIncome"), // yeah im sorry that is really complicated code. :( It translates the value from firebase
+                          AppLocalizations.of(context)!.translate(
+                              accountSettingsProvider.standardCategoryIncome[
+                                      EnumToString.fromString<StandardIncome>(
+                                    StandardIncome.values,
+                                    (accountSettingsProvider
+                                            .settings["StandardIncome"] ??
+                                        "None"),
+                                  )] ??
+                                  "ChosenStandardIncome"), // yeah im sorry that is really complicated code. :( It translates the value from firebase
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
 
@@ -218,14 +177,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     title: Text(
                       AppLocalizations.of(context)!.translate(
                               'settings_screen/standard-expense-selector/label-title') +
-                          AppLocalizations.of(context)!.translate(_standardExpenses[
-                                  EnumToString.fromString<StandardExpense>(
-                                StandardExpense.values,
-                                (accountSettingsProvider
-                                        .settings["StandardExpense"] ??
-                                    "None"),
-                              )] ??
-                              "ChoosenStandardExpense"), // yeah im sorry that is really complicated code. :( It translates the value from firebase
+                          AppLocalizations.of(context)!.translate(
+                              accountSettingsProvider.standardCategoryExpenses[
+                                      EnumToString.fromString<
+                                          StandardCategoryExpense>(
+                                    StandardCategoryExpense.values,
+                                    (accountSettingsProvider
+                                            .settings["StandardExpense"] ??
+                                        "None"),
+                                  )] ??
+                                  "ChosenStandardExpense"), // yeah im sorry that is really complicated code. :( It translates the value from firebase
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                     trailing: Icon(
@@ -235,55 +196,55 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 ),
                 //Ende GestureDetector Ausgaben
-                GestureDetector(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return Container(
-                          height: MediaQuery.of(context).size.height * 0.5,
-                          color: createMaterialColor(Color(0xFFFAFAFA)),
-                          child: Column(children: [
-                            ListTile(
-                              title: Text(
-                                AppLocalizations.of(context)!.translate(
-                                    'settings_screen/standard-account-selector/modal-label-title'),
-                              ),
-                            ),
-                            Container(
-                              height: MediaQuery.of(context).size.height * 0.4,
-                              child: _accountListViewBuilder(
-                                accountSettingsProvider,
-                              ),
-                            ),
-                          ]),
-                        );
-                      },
-                    );
-                  },
-                  child: ListTile(
-                    // onTap: ontap(),
-                    title: Text(
-                      AppLocalizations.of(context)!.translate(
-                              'settings_screen/standard-account-selector/label-title') +
-                          AppLocalizations.of(context)!.translate(_standardAccounts[
-                                  EnumToString.fromString<StandardAccount>(
-                                StandardAccount.values,
-                                (accountSettingsProvider
-                                        .settings["StandardAccount"] ??
-                                    "None"),
-                              )] ??
-                              "ChoosenStandardAccount"), // yeah im sorry that is really complicated code. :( It translates the value from firebase
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                    trailing: Icon(
-                      Icons.swap_horiz,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                //Einde GestureDetector Accounts
-                //Icons disputable
+                // GestureDetector(
+                //   onTap: () {
+                //     showModalBottomSheet(
+                //       context: context,
+                //       builder: (context) {
+                //         return Container(
+                //           height: MediaQuery.of(context).size.height * 0.5,
+                //           color: createMaterialColor(Color(0xFFFAFAFA)),
+                //           child: Column(children: [
+                //             ListTile(
+                //               title: Text(
+                //                 AppLocalizations.of(context)!.translate(
+                //                     'settings_screen/standard-account-selector/modal-label-title'),
+                //               ),
+                //             ),
+                //             Container(
+                //               height: MediaQuery.of(context).size.height * 0.4,
+                //               child: _accountListViewBuilder(
+                //                 accountSettingsProvider,
+                //               ),
+                //             ),
+                //           ]),
+                //         );
+                //       },
+                //     );
+                //   },
+                //   child: ListTile(
+                //     // onTap: ontap(),
+                //     title: Text(
+                //       AppLocalizations.of(context)!.translate(
+                //               'settings_screen/standard-account-selector/label-title') +
+                //           AppLocalizations.of(context)!.translate(_standardAccounts[
+                //                   EnumToString.fromString<StandardAccount>(
+                //                 StandardAccount.values,
+                //                 (accountSettingsProvider
+                //                         .settings["StandardAccount"] ??
+                //                     "None"),
+                //               )] ??
+                //               "ChosenStandardAccount"), // yeah im sorry that is really complicated code. :( It translates the value from firebase
+                //       style: Theme.of(context).textTheme.bodyText1,
+                //     ),
+                //     trailing: Icon(
+                //       Icons.swap_horiz,
+                //       color: Colors.black,
+                //     ),
+                //   ),
+                // ),
+
+                //Ende GestureDetector Accounts
               ],
             ),
             ListDivider(),
@@ -311,6 +272,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
             //     ),
             //   ],
             // ),
+            // ListDivider(),
+
+            /// STANDARD ACCOUNT (to be implemented)
+            // ListHeader(
+            //   'settings_screen/standard-account/label-title',
+            //   tooltipMessage: 'settings_screen/standard-account/label-tooltip',
+            // ),
+            // // Einnahmen Selector (Accounts)
             // ListDivider(),
 
             /// LANGUAGE SWITCH
@@ -407,7 +376,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         return ListTile(
             //leading: Icon(widget.categories[index].icon),
             title: Text(AppLocalizations.of(context)!.translate(
-                _standardIncomes[StandardIncome.values[indexBuilder]] ??
+                accountSettingsProvider.standardCategoryIncome[
+                        StandardIncome.values[indexBuilder]] ??
                     "Category")),
             selected: "StandardIncome." +
                     (accountSettingsProvider.settings["StandardIncome"] ??
@@ -431,20 +401,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
       AccountSettingsProvider accountSettingsProvider) {
     return ListView.builder(
       shrinkWrap: true,
-      itemCount: StandardExpense.values.length,
+      itemCount: StandardCategoryExpense.values.length,
       itemBuilder: (BuildContext context, int indexBuilder) {
         return ListTile(
             //leading: Icon(widget.categories[index].icon),
             title: Text(AppLocalizations.of(context)!.translate(
-                _standardExpenses[StandardExpense.values[indexBuilder]] ??
+                accountSettingsProvider.standardCategoryExpenses[
+                        StandardCategoryExpense.values[indexBuilder]] ??
                     "Category")),
-            selected: "StandardExpense." +
+            selected: "StandardCategoryExpense." +
                     (accountSettingsProvider.settings["StandardExpense"] ??
                         "None") ==
-                StandardExpense.values[indexBuilder].toString(),
+                StandardCategoryExpense.values[indexBuilder].toString(),
             onTap: () {
-              List<String> stringArr =
-                  StandardExpense.values[indexBuilder].toString().split(".");
+              List<String> stringArr = StandardCategoryExpense
+                  .values[indexBuilder]
+                  .toString()
+                  .split(".");
               accountSettingsProvider.updateSettings({
                 stringArr[0]: stringArr[1],
               });
@@ -454,34 +427,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  ListView _accountListViewBuilder(
-      AccountSettingsProvider accountSettingsProvider) {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: StandardAccount.values.length,
-      itemBuilder: (BuildContext context, int indexBuilder) {
-        return ListTile(
-          //leading: Icon(widget.categories[index].icon),
-          title: Text(AppLocalizations.of(context)!.translate(
-              _standardAccounts[StandardAccount.values[indexBuilder]] ??
-                  "Category")),
-          selected: "StandardAccount." +
-                  (accountSettingsProvider.settings["StandardAccount"] ??
-                      "None") ==
-              StandardAccount.values[indexBuilder].toString(),
-          onTap: () {
-            List<String> stringArr =
-                StandardAccount.values[indexBuilder].toString().split(".");
-            accountSettingsProvider.updateSettings({
-              stringArr[0]: stringArr[1],
-            });
+//   ListView _accountListViewBuilder(
+//       AccountSettingsProvider accountSettingsProvider) {
+//     return ListView.builder(
+//       shrinkWrap: true,
+//       itemCount: StandardAccount.values.length,
+//       itemBuilder: (BuildContext context, int indexBuilder) {
+//         return ListTile(
+//           //leading: Icon(widget.categories[index].icon),
+//           title: Text(AppLocalizations.of(context)!.translate(
+//               accountSettingsProvider
+//                       .standardAccounts[StandardAccount.values[indexBuilder]] ??
+//                   "Category")),
+//           selected: "StandardAccount." +
+//                   (accountSettingsProvider.settings["StandardAccount"] ??
+//                       "None") ==
+//               StandardAccount.values[indexBuilder].toString(),
+//           onTap: () {
+//             List<String> stringArr =
+//                 StandardAccount.values[indexBuilder].toString().split(".");
+//             accountSettingsProvider.updateSettings({
+//               stringArr[0]: stringArr[1],
+//             });
 
-            Navigator.pop(context);
-          },
-        );
-      },
-    );
-  }
+//             Navigator.pop(context);
+//           },
+//         );
+//       },
+//     );
+//   }
 }
 
 ListView _currencyChange(_currency) {
@@ -498,32 +472,4 @@ ListView _currencyChange(_currency) {
       );
     },
   );
-}
-
-enum StandardIncome {
-  None,
-  Income,
-  Allowance,
-  SideJob,
-  Investments,
-  ChildSupport,
-  Interest,
-  Miscellaneous,
-}
-
-enum StandardExpense {
-  None,
-  Food,
-  FreeTime,
-  House,
-  Lifestyle,
-  Car,
-  Miscellaneous,
-}
-enum StandardAccount {
-  None,
-  Debit,
-  Credit,
-  Cash,
-  Depot,
 }

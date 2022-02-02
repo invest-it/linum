@@ -15,6 +15,44 @@ class AccountSettingsProvider extends ChangeNotifier {
 
   Map<String, dynamic> lastGrabbedData = {};
 
+  /// List of Categories the User can declare as a Standard when tracking an EXPENSE.
+  /// e.g. Söncke usually incurs expenses for WATER, therefore he can choose FOOD
+  /// as his Standard Category for Expenses so he does not have to choose FOOD as a category when adding as an expense.
+  final Map<StandardCategoryExpense, String> standardCategoryExpenses = {
+    StandardCategoryExpense.None: "settings_screen/standards-selector-none",
+    StandardCategoryExpense.Food:
+        "settings_screen/standard-expense-selector/food",
+    StandardCategoryExpense.FreeTime:
+        "settings_screen/standard-expense-selector/freetime",
+    StandardCategoryExpense.House:
+        "settings_screen/standard-expense-selector/house",
+    StandardCategoryExpense.Lifestyle:
+        "settings_screen/standard-expense-selector/lifestyle",
+    StandardCategoryExpense.Car:
+        "settings_screen/standard-expense-selector/car",
+    StandardCategoryExpense.Miscellaneous:
+        "settings_screen/standard-expense-selector/misc",
+  };
+
+  /// List of Categories the User can declare as a Standard when tracking INCOME.
+  /// e.g. Otis works as a freelancer, so the income he tracks is mostly in the category SIDE JOB, therefore he can choose SIDE JOB
+  /// as his Standard Category for Income so he does not have to choose SIDE JOB as a category when adding an income.
+  final Map<StandardIncome, String> standardCategoryIncome = {
+    StandardIncome.None: "settings_screen/standards-selector-none",
+    StandardIncome.Income: "settings_screen/standard-income-selector/salary",
+    StandardIncome.Allowance:
+        "settings_screen/standard-income-selector/allowance",
+    StandardIncome.SideJob: "settings_screen/standard-income-selector/sidejob",
+    StandardIncome.Investments:
+        "settings_screen/standard-income-selector/investments",
+    StandardIncome.ChildSupport:
+        "settings_screen/standard-income-selector/childsupport",
+    StandardIncome.Interest:
+        "settings_screen/standard-income-selector/interest",
+    StandardIncome.Miscellaneous:
+        "settings_screen/standard-income-selector/misc",
+  };
+
   AccountSettingsProvider(BuildContext context) {
     _uid = Provider.of<AuthenticationService>(context, listen: false).uid;
 
@@ -77,4 +115,32 @@ class AccountSettingsProvider extends ChangeNotifier {
 
     return true;
   }
+}
+
+enum StandardIncome {
+  None,
+  Income,
+  Allowance,
+  SideJob,
+  Investments,
+  ChildSupport,
+  Interest,
+  Miscellaneous,
+}
+
+enum StandardCategoryExpense {
+  None,
+  Food,
+  FreeTime,
+  House,
+  Lifestyle,
+  Car,
+  Miscellaneous,
+}
+enum StandardAccount {
+  None,
+  Debit,
+  Credit,
+  Cash,
+  Depot,
 }

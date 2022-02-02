@@ -15,7 +15,6 @@ class EnterScreenListViewBuilder extends StatefulWidget {
   List<Category> categoriesTransaction;
   List<Category2> categoriesCategoryExpenses;
   List<Category2> categoriesCategoryIncome;
-  List<Category2> categoriesAccount;
   List<Category2> categoriesRepeat;
   EnterScreenListViewBuilder({
     Key? key,
@@ -23,7 +22,6 @@ class EnterScreenListViewBuilder extends StatefulWidget {
     required this.categoriesExpenses,
     required this.categoriesIncome,
     required this.categoriesTransaction,
-    required this.categoriesAccount,
     required this.categoriesCategoryExpenses,
     required this.categoriesCategoryIncome,
     required this.categoriesRepeat,
@@ -164,8 +162,12 @@ class _EnterScreenListViewBuilderState
   }
 
   //function executed when one of the categories (category, account, date etc.) is tapped
-  void _onCategoryPressed(int index, categoriesExpenses, categoriesIncome,
-      categoriesTransaction, enterScreenProvider) {
+  void _onCategoryPressed(
+      int index,
+      List<Category> categoriesExpenses,
+      List<Category> categoriesIncome,
+      List<Category> categoriesTransaction,
+      EnterScreenProvider enterScreenProvider) {
     if (index == 2) {
       //opens the date picker
       _openDatePicker(enterScreenProvider);
@@ -252,7 +254,8 @@ class _EnterScreenListViewBuilderState
   }
 
   //which list view is built depending on the tapped category at EXPENSES
-  ListView _listViewBuilderExpenses(index, enterScreenProvider) {
+  ListView _listViewBuilderExpenses(
+      int index, EnterScreenProvider enterScreenProvider) {
     if (index == 0) {
       return ListView.builder(
         itemCount: widget.categoriesCategoryExpenses.length,
@@ -271,21 +274,21 @@ class _EnterScreenListViewBuilderState
           );
         },
       );
-    } else if (index == 1) {
-      return ListView.builder(
-        itemCount: widget.categoriesAccount.length,
-        itemBuilder: (BuildContext context, int indexBuilder) {
-          return ListTile(
-            leading: Icon(widget.categoriesAccount[indexBuilder].categoryIcon),
-            title: Text(widget.categoriesAccount[indexBuilder].categoryName),
-            //selects the item as the account value
-            onTap: () => _selectAccountItem(
-              widget.categoriesAccount[indexBuilder].categoryName,
-              widget.categoriesAccount[indexBuilder].categoryIcon,
-            ),
-          );
-        },
-      );
+      // } else if (index == 1) {
+      // return ListView.builder(
+      //   itemCount: widget.categoriesAccount.length,
+      //   itemBuilder: (BuildContext context, int indexBuilder) {
+      //     return ListTile(
+      //       leading: Icon(widget.categoriesAccount[indexBuilder].categoryIcon),
+      //       title: Text(widget.categoriesAccount[indexBuilder].categoryName),
+      //       //selects the item as the account value
+      //       onTap: () => _selectAccountItem(
+      //         widget.categoriesAccount[indexBuilder].categoryName,
+      //         widget.categoriesAccount[indexBuilder].categoryIcon,
+      //       ),
+      //     );
+      //   },
+      // );
     } else
       return ListView.builder(
         itemCount: widget.categoriesRepeat.length,
@@ -305,7 +308,8 @@ class _EnterScreenListViewBuilderState
   }
   //which list view is built depending on the tapped category at INCOME
 
-  ListView _listViewBuilderIncome(index, enterScreenProvider) {
+  ListView _listViewBuilderIncome(
+      int index, EnterScreenProvider enterScreenProvider) {
     if (index == 0) {
       return ListView.builder(
         itemCount: widget.categoriesCategoryIncome.length,
@@ -323,20 +327,20 @@ class _EnterScreenListViewBuilderState
           );
         },
       );
-    } else if (index == 1) {
-      return ListView.builder(
-        itemCount: widget.categoriesAccount.length,
-        itemBuilder: (BuildContext context, int indexBuilder) {
-          return ListTile(
-            leading: Icon(widget.categoriesAccount[indexBuilder].categoryIcon),
-            title: Text(widget.categoriesAccount[indexBuilder].categoryName),
-            onTap: () => _selectAccountItem(
-              widget.categoriesAccount[indexBuilder].categoryName,
-              widget.categoriesAccount[indexBuilder].categoryIcon,
-            ),
-          );
-        },
-      );
+      // } else if (index == 1) {
+      // return ListView.builder(
+      //   itemCount: widget.categoriesAccount.length,
+      //   itemBuilder: (BuildContext context, int indexBuilder) {
+      //     return ListTile(
+      //       leading: Icon(widget.categoriesAccount[indexBuilder].categoryIcon),
+      //       title: Text(widget.categoriesAccount[indexBuilder].categoryName),
+      //       onTap: () => _selectAccountItem(
+      //         widget.categoriesAccount[indexBuilder].categoryName,
+      //         widget.categoriesAccount[indexBuilder].categoryIcon,
+      //       ),
+      //     );
+      //   },
+      // );
     } else
       return ListView.builder(
         itemCount: widget.categoriesRepeat.length,
@@ -355,50 +359,51 @@ class _EnterScreenListViewBuilderState
   }
   //which list view is built depending on the tapped category at TRANSACTION
 
-  ListView _listViewBuilderTransaction(index, enterScreenProvider) {
-    if (index == 0) {
-      return ListView.builder(
-        itemCount: widget.categoriesAccount.length,
-        itemBuilder: (BuildContext context, int indexBuilder) {
-          return ListTile(
-            leading: Icon(widget.categoriesAccount[indexBuilder].categoryIcon),
-            title: Text(widget.categoriesAccount[indexBuilder].categoryName),
-            onTap: () => _selectCategoryItemTransactions(
-              widget.categoriesAccount[indexBuilder].categoryName,
-              enterScreenProvider,
-            ),
-          );
-        },
-      );
-    } else if (index == 1) {
-      return ListView.builder(
-        itemCount: widget.categoriesAccount.length,
-        itemBuilder: (BuildContext context, int indexBuilder) {
-          return ListTile(
-            leading: Icon(widget.categoriesAccount[indexBuilder].categoryIcon),
-            title: Text(widget.categoriesAccount[indexBuilder].categoryName),
-            onTap: () => _selectAccountItem(
-              widget.categoriesAccount[indexBuilder].categoryName,
-              widget.categoriesAccount[indexBuilder].categoryIcon,
-            ),
-          );
-        },
-      );
-    } else
-      return ListView.builder(
-        itemCount: widget.categoriesRepeat.length,
-        itemBuilder: (BuildContext context, int indexBuilder) {
-          return ListTile(
-            leading: Icon(widget.categoriesRepeat[indexBuilder].categoryIcon),
-            title: Text(widget.categoriesRepeat[indexBuilder].categoryName),
-            onTap: () => _selectRepeatItem(
-              widget.categoriesRepeat[indexBuilder].categoryName,
-              enterScreenProvider,
-              widget.categoriesRepeat[indexBuilder].categoryIcon,
-            ),
-          );
-        },
-      );
+  ListView _listViewBuilderTransaction(
+      int index, EnterScreenProvider enterScreenProvider) {
+    // if (index == 0) {
+    //   return ListView.builder(
+    //     itemCount: widget.categoriesAccount.length,
+    //     itemBuilder: (BuildContext context, int indexBuilder) {
+    //       return ListTile(
+    //         leading: Icon(widget.categoriesAccount[indexBuilder].categoryIcon),
+    //         title: Text(widget.categoriesAccount[indexBuilder].categoryName),
+    //         onTap: () => _selectCategoryItemTransactions(
+    //           widget.categoriesAccount[indexBuilder].categoryName,
+    //           enterScreenProvider,
+    //         ),
+    //       );
+    //     },
+    //   );
+    // } else if (index == 1) {
+    // return ListView.builder(
+    //   itemCount: widget.categoriesAccount.length,
+    //   itemBuilder: (BuildContext context, int indexBuilder) {
+    //     return ListTile(
+    //       leading: Icon(widget.categoriesAccount[indexBuilder].categoryIcon),
+    //       title: Text(widget.categoriesAccount[indexBuilder].categoryName),
+    //       onTap: () => _selectAccountItem(
+    //         widget.categoriesAccount[indexBuilder].categoryName,
+    //         widget.categoriesAccount[indexBuilder].categoryIcon,
+    //       ),
+    //     );
+    //   },
+    // );
+    // } else
+    return ListView.builder(
+      itemCount: widget.categoriesRepeat.length,
+      itemBuilder: (BuildContext context, int indexBuilder) {
+        return ListTile(
+          leading: Icon(widget.categoriesRepeat[indexBuilder].categoryIcon),
+          title: Text(widget.categoriesRepeat[indexBuilder].categoryName),
+          onTap: () => _selectRepeatItem(
+            widget.categoriesRepeat[indexBuilder].categoryName,
+            enterScreenProvider,
+            widget.categoriesRepeat[indexBuilder].categoryIcon,
+          ),
+        );
+      },
+    );
   }
 
   //returns the selected value as a text

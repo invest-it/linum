@@ -73,7 +73,10 @@
     "settings_screen/standard-currency/label-tooltip": "This currency is used by default for every new transaction. You can also change it individually.",
 
     "settings_screen/standard-category/label-title": "STANDARD CATEGORIES",
-    "settings_screen/standard-category/label-tooltip": "These categories are used by default for each new income/expense/transaction. You can also change it individually.",
+    "settings_screen/standard-category/label-tooltip": "These categories are used by default for each new income/expense/transaction. You can also change them individually.",
+
+    "settings_screen/standard-account/label-title": "STANDARD ACCOUNTS",
+    "settings_screen/standard-account/label-tooltip": "These accounts are used by default for each new income/expense. You can also change them individually.",
 
     "settings_screen/special-settings/label-title": "SPECIAL SETTINGS",
     "settings_screen/special-settings/label-schwabenmodus": "Dagobert Duck Mode",

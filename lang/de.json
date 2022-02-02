@@ -75,6 +75,9 @@
     "settings_screen/standard-category/label-title": "STANDARD-KATEGORIEN",
     "settings_screen/standard-category/label-tooltip": "Diese Kategorien werden standardmäßig bei jeder neuen Einnahme/Ausgabe/Transaktion genutzt. Du kannst diese auch individuell ändern.",
 
+    "settings_screen/standard-account/label-title": "STANDARD-ACCOUNTS",
+    "settings_screen/standard-account/label-tooltip": "Diese Accounts werden standardmäßig bei jeder neuen Einnahme/Ausgabe genutzt. Du kannst diese auch individuell ändern.",
+
     "settings_screen/special-settings/label-title": "BESONDERE EINSTELLUNGEN",
     "settings_screen/special-settings/label-schwabenmodus": "Schwabenmodus",
 
