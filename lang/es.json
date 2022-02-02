@@ -1,0 +1,130 @@
+{
+    "main/label-loading": "Cargando...",
+
+    "onboarding_screen/card1-title": "Bienvenido!",
+    "onboarding_screen/card1-description": "Tu nuevo asistente de presupuestos ya te está esperando.",
+    "onboarding_screen/card2-title": "Rastreador de dinero",
+    "onboarding_screen/card2-description": "No podría ser más sencillo: con nuestra función de seguimiento, siempre sabrá exactamente de cuánto dinero dispone en este momento.",
+    "onboarding_screen/card3-title": "Prepárate bien",
+    "onboarding_screen/card3-description": "Con nuestra función de academia puede acceder a una amplia selección de vídeos gratuitos sobre muchos temas del mundo de las finanzas.",
+    "onboarding_screen/card4-title": "Estar al tanto de todo",
+    "onboarding_screen/card4-description": "Linum genera automáticamente estadísticas relevantes para ti. De este modo, puedes hacer un seguimiento de cómo vas con tu presupuesto.",
+    "onboarding_screen/register-button": "¡Inscríbase ahora!",
+    "onboarding_screen/login-button": "Tengo una cuenta",
+    "onboarding_screen/svg-credit-label": "Ilustraciones de Freepik",
+
+    "onboarding_screen/cta-login": "¿Tienes una cuenta? Inicie sesión aquí.",
+    "onboarding_screen/cta-register": "¿No tiene una cuenta? Regístrese aquí",
+
+    "onboarding_screen/login-lip-title": "LOGIN",
+    "onboarding_screen/login-email-hintlabel": "e-mail",
+    "onboarding_screen/login-password-hintlabel": "Contraseña",
+    "onboarding_screen/login-lip-login-button": "Acceder",
+    "onboarding_screen/login-lip-forgot-password-button": "¿Ha olvidado su contraseña?",
+
+    "onboarding_screen/register-lip-title": "SIGN UP",
+    "onboarding_screen/register-email-hintlabel": "e-mail",
+    "onboarding_screen/register-password-hintlabel": "Contraseña",
+    "onboarding_screen/register-lip-signup-button": "Inscríbete",
+    "onboarding_screen/register-lip-forgot-password-button": "Alternative sign-in methods",
+
+
+    "home_screen/label-recent-transactions": "Transacciones recientes",
+    "home_screen/button-show-more": "MOSTRAR MÁS",
+
+
+    "home_screen_card/home-screen-card-toast": "Desliza el dedo hacia la izquierda y hacia la derecha para ver los meses anteriores o los próximos. Pulse dos veces para volver al mes actual.",
+    "home_screen_card/label-current-balance": "Saldo actual",
+    "home_screen_card/label-income": "INGRESOS",
+    "home_screen_card/label-expenses": "GASTOS",
+
+
+    "budget_screen/label-all-transactions": "Todas las transacciones",
+    "budget_screen/button-filter": "FILTRO",
+
+
+    "settings_screen/standards-selector-none": "Sin categoría",
+
+    "settings_screen/standard-expense-selector/label-title": "Gastos: ",
+    "settings_screen/standard-expense-selector/food": "Comida y bebida",
+    "settings_screen/standard-expense-selector/freetime": "Ocio",
+    "settings_screen/standard-expense-selector/house": "Hogar y vida",
+    "settings_screen/standard-expense-selector/lifestyle": "Estilo de vida",
+    "settings_screen/standard-expense-selector/car": "Transporte",
+    "settings_screen/standard-expense-selector/misc": "Varios",
+
+    "settings_screen/standard-income-selector/label-title": "Ingresos: ",
+    "settings_screen/standard-income-selector/salary": "Salario",
+    "settings_screen/standard-income-selector/allowance": "Asignación",
+    "settings_screen/standard-income-selector/sidejob": "Trabajo secundario",
+    "settings_screen/standard-income-selector/investments": "Inversiones",
+    "settings_screen/standard-income-selector/childsupport": "Manutención de los hijos",
+    "settings_screen/standard-income-selector/interest": "Interés",
+    "settings_screen/standard-income-selector/misc": "Varios",
+
+    "settings_screen/standard-account-selector/label-title": "Transacciones: ",
+    "settings_screen/standard-account-selector/modal-label-title": "Cuentas",
+    "settings_screen/standard-account-selector/debit-card": "Tarjeta de débito",
+    "settings_screen/standard-account-selector/credit-card": "Tarjeta de crédito",
+    "settings_screen/standard-account-selector/cash": "Efectivo",
+    "settings_screen/standard-account-selector/deposit": "Depósito",
+
+    "settings_screen/standard-currency/label-title": "MONEDA ESTÁNDAR",
+    "settings_screen/standard-currency/label-tooltip": "Esta moneda se utiliza por defecto para cada nueva transacción. También puede cambiarla individualmente.",
+
+    "settings_screen/standard-category/label-title": "CATEGORÍAS ESTÁNDAR",
+    "settings_screen/standard-category/label-tooltip": "Estas categorías se utilizan por defecto para cada nuevo ingreso/gastos/transacción. También puede cambiarlas individualmente.",
+
+    "settings_screen/standard-account/label-title": "CUENTAS ESTÁNDAR",
+    "settings_screen/standard-account/label-tooltip": "Estas cuentas se utilizan por defecto para cada nuevo ingreso/gasto. También puede cambiarlas individualmente.",
+
+    "settings_screen/special-settings/label-title": "AJUSTES ESPECIALES",
+    "settings_screen/special-settings/label-schwabenmodus": "Moda de Rico McPato",
+
+    "settings_screen/language-settings/label-title": "AJUSTES DE IDIOMA",
+    "settings_screen/language-settings/label-systemlang": "Lenguaje del sistema",
+    "settings_screen/language-settings/label-tooltip": "Actualmente, sólo se admite el idioma del sistema. Idiomas admitidos: Alemán, inglés.",
+    "settings_screen/language-settings/label-de": "Inglés",
+    "settings_screen/language-settings/label-en": "Alemán",
+    "settings_screen/language-settings/label-nl": "Holandés",
+
+    "settings_screen/system-settings/label-title": "SU CUENTA",
+    "settings_screen/system-settings/button-forgot-password": "¿Ha olvidado su contraseña?",
+    "settings_screen/system-settings/button-forgot-password-tooltip": "Puede solicitar un restablecimiento de la contraseña aquí si ha olvidado su antigua contraseña.",
+    "settings_screen/system-settings/button-signout": "Firmar la salida",
+
+
+    "enter_screen/button-expenses-label": "Gastos",
+    "enter_screen/button-income-label": "Ingresos",
+    "enter_screen/button-transaction-label": "Transacción",
+    "enter_screen/button-save-entry": "Guardar entrada",
+    "enter_screen/expenses-textfield-title": "¿Qué has comprado?",
+    "enter_screen/income-textfield-title": "¿Cómo se llaman estos ingresos?",
+    "enter_screen/transaction-textfield-title": "¿Cómo se llama esta transacción?",
+
+    "enter_screen_attribute_category": "Categorías",
+    "enter_screen_attribute_account": "Cuenta",
+    "enter_screen_attribute_date": "Fecha",
+    "enter_screen_attribute_repeat": "Repita",
+    "enter_screen_attribute_account_from": "De la cuenta",
+    "enter_screen_attribute_account_to": "A la cuenta",
+
+
+    "action_lip/forgot-password/logged-out/label-title": "Restablecer contraseña",
+    "action_lip/forgot-password/logged-out/label-description": "Por favor, introduzca su dirección de correo electrónico conectada a su cuenta de Linum. Le enviaremos un código de verificación junto con las instrucciones para restablecer su contraseña.",
+    "action_lip/forgot-password/logged-out/button-submit": "Solicitar código",
+
+    "action_lip/forgot-password/logged-in/label-title": "Elija una nueva contraseña",
+    "action_lip/forgot-password/logged-in/label-description": "Por favor, introduzca una nueva contraseña. No puede utilizar contraseñas que ya haya usado antes. La nueva contraseña no debe contener su dirección de correo electrónico y debe tener al menos 6 caracteres.",
+    "action_lip/forgot-password/logged-in/button-submit": "Cambiar la contraseña ahora",
+
+
+    "logout_form/label-current-email": "Conectado como:\n",
+
+
+    "listview/label-no-entries": "- No se han encontrado entradas -",
+    "listview/label-today": "Hoy",
+    "listview/label-yesterday": "Ayer",
+    "listview/label-lastweek": "Última semana",
+    "listview/label-thismonth": "Este mes"
+}

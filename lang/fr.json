@@ -1,0 +1,130 @@
+{
+    "main/label-loading": "Chargement...",
+
+    "onboarding_screen/card1-title": "Bienvenue !",
+    "onboarding_screen/card1-description": "Votre nouvel assistant budgétaire vous attend déjà.",
+    "onboarding_screen/card2-title": "Suivi de l'argent",
+    "onboarding_screen/card2-description": "Rien de plus simple : grâce à notre fonction de suivi, vous savez toujours exactement combien d'argent vous avez en ce moment.",
+    "onboarding_screen/card3-title": "Soyez bien préparé",
+    "onboarding_screen/card3-description": "Grâce à notre fonction Académie, vous pouvez accéder à une large sélection de vidéos gratuites sur de nombreux sujets du monde de la finance !",
+    "onboarding_screen/card4-title": "Gardez le contrôle de la situation",
+    "onboarding_screen/card4-description": "Linum génère automatiquement des statistiques pertinentes pour vous. Vous pouvez ainsi suivre l'évolution de votre budget.",
+    "onboarding_screen/register-button": "Inscrivez-vous dès maintenant!",
+    "onboarding_screen/login-button": "J'ai un compte",
+    "onboarding_screen/svg-credit-label": "Illustrations par Freepik",
+
+    "onboarding_screen/cta-login": "Vous avez un compte? Connectez-vous ici.",
+    "onboarding_screen/cta-register": "Vous n'avez pas de compte? Inscrivez-vous ici",
+
+    "onboarding_screen/login-lip-title": "LOGIN",
+    "onboarding_screen/login-email-hintlabel": "e-mail",
+    "onboarding_screen/login-password-hintlabel": "Mot de passe",
+    "onboarding_screen/login-lip-login-button": "Se connecter",
+    "onboarding_screen/login-lip-forgot-password-button": "Réinitialiser le mot de passe",
+
+    "onboarding_screen/register-lip-title": "SIGN UP",
+    "onboarding_screen/register-email-hintlabel": "e-mail",
+    "onboarding_screen/register-password-hintlabel": "Mot de passe",
+    "onboarding_screen/register-lip-signup-button": "S'inscrire",
+    "onboarding_screen/register-lip-forgot-password-button": "Alternative sign-in methods",
+
+
+    "home_screen/label-recent-transactions": "Transactions récentes",
+    "home_screen/button-show-more": "AFFICHER PLUS",
+
+
+    "home_screen_card/home-screen-card-toast": "Balayez vers la gauche et la droite pour afficher les mois précédents ou à venir. Double-cliquez pour revenir au mois en cours.",
+    "home_screen_card/label-current-balance": "Solde actuel",
+    "home_screen_card/label-income": "REVENU",
+    "home_screen_card/label-expenses": "DÉPENSES",
+
+
+    "budget_screen/label-all-transactions": "Toutes les transactions",
+    "budget_screen/button-filter": "FILTRE",
+
+
+    "settings_screen/standards-selector-none": "Non classé",
+
+    "settings_screen/standard-expense-selector/label-title": "Dépenses: ",
+    "settings_screen/standard-expense-selector/food": "Nourriture",
+    "settings_screen/standard-expense-selector/freetime": "Loisirs",
+    "settings_screen/standard-expense-selector/house": "Maison et habitat",
+    "settings_screen/standard-expense-selector/lifestyle": "Mode de vie",
+    "settings_screen/standard-expense-selector/car": "Transport",
+    "settings_screen/standard-expense-selector/misc": "Divers",
+
+    "settings_screen/standard-income-selector/label-title": "Revenu: ",
+    "settings_screen/standard-income-selector/salary": "Salaire",
+    "settings_screen/standard-income-selector/allowance": "Allocation",
+    "settings_screen/standard-income-selector/sidejob": "Travail parallèle",
+    "settings_screen/standard-income-selector/investments": "Investissements",
+    "settings_screen/standard-income-selector/childsupport": "Pension alimentaire pour enfants",
+    "settings_screen/standard-income-selector/interest": "Intérêt",
+    "settings_screen/standard-income-selector/misc": "Divers",
+
+    "settings_screen/standard-account-selector/label-title": "Transactions: ",
+    "settings_screen/standard-account-selector/modal-label-title": "Comptes",
+    "settings_screen/standard-account-selector/debit-card": "Carte de débit",
+    "settings_screen/standard-account-selector/credit-card": "Carte de crédit",
+    "settings_screen/standard-account-selector/cash": "Espèces",
+    "settings_screen/standard-account-selector/deposit": "Dépôt",
+
+    "settings_screen/standard-currency/label-title": "DEVISE STANDARD",
+    "settings_screen/standard-currency/label-tooltip": "Cette devise est utilisée par défaut pour chaque nouvelle transaction. Vous pouvez également la modifier individuellement.",
+
+    "settings_screen/standard-category/label-title": "CATÉGORIES STANDARD",
+    "settings_screen/standard-category/label-tooltip": "Ces catégories sont utilisées par défaut pour chaque nouveau revenu/dépense/transaction. Vous pouvez également les modifier individuellement.",
+
+    "settings_screen/standard-account/label-title": "COMPTES STANDARD",
+    "settings_screen/standard-account/label-tooltip": "Ces comptes sont utilisés par défaut pour chaque nouveau revenu/dépense. Vous pouvez également les modifier individuellement.",
+
+    "settings_screen/special-settings/label-title": "PARAMÈTRES SPÉCIAUX",
+    "settings_screen/special-settings/label-schwabenmodus": "Mode Picsou",
+
+    "settings_screen/language-settings/label-title": "PARAMÈTRES LINGUISTIQUES",
+    "settings_screen/language-settings/label-systemlang": "Langue du système",
+    "settings_screen/language-settings/label-tooltip": "Actuellement, seule la langue du système est prise en charge. Langues prises en charge : Allemand, Anglais.",
+    "settings_screen/language-settings/label-de": "English",
+    "settings_screen/language-settings/label-en": "Deutsch",
+    "settings_screen/language-settings/label-nl": "Nederlands",
+
+    "settings_screen/system-settings/label-title": "VOTRE COMPTE",
+    "settings_screen/system-settings/button-forgot-password": "Réinitialiser le mot de passe",
+    "settings_screen/system-settings/button-forgot-password-tooltip": "Vous pouvez demander une réinitialisation du mot de passe ici si vous avez oublié votre ancien mot de passe.",
+    "settings_screen/system-settings/button-signout": "Se déconnecter",
+
+
+    "enter_screen/button-expenses-label": "Dépenses",
+    "enter_screen/button-income-label": "Revenu",
+    "enter_screen/button-transaction-label": "Transaction",
+    "enter_screen/button-save-entry": "Sauvegarder l'entrée",
+    "enter_screen/expenses-textfield-title": "Qu'avez-vous acheté?",
+    "enter_screen/income-textfield-title": "Comment appelle-t-on ce revenu?",
+    "enter_screen/transaction-textfield-title": "Comment s'appelle cette transaction?",
+
+    "enter_screen_attribute_category": "Catégories",
+    "enter_screen_attribute_account": "Compte",
+    "enter_screen_attribute_date": "Date",
+    "enter_screen_attribute_repeat": "Répéter",
+    "enter_screen_attribute_account_from": "Du compte",
+    "enter_screen_attribute_account_to": "Au compte",
+
+
+    "action_lip/forgot-password/logged-out/label-title": "Réinitialiser le mot de passe",
+    "action_lip/forgot-password/logged-out/label-description": "Veuillez saisir votre adresse e-mail connectée à votre compte Linum. Nous vous enverrons un code de vérification ainsi que des instructions sur la façon de réinitialiser votre mot de passe.",
+    "action_lip/forgot-password/logged-out/button-submit": "Envoyer la demande",
+
+    "action_lip/forgot-password/logged-in/label-title": "Choisissez un nouveau mot de passe",
+    "action_lip/forgot-password/logged-in/label-description": "Veuillez saisir un nouveau mot de passe. Vous ne pouvez pas utiliser des mots de passe que vous avez déjà utilisés auparavant. Le nouveau mot de passe ne doit pas contenir votre adresse électronique et doit comporter au moins 6 caractères.",
+    "action_lip/forgot-password/logged-in/button-submit": "Changer le mot de passe maintenant",
+
+
+    "logout_form/label-current-email": "Connecté en tant que:\n",
+
+
+    "listview/label-no-entries": "- Aucune entrée trouvée -",
+    "listview/label-today": "Aujourd'hui",
+    "listview/label-yesterday": "Hier",
+    "listview/label-lastweek": "La semaine dernière",
+    "listview/label-thismonth": "Ce mois-ci"
+}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
+import 'package:linum/frontend_functions/country_flag_generator.dart';
 import 'package:linum/frontend_functions/list_divider.dart';
 import 'package:linum/frontend_functions/list_header.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
@@ -11,6 +12,7 @@ import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/widgets/auth/forgot_password.dart';
 import 'package:linum/widgets/auth/logout_form.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
+import 'package:linum/widgets/settings_screen/toggle_button_element.dart';
 import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -311,33 +313,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   children: [
                     ToggleButtons(
                       children: [
-                        Container(
-                          child: Center(
-                            child: Text(
-                              AppLocalizations.of(context)!.translate(
-                                  'settings_screen/language-settings/label-en'),
-                            ),
-                          ),
-                          width: MediaQuery.of(context).size.width * 0.25,
-                        ),
-                        Container(
-                          child: Center(
-                            child: Text(
-                              AppLocalizations.of(context)!.translate(
-                                  'settings_screen/language-settings/label-de'),
-                            ),
-                          ),
-                          width: MediaQuery.of(context).size.width * 0.25,
-                        ),
-                        Container(
-                          child: Center(
-                            child: Text(
-                              AppLocalizations.of(context)!.translate(
-                                  'settings_screen/language-settings/label-nl'),
-                            ),
-                          ),
-                          width: MediaQuery.of(context).size.width * 0.25,
-                        ),
+                        ToggleButtonElement(countryFlag('de')),
+                        ToggleButtonElement(countryFlag('gb')),
+                        ToggleButtonElement(countryFlag('nl')),
+                        ToggleButtonElement(countryFlag('es')),
+                        ToggleButtonElement(countryFlag('fr')),
                       ],
                       isSelected: [
                         accountSettingsProvider.settings['languageCode'] ==
@@ -345,7 +325,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         accountSettingsProvider.settings['languageCode'] ==
                             'en-US',
                         accountSettingsProvider.settings['languageCode'] ==
-                            'nl-NL'
+                            'nl-NL',
+                        accountSettingsProvider.settings['languageCode'] ==
+                            'es-ES',
+                        accountSettingsProvider.settings['languageCode'] ==
+                            'fr-FR'
                       ],
                       onPressed:
                           accountSettingsProvider.settings['systemLanguage'] ==
@@ -361,6 +345,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       break;
                                     case 2:
                                       langSelector = 'nl-NL';
+                                      break;
+                                    case 3:
+                                      langSelector = 'es-ES';
+                                      break;
+                                    case 4:
+                                      langSelector = 'fr-FR';
                                       break;
                                     default:
                                       langSelector = 'en-US';
