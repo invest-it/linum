@@ -6,9 +6,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/backend_functions/url-handler.dart';
+import 'package:linum/frontend_functions/country_flag_generator.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/silent-scroll.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/widgets/auth/login_form.dart';
 import 'package:linum/widgets/auth/register_form.dart';
@@ -238,6 +240,28 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                   ..._builtSlides(),
                 ],
               ),
+            ),
+            Positioned(
+              child: SafeArea(
+                child: DropdownButton<String>(
+                  items: <String>[
+                    countryFlag('de'),
+                    countryFlag('gb'),
+                    countryFlag('nl'),
+                    countryFlag('es'),
+                    countryFlag('fr'),
+                  ].map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  value: countryFlag('de'),
+                  onChanged: (value) {},
+                ),
+              ),
+              top: 0,
+              right: 0,
             ),
             Positioned(
               left: 0,
