@@ -4,37 +4,42 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class EnterScreenProvider with ChangeNotifier {
-  bool _isExpenses = true;
-  bool _isIncome = false;
-  bool _isTransaction = false;
+  late bool _isExpenses;
+  late bool _isIncome;
+  late bool _isTransaction;
   String _name = "";
-  num _amount;
+  late num _amount;
   String _expenseCategory = "";
   String _incomeCategory = "";
   String _currency = "";
   String _repeat = "Niemals";
   DateTime _selectedDate = DateTime.now();
-  bool _editMode;
+  late bool _editMode;
 
   final _formKey = GlobalKey<FormState>();
 
   EnterScreenProvider({
     num amount = 0.0,
-    String category = "",
+    String category = "None",
     String name = "",
     String repeat = "",
     String currency = "",
-    String secondaryCategory = "",
+    String secondaryCategory = "None",
     DateTime? selectedDate,
     bool editMode = false,
-  })  : _amount = amount,
-        _expenseCategory = amount <= 0 ? category : secondaryCategory,
-        _incomeCategory = amount > 0 ? category : secondaryCategory,
-        _name = name,
-        _repeat = repeat,
-        _currency = currency,
-        _editMode = editMode,
-        _selectedDate = selectedDate ?? DateTime.now();
+  }) {
+    _amount = amount <= 0 ? -1 * amount : amount;
+    _expenseCategory = amount <= 0 ? category : secondaryCategory;
+    _incomeCategory = amount > 0 ? category : secondaryCategory;
+    _name = name;
+    _repeat = repeat;
+    _currency = currency;
+    _editMode = editMode;
+    _selectedDate = selectedDate ?? DateTime.now();
+    _isExpenses = amount <= 0;
+    _isIncome = !_isExpenses;
+    _isTransaction = false;
+  }
   //amount: amount, category: category, currency: currency, name: name, time: time
 
   void setName(String name) {

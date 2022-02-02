@@ -139,7 +139,7 @@ class HomeScreenListView implements BalanceDataListView {
                           ChangeNotifierProvider<EnterScreenProvider>(
                             create: (_) {
                               return EnterScreenProvider(
-                                amount: arrayElement["amount"] * -1,
+                                amount: arrayElement["amount"],
                                 category: arrayElement["category"],
                                 name: arrayElement["name"],
                                 selectedDate:
