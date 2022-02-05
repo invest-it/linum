@@ -59,7 +59,8 @@ class MyApp extends StatelessWidget {
 
         //we should discuss as whether to augment bis by adding an own @TODO
         // e.g. for the HEADLINER function
-
+        textSelectionTheme:
+            TextSelectionThemeData(selectionHandleColor: Colors.transparent),
         textTheme: TextTheme(
           headline1: GoogleFonts.dmSans(
             fontSize: 39.81,
