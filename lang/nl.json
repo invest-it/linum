@@ -94,6 +94,8 @@
     "settings_screen/system-settings/button-signout": "Uitschrijven",
 
 
+    "enter_screen/label-title": "Nieuw item",
+
     "enter_screen/button-expenses-label": "Uitgaven",
     "enter_screen/button-income-label": "Inkomen",
     "enter_screen/button-transaction-label": "Transaction",

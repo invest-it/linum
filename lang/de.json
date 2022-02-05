@@ -94,6 +94,8 @@
     "settings_screen/system-settings/button-signout": "Ausloggen",
 
 
+    "enter_screen/label-title": "Neuer Eintrag",
+
     "enter_screen/button-expenses-label": "Ausgabe",
     "enter_screen/button-income-label": "Einnahme",
     "enter_screen/button-transaction-label": "Transaktion",

@@ -94,6 +94,8 @@
     "settings_screen/system-settings/button-signout": "Se déconnecter",
 
 
+    "enter_screen/label-title": "Nouvelle entrée",
+
     "enter_screen/button-expenses-label": "Dépenses",
     "enter_screen/button-income-label": "Revenu",
     "enter_screen/button-transaction-label": "Transaction",
