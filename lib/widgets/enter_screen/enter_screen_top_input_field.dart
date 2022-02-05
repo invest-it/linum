@@ -40,8 +40,12 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
     EnterScreenProvider enterScreenProvider =
         Provider.of<EnterScreenProvider>(context);
     if (myController == null) {
-      myController =
-          TextEditingController(text: enterScreenProvider.amount.toString());
+      if (enterScreenProvider.amount != 0) {
+        myController =
+            TextEditingController(text: enterScreenProvider.amount.toString());
+      } else {
+        myController = TextEditingController();
+      }
     }
     //calculation of the size (width and height) of a text - here it
     //is "Expenses"
