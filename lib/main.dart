@@ -131,6 +131,7 @@ class MyApp extends StatelessWidget {
         Locale('de', 'DE'),
         Locale('nl', 'NL'),
         Locale('es', 'ES'),
+        Locale('fr', 'FR')
       ],
 
       localizationsDelegates: [
