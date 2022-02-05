@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:linum/frontend_functions/decimal_text_input_formatter.dart';
+import 'package:flutter/services.dart';
+import 'package:linum/backend_functions/currency_input_formatter.dart';
+import 'package:linum/backend_functions/decimal_text_input_formatter.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/widgets/text_container.dart';
@@ -63,25 +65,27 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
         height: proportionateScreenHeight(164),
         color: Theme.of(context).colorScheme.primary,
         child: GestureDetector(
-          child: Container(
+          child: SafeArea(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height < 690
-                      ? proportionateScreenHeight(35)
-                      : proportionateScreenHeight(50),
-                ),
+                // SizedBox(
+                //   // TODO wtf is this?
+                //   height: MediaQuery.of(context).size.height < 690
+                //       ? proportionateScreenHeight(35)
+                //       : proportionateScreenHeight(50),
+                // ),
+
                 //text field
                 Form(
                   key: enterScreenProvider.formKey,
                   child: Container(
-                    //current solution to "center" the textfield as best as possible
-                    width: sizeMyController.width + 120,
-                    child: TextFormField(
+                    child: TextField(
                       inputFormatters: [
-                        DecimalTextInputFormatter(decimalRange: 2)
+                        CurrencyInputFormatter(),
+                        // DecimalTextInputFormatter(decimalRange: 2),
+                        // FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                       ],
                       // validator: (value) {
                       //   if (value!.isNotEmpty && value.length < 8) {
@@ -91,36 +95,40 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                       //   }
                       // },
                       maxLength: 7,
-                      textAlign: TextAlign.start,
+                      textAlign: TextAlign.center,
                       textAlignVertical: TextAlignVertical.center,
                       controller: myController,
-                      showCursor: false,
+                      showCursor: true,
+                      cursorColor: Colors.white,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         counter: SizedBox.shrink(),
                         isCollapsed: true,
                         isDense: true,
-                        hintText:
-                            enterScreenProvider.isExpenses ? " 0.0" : " 0.0",
-                        prefixIcon: enterScreenProvider.isExpenses
-                            ? Padding(
-                                padding: const EdgeInsets.all(0.0),
-                                child: Icon(Icons.remove,
-                                    color: Theme.of(context).colorScheme.error),
-                              )
-                            : Icon(Icons.add,
-                                color: enterScreenProvider.isIncome
-                                    ? Theme.of(context).colorScheme.background
-                                    : Theme.of(context).colorScheme.secondary),
+                        // hintText:
+                        // enterScreenProvider.isExpenses ? " 0.00" : " 0.00",
+                        // prefixIcon: enterScreenProvider.isExpenses
+                        //     ? Icon(Icons.remove,
+                        //         color: Theme.of(context).colorScheme.error)
+                        //     : Icon(Icons.add,
+                        //         color: enterScreenProvider.isIncome
+                        //             ? Theme.of(context)
+                        //                 .colorScheme
+                        //                 .background
+                        //             : Theme.of(context)
+                        //                 .colorScheme
+                        //                 .secondary),
+                        // as soon as multiple currencies are implemented, the provider for this will insert the corresponding symbol here.
+                        // suffixIcon: Text("€"),
                         hintStyle: TextStyle(
                           color: _colorPicker(enterScreenProvider, context),
                         ),
                         border: InputBorder.none,
                         focusedBorder: InputBorder.none,
                       ),
-                      style: TextStyle(
-                          color: _colorPicker(enterScreenProvider, context),
-                          fontSize: 30),
+                      style: Theme.of(context).textTheme.headline1!.copyWith(
+                            color: _colorPicker(enterScreenProvider, context),
+                          ),
                       onChanged: (String _) {
                         setState(() {
                           enterScreenProvider.setAmount(
@@ -133,6 +141,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                     ),
                   ),
                 ),
+
                 //the user chooses between expenses, income etc.
                 //standard is expenses
                 Container(
