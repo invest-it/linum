@@ -41,8 +41,8 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
         Provider.of<EnterScreenProvider>(context);
     if (myController == null) {
       if (enterScreenProvider.amount != 0) {
-        myController =
-            TextEditingController(text: enterScreenProvider.amount.toString());
+        myController = TextEditingController(
+            text: enterScreenProvider.amount.toStringAsFixed(2) + " €");
       } else {
         myController = TextEditingController();
       }
@@ -98,7 +98,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                       //     return 'Enter a value!';
                       //   }
                       // },
-                      maxLength: 7,
+                      maxLength: 15,
                       textAlign: TextAlign.center,
                       textAlignVertical: TextAlignVertical.center,
                       controller: myController,
@@ -109,8 +109,9 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                         counter: SizedBox.shrink(),
                         isCollapsed: true,
                         isDense: true,
-                        // hintText:
-                        // enterScreenProvider.isExpenses ? " 0.00" : " 0.00",
+                        hintText: enterScreenProvider.isExpenses
+                            ? " 0.00 €"
+                            : " 0.00 €",
                         // prefixIcon: enterScreenProvider.isExpenses
                         //     ? Icon(Icons.remove,
                         //         color: Theme.of(context).colorScheme.error)
@@ -134,12 +135,13 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                             color: _colorPicker(enterScreenProvider, context),
                           ),
                       onChanged: (String _) {
-                        setState(() {
-                          enterScreenProvider.setAmount(
-                              double.tryParse(myController!.text) == null
-                                  ? 0.0
-                                  : double.tryParse(myController!.text)!);
-                        });
+                        enterScreenProvider.setAmount(double.tryParse(
+                                myController!.text
+                                    .substring(0, myController!.text.length - 2)
+                                    .replaceAll(".", "")
+                                    .replaceAll(",", ".")) ??
+                            0.0);
+
                         //print(enterScreenProvider.amount);
                       },
                     ),
