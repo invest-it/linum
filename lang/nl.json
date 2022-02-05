@@ -111,6 +111,11 @@
     "enter_screen_attribute_account_from": "Van Account",
     "enter_screen_attribute_account_to": "Naar Account",
 
+    "enter_screen/label-repeat-daily": "Dagelijks",
+    "enter_screen/label-repeat-weekly": "Wekelijks",
+    "enter_screen/label-repeat-monthly": "Begin van de maand",
+    "enter_screen/label-repeat-freeselect": "Vrij kiezen",
+
 
     "action_lip/forgot-password/logged-out/label-title": "Reset Wachtwoord",
     "action_lip/forgot-password/logged-out/label-description": "Voer uw e-mailadres in dat aan uw Linum-account is gekoppeld. Wij zullen u een verificatiecode sturen, samen met instructies over hoe u uw wachtwoord kunt resetten.",

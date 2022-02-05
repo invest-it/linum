@@ -111,6 +111,11 @@
     "enter_screen_attribute_account_from": "Von Account",
     "enter_screen_attribute_account_to": "Zu Account",
 
+    "enter_screen/label-repeat-daily": "Täglich",
+    "enter_screen/label-repeat-weekly": "Wöchentlich",
+    "enter_screen/label-repeat-monthly": "Zum Monatsanfang",
+    "enter_screen/label-repeat-freeselect": "Frei auswählen",
+
 
     "action_lip/forgot-password/logged-out/label-title": "Passwort zurücksetzen",
     "action_lip/forgot-password/logged-out/label-description": "Bitte trage deine E-Mail-Adresse ein, die mit deinem Account verbunden ist. Wir schicken die einen Verifizierungscode zu, mit dem du dein Passwort neu setzen kannst.",

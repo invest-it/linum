@@ -111,6 +111,10 @@
     "enter_screen_attribute_account_from": "De la cuenta",
     "enter_screen_attribute_account_to": "A la cuenta",
 
+    "enter_screen/label-repeat-daily": "Diario",
+    "enter_screen/label-repeat-weekly": "Semanal",
+    "enter_screen/label-repeat-monthly": "A principios de mes",
+    "enter_screen/label-repeat-freeselect": "Seleccione libremente",
 
     "action_lip/forgot-password/logged-out/label-title": "Restablecer contraseña",
     "action_lip/forgot-password/logged-out/label-description": "Por favor, introduzca su dirección de correo electrónico conectada a su cuenta de Linum. Le enviaremos un código de verificación junto con las instrucciones para restablecer su contraseña.",
