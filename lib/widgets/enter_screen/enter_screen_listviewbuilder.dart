@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
-import 'package:linum/frontend_functions/decimal_text_input_formatter.dart';
+import 'package:linum/backend_functions/decimal_text_input_formatter.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/models/entry_category.dart';
 import 'package:linum/providers/account_settings_provider.dart';
@@ -83,7 +83,7 @@ class _EnterScreenListViewBuilderState
           Container(
             width: proportionateScreenWidth(281),
             child: TextField(
-              maxLength: 18,
+              maxLength: 32,
               controller: myController,
               showCursor: true,
               textAlign: TextAlign.start,
@@ -222,11 +222,14 @@ class _EnterScreenListViewBuilderState
   //which hint text at the upper text field is shown
   String _hintTextChooser(enterScreenProvider) {
     if (enterScreenProvider.isExpenses) {
-      return "Was hast du gekauft?";
+      return AppLocalizations.of(context)!
+          .translate('enter_screen/expenses-textfield-title');
     } else if (enterScreenProvider.isIncome) {
-      return "Wie heißt dieses Einkommen?";
+      return AppLocalizations.of(context)!
+          .translate('enter_screen/income-textfield-title');
     } else
-      return "Wie heißt diese Transaktion?";
+      return AppLocalizations.of(context)!
+          .translate('enter_screen/transaction-textfield-title');
   }
 
   //which icon will displayed depending on expense etc.
