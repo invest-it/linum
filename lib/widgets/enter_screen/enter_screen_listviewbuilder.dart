@@ -56,7 +56,6 @@ class _EnterScreenListViewBuilderState
     if (myController != null) {
       myController!.dispose();
     }
-
     super.dispose();
   }
 
