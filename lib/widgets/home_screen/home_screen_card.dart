@@ -28,7 +28,9 @@ class HomeScreenCard extends StatelessWidget {
     AlgorithmProvider algorithmProvider =
         Provider.of<AlgorithmProvider>(context);
 
-    DateFormat dateFormat = DateFormat('MMMM yyyy', 'de');
+    String langCode = AppLocalizations.of(context)!.locale.languageCode;
+
+    DateFormat dateFormat = DateFormat('MMMM yyyy', langCode);
 
     return GestureDetector(
       onHorizontalDragEnd: (DragEndDetails details) {

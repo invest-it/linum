@@ -5,6 +5,7 @@ import 'dart:math' as Math;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
@@ -58,10 +59,13 @@ class HomeScreenListView implements BalanceDataListView {
   void setBalanceData(List<dynamic> balanceData,
       {required BuildContext context}) {
     initializeDateFormatting();
-    DateFormat formatter = DateFormat('EEEE, dd. MMMM yyyy', 'de');
 
-    DateFormat monthFormatter = DateFormat('MMMM', 'de');
-    DateFormat monthAndYearFormatter = DateFormat('MMMM yyyy', 'de');
+    String langCode = AppLocalizations.of(context)!.locale.languageCode;
+
+    DateFormat formatter = DateFormat('EEEE, dd. MMMM yyyy', langCode);
+
+    DateFormat monthFormatter = DateFormat('MMMM', langCode);
+    DateFormat monthAndYearFormatter = DateFormat('MMMM yyyy', langCode);
     BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
 
@@ -89,13 +93,19 @@ class HomeScreenListView implements BalanceDataListView {
             DateTime.now().day,
           ))) {
             if (date.isBefore(currentTime!)) {
-              list.add(TimeWidget(
-                displayValue: date.year == DateTime.now().year
-                    ? monthFormatter.format(date)
-                    : monthAndYearFormatter.format(date),
-                isTranslated: false,
-              ));
-              currentTime = DateTime(date.year, date.month);
+              if (list.isEmpty) {
+                list.add(TimeWidget(
+                  displayValue: "In der Zukunft",
+                ));
+              } else {
+                list.add(TimeWidget(
+                  displayValue: date.year == DateTime.now().year
+                      ? monthFormatter.format(date)
+                      : monthAndYearFormatter.format(date),
+                  isTranslated: true,
+                ));
+                currentTime = DateTime(date.year, date.month);
+              }
             }
           } else if (currentIndex < _timeWidgets.length &&
               date.isBefore(_timeWidgets[currentIndex]["time"])) {
@@ -119,7 +129,7 @@ class HomeScreenListView implements BalanceDataListView {
                 displayValue: date.year == DateTime.now().year
                     ? monthFormatter.format(date)
                     : monthAndYearFormatter.format(date),
-                isTranslated: false));
+                isTranslated: true));
             currentTime = DateTime(date.year, date.month - 1);
 
             currentIndex = 4; // idk why exactly but now we are save
