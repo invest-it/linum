@@ -3,7 +3,6 @@ import 'package:linum/backend_functions/currency_input_formatter.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
-import 'package:linum/widgets/screen_skeleton/app_bar_action.dart';
 import 'package:linum/widgets/text_container.dart';
 import 'package:provider/provider.dart';
 
@@ -81,9 +80,9 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                       child: Container(
                         child: TextField(
                           inputFormatters: [
-                            CurrencyInputFormatter(),
-                            // DecimalTextInputFormatter(decimalRange: 2),
-                            // FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                            CurrencyInputFormatter(
+                              allowNegative: false,
+                            ),
                           ],
                           // validator: (value) {
                           //   if (value!.isNotEmpty && value.length < 8) {

@@ -47,6 +47,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
     ];
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Center(
         child: StreamBuilder(
           stream: balance.snapshots(),

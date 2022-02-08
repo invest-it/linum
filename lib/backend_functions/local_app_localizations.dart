@@ -50,6 +50,9 @@ class _AppLocalizationsDelegate
     return [
       'de',
       'en',
+      'nl',
+      'es',
+      'fr',
     ].contains(locale.languageCode);
   }
 
