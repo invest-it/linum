@@ -122,6 +122,15 @@
     "enter_screen/label-repeat-monthly": "Au début du mois",
     "enter_screen/label-repeat-freeselect": "Choisir librement",
 
+    "enter_screen/delete-entry/dialog-label-title": "Confirmer",
+    "enter_screen/delete-entry/dialog-label-deleterep": "Quelle entrée souhaites-tu supprimer?",
+    "enter_screen/delete-entry/dialog-label-delete": "Tu veux vraiment supprimer cette entrée?",
+    "enter_screen/delete-entry/dialog-button-onlyonce": "Cette entrée",
+    "enter_screen/delete-entry/dialog-button-fromnow": "Cette entrée et toutes les suivantes",
+    "enter_screen/delete-entry/dialog-button-allentries": "Toutes les entrées",
+    "enter_screen/delete-entry/dialog-button-delete": "Supprimer",
+    "enter_screen/delete-entry/dialog-button-cancel": "Annuler",
+
 
     "action_lip/forgot-password/logged-out/label-title": "Réinitialiser le mot de passe",
     "action_lip/forgot-password/logged-out/label-description": "Veuillez saisir votre adresse e-mail connectée à votre compte Linum. Nous vous enverrons un code de vérification ainsi que des instructions sur la façon de réinitialiser votre mot de passe.",

@@ -6,6 +6,7 @@ import 'dart:math' as Math;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
+import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
@@ -245,42 +246,63 @@ class HomeScreenListView implements BalanceDataListView {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text("Bestätigen",
+                            title: Text(
+                                AppLocalizations.of(context)!.translate(
+                                    'enter_screen/delete-entry/dialog-label-title'),
                                 style: Theme.of(context).textTheme.headline4),
-                            content:
-                                Text("Welchen Eintrag möchtest du löschen?"),
+                            content: Text(
+                              AppLocalizations.of(context)!.translate(
+                                  "enter_screen/delete-entry/dialog-label-deleterep"),
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () =>
                                     Navigator.of(context).pop(true),
                                 child: Text(
-                                  "LÖSCHE DIESEN EINTRAG",
-                                  style: Theme.of(context).textTheme.bodyText2,
-                                ),
+                                    AppLocalizations.of(context)!.translate(
+                                        "enter_screen/delete-entry/dialog-button-onlyonce"),
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1),
                               ),
                               TextButton(
                                 onPressed: () {
                                   Navigator.of(context).pop(true);
                                 },
                                 child: Text(
-                                  "LÖSCHE ALLE ZUKÜNFTIGEN EINTRÄGE",
-                                  style: Theme.of(context).textTheme.bodyText2,
+                                  AppLocalizations.of(context)!.translate(
+                                      "enter_screen/delete-entry/dialog-button-fromnow"),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .copyWith(
+                                        color:
+                                            Theme.of(context).colorScheme.error,
+                                      ),
                                 ),
                               ),
                               TextButton(
                                 onPressed: () =>
                                     Navigator.of(context).pop(true),
                                 child: Text(
-                                  "LÖSCHE ALLE EINTRÄGE",
-                                  style: Theme.of(context).textTheme.bodyText2,
+                                  AppLocalizations.of(context)!.translate(
+                                      "enter_screen/delete-entry/dialog-button-allentries"),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .error),
                                 ),
                               ),
                               TextButton(
                                 onPressed: () =>
                                     Navigator.of(context).pop(false),
                                 child: Text(
-                                  "ABBRECHEN",
-                                  style: Theme.of(context).textTheme.bodyText2,
+                                  AppLocalizations.of(context)!.translate(
+                                      "enter_screen/delete-entry/dialog-button-cancel"),
+                                  style: Theme.of(context).textTheme.bodyText1,
                                 ),
                               ),
                             ],
@@ -304,19 +326,28 @@ class HomeScreenListView implements BalanceDataListView {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text("Confirm",
+                            title: Text(
+                                AppLocalizations.of(context)!.translate(
+                                    'enter_screen/delete-entry/dialog-label-title'),
                                 style: Theme.of(context).textTheme.headline4),
-                            content: Text(
-                                "Are you sure you wish to delete this item?"),
+                            content: Text(AppLocalizations.of(context)!.translate(
+                                'enter_screen/delete-entry/dialog-label-delete')),
                             actions: <Widget>[
                               TextButton(
-                                  onPressed: () =>
-                                      Navigator.of(context).pop(true),
-                                  child: const Text("DELETE")),
+                                onPressed: () =>
+                                    Navigator.of(context).pop(true),
+                                child: Text(
+                                  AppLocalizations.of(context)!.translate(
+                                      "enter_screen/delete-entry/dialog-button-delete"),
+                                ),
+                              ),
                               TextButton(
                                 onPressed: () =>
                                     Navigator.of(context).pop(false),
-                                child: const Text("CANCEL"),
+                                child: Text(
+                                  AppLocalizations.of(context)!.translate(
+                                      "enter_screen/delete-entry/dialog-button-cancel"),
+                                ),
                               ),
                             ],
                           );
@@ -433,7 +464,7 @@ class HomeScreenListView implements BalanceDataListView {
       arrayElement) {
     Widget singleTransaction = TextButton(
       child: Text(
-        "Nur diese Transaktion löschen",
+        "Nur diese Transaktion löschen", //TODO @Nightmind translate this after explanation from @thebluebaronx
         style: Theme.of(context).textTheme.bodyText1,
       ),
       onPressed: () {
@@ -443,7 +474,7 @@ class HomeScreenListView implements BalanceDataListView {
     );
     Widget multipleTransaction = TextButton(
       child: Text(
-        "Diese & alle zukünftigen Transaktionen löschen",
+        "Diese & alle zukünftigen Transaktionen löschen", //TODO @Nightmind translate this after explanation from @thebluebaronx
         style: Theme.of(context).textTheme.bodyText1,
       ),
       onPressed: () {
@@ -454,7 +485,7 @@ class HomeScreenListView implements BalanceDataListView {
     );
     Widget cancelButton = TextButton(
       child: Text(
-        "Alle vergangenen & zukünftigen Transaktionen löschen",
+        "Alle vergangenen & zukünftigen Transaktionen löschen", //TODO @Nightmind translate this after explanation from @thebluebaronx
         style: Theme.of(context).textTheme.bodyText1,
       ),
       onPressed: () {
@@ -467,10 +498,11 @@ class HomeScreenListView implements BalanceDataListView {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text(
-        "Auswählen",
+        "Auswählen", //TODO @Nightmind translate this after explanation from @thebluebaronx
         style: Theme.of(context).textTheme.headline4,
       ),
-      content: Text("Welche Transaktion möchtest du löschen?"),
+      content: Text(
+          "Welche Transaktion möchtest du löschen?"), //TODO @Nightmind translate this after explanation from @thebluebaronx
       actions: [
         singleTransaction,
         multipleTransaction,
