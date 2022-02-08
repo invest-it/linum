@@ -500,19 +500,22 @@ class BalanceDataProvider extends ChangeNotifier {
     while ((singleRepeatedBalance["endTime"] != null)
         ? currentTime.isBefore(singleRepeatedBalance["endTime"].toDate())
         : currentTime.isBefore(DateTime.now().add(futureDuration))) {
-      // if (currentTime.isAfter(
-      // (singleRepeatedBalance["lastUpdate"] as Timestamp).toDate())) {
-      didUpdate = true;
-      (data["balanceData"] as List<dynamic>).add({
-        "amount": singleRepeatedBalance["amount"],
-        "category": singleRepeatedBalance["category"],
-        "currency": singleRepeatedBalance["currency"],
-        "name": singleRepeatedBalance["name"],
-        "time": Timestamp.fromDate(currentTime),
-        "repeatId": singleRepeatedBalance["id"],
-        "id": Uuid().v4(),
-      });
-      // }
+      if (singleRepeatedBalance["lastUpdate"] == null ||
+          DateTime.now()
+              .add(Duration(seconds: singleRepeatedBalance["repeatDuration"]))
+              .isAfter((singleRepeatedBalance["lastUpdate"] as Timestamp)
+                  .toDate())) {
+        didUpdate = true;
+        (data["balanceData"] as List<dynamic>).add({
+          "amount": singleRepeatedBalance["amount"],
+          "category": singleRepeatedBalance["category"],
+          "currency": singleRepeatedBalance["currency"],
+          "name": singleRepeatedBalance["name"],
+          "time": Timestamp.fromDate(currentTime),
+          "repeatId": singleRepeatedBalance["id"],
+          "id": Uuid().v4(),
+        });
+      }
 
       currentTime = currentTime
           .add(Duration(seconds: singleRepeatedBalance["repeatDuration"]));

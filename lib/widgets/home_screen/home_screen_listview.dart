@@ -247,8 +247,14 @@ class HomeScreenListView implements BalanceDataListView {
                             ),
                             actions: <Widget>[
                               TextButton(
-                                onPressed: () =>
-                                    Navigator.of(context).pop(true),
+                                onPressed: () {
+                                  balanceDataProvider.removeRepeatedBalance(
+                                    id: arrayElement["repeatId"],
+                                    removeType: RemoveType.NONE,
+                                    time: arrayElement["time"],
+                                  );
+                                  Navigator.of(context).pop(true);
+                                },
                                 child: Text(
                                     AppLocalizations.of(context)!.translate(
                                         "enter_screen/delete-entry/dialog-button-onlyonce"),
@@ -257,6 +263,11 @@ class HomeScreenListView implements BalanceDataListView {
                               ),
                               TextButton(
                                 onPressed: () {
+                                  balanceDataProvider.removeRepeatedBalance(
+                                    id: arrayElement["repeatId"],
+                                    removeType: RemoveType.ALL_AFTER,
+                                    time: arrayElement["time"],
+                                  );
                                   Navigator.of(context).pop(true);
                                 },
                                 child: Text(
@@ -272,8 +283,14 @@ class HomeScreenListView implements BalanceDataListView {
                                 ),
                               ),
                               TextButton(
-                                onPressed: () =>
-                                    Navigator.of(context).pop(true),
+                                onPressed: () {
+                                  balanceDataProvider.removeRepeatedBalance(
+                                    id: arrayElement["repeatId"],
+                                    removeType: RemoveType.ALL,
+                                    time: arrayElement["time"],
+                                  );
+                                  Navigator.of(context).pop(true);
+                                },
                                 child: Text(
                                   AppLocalizations.of(context)!.translate(
                                       "enter_screen/delete-entry/dialog-button-allentries"),
