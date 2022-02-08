@@ -43,6 +43,7 @@ dependencies:
   fluttertoast: ^8.0.8
   uuid: ^3.0.5
   enum_to_string: ^2.0.1
+  shared_preferences: ^2.0.13
 
 dev_dependencies:
   flutter_test:
