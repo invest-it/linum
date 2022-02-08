@@ -14,6 +14,7 @@ class EnterScreenProvider with ChangeNotifier {
   String _currency = "";
   String _repeat = "Niemals";
   DateTime _selectedDate = DateTime.now();
+  Duration? _repeatDuration;
   late bool _editMode;
 
   String? _formerId;
@@ -30,6 +31,7 @@ class EnterScreenProvider with ChangeNotifier {
     DateTime? selectedDate,
     bool editMode = false,
     String? id,
+    Duration? repeatDuration,
   }) {
     _amount = amount <= 0 ? -1 * amount : amount;
     _expenseCategory = amount <= 0 ? category : secondaryCategory;
@@ -40,6 +42,7 @@ class EnterScreenProvider with ChangeNotifier {
     _editMode = editMode;
     _selectedDate = selectedDate ?? DateTime.now();
     _isExpenses = amount <= 0;
+    _repeatDuration = repeatDuration;
     _isIncome = !_isExpenses;
     _isTransaction = false;
     _formerId = id;
@@ -77,6 +80,11 @@ class EnterScreenProvider with ChangeNotifier {
 
   void setRepeat(String repeat) {
     _repeat = repeat;
+    notifyListeners();
+  }
+
+  void setRepeatDuration(Duration? repeatDuration) {
+    _repeatDuration = repeatDuration;
     notifyListeners();
   }
 
@@ -118,6 +126,10 @@ class EnterScreenProvider with ChangeNotifier {
 
   String get repeat {
     return _repeat;
+  }
+
+  Duration? get repeatDuration {
+    return _repeatDuration;
   }
 
   bool get editMode {
