@@ -231,15 +231,6 @@ class HomeScreenListView implements BalanceDataListView {
                   return Future<bool>.value(true);
                 }
               },*/
-              onDismissed: (DismissDirection direction) {
-                if (arrayElement["repeatId"] != null) {
-                  showAlertDialog(context, balanceDataProvider, arrayElement);
-                  //return Future<bool>.value(false);
-                } else {
-                  balanceDataProvider.removeSingleBalance(arrayElement["id"]);
-                  //return Future<bool>.value(true);
-                }
-              },
               confirmDismiss: arrayElement["repeatId"] != null
                   ? (DismissDirection direction) async {
                       return await showDialog(
@@ -335,18 +326,25 @@ class HomeScreenListView implements BalanceDataListView {
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () =>
-                                    Navigator.of(context).pop(true),
-                                child: Text(
-                                  AppLocalizations.of(context)!.translate(
-                                      "enter_screen/delete-entry/dialog-button-delete"),
-                                ),
-                              ),
-                              TextButton(
-                                onPressed: () =>
                                     Navigator.of(context).pop(false),
                                 child: Text(
                                   AppLocalizations.of(context)!.translate(
                                       "enter_screen/delete-entry/dialog-button-cancel"),
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                  ),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.of(context).pop(true),
+                                child: Text(
+                                  AppLocalizations.of(context)!.translate(
+                                      "enter_screen/delete-entry/dialog-button-delete"),
+                                  style: TextStyle(
+                                    color: Theme.of(context).colorScheme.error,
+                                  ),
                                 ),
                               ),
                             ],
@@ -459,63 +457,4 @@ class HomeScreenListView implements BalanceDataListView {
 
   @override
   ListView get listview => _listview;
-
-  showAlertDialog(BuildContext context, BalanceDataProvider balanceDataProvider,
-      arrayElement) {
-    Widget singleTransaction = TextButton(
-      child: Text(
-        "Nur diese Transaktion löschen", //TODO @Nightmind translate this after explanation from @thebluebaronx
-        style: Theme.of(context).textTheme.bodyText1,
-      ),
-      onPressed: () {
-        balanceDataProvider.removeSingleBalance(arrayElement["id"]);
-        Navigator.of(context).pop();
-      },
-    );
-    Widget multipleTransaction = TextButton(
-      child: Text(
-        "Diese & alle zukünftigen Transaktionen löschen", //TODO @Nightmind translate this after explanation from @thebluebaronx
-        style: Theme.of(context).textTheme.bodyText1,
-      ),
-      onPressed: () {
-        balanceDataProvider.removeRepeatedBalance(
-            id: arrayElement["repeatId"], removeType: RemoveType.ALL_AFTER);
-        Navigator.of(context).pop();
-      },
-    );
-    Widget cancelButton = TextButton(
-      child: Text(
-        "Alle vergangenen & zukünftigen Transaktionen löschen", //TODO @Nightmind translate this after explanation from @thebluebaronx
-        style: Theme.of(context).textTheme.bodyText1,
-      ),
-      onPressed: () {
-        balanceDataProvider.removeRepeatedBalance(
-            id: arrayElement["repeatId"], removeType: RemoveType.ALL);
-        Navigator.of(context).pop();
-      },
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text(
-        "Auswählen", //TODO @Nightmind translate this after explanation from @thebluebaronx
-        style: Theme.of(context).textTheme.headline4,
-      ),
-      content: Text(
-          "Welche Transaktion möchtest du löschen?"), //TODO @Nightmind translate this after explanation from @thebluebaronx
-      actions: [
-        singleTransaction,
-        multipleTransaction,
-        cancelButton,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
 }
