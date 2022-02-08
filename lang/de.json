@@ -1,6 +1,7 @@
 {
     "main/label-loading": "Laden...",
     "main/label-error": "Ein Fehler ist aufgetreten.",
+    "main/label-wip": "Hier wird noch gearbeitet. Schau gerne später vorbei!",
 
     "onboarding_screen/card1-title": "Herzlich Willkommen!",
     "onboarding_screen/card1-description": "Dein neuer Budgeting-Assistent wartet schon auf dich.",
@@ -121,8 +122,14 @@
     "enter_screen/label-repeat-monthly": "Zum Monatsanfang",
     "enter_screen/label-repeat-freeselect": "Frei auswählen",
 
-    "enter_screen/delete-entry/dialog-button-confirm": "Bestätigen",
-    "enter_screen/delete-entry/dialog-label-chooserep": "Welchen Eintrag möchtest du löschen?",
+    "enter_screen/delete-entry/dialog-label-title": "Bestätigen",
+    "enter_screen/delete-entry/dialog-label-deleterep": "Welchen Eintrag möchtest du löschen?",
+    "enter_screen/delete-entry/dialog-label-delete": "Möchtest du diesen Eintrag wirklich löschen?",
+    "enter_screen/delete-entry/dialog-button-onlyonce": "Diesen Eintrag",
+    "enter_screen/delete-entry/dialog-button-fromnow": "Diesen Eintrag und alle folgenden",
+    "enter_screen/delete-entry/dialog-button-allentries": "Alle Einträge",
+    "enter_screen/delete-entry/dialog-button-delete": "Löschen",
+    "enter_screen/delete-entry/dialog-button-cancel": "Abbrechen",
 
 
     "action_lip/forgot-password/logged-out/label-title": "Passwort zurücksetzen",

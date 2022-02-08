@@ -1,6 +1,7 @@
 {
     "main/label-loading": "Loading...",
     "main/label-error": "Er is een fout opgetreden.",
+    "main/label-wip": "Werk in uitvoering. Kom snel terug.",
 
 
     "onboarding_screen/card1-title": "Welkom!",
@@ -121,6 +122,15 @@
     "enter_screen/label-repeat-weekly": "Wekelijks",
     "enter_screen/label-repeat-monthly": "Begin van de maand",
     "enter_screen/label-repeat-freeselect": "Vrij kiezen",
+
+    "enter_screen/delete-entry/dialog-label-title": "Bevestig",
+    "enter_screen/delete-entry/dialog-label-deleterep": "Welk item wilt u verwijderen?",
+    "enter_screen/delete-entry/dialog-label-delete": "Wil je dit bericht echt verwijderen?",
+    "enter_screen/delete-entry/dialog-button-onlyonce": "Dit bericht",
+    "enter_screen/delete-entry/dialog-button-fromnow": "Dit bericht en alle volgende",
+    "enter_screen/delete-entry/dialog-button-allentries": "Alle inzendingen",
+    "enter_screen/delete-entry/dialog-button-delete": "Verwijderen",
+    "enter_screen/delete-entry/dialog-button-cancel": "Annuleren",
 
 
     "action_lip/forgot-password/logged-out/label-title": "Reset Wachtwoord",

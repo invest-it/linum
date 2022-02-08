@@ -230,7 +230,6 @@ class _OnboardingScreenState extends State<OnboardingPage> {
               child: PageView(
                 controller: _pageController,
                 onPageChanged: _handleOnPageChanged,
-                // For now, standard physics will do the trick. TODO-FUTURE improve the looks of this
                 physics: PageScrollPhysics(),
                 children: [
                   ..._builtSlides(),

@@ -1,6 +1,7 @@
 {
     "main/label-loading": "Chargement...",
     "main/label-error": "Une erreur s'est produite.",
+    "main/label-wip": "Travail en cours. Revenez nous voir bientôt.",
 
 
     "onboarding_screen/card1-title": "Bienvenue !",
@@ -121,6 +122,15 @@
     "enter_screen/label-repeat-weekly": "Hebdomadaire",
     "enter_screen/label-repeat-monthly": "Au début du mois",
     "enter_screen/label-repeat-freeselect": "Choisir librement",
+
+    "enter_screen/delete-entry/dialog-label-title": "Confirmer",
+    "enter_screen/delete-entry/dialog-label-deleterep": "Quelle entrée souhaites-tu supprimer?",
+    "enter_screen/delete-entry/dialog-label-delete": "Tu veux vraiment supprimer cette entrée?",
+    "enter_screen/delete-entry/dialog-button-onlyonce": "Cette entrée",
+    "enter_screen/delete-entry/dialog-button-fromnow": "Cette entrée et toutes les suivantes",
+    "enter_screen/delete-entry/dialog-button-allentries": "Toutes les entrées",
+    "enter_screen/delete-entry/dialog-button-delete": "Supprimer",
+    "enter_screen/delete-entry/dialog-button-cancel": "Annuler",
 
 
     "action_lip/forgot-password/logged-out/label-title": "Réinitialiser le mot de passe",

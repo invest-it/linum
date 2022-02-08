@@ -58,7 +58,8 @@ class _EnterScreenState extends State<EnterScreen> {
                             buttonIcon: Icons.build,
                             onPressedAction: () => {},
                           ),
-                          Text('Work in progress. Please check back soon.'),
+                          Text(AppLocalizations.of(context)!
+                              .translate('main/label-wip')),
                         ],
                       ),
                     )

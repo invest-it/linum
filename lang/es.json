@@ -1,6 +1,7 @@
 {
     "main/label-loading": "Cargando...",
     "main/label-error": "Se ha producido un error.",
+    "main/label-wip": "Trabajo en curso. Vuelva a comprobarlo pronto.",
 
 
     "onboarding_screen/card1-title": "Bienvenido!",
@@ -121,6 +122,15 @@
     "enter_screen/label-repeat-weekly": "Semanal",
     "enter_screen/label-repeat-monthly": "A principios de mes",
     "enter_screen/label-repeat-freeselect": "Seleccione libremente",
+
+    "enter_screen/delete-entry/dialog-label-title": "Confirmar",
+    "enter_screen/delete-entry/dialog-label-deleterep": "¿Qué entrada quieres eliminar?",
+    "enter_screen/delete-entry/dialog-label-delete": "¿Realmente quieres borrar esta entrada?",
+    "enter_screen/delete-entry/dialog-button-onlyonce": "Esta entrada",
+    "enter_screen/delete-entry/dialog-button-fromnow": "Esta entrada y todas las posteriores",
+    "enter_screen/delete-entry/dialog-button-allentries": "Todas las entradas",
+    "enter_screen/delete-entry/dialog-button-delete": "Borrar",
+    "enter_screen/delete-entry/dialog-button-cancel": "Cancelar",
 
     "action_lip/forgot-password/logged-out/label-title": "Restablecer contraseña",
     "action_lip/forgot-password/logged-out/label-description": "Por favor, introduzca su dirección de correo electrónico conectada a su cuenta de Linum. Le enviaremos un código de verificación junto con las instrucciones para restablecer su contraseña.",

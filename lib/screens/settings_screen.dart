@@ -142,10 +142,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   "ChosenStandardIncome"), // yeah im sorry that is really complicated code. :( It translates the value from firebase
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
-
-                    leading: Icon(
+                    trailing: Icon(
                       Icons.north_east,
                       color: createMaterialColor(Color(0xFF97BC4E)),
+                    ),
+                    leading: Icon(
+                      accountSettingsProvider
+                              .standardCategoryIncomes[EnumToString.fromString<
+                                  StandardCategoryIncome>(
+                            StandardCategoryIncome.values,
+                            (accountSettingsProvider
+                                    .settings["StandardCategoryIncome"] ??
+                                "None"),
+                          )]
+                              ?.icon ??
+                          Icons.error,
                     ),
                   ),
                 ),
@@ -194,9 +205,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   "ChosenStandardExpense"), // yeah im sorry that is really complicated code. :( It translates the value from firebase
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
-                    leading: Icon(
+                    trailing: Icon(
                       Icons.south_east,
                       color: Colors.red,
+                    ),
+                    leading: Icon(
+                      accountSettingsProvider
+                              .standardCategoryExpenses[EnumToString.fromString<
+                                  StandardCategoryExpense>(
+                            StandardCategoryExpense.values,
+                            (accountSettingsProvider
+                                    .settings["StandardCategoryExpense"] ??
+                                "None"),
+                          )]
+                              ?.icon ??
+                          Icons.error,
                     ),
                   ),
                 ),
