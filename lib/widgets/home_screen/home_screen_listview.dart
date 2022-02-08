@@ -1,12 +1,10 @@
 // ignore_for_file: implementation_imports
 
-import 'dart:developer';
 import 'dart:math' as Math;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
-import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
@@ -208,8 +206,9 @@ class HomeScreenListView implements BalanceDataListView {
                               style: Theme.of(context).textTheme.button),
                           Icon(
                             Icons.delete,
-                            color:
-                                Theme.of(context).colorScheme.secondaryVariant,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .secondaryContainer,
                           ),
                         ],
                       ),

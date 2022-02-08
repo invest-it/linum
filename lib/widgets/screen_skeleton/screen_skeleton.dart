@@ -118,8 +118,6 @@ class ScreenSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log("Screen Skeleton - BUILD CALLED");
-
     BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
 

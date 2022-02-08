@@ -160,7 +160,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: index == _currentPage
-            ? Theme.of(context).colorScheme.primaryVariant
+            ? Theme.of(context).colorScheme.primaryContainer
             : Theme.of(context).colorScheme.primary,
       ),
     );

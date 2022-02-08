@@ -166,7 +166,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 },
                 controlAffinity: ListTileControlAffinity.trailing,
                 checkColor: Theme.of(context).colorScheme.onPrimary,
-                activeColor: Theme.of(context).colorScheme.primaryVariant,
+                activeColor: Theme.of(context).colorScheme.primaryContainer,
                 secondary: Icon(Icons.verified_user_rounded),
                 visualDensity: VisualDensity(horizontal: -4, vertical: 0),
               ),

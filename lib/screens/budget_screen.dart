@@ -15,8 +15,6 @@ class BudgetScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log("Budget Screen - BUILD CALLED");
-
     BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
 

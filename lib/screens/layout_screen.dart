@@ -25,8 +25,6 @@ class LayoutScreen extends StatefulWidget {
 class _LayoutScreenState extends State<LayoutScreen> {
   @override
   Widget build(BuildContext context) {
-    print("Layout Screen - BUILD CALLED");
-
     AccountSettingsProvider _accountSettingsProvider =
         Provider.of<AccountSettingsProvider>(context);
 
