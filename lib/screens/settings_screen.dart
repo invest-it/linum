@@ -200,56 +200,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                   ),
                 ),
-                //Ende GestureDetector Ausgaben
-                // GestureDetector(
-                //   onTap: () {
-                //     showModalBottomSheet(
-                //       context: context,
-                //       builder: (context) {
-                //         return Container(
-                //           height: MediaQuery.of(context).size.height * 0.5,
-                //           color: createMaterialColor(Color(0xFFFAFAFA)),
-                //           child: Column(children: [
-                //             ListTile(
-                //               title: Text(
-                //                 AppLocalizations.of(context)!.translate(
-                //                     'settings_screen/standard-account-selector/modal-label-title'),
-                //               ),
-                //             ),
-                //             Container(
-                //               height: MediaQuery.of(context).size.height * 0.4,
-                //               child: _accountListViewBuilder(
-                //                 accountSettingsProvider,
-                //               ),
-                //             ),
-                //           ]),
-                //         );
-                //       },
-                //     );
-                //   },
-                //   child: ListTile(
-                //     // onTap: ontap(),
-                //     title: Text(
-                //       AppLocalizations.of(context)!.translate(
-                //               'settings_screen/standard-account-selector/label-title') +
-                //           AppLocalizations.of(context)!.translate(_standardAccounts[
-                //                   EnumToString.fromString<StandardAccount>(
-                //                 StandardAccount.values,
-                //                 (accountSettingsProvider
-                //                         .settings["StandardAccount"] ??
-                //                     "None"),
-                //               )] ??
-                //               "ChosenStandardAccount"), // yeah im sorry that is really complicated code. :( It translates the value from firebase
-                //       style: Theme.of(context).textTheme.bodyText1,
-                //     ),
-                //     trailing: Icon(
-                //       Icons.swap_horiz,
-                //       color: Colors.black,
-                //     ),
-                //   ),
-                // ),
-
-                //Ende GestureDetector Accounts
               ],
             ),
             ListDivider(),
@@ -455,36 +405,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
       },
     );
   }
-
-//   ListView _accountListViewBuilder(
-//       AccountSettingsProvider accountSettingsProvider) {
-//     return ListView.builder(
-//       shrinkWrap: true,
-//       itemCount: StandardAccount.values.length,
-//       itemBuilder: (BuildContext context, int indexBuilder) {
-//         return ListTile(
-//           //leading: Icon(widget.categories[index].icon),
-//           title: Text(AppLocalizations.of(context)!.translate(
-//               accountSettingsProvider
-//                       .standardAccounts[StandardAccount.values[indexBuilder]] ??
-//                   "Category")),
-//           selected: "StandardAccount." +
-//                   (accountSettingsProvider.settings["StandardAccount"] ??
-//                       "None") ==
-//               StandardAccount.values[indexBuilder].toString(),
-//           onTap: () {
-//             List<String> stringArr =
-//                 StandardAccount.values[indexBuilder].toString().split(".");
-//             accountSettingsProvider.updateSettings({
-//               stringArr[0]: stringArr[1],
-//             });
-
-//             Navigator.pop(context);
-//           },
-//         );
-//       },
-//     );
-//   }
 }
 
 // ignore: unused_element

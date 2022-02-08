@@ -180,9 +180,6 @@ class _OnboardingScreenState extends State<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
-    // ActionLipStatusProvider actionLipStatusProvider =
-    //     Provider.of<ActionLipStatusProvider>(context);
-
     switch (_pageState) {
       case 0:
         _loginYOffset = windowHeight;

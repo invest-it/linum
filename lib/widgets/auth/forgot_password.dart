@@ -13,7 +13,7 @@ class ForgotPasswordButton extends StatelessWidget {
   ForgotPasswordButton(this.providerKey);
 
   final ProviderKey providerKey;
-  final _inputController = TextEditingController();
+  final TextEditingController _inputController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

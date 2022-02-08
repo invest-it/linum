@@ -268,7 +268,7 @@ class HomeScreenCardManager implements AbstractStatisticPanel {
   }
 
   @override
-  addStatisticData(StatisticsCalculations? statData) {
+  void addStatisticData(StatisticsCalculations? statData) {
     if (statData != null) {
       num income = statData.sumIncomes;
       num expense = -(statData.sumCosts);
