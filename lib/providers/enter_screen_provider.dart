@@ -16,6 +16,8 @@ class EnterScreenProvider with ChangeNotifier {
   DateTime _selectedDate = DateTime.now();
   late bool _editMode;
 
+  String? _formerId;
+
   final _formKey = GlobalKey<FormState>();
 
   EnterScreenProvider({
@@ -27,6 +29,7 @@ class EnterScreenProvider with ChangeNotifier {
     String secondaryCategory = "None",
     DateTime? selectedDate,
     bool editMode = false,
+    String? id,
   }) {
     _amount = amount <= 0 ? -1 * amount : amount;
     _expenseCategory = amount <= 0 ? category : secondaryCategory;
@@ -39,6 +42,7 @@ class EnterScreenProvider with ChangeNotifier {
     _isExpenses = amount <= 0;
     _isIncome = !_isExpenses;
     _isTransaction = false;
+    _formerId = id;
   }
   //amount: amount, category: category, currency: currency, name: name, time: time
 
@@ -118,6 +122,10 @@ class EnterScreenProvider with ChangeNotifier {
 
   bool get editMode {
     return _editMode;
+  }
+
+  String? get formerId {
+    return _formerId;
   }
 
   void setExpense() {

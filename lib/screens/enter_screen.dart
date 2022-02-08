@@ -90,6 +90,7 @@ class _EnterScreenState extends State<EnterScreen> {
                       //with the values of the input from the user
                       enterScreenProvider.editMode
                           ? balanceDataProvider.updateSingleBalance(
+                              id: enterScreenProvider.formerId ?? "",
                               amount: _amountChooser(enterScreenProvider),
                               category: enterScreenProvider.category,
                               currency: "EUR",

@@ -218,35 +218,33 @@ class BalanceDataProvider extends ChangeNotifier {
 
   /// update a single Balance and upload it (identified using the name and time)
   Future<bool> updateSingleBalance({
-    required num amount,
-    required String category,
-    required String currency,
-    required String name,
-    required Timestamp time,
+    required String id,
+    num? amount,
+    String? category,
+    String? currency,
+    String? name,
+    Timestamp? time,
   }) async {
     if (_balance == null) {
       log("_balance is null");
       return false;
     }
-    bool isEdited = false;
+    if (id == "") {
+      log("no id provided");
+      return false;
+    }
     DocumentSnapshot<Map<String, dynamic>> snapshot = await _balance!.get();
     dynamic data = snapshot.data();
     data["balanceData"].forEach((value) {
-      if (!isEdited && (value["name"] == name && value["time"] == time)) {
-        isEdited = !(value["amount"] == amount &&
-            value["category"] == category &&
-            value["currency"] == currency);
-        if (isEdited) {
-          value["amount"] = amount;
-          value["category"] = category;
-          value["currency"] = currency;
-        }
+      if ((value["id"] == id)) {
+        value["amount"] = amount ?? value["amount"];
+        value["category"] = category ?? value["category"];
+        value["currency"] = currency ?? value["currency"];
       }
     });
-    if (isEdited) {
-      await _balance!.set(data);
-    }
-    return isEdited;
+    await _balance!.update(data);
+
+    return true;
   }
 
   void dontDisposeOneTime() {
