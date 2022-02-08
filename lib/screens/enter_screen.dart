@@ -108,8 +108,19 @@ class _EnterScreenState extends State<EnterScreen> {
                               name: enterScreenProvider.name == ""
                                   ? enterScreenProvider.category
                                   : enterScreenProvider.name,
-                              time: Timestamp.fromDate(
-                                  selectedDateDateTimeFormatted));
+                              time: Timestamp.fromDate(DateTime(
+                                  selectedDateDateTimeFormatted.year,
+                                  selectedDateDateTimeFormatted.month,
+                                  selectedDateDateTimeFormatted.day,
+                                  selectedDateDateTimeFormatted.hour != 0
+                                      ? selectedDateDateTimeFormatted.hour
+                                      : DateTime.now().hour,
+                                  selectedDateDateTimeFormatted.minute != 0
+                                      ? selectedDateDateTimeFormatted.minute
+                                      : DateTime.now().minute,
+                                  selectedDateDateTimeFormatted.second != 0
+                                      ? selectedDateDateTimeFormatted.second
+                                      : DateTime.now().second)));
                         } else {
                           balanceDataProvider.addRepeatedBalance(
                               amount: _amountChooser(enterScreenProvider),
@@ -118,8 +129,19 @@ class _EnterScreenState extends State<EnterScreen> {
                               name: enterScreenProvider.name == ""
                                   ? enterScreenProvider.category
                                   : enterScreenProvider.name,
-                              initialTime: Timestamp.fromDate(
-                                  selectedDateDateTimeFormatted),
+                              initialTime: Timestamp.fromDate(DateTime(
+                                  selectedDateDateTimeFormatted.year,
+                                  selectedDateDateTimeFormatted.month,
+                                  selectedDateDateTimeFormatted.day,
+                                  selectedDateDateTimeFormatted.hour != 0
+                                      ? selectedDateDateTimeFormatted.hour
+                                      : DateTime.now().hour,
+                                  selectedDateDateTimeFormatted.minute != 0
+                                      ? selectedDateDateTimeFormatted.minute
+                                      : DateTime.now().minute,
+                                  selectedDateDateTimeFormatted.second != 0
+                                      ? selectedDateDateTimeFormatted.second
+                                      : DateTime.now().second)),
                               repeatDuration:
                                   enterScreenProvider.repeatDuration!);
                         }
