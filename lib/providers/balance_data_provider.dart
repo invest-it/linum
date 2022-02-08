@@ -240,6 +240,8 @@ class BalanceDataProvider extends ChangeNotifier {
         value["amount"] = amount ?? value["amount"];
         value["category"] = category ?? value["category"];
         value["currency"] = currency ?? value["currency"];
+        value["name"] = name ?? value["name"];
+        value["time"] = time ?? value["time"];
       }
     });
     await _balance!.update(data);
