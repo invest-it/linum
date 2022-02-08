@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
@@ -31,6 +33,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   // final Function ontap = CurrencyList();
 
   Widget build(BuildContext context) {
+    log("Settings Screen - BUILD CALLED");
     AccountSettingsProvider accountSettingsProvider =
         Provider.of<AccountSettingsProvider>(context);
 

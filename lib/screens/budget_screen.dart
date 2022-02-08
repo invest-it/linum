@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/frontend_functions/silent-scroll.dart';
@@ -13,6 +15,8 @@ class BudgetScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log("Budget Screen - BUILD CALLED");
+
     BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
 
@@ -20,7 +24,8 @@ class BudgetScreen extends StatelessWidget {
         Provider.of<AlgorithmProvider>(context);
 
     if (algorithmProvider.currentFilter != AlgorithmProvider.noFilter) {
-      algorithmProvider.setCurrentFilterAlgorithm(AlgorithmProvider.noFilter);
+      algorithmProvider
+          .setCurrentFilterAlgorithmSilently(AlgorithmProvider.noFilter);
     }
     return ScreenSkeleton(
       head: 'Budget',

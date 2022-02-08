@@ -10,11 +10,34 @@ class ActionLipStatusProvider extends ChangeNotifier {
     required ProviderKey providerKey,
     ActionLipStatus actionLipStatus = ActionLipStatus.HIDDEN,
   }) {
-    _actionLipMap[providerKey] = actionLipStatus;
+    setActionLipStatusSilently(
+        providerKey: providerKey, actionLipStatus: actionLipStatus);
     notifyListeners();
   }
 
+  void setActionLipStatusSilently({
+    required ProviderKey providerKey,
+    ActionLipStatus actionLipStatus = ActionLipStatus.HIDDEN,
+  }) {
+    _actionLipMap[providerKey] = actionLipStatus;
+  }
+
   void setActionLip({
+    required ProviderKey providerKey,
+    required Widget actionLipBody,
+    String? actionLipTitle,
+    ActionLipStatus? actionLipStatus,
+  }) {
+    setActionLipSilently(
+      providerKey: providerKey,
+      actionLipBody: actionLipBody,
+      actionLipStatus: actionLipStatus,
+      actionLipTitle: actionLipTitle,
+    );
+    notifyListeners();
+  }
+
+  void setActionLipSilently({
     required ProviderKey providerKey,
     required Widget actionLipBody,
     String? actionLipTitle,
@@ -27,7 +50,6 @@ class ActionLipStatusProvider extends ChangeNotifier {
     if (actionLipTitle != null) {
       _actionTitleMap[providerKey] = actionLipTitle;
     }
-    notifyListeners();
   }
 
   void setActionLipTitle(

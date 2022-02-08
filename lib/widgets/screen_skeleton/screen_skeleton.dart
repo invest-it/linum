@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
@@ -116,6 +118,8 @@ class ScreenSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log("Screen Skeleton - BUILD CALLED");
+
     BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
 
@@ -124,13 +128,13 @@ class ScreenSkeleton extends StatelessWidget {
 
     if (providerKey != null &&
         !actionLipStatusProvider.isActionStatusInitialized(providerKey!)) {
-      actionLipStatusProvider.setActionLipStatus(
+      actionLipStatusProvider.setActionLipStatusSilently(
           providerKey: providerKey!, actionLipStatus: initialActionLipStatus);
     }
 
     if (providerKey != null &&
         !actionLipStatusProvider.isBodyInitialized(providerKey!)) {
-      actionLipStatusProvider.setActionLip(
+      actionLipStatusProvider.setActionLipSilently(
           providerKey: providerKey!, actionLipBody: _initialActionLipBody);
     }
 
