@@ -377,6 +377,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ForgotPasswordButton(ProviderKey.SETTINGS),
               ],
             ),
+            SizedBox(
+              height: 40,
+            ),
           ],
         ),
       ),
