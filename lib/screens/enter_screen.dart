@@ -4,7 +4,7 @@ import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
-import 'package:linum/widgets/enter_screen/enter_screen_list.dart';
+import 'package:linum/widgets/enter_screen/enter_screen_listviewbuilder.dart';
 import 'package:linum/widgets/enter_screen/enter_screen_top_input_field.dart';
 import 'package:linum/widgets/top_bar_action_item.dart';
 import 'package:provider/provider.dart';
@@ -63,7 +63,7 @@ class _EnterScreenState extends State<EnterScreen> {
                         ],
                       ),
                     )
-                  : EnterScreenList(),
+                  : EnterScreenListViewBuilder(),
               Expanded(
                 child:
                     Container(color: Theme.of(context).colorScheme.background),

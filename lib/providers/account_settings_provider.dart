@@ -74,6 +74,46 @@ class AccountSettingsProvider extends ChangeNotifier {
         icon: Icons.inventory_2),
   };
 
+  final Map<RepeatDuration, Map<String, dynamic>> categoriesRepeat = {
+    RepeatDuration.None: {
+      "entryCategory": EntryCategory(
+        label: 'enter_screen/label-repeat-none',
+        icon: Icons.cancel_presentation_rounded,
+      ),
+      "duration": null,
+    },
+    RepeatDuration.Daily: {
+      "entryCategory": EntryCategory(
+        label: 'enter_screen/label-repeat-daily',
+        icon: Icons.calendar_today,
+      ),
+      "duration": Duration(days: 1),
+    },
+    RepeatDuration.Weekly: {
+      "entryCategory": EntryCategory(
+        label: 'enter_screen/label-repeat-weekly',
+        icon: Icons.calendar_view_week_rounded,
+      ),
+      "duration": Duration(days: 7),
+    },
+    RepeatDuration.Monthly: {
+      "entryCategory": EntryCategory(
+        label: 'enter_screen/label-repeat-monthly',
+        icon: Icons.calendar_view_month_rounded,
+      ),
+      // TODO implement correctly
+      "duration": Duration(days: 30),
+    },
+    // TODO implement custom range picker
+    // {
+    //   "entryCategory": EntryCategory(
+    //       label: AppLocalizations.of(context)!
+    //           .translate('enter_screen/label-repeat-freeselect'),
+    //       icon: Icons.repeat),
+    //       "duration": null,
+    // },
+  };
+
   AccountSettingsProvider(BuildContext context) {
     _uid = Provider.of<AuthenticationService>(context, listen: false).uid;
 
@@ -171,10 +211,20 @@ enum StandardCategoryExpense {
   Car,
   Miscellaneous,
 }
+
 enum StandardAccount {
   None,
   Debit,
   Credit,
   Cash,
   Depot,
+}
+
+enum RepeatDuration {
+  None,
+  Daily,
+  Weekly,
+  Monthly,
+  // TODO implement custom repeat
+  // Custom,
 }
