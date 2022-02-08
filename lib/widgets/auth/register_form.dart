@@ -209,7 +209,9 @@ class _RegisterFormState extends State<RegisterForm> {
                 ),
                 callback: _agbCheck
                     ? () => signUp(_mailController.text, _passController.text)
-                    : () => _agbNullCheck = true,
+                    : () => setState(() {
+                          _agbNullCheck = true;
+                        }),
                 gradient: LinearGradient(
                   colors: [
                     Theme.of(context).colorScheme.primary,
