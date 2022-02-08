@@ -256,6 +256,17 @@ class HomeScreenListView implements BalanceDataListView {
                       );
                     }
                   : (DismissDirection direction) async {
+                      /*ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Hi, I am snackbar"),
+                          behavior: SnackBarBehavior.floating,
+                          action: SnackBarAction(
+                            label: "Undo",
+                            textColor: Theme.of(context).colorScheme.onPrimary,
+                            onPressed: () {},
+                          ),
+                        ),
+                      );*/
                       return await showDialog(
                         context: context,
                         builder: (BuildContext context) {

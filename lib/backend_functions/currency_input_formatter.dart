@@ -12,6 +12,7 @@ class CurrencyInputFormatter extends TextInputFormatter {
   CurrencyInputFormatter({this.decimalPlaces = 2, this.allowNegative = true})
       : _formatter = NumberFormat.currency(
           decimalDigits: decimalPlaces,
+          //TODO account for localization
           locale: 'de_DE',
           symbol: '€',
         );
