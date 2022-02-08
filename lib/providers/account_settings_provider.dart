@@ -78,14 +78,14 @@ class AccountSettingsProvider extends ChangeNotifier {
     RepeatDuration.None: {
       "entryCategory": EntryCategory(
         label: 'enter_screen/label-repeat-none',
-        icon: Icons.cancel_presentation_rounded,
+        icon: Icons.sync_disabled_rounded,
       ),
       "duration": null,
     },
     RepeatDuration.Daily: {
       "entryCategory": EntryCategory(
         label: 'enter_screen/label-repeat-daily',
-        icon: Icons.calendar_today,
+        icon: Icons.calendar_today_rounded,
       ),
       "duration": Duration(days: 1),
     },
