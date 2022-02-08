@@ -20,35 +20,35 @@ class _EnterScreenListState extends State<EnterScreenList> {
         Provider.of<EnterScreenProvider>(context);
 
     //all the lists that are displayed in the enter screen
-    final List<EntryCategory> _categoriesExpenses = [
-      EntryCategory(
-          label: AppLocalizations.of(context)!
-              .translate('enter_screen_attribute_category'),
-          icon: Icons.restaurant),
-      EntryCategory(
-          label: AppLocalizations.of(context)!
-              .translate('enter_screen_attribute_date'),
-          icon: Icons.event),
-      EntryCategory(
-          label: AppLocalizations.of(context)!
-              .translate('enter_screen_attribute_repeat'),
-          icon: Icons.loop),
-    ];
+    // final List<EntryCategory> _categoriesExpenses = [
+    //   EntryCategory(
+    //       label: AppLocalizations.of(context)!
+    //           .translate('enter_screen_attribute_category'),
+    //       icon: Icons.restaurant),
+    //   EntryCategory(
+    //       label: AppLocalizations.of(context)!
+    //           .translate('enter_screen_attribute_date'),
+    //       icon: Icons.event),
+    //   EntryCategory(
+    //       label: AppLocalizations.of(context)!
+    //           .translate('enter_screen_attribute_repeat'),
+    //       icon: Icons.loop),
+    // ];
 
-    final List<EntryCategory> _categoriesIncome = [
-      EntryCategory(
-          label: AppLocalizations.of(context)!
-              .translate('enter_screen_attribute_category'),
-          icon: Icons.payments),
-      EntryCategory(
-          label: AppLocalizations.of(context)!
-              .translate('enter_screen_attribute_date'),
-          icon: Icons.event),
-      EntryCategory(
-          label: AppLocalizations.of(context)!
-              .translate('enter_screen_attribute_repeat'),
-          icon: Icons.loop),
-    ];
+    // final List<EntryCategory> _categoriesIncome = [
+    //   EntryCategory(
+    //       label: AppLocalizations.of(context)!
+    //           .translate('enter_screen_attribute_category'),
+    //       icon: Icons.payments),
+    //   EntryCategory(
+    //       label: AppLocalizations.of(context)!
+    //           .translate('enter_screen_attribute_date'),
+    //       icon: Icons.event),
+    //   EntryCategory(
+    //       label: AppLocalizations.of(context)!
+    //           .translate('enter_screen_attribute_repeat'),
+    //       icon: Icons.loop),
+    // ];
 
     // final List<EntryCategory> _categoriesTransaction = [
     //   EntryCategory("Von Account", Icons.local_atm),
@@ -79,16 +79,10 @@ class _EnterScreenListState extends State<EnterScreenList> {
     //returns a different list view builder depending on the page
     if (enterScreenProvider.isExpenses)
       return EnterScreenListViewBuilder(
-        categories: _categoriesExpenses,
-        categoriesExpenses: _categoriesExpenses,
-        categoriesIncome: _categoriesIncome,
         categoriesRepeat: _categoriesRepeat,
       );
     else if (enterScreenProvider.isIncome)
       return EnterScreenListViewBuilder(
-        categories: _categoriesIncome,
-        categoriesExpenses: _categoriesExpenses,
-        categoriesIncome: _categoriesIncome,
         categoriesRepeat: _categoriesRepeat,
       );
     // else {

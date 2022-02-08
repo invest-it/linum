@@ -131,7 +131,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               'settings_screen/standard-income-selector/label-title') +
                           AppLocalizations.of(context)!.translate(
                               accountSettingsProvider
-                                      .standardCategoryIncome[EnumToString
+                                      .standardCategoryIncomes[EnumToString
                                           .fromString<StandardCategoryIncome>(
                                     StandardCategoryIncome.values,
                                     (accountSettingsProvider.settings[
@@ -398,7 +398,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             //leading: Icon(widget.categories[index].icon),
             title: Text(AppLocalizations.of(context)!.translate(
                 accountSettingsProvider
-                        .standardCategoryIncome[
+                        .standardCategoryIncomes[
                             StandardCategoryIncome.values[indexBuilder]]
                         ?.label ??
                     "Category")),

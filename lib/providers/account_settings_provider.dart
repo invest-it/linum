@@ -47,7 +47,7 @@ class AccountSettingsProvider extends ChangeNotifier {
   /// List of Categories the User can declare as a Standard when tracking INCOME.
   /// e.g. Otis works as a freelancer, so the income he tracks is mostly in the category SIDE JOB, therefore he can choose SIDE JOB
   /// as his Standard Category for Income so he does not have to choose SIDE JOB as a category when adding an income.
-  final Map<StandardCategoryIncome, EntryCategory> standardCategoryIncome = {
+  final Map<StandardCategoryIncome, EntryCategory> standardCategoryIncomes = {
     StandardCategoryIncome.None: EntryCategory(
         label: "settings_screen/standards-selector-none",
         icon: Icons.check_box_outline_blank_rounded),
