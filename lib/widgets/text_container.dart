@@ -19,7 +19,7 @@ class TextContainer extends StatelessWidget {
     //is "Expenses"
     //use like this: variable.width or variable.height
     final Size sizeExpenses = (TextPainter(
-            text: TextSpan(text: "Expenses"),
+            text: TextSpan(text: "Expenses"), // TODO : @Nightmind
             maxLines: 1,
             textScaleFactor: MediaQuery.of(context).textScaleFactor,
             textDirection: TextDirection.ltr)

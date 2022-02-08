@@ -547,7 +547,7 @@ class _EnterScreenListViewBuilderState
     } else if (index == 2) {
       return Text(enterScreenProvider.repeat);
     } else {
-      return Text("Trash");
+      return Text("Trash"); // TODO @Nightmind
     }
   }
 

@@ -192,7 +192,9 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (innerContext, snapshot) {
         // Check for errors
         if (snapshot.hasError) {
-          return Scaffold(body: Center(child: Text("Something went wrong")));
+          return Scaffold(
+              body: Center(
+                  child: Text("Something went wrong"))); // TODO: @Nightmind
         }
 
         // Once complete, show your application
