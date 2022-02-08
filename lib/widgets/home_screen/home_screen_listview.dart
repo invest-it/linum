@@ -93,9 +93,14 @@ class HomeScreenListView implements BalanceDataListView {
             DateTime.now().day,
           ))) {
             if (date.isBefore(currentTime!)) {
-              if (list.isEmpty) {
+              if (list.isEmpty &&
+                  DateTime(date.year, date.month) ==
+                      DateTime(
+                        DateTime.now().year,
+                        DateTime.now().month,
+                      )) {
                 list.add(TimeWidget(
-                  displayValue: "In der Zukunft",
+                  displayValue: "listview/label-future",
                 ));
               } else {
                 list.add(TimeWidget(
