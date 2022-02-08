@@ -117,6 +117,7 @@
     "enter_screen_attribute_account_from": "Von Account",
     "enter_screen_attribute_account_to": "Zu Account",
 
+    "enter_screen/label-repeat-none": "Nicht wiederholen",
     "enter_screen/label-repeat-daily": "Täglich",
     "enter_screen/label-repeat-weekly": "Wöchentlich",
     "enter_screen/label-repeat-monthly": "Zum Monatsanfang",

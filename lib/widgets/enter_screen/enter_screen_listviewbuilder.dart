@@ -11,12 +11,6 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
 class EnterScreenListViewBuilder extends StatefulWidget {
-  final List<EntryCategory> categoriesRepeat;
-  EnterScreenListViewBuilder({
-    Key? key,
-    required this.categoriesRepeat,
-  }) : super(key: key);
-
   @override
   _EnterScreenListViewBuilderState createState() =>
       _EnterScreenListViewBuilderState();
@@ -294,7 +288,8 @@ class _EnterScreenListViewBuilderState
       return _listViewBuilderIncome(
           index, enterScreenProvider, accountSettingsProvider);
     } else
-      return _listViewBuilderTransaction(index, enterScreenProvider);
+      return _listViewBuilderTransaction(
+          index, enterScreenProvider, accountSettingsProvider);
   }
 
   //which list view is built depending on the tapped category at EXPENSES
@@ -377,16 +372,29 @@ class _EnterScreenListViewBuilderState
       // );
     } else
       return ListView.builder(
-        itemCount: widget.categoriesRepeat.length,
+        itemCount: accountSettingsProvider.categoriesRepeat.length,
         itemBuilder: (BuildContext context, int indexBuilder) {
           return ListTile(
-            leading: Icon(widget.categoriesRepeat[indexBuilder].icon),
-            title: Text(widget.categoriesRepeat[indexBuilder].label),
+            leading: Icon(
+              accountSettingsProvider
+                      .categoriesRepeat[RepeatDuration.values[indexBuilder]]
+                          ?["entryCategory"]
+                      .icon ??
+                  Icons.error,
+            ),
+            title: Text(
+              AppLocalizations.of(context)!.translate(
+                accountSettingsProvider
+                    .categoriesRepeat[RepeatDuration.values[indexBuilder]]
+                        ?["entryCategory"]
+                    .label,
+              ),
+            ),
             //selects the item as the repeat value
             onTap: () => _selectRepeatItem(
-              widget.categoriesRepeat[indexBuilder].label,
               enterScreenProvider,
-              widget.categoriesRepeat[indexBuilder].icon,
+              indexBuilder,
+              accountSettingsProvider,
             ),
           );
         },
@@ -441,15 +449,26 @@ class _EnterScreenListViewBuilderState
       // );
     } else
       return ListView.builder(
-        itemCount: widget.categoriesRepeat.length,
+        itemCount: accountSettingsProvider.categoriesRepeat.length,
         itemBuilder: (BuildContext context, int indexBuilder) {
           return ListTile(
-            leading: Icon(widget.categoriesRepeat[indexBuilder].icon),
-            title: Text(widget.categoriesRepeat[indexBuilder].label),
+            leading: Icon(
+              accountSettingsProvider
+                      .categoriesRepeat[RepeatDuration.values[indexBuilder]]
+                          ?["entryCategory"]
+                      .icon ??
+                  Icons.error,
+            ),
+            title: Text(
+              AppLocalizations.of(context)!.translate(accountSettingsProvider
+                  .categoriesRepeat[RepeatDuration.values[indexBuilder]]
+                      ?["entryCategory"]
+                  .label),
+            ),
             onTap: () => _selectRepeatItem(
-              widget.categoriesRepeat[indexBuilder].label,
               enterScreenProvider,
-              widget.categoriesRepeat[indexBuilder].icon,
+              indexBuilder,
+              accountSettingsProvider,
             ),
           );
         },
@@ -458,47 +477,28 @@ class _EnterScreenListViewBuilderState
   //which list view is built depending on the tapped category at TRANSACTION
 
   ListView _listViewBuilderTransaction(
-      int index, EnterScreenProvider enterScreenProvider) {
-    // if (index == 0) {
-    //   return ListView.builder(
-    //     itemCount: widget.categoriesAccount.length,
-    //     itemBuilder: (BuildContext context, int indexBuilder) {
-    //       return ListTile(
-    //         leading: Icon(widget.categoriesAccount[indexBuilder].categoryIcon),
-    //         title: Text(widget.categoriesAccount[indexBuilder].categoryName),
-    //         onTap: () => _selectCategoryItemTransactions(
-    //           widget.categoriesAccount[indexBuilder].categoryName,
-    //           enterScreenProvider,
-    //         ),
-    //       );
-    //     },
-    //   );
-    // } else if (index == 1) {
-    // return ListView.builder(
-    //   itemCount: widget.categoriesAccount.length,
-    //   itemBuilder: (BuildContext context, int indexBuilder) {
-    //     return ListTile(
-    //       leading: Icon(widget.categoriesAccount[indexBuilder].categoryIcon),
-    //       title: Text(widget.categoriesAccount[indexBuilder].categoryName),
-    //       onTap: () => _selectAccountItem(
-    //         widget.categoriesAccount[indexBuilder].categoryName,
-    //         widget.categoriesAccount[indexBuilder].categoryIcon,
-    //       ),
-    //     );
-    //   },
-    // );
-    // } else
+      int index,
+      EnterScreenProvider enterScreenProvider,
+      AccountSettingsProvider accountSettingsProvider) {
     return ListView.builder(
-      itemCount: widget.categoriesRepeat.length,
+      itemCount: accountSettingsProvider.categoriesRepeat.length,
       itemBuilder: (BuildContext context, int indexBuilder) {
         return ListTile(
-          leading: Icon(widget.categoriesRepeat[indexBuilder].icon),
-          title: Text(widget.categoriesRepeat[indexBuilder].label),
-          onTap: () => _selectRepeatItem(
-            widget.categoriesRepeat[indexBuilder].label,
-            enterScreenProvider,
-            widget.categoriesRepeat[indexBuilder].icon,
+          leading: Icon(
+            accountSettingsProvider
+                    .categoriesRepeat[RepeatDuration.values[indexBuilder]]
+                        ?["entryCategory"]
+                    .icon ??
+                Icons.error,
           ),
+          title: Text(
+            AppLocalizations.of(context)!.translate(accountSettingsProvider
+                .categoriesRepeat[RepeatDuration.values[indexBuilder]]
+                    ?["entryCategory"]
+                .label),
+          ),
+          onTap: () => _selectRepeatItem(
+              enterScreenProvider, indexBuilder, accountSettingsProvider),
         );
       },
     );
@@ -545,7 +545,12 @@ class _EnterScreenListViewBuilderState
       DateFormat formatter = DateFormat('dd. MMMM yyyy', langCode);
       return Text(formatter.format(enterScreenProvider.selectedDate));
     } else if (index == 2) {
-      return Text(enterScreenProvider.repeat);
+      return Text(
+        AppLocalizations.of(context)!.translate(accountSettingsProvider
+            .categoriesRepeat[enterScreenProvider.repeatDurationEnum]
+                ?["entryCategory"]
+            .label),
+      );
     } else {
       log("Something has gone wrong with the index in enter_screen_listviewbuilder.dart");
       return Text(AppLocalizations.of(context)!.translate("main/label-error"));
@@ -599,9 +604,13 @@ class _EnterScreenListViewBuilderState
     enterScreenProvider.setCategory(name);
   }
 
-  void _selectRepeatItem(
-      String name, EnterScreenProvider enterScreenProvider, IconData icon) {
+  void _selectRepeatItem(EnterScreenProvider enterScreenProvider, int index,
+      AccountSettingsProvider accountSettingsProvider) {
     Navigator.pop(context);
+    enterScreenProvider
+        .setRepeatDurationEnumSilently(RepeatDuration.values[index]);
+    enterScreenProvider.setRepeatDuration(accountSettingsProvider
+        .categoriesRepeat[RepeatDuration.values[index]]?["duration"]);
   }
 
   void _openDatePicker(EnterScreenProvider enterScreenProvider) async {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linum/providers/account_settings_provider.dart';
 
 class EnterScreenProvider with ChangeNotifier {
   late bool _isExpenses;
@@ -9,10 +10,10 @@ class EnterScreenProvider with ChangeNotifier {
   String _expenseCategory = "";
   String _incomeCategory = "";
   String _currency = "";
-  String _repeat = "Niemals";
   DateTime _selectedDate = DateTime.now();
   Duration? _repeatDuration;
   late bool _editMode;
+  late RepeatDuration _repeatDurationEnum;
 
   String? _formerId;
 
@@ -27,12 +28,12 @@ class EnterScreenProvider with ChangeNotifier {
     bool editMode = false,
     String? id,
     Duration? repeatDuration,
+    RepeatDuration initRepeatDurationEnum = RepeatDuration.None,
   }) {
     _amount = amount <= 0 ? -1 * amount : amount;
     _expenseCategory = amount <= 0 ? category : secondaryCategory;
     _incomeCategory = amount > 0 ? category : secondaryCategory;
     _name = name;
-    _repeat = repeat;
     _currency = currency;
     _editMode = editMode;
     _selectedDate = selectedDate ?? DateTime.now();
@@ -41,46 +42,7 @@ class EnterScreenProvider with ChangeNotifier {
     _isIncome = !_isExpenses;
     _isTransaction = false;
     _formerId = id;
-  }
-  //amount: amount, category: category, currency: currency, name: name, time: time
-
-  void setName(String name) {
-    _name = name;
-    notifyListeners();
-  }
-
-  void setAmount(double amount) {
-    _amount = amount;
-    notifyListeners();
-  }
-
-  void setCategory(String category) {
-    if (isExpenses) {
-      _expenseCategory = category;
-    } else {
-      _incomeCategory = category;
-    }
-    notifyListeners();
-  }
-
-  void setCurrency(String currency) {
-    _currency = currency;
-    notifyListeners();
-  }
-
-  void setSelectedDate(DateTime selectedDate) {
-    _selectedDate = selectedDate;
-    notifyListeners();
-  }
-
-  void setRepeat(String repeat) {
-    _repeat = repeat;
-    notifyListeners();
-  }
-
-  void setRepeatDuration(Duration? repeatDuration) {
-    _repeatDuration = repeatDuration;
-    notifyListeners();
+    _repeatDurationEnum = initRepeatDurationEnum;
   }
 
   bool get isExpenses {
@@ -115,10 +77,6 @@ class EnterScreenProvider with ChangeNotifier {
     return _selectedDate;
   }
 
-  String get repeat {
-    return _repeat;
-  }
-
   Duration? get repeatDuration {
     return _repeatDuration;
   }
@@ -129,6 +87,10 @@ class EnterScreenProvider with ChangeNotifier {
 
   String? get formerId {
     return _formerId;
+  }
+
+  RepeatDuration get repeatDurationEnum {
+    return _repeatDurationEnum;
   }
 
   void setExpense() {
@@ -150,5 +112,48 @@ class EnterScreenProvider with ChangeNotifier {
     _isIncome = false;
     _isTransaction = true;
     notifyListeners();
+  }
+
+  void setName(String name) {
+    _name = name;
+    notifyListeners();
+  }
+
+  void setAmount(double amount) {
+    _amount = amount;
+    notifyListeners();
+  }
+
+  void setCategory(String category) {
+    if (isExpenses) {
+      _expenseCategory = category;
+    } else {
+      _incomeCategory = category;
+    }
+    notifyListeners();
+  }
+
+  void setCurrency(String currency) {
+    _currency = currency;
+    notifyListeners();
+  }
+
+  void setSelectedDate(DateTime selectedDate) {
+    _selectedDate = selectedDate;
+    notifyListeners();
+  }
+
+  void setRepeatDuration(Duration? repeatDuration) {
+    _repeatDuration = repeatDuration;
+    notifyListeners();
+  }
+
+  void setRepeatDurationEnum(RepeatDuration repeatDuration) {
+    setRepeatDurationEnumSilently(repeatDuration);
+    notifyListeners();
+  }
+
+  void setRepeatDurationEnumSilently(RepeatDuration repeatDuration) {
+    _repeatDurationEnum = repeatDuration;
   }
 }

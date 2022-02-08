@@ -118,6 +118,7 @@
     "enter_screen_attribute_account_from": "Van Account",
     "enter_screen_attribute_account_to": "Naar Account",
 
+    "enter_screen/label-repeat-none": "Niet herhalen",
     "enter_screen/label-repeat-daily": "Dagelijks",
     "enter_screen/label-repeat-weekly": "Wekelijks",
     "enter_screen/label-repeat-monthly": "Begin van de maand",
