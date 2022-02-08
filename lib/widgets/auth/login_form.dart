@@ -138,13 +138,8 @@ class _LoginFormState extends State<LoginForm> {
                         obscureText: true,
                         controller: _passController,
                         keyboardType: TextInputType.visiblePassword,
-                        onSubmitted: (_) => {
-                          setState(
-                            () {
-                              logIn(_mailController.text, _passController.text);
-                            },
-                          )
-                        },
+                        onSubmitted: (_) =>
+                            logIn(_mailController.text, _passController.text),
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: AppLocalizations.of(context)!.translate(
@@ -190,13 +185,8 @@ class _LoginFormState extends State<LoginForm> {
                       .translate('onboarding_screen/login-lip-login-button'),
                   style: Theme.of(context).textTheme.button,
                 ),
-                callback: () => {
-                  setState(
-                    () {
-                      logIn(_mailController.text, _passController.text);
-                    },
-                  )
-                },
+                callback: () =>
+                    logIn(_mailController.text, _passController.text),
                 gradient: LinearGradient(
                   colors: [
                     Theme.of(context).colorScheme.primary,

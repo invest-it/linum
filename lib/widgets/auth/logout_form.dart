@@ -38,16 +38,10 @@ class _LogoutFormState extends State<LogoutForm> {
                 .translate('settings_screen/system-settings/button-signout'),
             style: Theme.of(context).textTheme.button,
           ),
-          callback: () => {
-            setState(
-              () {
-                auth.signOut().then((_) {
-                  Provider.of<ScreenIndexProvider>(context, listen: false)
-                      .setPageIndex(0);
-                });
-              },
-            )
-          },
+          callback: () => auth.signOut().then((_) {
+            Provider.of<ScreenIndexProvider>(context, listen: false)
+                .setPageIndex(0);
+          }),
           gradient: LinearGradient(
             colors: [
               Theme.of(context).colorScheme.primary,

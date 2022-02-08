@@ -595,17 +595,13 @@ class _EnterScreenListViewBuilderState
   void _selectCategoryItemTransactions(
       String name, EnterScreenProvider enterScreenProvider) {
     Navigator.pop(context);
-    setState(() {
-      enterScreenProvider.setCategory(name);
-    });
+
+    enterScreenProvider.setCategory(name);
   }
 
   void _selectRepeatItem(
       String name, EnterScreenProvider enterScreenProvider, IconData icon) {
     Navigator.pop(context);
-    // setState(() {
-    //   categoriesRepeatIcon = Icon(icon);
-    // });
   }
 
   void _openDatePicker(EnterScreenProvider enterScreenProvider) async {
