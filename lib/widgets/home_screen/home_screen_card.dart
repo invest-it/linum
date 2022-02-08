@@ -47,7 +47,7 @@ class HomeScreenCard extends StatelessWidget {
               Timestamp.fromDate(DateTime(
                 DateTime.now().year,
                 DateTime.now().month,
-              )),
+              ).subtract(Duration(microseconds: 1))),
               Timestamp.fromDate(DateTime(
                 DateTime.now().year,
                 DateTime.now().month + 1,
@@ -57,7 +57,8 @@ class HomeScreenCard extends StatelessWidget {
             algorithmProvider
                 .setCurrentFilterAlgorithm(AlgorithmProvider.inBetween(
               Timestamp.fromDate(
-                algorithmProvider.currentShownMonth,
+                algorithmProvider.currentShownMonth
+                    .subtract(Duration(microseconds: 1)),
               ),
               Timestamp.fromDate(DateTime(
                 algorithmProvider.currentShownMonth.year,
@@ -76,7 +77,7 @@ class HomeScreenCard extends StatelessWidget {
               Timestamp.fromDate(DateTime(
                 DateTime.now().year,
                 DateTime.now().month,
-              )),
+              ).subtract(Duration(microseconds: 1))),
               Timestamp.fromDate(DateTime(
                 DateTime.now().year,
                 DateTime.now().month + 1,
@@ -86,7 +87,8 @@ class HomeScreenCard extends StatelessWidget {
             algorithmProvider
                 .setCurrentFilterAlgorithm(AlgorithmProvider.inBetween(
               Timestamp.fromDate(
-                algorithmProvider.currentShownMonth,
+                algorithmProvider.currentShownMonth
+                    .subtract(Duration(microseconds: 1)),
               ),
               Timestamp.fromDate(DateTime(
                 algorithmProvider.currentShownMonth.year,
@@ -110,7 +112,7 @@ class HomeScreenCard extends StatelessWidget {
           Timestamp.fromDate(DateTime(
             DateTime.now().year,
             DateTime.now().month,
-          )),
+          ).subtract(Duration(microseconds: 1))),
           Timestamp.fromDate(DateTime(
             DateTime.now().year,
             DateTime.now().month + 1,

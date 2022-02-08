@@ -44,7 +44,7 @@ class AlgorithmProvider extends ChangeNotifier {
       Timestamp.fromDate(DateTime(
         DateTime.now().year,
         DateTime.now().month,
-      )),
+      ).subtract(Duration(microseconds: 1))),
       Timestamp.fromDate(DateTime(
         DateTime.now().year,
         DateTime.now().month + 1,
