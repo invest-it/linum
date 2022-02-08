@@ -85,14 +85,16 @@ class AccountSettingsProvider extends ChangeNotifier {
   }
 
   void updateAuth(AuthenticationService auth, BuildContext context) {
-    _uid = auth.uid;
+    if (_uid != auth.uid) {
+      _uid = auth.uid;
 
-    if (_uid != "") {
-      _settings =
-          FirebaseFirestore.instance.collection('account_settings').doc(_uid);
+      if (_uid != "") {
+        _settings =
+            FirebaseFirestore.instance.collection('account_settings').doc(_uid);
+      }
+      _createAutoUpdate(context);
+      notifyListeners();
     }
-    _createAutoUpdate(context);
-    notifyListeners();
   }
 
   Future<void> _createAutoUpdate(BuildContext context) async {
