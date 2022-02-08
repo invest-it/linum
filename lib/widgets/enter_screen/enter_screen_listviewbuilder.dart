@@ -138,7 +138,8 @@ class _EnterScreenListViewBuilderState
                               )
                             ],
                           ),
-                          child: _selectIcon(index, enterScreenProvider),
+                          child: _selectIcon(index, enterScreenProvider,
+                              accountSettingsProvider),
                         ),
                         SizedBox(
                           width: 20,
@@ -191,7 +192,8 @@ class _EnterScreenListViewBuilderState
                       padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
                       child: Container(
                           //icon depending on the category
-                          child: _selectIcon(index, enterScreenProvider)),
+                          child: _selectIcon(index, enterScreenProvider,
+                              accountSettingsProvider)),
                     ),
                     Column(
                       children: [
@@ -521,15 +523,15 @@ class _EnterScreenListViewBuilderState
     }
   }
 
-  Icon _selectIcon(index, EnterScreenProvider enterScreenProvider) {
+  Icon _selectIcon(dynamic index, EnterScreenProvider enterScreenProvider,
+      AccountSettingsProvider accountSettingsProvider) {
     if (enterScreenProvider.isExpenses) {
-      if (index == 0) {
-        return categoriesCategoryExpensesIcon; //categoriesCategoryExpensesIcon;
-      } else if (index == 1) {
-        return Icon(Icons.event);
-      } else if (index == 2) {
-        return categoriesRepeatIcon;
+      if (index.runtimeType != StandardCategoryExpense) {
+        log("Error index had wrong type to choose icon");
+        return Icon(Icons.error);
       }
+      return Icon(
+          accountSettingsProvider.standardCategoryExpenses[index]!.icon);
     } else if (enterScreenProvider.isIncome) {
       if (index == 0) {
         return categoriesCategoryIncomeIcon; //categoriesCategoryExpensesIcon;
