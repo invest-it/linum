@@ -106,7 +106,7 @@ class BalanceDataProvider extends ChangeNotifier {
   }
 
   void updateAlgorithmProvider(AlgorithmProvider? algorithm) {
-    if (algorithm != null && _algorithmProvider != algorithm) {
+    if (algorithm != null /*&& _algorithmProvider != algorithm*/) {
       _algorithmProvider = algorithm;
       notifyListeners();
     }
