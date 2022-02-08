@@ -1,8 +1,10 @@
 import 'dart:developer';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
+import 'package:linum/backend_functions/url-handler.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/frontend_functions/user_alert.dart';
@@ -121,11 +123,40 @@ class _RegisterFormState extends State<RegisterForm> {
                 height: proportionateScreenHeight(16),
               ),
               CheckboxListTile(
-                title: Text(
-                    'Ich habe die AGB und die Erklärung zum Datenschutz gelesen und akzeptiere sie.',
-                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: Theme.of(context).colorScheme.onSurface)),
+                // title: Text(
+                //     'Ich habe die AGB und die Erklärung zum Datenschutz gelesen und akzeptiere sie.',
+                //     style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                //         fontWeight: FontWeight.w600,
+                //         color: Theme.of(context).colorScheme.onSurface)),
+                title: RichText(
+                  text: TextSpan(children: [
+                    TextSpan(
+                        text: AppLocalizations.of(context)!.translate(
+                            'onboarding_screen/register-privacy/label-leading'),
+                        style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: Theme.of(context).colorScheme.onSurface)),
+                    TextSpan(
+                      text: AppLocalizations.of(context)!.translate(
+                          'onboarding_screen/register-privacy/label-link'),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () async {
+                          launchURL('https://investit-academy.de/privacy');
+                        },
+                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: Theme.of(context).colorScheme.primary,
+                            decoration: TextDecoration.underline,
+                          ),
+                    ),
+                    TextSpan(
+                        text: AppLocalizations.of(context)!.translate(
+                            'onboarding_screen/register-privacy/label-trailing'),
+                        style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: Theme.of(context).colorScheme.onSurface)),
+                  ]),
+                ),
                 value: _agbCheck,
                 onChanged: (newVal) {
                   setState(() {

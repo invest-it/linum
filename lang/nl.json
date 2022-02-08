@@ -28,6 +28,10 @@
     "onboarding_screen/register-lip-signup-button": "Registeren",
     "onboarding_screen/register-lip-forgot-password-button": "Alternative sign-in methods",
 
+    "onboarding_screen/register-privacy/label-leading": "Ik heb de ",
+    "onboarding_screen/register-privacy/label-link": "privacyverklaaring",
+    "onboarding_screen/register-privacy/label-trailing": " gelezen en accepteer deze.",
+
 
     "home_screen/label-recent-transactions": "Recente transacties",
     "home_screen/button-show-more": "MEER ZIEN",

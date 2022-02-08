@@ -28,6 +28,10 @@
     "onboarding_screen/register-lip-signup-button": "Registrieren",
     "onboarding_screen/register-lip-forgot-password-button": "Alternative sign-in methoden",
 
+    "onboarding_screen/register-privacy/label-leading": "Ich habe die ",
+    "onboarding_screen/register-privacy/label-link": "Datenschutzerklärung",
+    "onboarding_screen/register-privacy/label-trailing": "gelesen und akzeptiere sie.",
+
 
     "home_screen/label-recent-transactions": "Neueste Transaktionen",
     "home_screen/button-show-more": "MEHR",
