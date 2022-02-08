@@ -1,5 +1,7 @@
 {
     "main/label-loading": "Loading...",
+    "main/label-error": "Er is een fout opgetreden.",
+
 
     "onboarding_screen/card1-title": "Welkom!",
     "onboarding_screen/card1-description": "Uw nieuwe budgetterings assistent staat al op u te wachten.",

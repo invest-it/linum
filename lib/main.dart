@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
           error: createMaterialColor(Color(0xFFEB5757)),
           onPrimary: createMaterialColor(Color(0xFFFAFAFA)),
           onSecondary: createMaterialColor(Color(0xFFFAFAFA)),
-          onSurface: createMaterialColor(Color(0xFF505050)),
+          onSurface: createMaterialColor(Color(0xFF808080)),
           onBackground: Colors.black12,
           onError: Colors.teal,
           brightness: Brightness.light,
@@ -193,8 +193,12 @@ class _MyHomePageState extends State<MyHomePage> {
         // Check for errors
         if (snapshot.hasError) {
           return Scaffold(
-              body: Center(
-                  child: Text("Something went wrong"))); // TODO: @Nightmind
+            body: Center(
+              child: Text(
+                AppLocalizations.of(context)!.translate("main/label-error"),
+              ),
+            ),
+          );
         }
 
         // Once complete, show your application

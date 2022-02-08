@@ -140,6 +140,12 @@ class HomeScreenListView implements BalanceDataListView {
             currentIndex = 4; // idk why exactly but now we are save
           }
 
+          bool isFutureItem = date.isAfter(DateTime(
+            DateTime.now().year,
+            DateTime.now().month,
+            DateTime.now().day + 1,
+          ));
+
           list.add(GestureDetector(
             onTap: () {
               BalanceDataProvider balanceDataProvider =
@@ -239,16 +245,16 @@ class HomeScreenListView implements BalanceDataListView {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text("Bestätigen", // TODO: @Nightmind
+                            title: Text("Bestätigen",
                                 style: Theme.of(context).textTheme.headline4),
-                            content: Text(
-                                "Welchen Eintrag möchtest du löschen?"), // TODO: @Nightmind
+                            content:
+                                Text("Welchen Eintrag möchtest du löschen?"),
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () =>
                                     Navigator.of(context).pop(true),
                                 child: Text(
-                                  "LÖSCHE DIESEN EINTRAG", // TODO: @Nightmind
+                                  "LÖSCHE DIESEN EINTRAG",
                                   style: Theme.of(context).textTheme.bodyText2,
                                 ),
                               ),
@@ -257,7 +263,7 @@ class HomeScreenListView implements BalanceDataListView {
                                   Navigator.of(context).pop(true);
                                 },
                                 child: Text(
-                                  "LÖSCHE ALLE ZUKÜNFTIGEN EINTRÄGE", // TODO: @Nightmind
+                                  "LÖSCHE ALLE ZUKÜNFTIGEN EINTRÄGE",
                                   style: Theme.of(context).textTheme.bodyText2,
                                 ),
                               ),
@@ -265,7 +271,7 @@ class HomeScreenListView implements BalanceDataListView {
                                 onPressed: () =>
                                     Navigator.of(context).pop(true),
                                 child: Text(
-                                  "LÖSCHE ALLE EINTRÄGE", // TODO: @Nightmind
+                                  "LÖSCHE ALLE EINTRÄGE",
                                   style: Theme.of(context).textTheme.bodyText2,
                                 ),
                               ),
@@ -273,7 +279,7 @@ class HomeScreenListView implements BalanceDataListView {
                                 onPressed: () =>
                                     Navigator.of(context).pop(false),
                                 child: Text(
-                                  "ABBRECHEN", // TODO: @Nightmind
+                                  "ABBRECHEN",
                                   style: Theme.of(context).textTheme.bodyText2,
                                 ),
                               ),
@@ -301,17 +307,16 @@ class HomeScreenListView implements BalanceDataListView {
                             title: Text("Confirm",
                                 style: Theme.of(context).textTheme.headline4),
                             content: Text(
-                                "Are you sure you wish to delete this item?"), // TODO: @Nightmind
+                                "Are you sure you wish to delete this item?"),
                             actions: <Widget>[
                               TextButton(
                                   onPressed: () =>
                                       Navigator.of(context).pop(true),
-                                  child:
-                                      const Text("DELETE")), // TODO: @Nightmind
+                                  child: const Text("DELETE")),
                               TextButton(
                                 onPressed: () =>
                                     Navigator.of(context).pop(false),
-                                child: const Text("CANCEL"), // TODO: @Nightmind
+                                child: const Text("CANCEL"),
                               ),
                             ],
                           );
@@ -363,21 +368,29 @@ class HomeScreenListView implements BalanceDataListView {
 
               child: ListTile(
                 leading: CircleAvatar(
-                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                  backgroundColor: isFutureItem
+                      ? Theme.of(context).colorScheme.surface
+                      : Theme.of(context).colorScheme.secondary,
                   child: Text(
                     arrayElement["category"]
                         .substring(0,
                             Math.min<num>(3, arrayElement["category"].length))
                         .toUpperCase(),
                     style: Theme.of(context).textTheme.overline?.copyWith(
-                          color: Theme.of(context).colorScheme.background,
+                          color: isFutureItem
+                              ? Theme.of(context).colorScheme.onSurface
+                              : Theme.of(context).colorScheme.background,
                           fontSize: 12,
                         ),
                   ),
                 ),
                 title: Text(
                   arrayElement["name"],
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: isFutureItem
+                      ? Theme.of(context).textTheme.bodyText1!.copyWith(
+                          fontStyle: FontStyle.italic,
+                          color: Theme.of(context).colorScheme.onSurface)
+                      : Theme.of(context).textTheme.bodyText1,
                 ),
                 subtitle: Text(
                   formatter
@@ -385,7 +398,12 @@ class HomeScreenListView implements BalanceDataListView {
                         arrayElement["time"].toDate(),
                       )
                       .toUpperCase(),
-                  style: Theme.of(context).textTheme.overline,
+                  style: isFutureItem
+                      ? Theme.of(context).textTheme.overline!.copyWith(
+                            fontStyle: FontStyle.italic,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          )
+                      : Theme.of(context).textTheme.overline,
                 ),
                 trailing: Text(
                   arrayElement["amount"].toStringAsFixed(2) + "€",
@@ -452,8 +470,7 @@ class HomeScreenListView implements BalanceDataListView {
         "Auswählen",
         style: Theme.of(context).textTheme.headline4,
       ),
-      content:
-          Text("Welche Transaktion möchtest du löschen?"), // TODO: @Nightmind
+      content: Text("Welche Transaktion möchtest du löschen?"),
       actions: [
         singleTransaction,
         multipleTransaction,

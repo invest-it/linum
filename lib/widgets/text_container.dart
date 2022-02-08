@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +20,9 @@ class TextContainer extends StatelessWidget {
     //is "Expenses"
     //use like this: variable.width or variable.height
     final Size sizeExpenses = (TextPainter(
-            text: TextSpan(text: "Expenses"), // TODO : @Nightmind
+            text: TextSpan(
+                text: AppLocalizations.of(context)!
+                    .translate('enter_screen/button-expenses-label')),
             maxLines: 1,
             textScaleFactor: MediaQuery.of(context).textScaleFactor,
             textDirection: TextDirection.ltr)

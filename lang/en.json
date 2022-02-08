@@ -1,5 +1,7 @@
 {
     "main/label-loading": "Loading...",
+    "main/label-error": "An error has occurred.",
+
 
     "onboarding_screen/card1-title": "Welcome!",
     "onboarding_screen/card1-description": "Your new budgeting assistant is already waiting for you.",
