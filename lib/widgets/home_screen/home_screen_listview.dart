@@ -190,9 +190,21 @@ class HomeScreenListView implements BalanceDataListView {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(right: 30),
-                      child: Icon(
-                        Icons.delete,
-                        color: Theme.of(context).colorScheme.background,
+                      child: Wrap(
+                        direction: Axis.horizontal,
+                        alignment: WrapAlignment.center,
+                        spacing: 16.0,
+                        children: [
+                          Text(
+                              AppLocalizations.of(context)!.translate(
+                                  "listview/dismissible/label-delete"),
+                              style: Theme.of(context).textTheme.button),
+                          Icon(
+                            Icons.delete,
+                            color:
+                                Theme.of(context).colorScheme.secondaryVariant,
+                          ),
+                        ],
                       ),
                     ),
                   ],

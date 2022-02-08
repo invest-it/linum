@@ -133,5 +133,8 @@
     "listview/label-today": "Vandaag",
     "listview/label-yesterday": "Gisteren",
     "listview/label-lastweek": "Vorige Week",
-    "listview/label-thismonth": "Deze Maand"
+    "listview/label-thismonth": "Deze Maand",
+    "listview/label-future": "Geplande boekingen",
+
+    "listview/dismissible/label-delete": "Verwijder"
 }

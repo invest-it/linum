@@ -132,5 +132,8 @@
     "listview/label-today": "Hoy",
     "listview/label-yesterday": "Ayer",
     "listview/label-lastweek": "Última semana",
-    "listview/label-thismonth": "Este mes"
+    "listview/label-thismonth": "Este mes",
+    "listview/label-future": "Reservas previstas",
+
+    "listview/dismissible/label-delete": "Borrar"
 }
