@@ -99,14 +99,14 @@ class BalanceDataProvider extends ChangeNotifier {
   }
 
   void updateAuth(AuthenticationService? auth) {
-    if (auth != null) {
+    if (auth != null && auth.uid != _uid) {
       _uid = auth.uid;
       asynConstructor();
     }
   }
 
   void updateAlgorithmProvider(AlgorithmProvider? algorithm) {
-    if (algorithm != null) {
+    if (algorithm != null && _algorithmProvider != algorithm) {
       _algorithmProvider = algorithm;
       notifyListeners();
     }
