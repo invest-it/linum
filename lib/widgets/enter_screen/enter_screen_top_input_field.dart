@@ -50,13 +50,13 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
     //calculation of the size (width and height) of a text - here it
     //is "Expenses"
     //use like this: variable.width or variable.height
-    final Size sizeMyController = (TextPainter(
+    /*final Size sizeMyController = (TextPainter(
             text: TextSpan(text: myController!.text),
             maxLines: 1,
             textScaleFactor: MediaQuery.of(context).textScaleFactor,
             textDirection: TextDirection.ltr)
           ..layout())
-        .size;
+        .size;*/
 
     return Stack(
       children: [
@@ -76,13 +76,6 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    // SizedBox(
-                    //   // TODO wtf is this?
-                    //   height: MediaQuery.of(context).size.height < 690
-                    //       ? proportionateScreenHeight(35)
-                    //       : proportionateScreenHeight(50),
-                    // ),
-
                     //text field
                     Form(
                       key: enterScreenProvider.formKey,
@@ -257,7 +250,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
           child: SafeArea(
             child: AppBar(
               elevation: 0,
-              actions: [AppBarAction.fromPreset(DefaultAction.CLOSE)],
+              //actions: [AppBarAction.fromPreset(DefaultAction.CLOSE)],
               title: Text(
                 AppLocalizations.of(context)!
                     .translate('enter_screen/label-title'),
