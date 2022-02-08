@@ -98,9 +98,9 @@ class ScreenSkeleton extends StatelessWidget {
     this.contentOverride = false,
     this.isInverted = false,
     this.hasHomeScreenCard = false,
-    initialActionLipStatus = ActionLipStatus.HIDDEN,
+    ActionLipStatus initialActionLipStatus = ActionLipStatus.HIDDEN,
     this.providerKey,
-    initialActionLipBody,
+    Widget? initialActionLipBody,
     this.actions,
     this.leadingAction,
   }) {
