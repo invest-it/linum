@@ -78,7 +78,6 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                   children: [
                     //text field
                     Form(
-                      key: enterScreenProvider.formKey,
                       child: Container(
                         child: TextField(
                           inputFormatters: [

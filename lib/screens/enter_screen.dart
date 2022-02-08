@@ -34,8 +34,6 @@ class _EnterScreenState extends State<EnterScreen> {
     DateTime selectedDateDateTimeFormatted =
         DateTime.parse(selectedDateStringFormatted);
 
-    final formKey = enterScreenProvider.formKey;
-
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -90,18 +88,21 @@ class _EnterScreenState extends State<EnterScreen> {
                       Navigator.of(context).pop();
                       //a single balance is added to the balancedataprovider
                       //with the values of the input from the user
-                      enterScreenProvider.editMode
-                          ? balanceDataProvider.updateSingleBalance(
-                              id: enterScreenProvider.formerId ?? "",
-                              amount: _amountChooser(enterScreenProvider),
-                              category: enterScreenProvider.category,
-                              currency: "EUR",
-                              name: enterScreenProvider.name == ""
-                                  ? enterScreenProvider.category
-                                  : enterScreenProvider.name,
-                              time: Timestamp.fromDate(
-                                  selectedDateDateTimeFormatted))
-                          : balanceDataProvider.addSingleBalance(
+
+                      if (enterScreenProvider.editMode) {
+                        balanceDataProvider.updateSingleBalance(
+                            id: enterScreenProvider.formerId ?? "",
+                            amount: _amountChooser(enterScreenProvider),
+                            category: enterScreenProvider.category,
+                            currency: "EUR",
+                            name: enterScreenProvider.name == ""
+                                ? enterScreenProvider.category
+                                : enterScreenProvider.name,
+                            time: Timestamp.fromDate(
+                                selectedDateDateTimeFormatted));
+                      } else {
+                        if (enterScreenProvider.repeatDuration == null) {
+                          balanceDataProvider.addSingleBalance(
                               amount: _amountChooser(enterScreenProvider),
                               category: enterScreenProvider.category,
                               currency: "EUR",
@@ -110,6 +111,20 @@ class _EnterScreenState extends State<EnterScreen> {
                                   : enterScreenProvider.name,
                               time: Timestamp.fromDate(
                                   selectedDateDateTimeFormatted));
+                        } else {
+                          balanceDataProvider.addRepeatedBalance(
+                              amount: _amountChooser(enterScreenProvider),
+                              category: enterScreenProvider.category,
+                              currency: "EUR",
+                              name: enterScreenProvider.name == ""
+                                  ? enterScreenProvider.category
+                                  : enterScreenProvider.name,
+                              initialTime: Timestamp.fromDate(
+                                  selectedDateDateTimeFormatted),
+                              repeatDuration:
+                                  enterScreenProvider.repeatDuration!);
+                        }
+                      }
                     },
                     child: Text(AppLocalizations.of(context)!
                         .translate('enter_screen/button-save-entry')),

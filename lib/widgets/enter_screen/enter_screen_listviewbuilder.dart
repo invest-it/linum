@@ -581,7 +581,6 @@ class _EnterScreenListViewBuilderState
       String name, EnterScreenProvider enterScreenProvider, IconData icon) {
     Navigator.pop(context);
     setState(() {
-      enterScreenProvider.setRepeat(name);
       categoriesRepeatIcon = Icon(icon);
     });
   }

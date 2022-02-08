@@ -19,8 +19,6 @@ class EnterScreenProvider with ChangeNotifier {
 
   String? _formerId;
 
-  final _formKey = GlobalKey<FormState>();
-
   EnterScreenProvider({
     num amount = 0.0,
     String category = "None",
@@ -118,10 +116,6 @@ class EnterScreenProvider with ChangeNotifier {
 
   DateTime get selectedDate {
     return _selectedDate;
-  }
-
-  GlobalKey<FormState> get formKey {
-    return _formKey;
   }
 
   String get repeat {
