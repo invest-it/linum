@@ -60,7 +60,7 @@ class EnterScreenProvider with ChangeNotifier {
   }
 
   void setCategory(String category) {
-    if (amount <= 0) {
+    if (isExpenses) {
       _expenseCategory = category;
     } else {
       _incomeCategory = category;
