@@ -135,7 +135,10 @@ class _EnterScreenListViewBuilderState
                                       .icon ??
                                   Icons.error,
                               timeEntryCategory.icon,
-                              repeatDurationEntryCategory.icon,
+                              accountSettingsProvider
+                                  .categoriesRepeat[enterScreenProvider
+                                      .repeatDurationEnum]!["entryCategory"]
+                                  .icon,
                             ][index],
                           ),
                         ),
