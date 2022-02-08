@@ -10,6 +10,7 @@ import 'package:linum/frontend_functions/country_flag_generator.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/silent-scroll.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/main.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/widgets/auth/login_form.dart';
@@ -17,6 +18,7 @@ import 'package:linum/widgets/auth/register_form.dart';
 import 'package:linum/widgets/onboarding/onboarding_slide.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({Key? key}) : super(key: key);
@@ -256,8 +258,33 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                       child: Text(value),
                     );
                   }).toList(),
-                  value: countryFlag('de'),
-                  onChanged: (value) {},
+                  value: countryFlagWithSpecialCases(
+                      AppLocalizations.of(context)!.locale.languageCode),
+                  onChanged: (value) {
+                    if (value != null) {
+                      setState(() {
+                        Map<String, String> countryFlagsToCountryCode = {
+                          countryFlag('de'): "de",
+                          countryFlag('gb'): "en",
+                          countryFlag('nl'): "nl",
+                          countryFlag('es'): "es",
+                          countryFlag('fr'): "fr",
+                        };
+                        SharedPreferences.getInstance().then((pref) {
+                          pref.setString("languageCode",
+                              countryFlagsToCountryCode[value] ?? "en");
+                        });
+                        String langString =
+                            countryFlagsToCountryCode[value] ?? "en";
+                        AppLocalizations.of(context)!.load(
+                            locale: Locale(
+                                langString,
+                                langString != "en"
+                                    ? langString.toUpperCase()
+                                    : "US"));
+                      });
+                    }
+                  },
                 ),
               ),
               top: 0,
