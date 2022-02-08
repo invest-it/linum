@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:linum/main.dart';
 
 class AppLocalizations {
   late final Locale _locale;
@@ -26,12 +28,12 @@ class AppLocalizations {
   late Map<String, String> _localizedStrings;
 
   Future<bool> load({Locale? locale}) async {
-    _currentLocale = locale ?? _locale;
+    String langCode = _chooseLanguageCode(locale);
+    _currentLocale =
+        Locale(langCode, langCode != "en" ? langCode.toUpperCase() : "US");
 
     // Load the language JSON file from the "lang" folder
-    String jsonString = await rootBundle.loadString(locale == null
-        ? 'lang/${_locale.languageCode}.json'
-        : 'lang/${locale.languageCode}.json');
+    String jsonString = await rootBundle.loadString("lang/$langCode.json");
     Map<String, dynamic> jsonMap = json.decode(jsonString);
 
     _localizedStrings = jsonMap.map((key, value) {
@@ -44,6 +46,18 @@ class AppLocalizations {
   // This method will be called from every widget which needs a localized text
   String translate(String key) {
     return _localizedStrings[key] ?? key + " could not be translated.";
+  }
+
+  String _chooseLanguageCode(Locale? locale) {
+    if (locale == null) {
+      if (MyApp.currentLocalLanguageCode == null) {
+        return _locale.languageCode;
+      } else {
+        return MyApp.currentLocalLanguageCode!;
+      }
+    } else {
+      return locale.languageCode;
+    }
   }
 }
 

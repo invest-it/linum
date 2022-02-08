@@ -18,13 +18,19 @@ import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/screens/onboarding_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  SharedPreferences.getInstance().then((pref) {
+    MyApp.currentLocalLanguageCode = pref.getString("languageCode");
+    runApp(MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
+  static String? currentLocalLanguageCode;
+
   @override
   Widget build(BuildContext context) {
     return _wrapWithBanner(MaterialApp(
