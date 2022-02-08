@@ -10,6 +10,7 @@ import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 import 'enter_screen_list.dart';
 
@@ -543,7 +544,10 @@ class _EnterScreenListViewBuilderState
                 'chosen income')));
       }
     } else if (index == 1) {
-      return Text(enterScreenProvider.selectedDate.toString().split(' ')[0]);
+      String langCode = AppLocalizations.of(context)!.locale.languageCode;
+
+      DateFormat formatter = DateFormat('dd. MMMM yyyy', langCode);
+      return Text(formatter.format(enterScreenProvider.selectedDate));
     } else if (index == 2) {
       return Text(enterScreenProvider.repeat);
     } else {
