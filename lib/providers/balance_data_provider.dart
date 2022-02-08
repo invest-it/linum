@@ -421,6 +421,11 @@ class BalanceDataProvider extends ChangeNotifier {
         _deleteAllNewerCopiesOfRepeatableLocally(id, data, time!);
         break;
       case RemoveType.NONE:
+        (data["balanceData"] as List<dynamic>).forEach((element) {
+          if (element["repeatId"] == id) {
+            element["repeatId"] = null;
+          }
+        });
         break;
     }
     await _balance!.set(data);
@@ -459,6 +464,11 @@ class BalanceDataProvider extends ChangeNotifier {
     (data["balanceData"] as List<dynamic>).removeWhere((element) =>
         element["repeatId"] == id &&
         (element["time"] as Timestamp).compareTo(time) >= 0);
+    (data["balanceData"] as List<dynamic>).forEach((element) {
+      if (element["repeatId"] == id) {
+        element["repeatId"] = null;
+      }
+    });
   }
 
   Future<void> _deleteAllOlderCopiesOfRepeatable(
@@ -475,6 +485,11 @@ class BalanceDataProvider extends ChangeNotifier {
     (data["balanceData"] as List<dynamic>).removeWhere((element) =>
         element["repeatId"] == id &&
         (element["time"] as Timestamp).compareTo(time) <= 0);
+    (data["balanceData"] as List<dynamic>).forEach((element) {
+      if (element["repeatId"] == id) {
+        element["repeatId"] = null;
+      }
+    });
   }
 
   Future<void> _addSingleRepeatableToBalanceData(

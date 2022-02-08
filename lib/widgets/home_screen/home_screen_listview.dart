@@ -248,10 +248,8 @@ class HomeScreenListView implements BalanceDataListView {
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () {
-                                  balanceDataProvider.removeRepeatedBalance(
-                                    id: arrayElement["repeatId"],
-                                    removeType: RemoveType.NONE,
-                                    time: arrayElement["time"],
+                                  balanceDataProvider.removeSingleBalance(
+                                    arrayElement["id"],
                                   );
                                   Navigator.of(context).pop(true);
                                 },
