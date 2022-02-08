@@ -48,6 +48,7 @@ class AppLocalizations {
     return _localizedStrings[key] ?? key + " could not be translated.";
   }
 
+  /// use actively set language if that is null choose languageCode read from preferences and if that is null use system language
   String _chooseLanguageCode(Locale? locale) {
     if (locale == null) {
       if (MyApp.currentLocalLanguageCode == null) {
