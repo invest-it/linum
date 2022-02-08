@@ -1,6 +1,7 @@
 {
     "main/label-loading": "Cargando...",
     "main/label-error": "Se ha producido un error.",
+    "main/label-wip": "Trabajo en curso. Vuelva a comprobarlo pronto.",
 
 
     "onboarding_screen/card1-title": "Bienvenido!",

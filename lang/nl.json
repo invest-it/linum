@@ -1,6 +1,7 @@
 {
     "main/label-loading": "Loading...",
     "main/label-error": "Er is een fout opgetreden.",
+    "main/label-wip": "Werk in uitvoering. Kom snel terug.",
 
 
     "onboarding_screen/card1-title": "Welkom!",

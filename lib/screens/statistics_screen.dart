@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:linum/widgets/top_bar_action_item.dart';
 
@@ -19,8 +20,7 @@ class StatisticsScreen extends StatelessWidget {
               buttonIcon: Icons.build,
               onPressedAction: () => log('message'),
             ),
-            Text(
-                'Work in progress. Please check back soon.'), // TODO @Nightmind translation
+            Text(AppLocalizations.of(context)!.translate('main/label-wip')),
           ],
         ),
       ),

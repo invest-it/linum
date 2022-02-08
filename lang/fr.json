@@ -1,6 +1,7 @@
 {
     "main/label-loading": "Chargement...",
     "main/label-error": "Une erreur s'est produite.",
+    "main/label-wip": "Travail en cours. Revenez nous voir bientôt.",
 
 
     "onboarding_screen/card1-title": "Bienvenue !",
