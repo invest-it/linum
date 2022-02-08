@@ -1,10 +1,6 @@
-import 'dart:developer';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/frontend_functions/silent-scroll.dart';
-import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/widgets/home_screen/home_screen_listview.dart';

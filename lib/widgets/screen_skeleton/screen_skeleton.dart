@@ -89,7 +89,7 @@ class ScreenSkeleton extends StatelessWidget {
   final Widget? leadingAction;
   final List<Widget>? actions;
   final ProviderKey? providerKey;
-  ActionLipStatus initialActionLipStatus;
+  late final ActionLipStatus initialActionLipStatus;
   late final Widget _initialActionLipBody;
 
   ScreenSkeleton({

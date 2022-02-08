@@ -1,3 +1,6 @@
+// ignore_for_file: unused_element
+
+// TODO @aronzimmermann explain me: what is this file
 final List<String> _categoriesCategoryExpenses = [
   "Essen & Trinken",
   "Freizeit",

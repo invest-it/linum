@@ -487,6 +487,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 //   }
 }
 
+// ignore: unused_element
 ListView _currencyChange(_currency) {
   return ListView.builder(
     shrinkWrap: true,

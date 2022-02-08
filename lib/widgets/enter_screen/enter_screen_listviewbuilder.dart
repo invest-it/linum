@@ -3,19 +3,15 @@ import 'dart:developer';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
-import 'package:linum/backend_functions/decimal_text_input_formatter.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/models/entry_category.dart';
 import 'package:linum/providers/account_settings_provider.dart';
-import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
-import 'enter_screen_list.dart';
-
 class EnterScreenListViewBuilder extends StatefulWidget {
-  List<EntryCategory> categoriesRepeat;
+  final List<EntryCategory> categoriesRepeat;
   EnterScreenListViewBuilder({
     Key? key,
     required this.categoriesRepeat,
@@ -595,6 +591,7 @@ class _EnterScreenListViewBuilderState
     enterScreenProvider.setCategory(name);
   }
 
+  // ignore: unused_element
   void _selectCategoryItemTransactions(
       String name, EnterScreenProvider enterScreenProvider) {
     Navigator.pop(context);

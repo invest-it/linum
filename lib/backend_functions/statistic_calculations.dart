@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:linum/providers/algorithm_provider.dart';
 
 class StatisticsCalculations {

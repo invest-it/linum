@@ -32,8 +32,6 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
     super.dispose();
   }
 
-  final _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     EnterScreenProvider enterScreenProvider =

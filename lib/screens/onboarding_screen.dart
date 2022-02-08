@@ -10,14 +10,11 @@ import 'package:linum/frontend_functions/country_flag_generator.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/silent-scroll.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
-import 'package:linum/main.dart';
-import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/widgets/auth/login_form.dart';
 import 'package:linum/widgets/auth/register_form.dart';
 import 'package:linum/widgets/onboarding/onboarding_slide.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -183,8 +180,8 @@ class _OnboardingScreenState extends State<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
-    ActionLipStatusProvider actionLipStatusProvider =
-        Provider.of<ActionLipStatusProvider>(context);
+    // ActionLipStatusProvider actionLipStatusProvider =
+    //     Provider.of<ActionLipStatusProvider>(context);
 
     switch (_pageState) {
       case 0:

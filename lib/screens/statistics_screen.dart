@@ -6,7 +6,6 @@ import 'package:linum/widgets/top_bar_action_item.dart';
 
 class StatisticsScreen extends StatelessWidget {
   StatisticsScreen({Key? key}) : super(key: key);
-  int volume = 0;
 
   @override
   Widget build(BuildContext context) {

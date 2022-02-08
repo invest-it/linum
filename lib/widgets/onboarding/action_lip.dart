@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';

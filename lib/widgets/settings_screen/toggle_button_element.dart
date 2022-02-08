@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:linum/frontend_functions/country_flag_generator.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 
 class ToggleButtonElement extends StatelessWidget {
@@ -7,8 +6,8 @@ class ToggleButtonElement extends StatelessWidget {
   final double? fixedWidth;
   final double? horizontalPadding;
   final double? verticalPadding;
-  late double _horizontalPadding;
-  late double _verticalPadding;
+  late final double _horizontalPadding;
+  late final double _verticalPadding;
 
   ToggleButtonElement(this.label,
       {this.fixedWidth, this.horizontalPadding, this.verticalPadding}) {
