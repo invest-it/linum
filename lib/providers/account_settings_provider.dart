@@ -102,7 +102,6 @@ class AccountSettingsProvider extends ChangeNotifier {
             'enter_screen/label-repeat-30days', // TODO @Nightmind translation
         icon: Icons.calendar_view_month_rounded,
       ),
-      // TODO implement correctly
       "duration": Duration(days: 30),
     },
     // TODO implement custom range picker
@@ -226,6 +225,7 @@ enum RepeatDuration {
   Daily,
   Weekly,
   ThirtyDays,
+  // TODO implement monthly
   //Monthly,
   // TODO implement custom repeat
   // Custom,
