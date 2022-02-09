@@ -3,6 +3,7 @@
 import 'dart:math' as Math;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/providers/account_settings_provider.dart';
@@ -108,8 +109,8 @@ class HomeScreenListView implements BalanceDataListView {
                       : monthAndYearFormatter.format(date),
                   isTranslated: true,
                 ));
-                currentTime = DateTime(date.year, date.month);
               }
+              currentTime = DateTime(date.year, date.month);
             }
           } else if (currentIndex < _timeWidgets.length &&
               date.isBefore(_timeWidgets[currentIndex]["time"])) {
@@ -412,20 +413,53 @@ class HomeScreenListView implements BalanceDataListView {
               child: ListTile(
                 leading: CircleAvatar(
                   backgroundColor: isFutureItem
-                      ? Theme.of(context).colorScheme.surface
-                      : Theme.of(context).colorScheme.secondary,
-                  child: Text(
-                    arrayElement["category"]
-                        .substring(0,
-                            Math.min<num>(3, arrayElement["category"].length))
-                        .toUpperCase(),
-                    style: Theme.of(context).textTheme.overline?.copyWith(
+                      ? arrayElement['amount'] > 0
+                          ? Theme.of(context)
+                              .colorScheme
+                              .tertiary // FUTURE INCOME BACKGROUND
+                          : Theme.of(context).colorScheme.errorContainer
+                      // FUTURE EXPENSE BACKGROUND
+                      : arrayElement['amount'] > 0
+                          ? Theme.of(context)
+                              .colorScheme
+                              .secondary // PRESENT INCOME BACKGROUND
+                          : Theme.of(context)
+                              .colorScheme
+                              .secondary, // PRESENT EXPENSE BACKGROUND
+                  child: arrayElement['amount'] > 0
+                      ? Icon(
+                          accountSettingsProvider
+                                  .standardCategoryIncomes[
+                                      EnumToString.fromString(
+                                          StandardCategoryIncome.values,
+                                          arrayElement['category'])]
+                                  ?.icon ??
+                              Icons.error,
                           color: isFutureItem
-                              ? Theme.of(context).colorScheme.onSurface
-                              : Theme.of(context).colorScheme.background,
-                          fontSize: 12,
+                              ? Theme.of(context)
+                                  .colorScheme
+                                  .onPrimary // FUTURE INCOME ICON
+                              : Theme.of(context)
+                                  .colorScheme
+                                  .tertiary // PRESENT INCOME ICON
+                          )
+                      : Icon(
+                          accountSettingsProvider
+                                  .standardCategoryExpenses[
+                                      EnumToString.fromString(
+                                          StandardCategoryExpense.values,
+                                          arrayElement['category'])]
+                                  ?.icon ??
+                              Icons.error,
+                          // TODO revise the color scheme of this
+                          color: isFutureItem
+                              ? Theme.of(context)
+                                  .colorScheme
+                                  .onPrimary // FUTURE EXPENSE ICON
+                              : Theme.of(context)
+                                  .colorScheme
+                                  .errorContainer, // PRESENT EXPENSE ICON
                         ),
-                  ),
                 ),
                 title: Text(
                   arrayElement["name"],
@@ -450,7 +484,7 @@ class HomeScreenListView implements BalanceDataListView {
                 ),
                 trailing: Text(
                   arrayElement["amount"].toStringAsFixed(2) + "€",
-                  style: arrayElement["amount"] < 0
+                  style: arrayElement["amount"] <= 0
                       ? Theme.of(context)
                           .textTheme
                           .bodyText1

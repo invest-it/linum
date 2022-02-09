@@ -57,6 +57,8 @@ class MyApp extends StatelessWidget {
           surface: createMaterialColor(Color(0xFFC1E695)),
           background: createMaterialColor(Color(0xFFFAFAFA)),
           error: createMaterialColor(Color(0xFFEB5757)),
+          errorContainer:
+              createMaterialColor(Color.fromARGB(255, 250, 171, 171)),
           onPrimary: createMaterialColor(Color(0xFFFAFAFA)),
           onSecondary: createMaterialColor(Color(0xFFFAFAFA)),
           onSurface: createMaterialColor(Color(0xFF505050)),
