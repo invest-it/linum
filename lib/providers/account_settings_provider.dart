@@ -96,9 +96,10 @@ class AccountSettingsProvider extends ChangeNotifier {
       ),
       "duration": Duration(days: 7),
     },
-    RepeatDuration.Monthly: {
+    RepeatDuration.ThirtyDays: {
       "entryCategory": EntryCategory(
-        label: 'enter_screen/label-repeat-monthly',
+        label:
+            'enter_screen/label-repeat-30days', // TODO @Nightmind translation
         icon: Icons.calendar_view_month_rounded,
       ),
       // TODO implement correctly
@@ -224,7 +225,8 @@ enum RepeatDuration {
   None,
   Daily,
   Weekly,
-  Monthly,
+  ThirtyDays,
+  //Monthly,
   // TODO implement custom repeat
   // Custom,
 }
