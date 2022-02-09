@@ -134,6 +134,10 @@
     "enter_screen/delete-entry/dialog-button-delete": "Verwijderen",
     "enter_screen/delete-entry/dialog-button-cancel": "Annuleren",
 
+    "enter_screen/add-amount/dialog-label-title-expenses": "Voeg een bedrag toe aan uw uitgave!",
+    "enter_screen/add-amount/dialog-label-title-income": "Voeg een bedrag toe aan uw inkomen!",
+    "enter_screen/add-amount/dialog-label-title": "Oké!",
+
 
     "action_lip/forgot-password/logged-out/label-title": "Reset Wachtwoord",
     "action_lip/forgot-password/logged-out/label-description": "Voer uw e-mailadres in dat aan uw Linum-account is gekoppeld. Wij zullen u een verificatiecode sturen, samen met instructies over hoe u uw wachtwoord kunt resetten.",

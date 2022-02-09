@@ -104,8 +104,10 @@ class _EnterScreenState extends State<EnterScreen> {
                             proportionateScreenHeight(40))),
                     onPressed: () {
                       if (enterScreenProvider.isIncome &&
-                          enterScreenProvider.amount <= 0) {
-                        //showAlertDialog(context);
+                              enterScreenProvider.amount <= 0 ||
+                          enterScreenProvider.isExpenses &&
+                              enterScreenProvider.amount <= 0) {
+                        showAlertDialog(context, enterScreenProvider);
                         return;
                         // if income is 0 u cant upload as income. TODO @Nightmind @TheBlueBaronx please give the user some kind of popup or whatever
                       }
@@ -197,15 +199,29 @@ class _EnterScreenState extends State<EnterScreen> {
       return enterScreenProvider.amount;
   }
 
-  /*void showAlertDialog(BuildContext context) {
+  void showAlertDialog(
+      BuildContext context, EnterScreenProvider enterScreenProvider) {
     showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text("You need to add an amount to your income"),
+            title: Text(
+              enterScreenProvider.isExpenses
+                  ? AppLocalizations.of(context)!
+                        .translate('enter_screen/add-amount/dialog-label-title-expenses')
+                  : AppLocalizations.of(context)!
+                        .translate('enter_screen/add-amount/dialog-label-title-income'),
+              style: Theme.of(context).textTheme.headline5,
+            ),
             actions: <Widget>[
               TextButton(
-                child: Text("Return"),
+                child: Text(AppLocalizations.of(context)!
+                        .translate('enter_screen/add-amount/dialog-label-title'),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(color: Theme.of(context).colorScheme.primary),
+                ),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -213,7 +229,5 @@ class _EnterScreenState extends State<EnterScreen> {
             ],
           );
         });
-
-    return;
-  }*/
+  }
 }

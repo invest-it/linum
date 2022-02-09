@@ -134,6 +134,10 @@
     "enter_screen/delete-entry/dialog-button-delete": "Delete",
     "enter_screen/delete-entry/dialog-button-cancel": "Cancel",
 
+    "enter_screen/add-amount/dialog-label-title-expenses": "Please add an amount to your expense!",
+    "enter_screen/add-amount/dialog-label-title-income": "Please add an amount to your income!",
+    "enter_screen/add-amount/dialog-label-title": "Okay!",
+
 
     "action_lip/forgot-password/logged-out/label-title": "Reset Password",
     "action_lip/forgot-password/logged-out/label-description": "Please enter your email address connected to your Linum account. We will send you a verification code along with instructions on how to reset your password.",
