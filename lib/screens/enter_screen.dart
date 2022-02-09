@@ -106,7 +106,7 @@ class _EnterScreenState extends State<EnterScreen> {
                             proportionateScreenHeight(40))),
                     onPressed: () {
                       if (enterScreenProvider.isIncome &&
-                          _amountChooser(enterScreenProvider) <= 0 || enterScreenProvider.isExpenses && _amountChooser(enterScreenProvider) >= 0) {
+                          _amountChooser(enterScreenProvider) <= 0) {
                         showAlertDialog(context, enterScreenProvider);
                         log("amount was to low: " +
                             _amountChooser(enterScreenProvider).toString());
@@ -207,17 +207,15 @@ class _EnterScreenState extends State<EnterScreen> {
         builder: (context) {
           return AlertDialog(
             title: Text(
-              enterScreenProvider.isExpenses
-                  ? AppLocalizations.of(context)!
-                        .translate('enter_screen/add-amount/dialog-label-title-expenses')
-                  : AppLocalizations.of(context)!
-                        .translate('enter_screen/add-amount/dialog-label-title-income'),
+              AppLocalizations.of(context)!.translate(
+                  'enter_screen/add-amount/dialog-label-title-expenses'),
               style: Theme.of(context).textTheme.headline5,
             ),
             actions: <Widget>[
               TextButton(
-                child: Text(AppLocalizations.of(context)!
-                        .translate('enter_screen/add-amount/dialog-label-title'),
+                child: Text(
+                  AppLocalizations.of(context)!
+                      .translate('enter_screen/add-amount/dialog-label-title'),
                   style: Theme.of(context)
                       .textTheme
                       .bodyText1!
