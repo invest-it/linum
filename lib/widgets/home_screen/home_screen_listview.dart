@@ -259,8 +259,13 @@ class HomeScreenListView implements BalanceDataListView {
                                 child: Text(
                                     AppLocalizations.of(context)!.translate(
                                         "enter_screen/delete-entry/dialog-button-onlyonce"),
-                                    style:
-                                        Theme.of(context).textTheme.bodyText1),
+                                    style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .error),),
                               ),
                               TextButton(
                                 onPressed: () {

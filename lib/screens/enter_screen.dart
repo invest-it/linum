@@ -105,7 +105,9 @@ class _EnterScreenState extends State<EnterScreen> {
                     onPressed: () {
                       if (enterScreenProvider.isIncome &&
                           enterScreenProvider.amount <= 0) {
-                        return; // if income is 0 u cant upload as income. TODO @Nightmind @TheBlueBaronx please give the user some kind of popup or whatever
+                        //showAlertDialog(context);
+                        return;
+                        // if income is 0 u cant upload as income. TODO @Nightmind @TheBlueBaronx please give the user some kind of popup or whatever
                       }
                       Navigator.of(context).pop();
 
@@ -194,4 +196,24 @@ class _EnterScreenState extends State<EnterScreen> {
     } else
       return enterScreenProvider.amount;
   }
+
+  /*void showAlertDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("You need to add an amount to your income"),
+            actions: <Widget>[
+              TextButton(
+                child: Text("Return"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
+
+    return;
+  }*/
 }

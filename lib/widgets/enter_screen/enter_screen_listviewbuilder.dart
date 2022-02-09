@@ -78,7 +78,7 @@ class _EnterScreenListViewBuilderState
                 focusedBorder: InputBorder.none,
               ),
               style: Theme.of(context).textTheme.headline5,
-              onChanged: (_) {
+              onSubmitted: (_) {
                 enterScreenProvider.setName(myController!.text);
               },
             ),
