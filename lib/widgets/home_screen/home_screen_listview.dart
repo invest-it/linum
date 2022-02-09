@@ -451,7 +451,6 @@ class HomeScreenListView implements BalanceDataListView {
                                           arrayElement['category'])]
                                   ?.icon ??
                               Icons.error,
-                          // TODO revise the color scheme of this
                           color: isFutureItem
                               ? Theme.of(context)
                                   .colorScheme
