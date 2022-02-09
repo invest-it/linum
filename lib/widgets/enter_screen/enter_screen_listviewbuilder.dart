@@ -90,7 +90,9 @@ class _EnterScreenListViewBuilderState
             child: ListView.separated(
               shrinkWrap: true,
               padding: const EdgeInsets.all(8),
-              itemCount: 3,
+              //as repeat is the last item and we dont want to implement it
+              //in the MVP the itemCount has to be cut by one
+              itemCount: enterScreenProvider.editMode ? 2 : 3,
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
                   onTap: () => _onCategoryPressed(

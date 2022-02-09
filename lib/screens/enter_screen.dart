@@ -68,6 +68,29 @@ class _EnterScreenState extends State<EnterScreen> {
                 child:
                     Container(color: Theme.of(context).colorScheme.background),
               ),
+              /*enterScreenProvider.editMode
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            balanceDataProvider.removeSingleBalance(arrayElement["id"])
+                          },
+                          child: Text("Delete"),
+                          style: ElevatedButton.styleFrom(
+                              side: BorderSide(
+                                  width: 2,
+                                  color: Theme.of(context).colorScheme.error),
+                              textStyle: Theme.of(context).textTheme.button,
+                              primary: Theme.of(context).colorScheme.background,
+                              onPrimary: Theme.of(context).colorScheme.error,
+                              onSurface: Colors.white,
+                              fixedSize: Size(proportionateScreenWidth(300),
+                                  proportionateScreenHeight(40))),
+                        ),
+                      ],
+                    )
+                  : SizedBox(height: 0),*/
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
