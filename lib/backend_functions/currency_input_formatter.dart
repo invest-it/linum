@@ -29,7 +29,6 @@ class CurrencyInputFormatter extends TextInputFormatter {
         // filter negative sign in the middle
         // this will also remove redundant negative signs
         if ('-'.allMatches(filteredString).length >= 1) {
-          print(filteredString);
           filteredString = (filteredString.startsWith('-') ? '-' : '') +
               filteredString.replaceAll('-', '');
         }
@@ -51,7 +50,6 @@ class CurrencyInputFormatter extends TextInputFormatter {
           return '-';
         }
       }
-      print(result);
       return result;
     });
   }
