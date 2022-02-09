@@ -99,7 +99,7 @@ class AccountSettingsProvider extends ChangeNotifier {
     RepeatDuration.ThirtyDays: {
       "entryCategory": EntryCategory(
         label:
-            'enter_screen/label-repeat-30days', // TODO @Nightmind translation
+            'enter_screen/label-repeat-30days', 
         icon: Icons.calendar_view_month_rounded,
       ),
       "duration": Duration(days: 30),
