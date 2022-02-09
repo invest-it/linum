@@ -508,11 +508,13 @@ class BalanceDataProvider extends ChangeNotifier {
     DateTime currentTime = singleRepeatedBalance["initialTime"].toDate();
     bool didUpdate = false;
 
-    Duration futureDuration =
-        Duration(seconds: singleRepeatedBalance["repeatDuration"] * 30);
-    if (futureDuration.inSeconds < FUTURE_DURATION.inSeconds) {
-      futureDuration = FUTURE_DURATION;
-    }
+    // Duration futureDuration =
+    //     Duration(seconds: singleRepeatedBalance["repeatDuration"] * 30);
+    // if (futureDuration.inSeconds < FUTURE_DURATION.inSeconds) {
+    //   futureDuration = FUTURE_DURATION;
+    // }
+
+    Duration futureDuration = Duration(days: 365);
 
     // while we are before 10 years after today / before endTime
     while ((singleRepeatedBalance["endTime"] != null)
