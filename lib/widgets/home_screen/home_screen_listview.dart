@@ -232,6 +232,7 @@ class HomeScreenListView implements BalanceDataListView {
                 }
               },*/
               direction: DismissDirection.endToStart,
+              dismissThresholds: {DismissDirection.endToStart: 0.5},
               confirmDismiss: arrayElement["repeatId"] != null
                   ? (DismissDirection direction) async {
                       return await showDialog(
