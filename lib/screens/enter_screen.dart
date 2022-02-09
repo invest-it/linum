@@ -80,13 +80,11 @@ class _EnterScreenState extends State<EnterScreen> {
                         fixedSize: Size(proportionateScreenWidth(300),
                             proportionateScreenHeight(40))),
                     onPressed: () {
-                      // if (!enterScreenProvider.formKey.currentState
-                      //     .validate()) {
-                      //   return;
-                      // }
+                      if (enterScreenProvider.isIncome &&
+                          enterScreenProvider.amount <= 0) {
+                        return; // if income is 0 u cant upload as income. TODO @Nightmind @TheBlueBaronx please give the user some kind of popup or whatever
+                      }
                       Navigator.of(context).pop();
-                      //a single balance is added to the balancedataprovider
-                      //with the values of the input from the user
 
                       if (enterScreenProvider.editMode) {
                         balanceDataProvider.updateSingleBalance(
