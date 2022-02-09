@@ -106,12 +106,11 @@ class _EnterScreenState extends State<EnterScreen> {
                             proportionateScreenHeight(40))),
                     onPressed: () {
                       if (enterScreenProvider.isIncome &&
-                          _amountChooser(enterScreenProvider) <= 0) {
-                        //showAlertDialog(context);
+                          _amountChooser(enterScreenProvider) <= 0 || enterScreenProvider.isExpenses && _amountChooser(enterScreenProvider) >= 0) {
+                        showAlertDialog(context, enterScreenProvider);
                         log("amount was to low: " +
                             _amountChooser(enterScreenProvider).toString());
                         return;
-                        // if income is 0 u cant upload as income. TODO @Nightmind @TheBlueBaronx please give the user some kind of popup or whatever
                       }
                       Navigator.of(context).pop();
 
