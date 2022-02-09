@@ -48,5 +48,6 @@ app.*.map.json
 
 # IOS
 /ios/Runner/GoogleService-Info.plist
+/ios/Podfile.lock
 
 pubspec.lock
