@@ -129,7 +129,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                                 color:
                                     _colorPicker(enterScreenProvider, context),
                               ),
-                          onSubmitted: (String _) {
+                          onChanged: (String _) {
                             enterScreenProvider.setAmount(double.tryParse(
                                     myController!.text
                                         .substring(
