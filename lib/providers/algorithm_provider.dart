@@ -15,7 +15,15 @@ class AlgorithmProvider extends ChangeNotifier {
 
   late DateTime _currentShownMonth;
 
+  int _balanceDataUnnoticedChanges = 0;
+
   DateTime get currentShownMonth => _currentShownMonth;
+
+  @override
+  void notifyListeners() {
+    super.notifyListeners();
+    _balanceDataUnnoticedChanges++;
+  }
 
   void setCurrentShownMonth(DateTime inputMonth) {
     _currentShownMonth = DateTime(inputMonth.year, inputMonth.month);
@@ -64,6 +72,17 @@ class AlgorithmProvider extends ChangeNotifier {
 
   void setCurrentFilterAlgorithmSilently(bool Function(dynamic) filter) {
     _currentFilter = filter;
+  }
+
+  int get balanceDataUnnoticedChanges => _balanceDataUnnoticedChanges;
+
+  bool get balanceNeedsNotice => balanceDataUnnoticedChanges > 0;
+
+  void balanceDataNotice() {
+    _balanceDataUnnoticedChanges--;
+    if (_balanceDataUnnoticedChanges < 0) {
+      _balanceDataUnnoticedChanges = 0;
+    }
   }
 
   /// returns a new sort algorithm. It sorts using the first

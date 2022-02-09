@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
@@ -104,10 +106,10 @@ class _EnterScreenState extends State<EnterScreen> {
                             proportionateScreenHeight(40))),
                     onPressed: () {
                       if (enterScreenProvider.isIncome &&
-                              enterScreenProvider.amount <= 0 ||
-                          enterScreenProvider.isExpenses &&
-                              enterScreenProvider.amount <= 0) {
-                        showAlertDialog(context, enterScreenProvider);
+                          _amountChooser(enterScreenProvider) <= 0) {
+                        //showAlertDialog(context);
+                        log("amount was to low: " +
+                            _amountChooser(enterScreenProvider).toString());
                         return;
                         // if income is 0 u cant upload as income. TODO @Nightmind @TheBlueBaronx please give the user some kind of popup or whatever
                       }
