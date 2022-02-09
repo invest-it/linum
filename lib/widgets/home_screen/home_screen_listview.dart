@@ -257,15 +257,16 @@ class HomeScreenListView implements BalanceDataListView {
                                   Navigator.of(context).pop(true);
                                 },
                                 child: Text(
-                                    AppLocalizations.of(context)!.translate(
-                                        "enter_screen/delete-entry/dialog-button-onlyonce"),
-                                    style: Theme.of(context)
+                                  AppLocalizations.of(context)!.translate(
+                                      "enter_screen/delete-entry/dialog-button-onlyonce"),
+                                  style: Theme.of(context)
                                       .textTheme
                                       .bodyText1!
                                       .copyWith(
                                           color: Theme.of(context)
                                               .colorScheme
-                                              .error),),
+                                              .error),
+                                ),
                               ),
                               TextButton(
                                 onPressed: () {
@@ -359,8 +360,12 @@ class HomeScreenListView implements BalanceDataListView {
                                 ),
                               ),
                               TextButton(
-                                onPressed: () =>
-                                    Navigator.of(context).pop(true),
+                                onPressed: () {
+                                  balanceDataProvider.removeSingleBalance(
+                                    arrayElement["id"],
+                                  );
+                                  Navigator.of(context).pop(true);
+                                },
                                 child: Text(
                                   AppLocalizations.of(context)!.translate(
                                       "enter_screen/delete-entry/dialog-button-delete"),
