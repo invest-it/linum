@@ -23,9 +23,6 @@ class _LoginFormState extends State<LoginForm> {
 
   late final Function logIn;
 
-  // hides developer login bypasses
-  int devMode = 0;
-
   @override
   Widget build(BuildContext context) {
     AuthenticationService auth = Provider.of<AuthenticationService>(context);
@@ -37,46 +34,6 @@ class _LoginFormState extends State<LoginForm> {
 
     return Column(
       children: [
-        devMode >= 6
-            ? Wrap(
-                spacing: 8,
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size.zero,
-                      padding: EdgeInsets.zero,
-                      primary: Theme.of(context).colorScheme.onError,
-                    ),
-                    onPressed: () => {
-                      auth.signIn("Soencke.Evers@investit-academy.de",
-                          "tempPassword123"),
-                    },
-                    child: Text(
-                      'Perform Normal Login',
-                      style: Theme.of(context).textTheme.overline?.copyWith(
-                          color: Theme.of(context).colorScheme.onPrimary),
-                    ),
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        minimumSize: Size.zero,
-                        padding: EdgeInsets.zero,
-                        primary: Theme.of(context).colorScheme.error),
-                    onPressed: () => {
-                      auth.signIn(
-                        "linum.debug@investit-academy.de",
-                        "F8q^5w!F9S4#!",
-                      ),
-                    },
-                    child: Text(
-                      'Perform Stress Test',
-                      style: Theme.of(context).textTheme.overline?.copyWith(
-                          color: Theme.of(context).colorScheme.onPrimary),
-                    ),
-                  ),
-                ],
-              )
-            : Wrap(),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 12.0),
           child: Text(
@@ -202,22 +159,6 @@ class _LoginFormState extends State<LoginForm> {
                 height: proportionateScreenHeight(8),
               ),
               ForgotPasswordButton(ProviderKey.ONBOARDING),
-              IconButton(
-                color: Colors.grey.shade200,
-                onPressed: () {
-                  setState(() {
-                    devMode++;
-                    log(
-                      devMode < 6
-                          ? 'OK, in ' +
-                              (6 - devMode).toString() +
-                              ' Schritten bist du Entwickler.'
-                          : 'OK, du bist nun Entwickler.',
-                    );
-                  });
-                },
-                icon: Icon(Icons.developer_board_rounded),
-              ),
             ],
           ),
         ),
