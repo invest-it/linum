@@ -84,14 +84,16 @@ class HomeScreenListView implements BalanceDataListView {
       balanceData.forEach(
         (arrayElement) {
           DateTime date = arrayElement["time"].toDate() as DateTime;
+          bool isFutureItem = date.isAfter(DateTime(
+            DateTime.now().year,
+            DateTime.now().month,
+            DateTime.now().day + 1,
+          ).subtract(Duration(microseconds: 1)));
+
           if (currentTime == null) {
             currentTime = DateTime(date.year, date.month + 2);
           }
-          if (date.isAfter(DateTime(
-            DateTime.now().year,
-            DateTime.now().month,
-            DateTime.now().day,
-          ))) {
+          if (isFutureItem) {
             if (date.isBefore(currentTime!)) {
               if (list.isEmpty &&
                   DateTime(date.year, date.month) ==
@@ -139,12 +141,6 @@ class HomeScreenListView implements BalanceDataListView {
 
             currentIndex = 4; // idk why exactly but now we are save
           }
-
-          bool isFutureItem = date.isAfter(DateTime(
-            DateTime.now().year,
-            DateTime.now().month,
-            DateTime.now().day + 1,
-          ));
 
           list.add(GestureDetector(
             onTap: () {
