@@ -37,9 +37,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _wrapWithBanner(MaterialApp(
+    // return _wrapWithBanner(MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Linum',
       theme: ThemeData(
         //This is the colorScheme where we store the colors
         //the names should be self explaining
@@ -172,7 +173,7 @@ class MyApp extends StatelessWidget {
         // from the list (English, in this case).
         return supportedLocales.first;
       },
-    ));
+    );
   }
 }
 
