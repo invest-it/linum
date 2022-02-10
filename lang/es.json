@@ -24,12 +24,16 @@
     "onboarding_screen/login-password-hintlabel": "Contraseña",
     "onboarding_screen/login-lip-login-button": "Acceder",
     "onboarding_screen/login-lip-forgot-password-button": "¿Ha olvidado su contraseña?",
+    "onboarding_screen/login-email-errorlabel": "Por favor, introduzca una dirección de correo electrónico válida.",
+    "onboarding_screen/login-password-errorlabel": "Por favor, introduzca su contraseña.",
 
     "onboarding_screen/register-lip-title": "SIGN UP",
     "onboarding_screen/register-email-hintlabel": "e-mail",
     "onboarding_screen/register-password-hintlabel": "Contraseña",
     "onboarding_screen/register-lip-signup-button": "Inscríbete",
     "onboarding_screen/register-lip-forgot-password-button": "Alternative sign-in methods",
+    "onboarding_screen/register-email-errorlabel": "Por favor, introduzca una dirección de correo electrónico válida.",
+    "onboarding_screen/register-password-errorlabel": "Por favor, introduzca una contraseña con al menos 6 caracteres.",
 
     "onboarding_screen/register-privacy/label-leading": "He leído y acepto la ",
     "onboarding_screen/register-privacy/label-link": "política de privacidad",

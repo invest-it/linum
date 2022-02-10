@@ -24,12 +24,16 @@
     "onboarding_screen/login-password-hintlabel": "Password",
     "onboarding_screen/login-lip-login-button": "Sign in",
     "onboarding_screen/login-lip-forgot-password-button": "Forgot your password?",
+    "onboarding_screen/login-email-errorlabel": "Please enter a valid email address.",
+    "onboarding_screen/login-password-errorlabel": "Please enter your password.",
 
     "onboarding_screen/register-lip-title": "SIGN UP",
     "onboarding_screen/register-email-hintlabel": "Email address",
     "onboarding_screen/register-password-hintlabel": "Password",
     "onboarding_screen/register-lip-signup-button": "Sign up",
     "onboarding_screen/register-lip-forgot-password-button": "Alternative sign-in methods",
+    "onboarding_screen/register-email-errorlabel": "Please enter a valid email address.",
+    "onboarding_screen/register-password-errorlabel": "Please enter a password with at least 6 characters.",
 
     "onboarding_screen/register-privacy/label-leading": "I have read and accept the ",
     "onboarding_screen/register-privacy/label-link": "Privacy Statement",

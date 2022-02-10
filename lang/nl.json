@@ -24,12 +24,18 @@
     "onboarding_screen/login-password-hintlabel": "Wachtwoord",
     "onboarding_screen/login-lip-login-button": "Login",
     "onboarding_screen/login-lip-forgot-password-button": "Wachtwoord vergeten?",
+    "onboarding_screen/login-email-errorlabel": "Voer een geldig e-mailadres in.",
+    "onboarding_screen/login-password-errorlabel": "Voer uw wachtwoord in.",
+
 
     "onboarding_screen/register-lip-title": "SIGN UP",
     "onboarding_screen/register-email-hintlabel": "Emailadres",
     "onboarding_screen/register-password-hintlabel": "Wachtwoord",
     "onboarding_screen/register-lip-signup-button": "Registeren",
     "onboarding_screen/register-lip-forgot-password-button": "Alternative sign-in methods",
+    "onboarding_screen/register-email-errorlabel": "Voer een geldig e-mailadres in.",
+    "onboarding_screen/register-password-errorlabel": "Voer een wachtwoord in van ten minste 6 tekens.",
+
 
     "onboarding_screen/register-privacy/label-leading": "Ik heb de ",
     "onboarding_screen/register-privacy/label-link": "privacyverklaaring",

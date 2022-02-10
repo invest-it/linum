@@ -23,12 +23,16 @@
     "onboarding_screen/login-password-hintlabel": "Passwort",
     "onboarding_screen/login-lip-login-button": "Anmelden",
     "onboarding_screen/login-lip-forgot-password-button": "Passwort vergessen?",
+    "onboarding_screen/login-email-errorlabel": "Bitte gib eine gültige E-Mail-Adresse ein.",
+    "onboarding_screen/login-password-errorlabel": "Bitte gib dein Passwort ein.",
 
     "onboarding_screen/register-lip-title": "REGISTRIEREN",
     "onboarding_screen/register-email-hintlabel": "E-Mail-Adresse",
     "onboarding_screen/register-password-hintlabel": "Passwort",
     "onboarding_screen/register-lip-signup-button": "Registrieren",
     "onboarding_screen/register-lip-forgot-password-button": "Alternative sign-in methoden",
+    "onboarding_screen/register-email-errorlabel": "Bitte gib eine gültige E-Mail-Adresse ein.",
+    "onboarding_screen/register-password-errorlabel": "Bitte gib ein Passwort mit mindestens 6 Zeichen ein.",
 
     "onboarding_screen/register-privacy/label-leading": "Ich habe die ",
     "onboarding_screen/register-privacy/label-link": "Datenschutzerklärung",

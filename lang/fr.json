@@ -24,12 +24,16 @@
     "onboarding_screen/login-password-hintlabel": "Mot de passe",
     "onboarding_screen/login-lip-login-button": "Se connecter",
     "onboarding_screen/login-lip-forgot-password-button": "Réinitialiser le mot de passe",
+    "onboarding_screen/login-email-errorlabel": "Veuillez saisir une adresse e-mail valide.",
+    "onboarding_screen/login-password-errorlabel": "Saisis ton mot de passe.",
 
     "onboarding_screen/register-lip-title": "SIGN UP",
     "onboarding_screen/register-email-hintlabel": "e-mail",
     "onboarding_screen/register-password-hintlabel": "Mot de passe",
     "onboarding_screen/register-lip-signup-button": "S'inscrire",
     "onboarding_screen/register-lip-forgot-password-button": "Alternative sign-in methods",
+    "onboarding_screen/register-email-errorlabel": "Veuillez saisir une adresse e-mail valide.",
+    "onboarding_screen/register-password-errorlabel": "Veuillez saisir un mot de passe d'au moins 6 caractères.",
 
     "onboarding_screen/register-privacy/label-leading": "J'ai lu la ",
     "onboarding_screen/register-privacy/label-link": "déclaration de confidentalité",
