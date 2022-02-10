@@ -159,7 +159,8 @@ class AccountSettingsProvider extends ChangeNotifier {
         lang = Locale(langArray[0], langArray[1]);
       }
       AppLocalizations.of(context)!.load(locale: lang);
-      Provider.of<AuthenticationService>(context).updateLanguageCode(context);
+      Provider.of<AuthenticationService>(context, listen: false)
+          .updateLanguageCode(context);
       notifyListeners();
     });
   }
