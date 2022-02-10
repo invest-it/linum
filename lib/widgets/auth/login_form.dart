@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
@@ -8,6 +6,7 @@ import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/frontend_functions/user_alert.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
+import 'package:linum/providers/onboarding_screen_provider.dart';
 import 'package:linum/widgets/auth/forgot_password.dart';
 import 'package:provider/provider.dart';
 
@@ -17,14 +16,26 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  final _mailController = TextEditingController();
+  TextEditingController? _mailController;
 
   final _passController = TextEditingController();
 
-  late final Function logIn;
-
   @override
   Widget build(BuildContext context) {
+    OnboardingScreenProvider onboardingScreenProvider =
+        Provider.of<OnboardingScreenProvider>(context);
+
+    if (onboardingScreenProvider.pageState == 1 &&
+        onboardingScreenProvider.hasPageChanged) {
+      _mailController = null;
+      _passController.clear();
+    }
+
+    if (_mailController == null) {
+      _mailController =
+          TextEditingController(text: onboardingScreenProvider.mailInput);
+    }
+
     AuthenticationService auth = Provider.of<AuthenticationService>(context);
     UserAlert userAlert = UserAlert(context: context);
 
@@ -96,7 +107,7 @@ class _LoginFormState extends State<LoginForm> {
                         controller: _passController,
                         keyboardType: TextInputType.visiblePassword,
                         onSubmitted: (_) =>
-                            logIn(_mailController.text, _passController.text),
+                            logIn(_mailController!.text, _passController.text),
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: AppLocalizations.of(context)!.translate(
@@ -143,7 +154,7 @@ class _LoginFormState extends State<LoginForm> {
                   style: Theme.of(context).textTheme.button,
                 ),
                 callback: () =>
-                    logIn(_mailController.text, _passController.text),
+                    logIn(_mailController!.text, _passController.text),
                 gradient: LinearGradient(
                   colors: [
                     Theme.of(context).colorScheme.primary,

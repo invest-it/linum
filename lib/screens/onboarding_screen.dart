@@ -11,10 +11,12 @@ import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/silent-scroll.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
+import 'package:linum/providers/onboarding_screen_provider.dart';
 import 'package:linum/widgets/auth/login_form.dart';
 import 'package:linum/widgets/auth/register_form.dart';
 import 'package:linum/widgets/onboarding/onboarding_slide.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -166,9 +168,6 @@ class _OnboardingScreenState extends State<OnboardingPage> {
     );
   }
 
-  // States: 0 = normal onboarding, 1 = login page, 2 = register page
-  int _pageState = 0;
-
   double _loginYOffset = 0;
   double _loginXOffset = 0;
   double _registerYOffset = 0;
@@ -180,7 +179,10 @@ class _OnboardingScreenState extends State<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
-    switch (_pageState) {
+    OnboardingScreenProvider onboardingScreenProvider =
+        Provider.of<OnboardingScreenProvider>(context);
+
+    switch (onboardingScreenProvider.pageState) {
       case 0:
         _loginYOffset = windowHeight;
         _registerYOffset = windowHeight;
@@ -219,10 +221,10 @@ class _OnboardingScreenState extends State<OnboardingPage> {
       initialActionLipStatus: ActionLipStatus.HIDDEN,
       providerKey: ProviderKey.ONBOARDING,
       body: GestureDetector(
-        onTap: () => setState(() {
-          _pageState = 0;
+        onTap: () {
           FocusManager.instance.primaryFocus?.unfocus();
-        }),
+          onboardingScreenProvider.setPageState(0);
+        },
         child: Stack(
           children: [
             ScrollConfiguration(
@@ -304,9 +306,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                           style: Theme.of(context).textTheme.button,
                         ),
                         callback: () => {
-                          setState(() {
-                            _pageState = 2;
-                          })
+                          onboardingScreenProvider.setPageState(2),
                         },
                         gradient: LinearGradient(
                           colors: [
@@ -333,21 +333,19 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                             color: Theme.of(context).colorScheme.onSurface),
                       ),
                       onPressed: () => {
-                            setState(() {
-                              _pageState = 1;
-                            })
+                            onboardingScreenProvider.setPageState(1),
                           }),
                 ],
               ),
             ),
 
-// Auth Screens
+            // Auth Screens
 
             GestureDetector(
-              onTap: () => setState(() {
-                _pageState = 1;
+              onTap: () {
+                onboardingScreenProvider.setPageState(1);
                 FocusManager.instance.primaryFocus?.unfocus();
-              }),
+              },
               child: AnimatedContainer(
                 width: _loginWidth,
                 curve: Curves.fastLinearToSlowEaseIn,
@@ -365,10 +363,8 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .onSurface
-                          .withAlpha(_pageState == 0 ? 0 : 135),
+                      color: Theme.of(context).colorScheme.onSurface.withAlpha(
+                          onboardingScreenProvider.pageState == 0 ? 0 : 135),
                       blurRadius: 16,
                     ),
                   ],
@@ -383,16 +379,18 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                           duration: Duration(milliseconds: 800),
                           child: ClipRRect(
                             borderRadius: BorderRadius.only(
-                              topLeft: _pageState == 2
+                              topLeft: onboardingScreenProvider.pageState == 2
                                   ? Radius.circular(32)
                                   : Radius.circular(0),
-                              topRight: _pageState == 2
+                              topRight: onboardingScreenProvider.pageState == 2
                                   ? Radius.circular(32)
                                   : Radius.circular(0),
                             ),
                             child: Container(
                               width: double.infinity,
-                              height: _pageState == 2 ? 32 * 1.2 : 0,
+                              height: onboardingScreenProvider.pageState == 2
+                                  ? 32 * 1.2
+                                  : 0,
                               color: Theme.of(context).colorScheme.primary,
                               child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -435,9 +433,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                         ),
                         child: GestureDetector(
                           onTap: () {
-                            setState(() {
-                              _pageState = 2;
-                            });
+                            onboardingScreenProvider.setPageState(2);
                           },
                           child: Container(
                             width: double.infinity,
@@ -471,10 +467,10 @@ class _OnboardingScreenState extends State<OnboardingPage> {
               ),
             ),
             GestureDetector(
-              onTap: () => setState(() {
-                _pageState = 2;
+              onTap: () {
+                onboardingScreenProvider.setPageState(2);
                 FocusManager.instance.primaryFocus?.unfocus();
-              }),
+              },
               child: AnimatedContainer(
                 curve: Curves.fastLinearToSlowEaseIn,
                 duration: Duration(milliseconds: 800),

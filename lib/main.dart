@@ -10,6 +10,7 @@ import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
+import 'package:linum/providers/onboarding_screen_provider.dart';
 import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/screens/layout_screen.dart';
 import 'package:linum/providers/authentication_service.dart';
@@ -327,6 +328,15 @@ class OnBoardingOrLayoutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     AuthenticationService auth = Provider.of<AuthenticationService>(context);
 
-    return auth.isLoggedIn ? LayoutScreen(key) : OnboardingPage();
+    return auth.isLoggedIn
+        ? LayoutScreen(key)
+        : MultiProvider(
+            providers: [
+              ChangeNotifierProvider<OnboardingScreenProvider>(
+                create: (_) => OnboardingScreenProvider(),
+              ),
+            ],
+            child: OnboardingPage(),
+          );
   }
 }

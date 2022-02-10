@@ -7,6 +7,7 @@ import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/frontend_functions/user_alert.dart';
 import 'package:linum/providers/authentication_service.dart';
+import 'package:linum/providers/onboarding_screen_provider.dart';
 import 'package:provider/provider.dart';
 
 class RegisterForm extends StatefulWidget {
@@ -18,26 +19,46 @@ class _RegisterFormState extends State<RegisterForm> {
   final _mailController = TextEditingController();
   final _passController = TextEditingController();
 
-  late final Function signUp;
   bool _agbCheck = false;
   bool _agbNullCheck = false;
 
   @override
   Widget build(BuildContext context) {
+    OnboardingScreenProvider onboardingScreenProvider =
+        Provider.of<OnboardingScreenProvider>(context);
+
+    if (onboardingScreenProvider.pageState == 2 &&
+        onboardingScreenProvider.hasPageChanged) {
+      _mailController.clear();
+      _passController.clear();
+      _agbCheck = false;
+      _agbNullCheck = false;
+    }
+
     AuthenticationService auth = Provider.of<AuthenticationService>(context);
     UserAlert userAlert = UserAlert(context: context);
 
     void signUp(String _mail, String _pass) {
-      auth.signUp(
-        _mail,
-        _pass,
-        onError: userAlert.showMyDialog,
-        onNotVerified: () => userAlert.showMyDialog(
+      auth.signUp(_mail, _pass, onError: (String message) {
+        setState(() {
+          userAlert.showMyDialog(message);
+          _passController.clear();
+          _agbCheck = false;
+          _agbNullCheck = false;
+        });
+      }, onNotVerified: () {
+        userAlert.showMyDialog(
           'alertdialog/login/message-notverified',
           title: 'alertdialog/login/title-notverified',
           actionTitle: 'alertdialog/login/action-standard',
-        ),
-      );
+        );
+        onboardingScreenProvider.setEmailLoginInputSilently(_mail);
+        _mailController.clear();
+        _passController.clear();
+        _agbNullCheck = false;
+        _agbCheck = false;
+        onboardingScreenProvider.setPageState(1);
+      });
     }
 
     return Column(
