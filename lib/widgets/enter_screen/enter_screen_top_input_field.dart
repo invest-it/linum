@@ -67,174 +67,165 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
             width: proportionateScreenWidth(375),
             height: proportionateScreenHeight(200), //164
             color: Theme.of(context).colorScheme.primary,
-            child: GestureDetector(
-              child: SafeArea(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    //text field
-                    Form(
-                      child: Container(
-                        child: TextField(
-                          inputFormatters: [
-                            CurrencyInputFormatter(
-                              allowNegative: false,
-                            ),
-                          ],
-                          // validator: (value) {
-                          //   if (value!.isNotEmpty && value.length < 8) {
-                          //     return null;
-                          //   } else {
-                          //     return 'Enter a value!';
-                          //   }
-                          // },
-                          maxLength: 15,
-                          textAlign: TextAlign.center,
-                          textAlignVertical: TextAlignVertical.center,
-                          controller: myController,
-                          showCursor: true,
-                          cursorColor: Colors.white,
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            counter: SizedBox.shrink(),
-                            isCollapsed: true,
-                            isDense: true,
-                            hintText: enterScreenProvider.isExpenses
-                                ? " 0.00 €"
-                                : " 0.00 €",
-                            // prefixIcon: enterScreenProvider.isExpenses
-                            //     ? Icon(Icons.remove,
-                            //         color: Theme.of(context).colorScheme.error)
-                            //     : Icon(Icons.add,
-                            //         color: enterScreenProvider.isIncome
-                            //             ? Theme.of(context)
-                            //                 .colorScheme
-                            //                 .background
-                            //             : Theme.of(context)
-                            //                 .colorScheme
-                            //                 .secondary),
-                            // as soon as multiple currencies are implemented, the provider for this will insert the corresponding symbol here.
-                            // suffixIcon: Text("€"),
-                            hintStyle: TextStyle(
-                              color: _colorPicker(enterScreenProvider, context),
-                            ),
-                            border: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                          ),
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline1!
-                              .copyWith(
-                                color:
-                                    _colorPicker(enterScreenProvider, context),
-                              ),
-                          onChanged: (String _) {
-                            enterScreenProvider.setAmount(double.tryParse(
-                                    myController!.text
-                                        .substring(
-                                            0, myController!.text.length - 2)
-                                        .replaceAll(".", "")
-                                        .replaceAll(",", ".")) ??
-                                0.0);
-
-                            //print(enterScreenProvider.amount);
-                          },
-                        ),
-                      ),
-                    ),
-
-                    //the user chooses between expenses, income etc.
-                    //standard is expenses
-                    Container(
-                      width: proportionateScreenWidth(282),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              enterScreenProvider.setExpense();
-                            },
-                            child: Container(
-                              width: proportionateScreenWidth(94),
-                              child: enterScreenProvider.isExpenses
-                                  ? TextContainer(
-                                      //context: context,
-                                      transactionClass: AppLocalizations.of(
-                                              context)!
-                                          .translate(
-                                              'enter_screen/button-expenses-label'),
-                                    )
-                                  : Center(
-                                      child: Text(
-                                      AppLocalizations.of(context)!.translate(
-                                          'enter_screen/button-expenses-label'),
-                                      style: TextStyle(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .background),
-                                    )),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              enterScreenProvider.setIncome();
-                            },
-                            child: Container(
-                              width: proportionateScreenWidth(94),
-                              child: enterScreenProvider.isIncome
-                                  ? TextContainer(
-                                      //context: context,
-                                      transactionClass: AppLocalizations.of(
-                                              context)!
-                                          .translate(
-                                              'enter_screen/button-income-label'),
-                                    )
-                                  : Center(
-                                      child: Text(
-                                      AppLocalizations.of(context)!.translate(
-                                          'enter_screen/button-income-label'),
-                                      style: TextStyle(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .background),
-                                    )),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              enterScreenProvider.setTransaction();
-                            },
-                            child: Container(
-                              width: proportionateScreenWidth(94),
-                              child: enterScreenProvider.isTransaction
-                                  ? TextContainer(
-                                      //context: context,
-                                      transactionClass: AppLocalizations.of(
-                                              context)!
-                                          .translate(
-                                              'enter_screen/button-transaction-label'),
-                                    )
-                                  : Center(
-                                      child: Text(
-                                        AppLocalizations.of(context)!.translate(
-                                            'enter_screen/button-transaction-label'),
-                                        style: TextStyle(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .background),
-                                      ),
-                                    ),
-                            ),
+            child: SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  //text field
+                  Form(
+                    child: Container(
+                      child: TextField(
+                        inputFormatters: [
+                          CurrencyInputFormatter(
+                            allowNegative: false,
                           ),
                         ],
+                        // validator: (value) {
+                        //   if (value!.isNotEmpty && value.length < 8) {
+                        //     return null;
+                        //   } else {
+                        //     return 'Enter a value!';
+                        //   }
+                        // },
+                        maxLength: 15,
+                        textAlign: TextAlign.center,
+                        textAlignVertical: TextAlignVertical.center,
+                        controller: myController,
+                        showCursor: true,
+                        cursorColor: Colors.white,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          counter: SizedBox.shrink(),
+                          isCollapsed: true,
+                          isDense: true,
+                          hintText: enterScreenProvider.isExpenses
+                              ? " 0.00 €"
+                              : " 0.00 €",
+                          // prefixIcon: enterScreenProvider.isExpenses
+                          //     ? Icon(Icons.remove,
+                          //         color: Theme.of(context).colorScheme.error)
+                          //     : Icon(Icons.add,
+                          //         color: enterScreenProvider.isIncome
+                          //             ? Theme.of(context)
+                          //                 .colorScheme
+                          //                 .background
+                          //             : Theme.of(context)
+                          //                 .colorScheme
+                          //                 .secondary),
+                          // as soon as multiple currencies are implemented, the provider for this will insert the corresponding symbol here.
+                          // suffixIcon: Text("€"),
+                          hintStyle: TextStyle(
+                            color: _colorPicker(enterScreenProvider, context),
+                          ),
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                        ),
+                        style: Theme.of(context).textTheme.headline1!.copyWith(
+                              color: _colorPicker(enterScreenProvider, context),
+                            ),
+                        onChanged: (String _) {
+                          enterScreenProvider.setAmount(double.tryParse(
+                                  myController!.text
+                                      .substring(
+                                          0, myController!.text.length - 2)
+                                      .replaceAll(".", "")
+                                      .replaceAll(",", ".")) ??
+                              0.0);
+
+                          //print(enterScreenProvider.amount);
+                        },
                       ),
                     ),
-                    SizedBox(
-                      height: 8,
-                    )
-                  ],
-                ),
+                  ),
+
+                  //the user chooses between expenses, income etc.
+                  //standard is expenses
+                  Container(
+                    width: proportionateScreenWidth(282),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            enterScreenProvider.setExpense();
+                          },
+                          child: Container(
+                            width: proportionateScreenWidth(94),
+                            child: enterScreenProvider.isExpenses
+                                ? TextContainer(
+                                    //context: context,
+                                    transactionClass:
+                                        AppLocalizations.of(context)!.translate(
+                                            'enter_screen/button-expenses-label'),
+                                  )
+                                : Center(
+                                    child: Text(
+                                    AppLocalizations.of(context)!.translate(
+                                        'enter_screen/button-expenses-label'),
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .background),
+                                  )),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            enterScreenProvider.setIncome();
+                          },
+                          child: Container(
+                            width: proportionateScreenWidth(94),
+                            child: enterScreenProvider.isIncome
+                                ? TextContainer(
+                                    //context: context,
+                                    transactionClass:
+                                        AppLocalizations.of(context)!.translate(
+                                            'enter_screen/button-income-label'),
+                                  )
+                                : Center(
+                                    child: Text(
+                                    AppLocalizations.of(context)!.translate(
+                                        'enter_screen/button-income-label'),
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .background),
+                                  )),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            enterScreenProvider.setTransaction();
+                          },
+                          child: Container(
+                            width: proportionateScreenWidth(94),
+                            child: enterScreenProvider.isTransaction
+                                ? TextContainer(
+                                    //context: context,
+                                    transactionClass:
+                                        AppLocalizations.of(context)!.translate(
+                                            'enter_screen/button-transaction-label'),
+                                  )
+                                : Center(
+                                    child: Text(
+                                      AppLocalizations.of(context)!.translate(
+                                          'enter_screen/button-transaction-label'),
+                                      style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .background),
+                                    ),
+                                  ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 8,
+                  )
+                ],
               ),
             ),
           ),
