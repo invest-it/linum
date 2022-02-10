@@ -48,9 +48,9 @@ class _RegisterFormState extends State<RegisterForm> {
         });
       }, onNotVerified: () {
         userAlert.showMyDialog(
-          'alertdialog/login/message-notverified',
-          title: 'alertdialog/login/title-notverified',
-          actionTitle: 'alertdialog/login/action-standard',
+          'alertdialog/signup-verification/message',
+          title: 'alertdialog/signup-verification/title',
+          actionTitle: 'alertdialog/signup-verification/action',
         );
         onboardingScreenProvider.setEmailLoginInputSilently(_mail);
         _mailController.clear();

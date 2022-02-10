@@ -40,7 +40,16 @@ class _LoginFormState extends State<LoginForm> {
     UserAlert userAlert = UserAlert(context: context);
 
     void logIn(String _mail, String _pass) {
-      auth.signIn(_mail, _pass, onError: userAlert.showMyDialog);
+      auth.signIn(
+        _mail,
+        _pass,
+        onError: userAlert.showMyDialog,
+        onNotVerified: () => userAlert.showMyDialog(
+          "alertdialog/login-verification/message",
+          title: "alertdialog/login-verification/title",
+          actionTitle: "alertdialog/login-verification/action",
+        ),
+      );
     }
 
     return Column(

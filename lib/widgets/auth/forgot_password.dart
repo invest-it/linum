@@ -77,7 +77,13 @@ class ForgotPasswordButton extends StatelessWidget {
                                 onEditingComplete: () => {
                                   authenticationService.resetPassword(
                                       _inputController.text,
-                                      onError: userAlert.showMyDialog),
+                                      onError: userAlert.showMyDialog,
+                                      onComplete: userAlert.showMyDialogCreator(
+                                        title:
+                                            "alertdialog/reset-password/title",
+                                        actionTitle:
+                                            "alertdialog/reset-password/action",
+                                      )),
                                 },
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
@@ -185,7 +191,12 @@ class ForgotPasswordButton extends StatelessWidget {
                                   authenticationService.updatePassword(
                                     _inputController.text,
                                     onError: userAlert.showMyDialog,
-                                    onComplete: userAlert.showMyDialog,
+                                    onComplete: userAlert.showMyDialogCreator(
+                                      title:
+                                          "alertdialog/update-password/title",
+                                      actionTitle:
+                                          "alertdialog/update-password/action",
+                                    ),
                                   ),
                                 },
                                 decoration: InputDecoration(
