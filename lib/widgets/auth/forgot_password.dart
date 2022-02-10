@@ -178,12 +178,15 @@ class ForgotPasswordButton extends StatelessWidget {
                                 ),
                               ),
                               child: TextField(
+                                obscureText: true,
                                 controller: _inputController,
-                                keyboardType: TextInputType.emailAddress,
+                                keyboardType: TextInputType.visiblePassword,
                                 onEditingComplete: () => {
-                                  authenticationService.resetPassword(
-                                      _inputController.text,
-                                      onError: userAlert.showMyDialog),
+                                  authenticationService.updatePassword(
+                                    _inputController.text,
+                                    onError: userAlert.showMyDialog,
+                                    onComplete: userAlert.showMyDialog,
+                                  ),
                                 },
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
@@ -213,8 +216,17 @@ class ForgotPasswordButton extends StatelessWidget {
                           style: Theme.of(context).textTheme.button,
                         ),
                         callback: () => {
-                          authenticationService
-                              .updatePassword(_inputController.text),
+                          authenticationService.updatePassword(
+                            _inputController.text,
+                            onError: userAlert.showMyDialog,
+                            onComplete: (String message) {
+                              userAlert.showMyDialog(message);
+                              actionLipStatusProvider.setActionLipStatus(
+                                providerKey: ProviderKey.SETTINGS,
+                              );
+                              FocusManager.instance.primaryFocus?.unfocus();
+                            },
+                          ),
                         },
                         gradient: LinearGradient(
                           colors: [
