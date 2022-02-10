@@ -221,6 +221,8 @@
     "auth/project-not-found": "La connexion au serveur n'a pas pu être établie. Veuillez contacter support@investit-academy.de.",
     "auth/session-cookie-expired": "Un cookie a expiré pendant ta demande. Veuillez vous déconnecter et redémarrer l'application.",
     "auth/session-cookie-revoked": "Pendant ta demande, un cookie a été révoqué. Veuillez vous déconnecter et redémarrer l'application.",
+    "auth/too-many-requests": "Trop de demandes d'enregistrement ont été envoyées. Veuillez réessayer plus tard.",
+    "auth/unknown": "Une erreur inconnue s'est produite. Veuillez contacter support@investit-academy.de",
     "auth/uid-already-exists": "Ton ID utilisateur n'a pas pu être défini. Merci d'essayer de t'inscrire à nouveau.",
     "auth/unauthorized-continue-uri": "Ta demande d'inscription n'a pas pu être traitée. Merci de te manifester auprès de support@investit-academy.de.",
     "auth/user-not-found": "Ton e-mail ou ton mot de passe sont incorrects. Tu as peut-être fait une faute de frappe?",

@@ -223,6 +223,8 @@
     "auth/project-not-found": "De verbinding met de server kon niet tot stand worden gebracht. Neem contact op met support@investit-academy.de",
     "auth/session-cookie-expired": "Een cookie is verlopen tijdens uw verzoek. Log uit en start de app opnieuw.",
     "auth/session-cookie-revoked": "Een cookie werd tijdens uw verzoek ingetrokken. Log uit en start de app opnieuw.",
+    "auth/too-many-requests": "Er zijn te veel registratieverzoeken verzonden. Probeer het later nog eens.",
+    "auth/unknown": "Er is een onbekende fout opgetreden. Neem contact op met support@investit-academy.de",
     "auth/uid-already-exists": "Uw gebruikers-ID kon niet worden ingesteld. Probeer opnieuw te registreren.",
     "auth/unauthorized-continue-uri": "Uw registratieverzoek kon niet worden verwerkt. Neem contact op met support@investit-academy.de",
     "auth/user-not-found": "Uw e-mail of wachtwoord is niet correct. Misschien heb je het verkeerd getypt?",
