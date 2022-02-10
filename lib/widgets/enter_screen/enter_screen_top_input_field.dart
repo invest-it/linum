@@ -68,6 +68,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
             height: proportionateScreenHeight(180),
             color: Theme.of(context).colorScheme.primary,
             child: SafeArea(
+              bottom: false,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -97,7 +98,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           counter: SizedBox.shrink(),
-                          isCollapsed: false,
+                          isCollapsed: true,
                           isDense: true,
                           hintText: enterScreenProvider.isExpenses
                               ? " 0.00 €"
