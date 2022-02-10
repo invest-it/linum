@@ -11,6 +11,7 @@ import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/silent-scroll.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
+import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
 import 'package:linum/widgets/auth/login_form.dart';
 import 'package:linum/widgets/auth/register_form.dart';
@@ -277,6 +278,9 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                                 langString != "en"
                                     ? langString.toUpperCase()
                                     : "US"));
+
+                        Provider.of<AuthenticationService>(context)
+                            .updateLanguageCode(context);
                       });
                     }
                   },
