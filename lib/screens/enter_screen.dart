@@ -1,9 +1,11 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/widgets/enter_screen/enter_screen_listviewbuilder.dart';
@@ -27,6 +29,10 @@ class _EnterScreenState extends State<EnterScreen> {
         Provider.of<EnterScreenProvider>(context);
     BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
+
+    AccountSettingsProvider accountSettingsProvider =
+        Provider.of<AccountSettingsProvider>(context);
+
     //to format the date time it has to be parsed to a string, get formatted
     //and get parsed back to a date time
     String selectedDateStringFormatted =
@@ -131,9 +137,8 @@ class _EnterScreenState extends State<EnterScreen> {
                               amount: _amountChooser(enterScreenProvider),
                               category: enterScreenProvider.category,
                               currency: "EUR",
-                              name: enterScreenProvider.name == ""
-                                  ? enterScreenProvider.category
-                                  : enterScreenProvider.name,
+                              name: _nameChooser(enterScreenProvider,
+                                  accountSettingsProvider, context),
                               time: Timestamp.fromDate(DateTime(
                                   selectedDateDateTimeFormatted.year,
                                   selectedDateDateTimeFormatted.month,
@@ -152,9 +157,8 @@ class _EnterScreenState extends State<EnterScreen> {
                               amount: _amountChooser(enterScreenProvider),
                               category: enterScreenProvider.category,
                               currency: "EUR",
-                              name: enterScreenProvider.name == ""
-                                  ? enterScreenProvider.category
-                                  : enterScreenProvider.name,
+                              name: _nameChooser(enterScreenProvider,
+                                  accountSettingsProvider, context),
                               initialTime: Timestamp.fromDate(DateTime(
                                   selectedDateDateTimeFormatted.year,
                                   selectedDateDateTimeFormatted.month,
@@ -198,6 +202,29 @@ class _EnterScreenState extends State<EnterScreen> {
         return -enterScreenProvider.amount;
     } else
       return enterScreenProvider.amount;
+  }
+
+  String _nameChooser(EnterScreenProvider enterScreenProvider,
+      AccountSettingsProvider accountSettingsProvider, BuildContext context) {
+    if (enterScreenProvider.name == "") {
+      if (enterScreenProvider.isExpenses) {
+        return AppLocalizations.of(context)!.translate(accountSettingsProvider
+                .standardCategoryExpenses[EnumToString.fromString(
+                    StandardCategoryExpense.values,
+                    enterScreenProvider.category)]
+                ?.label ??
+            "settings_screen/standards-selector-none");
+      } else {
+        return AppLocalizations.of(context)!.translate(accountSettingsProvider
+                .standardCategoryIncomes[EnumToString.fromString(
+                    StandardCategoryIncome.values,
+                    enterScreenProvider.category)]
+                ?.label ??
+            "settings_screen/standards-selector-none");
+      }
+    } else {
+      return enterScreenProvider.name;
+    }
   }
 
   void showAlertDialog(
