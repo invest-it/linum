@@ -132,27 +132,27 @@ class AuthenticationService extends ChangeNotifier {
   /// tells firebase that user wants to change its password to [newPassword]
   Future<void> updatePassword(
     String newPassword, {
-    void Function(String)? onComplete = log,
-    void Function(String)? onError = log,
+    void Function(String) onComplete = log,
+    void Function(String) onError = log,
   }) async {
     try {
       if (_firebaseAuth.currentUser != null) {
         await _firebaseAuth.currentUser!.updatePassword(newPassword);
 
-        onComplete!("Successfully updated the password");
+        onComplete("Successfully updated the password");
 
         notifyListeners();
       } else {
-        onError!(germanErrorVersion["auth/not-logged-in-to-update-password"] ??
+        onError(germanErrorVersion["auth/not-logged-in-to-update-password"] ??
             "Error");
         return;
       }
     } on FirebaseAuthException catch (e) {
       String? gerMessage = germanErrorVersion["auth/" + e.code];
       if (gerMessage != null) {
-        onError!(gerMessage);
+        onError(gerMessage);
       } else {
-        onError!(e.message != null
+        onError(e.message != null
             ? e.message!
             : "Firebase Error with null message");
       }
@@ -162,23 +162,23 @@ class AuthenticationService extends ChangeNotifier {
   /// tells firebase that [email] wants to verify itself
   Future<void> sendVerificationEmail(
     String email, {
-    void Function(String)? onComplete = log,
-    void Function(String)? onError = log,
+    void Function(String) onComplete = log,
+    void Function(String) onError = log,
   }) async {
     try {
       if (_firebaseAuth.currentUser != null) {
         await _firebaseAuth.currentUser!.sendEmailVerification();
       } else {
-        onError!(germanErrorVersion["auth/not-logged-in-to-verify"] ?? "Error");
+        onError(germanErrorVersion["auth/not-logged-in-to-verify"] ?? "Error");
         return;
       }
-      onComplete!("Successfully send Verification Mail request to Firebase");
+      onComplete("Successfully send Verification Mail request to Firebase");
     } on FirebaseAuthException catch (e) {
       String? gerMessage = germanErrorVersion["auth/" + e.code];
       if (gerMessage != null) {
-        onError!(gerMessage);
+        onError(gerMessage);
       } else {
-        onError!(e.message != null
+        onError(e.message != null
             ? e.message!
             : "Firebase Error with null message");
       }
@@ -188,18 +188,18 @@ class AuthenticationService extends ChangeNotifier {
   /// tells firebase that [email] wants to reset the password
   Future<void> resetPassword(
     String email, {
-    void Function(String)? onComplete = log,
-    void Function(String)? onError = log,
+    void Function(String) onComplete = log,
+    void Function(String) onError = log,
   }) async {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
-      onComplete!("Successfully send password reset request to Firebase");
+      onComplete("Successfully send password reset request to Firebase");
     } on FirebaseAuthException catch (e) {
       String? gerMessage = germanErrorVersion["auth/" + e.code];
       if (gerMessage != null) {
-        onError!(gerMessage);
+        onError(gerMessage);
       } else {
-        onError!(e.message != null
+        onError(e.message != null
             ? e.message!
             : "Firebase Error with null message");
       }
@@ -207,19 +207,19 @@ class AuthenticationService extends ChangeNotifier {
   }
 
   Future<void> signOut({
-    void Function(String)? onComplete = log,
-    void Function(String)? onError = log,
+    void Function(String) onComplete = log,
+    void Function(String) onError = log,
   }) async {
     try {
       await _firebaseAuth.signOut();
       notifyListeners();
-      onComplete!("Successfully signed out from Firebase");
+      onComplete("Successfully signed out from Firebase");
     } on FirebaseAuthException catch (e) {
       String? gerMessage = germanErrorVersion["auth/" + e.code];
       if (gerMessage != null) {
-        onError!(gerMessage);
+        onError(gerMessage);
       } else {
-        onError!(e.message != null
+        onError(e.message != null
             ? e.message!
             : "Firebase Error with null message");
       }
