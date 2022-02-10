@@ -45,6 +45,7 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 /android/app/google-services.json
+/android/app/UsersUSER_NAMEupload-keystore.jks
 
 # IOS
 /ios/Runner/GoogleService-Info.plist
@@ -52,4 +53,3 @@ app.*.map.json
 
 pubspec.lock
 
-UsersUSER_NAMEupload-keystore.jks
