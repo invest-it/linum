@@ -65,7 +65,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
           child: Container(
             alignment: Alignment.bottomCenter,
             width: proportionateScreenWidth(375),
-            height: 190, //proportionateScreenHeight(200), //180
+            height: MediaQuery.of(context).size.height < 650 ? 180 : 190 , //proportionateScreenHeight(200), //180
             color: Theme.of(context).colorScheme.primary,
             child: SafeArea(
               bottom: false,
