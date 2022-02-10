@@ -42,14 +42,7 @@ class AuthenticationService extends ChangeNotifier {
         }
       }
     } on FirebaseAuthException catch (e) {
-      String? gerMessage = germanErrorVersion["auth/" + e.code];
-      if (gerMessage != null) {
-        onError(gerMessage);
-      } else {
-        onError(e.message != null
-            ? e.message!
-            : "Firebase Error with null message");
-      }
+      onError("auth/" + e.code);
     }
   }
 
@@ -74,14 +67,7 @@ class AuthenticationService extends ChangeNotifier {
         onNotVerified();
       }
     } on FirebaseAuthException catch (e) {
-      String? gerMessage = germanErrorVersion["auth/" + e.code];
-      if (gerMessage != null) {
-        onError(gerMessage);
-      } else {
-        onError(e.message != null
-            ? e.message!
-            : "Firebase Error with null message");
-      }
+      onError("auth/" + e.code);
     }
   }
 
@@ -143,19 +129,11 @@ class AuthenticationService extends ChangeNotifier {
 
         notifyListeners();
       } else {
-        onError(germanErrorVersion["auth/not-logged-in-to-update-password"] ??
-            "Error");
+        onError("auth/not-logged-in-to-update-password");
         return;
       }
     } on FirebaseAuthException catch (e) {
-      String? gerMessage = germanErrorVersion["auth/" + e.code];
-      if (gerMessage != null) {
-        onError(gerMessage);
-      } else {
-        onError(e.message != null
-            ? e.message!
-            : "Firebase Error with null message");
-      }
+      onError("auth/" + e.code);
     }
   }
 
@@ -169,19 +147,12 @@ class AuthenticationService extends ChangeNotifier {
       if (_firebaseAuth.currentUser != null) {
         await _firebaseAuth.currentUser!.sendEmailVerification();
       } else {
-        onError(germanErrorVersion["auth/not-logged-in-to-verify"] ?? "Error");
+        onError("auth/not-logged-in-to-verify");
         return;
       }
       onComplete("Successfully send Verification Mail request to Firebase");
     } on FirebaseAuthException catch (e) {
-      String? gerMessage = germanErrorVersion["auth/" + e.code];
-      if (gerMessage != null) {
-        onError(gerMessage);
-      } else {
-        onError(e.message != null
-            ? e.message!
-            : "Firebase Error with null message");
-      }
+      onError("auth/" + e.code);
     }
   }
 
@@ -195,14 +166,7 @@ class AuthenticationService extends ChangeNotifier {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
       onComplete("Successfully send password reset request to Firebase");
     } on FirebaseAuthException catch (e) {
-      String? gerMessage = germanErrorVersion["auth/" + e.code];
-      if (gerMessage != null) {
-        onError(gerMessage);
-      } else {
-        onError(e.message != null
-            ? e.message!
-            : "Firebase Error with null message");
-      }
+      onError("auth/" + e.code);
     }
   }
 
@@ -215,18 +179,11 @@ class AuthenticationService extends ChangeNotifier {
       notifyListeners();
       onComplete("Successfully signed out from Firebase");
     } on FirebaseAuthException catch (e) {
-      String? gerMessage = germanErrorVersion["auth/" + e.code];
-      if (gerMessage != null) {
-        onError(gerMessage);
-      } else {
-        onError(e.message != null
-            ? e.message!
-            : "Firebase Error with null message");
-      }
+      onError("auth/" + e.code);
     }
   }
 
-  static const Map<String, String> germanErrorVersion = {
+  static const Map<String, String> _germanErrorVersion = {
     "auth/claims-too-large":
         "Es gehen mehr Anfragen als zulässig ein. Bitte versuche es später noch einmal.",
     "auth/email-already-exists":
