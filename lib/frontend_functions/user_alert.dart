@@ -6,13 +6,12 @@ class UserAlert {
 
   UserAlert({required BuildContext context}) : _context = context;
 
-  Future<void> showMyDialog2({
-    String message = 'alertdialog/error/message-standard',
+  Future<void> Function(String) showMyDialogCreator({
     String title = 'alertdialog/error/title-standard',
     String actionTitle = 'alertdialog/error/action-standard',
     bool userMustDismissWithButton = true,
   }) {
-    return showMyDialog(message,
+    return (message) => showMyDialog(message,
         title: title,
         actionTitle: actionTitle,
         userMustDismissWithButton: userMustDismissWithButton);
