@@ -26,8 +26,8 @@ class _EnterScreenListViewBuilderState
       EntryCategory(label: 'enter_screen_attribute_repeat', icon: Icons.loop);
 
   DateTime selectedDate = DateTime.now();
-  final firstDate = DateTime(2020, 1);
-  final lastDate = DateTime(2025, 12);
+  final firstDate = DateTime(2000, 1);
+  final lastDate = DateTime(DateTime.now().year + 5, 12);
 
   TextEditingController? myController;
   @override
