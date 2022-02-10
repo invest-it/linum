@@ -21,22 +21,32 @@ class AuthenticationService extends ChangeNotifier {
   Future<void> signIn(
     String email,
     String password, {
-    void Function(String)? onComplete = log,
-    void Function(String)? onError = log,
+    void Function(String) onComplete = log,
+    void Function(String) onError = log,
+    void Function()? onNotVerified,
   }) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
 
-      onComplete!("Successfully signed in to Firebase");
-
-      notifyListeners();
+      if (isEmailVerified) {
+        notifyListeners();
+        onComplete("Successfully signed in to Firebase");
+      } else {
+        await sendVerificationEmail(email);
+        signOut();
+        if (onNotVerified != null) {
+          onNotVerified();
+        } else {
+          log("Your mail is not verified.");
+        }
+      }
     } on FirebaseAuthException catch (e) {
       String? gerMessage = germanErrorVersion["auth/" + e.code];
       if (gerMessage != null) {
-        onError!(gerMessage);
+        onError(gerMessage);
       } else {
-        onError!(e.message != null
+        onError(e.message != null
             ? e.message!
             : "Firebase Error with null message");
       }
@@ -47,20 +57,28 @@ class AuthenticationService extends ChangeNotifier {
   Future<void> signUp(
     String email,
     String password, {
-    void Function(String)? onComplete = log,
-    void Function(String)? onError = log,
+    void Function(String) onComplete = log,
+    void Function(String) onError = log,
+    required void Function() onNotVerified,
   }) async {
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
-      notifyListeners();
-      onComplete!("Successfully signed in to Firebase");
+
+      if (isEmailVerified) {
+        notifyListeners();
+        onComplete("Successfully signed up to Firebase");
+      } else {
+        await sendVerificationEmail(email);
+        signOut();
+        onNotVerified();
+      }
     } on FirebaseAuthException catch (e) {
       String? gerMessage = germanErrorVersion["auth/" + e.code];
       if (gerMessage != null) {
-        onError!(gerMessage);
+        onError(gerMessage);
       } else {
-        onError!(e.message != null
+        onError(e.message != null
             ? e.message!
             : "Firebase Error with null message");
       }
