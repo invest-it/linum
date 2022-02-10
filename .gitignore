@@ -44,3 +44,10 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+/android/app/google-services.json
+
+# IOS
+/ios/Runner/GoogleService-Info.plist
+/ios/Runner.xcworkspacedata/Podfile.lock
+
+pubspec.lock

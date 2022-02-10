@@ -1,4 +1,4 @@
-package com.example.linum
+package de.investitacademy.linum
 
 import io.flutter.embedding.android.FlutterActivity
 
