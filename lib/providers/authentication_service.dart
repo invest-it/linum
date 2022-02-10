@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/backend_functions/local_app_localizations.dart';
 
 /// The AuthenticationService authenticates the user
 /// and provides the information needed for other classes
@@ -10,7 +11,9 @@ class AuthenticationService extends ChangeNotifier {
   final FirebaseAuth _firebaseAuth;
 
   /// Constructor
-  AuthenticationService(this._firebaseAuth);
+  AuthenticationService(this._firebaseAuth, BuildContext context) {
+    updateLanguageCode(context);
+  }
 
   /// Returns the authStateChanges Stream from the FirebaseAuth
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
@@ -180,5 +183,10 @@ class AuthenticationService extends ChangeNotifier {
     } on FirebaseAuthException catch (e) {
       onError("auth/" + e.code);
     }
+  }
+
+  void updateLanguageCode(BuildContext context) {
+    _firebaseAuth.setLanguageCode(
+        AppLocalizations.of(context)?.locale.languageCode ?? "en");
   }
 }

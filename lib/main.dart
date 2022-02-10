@@ -215,7 +215,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ChangeNotifierProvider<AuthenticationService>(
                 create: (_) {
                   AuthenticationService auth =
-                      AuthenticationService(FirebaseAuth.instance);
+                      AuthenticationService(FirebaseAuth.instance, context);
 
                   // NOTE: The sign-in service is now functional, no need to change anything here.
 

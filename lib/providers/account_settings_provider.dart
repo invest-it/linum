@@ -98,8 +98,7 @@ class AccountSettingsProvider extends ChangeNotifier {
     },
     RepeatDuration.ThirtyDays: {
       "entryCategory": EntryCategory(
-        label:
-            'enter_screen/label-repeat-30days', 
+        label: 'enter_screen/label-repeat-30days',
         icon: Icons.calendar_view_month_rounded,
       ),
       "duration": Duration(days: 30),
@@ -160,6 +159,7 @@ class AccountSettingsProvider extends ChangeNotifier {
         lang = Locale(langArray[0], langArray[1]);
       }
       AppLocalizations.of(context)!.load(locale: lang);
+      Provider.of<AuthenticationService>(context).updateLanguageCode(context);
       notifyListeners();
     });
   }
