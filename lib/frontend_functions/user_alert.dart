@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linum/backend_functions/local_app_localizations.dart';
 
 class UserAlert {
   final BuildContext _context;
@@ -6,9 +7,9 @@ class UserAlert {
   UserAlert({required BuildContext context}) : _context = context;
 
   Future<void> showMyDialog2({
-    String message = 'Ein unbekannter Fehler ist aufgetreten.',
-    String title = 'Fehler',
-    String actionTitle = 'Okay',
+    String message = 'alertdialog/error/message-standard',
+    String title = 'alertdialog/error/title-standard',
+    String actionTitle = 'alertdialog/error/action-standard',
     bool userMustDismissWithButton = true,
   }) {
     return showMyDialog(message,
@@ -19,8 +20,8 @@ class UserAlert {
 
   Future<void> showMyDialog(
     String message, {
-    String title = 'Anmeldung nicht erfolgreich',
-    String actionTitle = 'Okay',
+    String title = 'alertdialog/login/title-standard',
+    String actionTitle = 'alertdialog/login/action-standard',
     bool userMustDismissWithButton = false,
   }) async {
     return showDialog<void>(
@@ -30,19 +31,19 @@ class UserAlert {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
-            title,
+            AppLocalizations.of(context)!.translate(title),
             style: Theme.of(context).textTheme.headline5,
           ),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text(message),
+                Text(AppLocalizations.of(context)!.translate(message)),
               ],
             ),
           ),
           actions: <Widget>[
             TextButton(
-              child: Text(actionTitle,
+              child: Text(AppLocalizations.of(context)!.translate(actionTitle),
                   style: Theme.of(context)
                       .textTheme
                       .bodyText1

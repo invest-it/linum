@@ -28,7 +28,16 @@ class _RegisterFormState extends State<RegisterForm> {
     UserAlert userAlert = UserAlert(context: context);
 
     void signUp(String _mail, String _pass) {
-      auth.signUp(_mail, _pass, onError: userAlert.showMyDialog);
+      auth.signUp(
+        _mail,
+        _pass,
+        onError: userAlert.showMyDialog,
+        onNotVerified: () => userAlert.showMyDialog(
+          'alertdialog/login/message-notverified',
+          title: 'alertdialog/login/title-notverified',
+          actionTitle: 'alertdialog/login/action-standard',
+        ),
+      );
     }
 
     return Column(

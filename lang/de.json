@@ -132,12 +132,12 @@
     "enter_screen/delete-entry/dialog-button-allentries": "Alle Einträge",
     "enter_screen/delete-entry/dialog-button-delete": "Löschen",
     "enter_screen/delete-entry/dialog-button-cancel": "Abbrechen",
-    
+
     "enter_screen/add-amount/dialog-label-title-expenses": "Bitte füge einen Betrag zu deiner Ausgabe hinzu!",
     "enter_screen/add-amount/dialog-label-title-income": "Bitte füge einen Betrag zu deinem Einkommen hinzu!",
     "enter_screen/add-amount/dialog-label-title": "Okay!",
 
-    
+
     "action_lip/forgot-password/logged-out/label-title": "Passwort zurücksetzen",
     "action_lip/forgot-password/logged-out/label-description": "Bitte trage deine E-Mail-Adresse ein, die mit deinem Account verbunden ist. Wir schicken die einen Verifizierungscode zu, mit dem du dein Passwort neu setzen kannst.",
     "action_lip/forgot-password/logged-out/button-submit": "Code anfordern",
@@ -157,5 +157,15 @@
     "listview/label-thismonth": "Diesen Monat",
     "listview/label-future": "Geplante Buchungen",
 
-    "listview/dismissible/label-delete": "Löschen"
+    "listview/dismissible/label-delete": "Löschen",
+
+
+    "alertdialog/login/title-standard": "Anmeldung nicht erfolgreich",
+    "alertdialog/login/action-standard": "Okay",
+    "alertdialog/login/title-notverified": "Anmeldung bestätigen",
+    "alertdialog/login/message-notverified": "Wir haben dir einen Link zum Bestätigen deiner Registrierung geschickt. Bitte klicke auf den Link in der E-Mail, um deinen Account zu aktivieren.",
+
+    "alertdialog/error/title-standard": "Fehler",
+    "alertdialog/error/message-standard": "Ein unbekannter Fehler ist aufgetreten.",
+    "alertdialog/error/action-standard": "Okay"
 }
