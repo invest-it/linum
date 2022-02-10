@@ -65,7 +65,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
           child: Container(
             alignment: Alignment.bottomCenter,
             width: proportionateScreenWidth(375),
-            height: proportionateScreenHeight(200),
+            height: proportionateScreenHeight(180),
             color: Theme.of(context).colorScheme.primary,
             child: SafeArea(
               child: Column(
@@ -97,22 +97,11 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           counter: SizedBox.shrink(),
-                          isCollapsed: true,
+                          isCollapsed: false,
                           isDense: true,
                           hintText: enterScreenProvider.isExpenses
                               ? " 0.00 €"
                               : " 0.00 €",
-                          // prefixIcon: enterScreenProvider.isExpenses
-                          //     ? Icon(Icons.remove,
-                          //         color: Theme.of(context).colorScheme.error)
-                          //     : Icon(Icons.add,
-                          //         color: enterScreenProvider.isIncome
-                          //             ? Theme.of(context)
-                          //                 .colorScheme
-                          //                 .background
-                          //             : Theme.of(context)
-                          //                 .colorScheme
-                          //                 .secondary),
                           // as soon as multiple currencies are implemented, the provider for this will insert the corresponding symbol here.
                           // suffixIcon: Text("€"),
                           hintStyle: TextStyle(
