@@ -633,7 +633,9 @@ class _EnterScreenListViewBuilderState
       //if user tap cancel then this function will stop
       return;
     }
-    TimeOfDay? timeOfDay = await showTimePicker(
+    TimeOfDay? timeOfDay = TimeOfDay.now();
+    // Deactivated for now
+    /* = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
       builder: (context, child) {
@@ -644,7 +646,8 @@ class _EnterScreenListViewBuilderState
             ),
             child: child!);
       },
-    );
+    );*/
+    // ignore: unnecessary_null_comparison
     if (timeOfDay != null) {
       enterScreenProvider.setSelectedDate(
         pickedDate.add(
