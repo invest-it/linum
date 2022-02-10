@@ -137,7 +137,7 @@ class HomeScreenCard extends StatelessWidget {
                       Text(
                         AppLocalizations.of(context)!.translate(
                             'home_screen_card/label-current-balance'),
-                        style: MediaQuery.of(context).size.height < 800 ? Theme.of(context).textTheme.headline5 : Theme.of(context).textTheme.headline3,
+                        style: MediaQuery.of(context).size.height < 650 ? Theme.of(context).textTheme.headline5 : Theme.of(context).textTheme.headline3,
                       ),
                       Text(
                         '< ' +
@@ -155,7 +155,7 @@ class HomeScreenCard extends StatelessWidget {
                     children: [
                       Text(
                         balance.toStringAsFixed(2),
-                        style: MediaQuery.of(context).size.height < 800 ? Theme.of(context).textTheme.headline2 : Theme.of(context).textTheme.headline1,
+                        style: MediaQuery.of(context).size.height < 650 ? Theme.of(context).textTheme.headline2 : Theme.of(context).textTheme.headline1,
                       ),
                       Text('\€', style: Theme.of(context).textTheme.bodyText1)
                     ],
