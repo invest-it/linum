@@ -21,6 +21,8 @@ class _RegisterFormState extends State<RegisterForm> {
 
   bool _agbCheck = false;
   bool _agbNullCheck = false;
+  bool _mailValidate = false;
+  bool _passValidate = false;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,8 @@ class _RegisterFormState extends State<RegisterForm> {
       _passController.clear();
       _agbCheck = false;
       _agbNullCheck = false;
+      _mailValidate = false;
+      _passValidate = false;
     }
 
     AuthenticationService auth = Provider.of<AuthenticationService>(context);
@@ -45,6 +49,8 @@ class _RegisterFormState extends State<RegisterForm> {
           _passController.clear();
           _agbCheck = false;
           _agbNullCheck = false;
+          _mailValidate = false;
+          _passValidate = false;
         });
       }, onNotVerified: () {
         userAlert.showMyDialog(
@@ -57,6 +63,8 @@ class _RegisterFormState extends State<RegisterForm> {
         _passController.clear();
         _agbNullCheck = false;
         _agbCheck = false;
+        _mailValidate = false;
+        _passValidate = false;
         onboardingScreenProvider.setPageState(1);
       });
     }
@@ -109,6 +117,10 @@ class _RegisterFormState extends State<RegisterForm> {
                               ?.copyWith(
                                   color:
                                       Theme.of(context).colorScheme.secondary),
+                          errorText: _mailValidate
+                              ? AppLocalizations.of(context)!.translate(
+                                  'onboarding_screen/register-email-errorlabel')
+                              : null,
                         ),
                       ),
                     ),
@@ -141,6 +153,10 @@ class _RegisterFormState extends State<RegisterForm> {
                               ?.copyWith(
                                   color:
                                       Theme.of(context).colorScheme.secondary),
+                          errorText: _passValidate
+                              ? AppLocalizations.of(context)!.translate(
+                                  'onboarding_screen/register-password-errorlabel')
+                              : null,
                         ),
                       ),
                     ),
@@ -238,8 +254,27 @@ class _RegisterFormState extends State<RegisterForm> {
                   style: Theme.of(context).textTheme.button,
                 ),
                 callback: _agbCheck
-                    ? () => signUp(_mailController.text, _passController.text)
+                    ? () {
+                        setState(() {
+                          _mailController.text.isEmpty
+                              ? _mailValidate = true
+                              : _mailValidate = false;
+                          _passController.text.isEmpty
+                              ? _passValidate = true
+                              : _passValidate = false;
+                        });
+
+                        if (_mailValidate == false && _passValidate == false) {
+                          signUp(_mailController.text, _passController.text);
+                        }
+                      }
                     : () => setState(() {
+                          _mailController.text.isEmpty
+                              ? _mailValidate = true
+                              : _mailValidate = false;
+                          _passController.text.isEmpty
+                              ? _passValidate = true
+                              : _passValidate = false;
                           _agbNullCheck = true;
                         }),
                 gradient: LinearGradient(

@@ -20,6 +20,9 @@ class _LoginFormState extends State<LoginForm> {
 
   final _passController = TextEditingController();
 
+  bool _mailValidate = false;
+  bool _passValidate = false;
+
   @override
   Widget build(BuildContext context) {
     OnboardingScreenProvider onboardingScreenProvider =
@@ -29,6 +32,8 @@ class _LoginFormState extends State<LoginForm> {
         onboardingScreenProvider.hasPageChanged) {
       _mailController = null;
       _passController.clear();
+      _mailValidate = false;
+      _passValidate = false;
     }
 
     if (_mailController == null) {
@@ -101,6 +106,10 @@ class _LoginFormState extends State<LoginForm> {
                               ?.copyWith(
                                   color:
                                       Theme.of(context).colorScheme.secondary),
+                          errorText: _mailValidate
+                              ? AppLocalizations.of(context)!.translate(
+                                  'onboarding_screen/login-email-errorlabel')
+                              : null,
                         ),
                       ),
                     ),
@@ -121,6 +130,10 @@ class _LoginFormState extends State<LoginForm> {
                           border: InputBorder.none,
                           hintText: AppLocalizations.of(context)!.translate(
                               'onboarding_screen/login-password-hintlabel'),
+                          errorText: _passValidate
+                              ? AppLocalizations.of(context)!.translate(
+                                  'onboarding_screen/login-password-errorlabel')
+                              : null,
                           hintStyle: Theme.of(context)
                               .textTheme
                               .bodyText1
@@ -162,8 +175,20 @@ class _LoginFormState extends State<LoginForm> {
                       .translate('onboarding_screen/login-lip-login-button'),
                   style: Theme.of(context).textTheme.button,
                 ),
-                callback: () =>
-                    logIn(_mailController!.text, _passController.text),
+                callback: () {
+                  setState(() {
+                    _mailController!.text.isEmpty
+                        ? _mailValidate = true
+                        : _mailValidate = false;
+                    _passController.text.isEmpty
+                        ? _passValidate = true
+                        : _passValidate = false;
+                  });
+
+                  if (_mailValidate == false && _passValidate == false) {
+                    logIn(_mailController!.text, _passController.text);
+                  }
+                },
                 gradient: LinearGradient(
                   colors: [
                     Theme.of(context).colorScheme.primary,
