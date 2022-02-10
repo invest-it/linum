@@ -138,12 +138,15 @@ class AuthenticationService extends ChangeNotifier {
     try {
       if (_firebaseAuth.currentUser != null) {
         await _firebaseAuth.currentUser!.updatePassword(newPassword);
+
+        onComplete!("Successfully updated the password");
+
+        notifyListeners();
       } else {
         onError!(germanErrorVersion["auth/not-logged-in-to-update-password"] ??
             "Error");
         return;
       }
-      onComplete!("Successfully updated the password");
     } on FirebaseAuthException catch (e) {
       String? gerMessage = germanErrorVersion["auth/" + e.code];
       if (gerMessage != null) {
