@@ -164,7 +164,7 @@
 
     "listview/dismissible/label-delete": "Delete",
 
-    
+
     "alertdialog/login/title-standard": "Login not successful",
     "alertdialog/login/action-standard": "Okay",
 
@@ -189,6 +189,7 @@
     "alertdialog/reset-password/action": "Okay",
 
     "auth/claims-too-large": "More requests than allowed are received. Please try again later.",
+    "auth/wrong-password": "Your email or password is not correct. Check for spelling errors?",
     "auth/email-already-exists": "The specified e-mail is already in use.",
     "auth/id-token-expired": "The Authentication ID token has expired.",
     "auth/id-token-revoked": "The Authentication ID token has been revoked.",

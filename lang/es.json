@@ -189,6 +189,7 @@
     "alertdialog/reset-password/action": "Okay",
 
     "auth/claims-too-large": "Se reciben más solicitudes de las permitidas. Por favor, inténtelo más tarde.",
+    "auth/wrong-password": "Su correo electrónico o su contraseña no son correctos. ¿Quizás lo has escrito mal?",
     "auth/email-already-exists": "El correo electrónico especificado ya está en uso.",
     "auth/id-token-expired": "El token de identificación de autenticación ha caducado.",
     "auth/id-token-revoked": "El token de identificación de autenticación ha sido revocado.",

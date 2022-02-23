@@ -187,6 +187,7 @@
     "alertdialog/reset-password/title": "Anfrage gesendet",
     "alertdialog/reset-password/action": "Okay",
 
+    "auth/wrong-password": "Deine E-Mail oder dein Passwort sind nicht korrekt. Vielleicht hast du dich vertippt?",
     "auth/claims-too-large": "Es gehen mehr Anfragen als zulässig ein. Bitte versuche es später noch einmal.",
     "auth/email-already-exists": "Die angegebene E-Mail wird bereits verwendet.",
     "auth/id-token-expired": "Das Authentication-ID-Token ist abgelaufen.",

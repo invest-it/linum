@@ -189,6 +189,7 @@
     "alertdialog/reset-password/action": "Okay",
 
     "auth/claims-too-large": "Nous recevons plus de demandes que ce qui est autorisé. Veuillez réessayer plus tard.",
+    "auth/wrong-password": "Ton e-mail ou ton mot de passe sont incorrects. Tu as peut-être fait une faute de frappe ?",
     "auth/email-already-exists": "L'e-mail indiqué est déjà utilisé.",
     "auth/id-token-expired": "Le jeton d'identification d'authentification a expiré.",
     "auth/id-token-revoked": "Le jeton d'identification d'authentification a été révoqué.",

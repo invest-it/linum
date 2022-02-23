@@ -191,6 +191,7 @@
     "alertdialog/reset-password/action": "Okay",
 
     "auth/claims-too-large": "Er komen meer verzoeken binnen dan toegestaan. Probeer het later nog eens.",
+    "auth/wrong-password": "Uw e-mail of wachtwoord is niet correct. Misschien heb je het verkeerd getypt?",
     "auth/email-already-exists": "De opgegeven e-mail is al in gebruik.",
     "auth/id-token-expired": "Het Authenticatie ID token is verlopen.",
     "auth/id-token-revoked": "Het Authenticatie ID token is ingetrokken.",
