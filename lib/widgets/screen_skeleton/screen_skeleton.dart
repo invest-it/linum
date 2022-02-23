@@ -81,7 +81,6 @@ import 'package:provider/provider.dart';
 /// Wichtig sind außerdem noch folgende Dinge:
 /// Ihr könnt kein eigenständiges AppBarAction Widget erstellen. Ihr müsst immer entweder .fromPreset() oder .fromParameters() nutzen.
 /// Wenn ihr weder actions: noch leadingAction: definiert, wird keine AppBar angelegt.
-
 class ScreenSkeleton extends StatelessWidget {
   final String head;
   final Widget body;
