@@ -56,7 +56,7 @@ flutter_icons:
   android: true
   ios: true
   image_path: "assets/res/appicon.png"
-  image_path_ios: "assets/res/appicon-ios.png"
+  image_path_ios: "assets/res/appicon-ios.jpg"
   # adaptive_icon_background: "#86bd42"
   # adaptive_icon_foreground: "assets/res/appicon.png"
 
