@@ -135,14 +135,14 @@ class _RegisterFormState extends State<RegisterForm> {
                         obscureText: true,
                         controller: _passController,
                         keyboardType: TextInputType.visiblePassword,
-                        onSubmitted: (_) => {
-                          setState(
-                            () {
-                              signUp(
-                                  _mailController.text, _passController.text);
-                            },
-                          )
-                        },
+                        // onSubmitted: (_) => {
+                        //   setState(
+                        //     () {
+                        //       signUp(
+                        //           _mailController.text, _passController.text);
+                        //     },
+                        //   )
+                        // },
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: AppLocalizations.of(context)!.translate(
