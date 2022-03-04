@@ -188,8 +188,18 @@
     "alertdialog/reset-password/title": "Demande envoyée",
     "alertdialog/reset-password/action": "Okay",
 
+    "auth/invalid-email": "Votre adresse électronique ou votre mot de passe n'est pas correct. Vérifier les fautes d'orthographe ?",
+    "auth/user-disabled": "L'utilisateur a été désactivé par le système. Si vous pensez qu'il s'agit d'une erreur, veuillez contacter support@investit-academy.de.",
+    "auth/user-not-found": "Votre adresse électronique ou votre mot de passe n'est pas correct. Vérifier les fautes d'orthographe ?",
+    "auth/wrong-password": "Votre adresse électronique ou votre mot de passe n'est pas correct. Vérifier les fautes d'orthographe ?",
+
+    "auth/email-already-in-use": "An account already exists for the email address you entered. If you have forgotten your password, you can reset it at any time using the 'Reset password' function.",
+    "auth/operation-not-allowed": "The login service is currently disabled. Please try again later.",
+    "auth/weak-password": "The password you entered is too weak. Please choose a stronger password.",
+
+    "auth/requires-recent-login": "For security reasons, please log in first.",
+
     "auth/claims-too-large": "Nous recevons plus de demandes que ce qui est autorisé. Veuillez réessayer plus tard.",
-    "auth/wrong-password": "Ton e-mail ou ton mot de passe sont incorrects. Tu as peut-être fait une faute de frappe ?",
     "auth/email-already-exists": "L'e-mail indiqué est déjà utilisé.",
     "auth/id-token-expired": "Le jeton d'identification d'authentification a expiré.",
     "auth/id-token-revoked": "Le jeton d'identification d'authentification a été révoqué.",
@@ -202,7 +212,6 @@
     "auth/invalid-credential": "Les informations de connexion ne peuvent pas être utilisées pour l'inscription. Veuillez vous inscrire auprès de support@investit-academy.de.",
     "auth/invalid-disabled-field": "Si tu vois cette erreur, c'est que nous avons fait quelque chose de complètement faux. Veuillez vous inscrire auprès de support@investit-academy.de.",
     "auth/invalid-display-name": "Ton nom d'utilisateur n'est pas valide.",
-    "auth/invalid-email": "Ton adresse e-mail n'est pas valide. Tu as peut-être fait une erreur de frappe ?",
     "auth/invalid-email-verified": "Ton adresse e-mail n'a pas pu être vérifiée. Tu as peut-être fait une erreur de frappe ?",
     "auth/invalid-id-token": "La connexion au serveur était erronée. Veuillez contacter support@investit-academy.de.",
     "auth/invalid-last-sign-in-time": "Le serveur n'a pas pu valider ton fuseau horaire. Veuillez vérifier si l'heure est correctement réglée sur votre téléphone.",
@@ -217,7 +226,6 @@
     "auth/missing-ios-bundle-id": "Les données de l'app sur ton appareil sont erronées. Veuillez réinstaller l'app. Si l'erreur persiste, contacte support@investit-academy.de.",
     "auth/missing-uid": "Ton ID utilisateur n'a pas pu être chargé. Veuillez redémarrer l'application. Si le problème persiste, contacte support@investit-academy.de.",
     "auth/missing-oauth-client-secret": "Ton inscription n'a pas pu être traitée. Merci de te connecter à support@investit-academy.de.",
-    "auth/operation-not-allowed": "Le service de connexion est actuellement désactivé. Veuillez réessayer plus tard.",
     "auth/phone-number-already-exists": "Ce numéro de téléphone existe déjà.",
     "auth/project-not-found": "La connexion au serveur n'a pas pu être établie. Veuillez contacter support@investit-academy.de.",
     "auth/session-cookie-expired": "Un cookie a expiré pendant ta demande. Veuillez vous déconnecter et redémarrer l'application.",
@@ -226,7 +234,6 @@
     "auth/unknown": "Une erreur inconnue s'est produite. Veuillez contacter support@investit-academy.de",
     "auth/uid-already-exists": "Ton ID utilisateur n'a pas pu être défini. Merci d'essayer de t'inscrire à nouveau.",
     "auth/unauthorized-continue-uri": "Ta demande d'inscription n'a pas pu être traitée. Merci de te manifester auprès de support@investit-academy.de.",
-    "auth/user-not-found": "Ton e-mail ou ton mot de passe sont incorrects. Tu as peut-être fait une faute de frappe?",
     "auth/not-logged-in-to-verify": "Pour demander un e-mail de vérification, tu dois être connecté.",
     "auth/not-logged-in-to-update-password": "Pour modifier ton mot de passe, tu dois être connecté. Si tu as oublié ton mot de passe, tu peux demander à recevoir un e-mail de réinitialisation de ton mot de passe à la place."
 }

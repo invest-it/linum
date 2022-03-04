@@ -190,8 +190,18 @@
     "alertdialog/reset-password/title": "Verzoek verzonden",
     "alertdialog/reset-password/action": "Okay",
 
+    "auth/invalid-email": "Uw e-mail of wachtwoord is niet correct. Controleer op spelfouten?",
+    "auth/user-disabled": "De gebruiker is gedeactiveerd door het systeem. Als u denkt dat dit een fout is, neem dan contact op met support@investit-academy.de.",
+    "auth/user-not-found": "Uw e-mail of wachtwoord is niet correct. Controleer op spelfouten?",
+    "auth/wrong-password": "Uw e-mail of wachtwoord is niet correct. Controleer op spelfouten?",
+
+    "auth/email-already-in-use": "Er bestaat al een account voor het door u ingevoerde e-mailadres. Als u uw wachtwoord bent vergeten, kunt u het op elk moment opnieuw instellen met de functie 'Wachtwoord opnieuw instellen'.",
+    "auth/operation-not-allowed": "De inlogdienst is momenteel uitgeschakeld. Probeer het later opnieuw.",
+    "auth/weak-password": "Het wachtwoord dat u hebt ingevoerd is te zwak. Kies een sterker wachtwoord.",
+
+    "auth/requires-recent-login": "Om veiligheidsredenen, gelieve eerst in te loggen.",
+
     "auth/claims-too-large": "Er komen meer verzoeken binnen dan toegestaan. Probeer het later nog eens.",
-    "auth/wrong-password": "Uw e-mail of wachtwoord is niet correct. Misschien heb je het verkeerd getypt?",
     "auth/email-already-exists": "De opgegeven e-mail is al in gebruik.",
     "auth/id-token-expired": "Het Authenticatie ID token is verlopen.",
     "auth/id-token-revoked": "Het Authenticatie ID token is ingetrokken.",
@@ -204,7 +214,6 @@
     "auth/invalid-credential": "De inloggegevens kunnen niet worden gebruikt voor registratie. Neem contact op met support@investit-academy.de.",
     "auth/invalid-disabled-field": "Als je deze fout ziet, hebben we iets helemaal verkeerd gedaan. Neem contact op met support@investit-academy.de.",
     "auth/invalid-display-name": "Uw gebruikersnaam is ongeldig.",
-    "auth/invalid-email": "Uw e-mailadres is ongeldig. Misschien heb je het verkeerd getypt?",
     "auth/invalid-email-verified": "Uw e-mailadres kon niet worden geverifieerd. Misschien heb je het verkeerd getypt?",
     "auth/invalid-id-token": "De verbinding met de server was defect. Neem contact op met support@investit-academy.de.",
     "auth/invalid-last-sign-in-time": "De server kon uw tijdzone niet valideren. Controleer of de tijd correct is ingesteld op uw mobiele telefoon.",
@@ -219,7 +228,6 @@
     "auth/missing-ios-bundle-id": "De app-gegevens op uw apparaat zijn onjuist. Installeer de app opnieuw. Als de fout zich blijft voordoen, neem dan contact op met support@investit-academy.de.",
     "auth/missing-uid": "Uw gebruikers-ID kon niet worden geladen. Start de app opnieuw op. Als het probleem aanhoudt, neem dan contact op met support@investit-academy.de.",
     "auth/missing-oauth-client-secret": "Uw registratie kon niet worden verwerkt. Neem contact op met support@investit-academy.de",
-    "auth/operation-not-allowed": "De inlogdienst is momenteel uitgeschakeld. Probeer het later nog eens.",
     "auth/phone-number-already-exists": "Dit telefoonnummer bestaat al.",
     "auth/project-not-found": "De verbinding met de server kon niet tot stand worden gebracht. Neem contact op met support@investit-academy.de",
     "auth/session-cookie-expired": "Een cookie is verlopen tijdens uw verzoek. Log uit en start de app opnieuw.",
@@ -228,7 +236,6 @@
     "auth/unknown": "Er is een onbekende fout opgetreden. Neem contact op met support@investit-academy.de",
     "auth/uid-already-exists": "Uw gebruikers-ID kon niet worden ingesteld. Probeer opnieuw te registreren.",
     "auth/unauthorized-continue-uri": "Uw registratieverzoek kon niet worden verwerkt. Neem contact op met support@investit-academy.de",
-    "auth/user-not-found": "Uw e-mail of wachtwoord is niet correct. Misschien heb je het verkeerd getypt?",
     "auth/not-logged-in-to-verify": "Om een verificatie e-mail aan te vragen, moet u ingelogd zijn.",
     "auth/not-logged-in-to-update-password": "Om uw wachtwoord te wijzigen, moet u ingelogd zijn. Als u uw wachtwoord bent vergeten, kunt u een e-mail aanvragen om uw wachtwoord opnieuw in te stellen."
 }

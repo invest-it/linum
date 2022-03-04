@@ -188,8 +188,18 @@
     "alertdialog/reset-password/title": "Solicitud enviada",
     "alertdialog/reset-password/action": "Okay",
 
+    "auth/invalid-email": "Su correo electrónico o su contraseña no son correctos. ¿Comprobar errores ortográficos?",
+    "auth/user-disabled": "El usuario ha sido desactivado por el sistema. Si cree que se trata de un error, póngase en contacto con support@investit-academy.de.",
+    "auth/user-not-found": "Su correo electrónico o su contraseña no son correctos. ¿Comprobar errores ortográficos?",
+    "auth/wrong-password": "Su correo electrónico o su contraseña no son correctos. ¿Comprobar errores ortográficos?",
+
+    "auth/email-already-in-use": "Ya existe una cuenta para la dirección de correo electrónico que ha introducido. Si ha olvidado su contraseña, puede restablecerla en cualquier momento mediante la función 'Restablecer contraseña'.",
+    "auth/operation-not-allowed": "El servicio de inicio de sesión está actualmente desactivado. Por favor, inténtelo de nuevo más tarde.",
+    "auth/weak-password": "La contraseña que has introducido es demasiado débil. Por favor, elija una contraseña más fuerte.",
+
+    "auth/requires-recent-login": "Por razones de seguridad, por favor inicie sesión primero.",
+
     "auth/claims-too-large": "Se reciben más solicitudes de las permitidas. Por favor, inténtelo más tarde.",
-    "auth/wrong-password": "Su correo electrónico o su contraseña no son correctos. ¿Quizás lo has escrito mal?",
     "auth/email-already-exists": "El correo electrónico especificado ya está en uso.",
     "auth/id-token-expired": "El token de identificación de autenticación ha caducado.",
     "auth/id-token-revoked": "El token de identificación de autenticación ha sido revocado.",
@@ -202,7 +212,6 @@
     "auth/invalid-credential": "Los datos de acceso no pueden utilizarse para el registro. Póngase en contacto con support@investit-academy.de.",
     "auth/invalid-disabled-field": "Si ve este error, es que hemos hecho algo completamente mal. Póngase en contacto con support@investit-academy.de.",
     "auth/invalid-display-name": "Su nombre de usuario no es válido.",
-    "auth/invalid-email": "Su dirección de correo electrónico no es válida. ¿Quizás lo has escrito mal?",
     "auth/invalid-email-verified": "Su dirección de correo electrónico no ha podido ser verificada. ¿Quizás lo has escrito mal?",
     "auth/invalid-id-token": "La conexión con el servidor era defectuosa. Póngase en contacto con support@investit-academy.de.",
     "auth/invalid-last-sign-in-time": "El servidor no ha podido validar su zona horaria. Por favor, compruebe si la hora está correctamente ajustada en su teléfono móvil.",
@@ -217,7 +226,6 @@
     "auth/missing-ios-bundle-id": "Los datos de la aplicación en su dispositivo son incorrectos. Por favor, vuelva a instalar la aplicación. Si el error persiste, póngase en contacto con support@investit-academy.de.",
     "auth/missing-uid": "No se ha podido cargar su ID de usuario. Por favor, reinicie la aplicación. Si el problema persiste, póngase en contacto con support@investit-academy.de.",
     "auth/missing-oauth-client-secret": "Su registro no ha podido ser procesado. Póngase en contacto con support@investit-academy.de.",
-    "auth/operation-not-allowed": "El servicio de inicio de sesión está actualmente desactivado. Por favor, inténtelo más tarde.",
     "auth/phone-number-already-exists": "Este número de teléfono ya existe.",
     "auth/project-not-found": "No se ha podido establecer la conexión con el servidor. Póngase en contacto con support@investit-academy.de.",
     "auth/session-cookie-expired": "Una cookie expiró durante su solicitud. Por favor, cierra la sesión y reinicia la aplicación.",
@@ -226,7 +234,6 @@
     "auth/unknown": "Se ha producido un error desconocido. Póngase en contacto con support@investit-academy.de",
     "auth/uid-already-exists": "No se ha podido establecer su ID de usuario. Por favor, intente registrarse de nuevo.",
     "auth/unauthorized-continue-uri": "Su solicitud de registro no ha podido ser procesada. Póngase en contacto con support@investit-academy.de.",
-    "auth/user-not-found": "Su correo electrónico o su contraseña no son correctos. ¿Quizás lo has escrito mal?",
     "auth/not-logged-in-to-verify": "Para solicitar un correo electrónico de verificación, debe estar conectado.",
     "auth/not-logged-in-to-update-password": "Para cambiar su contraseña, debe estar conectado. Si ha olvidado su contraseña, puede solicitar un correo electrónico para restablecerla."
 }

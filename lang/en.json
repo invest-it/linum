@@ -188,8 +188,18 @@
     "alertdialog/reset-password/title": "Request sent.",
     "alertdialog/reset-password/action": "Okay",
 
-    "auth/claims-too-large": "More requests than allowed are received. Please try again later.",
+    "auth/invalid-email": "Your email or password is not correct. Check for spelling errors?",
+    "auth/user-disabled": "The user has been deactivated by the system. If you think this is an error, please contact support@investit-academy.de.",
+    "auth/user-not-found": "Your email or password is not correct. Check for spelling errors?",
     "auth/wrong-password": "Your email or password is not correct. Check for spelling errors?",
+
+    "auth/email-already-in-use": "An account already exists for the email address you entered. If you have forgotten your password, you can reset it at any time using the 'Reset password' function.",
+    "auth/operation-not-allowed": "The login service is currently disabled. Please try again later.",
+    "auth/weak-password": "The password you entered is too weak. Please choose a stronger password.",
+
+    "auth/requires-recent-login": "For security reasons, please log in first.",
+
+    "auth/claims-too-large": "More requests than allowed are received. Please try again later.",
     "auth/email-already-exists": "The specified e-mail is already in use.",
     "auth/id-token-expired": "The Authentication ID token has expired.",
     "auth/id-token-revoked": "The Authentication ID token has been revoked.",
@@ -202,7 +212,6 @@
     "auth/invalid-credential": "The login information cannot be used for registration. Please contact support@investit-academy.de.",
     "auth/invalid-disabled-field": "If you see this error, we have done something completely wrong. Please contact support@investit-academy.de.",
     "auth/invalid-display-name": "Your username is invalid.",
-    "auth/invalid-email": "Your email address is invalid. Look our for spelling errors!",
     "auth/invalid-email-verified": "Your email address could not be verified. Look our for spelling errors!",
     "auth/invalid-id-token": "The connection to the server malfunctioned. Please contact support@investit-academy.de.",
     "auth/invalid-last-sign-in-time": "The server could not validate your time zone. Please check if the time is set correctly on your mobile phone.",
@@ -217,7 +226,6 @@
     "auth/missing-ios-bundle-id": "The app data on your device is incorrect. Please reinstall the app. If the error persists, please contact support@investit-academy.de.",
     "auth/missing-uid": "Your user ID could not be loaded. Please restart the app. If the problem persists, please contact support@investit-academy.de.",
     "auth/missing-oauth-client-secret": "Your registration could not be processed. Please contact support@investit-academy.de",
-    "auth/operation-not-allowed": "The login service is currently disabled. Please try again later.",
     "auth/phone-number-already-exists": "This telephone number already exists.",
     "auth/project-not-found": "The connection to the server could not be established. Please contact support@investit-academy.de",
     "auth/session-cookie-expired": "A cookie expired during your request. Please log out and restart the app.",
@@ -226,7 +234,6 @@
     "auth/unknown": "An unknown error occurred. Please contact support@investit-academy.de",
     "auth/uid-already-exists": "Your user ID could not be set. Please try to register again.",
     "auth/unauthorized-continue-uri": "Your registration request could not be processed. Please contact support@investit-academy.de.",
-    "auth/user-not-found": "Your email or password is not correct. Check for spelling errors?",
     "auth/not-logged-in-to-verify": "To request a verification email, you must be logged in.",
     "auth/not-logged-in-to-update-password": "To change your password, you must be logged in. If you have forgotten your password, you can request a password reset email instead."
 }
