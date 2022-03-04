@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/currency_input_formatter.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
@@ -18,6 +20,9 @@ class EnterScreenTopInputField extends StatefulWidget {
 
 class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
   TextEditingController? myController;
+
+  String lastState = "0,00";
+
   @override
   void initState() {
     super.initState();
@@ -39,9 +44,12 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
     if (myController == null) {
       if (enterScreenProvider.amount != 0) {
         myController = TextEditingController(
-            text: enterScreenProvider.amount.toStringAsFixed(2) + " €");
+            text: enterScreenProvider.amount
+                    .toStringAsFixed(2)
+                    .replaceAll(".", ",") +
+                " €");
       } else {
-        myController = TextEditingController();
+        myController = TextEditingController(text: lastState + " €");
       }
     }
     //calculation of the size (width and height) of a text - here it
@@ -65,7 +73,9 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
           child: Container(
             alignment: Alignment.bottomCenter,
             width: proportionateScreenWidth(375),
-            height: MediaQuery.of(context).size.height < 650 ? 180 : 190 , //proportionateScreenHeight(200), //180
+            height: MediaQuery.of(context).size.height < 650
+                ? 180
+                : 190, //proportionateScreenHeight(200), //180
             color: Theme.of(context).colorScheme.primary,
             child: SafeArea(
               bottom: false,
@@ -77,11 +87,12 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                   Form(
                     child: Container(
                       child: TextField(
-                        inputFormatters: [
-                          CurrencyInputFormatter(
-                            allowNegative: false,
-                          ),
-                        ],
+                        // inputFormatters: [
+                        //   CurrencyInputFormatter(
+                        //     allowNegative: false,
+                        //   ),
+                        // ],
+
                         // validator: (value) {
                         //   if (value!.isNotEmpty && value.length < 8) {
                         //     return null;
@@ -89,6 +100,8 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                         //     return 'Enter a value!';
                         //   }
                         // },
+
+                        cursorWidth: 0,
                         maxLength: 15,
                         textAlign: TextAlign.center,
                         textAlignVertical: TextAlignVertical.center,
@@ -101,8 +114,8 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                           isCollapsed: true,
                           isDense: true,
                           hintText: enterScreenProvider.isExpenses
-                              ? " 0.00 €"
-                              : " 0.00 €",
+                              ? " 0,00 €"
+                              : " 0,00 €",
                           // as soon as multiple currencies are implemented, the provider for this will insert the corresponding symbol here.
                           // suffixIcon: Text("€"),
                           hintStyle: TextStyle(
@@ -114,7 +127,60 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                         style: Theme.of(context).textTheme.headline1!.copyWith(
                               color: _colorPicker(enterScreenProvider, context),
                             ),
-                        onChanged: (String _) {
+                        onTap: () => {
+                          myController!.selection = TextSelection.fromPosition(
+                              TextPosition(
+                                  offset: myController!.text.length - 2))
+                        },
+                        onChanged: (String str) {
+                          str = str.trim();
+
+                          if (str.substring(str.length - 1) != "€" &&
+                              !str
+                                  .substring(str.length - 1)
+                                  .contains(RegExp(r"[0-9]"))) {
+                            str = str.substring(0, str.length - 1);
+                          }
+                          if (str.substring(str.length - 1) != "€") {
+                            str = str.substring(0, str.length - 3) +
+                                str.substring(str.length - 1);
+                          } else {
+                            str = str.substring(0, str.length - 2);
+                          }
+
+                          // if (lastState.length < str.length) {
+                          //   String newChar =
+                          //       str.substring(str.length - 1).trim();
+                          //   int valueToAdd = int.parse(newChar);
+                          //   int current =
+                          //       int.parse(lastState.replaceAll(r",", ""));
+                          //   newVal = (current * 10 + valueToAdd).toString();
+                          // } else if (lastState.length > str.length) {
+                          //   int currentValue =
+                          //       int.parse(lastState.replaceAll(r",", ""));
+                          //   newVal = (currentValue ~/ 10).toString();
+                          // }
+
+                          String newVal = int.parse(
+                                  str.replaceAll(r",", "").replaceAll(r".", ""))
+                              .toString();
+
+                          if (newVal.length < 3) {
+                            int x = 3 - newVal.length;
+                            for (int i = 0; i < x; i++) {
+                              newVal = "0$newVal";
+                            }
+                          }
+                          lastState = newVal.replaceRange(
+                              newVal.length - 2,
+                              newVal.length,
+                              ",${newVal.substring(newVal.length - 2)}");
+                          setState(() {
+                            myController!.text = lastState + " €";
+                            myController!.selection =
+                                TextSelection.fromPosition(TextPosition(
+                                    offset: myController!.text.length - 2));
+                          });
                           enterScreenProvider.setAmount(double.tryParse(
                                   myController!.text
                                       .substring(
@@ -122,7 +188,6 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                                       .replaceAll(".", "")
                                       .replaceAll(",", ".")) ??
                               0.0);
-
                           //print(enterScreenProvider.amount);
                         },
                       ),
