@@ -44,6 +44,10 @@ class _HomeScreenState extends State<HomeScreen> {
           icon: Icons.settings,
           ontap: () => screenIndexProvider.setPageIndex(3),
         ),
+        AppBarAction.fromParameters(
+          icon: Icons.developer_mode_rounded,
+          ontap: () => screenIndexProvider.setPageIndex(4),
+        )
       ],
       body: Stack(
         children: [

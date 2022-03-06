@@ -142,7 +142,11 @@
 
     "enter_screen/add-amount/dialog-label-title-expenses": "Voeg een bedrag toe aan uw uitgave!",
     "enter_screen/add-amount/dialog-label-title-income": "Voeg een bedrag toe aan uw inkomen!",
-    "enter_screen/add-amount/dialog-label-title": "Oké!",
+    "enter_screen/add-amount/dialog-label-title": "OK",
+
+
+    "academy_screen/label-title": "Financiën eenvoudig uitgelegd.",
+    "academy_screen/label-description": "De Investeer het! Academy helpt je navigeren in de wereld van business en financiën. Wij produceren gratis, onbevooroordeelde leervideo's voor u. Kijk nu eens!",
 
 
     "action_lip/forgot-password/logged-out/label-title": "Reset Wachtwoord",

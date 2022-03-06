@@ -14,6 +14,7 @@ abstract class AppBarAction {
     DefaultAction.ACADEMY: AppBarAction.fromParameters(
         icon: Icons.video_library_rounded,
         ontap: () {
+          //TODO @Burst change this into the equivalent of screenIndexProvider.setScreenIndex(4)
           launchURL('https://youtube.investit-academy.de');
         }),
     DefaultAction.BACK: BackButton(),

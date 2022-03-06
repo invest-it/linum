@@ -92,4 +92,5 @@ enum ProviderKey {
   STATS,
   SETTINGS,
   ONBOARDING,
+  ACADEMY,
 }

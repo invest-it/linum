@@ -143,6 +143,10 @@
     "enter_screen/add-amount/dialog-label-title": "Okay!",
 
 
+    "academy_screen/label-title": "Finances simply explained.",
+    "academy_screen/label-description": "The Invest it! Academy helps you navigate the world of business and finance. We produce free, unbiased learning videos for you. Take a look now!",
+
+
     "action_lip/forgot-password/logged-out/label-title": "Reset Password",
     "action_lip/forgot-password/logged-out/label-description": "Please enter your email address connected to your Linum account. We will send you a verification code along with instructions on how to reset your password.",
     "action_lip/forgot-password/logged-out/button-submit": "Request code",

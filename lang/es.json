@@ -143,6 +143,10 @@
     "enter_screen/add-amount/dialog-label-title": "Ok!",
 
 
+    "academy_screen/label-title": "Las finanzas explicadas de forma sencilla.",
+    "academy_screen/label-description": "El programa Invest it! La Academia le ayuda a navegar por el mundo de los negocios y las finanzas. Producimos vídeos de aprendizaje gratuitos e imparciales para usted. ¡Echa un vistazo ahora!",
+
+
     "action_lip/forgot-password/logged-out/label-title": "Restablecer contraseña",
     "action_lip/forgot-password/logged-out/label-description": "Por favor, introduzca su dirección de correo electrónico conectada a su cuenta de Linum. Le enviaremos un código de verificación junto con las instrucciones para restablecer su contraseña.",
     "action_lip/forgot-password/logged-out/button-submit": "Solicitar código",
