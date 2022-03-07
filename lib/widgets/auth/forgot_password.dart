@@ -112,6 +112,7 @@ class ForgotPasswordButton extends StatelessWidget {
                               'action_lip/forgot-password/logged-out/button-submit'),
                           style: Theme.of(context).textTheme.button,
                         ),
+                        // Logged Out onPressed
                         callback: () => {
                           authenticationService.resetPassword(
                               _inputController.text,
@@ -226,6 +227,7 @@ class ForgotPasswordButton extends StatelessWidget {
                               'action_lip/forgot-password/logged-in/button-submit'),
                           style: Theme.of(context).textTheme.button,
                         ),
+                        //Logged in onPressed
                         callback: () => {
                           authenticationService.updatePassword(
                             _inputController.text,
@@ -264,8 +266,11 @@ class ForgotPasswordButton extends StatelessWidget {
     return OutlinedButton(
       onPressed: forgotPWactionLip,
       child: Text(
-        AppLocalizations.of(context)!
-            .translate('onboarding_screen/login-lip-forgot-password-button'),
+        authenticationService.isLoggedIn
+            ? AppLocalizations.of(context)!.translate(
+                "settings_screen/system-settings/button-forgot-password")
+            : AppLocalizations.of(context)!.translate(
+                'onboarding_screen/login-lip-forgot-password-button'),
         style: Theme.of(context)
             .textTheme
             .button
