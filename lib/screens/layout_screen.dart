@@ -59,69 +59,78 @@ class _LayoutScreenState extends State<LayoutScreen> {
       ),
       //floatingactionbutton with bottomnavbar
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          BalanceDataProvider balanceDataProvider =
-              Provider.of<BalanceDataProvider>(context, listen: false);
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (innerContext) {
-              return MultiProvider(
-                providers: [
-                  ChangeNotifierProvider<EnterScreenProvider>(
-                    create: (_) {
-                      return EnterScreenProvider(
-                        category: _accountSettingsProvider
-                                .settings['StandardCategoryExpense'] ??
-                            "None",
-                        secondaryCategory: _accountSettingsProvider
-                                .settings['StandardCategoryIncome'] ??
-                            "None",
-                      );
-                    },
-                  ),
-                  ChangeNotifierProvider<BalanceDataProvider>(
-                    create: (_) {
-                      return balanceDataProvider..dontDisposeOneTime();
-                    },
-                  ),
-                  ChangeNotifierProvider<AccountSettingsProvider>(
-                    create: (_) {
-                      return _accountSettingsProvider..dontDisposeOneTime();
-                    },
-                  ),
-                ],
-                child: EnterScreen(),
-              );
-              // ChangeNotifierProvider.value(
-              // value: enterScreenProvider, child: EnterScreen());
-            }
-                //=> EnterScreen()),
+      floatingActionButton: screenIndexProvider.pageIndex ==
+              5 //Check if the PIN lock is active
+          ? null
+          : FloatingActionButton(
+              onPressed: () {
+                BalanceDataProvider balanceDataProvider =
+                    Provider.of<BalanceDataProvider>(context, listen: false);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (innerContext) {
+                    return MultiProvider(
+                      providers: [
+                        ChangeNotifierProvider<EnterScreenProvider>(
+                          create: (_) {
+                            return EnterScreenProvider(
+                              category: _accountSettingsProvider
+                                      .settings['StandardCategoryExpense'] ??
+                                  "None",
+                              secondaryCategory: _accountSettingsProvider
+                                      .settings['StandardCategoryIncome'] ??
+                                  "None",
+                            );
+                          },
+                        ),
+                        ChangeNotifierProvider<BalanceDataProvider>(
+                          create: (_) {
+                            return balanceDataProvider..dontDisposeOneTime();
+                          },
+                        ),
+                        ChangeNotifierProvider<AccountSettingsProvider>(
+                          create: (_) {
+                            return _accountSettingsProvider
+                              ..dontDisposeOneTime();
+                          },
+                        ),
+                      ],
+                      child: EnterScreen(),
+                    );
+                    // ChangeNotifierProvider.value(
+                    // value: enterScreenProvider, child: EnterScreen());
+                  }
+                      //=> EnterScreen()),
+                      ),
+                );
+              },
+              child: Icon(Icons.add),
+              elevation: 2.0,
+              backgroundColor: Theme.of(context).colorScheme.secondary,
+            ),
+      bottomNavigationBar:
+          screenIndexProvider.pageIndex == 5 //Check if the PIN lock is active
+              ? null
+              : FABBottomAppBar(
+                  items: [
+                    BottomAppBarItem(iconData: Icons.home, text: 'Home'),
+                    BottomAppBarItem(
+                        iconData: Icons.savings_rounded, text: 'Budget'),
+                    BottomAppBarItem(
+                        iconData: Icons.bar_chart_rounded, text: 'Stats'),
+                    BottomAppBarItem(iconData: Icons.person, text: 'Account'),
+                  ],
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  centerItemText: '',
+                  color: Theme.of(context).colorScheme.background,
+                  selectedColor: Theme.of(context).colorScheme.secondary,
+                  notchedShape: CircularNotchedRectangle(),
+                  //gives the pageIndex the value (the current selected index in the
+                  //bottom navigation bar)
+                  onTabSelected: (int value) {
+                    screenIndexProvider.setPageIndex(value);
+                  },
                 ),
-          );
-        },
-        child: Icon(Icons.add),
-        elevation: 2.0,
-        backgroundColor: Theme.of(context).colorScheme.secondary,
-      ),
-      bottomNavigationBar: FABBottomAppBar(
-        items: [
-          BottomAppBarItem(iconData: Icons.home, text: 'Home'),
-          BottomAppBarItem(iconData: Icons.savings_rounded, text: 'Budget'),
-          BottomAppBarItem(iconData: Icons.bar_chart_rounded, text: 'Stats'),
-          BottomAppBarItem(iconData: Icons.person, text: 'Account'),
-        ],
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        centerItemText: '',
-        color: Theme.of(context).colorScheme.background,
-        selectedColor: Theme.of(context).colorScheme.secondary,
-        notchedShape: CircularNotchedRectangle(),
-        //gives the pageIndex the value (the current selected index in the
-        //bottom navigation bar)
-        onTabSelected: (int value) {
-          screenIndexProvider.setPageIndex(value);
-        },
-      ),
     );
   }
 
