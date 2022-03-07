@@ -5,6 +5,7 @@ import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:linum/widgets/top_bar_action_item.dart';
 
+/// Page Index: 2
 class StatisticsScreen extends StatelessWidget {
   StatisticsScreen({Key? key}) : super(key: key);
 

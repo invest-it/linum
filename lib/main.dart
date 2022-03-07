@@ -11,6 +11,7 @@ import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
+import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/screens/layout_screen.dart';
 import 'package:linum/providers/authentication_service.dart';
@@ -269,6 +270,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   }),
               ChangeNotifierProvider<ActionLipStatusProvider>(
                 create: (_) => ActionLipStatusProvider(),
+              ),
+              ChangeNotifierProvider<PinCodeProvider>(
+                create: (_) => PinCodeProvider(),
               ),
             ],
             child: OnBoardingOrLayoutScreen(),

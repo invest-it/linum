@@ -11,6 +11,7 @@ import 'package:linum/widgets/screen_skeleton/app_bar_action.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
+/// Page Index: 4
 class AcademyScreen extends StatelessWidget {
   const AcademyScreen({Key? key}) : super(key: key);
 

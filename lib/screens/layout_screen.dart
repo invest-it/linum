@@ -8,6 +8,7 @@ import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/screens/academy_screen.dart';
+import 'package:linum/screens/lock_screen.dart';
 import 'package:linum/screens/statistics_screen.dart';
 import 'package:linum/screens/enter_screen.dart';
 import 'package:linum/screens/home_screen.dart';
@@ -37,11 +38,12 @@ class _LayoutScreenState extends State<LayoutScreen> {
 
     //list with all the "screens"
     List<Widget> _page = <Widget>[
-      HomeScreen(),
-      BudgetScreen(),
-      StatisticsScreen(),
-      SettingsScreen(),
-      AcademyScreen(),
+      HomeScreen(), //0
+      BudgetScreen(), //1
+      StatisticsScreen(), //2
+      SettingsScreen(), //3
+      AcademyScreen(), //4
+      LockScreen(), //5
     ];
 
     return Scaffold(

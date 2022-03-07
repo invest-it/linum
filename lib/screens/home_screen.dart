@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/frontend_functions/silent-scroll.dart';
@@ -9,6 +11,7 @@ import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 
 import 'package:provider/provider.dart';
 
+/// Page Index: 0
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -40,6 +43,12 @@ class _HomeScreenState extends State<HomeScreen> {
       hasHomeScreenCard: true,
       leadingAction: AppBarAction.fromPreset(DefaultAction.ACADEMY),
       actions: [
+        (BuildContext context) => AppBarAction.fromParameters(
+              icon: Icons.lock_rounded,
+              ontap: () {
+                screenIndexProvider.setPageIndex(5);
+              },
+            ),
         AppBarAction.fromPreset(DefaultAction.SETTINGS),
       ],
       body: Stack(

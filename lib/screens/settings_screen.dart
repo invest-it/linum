@@ -18,6 +18,7 @@ import 'package:linum/widgets/settings_screen/toggle_button_element.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
+/// Page Index: 3
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({
     Key? key,
