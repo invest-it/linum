@@ -36,6 +36,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     AccountSettingsProvider accountSettingsProvider =
         Provider.of<AccountSettingsProvider>(context);
 
+    ActionLipStatusProvider actionLipStatusProvider =
+        Provider.of<ActionLipStatusProvider>(context);
+
     return ScreenSkeleton(
       head: 'Account',
       providerKey: ProviderKey.SETTINGS,
@@ -100,6 +103,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: [
                 GestureDetector(
                   onTap: () {
+                    //Request from SoTBurst - this fix is related to issue #46
+                    actionLipStatusProvider.setActionLipStatus(
+                        providerKey: ProviderKey.SETTINGS);
+
                     showModalBottomSheet(
                       context: context,
                       builder: (context) {
@@ -165,6 +172,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 //Ende Einnahmen ListTile
                 GestureDetector(
                   onTap: () {
+                    //Request from SoTBurst - this fix is related to issue #46
+                    actionLipStatusProvider.setActionLipStatus(
+                        providerKey: ProviderKey.SETTINGS);
+
                     showModalBottomSheet(
                       context: context,
                       builder: (context) {
@@ -352,16 +363,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ForgotPasswordButton(ProviderKey.SETTINGS),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Text(
-                'App Version: Unknown',
-                style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                    color: Theme.of(context).colorScheme.tertiaryContainer,
-                    letterSpacing: 0),
-                textAlign: TextAlign.center,
-              ),
-            ),
+            //TODO Add Version Display here
+
+            // Padding(
+            //   padding: const EdgeInsets.all(12.0),
+            //   child: Text(
+            //     'App Version: Unknown',
+            //     style: Theme.of(context).textTheme.bodyText2?.copyWith(
+            //         color: Theme.of(context).colorScheme.tertiaryContainer,
+            //         letterSpacing: 0),
+            //     textAlign: TextAlign.center,
+            //   ),
+            // ),
             SizedBox(
               height: 40,
             ),
