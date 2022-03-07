@@ -87,8 +87,8 @@ class ScreenSkeleton extends StatelessWidget {
   final bool contentOverride;
   final bool isInverted;
   final bool hasHomeScreenCard;
-  final Widget? leadingAction;
-  final List<Widget>? actions;
+  final Widget Function(BuildContext)? leadingAction;
+  final List<Widget Function(BuildContext)>? actions;
   final ProviderKey? providerKey;
   ActionLipStatus initialActionLipStatus;
   late final Widget _initialActionLipBody;

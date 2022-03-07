@@ -1,11 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 
 class LipSection extends StatelessWidget {
   final String lipTitle;
   final bool isInverted;
-  final Widget? leadingAction;
-  final List<Widget>? actions;
+  final Widget Function(BuildContext)? leadingAction;
+  final List<Widget Function(BuildContext)>? actions;
 
   const LipSection({
     required this.lipTitle,
@@ -44,8 +46,8 @@ class LipSection extends StatelessWidget {
                       elevation: 0,
                       automaticallyImplyLeading: false,
                       backgroundColor: Colors.transparent,
-                      leading: leadingAction,
-                      actions: actions,
+                      leading: leadingAction!(context),
+                      actions: _actionHelper(actions, context),
                     ),
                   ),
                 ),
@@ -83,12 +85,23 @@ class LipSection extends StatelessWidget {
                       elevation: 0,
                       automaticallyImplyLeading: false,
                       backgroundColor: Colors.transparent,
-                      leading: leadingAction,
-                      actions: actions,
+                      leading: leadingAction!(context),
+                      actions: _actionHelper(actions, context),
                     ),
                   ),
                 ),
             ],
           );
+  }
+
+  List<Widget>? _actionHelper(
+      List<Widget Function(BuildContext context)>? functions,
+      BuildContext context) {
+    List<Widget> widgets = [];
+    if (functions != null)
+      for (int i = 0; i < functions.length; i++) {
+        widgets.add(functions[i](context));
+      }
+    return widgets;
   }
 }

@@ -1,4 +1,9 @@
+import 'dart:developer';
+
+import 'package:linum/providers/screen_index_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/material.dart';
 
 // Launches URLS in the standard browser. Helpful for Buttons etc.
 // usage: e.g. onTap: launchURL('https://onlyfans.com')

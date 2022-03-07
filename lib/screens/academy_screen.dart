@@ -21,7 +21,7 @@ class AcademyScreen extends StatelessWidget {
 
     return ScreenSkeleton(
       head: 'Academy',
-      leadingAction: AppBarAction.fromParameters(
+      leadingAction: (BuildContext context) => AppBarAction.fromParameters(
         icon: Icons.arrow_back_rounded,
         ontap: () => screenIndexProvider.setPageIndex(0),
       ),

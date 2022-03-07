@@ -40,14 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
       hasHomeScreenCard: true,
       leadingAction: AppBarAction.fromPreset(DefaultAction.ACADEMY),
       actions: [
-        AppBarAction.fromParameters(
-          icon: Icons.settings,
-          ontap: () => screenIndexProvider.setPageIndex(3),
-        ),
-        AppBarAction.fromParameters(
-          icon: Icons.developer_mode_rounded,
-          ontap: () => screenIndexProvider.setPageIndex(4),
-        )
+        AppBarAction.fromPreset(DefaultAction.SETTINGS),
       ],
       body: Stack(
         children: [
