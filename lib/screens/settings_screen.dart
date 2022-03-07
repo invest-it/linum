@@ -352,6 +352,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ForgotPasswordButton(ProviderKey.SETTINGS),
               ],
             ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Text(
+                'App Version: Unknown',
+                style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                    color: Theme.of(context).colorScheme.tertiaryContainer,
+                    letterSpacing: 0),
+                textAlign: TextAlign.center,
+              ),
+            ),
             SizedBox(
               height: 40,
             ),

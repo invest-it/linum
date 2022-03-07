@@ -113,10 +113,21 @@ class ForgotPasswordButton extends StatelessWidget {
                           style: Theme.of(context).textTheme.button,
                         ),
                         // Logged Out onPressed
-                        callback: () => {
+                        callback: () {
                           authenticationService.resetPassword(
                               _inputController.text,
-                              onError: userAlert.showMyDialog),
+                              onError: userAlert.showMyDialog,
+                              onComplete: (String message) {
+                            userAlert.showMyDialog(
+                              message,
+                              title: "alertdialog/reset-password/title",
+                              actionTitle: "alertdialog/reset-password/action",
+                            );
+                            actionLipStatusProvider.setActionLipStatus(
+                              providerKey: ProviderKey.ONBOARDING,
+                            );
+                            FocusManager.instance.primaryFocus?.unfocus();
+                          });
                         },
                         gradient: LinearGradient(
                           colors: [
@@ -233,7 +244,10 @@ class ForgotPasswordButton extends StatelessWidget {
                             _inputController.text,
                             onError: userAlert.showMyDialog,
                             onComplete: (String message) {
-                              userAlert.showMyDialog(message);
+                              userAlert.showMyDialog(message,
+                                  title: "alertdialog/update-password/title",
+                                  actionTitle:
+                                      "alertdialog/update-password/action");
                               actionLipStatusProvider.setActionLipStatus(
                                 providerKey: ProviderKey.SETTINGS,
                               );
