@@ -15,6 +15,7 @@ import 'package:linum/widgets/auth/forgot_password.dart';
 import 'package:linum/widgets/auth/logout_form.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:linum/widgets/settings_screen/toggle_button_element.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -27,6 +28,28 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  //TODO PACKAGE-INFO-PLUS
+  PackageInfo _packageInfo = PackageInfo(
+    appName: 'Unknown',
+    packageName: 'Unknown',
+    version: 'Unknown',
+    buildNumber: 'Unknown',
+    buildSignature: 'Unknown',
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    _initPackageInfo();
+  }
+
+  Future<void> _initPackageInfo() async {
+    final info = await PackageInfo.fromPlatform();
+    setState(() {
+      _packageInfo = info;
+    });
+  }
+
   String dropdownValue = 'Euro (EUR, €)';
 
   @override
@@ -365,16 +388,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             //TODO Add Version Display here
 
-            // Padding(
-            //   padding: const EdgeInsets.all(12.0),
-            //   child: Text(
-            //     'App Version: Unknown',
-            //     style: Theme.of(context).textTheme.bodyText2?.copyWith(
-            //         color: Theme.of(context).colorScheme.tertiaryContainer,
-            //         letterSpacing: 0),
-            //     textAlign: TextAlign.center,
-            //   ),
-            // ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Text(
+                _packageInfo.appName +
+                    ' Version ' +
+                    _packageInfo.version +
+                    ' (' +
+                    _packageInfo.buildNumber +
+                    ')',
+                style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                    color: Theme.of(context).colorScheme.tertiaryContainer,
+                    letterSpacing: 0),
+                textAlign: TextAlign.center,
+              ),
+            ),
             SizedBox(
               height: 40,
             ),
