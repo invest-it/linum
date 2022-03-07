@@ -181,7 +181,9 @@ class _OnboardingScreenState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     OnboardingScreenProvider onboardingScreenProvider =
-        Provider.of<OnboardingScreenProvider>(context);
+        Provider.of<OnboardingScreenProvider>(
+      context,
+    );
 
     switch (onboardingScreenProvider.pageState) {
       case 0:
@@ -241,49 +243,54 @@ class _OnboardingScreenState extends State<OnboardingPage> {
             ),
             Positioned(
               child: SafeArea(
-                child: DropdownButton<String>(
-                  items: <String>[
-                    countryFlag('de'),
-                    countryFlag('gb'),
-                    countryFlag('nl'),
-                    countryFlag('es'),
-                    countryFlag('fr'),
-                  ].map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  value: countryFlagWithSpecialCases(
-                      AppLocalizations.of(context)!.locale.languageCode),
-                  onChanged: (value) {
-                    if (value != null) {
-                      setState(() {
-                        Map<String, String> countryFlagsToCountryCode = {
-                          countryFlag('de'): "de",
-                          countryFlag('gb'): "en",
-                          countryFlag('nl'): "nl",
-                          countryFlag('es'): "es",
-                          countryFlag('fr'): "fr",
-                        };
-                        SharedPreferences.getInstance().then((pref) {
-                          pref.setString("languageCode",
-                              countryFlagsToCountryCode[value] ?? "en");
-                        });
-                        String langString =
-                            countryFlagsToCountryCode[value] ?? "en";
-                        AppLocalizations.of(context)!.load(
-                            locale: Locale(
-                                langString,
-                                langString != "en"
-                                    ? langString.toUpperCase()
-                                    : "US"));
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    elevation: 1,
+                    items: <String>[
+                      countryFlag('de'),
+                      countryFlag('gb'),
+                      countryFlag('nl'),
+                      countryFlag('es'),
+                      countryFlag('fr'),
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    value: countryFlagWithSpecialCases(
+                        AppLocalizations.of(context)!.locale.languageCode),
+                    onChanged: (value) {
+                      if (value != null) {
+                        setState(() {
+                          Map<String, String> countryFlagsToCountryCode = {
+                            countryFlag('de'): "de",
+                            countryFlag('gb'): "en",
+                            countryFlag('nl'): "nl",
+                            countryFlag('es'): "es",
+                            countryFlag('fr'): "fr",
+                          };
+                          SharedPreferences.getInstance().then((pref) {
+                            pref.setString("languageCode",
+                                countryFlagsToCountryCode[value] ?? "en");
+                          });
+                          String langString =
+                              countryFlagsToCountryCode[value] ?? "en";
+                          AppLocalizations.of(context)!.load(
+                              locale: Locale(
+                                  langString,
+                                  langString != "en"
+                                      ? langString.toUpperCase()
+                                      : "US"));
 
-                        Provider.of<AuthenticationService>(context)
-                            .updateLanguageCode(context);
-                      });
-                    }
-                  },
+                          Provider.of<AuthenticationService>(
+                            context,
+                            listen: false,
+                          ).updateLanguageCode(context);
+                        });
+                      }
+                    },
+                  ),
                 ),
               ),
               top: 0,
