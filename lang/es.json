@@ -100,7 +100,7 @@
     "settings_screen/language-settings/label-nl": "Holandés",
 
     "settings_screen/system-settings/label-title": "SU CUENTA",
-    "settings_screen/system-settings/button-forgot-password": "¿Ha olvidado su contraseña?",
+    "settings_screen/system-settings/button-forgot-password": "Cambiar contraseña",
     "settings_screen/system-settings/button-forgot-password-tooltip": "Puede solicitar un restablecimiento de la contraseña aquí si ha olvidado su antigua contraseña.",
     "settings_screen/system-settings/button-signout": "Firmar la salida",
 

@@ -100,7 +100,7 @@
     "settings_screen/language-settings/label-nl": "Nederlands",
 
     "settings_screen/system-settings/label-title": "YOUR ACCOUNT",
-    "settings_screen/system-settings/button-forgot-password": "Forgot your password?",
+    "settings_screen/system-settings/button-forgot-password": "Change Password",
     "settings_screen/system-settings/button-forgot-password-tooltip": "You can request a password reset here if you forgot your old password.",
     "settings_screen/system-settings/button-signout": "Sign out",
 

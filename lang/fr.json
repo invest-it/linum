@@ -100,7 +100,7 @@
     "settings_screen/language-settings/label-nl": "Nederlands",
 
     "settings_screen/system-settings/label-title": "VOTRE COMPTE",
-    "settings_screen/system-settings/button-forgot-password": "Réinitialiser le mot de passe",
+    "settings_screen/system-settings/button-forgot-password": "Modifier le mot de passe",
     "settings_screen/system-settings/button-forgot-password-tooltip": "Vous pouvez demander une réinitialisation du mot de passe ici si vous avez oublié votre ancien mot de passe.",
     "settings_screen/system-settings/button-signout": "Se déconnecter",
 
