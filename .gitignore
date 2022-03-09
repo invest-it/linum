@@ -53,3 +53,4 @@ app.*.map.json
 
 pubspec.lock
 
+.firebaserc

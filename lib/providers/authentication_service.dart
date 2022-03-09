@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
@@ -19,6 +20,10 @@ class AuthenticationService extends ChangeNotifier {
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
   bool get isLoggedIn => uid != "";
+
+  bool get isInDebugMode => FirebaseFirestore.instance.settings.asMap["host"]
+      .toString()
+      .contains("localhost");
 
   /// Tries to sign the user in
   Future<void> signIn(
@@ -98,6 +103,9 @@ class AuthenticationService extends ChangeNotifier {
   }
 
   bool get isEmailVerified {
+    if (isInDebugMode) {
+      return true;
+    }
     if (_firebaseAuth.currentUser != null) {
       return _firebaseAuth.currentUser!.emailVerified;
     }

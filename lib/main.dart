@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -22,16 +25,33 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  /// Force Portrait Mode
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  SharedPreferences.getInstance().then((pref) {
-    MyApp.currentLocalLanguageCode = pref.getString("languageCode");
-    runApp(MyApp());
+  Future<FirebaseApp> _initialization = Firebase.initializeApp();
+  _initialization.then((_) {
+    FirebaseFirestore.instance.useFirestoreEmulator("localhost", 8080);
+    FirebaseAuth.instance.useAuthEmulator("localhost", 9099);
+
+    if (FirebaseFirestore.instance.settings.asMap["host"]
+        .toString()
+        .contains("localhost")) {
+      log("---- DEBUG MODE ----");
+      log("Using Firebase Emulator");
+      log("DO NOT PUBLISH IN DEBUG MODE");
+    }
+
+    /// Force Portrait Mode
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    SharedPreferences.getInstance().then((pref) {
+      MyApp.currentLocalLanguageCode = pref.getString("languageCode");
+      runApp(MyApp(_initialization));
+    });
   });
 }
 
 class MyApp extends StatelessWidget {
   static String? currentLocalLanguageCode;
+  final Future<FirebaseApp> _initialization;
+
+  MyApp(this._initialization);
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +156,7 @@ class MyApp extends StatelessWidget {
 
       // End of Theme Data.
 
-      home: MyHomePage(title: 'Linum'),
+      home: MyHomePage(_initialization, title: 'Linum'),
 
       // Specified Localizations
       supportedLocales: [
@@ -176,18 +196,24 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+  MyHomePage(this._initialization, {Key? key, required this.title})
+      : super(key: key);
 
   final String title;
 
+  final Future<FirebaseApp> _initialization;
+
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState(_initialization);
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   /// The future is part of the state of our widget. We should not call `initializeApp`
   /// directly inside [build].
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+  final Future<FirebaseApp> _initialization;
+
+  _MyHomePageState(this._initialization);
+
   @override
   Widget build(BuildContext context) {
     // Initialize Size Guide for responsive behaviour
@@ -327,7 +353,6 @@ class OnBoardingOrLayoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthenticationService auth = Provider.of<AuthenticationService>(context);
-
     return auth.isLoggedIn
         ? LayoutScreen(key)
         : MultiProvider(
