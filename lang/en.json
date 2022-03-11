@@ -38,6 +38,7 @@
     "onboarding_screen/register-privacy/label-leading": "I have read and accept the ",
     "onboarding_screen/register-privacy/label-link": "Privacy Statement",
     "onboarding_screen/register-privacy/label-trailing": ".",
+    "onboarding_screen/register-privacy/label-error": "You must accept the T&Cs before you can register.",
 
 
     "home_screen/label-recent-transactions": "Recent transactions",
@@ -202,6 +203,8 @@
     "auth/weak-password": "The password you entered is too weak. Please choose a stronger password.",
 
     "auth/requires-recent-login": "For security reasons, please log in first.",
+    "auth/network-request-failed": "The server could not be contacted (timeout).",
+
 
     "auth/claims-too-large": "More requests than allowed are received. Please try again later.",
     "auth/email-already-exists": "The specified e-mail is already in use.",
