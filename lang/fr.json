@@ -38,6 +38,7 @@
     "onboarding_screen/register-privacy/label-leading": "J'ai lu la ",
     "onboarding_screen/register-privacy/label-link": "déclaration de confidentalité",
     "onboarding_screen/register-privacy/label-trailing": " et je l'accepte.",
+    "onboarding_screen/register-privacy/label-error": "Vous devez accepter les CGU avant de pouvoir vous inscrire.",
 
 
     "home_screen/label-recent-transactions": "Transactions récentes",
@@ -202,6 +203,8 @@
     "auth/weak-password": "The password you entered is too weak. Please choose a stronger password.",
 
     "auth/requires-recent-login": "For security reasons, please log in first.",
+    "auth/network-request-failed": "Le serveur n'a pas pu être contacté (timeout).",
+
 
     "auth/claims-too-large": "Nous recevons plus de demandes que ce qui est autorisé. Veuillez réessayer plus tard.",
     "auth/email-already-exists": "L'e-mail indiqué est déjà utilisé.",
