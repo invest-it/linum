@@ -1,13 +1,13 @@
 {
     "main/label-loading": "Cargando...",
     "main/label-error": "Se ha producido un error.",
-    "main/label-wip": "Trabajo en curso. Vuelva a comprobarlo pronto.",
+    "main/label-wip": "Seguimos trabajando en ello. Vuelva a comprobarlo más tarde.",
 
 
-    "onboarding_screen/card1-title": "Bienvenido!",
-    "onboarding_screen/card1-description": "Tu nuevo asistente de presupuestos ya te está esperando.",
+    "onboarding_screen/card1-title": "¡Bienvenido!",
+    "onboarding_screen/card1-description": "Tu nuevo asistente de presupuestos te está esperando.",
     "onboarding_screen/card2-title": "Rastreador de dinero",
-    "onboarding_screen/card2-description": "No podría ser más sencillo: con nuestra función de seguimiento, siempre sabrá exactamente de cuánto dinero dispone en este momento.",
+    "onboarding_screen/card2-description": "No podría ser más sencillo: con nuestra función de seguimiento, siempre sabrá exactamente de cuánto dinero dispone en cualquier momento.",
     "onboarding_screen/card3-title": "Prepárate bien",
     "onboarding_screen/card3-description": "Con nuestra función de academia puede acceder a una amplia selección de vídeos gratuitos sobre muchos temas del mundo de las finanzas.",
     "onboarding_screen/card4-title": "Estar al tanto de todo",
@@ -38,6 +38,7 @@
     "onboarding_screen/register-privacy/label-leading": "He leído y acepto la ",
     "onboarding_screen/register-privacy/label-link": "política de privacidad",
     "onboarding_screen/register-privacy/label-trailing": ".",
+    "onboarding_screen/register-privacy/label-error": "Debe aceptar las condiciones generales antes de registrarse.",
 
 
     "home_screen/label-recent-transactions": "Transacciones recientes",
@@ -185,7 +186,7 @@
     "alertdialog/login-verification/action": "Okay",
 
     "alertdialog/update-password/message": "Su contraseña ha sido actualizada.",
-    "alertdialog/update-password/title": "Listo!",
+    "alertdialog/update-password/title": "¡Listo!",
     "alertdialog/update-password/action": "Okay",
 
     "alertdialog/reset-password/message": "Te hemos enviado un enlace para restablecer tu contraseña. Haga clic en el enlace del correo electrónico para establecer una nueva contraseña. Por favor, compruebe también su carpeta de spam.",
@@ -202,6 +203,7 @@
     "auth/weak-password": "La contraseña que has introducido es demasiado débil. Por favor, elija una contraseña más fuerte.",
 
     "auth/requires-recent-login": "Por razones de seguridad, por favor inicie sesión primero.",
+    "auth/network-request-failed": "No se ha podido contactar con el servidor (Timeout).",
 
     "auth/claims-too-large": "Se reciben más solicitudes de las permitidas. Por favor, inténtelo más tarde.",
     "auth/email-already-exists": "El correo electrónico especificado ya está en uso.",
