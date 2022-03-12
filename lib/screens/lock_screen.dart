@@ -164,6 +164,7 @@ class _LockScreenState extends State<LockScreen> {
                         function: () {
                           // TODO @Burst create a special signOut() function (or parameter) for me which resets the pin lock status for the account
                           auth.signOut();
+                          // TODO this procedure leads to some permission errors in firebase
                           sip.setPageIndex(0);
                           Navigator.of(context).pop();
                         },
