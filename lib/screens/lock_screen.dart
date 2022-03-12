@@ -1,12 +1,15 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/widgets/lock_screen/numeric_field.dart';
 import 'package:linum/widgets/lock_screen/pin_field.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
+
+import '../backend_functions/local_app_localizations.dart';
 
 /// Page Index: 5
 class LockScreen extends StatefulWidget {
@@ -121,7 +124,14 @@ class _LockScreenState extends State<LockScreen> {
                           child: Material(
                             child: IconButton(
                               icon: Icon(Icons.fingerprint_rounded),
-                              onPressed: () {},
+                              onPressed: null,
+                              // Alternatively, we could display a toast here. Uncomment this if simply disabling the button displeases too many people in the dev team.
+                              // onPressed: () {
+                              // Fluttertoast.showToast(
+                              //     msg: AppLocalizations.of(context)!.translate(
+                              //         'home_screen_card/home-screen-card-toast'),
+                              //     toastLength: Toast.LENGTH_SHORT);
+                              // },
                             ),
                           ),
                         ),
