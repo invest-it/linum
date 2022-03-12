@@ -192,6 +192,11 @@
     "alertdialog/reset-password/title": "Demande envoyée",
     "alertdialog/reset-password/action": "Okay",
 
+    "alertdialog/killswitch/title": "Tu es sûr?",
+    "alertdialog/killswitch/message": "Si tu te déconnectes, le blocage du code PIN sera désactivé. Tu peux ainsi te connecter normalement avec ton e-mail et ton mot de passe si tu as oublié ton code PIN.",
+    "alertdialog/killswitch/action": "Se déconnecter et réinitialiser le code PIN",
+    "alertdialog/killswitch/cancel": "Ne pas se déconnecter",
+
     "auth/invalid-email": "Votre adresse électronique ou votre mot de passe n'est pas correct. Vérifier les fautes d'orthographe ?",
     "auth/user-disabled": "L'utilisateur a été désactivé par le système. Si vous pensez qu'il s'agit d'une erreur, veuillez contacter support@investit-academy.de.",
     "auth/user-not-found": "Votre adresse électronique ou votre mot de passe n'est pas correct. Vérifier les fautes d'orthographe ?",

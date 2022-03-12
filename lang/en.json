@@ -192,6 +192,11 @@
     "alertdialog/reset-password/title": "Request sent.",
     "alertdialog/reset-password/action": "Okay",
 
+    "alertdialog/killswitch/title": "Are you sure?",
+    "alertdialog/killswitch/message": "When you log out, the PIN lock is deactivated. This allows you to log in normally with your email and password if you forget your PIN code.",
+    "alertdialog/killswitch/action": "Log out and reset PIN",
+    "alertdialog/killswitch/cancel": "Don't log out",
+
     "auth/invalid-email": "Your email or password is not correct. Check for spelling errors?",
     "auth/user-disabled": "The user has been deactivated by the system. If you think this is an error, please contact support@investit-academy.de.",
     "auth/user-not-found": "Your email or password is not correct. Check for spelling errors?",

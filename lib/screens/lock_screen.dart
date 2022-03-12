@@ -1,15 +1,15 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/frontend_functions/user_alert.dart';
+import 'package:linum/models/dialog_action.dart';
+import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/widgets/lock_screen/numeric_field.dart';
 import 'package:linum/widgets/lock_screen/pin_field.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
-import '../backend_functions/local_app_localizations.dart';
+import '../providers/screen_index_provider.dart';
 
 /// Page Index: 5
 class LockScreen extends StatefulWidget {
@@ -20,7 +20,10 @@ class LockScreen extends StatefulWidget {
 class _LockScreenState extends State<LockScreen> {
   @override
   Widget build(BuildContext context) {
+    AuthenticationService auth = Provider.of<AuthenticationService>(context);
     PinCodeProvider pinCodeProvider = Provider.of<PinCodeProvider>(context);
+    ScreenIndexProvider sip = Provider.of<ScreenIndexProvider>(context);
+    UserAlert confirmKillswitch = UserAlert(context: context);
 
     return ScreenSkeleton(
       head: 'Linum',
@@ -152,7 +155,33 @@ class _LockScreenState extends State<LockScreen> {
               ),
               child: TextButton(
                 child: Text('Abmelden'),
-                onPressed: () {},
+                onPressed: () {
+                  confirmKillswitch.showMyActionDialog(
+                    "alertdialog/killswitch/message",
+                    [
+                      DialogAction(
+                        actionTitle: "alertdialog/killswitch/action",
+                        function: () {
+                          // TODO @Burst create a special signOut() function (or parameter) for me which resets the pin lock status for the account
+                          auth.signOut();
+                          sip.setPageIndex(0);
+                          Navigator.of(context).pop();
+                        },
+                        dialogPurpose: DialogPurpose.PRIMARY,
+                      ),
+                      DialogAction(
+                        actionTitle: "alertdialog/killswitch/cancel",
+                        //If this is empty, UserAlert will use its own context to pop the dialog
+                        function: () {
+                          Navigator.of(context).pop();
+                        },
+                        dialogPurpose: DialogPurpose.SECONDARY,
+                        popDialog: true,
+                      ),
+                    ],
+                    title: "alertdialog/killswitch/title",
+                  );
+                },
               ),
             ),
           ),

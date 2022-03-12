@@ -191,6 +191,11 @@
     "alertdialog/reset-password/title": "Anfrage gesendet",
     "alertdialog/reset-password/action": "Okay",
 
+    "alertdialog/killswitch/title": "Bist du sicher?",
+    "alertdialog/killswitch/message": "Wenn du dich abmeldest, wird die PIN-Sperre deaktiviert. So kannst du dich normal mit deiner E-Mail und deinem Passwort anmelden, falls du deinen PIN-Code vergessen hast.",
+    "alertdialog/killswitch/action": "Abmelden und PIN zurücksetzen",
+    "alertdialog/killswitch/cancel": "Nicht abmelden",
+
     "auth/invalid-email": "Deine E-Mail-Adresse ist ungültig. Vielleicht hast du dich vertippt?",
     "auth/user-disabled": "Der Benutzer wurde vom System deaktiviert. Falls du denkst, dass dies ein Fehler ist, wende dich bitte an support@investit-academy.de",
     "auth/user-not-found": "Deine E-Mail oder dein Passwort sind nicht korrekt. Vielleicht hast du dich vertippt?",

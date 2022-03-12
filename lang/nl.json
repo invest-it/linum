@@ -157,6 +157,10 @@
     "action_lip/forgot-password/logged-in/label-description": "Voer een nieuw wachtwoord in. U kunt geen wachtwoorden gebruiken die u al eerder hebt gebruikt. Het nieuwe wachtwoord mag niet uw e-mailadres bevatten en moet uit ten minste 6 tekens bestaan.",
     "action_lip/forgot-password/logged-in/button-submit": "Wijzig Wachtwoord nu",
 
+    "alertdialog/killswitch/title": "Ben je zeker?",
+    "alertdialog/killswitch/message": "Wanneer u uitlogt, wordt het PIN-slot gedeactiveerd. Hiermee kunt u normaal inloggen met uw e-mailadres en wachtwoord als u uw PIN-code bent vergeten.",
+    "alertdialog/killswitch/action": "Log uit en reset PIN",
+    "alertdialog/killswitch/cancel": "Niet uitloggen",
 
     "logout_form/label-current-email": "Ingelogd als:\n",
 
