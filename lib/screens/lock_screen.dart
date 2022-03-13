@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/frontend_functions/user_alert.dart';
 import 'package:linum/models/dialog_action.dart';
+import 'package:linum/models/lock_screen_action.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/widgets/lock_screen/numeric_field.dart';
@@ -23,8 +24,7 @@ class _LockScreenState extends State<LockScreen> {
     AuthenticationService auth = Provider.of<AuthenticationService>(context);
     PinCodeProvider pinCodeProvider = Provider.of<PinCodeProvider>(context);
     ScreenIndexProvider sip = Provider.of<ScreenIndexProvider>(context);
-    UserAlert confirmKillswitch = UserAlert(context: context);
-    Map<String, dynamic> screenIntent = pinCodeProvider.recallPINLockIntent();
+    LockScreenAction screenIntent = pinCodeProvider.recallPINLockIntent();
 
     return ScreenSkeleton(
       head: 'Linum',
@@ -38,7 +38,7 @@ class _LockScreenState extends State<LockScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  screenIntent["label-title"],
+                  screenIntent.screenTitle,
                   style: Theme.of(context).textTheme.headline3,
                 ),
                 Padding(
@@ -48,6 +48,7 @@ class _LockScreenState extends State<LockScreen> {
                         ScreenFraction.QUANTILE,
                       )),
                   child: Text(
+                    //TODO get last login email address
                     'mail@otismohr.de',
                     style: Theme.of(context).textTheme.headline5,
                   ),
@@ -155,34 +156,9 @@ class _LockScreenState extends State<LockScreen> {
                 minWidth: double.infinity,
               ),
               child: TextButton(
-                child: Text(screenIntent["label-action"]),
+                child: Text(screenIntent.actionTitle),
                 onPressed: () {
-                  confirmKillswitch.showMyActionDialog(
-                    "alertdialog/killswitch/message",
-                    [
-                      DialogAction(
-                        actionTitle: "alertdialog/killswitch/action",
-                        function: () {
-                          // TODO @Burst create a special signOut() function (or parameter) for me which resets the pin lock status for the account
-                          auth.signOut();
-                          // TODO this procedure leads to some permission errors in firebase
-                          sip.setPageIndex(0);
-                          Navigator.of(context).pop();
-                        },
-                        dialogPurpose: DialogPurpose.PRIMARY,
-                      ),
-                      DialogAction(
-                        actionTitle: "alertdialog/killswitch/cancel",
-                        //If this is empty, UserAlert will use its own context to pop the dialog
-                        function: () {
-                          Navigator.of(context).pop();
-                        },
-                        dialogPurpose: DialogPurpose.SECONDARY,
-                        popDialog: true,
-                      ),
-                    ],
-                    title: "alertdialog/killswitch/title",
-                  );
+                  screenIntent.function();
                 },
               ),
             ),

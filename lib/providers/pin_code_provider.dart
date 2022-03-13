@@ -3,6 +3,10 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:linum/frontend_functions/user_alert.dart';
+import 'package:linum/models/dialog_action.dart';
+import 'package:linum/models/lock_screen_action.dart';
+import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/screen_index_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,17 +17,33 @@ class PinCodeProvider extends ChangeNotifier {
   String _code = '';
   int _pinSlot = 0;
   Color _ringColor = Color(0XFF279E44);
+  late BuildContext _context;
   late ScreenIndexProvider _screenIndexProvider;
+  late AuthenticationService _auth;
+  late UserAlert confirmKillswitch;
 
   PinCodeProvider(BuildContext context) {
     _screenIndexProvider = Provider.of<ScreenIndexProvider>(
       context,
       listen: false,
     );
+    _auth = Provider.of<AuthenticationService>(
+      context,
+      listen: false,
+    );
+    _context = context;
+    confirmKillswitch = UserAlert(context: _context);
   }
 
-  updateScreenIndexProvider(ScreenIndexProvider screenIndexProvider) {
-    _screenIndexProvider = screenIndexProvider;
+  updateSipAndAuth(BuildContext context) {
+    _screenIndexProvider = Provider.of<ScreenIndexProvider>(
+      context,
+      listen: false,
+    );
+
+    _auth = Provider.of<AuthenticationService>(context);
+
+    _context = context;
   }
 
   // If the intent of the PIN lock is not set before the screen is called, assume that we want to check whether user knows the code (classic recall)
@@ -72,32 +92,54 @@ class PinCodeProvider extends ChangeNotifier {
     _intent = intent;
   }
 
-  Map<String, dynamic> recallPINLockIntent() {
+//TODO make a model out of this
+  LockScreenAction recallPINLockIntent() {
     switch (_intent) {
       case PINLockIntent.INITIALIZE:
-        return {
-          "label-title": "Wähle eine PIN",
-          "label-action": "Abbrechen",
-          "action": () {
-            log("Back to Settings Screen");
-          }
-        };
+        return LockScreenAction(
+          screenTitle: "Wähle eine neue PIN",
+          actionTitle: "Abbrechen",
+          function: () => log("Back to Settings Screen"),
+        );
       case PINLockIntent.CHANGE:
-        return {
-          "label-title": "Wähle eine neue PIN",
-          "label-action": "Abbrechen",
-          "action": () {
-            log("Back to Settings Screen");
-          }
-        };
+        return LockScreenAction(
+          screenTitle: "Wähle deine neue PIN",
+          actionTitle: "Abbrechen",
+          function: () => log("Back to Settings Screen"),
+        );
       case PINLockIntent.RECALL:
-        return {
-          "label-title": "Bitte PIN eingeben",
-          "label-action": "Abmelden",
-          "action": () {
-            log("Log out and turn off PIN");
-          }
-        };
+        return LockScreenAction(
+          screenTitle: "Bitte PIN eingeben",
+          actionTitle: "alertdialog/killswitch/action",
+          function: () {
+            confirmKillswitch.showMyActionDialog(
+              "alertdialog/killswitch/message",
+              [
+                DialogAction(
+                  actionTitle: "alertdialog/killswitch/action",
+                  function: () {
+                    _auth.signOut().then((_) {
+                      Provider.of<ScreenIndexProvider>(_context, listen: false)
+                          .setPageIndex(0);
+                      Navigator.of(_context).pop();
+                    });
+                  },
+                  dialogPurpose: DialogPurpose.PRIMARY,
+                ),
+                DialogAction(
+                  actionTitle: "alertdialog/killswitch/cancel",
+                  //If this is empty, UserAlert will use its own context to pop the dialog
+                  function: () {
+                    Navigator.of(_context).pop();
+                  },
+                  dialogPurpose: DialogPurpose.SECONDARY,
+                  popDialog: true,
+                ),
+              ],
+              title: "alertdialog/killswitch/title",
+            );
+          },
+        );
     }
   }
 

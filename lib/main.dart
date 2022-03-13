@@ -271,14 +271,15 @@ class _MyHomePageState extends State<MyHomePage> {
               ChangeNotifierProvider<ActionLipStatusProvider>(
                 create: (_) => ActionLipStatusProvider(),
               ),
-              ChangeNotifierProxyProvider<ScreenIndexProvider, PinCodeProvider>(
+              ChangeNotifierProxyProvider2<ScreenIndexProvider,
+                      AuthenticationService, PinCodeProvider>(
                   create: (context) => PinCodeProvider(context),
-                  update: (context, screenIndexProvider, oldPinCodeProvider) {
+                  update:
+                      (context, screenIndexProvider, auth, oldPinCodeProvider) {
                     if (oldPinCodeProvider == null) {
                       return PinCodeProvider(context);
                     } else {
-                      return oldPinCodeProvider
-                        ..updateScreenIndexProvider(screenIndexProvider);
+                      return oldPinCodeProvider..updateSipAndAuth(context);
                     }
                   }),
             ],
