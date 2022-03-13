@@ -239,7 +239,8 @@ class _RegisterFormState extends State<RegisterForm> {
               // ),
               Text(
                 _agbNullCheck
-                    ? 'Sie müssen die AGB akzeptieren, bevor Sie sich registrieren können.'
+                    ? AppLocalizations.of(context)!.translate(
+                        "onboarding_screen/register-privacy/label-error")
                     : '',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyText2!.copyWith(

@@ -50,6 +50,7 @@ class AuthenticationService extends ChangeNotifier {
         }
       }
     } on FirebaseAuthException catch (e) {
+      log(e.message.toString());
       onError("auth/" + e.code);
     }
   }
@@ -75,6 +76,7 @@ class AuthenticationService extends ChangeNotifier {
         onNotVerified();
       }
     } on FirebaseAuthException catch (e) {
+      log(e.message.toString());
       onError("auth/" + e.code);
     }
   }
