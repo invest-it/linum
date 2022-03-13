@@ -24,6 +24,7 @@ class _LockScreenState extends State<LockScreen> {
     PinCodeProvider pinCodeProvider = Provider.of<PinCodeProvider>(context);
     ScreenIndexProvider sip = Provider.of<ScreenIndexProvider>(context);
     UserAlert confirmKillswitch = UserAlert(context: context);
+    Map<String, dynamic> screenIntent = pinCodeProvider.recallPINLockIntent();
 
     return ScreenSkeleton(
       head: 'Linum',
@@ -37,7 +38,7 @@ class _LockScreenState extends State<LockScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Bitte PIN eingeben',
+                  screenIntent["label-title"],
                   style: Theme.of(context).textTheme.headline3,
                 ),
                 Padding(
@@ -146,7 +147,7 @@ class _LockScreenState extends State<LockScreen> {
             ),
           ),
 
-          /// KILLSWITCH
+          /// KILLSWITCH - to be refactored very soon
           Expanded(
             flex: 1,
             child: ConstrainedBox(
@@ -154,7 +155,7 @@ class _LockScreenState extends State<LockScreen> {
                 minWidth: double.infinity,
               ),
               child: TextButton(
-                child: Text('Abmelden'),
+                child: Text(screenIntent["label-action"]),
                 onPressed: () {
                   confirmKillswitch.showMyActionDialog(
                     "alertdialog/killswitch/message",

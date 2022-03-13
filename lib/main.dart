@@ -271,9 +271,16 @@ class _MyHomePageState extends State<MyHomePage> {
               ChangeNotifierProvider<ActionLipStatusProvider>(
                 create: (_) => ActionLipStatusProvider(),
               ),
-              ChangeNotifierProvider<PinCodeProvider>(
-                create: (_) => PinCodeProvider(),
-              ),
+              ChangeNotifierProxyProvider<ScreenIndexProvider, PinCodeProvider>(
+                  create: (context) => PinCodeProvider(context),
+                  update: (context, screenIndexProvider, oldPinCodeProvider) {
+                    if (oldPinCodeProvider == null) {
+                      return PinCodeProvider(context);
+                    } else {
+                      return oldPinCodeProvider
+                        ..updateScreenIndexProvider(screenIndexProvider);
+                    }
+                  }),
             ],
             child: OnBoardingOrLayoutScreen(),
           );
