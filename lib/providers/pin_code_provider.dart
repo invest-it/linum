@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PinCodeProvider extends ChangeNotifier {
+  //TODO turn this off. This should not be active by default, but as long as the switch in settings_screen isn't implemented, there is no other way of turning the feature on.
   bool _pinActive = true;
   String _code = '';
   int _pinSlot = 0;
@@ -94,7 +95,7 @@ class PinCodeProvider extends ChangeNotifier {
           "label-title": "Bitte PIN eingeben",
           "label-action": "Abmelden",
           "action": () {
-            log("Log out and deactivate the PIN");
+            log("Log out and turn off PIN");
           }
         };
     }
