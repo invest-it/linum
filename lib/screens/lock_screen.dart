@@ -61,10 +61,10 @@ class _LockScreenState extends State<LockScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                PinField(1, pinCodeProvider.pinSlot),
-                PinField(2, pinCodeProvider.pinSlot),
-                PinField(3, pinCodeProvider.pinSlot),
-                PinField(4, pinCodeProvider.pinSlot),
+                PinField(1, pinCodeProvider.pinSlot, pinCodeProvider.ringColor),
+                PinField(2, pinCodeProvider.pinSlot, pinCodeProvider.ringColor),
+                PinField(3, pinCodeProvider.pinSlot, pinCodeProvider.ringColor),
+                PinField(4, pinCodeProvider.pinSlot, pinCodeProvider.ringColor),
               ],
             ),
           ),

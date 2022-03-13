@@ -4,7 +4,8 @@ import 'package:linum/frontend_functions/size_guide.dart';
 class PinField extends StatelessWidget {
   final int index;
   final int selectedIndex;
-  PinField(this.index, this.selectedIndex);
+  final Color ringColor;
+  PinField(this.index, this.selectedIndex, this.ringColor);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class PinField extends StatelessWidget {
             ),
             BoxShadow(
               color: selectedIndex == index - 1
-                  ? Theme.of(context).colorScheme.primaryContainer
+                  ? ringColor
                   : Colors.black.withAlpha(0),
               spreadRadius: 2,
             ),
