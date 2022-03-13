@@ -37,6 +37,7 @@
     "onboarding_screen/register-privacy/label-leading": "Ich habe die ",
     "onboarding_screen/register-privacy/label-link": "Datenschutzerklärung",
     "onboarding_screen/register-privacy/label-trailing": " gelesen und akzeptiere sie.",
+    "onboarding_screen/register-privacy/label-error": "Sie müssen die AGB akzeptieren, bevor Sie sich registrieren können.",
 
 
     "home_screen/label-recent-transactions": "Neueste Transaktionen",
@@ -201,6 +202,8 @@
     "auth/weak-password": "Das eingegebene Passwort ist zu schwach. Bitte wähle ein stärkeres Passwort.",
 
     "auth/requires-recent-login": "Bitte melde dich aus Sicherheitsgründen zunächst an.",
+    "auth/network-request-failed": "Der Server konnte nicht kontaktiert werden (Timeout).",
+
 
     "auth/claims-too-large": "Es gehen mehr Anfragen als zulässig ein. Bitte versuche es später noch einmal.",
     "auth/email-already-exists": "Die angegebene E-Mail wird bereits verwendet.",
