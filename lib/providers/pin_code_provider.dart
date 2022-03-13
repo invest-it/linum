@@ -37,6 +37,7 @@ class PinCodeProvider extends ChangeNotifier {
   }
 
   void wrongCode() {
+    // TODO test this on a physical device (it goes without saying that I cannot verify this feature on an emulator)
     HapticFeedback.vibrate();
     ringColor = Color(0XFFEB5757);
     Fluttertoast.showToast(msg: "Wrong Code");
