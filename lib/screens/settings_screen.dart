@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
@@ -11,6 +9,7 @@ import 'package:linum/frontend_functions/silent-scroll.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
+import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/widgets/auth/forgot_password.dart';
 import 'package:linum/widgets/auth/logout_form.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
@@ -62,6 +61,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     ActionLipStatusProvider actionLipStatusProvider =
         Provider.of<ActionLipStatusProvider>(context);
+
+    PinCodeProvider pinCodeProvider = Provider.of<PinCodeProvider>(context);
 
     return ScreenSkeleton(
       head: 'Account',
@@ -260,6 +261,44 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                   ),
                 ),
+              ],
+            ),
+            ListDivider(),
+
+            ListHeader(
+              'settings_screen/pin-lock/label-title',
+              tooltipMessage: 'settings_screen/pin-lock/label-tooltip',
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SwitchListTile(
+                  title: Text(
+                    AppLocalizations.of(context)!
+                        .translate("settings_screen/pin-lock/switch-label"),
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  value: pinCodeProvider.pinActive,
+                  activeColor: Theme.of(context).colorScheme.primaryContainer,
+                  onChanged: (_) {
+                    setState(() {
+                      pinCodeProvider.togglePINLock();
+                    });
+                  },
+                ),
+                if (pinCodeProvider.pinActive)
+                  ListTile(
+                    dense: true,
+                    trailing: Icon(Icons.arrow_forward_ios_rounded),
+                    title: Text(
+                      AppLocalizations.of(context)!.translate(
+                          "settings_screen/pin-lock/label-change-pin"),
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    onTap: () {
+                      pinCodeProvider.triggerPINChange();
+                    },
+                  ),
               ],
             ),
             ListDivider(),

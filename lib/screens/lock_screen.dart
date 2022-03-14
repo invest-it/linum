@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
-import 'package:linum/frontend_functions/user_alert.dart';
-import 'package:linum/models/dialog_action.dart';
 import 'package:linum/models/lock_screen_action.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/pin_code_provider.dart';
@@ -38,7 +37,8 @@ class _LockScreenState extends State<LockScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  screenIntent.screenTitle,
+                  AppLocalizations.of(context)!
+                      .translate(screenIntent.screenTitle),
                   style: Theme.of(context).textTheme.headline3,
                 ),
                 Padding(
@@ -48,7 +48,7 @@ class _LockScreenState extends State<LockScreen> {
                         ScreenFraction.QUANTILE,
                       )),
                   child: Text(
-                    //TODO get last login email address
+                    //TODO get last login email address from sharedPreferences
                     'mail@otismohr.de',
                     style: Theme.of(context).textTheme.headline5,
                   ),
@@ -148,7 +148,7 @@ class _LockScreenState extends State<LockScreen> {
             ),
           ),
 
-          /// KILLSWITCH - to be refactored very soon
+          /// Action Switch
           Expanded(
             flex: 1,
             child: ConstrainedBox(
@@ -156,7 +156,10 @@ class _LockScreenState extends State<LockScreen> {
                 minWidth: double.infinity,
               ),
               child: TextButton(
-                child: Text(screenIntent.actionTitle),
+                child: Text(
+                  AppLocalizations.of(context)!
+                      .translate(screenIntent.actionTitle),
+                ),
                 onPressed: () {
                   screenIntent.function();
                 },

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/frontend_functions/silent-scroll.dart';
@@ -50,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
           (BuildContext context) => AppBarAction.fromParameters(
                 icon: Icons.lock_rounded,
                 ontap: () {
-                  screenIndexProvider.setPageIndex(5);
+                  pinCodeProvider.triggerPINRecall();
                 },
               ),
         AppBarAction.fromPreset(DefaultAction.SETTINGS),

@@ -27,7 +27,6 @@
     "onboarding_screen/login-email-errorlabel": "Voer een geldig e-mailadres in.",
     "onboarding_screen/login-password-errorlabel": "Voer uw wachtwoord in.",
 
-
     "onboarding_screen/register-lip-title": "SIGN UP",
     "onboarding_screen/register-email-hintlabel": "Emailadres",
     "onboarding_screen/register-password-hintlabel": "Wachtwoord",
@@ -35,7 +34,6 @@
     "onboarding_screen/register-lip-forgot-password-button": "Alternative sign-in methods",
     "onboarding_screen/register-email-errorlabel": "Voer een geldig e-mailadres in.",
     "onboarding_screen/register-password-errorlabel": "Voer een wachtwoord in van ten minste 6 tekens.",
-
 
     "onboarding_screen/register-privacy/label-leading": "Ik heb de ",
     "onboarding_screen/register-privacy/label-link": "privacyverklaaring",
@@ -81,6 +79,11 @@
     "settings_screen/standard-account-selector/credit-card": "Credit Card",
     "settings_screen/standard-account-selector/cash": "Cash",
     "settings_screen/standard-account-selector/deposit": "Deposit",
+
+    "settings_screen/pin-lock/label-title": "PIN SLOT",
+    "settings_screen/pin-lock/label-tooltip": "Als de PIN slot actief is, moet u bij het starten van de app uw persoonlijke PIN-code invoeren om uw gegevens te beschermen.",
+    "settings_screen/pin-lock/switch-label": "PIN slot actief",
+    "settings_screen/pin-lock/label-change-pin": "Wijzig PIN code",
 
     "settings_screen/standard-currency/label-title": "STANDAARDVALUTA",
     "settings_screen/standard-currency/label-tooltip": "Deze valuta wordt standaard gebruikt voor elke nieuwe transactie. U kunt deze ook individueel wijzigen.",
@@ -149,6 +152,19 @@
     "academy_screen/label-description": "De Investeer het! Academy helpt je navigeren in de wereld van business en financiën. Wij produceren gratis, onbevooroordeelde leervideo's voor u. Kijk nu eens!",
 
 
+    "lock_screen/initialize/label-title": "Kies uw PIN",
+    "lock_screen/initialize/label-button": "Annuleren",
+    "lock_screen/change/label-title": "Kies een nieuwe PIN",
+    "lock_screen/change/label-button": "Annuleren",
+    "lock_screen/recall/label-title": "Voer PIN in",
+    "lock_screen/recall/label-button": "Log uit",
+
+    "lock_screen/toast-wrong-code": "De ingevoerde code is onjuist",
+    "lock_screen/toast-pin-deactivated": "De PIN slot is gedeactiveerd.",
+    "lock_screen/toast-pin-set": "De PIN slot is succesvol geactiveerd!",
+    "lock_screen/toast-pin-changed": "De PIN is succesvol gewijzigd.",
+
+
     "action_lip/forgot-password/logged-out/label-title": "Reset Wachtwoord",
     "action_lip/forgot-password/logged-out/label-description": "Voer uw e-mailadres in dat aan uw Linum-account is gekoppeld. Wij zullen u een verificatiecode sturen, samen met instructies over hoe u uw wachtwoord kunt resetten.",
     "action_lip/forgot-password/logged-out/button-submit": "Aanvraag code",
@@ -157,10 +173,6 @@
     "action_lip/forgot-password/logged-in/label-description": "Voer een nieuw wachtwoord in. U kunt geen wachtwoorden gebruiken die u al eerder hebt gebruikt. Het nieuwe wachtwoord mag niet uw e-mailadres bevatten en moet uit ten minste 6 tekens bestaan.",
     "action_lip/forgot-password/logged-in/button-submit": "Wijzig Wachtwoord nu",
 
-    "alertdialog/killswitch/title": "Ben je zeker?",
-    "alertdialog/killswitch/message": "Wanneer u uitlogt, wordt het PIN-slot gedeactiveerd. Hiermee kunt u normaal inloggen met uw e-mailadres en wachtwoord als u uw PIN-code bent vergeten.",
-    "alertdialog/killswitch/action": "Log uit en reset PIN",
-    "alertdialog/killswitch/cancel": "Niet uitloggen",
 
     "logout_form/label-current-email": "Ingelogd als:\n",
 
@@ -197,6 +209,21 @@
     "alertdialog/reset-password/message": "Wij hebben u een link gestuurd om uw wachtwoord te resetten. Klik op de link in de e-mail om een nieuw wachtwoord in te stellen. Controleer ook uw spam-map.",
     "alertdialog/reset-password/title": "Verzoek verzonden",
     "alertdialog/reset-password/action": "Okay",
+
+    "alertdialog/killswitch-recall/title": "Ben je zeker?",
+    "alertdialog/killswitch-recall/message": "Als je uitlogt, wordt het PIN slot gedeactiveerd. Hierdoor kun je normaal inloggen met je e-mail en wachtwoord als je je PIN code vergeten bent.",
+    "alertdialog/killswitch-recall/action": "Log uit en reset PIN",
+    "alertdialog/killswitch-recall/cancel": "Annuleren",
+
+    "alertdialog/killswitch-initialize/title": "Ben je zeker?",
+    "alertdialog/killswitch-initialize/message": "Als je het proces nu annuleert, wordt het PIN-slot weer gedeactiveerd.",
+    "alertdialog/killswitch-initialize/action": "Annuleren toch",
+    "alertdialog/killswitch-initialize/cancel": "Terug naar bewerken",
+
+    "alertdialog/killswitch-change/title": "Ben je zeker?",
+    "alertdialog/killswitch-change/message": "Als je het proces nu annuleert, zal de oude PIN actief blijven.",
+    "alertdialog/killswitch-change/action": "Annuleren toch",
+    "alertdialog/killswitch-change/cancel": "Terug naar bewerken",
 
     "auth/invalid-email": "Uw e-mail of wachtwoord is niet correct. Controleer op spelfouten?",
     "auth/user-disabled": "De gebruiker is gedeactiveerd door het systeem. Als u denkt dat dit een fout is, neem dan contact op met support@investit-academy.de.",
