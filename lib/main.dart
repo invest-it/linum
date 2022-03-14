@@ -339,16 +339,22 @@ class OnBoardingOrLayoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthenticationService auth = Provider.of<AuthenticationService>(context);
+    PinCodeProvider pinCodeProvider = Provider.of<PinCodeProvider>(context);
 
-    return auth.isLoggedIn
-        ? LayoutScreen(key)
-        : MultiProvider(
-            providers: [
-              ChangeNotifierProvider<OnboardingScreenProvider>(
-                create: (_) => OnboardingScreenProvider(),
-              ),
-            ],
-            child: OnboardingPage(),
-          );
+    if (auth.isLoggedIn) {
+      if (pinCodeProvider.pinActive) {
+        pinCodeProvider.triggerPINRecall();
+      }
+      return LayoutScreen(key);
+    } else {
+      return MultiProvider(
+        providers: [
+          ChangeNotifierProvider<OnboardingScreenProvider>(
+            create: (_) => OnboardingScreenProvider(),
+          ),
+        ],
+        child: OnboardingPage(),
+      );
+    }
   }
 }

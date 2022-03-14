@@ -49,7 +49,9 @@ class _LockScreenState extends State<LockScreen> {
                       )),
                   child: Text(
                     //TODO get last login email address from sharedPreferences
-                    'mail@otismohr.de',
+                    auth.userEmail.isNotEmpty
+                        ? auth.userEmail
+                        : pinCodeProvider.lastEmail,
                     style: Theme.of(context).textTheme.headline5,
                   ),
                 ),

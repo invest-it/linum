@@ -16,6 +16,7 @@ import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:linum/widgets/settings_screen/toggle_button_element.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Page Index: 3
 class SettingsScreen extends StatefulWidget {
@@ -280,11 +281,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   value: pinCodeProvider.pinActive,
                   activeColor: Theme.of(context).colorScheme.primaryContainer,
-                  onChanged: (_) {
-                    setState(() {
-                      pinCodeProvider.togglePINLock();
-                    });
-                  },
+                  onChanged: pinCodeProvider.pinActiveStillLoading
+                      ? null
+                      : (_) {
+                          pinCodeProvider.togglePINLock();
+                        },
                 ),
                 if (pinCodeProvider.pinActive)
                   ListTile(

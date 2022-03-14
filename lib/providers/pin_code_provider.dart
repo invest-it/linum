@@ -13,8 +13,6 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PinCodeProvider extends ChangeNotifier {
-  //TODO turn this off. This should not be active by default, but as long as the switch in settings_screen isn't implemented, there is no other way of turning the feature on.
-  bool _pinActive = true;
   String _code = '';
   int _pinSlot = 0;
   Color _ringColor = Color(0XFF279E44);
@@ -22,8 +20,14 @@ class PinCodeProvider extends ChangeNotifier {
   late ScreenIndexProvider _screenIndexProvider;
   late AuthenticationService _auth;
   late UserAlert confirmKillswitch;
+  late bool _pinActive;
+  late String _lastEmail;
+  bool _pinActiveStillLoading = true;
+  bool _lastEmailStillLoading = true;
 
   PinCodeProvider(BuildContext context) {
+    _initialIsPINActive();
+    _initialLastEmail();
     _screenIndexProvider = Provider.of<ScreenIndexProvider>(
       context,
       listen: false,
@@ -36,7 +40,19 @@ class PinCodeProvider extends ChangeNotifier {
     confirmKillswitch = UserAlert(context: _context);
   }
 
-  updateSipAndAuth(BuildContext context) {
+  void _initialIsPINActive() async {
+    _pinActive = await _isPinActive();
+    _pinActiveStillLoading = false;
+  }
+
+  void _initialLastEmail() async {
+    _lastEmail = await _getLastEmail();
+    _lastEmailStillLoading = false;
+  }
+
+  void updateSipAndAuth(BuildContext context) {
+    _lastEmailStillLoading = true;
+    _initialLastEmail();
     _screenIndexProvider = Provider.of<ScreenIndexProvider>(
       context,
       listen: false,
@@ -53,7 +69,7 @@ class PinCodeProvider extends ChangeNotifier {
   // ACTIVATION & SETTINGS - Toggles the PIN Lock in the settingsScreen
 
   ///Activates - Deactivates the PIN Lock
-  //TODO - change the switch condition of _pinActive into one that relies on whether 'applock' has a value in sharedPreferences
+  //TODO - change the switch condition of _pinActive into one that relies on whether _lastEmail + '.code' has a value in sharedPreferences
   void togglePINLock() {
     if (pinActive == false) {
       _pinActive = true;
@@ -68,6 +84,23 @@ class PinCodeProvider extends ChangeNotifier {
               .translate("lock_screen/toast-pin-deactivated"));
     }
     notifyListeners();
+  }
+
+  ///Returns the PIN status based on whether a PIN code is currently being stored in sharedPreferences
+  Future<bool> _isPinActive() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    while (_lastEmailStillLoading) {
+      await Future.delayed(
+        Duration(milliseconds: 10),
+      );
+    }
+    return prefs.containsKey(_lastEmail + '.code');
+  }
+
+  ///Returns the last email that has been used for login stored in sharedPreferences
+  Future<String> _getLastEmail() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('lastMail') ?? 'Error!';
   }
 
   /// Toggles a PIN change request
@@ -87,14 +120,15 @@ class PinCodeProvider extends ChangeNotifier {
   /// Stores a new value for the PIN on the device
   void _storePIN(String code) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('applock', code);
-    log(prefs.getString('applock') ?? "ERROR: No String stored in prefs!!!");
+    prefs.setString(_lastEmail + '.code', code);
+    log(prefs.getString(_lastEmail + '.code') ??
+        "ERROR: No String stored in prefs!!!");
   }
 
   /// Deletes the currently stored value for the PIN on the device
   void _removePIN() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('applock');
+    prefs.remove(_lastEmail + '.code');
   }
 
   // INTENT - provides the "style" of the PIN lock depending of the system intent
@@ -216,13 +250,14 @@ class PinCodeProvider extends ChangeNotifier {
       // log(_code);
       _pinSlot++;
       _ringColor = Color(0XFF279E44);
-      notifyListeners();
 
       //if code # is complete, check if it is correct
-      if (_code.length == 4)
+      if (_code.length == 4) {
         switch (_intent) {
           case PINLockIntent.INITIALIZE:
-            _storePIN(_code);
+            if (_lastEmail != 'Error!') {
+              _storePIN(_code);
+            }
             Fluttertoast.showToast(
               msg: AppLocalizations.of(_context)!
                   .translate("lock_screen/toast-pin-set"),
@@ -231,7 +266,9 @@ class PinCodeProvider extends ChangeNotifier {
             _emptyCode();
             break;
           case PINLockIntent.CHANGE:
-            _storePIN(_code);
+            if (_lastEmail != 'Error!') {
+              _storePIN(_code);
+            }
             Fluttertoast.showToast(
               msg: AppLocalizations.of(_context)!
                   .translate("lock_screen/toast-pin-changed"),
@@ -244,6 +281,8 @@ class PinCodeProvider extends ChangeNotifier {
             _emptyCode();
             break;
         }
+      }
+      notifyListeners();
     }
   }
 
@@ -260,7 +299,7 @@ class PinCodeProvider extends ChangeNotifier {
   /// Check if the current value of [_code] matches the locally stored PIN.
   void _checkCode(String _inputCode) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String _pin = prefs.getString('applock') ?? '';
+    String _pin = prefs.getString(_lastEmail + '.code') ?? '';
     if (_pin == _inputCode) {
       _correctCode();
     } else
@@ -293,7 +332,11 @@ class PinCodeProvider extends ChangeNotifier {
 
   int get pinSlot => _pinSlot;
   Color get ringColor => _ringColor;
-  bool get pinActive => _pinActive;
+  bool get pinActive => !_pinActiveStillLoading ? _pinActive : false;
+  //TODO decide whether we should leave "Loading..." blank in shipping
+  String get lastEmail => !_lastEmailStillLoading ? _lastEmail : 'Loading...';
+  bool get pinActiveStillLoading => _pinActiveStillLoading;
+  bool get lastEmailStillLoading => _lastEmailStillLoading;
 }
 
 enum PINLockIntent {
