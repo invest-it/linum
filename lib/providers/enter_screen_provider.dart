@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linum/models/repeat_duration_type_enum.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 
 class EnterScreenProvider with ChangeNotifier {
@@ -11,10 +12,11 @@ class EnterScreenProvider with ChangeNotifier {
   String _incomeCategory = "";
   String _currency = "";
   DateTime _selectedDate = DateTime.now();
-  Duration? _repeatDuration;
-  late bool _editMode;
+  int? _repeatDuration;
+  RepeatDurationType? _repeatDurationType;
   late RepeatDuration _repeatDurationEnum;
 
+  late bool _editMode;
   String? _formerId;
 
   EnterScreenProvider({
@@ -27,8 +29,9 @@ class EnterScreenProvider with ChangeNotifier {
     DateTime? selectedDate,
     bool editMode = false,
     String? id,
-    Duration? repeatDuration,
-    RepeatDuration initRepeatDurationEnum = RepeatDuration.None,
+    int? repeatDuration,
+    RepeatDurationType? repeatDurationType,
+    RepeatDuration initRepeatDurationEnum = RepeatDuration.NONE,
   }) {
     _amount = amount <= 0 ? -1 * amount : amount;
     _expenseCategory = amount <= 0 ? category : secondaryCategory;
@@ -77,8 +80,12 @@ class EnterScreenProvider with ChangeNotifier {
     return _selectedDate;
   }
 
-  Duration? get repeatDuration {
+  int? get repeatDuration {
     return _repeatDuration;
+  }
+
+  RepeatDurationType? get repeatDurationTyp {
+    return _repeatDurationType;
   }
 
   bool get editMode {
@@ -143,8 +150,13 @@ class EnterScreenProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void setRepeatDuration(Duration? repeatDuration) {
+  void setRepeatDuration(int? repeatDuration) {
     _repeatDuration = repeatDuration;
+    notifyListeners();
+  }
+
+  void setRepeatDurationType(RepeatDurationType repeatDurationType) {
+    _repeatDurationType = repeatDurationType;
     notifyListeners();
   }
 

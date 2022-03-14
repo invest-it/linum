@@ -616,6 +616,8 @@ class _EnterScreenListViewBuilderState
         .setRepeatDurationEnumSilently(RepeatDuration.values[index]);
     enterScreenProvider.setRepeatDuration(accountSettingsProvider
         .categoriesRepeat[RepeatDuration.values[index]]?["duration"]);
+    enterScreenProvider.setRepeatDurationType(accountSettingsProvider
+        .categoriesRepeat[RepeatDuration.values[index]]?["durationType"]);
   }
 
   void _openDatePicker(EnterScreenProvider enterScreenProvider) async {
