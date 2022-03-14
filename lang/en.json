@@ -126,7 +126,7 @@
     "enter_screen/label-repeat-none": "Don't repeat",
     "enter_screen/label-repeat-daily": "Daily",
     "enter_screen/label-repeat-weekly": "Weekly",
-    "enter_screen/label-repeat-30days": "Every 30 days",
+    "enter_screen/label-repeat-30days": "Monthly",
     "enter_screen/label-repeat-monthly": "Beginning of the month",
     "enter_screen/label-repeat-freeselect": "Custom",
 

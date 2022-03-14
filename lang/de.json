@@ -125,7 +125,7 @@
     "enter_screen/label-repeat-none": "Nicht wiederholen",
     "enter_screen/label-repeat-daily": "Täglich",
     "enter_screen/label-repeat-weekly": "Wöchentlich",
-    "enter_screen/label-repeat-30days": "Alle 30 Tage",
+    "enter_screen/label-repeat-30days": "Monatlich",
     "enter_screen/label-repeat-monthly": "Zum Monatsanfang",
     "enter_screen/label-repeat-freeselect": "Frei auswählen",
 
