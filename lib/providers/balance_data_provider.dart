@@ -600,16 +600,26 @@ class BalanceDataProvider extends ChangeNotifier {
           });
         }
 
-        currentTime = DateTime(
+        currentTime = currentTimeRecalculator(
             currentTime.year,
             currentTime.month +
                 (singleRepeatedBalance["repeatDuration"] as num).floor(),
-            currentTime.day);
+            singleRepeatedBalance["initialTime"].toDate().day);
       }
     }
 
     if (didUpdate) {
       singleRepeatedBalance["lastUpdate"] = Timestamp.fromDate(DateTime.now());
+    }
+  }
+
+  DateTime currentTimeRecalculator(year, month, day) {
+    DateTime temp = DateTime(year, month, day);
+    if (temp.month == month || month == 13) {
+      return temp;
+    } else {
+      return DateTime(temp.year, temp.month, 1)
+          .subtract(const Duration(days: 1));
     }
   }
 
