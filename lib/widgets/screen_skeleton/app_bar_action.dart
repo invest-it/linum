@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:linum/backend_functions/url-handler.dart';
 import 'package:linum/providers/screen_index_provider.dart';
 import 'package:provider/provider.dart';
 

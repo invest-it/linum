@@ -304,6 +304,7 @@ class _MyHomePageState extends State<MyHomePage> {
 // Defines the State of the App (in our MVP test phase, this will be "ALPHA" according
 // to the principles of versioning)
 
+// ignore: unused_element
 Widget _wrapWithBanner(Widget child) {
   return Directionality(
     textDirection: TextDirection.ltr,
