@@ -1,7 +1,3 @@
-// ignore_for_file: implementation_imports
-
-import 'dart:math' as Math;
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
@@ -436,7 +432,7 @@ class HomeScreenListView implements BalanceDataListView {
                               .secondary, // PRESENT EXPENSE BACKGROUND
                   child: arrayElement['amount'] > 0
                       ? Icon(
-                          accountSettingsProvider
+                          AccountSettingsProvider
                                   .standardCategoryIncomes[
                                       EnumToString.fromString(
                                           StandardCategoryIncome.values,
@@ -452,7 +448,7 @@ class HomeScreenListView implements BalanceDataListView {
                                   .tertiary // PRESENT INCOME ICON
                           )
                       : Icon(
-                          accountSettingsProvider
+                          AccountSettingsProvider
                                   .standardCategoryExpenses[
                                       EnumToString.fromString(
                                           StandardCategoryExpense.values,
@@ -469,7 +465,10 @@ class HomeScreenListView implements BalanceDataListView {
                         ),
                 ),
                 title: Text(
-                  arrayElement["name"],
+                  arrayElement["name"] != ""
+                      ? arrayElement["name"]
+                      : translateCategory(arrayElement["category"],
+                          arrayElement["amount"] <= 0, context),
                   style: isFutureItem
                       ? Theme.of(context).textTheme.bodyText1!.copyWith(
                           fontStyle: FontStyle.italic,
@@ -508,6 +507,24 @@ class HomeScreenListView implements BalanceDataListView {
       // log("HomeScreenListView: " + balanceData[0]["Error"].toString());
     }
     _listview = ListView(children: list, padding: EdgeInsets.zero);
+  }
+
+  String translateCategory(
+      String category, bool isExpense, BuildContext context) {
+    if (isExpense) {
+      return AppLocalizations.of(context)!.translate(AccountSettingsProvider
+              .standardCategoryExpenses[EnumToString.fromString(
+                  StandardCategoryExpense.values, category)]
+              ?.label ??
+          ""); // TODO @Nightmind you could add a String here that will show something like "error translating your category"
+    } else if (!isExpense) {
+      return AppLocalizations.of(context)!.translate(AccountSettingsProvider
+              .standardCategoryIncomes[EnumToString.fromString(
+                  StandardCategoryIncome.values, category)]
+              ?.label ??
+          ""); // TODO @Nightmind you could add a String here that will show something like "error translating your category"
+    }
+    return "Error"; // This should never happen.
   }
 
   @override

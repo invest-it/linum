@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
@@ -81,6 +79,7 @@ import 'package:provider/provider.dart';
 /// Wichtig sind außerdem noch folgende Dinge:
 /// Ihr könnt kein eigenständiges AppBarAction Widget erstellen. Ihr müsst immer entweder .fromPreset() oder .fromParameters() nutzen.
 /// Wenn ihr weder actions: noch leadingAction: definiert, wird keine AppBar angelegt.
+// ignore: must_be_immutable
 class ScreenSkeleton extends StatelessWidget {
   final String head;
   final Widget body;

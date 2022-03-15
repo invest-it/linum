@@ -3,8 +3,10 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/statistic_calculations.dart';
+import 'package:linum/models/repeat_duration_type_enum.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/widgets/abstract/abstract_statistic_panel.dart';
@@ -183,7 +185,7 @@ class BalanceDataProvider extends ChangeNotifier {
       log("_balance is null");
       return false;
     }
-    if (category == "" || currency == "" || name == "") {
+    if (category == "" || currency == "" /* || name == "" */) {
       return false;
     }
     Map<String, dynamic> singleBalance = {
@@ -277,11 +279,29 @@ class BalanceDataProvider extends ChangeNotifier {
       if (singleRepeatedBalance["lastUpdate"] == null) {
         singleRepeatedBalance["lastUpdate"] = Timestamp(0, 0);
       }
+
       if (singleRepeatedBalance != null &&
-          ((singleRepeatedBalance["lastUpdate"] as Timestamp)
-              .toDate()
-              .add(Duration(seconds: singleRepeatedBalance["repeatDuration"]))
-              .isBefore(DateTime.now()))) {
+              ((singleRepeatedBalance["repeatDurationType"] == "SECONDS" ||
+                      singleRepeatedBalance["repeatDurationType"] == null) &&
+                  (((singleRepeatedBalance["lastUpdate"] as Timestamp)
+                      .toDate()
+                      .add(Duration(
+                          seconds: singleRepeatedBalance["repeatDuration"]))
+                      .isBefore(DateTime.now())))) ||
+          (singleRepeatedBalance["repeatDurationType"] == "MONTHS" &&
+              DateTime(
+                      (singleRepeatedBalance["lastUpdate"] as Timestamp)
+                          .toDate()
+                          .year,
+                      (singleRepeatedBalance["lastUpdate"] as Timestamp)
+                              .toDate()
+                              .month +
+                          (singleRepeatedBalance["repeatDuration"] as num)
+                              .floor(),
+                      (singleRepeatedBalance["lastUpdate"] as Timestamp)
+                          .toDate()
+                          .day)
+                  .isBefore(DateTime.now()))) {
         _addSingleRepeatableToBalanceDataLocally(singleRepeatedBalance, data);
       }
     }
@@ -295,11 +315,15 @@ class BalanceDataProvider extends ChangeNotifier {
     required String currency,
     required String name,
     required Timestamp initialTime,
-    required Duration repeatDuration,
+    required int repeatDuration,
+    RepeatDurationType repeatDurationType = RepeatDurationType.SECONDS,
     Timestamp? endTime,
   }) async {
     if (_balance == null) {
       log("_balance is null");
+      return false;
+    }
+    if (category == "" || currency == "" /* || name == "" */) {
       return false;
     }
     Map<String, dynamic> singleRepeatedBalance = {
@@ -308,7 +332,8 @@ class BalanceDataProvider extends ChangeNotifier {
       "currency": currency,
       "name": name,
       "initialTime": initialTime,
-      "repeatDuration": repeatDuration.inSeconds,
+      "repeatDuration": repeatDuration,
+      "repeatDurationType": repeatDurationType.toString().substring(19),
       "endTime": endTime,
       "id": Uuid().v4(),
     };
@@ -328,7 +353,8 @@ class BalanceDataProvider extends ChangeNotifier {
     String? currency,
     String? name,
     Timestamp? initialTime,
-    Duration? repeatDuration,
+    int? repeatDuration,
+    RepeatDurationType? repeatDurationType,
     Timestamp? endTime,
     bool? resetEndTime,
   }) async {
@@ -363,7 +389,14 @@ class BalanceDataProvider extends ChangeNotifier {
         }
         if (repeatDuration != null &&
             repeatDuration != value["repeatDuration"]) {
-          value["repeatDuration"] = repeatDuration.inSeconds;
+          value["repeatDuration"] = repeatDuration;
+          isEdited = true;
+        }
+        if (repeatDurationType != null &&
+            repeatDurationType !=
+                EnumToString.fromString<RepeatDurationType>(
+                    RepeatDurationType.values, value["repeatDurationType"])) {
+          value["repeatDuration"] = repeatDurationType.toString().substring(19);
           isEdited = true;
         }
         if (endTime != null && endTime != value["endTime"]) {
@@ -515,33 +548,78 @@ class BalanceDataProvider extends ChangeNotifier {
     // }
 
     Duration futureDuration = Duration(days: 365);
-
-    // while we are before 10 years after today / before endTime
-    while ((singleRepeatedBalance["endTime"] != null)
-        ? currentTime.isBefore(singleRepeatedBalance["endTime"].toDate())
-        : currentTime.isBefore(DateTime.now().add(futureDuration))) {
-      if (singleRepeatedBalance["lastUpdate"] == null ||
-          DateTime.now()
-              .add(Duration(seconds: singleRepeatedBalance["repeatDuration"]))
-              .isAfter((singleRepeatedBalance["lastUpdate"] as Timestamp)
-                  .toDate())) {
-        didUpdate = true;
-        (data["balanceData"] as List<dynamic>).add({
-          "amount": singleRepeatedBalance["amount"],
-          "category": singleRepeatedBalance["category"],
-          "currency": singleRepeatedBalance["currency"],
-          "name": singleRepeatedBalance["name"],
-          "time": Timestamp.fromDate(currentTime),
-          "repeatId": singleRepeatedBalance["id"],
-          "id": Uuid().v4(),
-        });
+    if (singleRepeatedBalance["repeatDurationType"] == "SECONDS" ||
+        singleRepeatedBalance["repeatDurationType"] == null) {
+      // while we are before 1 years after today / before endTime
+      while ((singleRepeatedBalance["endTime"] != null)
+          ? currentTime.isBefore(singleRepeatedBalance["endTime"].toDate())
+          : currentTime.isBefore(DateTime.now().add(futureDuration))) {
+        // why does this work?
+        if (singleRepeatedBalance["lastUpdate"] == null ||
+            DateTime.now()
+                .add(Duration(seconds: singleRepeatedBalance["repeatDuration"]))
+                .isAfter((singleRepeatedBalance["lastUpdate"] as Timestamp)
+                    .toDate())) {
+          didUpdate = true;
+          (data["balanceData"] as List<dynamic>).add({
+            "amount": singleRepeatedBalance["amount"],
+            "category": singleRepeatedBalance["category"],
+            "currency": singleRepeatedBalance["currency"],
+            "name": singleRepeatedBalance["name"],
+            "time": Timestamp.fromDate(currentTime),
+            "repeatId": singleRepeatedBalance["id"],
+            "id": Uuid().v4(),
+          });
+          currentTime = currentTime
+              .add(Duration(seconds: singleRepeatedBalance["repeatDuration"]));
+        }
       }
+    } else if (singleRepeatedBalance["repeatDurationType"] == "MONTHS") {
+      // while we are before 1 years after today / before endTime
+      while ((singleRepeatedBalance["endTime"] != null)
+          ? currentTime.isBefore(singleRepeatedBalance["endTime"].toDate())
+          : currentTime.isBefore(DateTime.now().add(futureDuration))) {
+        if (singleRepeatedBalance["lastUpdate"] == null ||
+            DateTime(
+                    DateTime.now().year,
+                    DateTime.now().month +
+                        (singleRepeatedBalance["repeatDuration"] as num)
+                            .floor(),
+                    DateTime.now().day)
+                .isAfter((singleRepeatedBalance["lastUpdate"] as Timestamp)
+                    .toDate())) {
+          didUpdate = true;
+          (data["balanceData"] as List<dynamic>).add({
+            "amount": singleRepeatedBalance["amount"],
+            "category": singleRepeatedBalance["category"],
+            "currency": singleRepeatedBalance["currency"],
+            "name": singleRepeatedBalance["name"],
+            "time": Timestamp.fromDate(currentTime),
+            "repeatId": singleRepeatedBalance["id"],
+            "id": Uuid().v4(),
+          });
+        }
 
-      currentTime = currentTime
-          .add(Duration(seconds: singleRepeatedBalance["repeatDuration"]));
+        currentTime = currentTimeRecalculator(
+            currentTime.year,
+            currentTime.month +
+                (singleRepeatedBalance["repeatDuration"] as num).floor(),
+            singleRepeatedBalance["initialTime"].toDate().day);
+      }
     }
+
     if (didUpdate) {
       singleRepeatedBalance["lastUpdate"] = Timestamp.fromDate(DateTime.now());
+    }
+  }
+
+  DateTime currentTimeRecalculator(year, month, day) {
+    DateTime temp = DateTime(year, month, day);
+    if (temp.month == month || month == 13) {
+      return temp;
+    } else {
+      return DateTime(temp.year, temp.month, 1)
+          .subtract(const Duration(days: 1));
     }
   }
 

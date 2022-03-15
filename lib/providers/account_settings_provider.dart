@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/models/entry_category.dart';
+import 'package:linum/models/repeat_duration_type_enum.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +21,8 @@ class AccountSettingsProvider extends ChangeNotifier {
   /// List of Categories the User can declare as a Standard when tracking an EXPENSE.
   /// e.g. Söncke usually incurs expenses for WATER, therefore he can choose FOOD
   /// as his Standard Category for Expenses so he does not have to choose FOOD as a category when adding as an expense.
-  final Map<StandardCategoryExpense, EntryCategory> standardCategoryExpenses = {
+  static final Map<StandardCategoryExpense, EntryCategory>
+      standardCategoryExpenses = {
     StandardCategoryExpense.None: EntryCategory(
         label: 'settings_screen/standards-selector-none',
         icon: Icons.check_box_outline_blank_rounded),
@@ -47,7 +49,8 @@ class AccountSettingsProvider extends ChangeNotifier {
   /// List of Categories the User can declare as a Standard when tracking INCOME.
   /// e.g. Otis works as a freelancer, so the income he tracks is mostly in the category SIDE JOB, therefore he can choose SIDE JOB
   /// as his Standard Category for Income so he does not have to choose SIDE JOB as a category when adding an income.
-  final Map<StandardCategoryIncome, EntryCategory> standardCategoryIncomes = {
+  static final Map<StandardCategoryIncome, EntryCategory>
+      standardCategoryIncomes = {
     StandardCategoryIncome.None: EntryCategory(
         label: "settings_screen/standards-selector-none",
         icon: Icons.check_box_outline_blank_rounded),
@@ -75,33 +78,37 @@ class AccountSettingsProvider extends ChangeNotifier {
   };
 
   final Map<RepeatDuration, Map<String, dynamic>> categoriesRepeat = {
-    RepeatDuration.None: {
+    RepeatDuration.NONE: {
       "entryCategory": EntryCategory(
         label: 'enter_screen/label-repeat-none',
         icon: Icons.sync_disabled_rounded,
       ),
       "duration": null,
+      "durationType": null,
     },
-    RepeatDuration.Daily: {
+    RepeatDuration.DAILY: {
       "entryCategory": EntryCategory(
         label: 'enter_screen/label-repeat-daily',
         icon: Icons.calendar_today_rounded,
       ),
-      "duration": Duration(days: 1),
+      "duration": Duration(days: 1).inSeconds,
+      "durationType": RepeatDurationType.SECONDS,
     },
-    RepeatDuration.Weekly: {
+    RepeatDuration.WEEKLY: {
       "entryCategory": EntryCategory(
         label: 'enter_screen/label-repeat-weekly',
         icon: Icons.calendar_view_week_rounded,
       ),
-      "duration": Duration(days: 7),
+      "duration": Duration(days: 7).inSeconds,
+      "durationType": RepeatDurationType.SECONDS,
     },
-    RepeatDuration.ThirtyDays: {
+    RepeatDuration.MONTHLY: {
       "entryCategory": EntryCategory(
         label: 'enter_screen/label-repeat-30days',
         icon: Icons.calendar_view_month_rounded,
       ),
-      "duration": Duration(days: 30),
+      "duration": 1,
+      "durationType": RepeatDurationType.MONTHS,
     },
     // TODO implement custom range picker
     // {
@@ -222,12 +229,10 @@ enum StandardAccount {
 }
 
 enum RepeatDuration {
-  None,
-  Daily,
-  Weekly,
-  ThirtyDays,
-  // TODO implement monthly
-  //Monthly,
+  NONE,
+  DAILY,
+  WEEKLY,
+  MONTHLY,
   // TODO implement custom repeat
   // Custom,
 }

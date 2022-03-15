@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
@@ -162,7 +160,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       AppLocalizations.of(context)!.translate(
                               'settings_screen/standard-income-selector/label-title') +
                           AppLocalizations.of(context)!.translate(
-                              accountSettingsProvider
+                              AccountSettingsProvider
                                       .standardCategoryIncomes[EnumToString
                                           .fromString<StandardCategoryIncome>(
                                     StandardCategoryIncome.values,
@@ -179,7 +177,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       color: createMaterialColor(Color(0xFF97BC4E)),
                     ),
                     leading: Icon(
-                      accountSettingsProvider
+                      AccountSettingsProvider
                               .standardCategoryIncomes[EnumToString.fromString<
                                   StandardCategoryIncome>(
                             StandardCategoryIncome.values,
@@ -229,7 +227,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       AppLocalizations.of(context)!.translate(
                               'settings_screen/standard-expense-selector/label-title') +
                           AppLocalizations.of(context)!.translate(
-                              accountSettingsProvider
+                              AccountSettingsProvider
                                       .standardCategoryExpenses[EnumToString
                                           .fromString<StandardCategoryExpense>(
                                     StandardCategoryExpense.values,
@@ -246,7 +244,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       color: Colors.red,
                     ),
                     leading: Icon(
-                      accountSettingsProvider
+                      AccountSettingsProvider
                               .standardCategoryExpenses[EnumToString.fromString<
                                   StandardCategoryExpense>(
                             StandardCategoryExpense.values,
@@ -423,7 +421,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         return ListTile(
             //leading: Icon(widget.categories[index].icon),
             title: Text(AppLocalizations.of(context)!.translate(
-                accountSettingsProvider
+                AccountSettingsProvider
                         .standardCategoryIncomes[
                             StandardCategoryIncome.values[indexBuilder]]
                         ?.label ??
@@ -458,7 +456,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         return ListTile(
             //leading: Icon(widget.categories[index].icon),
             title: Text(AppLocalizations.of(context)!.translate(
-                accountSettingsProvider
+                AccountSettingsProvider
                         .standardCategoryExpenses[
                             StandardCategoryExpense.values[indexBuilder]]
                         ?.label ??
