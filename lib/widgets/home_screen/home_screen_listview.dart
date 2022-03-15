@@ -1,7 +1,3 @@
-// ignore_for_file: implementation_imports
-
-import 'dart:math' as Math;
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
