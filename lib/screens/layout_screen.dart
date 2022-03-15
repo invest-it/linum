@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
+import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/screens/academy_screen.dart';
 import 'package:linum/screens/lock_screen.dart';
@@ -33,6 +34,8 @@ class _LayoutScreenState extends State<LayoutScreen> {
     ScreenIndexProvider screenIndexProvider =
         Provider.of<ScreenIndexProvider>(context);
 
+    PinCodeProvider pinCodeProvider = Provider.of<PinCodeProvider>(context);
+
     CollectionReference balance =
         FirebaseFirestore.instance.collection('balance');
 
@@ -52,15 +55,23 @@ class _LayoutScreenState extends State<LayoutScreen> {
         child: StreamBuilder(
           stream: balance.snapshots(),
           builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
-            //returns the page at the current index
+            //returns the page at the current index, or at the lock screen index if a) the PIN lock is active AND b) there is a code for the email used for login stored in sharedPreferences AND c) the pin code has not been recalled before
+            if (pinCodeProvider.pinActive && !pinCodeProvider.sessionIsSafe) {
+              pinCodeProvider.triggerPINRecall();
+            }
+            dev.log(pinCodeProvider.sessionIsSafe
+                ? "The session is safe"
+                : "The session is not safe");
             return _page.elementAt(screenIndexProvider.pageIndex);
           },
         ),
       ),
       //floatingactionbutton with bottomnavbar
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: screenIndexProvider.pageIndex ==
-              5 //Check if the PIN lock is active
+      floatingActionButton: (screenIndexProvider.pageIndex == 5 ||
+              (pinCodeProvider.pinActive &&
+                  !pinCodeProvider
+                      .sessionIsSafe)) //Check if the PIN lock is active
           ? null
           : FloatingActionButton(
               onPressed: () {
@@ -108,29 +119,31 @@ class _LayoutScreenState extends State<LayoutScreen> {
               elevation: 2.0,
               backgroundColor: Theme.of(context).colorScheme.secondary,
             ),
-      bottomNavigationBar:
-          screenIndexProvider.pageIndex == 5 //Check if the PIN lock is active
-              ? null
-              : FABBottomAppBar(
-                  items: [
-                    BottomAppBarItem(iconData: Icons.home, text: 'Home'),
-                    BottomAppBarItem(
-                        iconData: Icons.savings_rounded, text: 'Budget'),
-                    BottomAppBarItem(
-                        iconData: Icons.bar_chart_rounded, text: 'Stats'),
-                    BottomAppBarItem(iconData: Icons.person, text: 'Account'),
-                  ],
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  centerItemText: '',
-                  color: Theme.of(context).colorScheme.background,
-                  selectedColor: Theme.of(context).colorScheme.secondary,
-                  notchedShape: CircularNotchedRectangle(),
-                  //gives the pageIndex the value (the current selected index in the
-                  //bottom navigation bar)
-                  onTabSelected: (int value) {
-                    screenIndexProvider.setPageIndex(value);
-                  },
-                ),
+      bottomNavigationBar: (screenIndexProvider.pageIndex == 5 ||
+              (pinCodeProvider.pinActive &&
+                  !pinCodeProvider
+                      .sessionIsSafe)) //Check if the PIN lock is active
+          ? null
+          : FABBottomAppBar(
+              items: [
+                BottomAppBarItem(iconData: Icons.home, text: 'Home'),
+                BottomAppBarItem(
+                    iconData: Icons.savings_rounded, text: 'Budget'),
+                BottomAppBarItem(
+                    iconData: Icons.bar_chart_rounded, text: 'Stats'),
+                BottomAppBarItem(iconData: Icons.person, text: 'Account'),
+              ],
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              centerItemText: '',
+              color: Theme.of(context).colorScheme.background,
+              selectedColor: Theme.of(context).colorScheme.secondary,
+              notchedShape: CircularNotchedRectangle(),
+              //gives the pageIndex the value (the current selected index in the
+              //bottom navigation bar)
+              onTabSelected: (int value) {
+                screenIndexProvider.setPageIndex(value);
+              },
+            ),
     );
   }
 

@@ -16,6 +16,7 @@ class PinCodeProvider extends ChangeNotifier {
   String _code = '';
   int _pinSlot = 0;
   Color _ringColor = Color(0XFF279E44);
+  bool _sessionIsSafe = false;
   late BuildContext _context;
   late ScreenIndexProvider _screenIndexProvider;
   late AuthenticationService _auth;
@@ -26,8 +27,8 @@ class PinCodeProvider extends ChangeNotifier {
   bool _lastEmailStillLoading = true;
 
   PinCodeProvider(BuildContext context) {
-    _initialIsPINActive();
     _initialLastEmail();
+    _initialIsPINActive();
     _screenIndexProvider = Provider.of<ScreenIndexProvider>(
       context,
       listen: false,
@@ -72,6 +73,7 @@ class PinCodeProvider extends ChangeNotifier {
   //TODO - change the switch condition of _pinActive into one that relies on whether _lastEmail + '.code' has a value in sharedPreferences
   void togglePINLock() {
     if (pinActive == false) {
+      _sessionIsSafe = true;
       _pinActive = true;
       //Force the user to initialize their PIN number every time the PIN is (re-)activated.
       _setPINLockIntent(intent: PINLockIntent.INITIALIZE);
@@ -112,7 +114,7 @@ class PinCodeProvider extends ChangeNotifier {
   /// Triggers a PIN recall
   void triggerPINRecall() {
     _setPINLockIntent(intent: PINLockIntent.RECALL);
-    _screenIndexProvider.setPageIndex(5);
+    _screenIndexProvider.setPageIndexSilently(5);
   }
 
   // PERSISTENCE - stores a (new) PIN number in the device storage, probably sharedPreferences
@@ -123,6 +125,7 @@ class PinCodeProvider extends ChangeNotifier {
     prefs.setString(_lastEmail + '.code', code);
     log(prefs.getString(_lastEmail + '.code') ??
         "ERROR: No String stored in prefs!!!");
+    _sessionIsSafe = true;
   }
 
   /// Deletes the currently stored value for the PIN on the device
@@ -216,6 +219,7 @@ class PinCodeProvider extends ChangeNotifier {
                 DialogAction(
                   actionTitle: "alertdialog/killswitch-recall/action",
                   function: () {
+                    togglePINLock();
                     _auth.signOut().then((_) {
                       Provider.of<ScreenIndexProvider>(_context, listen: false)
                           .setPageIndex(0);
@@ -310,6 +314,7 @@ class PinCodeProvider extends ChangeNotifier {
 
   /// Set the page index to 0 - "welcome to the app"
   void _correctCode() {
+    _sessionIsSafe = true;
     _screenIndexProvider.setPageIndex(0);
   }
 
@@ -327,9 +332,17 @@ class PinCodeProvider extends ChangeNotifier {
   void _emptyCode() {
     _code = '';
     _pinSlot = 0;
+    _ringColor = Color(0XFF279E44);
     notifyListeners();
   }
 
+  /// Resets session
+  void resetSession() {
+    _sessionIsSafe = false;
+    notifyListeners();
+  }
+
+  bool get sessionIsSafe => _sessionIsSafe;
   int get pinSlot => _pinSlot;
   Color get ringColor => _ringColor;
   bool get pinActive => !_pinActiveStillLoading ? _pinActive : false;

@@ -48,7 +48,6 @@ class _LockScreenState extends State<LockScreen> {
                         ScreenFraction.QUANTILE,
                       )),
                   child: Text(
-                    //TODO get last login email address from sharedPreferences
                     auth.userEmail.isNotEmpty
                         ? auth.userEmail
                         : pinCodeProvider.lastEmail,

@@ -181,6 +181,7 @@ class AuthenticationService extends ChangeNotifier {
   }) async {
     try {
       await _firebaseAuth.signOut();
+
       notifyListeners();
       onComplete("Successfully signed out from Firebase");
     } on FirebaseAuthException catch (e) {

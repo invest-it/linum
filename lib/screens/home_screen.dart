@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
           (BuildContext context) => AppBarAction.fromParameters(
                 icon: Icons.lock_rounded,
                 ontap: () {
-                  pinCodeProvider.triggerPINRecall();
+                  pinCodeProvider.resetSession();
                 },
               ),
         AppBarAction.fromPreset(DefaultAction.SETTINGS),
