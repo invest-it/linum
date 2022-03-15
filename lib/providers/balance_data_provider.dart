@@ -279,11 +279,29 @@ class BalanceDataProvider extends ChangeNotifier {
       if (singleRepeatedBalance["lastUpdate"] == null) {
         singleRepeatedBalance["lastUpdate"] = Timestamp(0, 0);
       }
+
       if (singleRepeatedBalance != null &&
-          ((singleRepeatedBalance["lastUpdate"] as Timestamp)
-              .toDate()
-              .add(Duration(seconds: singleRepeatedBalance["repeatDuration"]))
-              .isBefore(DateTime.now()))) {
+              ((singleRepeatedBalance["repeatDurationType"] == "SECONDS" ||
+                      singleRepeatedBalance["repeatDurationType"] == null) &&
+                  (((singleRepeatedBalance["lastUpdate"] as Timestamp)
+                      .toDate()
+                      .add(Duration(
+                          seconds: singleRepeatedBalance["repeatDuration"]))
+                      .isBefore(DateTime.now())))) ||
+          (singleRepeatedBalance["repeatDurationType"] == "MONTHS" &&
+              DateTime(
+                      (singleRepeatedBalance["lastUpdate"] as Timestamp)
+                          .toDate()
+                          .year,
+                      (singleRepeatedBalance["lastUpdate"] as Timestamp)
+                              .toDate()
+                              .month +
+                          (singleRepeatedBalance["repeatDuration"] as num)
+                              .floor(),
+                      (singleRepeatedBalance["lastUpdate"] as Timestamp)
+                          .toDate()
+                          .day)
+                  .isBefore(DateTime.now()))) {
         _addSingleRepeatableToBalanceDataLocally(singleRepeatedBalance, data);
       }
     }
@@ -533,6 +551,7 @@ class BalanceDataProvider extends ChangeNotifier {
       while ((singleRepeatedBalance["endTime"] != null)
           ? currentTime.isBefore(singleRepeatedBalance["endTime"].toDate())
           : currentTime.isBefore(DateTime.now().add(futureDuration))) {
+        // why does this work?
         if (singleRepeatedBalance["lastUpdate"] == null ||
             DateTime.now()
                 .add(Duration(seconds: singleRepeatedBalance["repeatDuration"]))
@@ -558,8 +577,12 @@ class BalanceDataProvider extends ChangeNotifier {
           ? currentTime.isBefore(singleRepeatedBalance["endTime"].toDate())
           : currentTime.isBefore(DateTime.now().add(futureDuration))) {
         if (singleRepeatedBalance["lastUpdate"] == null ||
-            DateTime.now()
-                .add(Duration(seconds: singleRepeatedBalance["repeatDuration"]))
+            DateTime(
+                    DateTime.now().year,
+                    DateTime.now().month +
+                        (singleRepeatedBalance["repeatDuration"] as num)
+                            .floor(),
+                    DateTime.now().day)
                 .isAfter((singleRepeatedBalance["lastUpdate"] as Timestamp)
                     .toDate())) {
           didUpdate = true;
