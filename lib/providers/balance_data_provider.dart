@@ -185,7 +185,7 @@ class BalanceDataProvider extends ChangeNotifier {
       log("_balance is null");
       return false;
     }
-    if (category == "" || currency == "" || name == "") {
+    if (category == "" || currency == "" /* || name == "" */) {
       return false;
     }
     Map<String, dynamic> singleBalance = {
@@ -321,6 +321,9 @@ class BalanceDataProvider extends ChangeNotifier {
   }) async {
     if (_balance == null) {
       log("_balance is null");
+      return false;
+    }
+    if (category == "" || currency == "" /* || name == "" */) {
       return false;
     }
     Map<String, dynamic> singleRepeatedBalance = {
