@@ -1,11 +1,9 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
-import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/widgets/enter_screen/enter_screen_listviewbuilder.dart';
@@ -30,8 +28,8 @@ class _EnterScreenState extends State<EnterScreen> {
     BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
 
-    AccountSettingsProvider accountSettingsProvider =
-        Provider.of<AccountSettingsProvider>(context);
+    //  AccountSettingsProvider accountSettingsProvider =
+    //       Provider.of<AccountSettingsProvider>(context);
 
     //to format the date time it has to be parsed to a string, get formatted
     //and get parsed back to a date time
@@ -126,9 +124,7 @@ class _EnterScreenState extends State<EnterScreen> {
                             amount: _amountChooser(enterScreenProvider),
                             category: enterScreenProvider.category,
                             currency: "EUR",
-                            name: enterScreenProvider.name == ""
-                                ? enterScreenProvider.category
-                                : enterScreenProvider.name,
+                            name: enterScreenProvider.name,
                             time: Timestamp.fromDate(
                                 selectedDateDateTimeFormatted));
                       } else {
@@ -138,8 +134,7 @@ class _EnterScreenState extends State<EnterScreen> {
                               amount: _amountChooser(enterScreenProvider),
                               category: enterScreenProvider.category,
                               currency: "EUR",
-                              name: _nameChooser(enterScreenProvider,
-                                  accountSettingsProvider, context),
+                              name: enterScreenProvider.name,
                               time: Timestamp.fromDate(DateTime(
                                   selectedDateDateTimeFormatted.year,
                                   selectedDateDateTimeFormatted.month,
@@ -158,8 +153,7 @@ class _EnterScreenState extends State<EnterScreen> {
                             amount: _amountChooser(enterScreenProvider),
                             category: enterScreenProvider.category,
                             currency: "EUR",
-                            name: _nameChooser(enterScreenProvider,
-                                accountSettingsProvider, context),
+                            name: enterScreenProvider.name,
                             initialTime: Timestamp.fromDate(DateTime(
                                 selectedDateDateTimeFormatted.year,
                                 selectedDateDateTimeFormatted.month,
@@ -207,6 +201,9 @@ class _EnterScreenState extends State<EnterScreen> {
       return enterScreenProvider.amount;
   }
 
+/*
+  Not in use anymore 
+
   String _nameChooser(EnterScreenProvider enterScreenProvider,
       AccountSettingsProvider accountSettingsProvider, BuildContext context) {
     if (enterScreenProvider.name == "") {
@@ -229,6 +226,7 @@ class _EnterScreenState extends State<EnterScreen> {
       return enterScreenProvider.name;
     }
   }
+  */
 
   void showAlertDialog(
       BuildContext context, EnterScreenProvider enterScreenProvider) {
