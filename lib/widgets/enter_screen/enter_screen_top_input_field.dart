@@ -97,7 +97,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                         //     return 'Enter a value!';
                         //   }
                         // },
-
+                        autofocus: true,
                         cursorWidth: 0,
                         maxLength: 15,
                         textAlign: TextAlign.center,
