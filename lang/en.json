@@ -45,6 +45,9 @@
     "home_screen/button-show-more": "SHOW MORE",
 
 
+    "home_screen/free-text": "Free",
+
+
     "home_screen_card/home-screen-card-toast": "Swipe left and right to view previous or upcoming months. Double tap to return to the current month.",
     "home_screen_card/label-current-balance": "Current balance",
     "home_screen_card/label-income": "INCOME",
