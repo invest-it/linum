@@ -415,54 +415,66 @@ class HomeScreenListView implements BalanceDataListView {
                       });*/
 
               child: ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: isFutureItem
-                      ? arrayElement['amount'] > 0
-                          ? Theme.of(context)
-                              .colorScheme
-                              .tertiary // FUTURE INCOME BACKGROUND
-                          : Theme.of(context).colorScheme.errorContainer
-                      // FUTURE EXPENSE BACKGROUND
-                      : arrayElement['amount'] > 0
-                          ? Theme.of(context)
-                              .colorScheme
-                              .secondary // PRESENT INCOME BACKGROUND
-                          : Theme.of(context)
-                              .colorScheme
-                              .secondary, // PRESENT EXPENSE BACKGROUND
-                  child: arrayElement['amount'] > 0
-                      ? Icon(
-                          AccountSettingsProvider
-                                  .standardCategoryIncomes[
-                                      EnumToString.fromString(
-                                          StandardCategoryIncome.values,
-                                          arrayElement['category'])]
-                                  ?.icon ??
-                              Icons.error,
-                          color: isFutureItem
+                leading: Stack(
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: isFutureItem
+                          ? arrayElement['amount'] > 0
                               ? Theme.of(context)
                                   .colorScheme
-                                  .onPrimary // FUTURE INCOME ICON
+                                  .tertiary // FUTURE INCOME BACKGROUND
+                              : Theme.of(context).colorScheme.errorContainer
+                          // FUTURE EXPENSE BACKGROUND
+                          : arrayElement['amount'] > 0
+                              ? Theme.of(context)
+                                  .colorScheme
+                                  .secondary // PRESENT INCOME BACKGROUND
                               : Theme.of(context)
                                   .colorScheme
-                                  .tertiary // PRESENT INCOME ICON
+                                  .secondary, // PRESENT EXPENSE BACKGROUND
+                      child: arrayElement['amount'] > 0
+                          ? Icon(
+                              AccountSettingsProvider
+                                      .standardCategoryIncomes[
+                                          EnumToString.fromString(
+                                              StandardCategoryIncome.values,
+                                              arrayElement['category'])]
+                                      ?.icon ??
+                                  Icons.error,
+                              color: isFutureItem
+                                  ? Theme.of(context)
+                                      .colorScheme
+                                      .onPrimary // FUTURE INCOME ICON
+                                  : Theme.of(context)
+                                      .colorScheme
+                                      .tertiary // PRESENT INCOME ICON
+                              )
+                          : Icon(
+                              AccountSettingsProvider
+                                      .standardCategoryExpenses[
+                                          EnumToString.fromString(
+                                              StandardCategoryExpense.values,
+                                              arrayElement['category'])]
+                                      ?.icon ??
+                                  Icons.error,
+                              color: isFutureItem
+                                  ? Theme.of(context)
+                                      .colorScheme
+                                      .onPrimary // FUTURE EXPENSE ICON
+                                  : Theme.of(context)
+                                      .colorScheme
+                                      .errorContainer, // PRESENT EXPENSE ICON
+                            ),
+                    ),
+                    arrayElement["repeatId"] != null
+                        ? Positioned(
+                            bottom: 18,
+                            left: 18,
+                            child: Icon(Icons.repeat,
+                                color: Theme.of(context).colorScheme.secondary),
                           )
-                      : Icon(
-                          AccountSettingsProvider
-                                  .standardCategoryExpenses[
-                                      EnumToString.fromString(
-                                          StandardCategoryExpense.values,
-                                          arrayElement['category'])]
-                                  ?.icon ??
-                              Icons.error,
-                          color: isFutureItem
-                              ? Theme.of(context)
-                                  .colorScheme
-                                  .onPrimary // FUTURE EXPENSE ICON
-                              : Theme.of(context)
-                                  .colorScheme
-                                  .errorContainer, // PRESENT EXPENSE ICON
-                        ),
+                        : SizedBox(),
+                  ],
                 ),
                 title: Text(
                   arrayElement["name"] != ""
