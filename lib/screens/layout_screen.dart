@@ -58,6 +58,10 @@ class _LayoutScreenState extends State<LayoutScreen> {
             //returns the page at the current index, or at the lock screen index if a) the PIN lock is active AND b) there is a code for the email used for login stored in sharedPreferences AND c) the pin code has not been recalled before
             if (pinCodeProvider.pinActive && !pinCodeProvider.sessionIsSafe) {
               pinCodeProvider.triggerPINRecall();
+            } else {
+              if (screenIndexProvider.pageIndex == 5) {
+                screenIndexProvider.setPageIndex(0);
+              }
             }
             dev.log(pinCodeProvider.sessionIsSafe
                 ? "The session is safe"

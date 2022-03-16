@@ -22,7 +22,7 @@ class PinCodeProvider extends ChangeNotifier {
   late AuthenticationService _auth;
   late UserAlert confirmKillswitch;
   late bool _pinActive;
-  late String _lastEmail;
+  String? _lastEmail;
   bool _pinActiveStillLoading = true;
   bool _lastEmailStillLoading = true;
 
@@ -43,6 +43,7 @@ class PinCodeProvider extends ChangeNotifier {
 
   void _initialIsPINActive() async {
     _pinActive = await _isPinActive();
+    log("Pinactive is " + _pinActive.toString());
     _pinActiveStillLoading = false;
   }
 
@@ -52,8 +53,10 @@ class PinCodeProvider extends ChangeNotifier {
   }
 
   void updateSipAndAuth(BuildContext context) {
+    _lastEmail = null;
     _lastEmailStillLoading = true;
     _initialLastEmail();
+    _initialIsPINActive();
     _screenIndexProvider = Provider.of<ScreenIndexProvider>(
       context,
       listen: false,
@@ -96,7 +99,7 @@ class PinCodeProvider extends ChangeNotifier {
         Duration(milliseconds: 10),
       );
     }
-    return prefs.containsKey(_lastEmail + '.code');
+    return prefs.containsKey(_lastEmail! + '.code');
   }
 
   ///Returns the last email that has been used for login stored in sharedPreferences
@@ -113,8 +116,8 @@ class PinCodeProvider extends ChangeNotifier {
 
   /// Triggers a PIN recall
   void triggerPINRecall() {
-    _setPINLockIntent(intent: PINLockIntent.RECALL);
     _screenIndexProvider.setPageIndexSilently(5);
+    _setPINLockIntent(intent: PINLockIntent.RECALL);
   }
 
   // PERSISTENCE - stores a (new) PIN number in the device storage, probably sharedPreferences
@@ -122,8 +125,8 @@ class PinCodeProvider extends ChangeNotifier {
   /// Stores a new value for the PIN on the device
   void _storePIN(String code) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(_lastEmail + '.code', code);
-    log(prefs.getString(_lastEmail + '.code') ??
+    prefs.setString(_lastEmail! + '.code', code);
+    log(prefs.getString(_lastEmail! + '.code') ??
         "ERROR: No String stored in prefs!!!");
     _sessionIsSafe = true;
   }
@@ -131,7 +134,7 @@ class PinCodeProvider extends ChangeNotifier {
   /// Deletes the currently stored value for the PIN on the device
   void _removePIN() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove(_lastEmail + '.code');
+    prefs.remove(_lastEmail! + '.code');
   }
 
   // INTENT - provides the "style" of the PIN lock depending of the system intent
@@ -303,7 +306,8 @@ class PinCodeProvider extends ChangeNotifier {
   /// Check if the current value of [_code] matches the locally stored PIN.
   void _checkCode(String _inputCode) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String _pin = prefs.getString(_lastEmail + '.code') ?? '';
+    String _pin = prefs.getString(_lastEmail! + '.code') ?? 'ERROR';
+    log("pin:" + _pin);
     if (_pin == _inputCode) {
       _correctCode();
     } else
@@ -347,7 +351,7 @@ class PinCodeProvider extends ChangeNotifier {
   Color get ringColor => _ringColor;
   bool get pinActive => !_pinActiveStillLoading ? _pinActive : false;
   //TODO decide whether we should leave "Loading..." blank in shipping
-  String get lastEmail => !_lastEmailStillLoading ? _lastEmail : 'Loading...';
+  String get lastEmail => !_lastEmailStillLoading ? _lastEmail! : 'Loading...';
   bool get pinActiveStillLoading => _pinActiveStillLoading;
   bool get lastEmailStillLoading => _lastEmailStillLoading;
 }
