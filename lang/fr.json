@@ -43,10 +43,7 @@
 
     "home_screen/label-recent-transactions": "Transactions récentes",
     "home_screen/button-show-more": "AFFICHER PLUS",
-
-
     "home_screen/free-text": "Gratis",
-
 
     "home_screen_card/home-screen-card-toast": "Balayez vers la gauche et la droite pour afficher les mois précédents ou à venir. Double-cliquez pour revenir au mois en cours.",
     "home_screen_card/label-current-balance": "Solde actuel",
