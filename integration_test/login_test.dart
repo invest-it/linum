@@ -3,30 +3,62 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:linum/main.dart' as app;
 
+import 'robots/home_robot.dart';
+import 'robots/onboarding_screen/onboarding_open_sign_in.dart';
+import 'robots/onboarding_screen/onboarding_open_sign_up.dart';
+import 'robots/onboarding_screen/onboarding_robot.dart';
+
 void main() {
-  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized()
+      as IntegrationTestWidgetsFlutterBinding;
 
-  group('end-to-end test', () {
-    testWidgets(
-        'try to register with an existing account, login with that account',
-        (WidgetTester tester) async {
+  HomeRobot homeRobot;
+  OnboardingRobot onboardingRobot;
+  OnboardingOpenSignUpRobot onboardingOpenSignUpRobot;
+  OnboardingOpenSignInRobot onboardingOpenSignInRobot;
+
+  group('e2e test', () {
+    testWidgets('whole app', (WidgetTester tester) async {
       app.main();
+
+      homeRobot = HomeRobot(tester);
+      onboardingRobot = OnboardingRobot(tester);
+      onboardingOpenSignUpRobot = OnboardingOpenSignUpRobot(tester);
+      onboardingOpenSignInRobot = OnboardingOpenSignInRobot(tester);
+
+      // For recording perf
+      // await tester.pumpAndSettle();
+      // final listFinder = find.byKey(const Key('singleChildScrollView'));
+      // await binding.watchPerformance(() async {
+      //   await tester.fling(listFinder, const Offset(0, -500), 10000);
+      //   await tester.pumpAndSettle();
+      // });
+
       await tester.pumpAndSettle();
 
-      // Verify the counter starts at 0.
-      expect(find.text('0'), findsOneWidget);
+      await onboardingRobot.pressSignUpNow();
 
-      // Finds the floating action button to tap on.
-      final Finder fab = find.byTooltip('Increment');
+      /*
+      await homeRobot.findTitle();
 
-      // Emulate a tap on the floating action button.
-      await tester.tap(fab);
+      await homeRobot.scrollThePage();
 
-      // Trigger a frame.
-      await tester.pumpAndSettle();
+      await homeRobot.clickFirstButton();
+      await secondScreenRobot.findTitle();
+      await secondScreenRobot.scrollThePage();
+      await secondScreenRobot.scrollThePage(scrollUp: true);
+      await secondScreenRobot.goBack();
 
-      // Verify the counter increments by 1.
-      expect(find.text('1'), findsOneWidget);
+      await homeRobot.clickSecondButton();
+      await thirdScreenRobot.findTitle();
+      await thirdScreenRobot.scrollThePage();
+      await thirdScreenRobot.scrollThePage(scrollUp: true);
+      await thirdScreenRobot.clickTile(2);
+      await thirdScreenRobot.goBack();
+
+      await homeRobot.scrollThePage(scrollUp: true);
+
+      */
     });
   });
 }
