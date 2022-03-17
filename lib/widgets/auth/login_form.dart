@@ -93,6 +93,7 @@ class _LoginFormState extends State<LoginForm> {
                         ),
                       ),
                       child: TextField(
+                        key: Key("loginEmailField"),
                         controller: _mailController,
                         keyboardType: TextInputType.emailAddress,
                         autocorrect: false,
@@ -121,11 +122,12 @@ class _LoginFormState extends State<LoginForm> {
                         ),
                       ),
                       child: TextField(
+                        key: Key("loginPasswordField"),
                         obscureText: true,
                         controller: _passController,
                         keyboardType: TextInputType.visiblePassword,
-                        onSubmitted: (_) =>
-                            logIn(_mailController!.text, _passController.text),
+                        //onSubmitted: (_) =>
+                        //    logIn(_mailController!.text, _passController.text),
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: AppLocalizations.of(context)!.translate(

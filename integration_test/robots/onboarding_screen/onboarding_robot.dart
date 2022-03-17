@@ -28,7 +28,7 @@ class OnboardingRobot {
     await tester.ensureVisible(signUpButtonFinder);
     await tester.tap(signUpButtonFinder);
 
-    await tester.pumpAndSettle();
+    await tester.pumpAndSettle(Duration(seconds: 2));
   }
 
 /*
