@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
@@ -411,62 +412,8 @@ class HomeScreenListView implements BalanceDataListView {
                               )
                             ],
                           ),
-                        );
-                      });*/
 
-              child: ListTile(
-                leading: Stack(
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: isFutureItem
-                          ? arrayElement['amount'] > 0
-                              ? Theme.of(context)
-                                  .colorScheme
-                                  .tertiary // FUTURE INCOME BACKGROUND
-                              : Theme.of(context).colorScheme.errorContainer
-                          // FUTURE EXPENSE BACKGROUND
-                          : arrayElement['amount'] > 0
-                              ? Theme.of(context)
-                                  .colorScheme
-                                  .secondary // PRESENT INCOME BACKGROUND
-                              : Theme.of(context)
-                                  .colorScheme
-                                  .secondary, // PRESENT EXPENSE BACKGROUND
-                      child: arrayElement['amount'] > 0
-                          ? Icon(
-                              AccountSettingsProvider
-                                      .standardCategoryIncomes[
-                                          EnumToString.fromString(
-                                              StandardCategoryIncome.values,
-                                              arrayElement['category'])]
-                                      ?.icon ??
-                                  Icons.error,
-                              color: isFutureItem
-                                  ? Theme.of(context)
-                                      .colorScheme
-                                      .onPrimary // FUTURE INCOME ICON
-                                  : Theme.of(context)
-                                      .colorScheme
-                                      .tertiary // PRESENT INCOME ICON
-                              )
-                          : Icon(
-                              AccountSettingsProvider
-                                      .standardCategoryExpenses[
-                                          EnumToString.fromString(
-                                              StandardCategoryExpense.values,
-                                              arrayElement['category'])]
-                                      ?.icon ??
-                                  Icons.error,
-                              color: isFutureItem
-                                  ? Theme.of(context)
-                                      .colorScheme
-                                      .onPrimary // FUTURE EXPENSE ICON
-                                  : Theme.of(context)
-                                      .colorScheme
-                                      .errorContainer, // PRESENT EXPENSE ICON
-                            ),
-                    ),
-                    arrayElement["repeatId"] != null
+                          arrayElement["repeatId"] != null
                         ? Positioned(
                             bottom: 18,
                             left: 18,
@@ -474,7 +421,76 @@ class HomeScreenListView implements BalanceDataListView {
                                 color: Theme.of(context).colorScheme.secondary),
                           )
                         : SizedBox(),
-                  ],
+                        );
+                      });*/
+
+              child: ListTile(
+                leading: Badge(
+                  toAnimate: false,
+                  position: BadgePosition(bottom: 16, start: 16),
+                  elevation: 0,
+                  badgeColor: Color(0x00000000),
+                  badgeContent: arrayElement["repeatId"] != null
+                      ? Icon(
+                          Icons.sync,
+                          color: isFutureItem
+                              ? Theme.of(context).colorScheme.onSurface
+                              : arrayElement["amount"] > 0
+                                  ? Theme.of(context).colorScheme.tertiary
+                                  : Theme.of(context)
+                                      .colorScheme
+                                      .errorContainer,
+                        )
+                      : SizedBox(),
+                  child: CircleAvatar(
+                    backgroundColor: isFutureItem
+                        ? arrayElement['amount'] > 0
+                            ? Theme.of(context)
+                                .colorScheme
+                                .tertiary // FUTURE INCOME BACKGROUND
+                            : Theme.of(context).colorScheme.errorContainer
+                        // FUTURE EXPENSE BACKGROUND
+                        : arrayElement['amount'] > 0
+                            ? Theme.of(context)
+                                .colorScheme
+                                .secondary // PRESENT INCOME BACKGROUND
+                            : Theme.of(context)
+                                .colorScheme
+                                .secondary, // PRESENT EXPENSE BACKGROUND
+                    child: arrayElement['amount'] > 0
+                        ? Icon(
+                            AccountSettingsProvider
+                                    .standardCategoryIncomes[
+                                        EnumToString.fromString(
+                                            StandardCategoryIncome.values,
+                                            arrayElement['category'])]
+                                    ?.icon ??
+                                Icons.error,
+                            color: isFutureItem
+                                ? Theme.of(context)
+                                    .colorScheme
+                                    .onPrimary // FUTURE INCOME ICON
+                                : Theme.of(context)
+                                    .colorScheme
+                                    .tertiary // PRESENT INCOME ICON
+                            )
+                        : Icon(
+                            AccountSettingsProvider
+                                    .standardCategoryExpenses[
+                                        EnumToString.fromString(
+                                            StandardCategoryExpense.values,
+                                            arrayElement['category'])]
+                                    ?.icon ??
+                                Icons.error,
+                            color: isFutureItem
+                                ? Theme.of(context)
+                                    .colorScheme
+                                    .onPrimary // FUTURE EXPENSE ICON
+                                : Theme.of(context)
+                                    .colorScheme
+                                    .errorContainer, // PRESENT EXPENSE ICON
+                          ),
+                  ),
                 ),
                 title: Text(
                   arrayElement["name"] != ""
