@@ -43,8 +43,15 @@ class PinCodeProvider extends ChangeNotifier {
 
   void _initialIsPINActive() async {
     _pinActive = await _isPinActive();
-    log("Pinactive is " + _pinActive.toString());
+    log(_pinActive
+        ? "PIN lock is active for " + _lastEmail.toString()
+        : "PIN lock is NOT ACTIVE for " + _lastEmail.toString());
     _pinActiveStillLoading = false;
+
+    //Set Session to Safe if there is no PIN lock
+    if (!_pinActive) {
+      _sessionIsSafe = true;
+    }
   }
 
   void _initialLastEmail() async {
@@ -128,6 +135,7 @@ class PinCodeProvider extends ChangeNotifier {
     prefs.setString(_lastEmail! + '.code', code);
     log(prefs.getString(_lastEmail! + '.code') ??
         "ERROR: No String stored in prefs!!!");
+    log("PIN HAS BEEN STORED!");
     _sessionIsSafe = true;
   }
 
@@ -336,14 +344,17 @@ class PinCodeProvider extends ChangeNotifier {
   void _emptyCode() {
     _code = '';
     _pinSlot = 0;
-    _ringColor = Color(0XFF279E44);
     notifyListeners();
   }
 
   /// Resets session
   void resetSession() {
-    _sessionIsSafe = false;
-    notifyListeners();
+    if (_pinActive) {
+      _sessionIsSafe = false;
+      notifyListeners();
+    } else {
+      log("No PIN code is active, therefore the session will not be reset.");
+    }
   }
 
   bool get sessionIsSafe => _sessionIsSafe;
