@@ -87,8 +87,14 @@ class _LayoutScreenState extends State<LayoutScreen>
           stream: balance.snapshots(),
           builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
             //returns the page at the current index, or at the lock screen index if a) the PIN lock is active AND b) there is a code for the email used for login stored in sharedPreferences AND c) the pin code has not been recalled before
+
+            dev.log(pinCodeProvider.sessionIsSafe
+                ? "Session: SAFE"
+                : "Session: NOT SAFE");
             if (pinCodeProvider.pinActive && !pinCodeProvider.sessionIsSafe) {
-              dev.log("PIN ACTIVE. Triggering recall");
+              dev.log("PIN ACTIVE for " +
+                  pinCodeProvider.lastEmail +
+                  ", triggering recall");
               pinCodeProvider.triggerPINRecall();
             } else {
               dev.log(
@@ -96,9 +102,6 @@ class _LayoutScreenState extends State<LayoutScreen>
                       pinCodeProvider.lastEmail +
                       " or the session is safe.");
             }
-            dev.log(pinCodeProvider.sessionIsSafe
-                ? "Session: SAFE"
-                : "Session: NOT SAFE");
             return _page.elementAt(screenIndexProvider.pageIndex);
           },
         ),
