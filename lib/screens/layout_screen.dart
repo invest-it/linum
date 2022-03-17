@@ -25,7 +25,38 @@ class LayoutScreen extends StatefulWidget {
   State<LayoutScreen> createState() => _LayoutScreenState();
 }
 
-class _LayoutScreenState extends State<LayoutScreen> {
+class _LayoutScreenState extends State<LayoutScreen>
+    with WidgetsBindingObserver {
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance?.addObserver(this);
+  // }
+
+  // @override
+  // void dispose() {
+  //   WidgetsBinding.instance?.removeObserver(this);
+  //   super.dispose();
+  // }
+
+  // @override
+  // void didChangeAppLifecycleState(AppLifecycleState state) {
+  //   PinCodeProvider pinCodeProvider =
+  //       Provider.of<PinCodeProvider>(context, listen: false);
+  //   super.didChangeAppLifecycleState(state);
+
+  //   if (state == AppLifecycleState.inactive ||
+  //       state == AppLifecycleState.detached) {
+  //     return;
+  //   }
+
+  //   final isBackground = state == AppLifecycleState.paused;
+
+  //   if (isBackground) {
+  //     pinCodeProvider.resetSession();
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     AccountSettingsProvider _accountSettingsProvider =
@@ -57,15 +88,17 @@ class _LayoutScreenState extends State<LayoutScreen> {
           builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
             //returns the page at the current index, or at the lock screen index if a) the PIN lock is active AND b) there is a code for the email used for login stored in sharedPreferences AND c) the pin code has not been recalled before
             if (pinCodeProvider.pinActive && !pinCodeProvider.sessionIsSafe) {
+              dev.log("PIN ACTIVE. Triggering recall");
               pinCodeProvider.triggerPINRecall();
             } else {
-              if (screenIndexProvider.pageIndex == 5) {
-                screenIndexProvider.setPageIndex(0);
-              }
+              dev.log(
+                  "Checked if I should trigger a PIN recall, but either it is not active for " +
+                      pinCodeProvider.lastEmail +
+                      " or the session is safe.");
             }
             dev.log(pinCodeProvider.sessionIsSafe
-                ? "The session is safe"
-                : "The session is not safe");
+                ? "Session: SAFE"
+                : "Session: NOT SAFE");
             return _page.elementAt(screenIndexProvider.pageIndex);
           },
         ),
