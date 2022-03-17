@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 
@@ -10,12 +10,20 @@ class OnboardingRobot {
   final WidgetTester tester;
 
   Future<void> pressSignUpNow() async {
-    expect(find.text("Sign up now!"), findsOneWidget);
+    await _pressButtonByText("Sign up now!", GradientButton);
+  }
+
+  Future<void> pressIHaveAnAccount() async {
+    await _pressButtonByText("I have an account", CupertinoButton);
+  }
+
+  Future<void> _pressButtonByText(String text, Type buttonType) async {
+    expect(find.text(text), findsOneWidget);
     sleep(const Duration(milliseconds: 500));
 
-    final signUpTextFinder = find.text("Sign up now!");
-    final signUpButtonFinder = find.ancestor(
-        of: signUpTextFinder, matching: find.byType(GradientButton));
+    final signUpTextFinder = find.text(text);
+    final signUpButtonFinder =
+        find.ancestor(of: signUpTextFinder, matching: find.byType(buttonType));
 
     await tester.ensureVisible(signUpButtonFinder);
     await tester.tap(signUpButtonFinder);

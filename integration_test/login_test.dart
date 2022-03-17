@@ -18,8 +18,9 @@ void main() {
   OnboardingOpenSignInRobot onboardingOpenSignInRobot;
 
   group('e2e test', () {
-    testWidgets('whole app', (WidgetTester tester) async {
+    testWidgets('login directly', (WidgetTester tester) async {
       app.main();
+      await tester.pumpAndSettle();
 
       homeRobot = HomeRobot(tester);
       onboardingRobot = OnboardingRobot(tester);
@@ -34,9 +35,13 @@ void main() {
       //   await tester.pumpAndSettle();
       // });
 
-      await tester.pumpAndSettle();
+      await onboardingRobot.pressIHaveAnAccount();
 
-      await onboardingRobot.pressSignUpNow();
+/*
+      await onboardingOpenSignInRobot
+          .fillInEmail("soencke.evers@investit-academy.de");
+      await onboardingOpenSignInRobot.fillInPassword("tempPasswort123");
+*/
 
       /*
       await homeRobot.findTitle();
