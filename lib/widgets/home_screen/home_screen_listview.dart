@@ -426,20 +426,27 @@ class HomeScreenListView implements BalanceDataListView {
 
               child: ListTile(
                 leading: Badge(
+                  padding: const EdgeInsets.all(2),
                   toAnimate: false,
-                  position: BadgePosition(bottom: 16, start: 16),
+                  position: BadgePosition(bottom: 19, start: 19),
                   elevation: 0,
-                  badgeColor: Color(0x00000000),
+                  badgeColor: isFutureItem && arrayElement["repeatId"] != null
+                      ? Theme.of(context).colorScheme.onSurface
+                      : arrayElement["amount"] > 0
+                          ? arrayElement["repeatId"] != null
+                              ? Theme.of(context).colorScheme.tertiary
+                              : Color(0x000000)
+                          : arrayElement["repeatId"] != null
+                              ? Theme.of(context).colorScheme.errorContainer
+                              : Color(0x000000),
                   badgeContent: arrayElement["repeatId"] != null
                       ? Icon(
                           Icons.sync,
                           color: isFutureItem
-                              ? Theme.of(context).colorScheme.onSurface
-                              : arrayElement["amount"] > 0
+                              ? arrayElement["amount"] > 0
                                   ? Theme.of(context).colorScheme.tertiary
-                                  : Theme.of(context)
-                                      .colorScheme
-                                      .errorContainer,
+                                  : Theme.of(context).colorScheme.errorContainer
+                              : Theme.of(context).colorScheme.onSurface,
                         )
                       : SizedBox(),
                   child: CircleAvatar(
