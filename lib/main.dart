@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -19,18 +21,22 @@ import 'package:linum/screens/onboarding_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main({bool? testing}) {
   WidgetsFlutterBinding.ensureInitialized();
 
   /// Force Portrait Mode
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   SharedPreferences.getInstance().then((pref) {
     MyApp.currentLocalLanguageCode = pref.getString("languageCode");
-    runApp(MyApp());
+    runApp(MyApp(testing));
   });
 }
 
 class MyApp extends StatelessWidget {
+  final bool? testing;
+
+  MyApp(this.testing);
+
   static String? currentLocalLanguageCode;
 
   @override
@@ -136,7 +142,7 @@ class MyApp extends StatelessWidget {
 
       // End of Theme Data.
 
-      home: MyHomePage(title: 'Linum'),
+      home: MyHomePage(title: 'Linum', testing: testing),
 
       // Specified Localizations
       supportedLocales: [
@@ -176,18 +182,23 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+  final bool? testing;
+  MyHomePage({Key? key, required this.title, this.testing}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState(testing);
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   /// The future is part of the state of our widget. We should not call `initializeApp`
   /// directly inside [build].
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
+  final bool? testing;
+  _MyHomePageState(this.testing);
+
   @override
   Widget build(BuildContext context) {
     // Initialize Size Guide for responsive behaviour
@@ -211,13 +222,20 @@ class _MyHomePageState extends State<MyHomePage> {
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
           return MultiProvider(
+            key: Key("MainMultiProvider"),
             providers: [
               ChangeNotifierProvider<AuthenticationService>(
+                key: Key("AuthenticationChangeNotifierProvider"),
                 create: (_) {
                   AuthenticationService auth =
                       AuthenticationService(FirebaseAuth.instance, context);
-
-                  // NOTE: The sign-in service is now functional, no need to change anything here.
+                  if (testing != null && testing!) {
+                    auth.signOut();
+                    while (auth.isLoggedIn) {
+                      sleep(Duration(milliseconds: 50));
+                      // this should only be called when we are testing.
+                    }
+                  }
 
                   return auth;
                 },
