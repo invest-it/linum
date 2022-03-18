@@ -29,13 +29,6 @@ void main() {
       onboardingOpenSignUpRobot = OnboardingOpenSignUpRobot(tester);
       onboardingOpenSignInRobot = OnboardingOpenSignInRobot(tester);
       onboardingOpenMessageRobot = OnboardingOpenMessageRobot(tester);
-      // For recording perf
-      // await tester.pumpAndSettle();
-      // final listFinder = find.byKey(const Key('singleChildScrollView'));
-      // await binding.watchPerformance(() async {
-      //   await tester.fling(listFinder, const Offset(0, -500), 10000);
-      //   await tester.pumpAndSettle();
-      // });
 
       await onboardingRobot.pressIHaveAnAccount();
 
@@ -48,28 +41,6 @@ void main() {
 
       await onboardingOpenSignInRobot.fillInPassword("tempPasswort123");
       await onboardingOpenSignInRobot.pressSignIn();
-
-      /*
-      await homeRobot.findTitle();
-
-      await homeRobot.scrollThePage();
-
-      await homeRobot.clickFirstButton();
-      await secondScreenRobot.findTitle();
-      await secondScreenRobot.scrollThePage();
-      await secondScreenRobot.scrollThePage(scrollUp: true);
-      await secondScreenRobot.goBack();
-
-      await homeRobot.clickSecondButton();
-      await thirdScreenRobot.findTitle();
-      await thirdScreenRobot.scrollThePage();
-      await thirdScreenRobot.scrollThePage(scrollUp: true);
-      await thirdScreenRobot.clickTile(2);
-      await thirdScreenRobot.goBack();
-
-      await homeRobot.scrollThePage(scrollUp: true);
-
-      */
     });
   });
 }
