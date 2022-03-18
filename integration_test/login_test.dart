@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -25,6 +27,8 @@ void main() {
   group('e2e test', () {
     testWidgets('login directly', (WidgetTester tester) async {
       app.main(testing: true);
+      sleep(Duration(seconds: 2));
+
       await tester.pumpAndSettle(Duration(seconds: 2));
 
       homeRobot = HomeRobot(tester);
