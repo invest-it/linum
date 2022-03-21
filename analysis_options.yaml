@@ -1,0 +1,5 @@
+include: package:lint/analysis_options.yaml
+
+linter:
+  rules:
+    prefer_if_elements_to_conditional_expressions: false

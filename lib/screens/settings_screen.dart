@@ -165,7 +165,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           .fromString<StandardCategoryIncome>(
                                     StandardCategoryIncome.values,
                                     (accountSettingsProvider.settings[
-                                            "StandardCategoryIncome"] ??
+                                                "StandardCategoryIncome"]
+                                            as String? ??
                                         "None"),
                                   )]
                                       ?.label ??
@@ -182,7 +183,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   StandardCategoryIncome>(
                             StandardCategoryIncome.values,
                             (accountSettingsProvider
-                                    .settings["StandardCategoryIncome"] ??
+                                        .settings["StandardCategoryIncome"]
+                                    as String? ??
                                 "None"),
                           )]
                               ?.icon ??
@@ -232,7 +234,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           .fromString<StandardCategoryExpense>(
                                     StandardCategoryExpense.values,
                                     (accountSettingsProvider.settings[
-                                            "StandardCategoryExpense"] ??
+                                                "StandardCategoryExpense"]
+                                            as String? ??
                                         "None"),
                                   )]
                                       ?.label ??
@@ -249,7 +252,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   StandardCategoryExpense>(
                             StandardCategoryExpense.values,
                             (accountSettingsProvider
-                                    .settings["StandardCategoryExpense"] ??
+                                        .settings["StandardCategoryExpense"]
+                                    as String? ??
                                 "None"),
                           )]
                               ?.icon ??
@@ -307,7 +311,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         'settings_screen/language-settings/label-systemlang'),
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
-                  value: accountSettingsProvider.settings['systemLanguage'] ??
+                  value: accountSettingsProvider.settings['systemLanguage']
+                          as bool? ??
                       true,
                   activeColor: Theme.of(context).colorScheme.primary,
                   onChanged: (bool value) {
@@ -427,8 +432,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ?.label ??
                     "Category")),
             selected: "StandardCategoryIncome." +
-                    (accountSettingsProvider
-                            .settings["StandardCategoryIncome"] ??
+                    (accountSettingsProvider.settings["StandardCategoryIncome"]
+                            as String? ??
                         "None") ==
                 StandardCategoryIncome.values[indexBuilder].toString(),
             onTap: () {
@@ -462,8 +467,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ?.label ??
                     "Category")),
             selected: "StandardCategoryExpense." +
-                    (accountSettingsProvider
-                            .settings["StandardCategoryExpense"] ??
+                    (accountSettingsProvider.settings["StandardCategoryExpense"]
+                            as String? ??
                         "None") ==
                 StandardCategoryExpense.values[indexBuilder].toString(),
             onTap: () {
@@ -482,14 +487,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
 }
 
 // ignore: unused_element
-ListView _currencyChange(_currency) {
+ListView _currencyChange(List<String> currency) {
   return ListView.builder(
     shrinkWrap: true,
-    itemCount: _currency.length,
+    itemCount: currency.length,
     itemBuilder: (BuildContext context, int indexBuilder) {
       return ListTile(
         //leading: Icon(widget.categories[index].icon),
-        title: Text(_currency[indexBuilder]),
+        title: Text(currency[indexBuilder]),
         // onTap: () => _selectCategoryItem(
         //     widget.categoriesCategoryIncome[indexBuilder],
         //     enterScreenProvider),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/models/entry_category.dart';
+import 'package:linum/models/repeat_duration_type_enum.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:provider/provider.dart';
@@ -96,10 +97,11 @@ class _EnterScreenListViewBuilderState
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
                   onTap: () => _onCategoryPressed(
-                      index,
-                      // widget.categoriesTransaction,
-                      enterScreenProvider,
-                      accountSettingsProvider),
+                    index,
+                    // widget.categoriesTransaction,
+                    enterScreenProvider,
+                    accountSettingsProvider,
+                  ),
                   child: Container(
                     height: 50,
                     child: Row(
@@ -109,8 +111,8 @@ class _EnterScreenListViewBuilderState
                           decoration: BoxDecoration(
                             color: Colors.white,
                             border: Border.all(
-                                color:
-                                    Theme.of(context).colorScheme.background),
+                              color: Theme.of(context).colorScheme.background,
+                            ),
                             borderRadius: BorderRadius.circular(5),
                             boxShadow: [
                               BoxShadow(
@@ -118,50 +120,56 @@ class _EnterScreenListViewBuilderState
                                 blurRadius: 2.0,
                                 spreadRadius: 0.0,
                                 offset: Offset(
-                                    0.5, 2.0), // shadow direction: bottom right
+                                  0.5,
+                                  2.0,
+                                ), // shadow direction: bottom right
                               )
                             ],
                           ),
                           child: Icon(
                             <IconData>[
                               _selectIcon(
-                                          EnumToString.fromString(
-                                              enterScreenProvider.isExpenses
-                                                  ? StandardCategoryExpense
-                                                      .values
-                                                  : StandardCategoryIncome
-                                                      .values,
-                                              enterScreenProvider.category),
-                                          enterScreenProvider,
-                                          accountSettingsProvider)
-                                      .icon ??
+                                    EnumToString.fromString(
+                                      enterScreenProvider.isExpenses
+                                          ? StandardCategoryExpense.values
+                                          : StandardCategoryIncome.values,
+                                      enterScreenProvider.category,
+                                    ),
+                                    enterScreenProvider,
+                                    accountSettingsProvider,
+                                  ).icon ??
                                   Icons.error,
                               timeEntryCategory.icon,
                               accountSettingsProvider
                                   .categoriesRepeat[enterScreenProvider
                                       .repeatDurationEnum]!["entryCategory"]
-                                  .icon,
+                                  .icon as IconData,
                             ][index],
                           ),
                         ),
                         SizedBox(
                           width: 20,
                         ),
-                        Text(AppLocalizations.of(context)!.translate(
-                              [
-                                "enter_screen_attribute_category",
-                                timeEntryCategory.label,
-                                repeatDurationEntryCategory.label,
-                              ][index],
-                            ) +
-                            ": "),
+                        Text(
+                          AppLocalizations.of(context)!.translate(
+                                [
+                                  "enter_screen_attribute_category",
+                                  timeEntryCategory.label,
+                                  repeatDurationEntryCategory.label,
+                                ][index],
+                              ) +
+                              ": ",
+                        ),
                         SizedBox(
                           width: 5,
                         ),
                         //displays the selecte option behind the category/repetiton etc.
                         //e.g. Category : Food <-- Food is the select Text
-                        _selectText(index, enterScreenProvider,
-                            accountSettingsProvider),
+                        _selectText(
+                          index,
+                          enterScreenProvider,
+                          accountSettingsProvider,
+                        ),
                       ],
                     ),
                   ),
@@ -200,14 +208,15 @@ class _EnterScreenListViewBuilderState
                         child: Icon(
                           <IconData>[
                             _selectIcon(
-                                        EnumToString.fromString(
-                                            enterScreenProvider.isExpenses
-                                                ? StandardCategoryExpense.values
-                                                : StandardCategoryIncome.values,
-                                            enterScreenProvider.category),
-                                        enterScreenProvider,
-                                        accountSettingsProvider)
-                                    .icon ??
+                                  EnumToString.fromString(
+                                    enterScreenProvider.isExpenses
+                                        ? StandardCategoryExpense.values
+                                        : StandardCategoryIncome.values,
+                                    enterScreenProvider.category,
+                                  ),
+                                  enterScreenProvider,
+                                  accountSettingsProvider,
+                                ).icon ??
                                 Icons.error,
                             timeEntryCategory.icon,
                             repeatDurationEntryCategory.icon,
@@ -232,7 +241,10 @@ class _EnterScreenListViewBuilderState
                     height: proportionateScreenHeight(300),
                     //which list view is displayed depending on which category is tapped
                     child: _chooseListViewBuilder(
-                        enterScreenProvider, index, accountSettingsProvider),
+                      enterScreenProvider,
+                      index,
+                      accountSettingsProvider,
+                    ),
                   ),
                 ),
               ],
@@ -244,7 +256,7 @@ class _EnterScreenListViewBuilderState
   }
 
   //which hint text at the upper text field is shown
-  String _hintTextChooser(enterScreenProvider) {
+  String _hintTextChooser(EnterScreenProvider enterScreenProvider) {
     if (enterScreenProvider.isExpenses) {
       return AppLocalizations.of(context)!
           .translate('enter_screen/expenses-textfield-title');
@@ -273,14 +285,16 @@ class _EnterScreenListViewBuilderState
     AccountSettingsProvider accountSettingsProvider,
     int index,
   ) {
-    return Text(AppLocalizations.of(context)!.translate(
-          [
-            "enter_screen_attribute_category",
-            timeEntryCategory.label,
-            repeatDurationEntryCategory.label,
-          ][index],
-        ) +
-        ": ");
+    return Text(
+      AppLocalizations.of(context)!.translate(
+            [
+              "enter_screen_attribute_category",
+              timeEntryCategory.label,
+              repeatDurationEntryCategory.label,
+            ][index],
+          ) +
+          ": ",
+    );
   }
 
   //which lists view is built depending on expense etc.
@@ -288,13 +302,22 @@ class _EnterScreenListViewBuilderState
       int index, AccountSettingsProvider accountSettingsProvider) {
     if (enterScreenProvider.isExpenses) {
       return _listViewBuilderExpenses(
-          index, enterScreenProvider, accountSettingsProvider);
+        index,
+        enterScreenProvider,
+        accountSettingsProvider,
+      );
     } else if (enterScreenProvider.isIncome) {
       return _listViewBuilderIncome(
-          index, enterScreenProvider, accountSettingsProvider);
+        index,
+        enterScreenProvider,
+        accountSettingsProvider,
+      );
     } else
       return _listViewBuilderTransaction(
-          index, enterScreenProvider, accountSettingsProvider);
+        index,
+        enterScreenProvider,
+        accountSettingsProvider,
+      );
   }
 
   //which list view is built depending on the tapped category at EXPENSES
@@ -308,15 +331,20 @@ class _EnterScreenListViewBuilderState
           itemCount: AccountSettingsProvider.standardCategoryExpenses.length,
           itemBuilder: (BuildContext context, int indexBuilder) {
             return ListTile(
-              leading: Icon(AccountSettingsProvider
-                  .standardCategoryExpenses[
-                      StandardCategoryExpense.values[indexBuilder]]!
-                  .icon),
-              title: Text(AppLocalizations.of(context)!.translate(
+              leading: Icon(
+                AccountSettingsProvider
+                    .standardCategoryExpenses[
+                        StandardCategoryExpense.values[indexBuilder]]!
+                    .icon,
+              ),
+              title: Text(
+                AppLocalizations.of(context)!.translate(
                   AccountSettingsProvider
                       .standardCategoryExpenses[
                           StandardCategoryExpense.values[indexBuilder]]!
-                      .label)),
+                      .label,
+                ),
+              ),
               //selects the item as the categories value
               onTap: () => _selectCategoryItemExpenses(
                 StandardCategoryExpense.values[indexBuilder]
@@ -336,15 +364,20 @@ class _EnterScreenListViewBuilderState
           itemCount: AccountSettingsProvider.standardCategoryExpenses.length,
           itemBuilder: (BuildContext context, int indexBuilder) {
             return ListTile(
-              leading: Icon(AccountSettingsProvider
-                  .standardCategoryIncomes[
-                      StandardCategoryIncome.values[indexBuilder]]!
-                  .icon),
-              title: Text(AppLocalizations.of(context)!.translate(
+              leading: Icon(
+                AccountSettingsProvider
+                    .standardCategoryIncomes[
+                        StandardCategoryIncome.values[indexBuilder]]!
+                    .icon,
+              ),
+              title: Text(
+                AppLocalizations.of(context)!.translate(
                   AccountSettingsProvider
                       .standardCategoryIncomes[
                           StandardCategoryIncome.values[indexBuilder]]!
-                      .label)),
+                      .label,
+                ),
+              ),
               //selects the item as the categories value
               onTap: () => _selectCategoryItemIncome(
                 StandardCategoryIncome.values[indexBuilder]
@@ -384,7 +417,7 @@ class _EnterScreenListViewBuilderState
               accountSettingsProvider
                       .categoriesRepeat[RepeatDuration.values[indexBuilder]]
                           ?["entryCategory"]
-                      .icon ??
+                      .icon as IconData? ??
                   Icons.error,
             ),
             title: Text(
@@ -392,7 +425,7 @@ class _EnterScreenListViewBuilderState
                 accountSettingsProvider
                     .categoriesRepeat[RepeatDuration.values[indexBuilder]]
                         ?["entryCategory"]
-                    .label,
+                    .label as String,
               ),
             ),
             //selects the item as the repeat value
@@ -416,15 +449,20 @@ class _EnterScreenListViewBuilderState
         itemCount: AccountSettingsProvider.standardCategoryIncomes.length,
         itemBuilder: (BuildContext context, int indexBuilder) {
           return ListTile(
-            leading: Icon(AccountSettingsProvider
-                .standardCategoryIncomes[
-                    StandardCategoryIncome.values[indexBuilder]]!
-                .icon),
-            title: Text(AppLocalizations.of(context)!.translate(
+            leading: Icon(
+              AccountSettingsProvider
+                  .standardCategoryIncomes[
+                      StandardCategoryIncome.values[indexBuilder]]!
+                  .icon,
+            ),
+            title: Text(
+              AppLocalizations.of(context)!.translate(
                 AccountSettingsProvider
                     .standardCategoryIncomes[
                         StandardCategoryIncome.values[indexBuilder]]!
-                    .label)),
+                    .label,
+              ),
+            ),
             onTap: () => _selectCategoryItemIncome(
               StandardCategoryIncome.values[indexBuilder]
                   .toString()
@@ -461,14 +499,16 @@ class _EnterScreenListViewBuilderState
               accountSettingsProvider
                       .categoriesRepeat[RepeatDuration.values[indexBuilder]]
                           ?["entryCategory"]
-                      .icon ??
+                      .icon as IconData? ??
                   Icons.error,
             ),
             title: Text(
-              AppLocalizations.of(context)!.translate(accountSettingsProvider
-                  .categoriesRepeat[RepeatDuration.values[indexBuilder]]
-                      ?["entryCategory"]
-                  .label),
+              AppLocalizations.of(context)!.translate(
+                accountSettingsProvider
+                    .categoriesRepeat[RepeatDuration.values[indexBuilder]]
+                        ?["entryCategory"]
+                    .label as String,
+              ),
             ),
             onTap: () => _selectRepeatItem(
               enterScreenProvider,
@@ -493,17 +533,22 @@ class _EnterScreenListViewBuilderState
             accountSettingsProvider
                     .categoriesRepeat[RepeatDuration.values[indexBuilder]]
                         ?["entryCategory"]
-                    .icon ??
+                    .icon as IconData? ??
                 Icons.error,
           ),
           title: Text(
-            AppLocalizations.of(context)!.translate(accountSettingsProvider
-                .categoriesRepeat[RepeatDuration.values[indexBuilder]]
-                    ?["entryCategory"]
-                .label),
+            AppLocalizations.of(context)!.translate(
+              accountSettingsProvider
+                  .categoriesRepeat[RepeatDuration.values[indexBuilder]]
+                      ?["entryCategory"]
+                  .label as String,
+            ),
           ),
           onTap: () => _selectRepeatItem(
-              enterScreenProvider, indexBuilder, accountSettingsProvider),
+            enterScreenProvider,
+            indexBuilder,
+            accountSettingsProvider,
+          ),
         );
       },
     );
@@ -515,34 +560,47 @@ class _EnterScreenListViewBuilderState
     if (index == 0) {
       if (enterScreenProvider.isExpenses) {
         if (enterScreenProvider.category == "") {
-          return Text(AppLocalizations.of(context)!.translate(
+          return Text(
+            AppLocalizations.of(context)!.translate(
               AccountSettingsProvider
                   .standardCategoryExpenses[StandardCategoryExpense.None]!
-                  .label));
+                  .label,
+            ),
+          );
         }
-        return Text(AppLocalizations.of(context)!.translate(
+        return Text(
+          AppLocalizations.of(context)!.translate(
             (AccountSettingsProvider
                     .standardCategoryExpenses[
                         EnumToString.fromString<StandardCategoryExpense>(
-                            StandardCategoryExpense.values,
-                            enterScreenProvider.category)]
+                  StandardCategoryExpense.values,
+                  enterScreenProvider.category,
+                )]
                     ?.label ??
-                'chosen expense')));
+                'chosen expense'),
+          ),
+        );
       } else {
         if (enterScreenProvider.category == "") {
-          return Text(AppLocalizations.of(context)!.translate(
+          return Text(
+            AppLocalizations.of(context)!.translate(
               AccountSettingsProvider
-                  .standardCategoryIncomes[StandardCategoryIncome.None]!
-                  .label));
+                  .standardCategoryIncomes[StandardCategoryIncome.None]!.label,
+            ),
+          );
         }
-        return Text(AppLocalizations.of(context)!.translate(
+        return Text(
+          AppLocalizations.of(context)!.translate(
             (AccountSettingsProvider
                     .standardCategoryIncomes[
                         EnumToString.fromString<StandardCategoryIncome>(
-                            StandardCategoryIncome.values,
-                            enterScreenProvider.category)]
+                  StandardCategoryIncome.values,
+                  enterScreenProvider.category,
+                )]
                     ?.label ??
-                'chosen income')));
+                'chosen income'),
+          ),
+        );
       }
     } else if (index == 1) {
       String langCode = AppLocalizations.of(context)!.locale.languageCode;
@@ -551,10 +609,12 @@ class _EnterScreenListViewBuilderState
       return Text(formatter.format(enterScreenProvider.selectedDate));
     } else if (index == 2) {
       return Text(
-        AppLocalizations.of(context)!.translate(accountSettingsProvider
-            .categoriesRepeat[enterScreenProvider.repeatDurationEnum]
-                ?["entryCategory"]
-            .label),
+        AppLocalizations.of(context)!.translate(
+          accountSettingsProvider
+              .categoriesRepeat[enterScreenProvider.repeatDurationEnum]
+                  ?["entryCategory"]
+              .label as String,
+        ),
       );
     } else {
       log("Something has gone wrong with the index in enter_screen_listviewbuilder.dart");
@@ -567,19 +627,24 @@ class _EnterScreenListViewBuilderState
     if (enterScreenProvider.isExpenses) {
       if (index.runtimeType != StandardCategoryExpense) {
         log("Error index had wrong type to choose icon");
-        log("assumed: " +
-            index.runtimeType.toString() +
-            " to be StandardCategoryExpense");
+        log(
+          "assumed: " +
+              index.runtimeType.toString() +
+              " to be StandardCategoryExpense",
+        );
         return Icon(Icons.error);
       }
       return Icon(
-          AccountSettingsProvider.standardCategoryExpenses[index]!.icon);
+        AccountSettingsProvider.standardCategoryExpenses[index]!.icon,
+      );
     } else if (enterScreenProvider.isIncome) {
       if (index.runtimeType != StandardCategoryIncome) {
         log("Error index had wrong type to choose icon");
-        log("assumed: " +
-            index.runtimeType.toString() +
-            " to be StandardCategoryIncome");
+        log(
+          "assumed: " +
+              index.runtimeType.toString() +
+              " to be StandardCategoryIncome",
+        );
 
         return Icon(Icons.error);
       }
@@ -614,10 +679,14 @@ class _EnterScreenListViewBuilderState
     Navigator.pop(context);
     enterScreenProvider
         .setRepeatDurationEnumSilently(RepeatDuration.values[index]);
-    enterScreenProvider.setRepeatDuration(accountSettingsProvider
-        .categoriesRepeat[RepeatDuration.values[index]]?["duration"]);
-    enterScreenProvider.setRepeatDurationType(accountSettingsProvider
-        .categoriesRepeat[RepeatDuration.values[index]]?["durationType"]);
+    enterScreenProvider.setRepeatDuration(
+      accountSettingsProvider.categoriesRepeat[RepeatDuration.values[index]]
+          ?["duration"] as int?,
+    );
+    enterScreenProvider.setRepeatDurationType(
+      accountSettingsProvider.categoriesRepeat[RepeatDuration.values[index]]
+          ?["durationType"] as RepeatDurationType,
+    );
   }
 
   void _openDatePicker(EnterScreenProvider enterScreenProvider) async {

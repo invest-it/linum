@@ -159,10 +159,10 @@ class AccountSettingsProvider extends ChangeNotifier {
         .listen((DocumentSnapshot<Map<String, dynamic>> innerSnapshot) {
       lastGrabbedData = innerSnapshot.data() ?? {};
 
-      String? langString = lastGrabbedData["languageCode"];
+      final String? langString = lastGrabbedData["languageCode"] as String?;
       Locale? lang;
       if (lastGrabbedData["systemLanguage"] == false && langString != null) {
-        List<String> langArray = langString.split("-");
+        final List<String> langArray = langString.split("-");
         lang = Locale(langArray[0], langArray[1]);
       }
       AppLocalizations.of(context)!.load(locale: lang);

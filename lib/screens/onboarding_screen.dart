@@ -93,17 +93,17 @@ class _OnboardingScreenState extends State<OnboardingPage> {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 16,
         ),
         Expanded(
           child: Container(
-            margin: EdgeInsets.all(32),
+            margin: const EdgeInsets.all(32),
             child: SvgPicture.asset(slide.imageURL),
           ),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 36),
+          padding: const EdgeInsets.symmetric(horizontal: 36),
           child: Text(
             AppLocalizations.of(context)!.translate(slide.heading),
             textAlign: TextAlign.center,
@@ -112,14 +112,16 @@ class _OnboardingScreenState extends State<OnboardingPage> {
         ),
         slide.description != null
             ? Padding(
-                padding: EdgeInsets.symmetric(horizontal: 36, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 36, vertical: 16),
                 child: Text(
-                  AppLocalizations.of(context)!.translate(slide.description),
+                  AppLocalizations.of(context)!
+                      .translate(slide.description as String),
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headline5,
                 ),
               )
-            : Padding(
+            : const Padding(
                 padding: EdgeInsets.zero,
               ),
         SizedBox(
@@ -146,7 +148,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
     for (int i = 0; i < _slides.length; i++) {
       row.children.add(_buildPageIndicatorItem(i));
       if (i != _slides.length - 1) {
-        row.children.add(SizedBox(
+        row.children.add(const SizedBox(
           width: 12,
         ));
       }
@@ -235,7 +237,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
               child: PageView(
                 controller: _pageController,
                 onPageChanged: _handleOnPageChanged,
-                physics: PageScrollPhysics(),
+                physics: const PageScrollPhysics(),
                 children: [
                   ..._builtSlides(),
                 ],
@@ -307,7 +309,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                     height: proportionateScreenHeight(32),
                   ),
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 32),
+                    margin: const EdgeInsets.symmetric(horizontal: 32),
                     child: SizedBox(
                       width: double.infinity,
                       child: GradientButton(
@@ -322,7 +324,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                         gradient: LinearGradient(
                           colors: [
                             Theme.of(context).colorScheme.primary,
-                            createMaterialColor(Color(0xFFC1E695)),
+                            createMaterialColor(const Color(0xFFC1E695)),
                           ],
                         ),
                         elevation: 0,
@@ -360,7 +362,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
               child: AnimatedContainer(
                 width: _loginWidth,
                 curve: Curves.fastLinearToSlowEaseIn,
-                duration: Duration(milliseconds: 1200),
+                duration: const Duration(milliseconds: 1200),
                 transform:
                     Matrix4.translationValues(_loginXOffset, _loginYOffset, 1),
                 decoration: BoxDecoration(
@@ -368,8 +370,8 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                       .colorScheme
                       .background
                       .withOpacity(_loginOpacity),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(32),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: const Radius.circular(32),
                     topRight: Radius.circular(32),
                   ),
                   boxShadow: [
@@ -387,15 +389,15 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                       children: [
                         AnimatedSize(
                           curve: Curves.fastLinearToSlowEaseIn,
-                          duration: Duration(milliseconds: 800),
+                          duration: const Duration(milliseconds: 800),
                           child: ClipRRect(
                             borderRadius: BorderRadius.only(
                               topLeft: onboardingScreenProvider.pageState == 2
-                                  ? Radius.circular(32)
-                                  : Radius.circular(0),
+                                  ? const Radius.circular(32)
+                                  : const Radius.circular(0),
                               topRight: onboardingScreenProvider.pageState == 2
-                                  ? Radius.circular(32)
-                                  : Radius.circular(0),
+                                  ? const Radius.circular(32)
+                                  : const Radius.circular(0),
                             ),
                             child: Container(
                               width: double.infinity,
@@ -438,7 +440,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                               ScreenFraction.TWOFIFTHS),
                       right: 0,
                       child: ClipRRect(
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(32),
                           topRight: Radius.circular(32),
                         ),
@@ -484,11 +486,11 @@ class _OnboardingScreenState extends State<OnboardingPage> {
               },
               child: AnimatedContainer(
                 curve: Curves.fastLinearToSlowEaseIn,
-                duration: Duration(milliseconds: 800),
+                duration: const Duration(milliseconds: 800),
                 transform: Matrix4.translationValues(0, _registerYOffset, 0),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.background,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(32),
                     topRight: Radius.circular(32),
                   ),

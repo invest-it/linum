@@ -47,7 +47,8 @@ class TextContainer extends StatelessWidget {
   }
 }
 
-_colorPicker(enterScreenProvider, context) {
+Color? _colorPicker(
+    EnterScreenProvider enterScreenProvider, BuildContext context) {
   if (enterScreenProvider.isExpenses) {
     return Theme.of(context).colorScheme.error;
   } else if (enterScreenProvider.isIncome) {

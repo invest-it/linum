@@ -304,7 +304,8 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
   }
 
   //which color to show depending on expense or not
-  Color _colorPicker(EnterScreenProvider enterScreenProvider, context) {
+  Color _colorPicker(
+      EnterScreenProvider enterScreenProvider, BuildContext context) {
     if (enterScreenProvider.isExpenses) {
       return Theme.of(context).colorScheme.error;
     } else if (enterScreenProvider.isIncome) {
