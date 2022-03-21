@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/backend_functions/statistic_calculations.dart';
 
 void main() {
-  group("basic statistic calculation", () {
+  group("basic_statistic_calculation", () {
     List<dynamic> exampleData1 = [
       {"amount": 15},
       {"amount": 35.5},

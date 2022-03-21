@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
@@ -28,45 +30,17 @@ void main() {
         (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          supportedLocales: [
-            Locale('en', 'US'),
-          ],
-
-          localizationsDelegates: [
-            // Local Translation of our coding team / Invest it! Community
-            AppLocalizations.delegate,
-          ],
-
-          // Returns a locale which will be used by the app
-          localeResolutionCallback: (locale, supportedLocales) {
-            // Check if the current device locale is supported
-            for (var supportedLocale in supportedLocales) {
-              if (supportedLocale.languageCode == locale?.languageCode ||
-                  supportedLocale.countryCode == locale?.countryCode) {
-                return supportedLocale;
-              }
-            }
-            // If the locale of the device is not supported, use the first one
-            // from the list (English, in this case).
-            return supportedLocales.first;
-          },
-          home: ListView(children: <Widget>[
-            Builder(builder: (context) {
-              SizeGuide().init(context);
-              //AppLocalizations.of(context)!.load(locale: Locale("en", "US"));
-              return Container();
-            }),
-            TimeWidget(
-              displayValue: "listview/label-today",
-              key: Key("TimeWidget"),
-            ),
-          ]),
+          home: Builder(builder: (context) {
+            SizeGuide().init(context);
+            return TimeWidget(
+              displayValue: "Test text",
+              isTranslated: true,
+            );
+          }),
         ),
       );
 
-      final textFinder = find.text("TODAY");
-      final test = find.byKey(Key("TimeWidget")).evaluate();
-      final test2 = find.byType(MaterialApp).evaluate();
+      final textFinder = find.text("TEST TEXT");
       expect(textFinder, findsOneWidget);
     });
   });
