@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/backend_functions/statistic_calculations.dart';
 
@@ -43,6 +45,8 @@ void main() {
       {"amount": -0},
       {"amount": -0},
     ];
+    List<dynamic> randomData = _createRandomStatisticData();
+
     group("balance", () {
       group("sum", () {
         test("empty data", () {
@@ -115,6 +119,22 @@ void main() {
           StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData5);
           num expectedSum = 0;
+
+          // Act (Execution)
+          num sum = statisticsCalculations.sumBalance;
+
+          // Assert (Observation)
+          expect(sum, expectedSum);
+        });
+
+        test("random data", () {
+          // Arrange (Initialization)
+          StatisticsCalculations statisticsCalculations =
+              StatisticsCalculations(randomData);
+          num expectedSum = 0;
+          for (int i = 0; i < randomData.length; i++) {
+            expectedSum += randomData[i]["amount"];
+          }
 
           // Act (Execution)
           num sum = statisticsCalculations.sumBalance;
@@ -202,8 +222,26 @@ void main() {
           // Assert (Observation)
           expect(average, expectedAverage);
         });
+
+        test("random data", () {
+          // Arrange (Initialization)
+          StatisticsCalculations statisticsCalculations =
+              StatisticsCalculations(randomData);
+          num expectedAverage = 0;
+          for (int i = 0; i < randomData.length; i++) {
+            expectedAverage += randomData[i]["amount"];
+          }
+          expectedAverage /= randomData.length;
+
+          // Act (Execution)
+          num average = statisticsCalculations.averageBalance;
+
+          // Assert (Observation)
+          expect(average, expectedAverage);
+        });
       });
     });
+
     group("income", () {
       group("sum", () {
         test("empty data", () {
@@ -276,6 +314,24 @@ void main() {
           StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData5);
           num expectedSum = 0;
+
+          // Act (Execution)
+          num sum = statisticsCalculations.sumIncomes;
+
+          // Assert (Observation)
+          expect(sum, expectedSum);
+        });
+
+        test("random data", () {
+          // Arrange (Initialization)
+          StatisticsCalculations statisticsCalculations =
+              StatisticsCalculations(randomData);
+          num expectedSum = 0;
+          for (int i = 0; i < randomData.length; i++) {
+            if (randomData[i]["amount"] > 0) {
+              expectedSum += randomData[i]["amount"];
+            }
+          }
 
           // Act (Execution)
           num sum = statisticsCalculations.sumIncomes;
@@ -356,6 +412,27 @@ void main() {
               StatisticsCalculations(exampleData5);
           num expectedAverage = 0;
 
+          // Act (Execution)
+          num average = statisticsCalculations.averageIncomes;
+
+          // Assert (Observation)
+          expect(average, expectedAverage);
+        });
+
+        test("random data", () {
+          // Arrange (Initialization)
+          StatisticsCalculations statisticsCalculations =
+              StatisticsCalculations(randomData);
+          num expectedAverage = 0;
+          int incomes = 0;
+          for (int i = 0; i < randomData.length; i++) {
+            if (randomData[i]["amount"] > 0) {
+              expectedAverage += randomData[i]["amount"];
+
+              incomes++;
+            }
+          }
+          expectedAverage /= incomes;
           // Act (Execution)
           num average = statisticsCalculations.averageIncomes;
 
@@ -444,6 +521,24 @@ void main() {
           // Assert (Observation)
           expect(sum, expectedSum);
         });
+
+        test("random data", () {
+          // Arrange (Initialization)
+          StatisticsCalculations statisticsCalculations =
+              StatisticsCalculations(randomData);
+          num expectedSum = 0;
+          for (int i = 0; i < randomData.length; i++) {
+            if (randomData[i]["amount"] <= 0) {
+              expectedSum += randomData[i]["amount"];
+            }
+          }
+
+          // Act (Execution)
+          num sum = statisticsCalculations.sumCosts;
+
+          // Assert (Observation)
+          expect(sum, expectedSum);
+        });
       });
 
       group("average", () {
@@ -524,7 +619,42 @@ void main() {
           // Assert (Observation)
           expect(average, expectedAverage);
         });
+
+        test("random data", () {
+          // Arrange (Initialization)
+          StatisticsCalculations statisticsCalculations =
+              StatisticsCalculations(randomData);
+          num expectedAverage = 0;
+          int costs = 0;
+          for (int i = 0; i < randomData.length; i++) {
+            if (randomData[i]["amount"] <= 0) {
+              expectedAverage += randomData[i]["amount"];
+
+              costs++;
+            }
+          }
+          expectedAverage /= costs;
+          // Act (Execution)
+          num average = statisticsCalculations.averageCosts;
+
+          // Assert (Observation)
+          expect(average, expectedAverage);
+        });
       });
     });
   });
+}
+
+List<dynamic> _createRandomStatisticData() {
+  List<dynamic> returnList = [];
+  math.Random rand = math.Random();
+  int max = rand.nextInt(256);
+  for (int i = 0; i < max; i++) {
+    returnList.add({
+      "amount":
+          ((((0.5 - rand.nextDouble()) * 2 * 256) * 100).roundToDouble()) /
+              100.0
+    }); // create a random Number from -256 to 256
+  }
+  return returnList;
 }
