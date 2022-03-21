@@ -488,16 +488,20 @@ class HomeScreenListView implements BalanceDataListView {
                           )
                       : Theme.of(context).textTheme.overline,
                 ),
-                trailing: Text(
-                  arrayElement["amount"].toStringAsFixed(2) + "€",
-                  style: arrayElement["amount"] <= 0
-                      ? Theme.of(context)
-                          .textTheme
-                          .bodyText1
-                          ?.copyWith(color: Theme.of(context).colorScheme.error)
-                      : Theme.of(context).textTheme.bodyText1?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurface),
-                ),
+                trailing: arrayElement["amount"] == 0
+                    ? Text(
+                        AppLocalizations.of(context)!
+                            .translate('home_screen/free-text'),
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      )
+                    : Text(
+                        arrayElement["amount"].toStringAsFixed(2) + "€",
+                        style: arrayElement["amount"] <= 0
+                            ? Theme.of(context).textTheme.bodyText1?.copyWith(
+                                color: Theme.of(context).colorScheme.error)
+                            : Theme.of(context).textTheme.bodyText1?.copyWith(
+                                color: Theme.of(context).colorScheme.onSurface),
+                      ),
               ),
             ),
           ));
