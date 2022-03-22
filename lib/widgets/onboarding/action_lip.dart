@@ -5,7 +5,7 @@ import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
 class ActionLip extends StatefulWidget {
-  ActionLip(this.providerKey);
+  const ActionLip(this.providerKey);
 
   final ProviderKey providerKey;
   @override
@@ -20,7 +20,7 @@ class _ActionLipState extends State<ActionLip> {
 
   @override
   Widget build(BuildContext context) {
-    ActionLipStatusProvider actionLipStatusProvider =
+    final ActionLipStatusProvider actionLipStatusProvider =
         Provider.of<ActionLipStatusProvider>(context);
 
     // log('Status when ActionLip was built:' + actionLipStatus.toString());
@@ -47,17 +47,18 @@ class _ActionLipState extends State<ActionLip> {
         break;
       case ActionLipStatus.DISABLED:
         throw ArgumentError(
-            'If the actionLipStatus is set to DISABLED, the ActionLip class must not be invoked.',
-            'actionLipStatus');
+          'If the actionLipStatus is set to DISABLED, the ActionLip class must not be invoked.',
+          'actionLipStatus',
+        );
     }
 
     return AnimatedContainer(
       curve: Curves.fastLinearToSlowEaseIn,
-      duration: Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 1000),
       transform: Matrix4.translationValues(0, _lipYOffset, 1),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.background,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(32),
           topRight: Radius.circular(32),
         ),
@@ -68,31 +69,31 @@ class _ActionLipState extends State<ActionLip> {
           ),
         ],
       ),
-      child: Container(
+      child: SizedBox(
         width: double.infinity,
         height: proportionateScreenHeightFraction(ScreenFraction.threefifths),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             AppBar(
               primary: false,
               automaticallyImplyLeading: false,
               title: Text(
-                  actionLipStatusProvider.getActionLipTitle(providerKey),
-                  style: Theme.of(context).textTheme.headline5),
+                actionLipStatusProvider.getActionLipTitle(providerKey),
+                style: Theme.of(context).textTheme.headline5,
+              ),
               centerTitle: true,
               actions: [
                 IconButton(
-                  icon: Icon(Icons.close),
+                  icon: const Icon(Icons.close),
                   onPressed: () {
                     FocusManager.instance.primaryFocus?.unfocus();
                     actionLipStatusProvider.setActionLipStatus(
-                        providerKey: providerKey,
-                        actionLipStatus: ActionLipStatus.HIDDEN);
+                      providerKey: providerKey,
+                    );
                   },
                 ),
               ],
-              iconTheme: IconThemeData(color: Colors.black),
+              iconTheme: const IconThemeData(color: Colors.black),
               backgroundColor: Colors.transparent,
               elevation: 0,
             ),
