@@ -93,7 +93,7 @@ class _LoginFormState extends State<LoginForm> {
                         ),
                       ),
                       child: TextField(
-                        key: Key("loginEmailField"),
+                        key: const Key("loginEmailField"),
                         controller: _mailController,
                         keyboardType: TextInputType.emailAddress,
                         autocorrect: false,
@@ -124,7 +124,7 @@ class _LoginFormState extends State<LoginForm> {
                         ),
                       ),
                       child: TextField(
-                        key: Key("loginPasswordField"),
+                        key: const Key("loginPasswordField"),
                         obscureText: true,
                         controller: _passController,
                         keyboardType: TextInputType.visiblePassword,

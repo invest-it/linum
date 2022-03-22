@@ -32,8 +32,7 @@ class StatisticsCalculations {
   }
 
   /// average of the sum. if data is empty = 0
-  num get averageBalance => !_data.isEmpty ? sumBalance / _data.length : 0;
-
+  num get averageBalance => _data.isNotEmpty ? sumBalance / _data.length : 0;
 
   /// sum up the cost data
   num get sumCosts {
@@ -45,7 +44,8 @@ class StatisticsCalculations {
   }
 
   /// average of the sum. if data is empty = 0
-  num get averageCosts => !_costData.isEmpty ? sumCosts / _costData.length : 0;
+  num get averageCosts =>
+      _costData.isNotEmpty ? sumCosts / _costData.length : 0;
 
   /// sum up the income data. if data is empty = 0
   num get sumIncomes {
@@ -58,8 +58,7 @@ class StatisticsCalculations {
 
   /// average of the income data. if data is empty = 0
   num get averageIncomes =>
-      !_incomeData.isEmpty ? sumIncomes / _incomeData.length : 0;
-
+      _incomeData.isNotEmpty ? sumIncomes / _incomeData.length : 0;
 
   static Duration parseDuration(String s) {
     int hours = 0;

@@ -28,14 +28,14 @@ void main({bool? testing}) {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   SharedPreferences.getInstance().then((pref) {
     MyApp.currentLocalLanguageCode = pref.getString("languageCode");
-    runApp(MyApp(testing));
+    runApp(MyApp(testing: testing));
   });
 }
 
 class MyApp extends StatelessWidget {
   final bool? testing;
 
-  MyApp(this.testing);
+  const MyApp({this.testing});
 
   static String? currentLocalLanguageCode;
 
@@ -146,7 +146,6 @@ class MyApp extends StatelessWidget {
       // End of Theme Data.
       home: MyHomePage(title: 'Linum', testing: testing),
 
-
       // Specified Localizations
       supportedLocales: const [
         Locale('en', 'US'),
@@ -186,13 +185,13 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   final bool? testing;
-  MyHomePage({Key? key, required this.title, this.testing}) : super(key: key);
-
+  const MyHomePage({Key? key, required this.title, this.testing})
+      : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState(testing);
+  _MyHomePageState createState() => _MyHomePageState(testing: testing);
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -201,7 +200,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
   final bool? testing;
-  _MyHomePageState(this.testing);
+  _MyHomePageState({this.testing});
 
   @override
   Widget build(BuildContext context) {
@@ -226,17 +225,17 @@ class _MyHomePageState extends State<MyHomePage> {
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
           return MultiProvider(
-            key: Key("MainMultiProvider"),
+            key: const Key("MainMultiProvider"),
             providers: [
               ChangeNotifierProvider<AuthenticationService>(
-                key: Key("AuthenticationChangeNotifierProvider"),
+                key: const Key("AuthenticationChangeNotifierProvider"),
                 create: (_) {
                   final AuthenticationService auth =
                       AuthenticationService(FirebaseAuth.instance, context);
                   if (testing != null && testing!) {
                     auth.signOut();
                     while (auth.isLoggedIn) {
-                      sleep(Duration(milliseconds: 50));
+                      sleep(const Duration(milliseconds: 50));
                       // this should only be called when we are testing.
                     }
                   }

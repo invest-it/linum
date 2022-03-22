@@ -112,7 +112,7 @@ class _RegisterFormState extends State<RegisterForm> {
                         ),
                       ),
                       child: TextField(
-                        key: Key("registerEmailField"),
+                        key: const Key("registerEmailField"),
                         controller: _mailController,
                         keyboardType: TextInputType.emailAddress,
                         autocorrect: false,
@@ -143,7 +143,7 @@ class _RegisterFormState extends State<RegisterForm> {
                         ),
                       ),
                       child: TextField(
-                        key: Key("registerPasswordField"),
+                        key: const Key("registerPasswordField"),
                         obscureText: true,
                         controller: _passController,
                         keyboardType: TextInputType.visiblePassword,
