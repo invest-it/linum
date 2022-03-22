@@ -88,10 +88,10 @@ double proportionateScreenHeightFraction(ScreenFraction inputFraction) {
     case ScreenFraction.onefifth:
       scalingFactor = 1 / 5;
       break;
-    case ScreenFraction.ONETENTH:
+    case ScreenFraction.onetenth:
       scalingFactor = 1 / 10;
       break;
-    case ScreenFraction.QUANTILE:
+    case ScreenFraction.quantile:
       scalingFactor = 1 / 100;
       break;
   }
@@ -136,10 +136,10 @@ double proportionateScreenWidthFraction(ScreenFraction inputFraction) {
     case ScreenFraction.onefifth:
       scalingFactor = 1 / 5;
       break;
-    case ScreenFraction.ONETENTH:
+    case ScreenFraction.onetenth:
       scalingFactor = 1 / 10;
       break;
-    case ScreenFraction.QUANTILE:
+    case ScreenFraction.quantile:
       scalingFactor = 1 / 100;
       break;
   }
