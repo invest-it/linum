@@ -27,13 +27,14 @@ class AppLocalizations {
   late Map<String, String> _localizedStrings;
 
   Future<bool> load({Locale? locale}) async {
-    String langCode = _chooseLanguageCode(locale);
+    final String langCode = _chooseLanguageCode(locale);
     _currentLocale =
         Locale(langCode, langCode != "en" ? langCode.toUpperCase() : "US");
 
     // Load the language JSON file from the "lang" folder
-    String jsonString = await rootBundle.loadString("lang/$langCode.json");
-    Map<String, dynamic>? jsonMap =
+    final String jsonString =
+        await rootBundle.loadString("lang/$langCode.json");
+    final Map<String, dynamic>? jsonMap =
         json.decode(jsonString) as Map<String, dynamic>?;
     if (jsonMap == null) {
       return false;
@@ -83,7 +84,7 @@ class _AppLocalizationsDelegate
   @override
   Future<AppLocalizations> load(Locale locale) async {
     // AppLocalizations class is where the JSON loading actually runs
-    AppLocalizations localizations = AppLocalizations(locale);
+    final AppLocalizations localizations = AppLocalizations(locale);
     await localizations.load();
     return localizations;
   }

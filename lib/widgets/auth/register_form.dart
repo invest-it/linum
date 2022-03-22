@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
-import 'package:linum/backend_functions/url-handler.dart';
+import 'package:linum/backend_functions/url_handler.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/frontend_functions/user_alert.dart';
