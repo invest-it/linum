@@ -1,4 +1,4 @@
-// ignore_for_file: unused_element
+// ignore_for_file: unused_element, avoid_dynamic_calls
 
 import 'dart:developer';
 
@@ -26,7 +26,7 @@ class BalanceDataProvider extends ChangeNotifier {
 
   num _dontDispose = 0;
 
-  static const Duration FUTURE_DURATION = Duration(days: 30 * 3);
+  static const Duration futureDuration = Duration(days: 30 * 3);
 
   /// Creates the BalanceDataProvider. Inparticular it sets [_balance] correctly
   BalanceDataProvider(BuildContext context) {
@@ -36,7 +36,7 @@ class BalanceDataProvider extends ChangeNotifier {
   }
 
   /// Async part of the constructor (so notifyListeners will be used after loading)
-  void asynConstructor() async {
+  Future<void> asynConstructor() async {
     if (_uid == "") {
       return;
     }
@@ -127,8 +127,10 @@ class BalanceDataProvider extends ChangeNotifier {
   }
 
   /// Returns a StreamBuilder that builds the ListView from the document-datastream
-  StreamBuilder fillListViewWithData(BalanceDataListView blistview,
-      {required BuildContext context}) {
+  StreamBuilder fillListViewWithData(
+    BalanceDataListView blistview, {
+    required BuildContext context,
+  }) {
     return StreamBuilder(
       stream: _dataStream,
       builder: (ctx, AsyncSnapshot<dynamic> snapshot) {
@@ -161,7 +163,8 @@ class BalanceDataProvider extends ChangeNotifier {
 
   /// Returns a StreamBuilder that builds the ListView from the document-datastream
   StreamBuilder fillStatisticPanelWithData(
-      AbstractStatisticPanel statisticPanel) {
+    AbstractStatisticPanel statisticPanel,
+  ) {
     return StreamBuilder(
       stream: _dataStream,
       builder: (ctx, AsyncSnapshot<dynamic> snapshot) {
@@ -205,7 +208,7 @@ class BalanceDataProvider extends ChangeNotifier {
       "currency": currency,
       "name": name,
       "time": time,
-      "id": Uuid().v4(),
+      "id": const Uuid().v4(),
     };
     final DocumentSnapshot<Map<String, dynamic>> snapshot =
         await _balance!.get();
@@ -300,7 +303,7 @@ class BalanceDataProvider extends ChangeNotifier {
       if (singleRepeatedBalance != null &&
               ((singleRepeatedBalance["repeatDurationType"] == "SECONDS" ||
                       singleRepeatedBalance["repeatDurationType"] == null) &&
-                  (((singleRepeatedBalance["lastUpdate"] as Timestamp)
+                  (singleRepeatedBalance["lastUpdate"] as Timestamp)
                       .toDate()
                       .add(
                         Duration(
@@ -308,7 +311,7 @@ class BalanceDataProvider extends ChangeNotifier {
                               singleRepeatedBalance["repeatDuration"] as int,
                         ),
                       )
-                      .isBefore(DateTime.now())))) ||
+                      .isBefore(DateTime.now())) ||
           (singleRepeatedBalance["repeatDurationType"] == "MONTHS" &&
               DateTime(
                 (singleRepeatedBalance["lastUpdate"] as Timestamp)
@@ -353,7 +356,7 @@ class BalanceDataProvider extends ChangeNotifier {
       "repeatDuration": repeatDuration,
       "repeatDurationType": repeatDurationType.toString().substring(19),
       "endTime": endTime,
-      "id": Uuid().v4(),
+      "id": const Uuid().v4(),
     };
     final DocumentSnapshot<Map<String, dynamic>> snapshot =
         await _balance!.get();
@@ -443,8 +446,8 @@ class BalanceDataProvider extends ChangeNotifier {
   }
 
   /// [id] is the id of the repeatedBalance
-  /// [removeType] decides what data should be removed from the balanceData. RemoveType.NONE should only be used for repeatedData with endDate
-  /// [time] is required if you want to use RemoveType.ALL_BEFORE or RemoveType.ALL_AFTER
+  /// [removeType] decides what data should be removed from the balanceData. RemoveType.none should only be used for repeatedData with endDate
+  /// [time] is required if you want to use RemoveType.allBefore or RemoveType.allAfter
   Future<bool> removeRepeatedBalance({
     required String id,
     required RemoveType removeType,
@@ -464,27 +467,27 @@ class BalanceDataProvider extends ChangeNotifier {
     if (length == (data["repeatedBalance"] as List<dynamic>).length) {
       return false;
     }
-    if (removeType != RemoveType.ALL &&
-        removeType != RemoveType.NONE &&
+    if (removeType != RemoveType.all &&
+        removeType != RemoveType.none &&
         time == null) {
       return false;
     }
     switch (removeType) {
-      case RemoveType.ALL:
+      case RemoveType.all:
         _deleteAllCopiesOfRepeatableLocally(id, data);
         break;
-      case RemoveType.All_BEFORE:
+      case RemoveType.allBefore:
         _deleteAllOlderCopiesOfRepeatableLocally(id, data, time!);
         break;
-      case RemoveType.ALL_AFTER:
+      case RemoveType.allAfter:
         _deleteAllNewerCopiesOfRepeatableLocally(id, data, time!);
         break;
-      case RemoveType.NONE:
-        (data["balanceData"] as List<dynamic>).forEach((element) {
+      case RemoveType.none:
+        for (final element in data["balanceData"] as List<dynamic>) {
           if (element["repeatId"] == id) {
             element["repeatId"] = null;
           }
-        });
+        }
         break;
     }
     await _balance!.set(data);
@@ -492,9 +495,13 @@ class BalanceDataProvider extends ChangeNotifier {
   }
 
   void _redoRepeatable(
-      dynamic singleRepeatedBalance, Map<String, dynamic>? data) {
+    dynamic singleRepeatedBalance,
+    Map<String, dynamic>? data,
+  ) {
     _deleteAllCopiesOfRepeatableLocally(
-        singleRepeatedBalance["id"] as String, data);
+      singleRepeatedBalance["id"] as String,
+      data,
+    );
     _addSingleRepeatableToBalanceDataLocally(singleRepeatedBalance, data);
   }
 
@@ -508,13 +515,17 @@ class BalanceDataProvider extends ChangeNotifier {
   }
 
   void _deleteAllCopiesOfRepeatableLocally(
-      String id, Map<String, dynamic>? data) {
+    String id,
+    Map<String, dynamic>? data,
+  ) {
     (data!["balanceData"] as List<dynamic>)
         .removeWhere((element) => element["repeatId"] == id);
   }
 
   Future<void> _deleteAllNewerCopiesOfRepeatable(
-      String id, Timestamp time) async {
+    String id,
+    Timestamp time,
+  ) async {
     final DocumentSnapshot<Map<String, dynamic>> snapshot =
         await _balance!.get();
     final Map<String, dynamic>? data = snapshot.data();
@@ -524,21 +535,26 @@ class BalanceDataProvider extends ChangeNotifier {
   }
 
   void _deleteAllNewerCopiesOfRepeatableLocally(
-      String id, Map<String, dynamic>? data, Timestamp time) {
+    String id,
+    Map<String, dynamic>? data,
+    Timestamp time,
+  ) {
     (data!["balanceData"] as List<dynamic>).removeWhere(
       (element) =>
           element["repeatId"] == id &&
           (element["time"] as Timestamp).compareTo(time) >= 0,
     );
-    (data["balanceData"] as List<dynamic>).forEach((element) {
+    for (final element in data["balanceData"] as List<dynamic>) {
       if (element["repeatId"] == id) {
         element["repeatId"] = null;
       }
-    });
+    }
   }
 
   Future<void> _deleteAllOlderCopiesOfRepeatable(
-      String id, Timestamp time) async {
+    String id,
+    Timestamp time,
+  ) async {
     final DocumentSnapshot<Map<String, dynamic>> snapshot =
         await _balance!.get();
     final Map<String, dynamic>? data = snapshot.data();
@@ -548,21 +564,25 @@ class BalanceDataProvider extends ChangeNotifier {
   }
 
   void _deleteAllOlderCopiesOfRepeatableLocally(
-      String id, Map<String, dynamic>? data, Timestamp time) {
+    String id,
+    Map<String, dynamic>? data,
+    Timestamp time,
+  ) {
     (data!["balanceData"] as List<dynamic>).removeWhere(
       (element) =>
           element["repeatId"] == id &&
           (element["time"] as Timestamp).compareTo(time) <= 0,
     );
-    (data["balanceData"] as List<dynamic>).forEach((element) {
+    for (final element in data["balanceData"] as List<dynamic>) {
       if (element["repeatId"] == id) {
         element["repeatId"] = null;
       }
-    });
+    }
   }
 
   Future<void> _addSingleRepeatableToBalanceData(
-      dynamic singleRepeatedBalance) async {
+    dynamic singleRepeatedBalance,
+  ) async {
     final DocumentSnapshot<Map<String, dynamic>> snapshot =
         await _balance!.get();
     final Map<String, dynamic>? data = snapshot.data();
@@ -571,7 +591,9 @@ class BalanceDataProvider extends ChangeNotifier {
   }
 
   void _addSingleRepeatableToBalanceDataLocally(
-      dynamic singleRepeatedBalance, Map<String, dynamic>? data) {
+    dynamic singleRepeatedBalance,
+    Map<String, dynamic>? data,
+  ) {
     DateTime currentTime =
         (singleRepeatedBalance["initialTime"] as Timestamp).toDate();
     bool didUpdate = false;
@@ -582,19 +604,23 @@ class BalanceDataProvider extends ChangeNotifier {
     //   futureDuration = FUTURE_DURATION;
     // }
 
-    final Duration futureDuration = Duration(days: 365);
+    const Duration futureDuration = Duration(days: 365);
     if (singleRepeatedBalance["repeatDurationType"] == "SECONDS" ||
         singleRepeatedBalance["repeatDurationType"] == null) {
       // while we are before 1 years after today / before endTime
       while ((singleRepeatedBalance["endTime"] != null)
           ? currentTime.isBefore(
-              (singleRepeatedBalance["endTime"] as Timestamp).toDate())
+              (singleRepeatedBalance["endTime"] as Timestamp).toDate(),
+            )
           : currentTime.isBefore(DateTime.now().add(futureDuration))) {
         // why does this work?
         if (singleRepeatedBalance["lastUpdate"] == null ||
             DateTime.now()
-                .add(Duration(
-                    seconds: singleRepeatedBalance["repeatDuration"] as int))
+                .add(
+                  Duration(
+                    seconds: singleRepeatedBalance["repeatDuration"] as int,
+                  ),
+                )
                 .isAfter(
                   (singleRepeatedBalance["lastUpdate"] as Timestamp).toDate(),
                 )) {
@@ -606,17 +632,21 @@ class BalanceDataProvider extends ChangeNotifier {
             "name": singleRepeatedBalance["name"],
             "time": Timestamp.fromDate(currentTime),
             "repeatId": singleRepeatedBalance["id"],
-            "id": Uuid().v4(),
+            "id": const Uuid().v4(),
           });
-          currentTime = currentTime.add(Duration(
-              seconds: singleRepeatedBalance["repeatDuration"] as int));
+          currentTime = currentTime.add(
+            Duration(
+              seconds: singleRepeatedBalance["repeatDuration"] as int,
+            ),
+          );
         }
       }
     } else if (singleRepeatedBalance["repeatDurationType"] == "MONTHS") {
       // while we are before 1 years after today / before endTime
       while ((singleRepeatedBalance["endTime"] != null)
           ? currentTime.isBefore(
-              (singleRepeatedBalance["endTime"] as Timestamp).toDate())
+              (singleRepeatedBalance["endTime"] as Timestamp).toDate(),
+            )
           : currentTime.isBefore(DateTime.now().add(futureDuration))) {
         if (singleRepeatedBalance["lastUpdate"] == null ||
             DateTime(
@@ -635,7 +665,7 @@ class BalanceDataProvider extends ChangeNotifier {
             "name": singleRepeatedBalance["name"],
             "time": Timestamp.fromDate(currentTime),
             "repeatId": singleRepeatedBalance["id"],
-            "id": Uuid().v4(),
+            "id": const Uuid().v4(),
           });
         }
 
@@ -658,8 +688,7 @@ class BalanceDataProvider extends ChangeNotifier {
     if (temp.month == month || month == 13) {
       return temp;
     } else {
-      return DateTime(temp.year, temp.month, 1)
-          .subtract(const Duration(days: 1));
+      return DateTime(temp.year, temp.month).subtract(const Duration(days: 1));
     }
   }
 
@@ -686,8 +715,8 @@ class BalanceDataProvider extends ChangeNotifier {
 }
 
 enum RemoveType {
-  ALL,
-  All_BEFORE,
-  ALL_AFTER,
-  NONE,
+  all,
+  allBefore,
+  allAfter,
+  none,
 }
