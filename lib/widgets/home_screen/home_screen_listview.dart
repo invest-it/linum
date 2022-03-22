@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_dynamic_calls
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +23,7 @@ class HomeScreenListView implements BalanceDataListView {
 
   final List<Map<String, dynamic>> _timeWidgets = <Map<String, dynamic>>[
     {
-      "widget": TimeWidget(displayValue: 'listview/label-today'),
+      "widget": const TimeWidget(displayValue: 'listview/label-today'),
       "time": DateTime(
         DateTime.now().year,
         DateTime.now().month,
@@ -29,7 +31,7 @@ class HomeScreenListView implements BalanceDataListView {
       ).add(const Duration(days: 1, microseconds: -1))
     },
     {
-      "widget": TimeWidget(displayValue: 'listview/label-yesterday'),
+      "widget": const TimeWidget(displayValue: 'listview/label-yesterday'),
       "time": DateTime(
         DateTime.now().year,
         DateTime.now().month,
@@ -37,7 +39,7 @@ class HomeScreenListView implements BalanceDataListView {
       ).subtract(const Duration(microseconds: 1))
     },
     {
-      "widget": TimeWidget(displayValue: 'listview/label-lastweek'),
+      "widget": const TimeWidget(displayValue: 'listview/label-lastweek'),
       "time": DateTime(
         DateTime.now().year,
         DateTime.now().month,
@@ -45,7 +47,7 @@ class HomeScreenListView implements BalanceDataListView {
       ).subtract(const Duration(days: 1, microseconds: 1))
     },
     {
-      "widget": TimeWidget(displayValue: 'listview/label-thismonth'),
+      "widget": const TimeWidget(displayValue: 'listview/label-thismonth'),
       "time": DateTime(
         DateTime.now().year,
         DateTime.now().month,
@@ -85,7 +87,7 @@ class HomeScreenListView implements BalanceDataListView {
     //log(balanceData.toString());
     final List<Widget> list = [];
     if (balanceData.isEmpty) {
-      list.add(TimeWidget(displayValue: "listview/label-no-entries"));
+      list.add(const TimeWidget(displayValue: "listview/label-no-entries"));
     } else if (balanceData[0] != null && balanceData[0]["Error"] == null) {
       for (final arrayElement in balanceData) {
         final DateTime date = (arrayElement["time"] as Timestamp).toDate();
@@ -107,7 +109,7 @@ class HomeScreenListView implements BalanceDataListView {
                       DateTime.now().month,
                     )) {
               list.add(
-                TimeWidget(
+                const TimeWidget(
                   displayValue: "listview/label-future",
                 ),
               );
@@ -192,7 +194,7 @@ class HomeScreenListView implements BalanceDataListView {
                           },
                         ),
                       ],
-                      child: EnterScreen(),
+                      child: const EnterScreen(),
                     );
                   },
                 ),
@@ -244,12 +246,12 @@ class HomeScreenListView implements BalanceDataListView {
                 }
               },*/
               direction: DismissDirection.endToStart,
-              dismissThresholds: {
+              dismissThresholds: const {
                 DismissDirection.endToStart: 0.5,
               },
               confirmDismiss: arrayElement["repeatId"] != null
                   ? (DismissDirection direction) async {
-                      return await showDialog(
+                      return showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
@@ -357,7 +359,7 @@ class HomeScreenListView implements BalanceDataListView {
                           ),
                         ),
                       );*/
-                      return await showDialog(
+                      return showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
@@ -506,8 +508,10 @@ class HomeScreenListView implements BalanceDataListView {
                   arrayElement["name"] as String != ""
                       ? arrayElement["name"] as String
                       : translateCategory(
-                          arrayElement["category"] as String, context,
-                          isExpense: arrayElement["amount"] as num <= 0),
+                          arrayElement["category"] as String,
+                          context,
+                          isExpense: arrayElement["amount"] as num <= 0,
+                        ),
                   style: isFutureItem
                       ? Theme.of(context).textTheme.bodyText1!.copyWith(
                             fontStyle: FontStyle.italic,
@@ -535,13 +539,15 @@ class HomeScreenListView implements BalanceDataListView {
                         style: Theme.of(context).textTheme.bodyLarge,
                       )
                     : Text(
-                        (arrayElement["amount"] as num).toStringAsFixed(2) +
-                            "€",
+                        "${(arrayElement["amount"] as num).toStringAsFixed(2)}€",
                         style: arrayElement["amount"] as num <= 0
                             ? Theme.of(context).textTheme.bodyText1?.copyWith(
-                                color: Theme.of(context).colorScheme.error)
+                                  color: Theme.of(context).colorScheme.error,
+                                )
                             : Theme.of(context).textTheme.bodyText1?.copyWith(
-                                color: Theme.of(context).colorScheme.onSurface),
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface,
+                                ),
                       ),
               ),
             ),
@@ -551,7 +557,7 @@ class HomeScreenListView implements BalanceDataListView {
     } else {
       // log("HomeScreenListView: " + balanceData[0]["Error"].toString());
     }
-    _listview = ListView(children: list, padding: EdgeInsets.zero);
+    _listview = ListView(padding: EdgeInsets.zero, children: list);
   }
 
   String translateCategory(
