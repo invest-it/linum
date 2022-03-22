@@ -208,7 +208,7 @@ class _LoginFormState extends State<LoginForm> {
               SizedBox(
                 height: proportionateScreenHeight(8),
               ),
-              ForgotPasswordButton(ProviderKey.ONBOARDING),
+              ForgotPasswordButton(ProviderKey.onboarding),
             ],
           ),
         ),

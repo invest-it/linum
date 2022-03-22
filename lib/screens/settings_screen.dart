@@ -62,7 +62,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     return ScreenSkeleton(
       head: 'Account',
-      providerKey: ProviderKey.SETTINGS,
+      providerKey: ProviderKey.settings,
       initialActionLipBody: Container(),
       body: ScrollConfiguration(
         behavior: SilentScroll(),
@@ -125,7 +125,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   onTap: () {
                     //Request from SoTBurst - this fix is related to issue #46
                     actionLipStatusProvider.setActionLipStatus(
-                      providerKey: ProviderKey.SETTINGS,
+                      providerKey: ProviderKey.settings,
                     );
 
                     showModalBottomSheet(
@@ -204,7 +204,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   onTap: () {
                     //Request from SoTBurst - this fix is related to issue #46
                     actionLipStatusProvider.setActionLipStatus(
-                      providerKey: ProviderKey.SETTINGS,
+                      providerKey: ProviderKey.settings,
                     );
 
                     showModalBottomSheet(
@@ -401,7 +401,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: [
                 // All Authentication Actions (including logOut will be handled via widgets/auth from now on.)
                 LogoutForm(),
-                ForgotPasswordButton(ProviderKey.SETTINGS),
+                ForgotPasswordButton(ProviderKey.settings),
               ],
             ),
             //TODO Add Version Display here

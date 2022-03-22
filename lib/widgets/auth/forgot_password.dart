@@ -124,7 +124,7 @@ class ForgotPasswordButton extends StatelessWidget {
                               actionTitle: "alertdialog/reset-password/action",
                             );
                             actionLipStatusProvider.setActionLipStatus(
-                              providerKey: ProviderKey.ONBOARDING,
+                              providerKey: ProviderKey.onboarding,
                             );
                             FocusManager.instance.primaryFocus?.unfocus();
                           },
@@ -259,7 +259,7 @@ class ForgotPasswordButton extends StatelessWidget {
                               actionTitle: "alertdialog/update-password/action",
                             );
                             actionLipStatusProvider.setActionLipStatus(
-                              providerKey: ProviderKey.SETTINGS,
+                              providerKey: ProviderKey.settings,
                             );
                             FocusManager.instance.primaryFocus?.unfocus();
                           },

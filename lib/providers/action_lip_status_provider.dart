@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 
 class ActionLipStatusProvider extends ChangeNotifier {
-  Map<ProviderKey, ActionLipStatus> _actionLipMap = {};
-  Map<ProviderKey, Widget> _actionBodyMap = {};
-  Map<ProviderKey, String> _actionTitleMap = {};
+  final Map<ProviderKey, ActionLipStatus> _actionLipMap = {};
+  final Map<ProviderKey, Widget> _actionBodyMap = {};
+  final Map<ProviderKey, String> _actionTitleMap = {};
 
   void setActionLipStatus({
     required ProviderKey providerKey,
     ActionLipStatus actionLipStatus = ActionLipStatus.HIDDEN,
   }) {
     setActionLipStatusSilently(
-        providerKey: providerKey, actionLipStatus: actionLipStatus);
+      providerKey: providerKey,
+      actionLipStatus: actionLipStatus,
+    );
     notifyListeners();
   }
 
@@ -52,15 +54,17 @@ class ActionLipStatusProvider extends ChangeNotifier {
     }
   }
 
-  void setActionLipTitle(
-      {required ProviderKey providerKey, required String actionLipTitle}) {
+  void setActionLipTitle({
+    required ProviderKey providerKey,
+    required String actionLipTitle,
+  }) {
     _actionTitleMap[providerKey] = actionLipTitle;
     notifyListeners();
   }
 
   Widget getActionLipBody(ProviderKey providerKey) {
     return _actionBodyMap[providerKey] ??
-        Center(
+        const Center(
           child: Text('Wrong key'),
         );
   }
@@ -87,10 +91,10 @@ class ActionLipStatusProvider extends ChangeNotifier {
 }
 
 enum ProviderKey {
-  HOME,
-  BUDGET,
-  STATS,
-  SETTINGS,
-  ONBOARDING,
-  ACADEMY,
+  home,
+  budget,
+  stats,
+  settings,
+  onboarding,
+  academy,
 }

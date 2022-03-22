@@ -225,7 +225,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
     return ScreenSkeleton(
       head: '', // will not be displayed anyways
       contentOverride: true,
-      providerKey: ProviderKey.ONBOARDING,
+      providerKey: ProviderKey.onboarding,
       body: GestureDetector(
         onTap: () {
           FocusManager.instance.primaryFocus?.unfocus();
