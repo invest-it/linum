@@ -113,7 +113,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             // ListDivider(T: 0),
 
             /// STANDARD CATEGORY
-            ListHeader(
+            const ListHeader(
               'settings_screen/standard-category/label-title',
               tooltipMessage: 'settings_screen/standard-category/label-tooltip',
             ),
@@ -277,7 +277,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ],
             ),
-            ListDivider(),
+            const ListDivider(),
 
             /// SPECIAL SETTINGS
             /// This setting will be hidden until implememted.
@@ -313,7 +313,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             // ListDivider(),
 
             /// LANGUAGE SWITCH
-            ListHeader(
+            const ListHeader(
               'settings_screen/language-settings/label-title',
             ),
             Column(
@@ -392,10 +392,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ],
             ),
-            ListDivider(),
+            const ListDivider(),
 
             /// YOUR ACCOUNT
-            ListHeader('settings_screen/system-settings/label-title'),
+            const ListHeader('settings_screen/system-settings/label-title'),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

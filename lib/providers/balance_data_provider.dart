@@ -337,7 +337,7 @@ class BalanceDataProvider extends ChangeNotifier {
     required String name,
     required Timestamp initialTime,
     required int repeatDuration,
-    RepeatDurationType repeatDurationType = RepeatDurationType.SECONDS,
+    RepeatDurationType repeatDurationType = RepeatDurationType.seconds,
     Timestamp? endTime,
   }) async {
     if (_balance == null) {

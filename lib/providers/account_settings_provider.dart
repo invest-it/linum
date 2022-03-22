@@ -107,7 +107,7 @@ class AccountSettingsProvider extends ChangeNotifier {
         icon: Icons.calendar_today_rounded,
       ),
       "duration": const Duration(days: 1).inSeconds,
-      "durationType": RepeatDurationType.SECONDS,
+      "durationType": RepeatDurationType.seconds,
     },
     RepeatDuration.weekly: {
       "entryCategory": const EntryCategory(
@@ -115,7 +115,7 @@ class AccountSettingsProvider extends ChangeNotifier {
         icon: Icons.calendar_view_week_rounded,
       ),
       "duration": const Duration(days: 7).inSeconds,
-      "durationType": RepeatDurationType.SECONDS,
+      "durationType": RepeatDurationType.seconds,
     },
     RepeatDuration.monthly: {
       "entryCategory": const EntryCategory(
@@ -123,7 +123,7 @@ class AccountSettingsProvider extends ChangeNotifier {
         icon: Icons.calendar_view_month_rounded,
       ),
       "duration": 1,
-      "durationType": RepeatDurationType.MONTHS,
+      "durationType": RepeatDurationType.months,
     },
     // TODO implement custom range picker
     // {
