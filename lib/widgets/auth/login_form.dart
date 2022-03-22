@@ -25,7 +25,7 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    OnboardingScreenProvider onboardingScreenProvider =
+    final OnboardingScreenProvider onboardingScreenProvider =
         Provider.of<OnboardingScreenProvider>(context);
 
     if (onboardingScreenProvider.pageState == 1 &&
@@ -36,13 +36,12 @@ class _LoginFormState extends State<LoginForm> {
       _passValidate = false;
     }
 
-    if (_mailController == null) {
-      _mailController =
-          TextEditingController(text: onboardingScreenProvider.mailInput);
-    }
+    _mailController ??=
+        TextEditingController(text: onboardingScreenProvider.mailInput);
 
-    AuthenticationService auth = Provider.of<AuthenticationService>(context);
-    UserAlert userAlert = UserAlert(context: context);
+    final AuthenticationService auth =
+        Provider.of<AuthenticationService>(context);
+    final UserAlert userAlert = UserAlert(context: context);
 
     void logIn(String _mail, String _pass) {
       auth.signIn(
@@ -72,21 +71,22 @@ class _LoginFormState extends State<LoginForm> {
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.all(5.0),
+                padding: const EdgeInsets.all(5.0),
                 decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.onSecondary,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Theme.of(context).colorScheme.onBackground,
-                        blurRadius: 20.0,
-                        offset: Offset(0, 10),
-                      ),
-                    ]),
+                  color: Theme.of(context).colorScheme.onSecondary,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Theme.of(context).colorScheme.onBackground,
+                      blurRadius: 20.0,
+                      offset: const Offset(0, 10),
+                    ),
+                  ],
+                ),
                 child: Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
                         border: Border(
                           bottom: BorderSide(color: Colors.grey.shade100),
@@ -100,22 +100,24 @@ class _LoginFormState extends State<LoginForm> {
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: AppLocalizations.of(context)!.translate(
-                              'onboarding_screen/login-email-hintlabel'),
+                            'onboarding_screen/login-email-hintlabel',
+                          ),
                           hintStyle: Theme.of(context)
                               .textTheme
                               .bodyText1
                               ?.copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary),
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
                           errorText: _mailValidate
                               ? AppLocalizations.of(context)!.translate(
-                                  'onboarding_screen/login-email-errorlabel')
+                                  'onboarding_screen/login-email-errorlabel',
+                                )
                               : null,
                         ),
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
                         border: Border(
                           bottom: BorderSide(color: Colors.grey.shade100),
@@ -131,17 +133,19 @@ class _LoginFormState extends State<LoginForm> {
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: AppLocalizations.of(context)!.translate(
-                              'onboarding_screen/login-password-hintlabel'),
+                            'onboarding_screen/login-password-hintlabel',
+                          ),
                           errorText: _passValidate
                               ? AppLocalizations.of(context)!.translate(
-                                  'onboarding_screen/login-password-errorlabel')
+                                  'onboarding_screen/login-password-errorlabel',
+                                )
                               : null,
                           hintStyle: Theme.of(context)
                               .textTheme
                               .bodyText1
                               ?.copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary),
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
                         ),
                       ),
                     ),
@@ -172,11 +176,6 @@ class _LoginFormState extends State<LoginForm> {
 
               GradientButton(
                 increaseHeightBy: proportionateScreenHeight(16),
-                child: Text(
-                  AppLocalizations.of(context)!
-                      .translate('onboarding_screen/login-lip-login-button'),
-                  style: Theme.of(context).textTheme.button,
-                ),
                 callback: () {
                   setState(() {
                     _mailController!.text.isEmpty
@@ -194,18 +193,24 @@ class _LoginFormState extends State<LoginForm> {
                 gradient: LinearGradient(
                   colors: [
                     Theme.of(context).colorScheme.primary,
-                    createMaterialColor(Color(0xFFC1E695)),
+                    createMaterialColor(const Color(0xFFC1E695)),
                   ],
                 ),
                 elevation: 0,
                 increaseWidthBy: double.infinity,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  AppLocalizations.of(context)!
+                      .translate('onboarding_screen/login-lip-login-button'),
+                  style: Theme.of(context).textTheme.button,
+                ),
               ),
               SizedBox(
                 height: proportionateScreenHeight(8),
               ),
-              ForgotPasswordButton(ProviderKey.ONBOARDING),
+              ForgotPasswordButton(ProviderKey.onboarding),
             ],
           ),
         ),

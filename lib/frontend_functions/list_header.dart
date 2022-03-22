@@ -5,7 +5,7 @@ class ListHeader extends StatelessWidget {
   final String title;
   final String? tooltipMessage;
 
-  ListHeader(this.title, {this.tooltipMessage});
+  const ListHeader(this.title, {this.tooltipMessage});
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +19,17 @@ class ListHeader extends StatelessWidget {
         crossAxisAlignment: WrapCrossAlignment.center,
         spacing: 8,
         children: [
-          Text(AppLocalizations.of(context)!.translate(title),
-              style: Theme.of(context).textTheme.overline),
+          Text(
+            AppLocalizations.of(context)!.translate(title),
+            style: Theme.of(context).textTheme.overline,
+          ),
           Tooltip(
-            child: Align(
+            message: AppLocalizations.of(context)!.translate(tooltipMessage!),
+            triggerMode: TooltipTriggerMode.tap,
+            padding: const EdgeInsets.all(8.0),
+            enableFeedback: false,
+            preferBelow: false,
+            child: const Align(
               heightFactor: 1,
               widthFactor: 1,
               child: Icon(
@@ -30,11 +37,6 @@ class ListHeader extends StatelessWidget {
                 size: 10 * 1.8,
               ),
             ),
-            message: AppLocalizations.of(context)!.translate(tooltipMessage!),
-            triggerMode: TooltipTriggerMode.tap,
-            padding: EdgeInsets.all(8.0),
-            enableFeedback: false,
-            preferBelow: false,
           ),
         ],
       );

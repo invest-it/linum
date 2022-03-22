@@ -9,7 +9,7 @@ class AppLocalizations {
   late final Locale _locale;
   late Locale _currentLocale;
 
-  AppLocalizations(locale)
+  AppLocalizations(Locale locale)
       : _locale = locale,
         _currentLocale = locale;
 
@@ -27,14 +27,18 @@ class AppLocalizations {
   late Map<String, String> _localizedStrings;
 
   Future<bool> load({Locale? locale}) async {
-    String langCode = _chooseLanguageCode(locale);
+    final String langCode = _chooseLanguageCode(locale);
     _currentLocale =
         Locale(langCode, langCode != "en" ? langCode.toUpperCase() : "US");
 
     // Load the language JSON file from the "lang" folder
-    String jsonString = await rootBundle.loadString("lang/$langCode.json");
-    Map<String, dynamic> jsonMap = json.decode(jsonString);
-
+    final String jsonString =
+        await rootBundle.loadString("lang/$langCode.json");
+    final Map<String, dynamic>? jsonMap =
+        json.decode(jsonString) as Map<String, dynamic>?;
+    if (jsonMap == null) {
+      return false;
+    }
     _localizedStrings = jsonMap.map((key, value) {
       return MapEntry(key, value.toString());
     });
@@ -44,7 +48,7 @@ class AppLocalizations {
 
   // This method will be called from every widget which needs a localized text
   String translate(String key) {
-    return _localizedStrings[key] ?? key + " could not be translated.";
+    return _localizedStrings[key] ?? "$key could not be translated.";
   }
 
   /// use actively set language if that is null choose languageCode read from preferences and if that is null use system language
@@ -80,7 +84,7 @@ class _AppLocalizationsDelegate
   @override
   Future<AppLocalizations> load(Locale locale) async {
     // AppLocalizations class is where the JSON loading actually runs
-    AppLocalizations localizations = new AppLocalizations(locale);
+    final AppLocalizations localizations = AppLocalizations(locale);
     await localizations.load();
     return localizations;
   }

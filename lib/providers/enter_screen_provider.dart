@@ -23,7 +23,6 @@ class EnterScreenProvider with ChangeNotifier {
     num amount = 0.0,
     String category = "None",
     String name = "",
-    String repeat = "",
     String currency = "",
     String secondaryCategory = "None",
     DateTime? selectedDate,
@@ -31,7 +30,7 @@ class EnterScreenProvider with ChangeNotifier {
     String? id,
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
-    RepeatDuration initRepeatDurationEnum = RepeatDuration.NONE,
+    RepeatDuration initRepeatDurationEnum = RepeatDuration.none,
   }) {
     _amount = amount <= 0 ? -1 * amount : amount;
     _expenseCategory = amount <= 0 ? category : secondaryCategory;
@@ -46,6 +45,7 @@ class EnterScreenProvider with ChangeNotifier {
     _isTransaction = false;
     _formerId = id;
     _repeatDurationEnum = initRepeatDurationEnum;
+    _repeatDurationType = repeatDurationType;
   }
 
   bool get isExpenses {

@@ -6,12 +6,13 @@ class TimeWidget extends StatelessWidget {
   TimeWidget({required this.displayValue, this.isTranslated = false, Key? key})
       : super(key: key);
 
+
   final String displayValue;
   final bool isTranslated;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: proportionateScreenHeight(48),
       child: Align(

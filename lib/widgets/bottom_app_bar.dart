@@ -18,9 +18,7 @@ class FABBottomAppBar extends StatefulWidget {
     required this.selectedColor,
     required this.notchedShape,
     required this.onTabSelected,
-  }) {
-    assert(this.items.length == 2 || this.items.length == 4);
-  }
+  });
   final List<BottomAppBarItem> items;
   final String centerItemText;
   final double height = proportionateScreenHeight(64);
@@ -38,10 +36,10 @@ class FABBottomAppBar extends StatefulWidget {
 class FABBottomAppBarState extends State<FABBottomAppBar> {
   @override
   Widget build(BuildContext context) {
-    ScreenIndexProvider screenIndexProvider =
+    final ScreenIndexProvider screenIndexProvider =
         Provider.of<ScreenIndexProvider>(context);
 
-    List<Widget> items = List.generate(widget.items.length, (int index) {
+    final List<Widget> items = List.generate(widget.items.length, (int index) {
       return _buildTabItem(
         item: widget.items[index],
         index: index,
@@ -53,12 +51,11 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
 
     return BottomAppBar(
       shape: widget.notchedShape,
+      color: widget.backgroundColor,
       child: Row(
-        mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: items,
       ),
-      color: widget.backgroundColor,
     );
   }
 
@@ -87,7 +84,7 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
     required ValueChanged<int> onPressed,
     required ScreenIndexProvider screenIndexProvider,
   }) {
-    Color color = screenIndexProvider.pageIndex == index
+    final Color color = screenIndexProvider.pageIndex == index
         ? widget.selectedColor
         : widget.color;
     return Expanded(
@@ -105,7 +102,9 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
                 Text(
                   item.text,
                   style: TextStyle(
-                      color: color, fontSize: proportionateScreenHeight(12)),
+                    color: color,
+                    fontSize: proportionateScreenHeight(12),
+                  ),
                 )
               ],
             ),

@@ -35,7 +35,9 @@ class AuthenticationService extends ChangeNotifier {
   }) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: password);
+        email: email,
+        password: password,
+      );
 
       if (isEmailVerified) {
         notifyListeners();
@@ -51,7 +53,7 @@ class AuthenticationService extends ChangeNotifier {
       }
     } on FirebaseAuthException catch (e) {
       log(e.message.toString());
-      onError("auth/" + e.code);
+      onError("auth/${e.code}");
     }
   }
 
@@ -65,7 +67,9 @@ class AuthenticationService extends ChangeNotifier {
   }) async {
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: password);
+        email: email,
+        password: password,
+      );
 
       if (isEmailVerified) {
         notifyListeners();
@@ -77,7 +81,7 @@ class AuthenticationService extends ChangeNotifier {
       }
     } on FirebaseAuthException catch (e) {
       log(e.message.toString());
-      onError("auth/" + e.code);
+      onError("auth/${e.code}");
     }
   }
 
@@ -146,7 +150,7 @@ class AuthenticationService extends ChangeNotifier {
         return;
       }
     } on FirebaseAuthException catch (e) {
-      onError("auth/" + e.code);
+      onError("auth/${e.code}");
     }
   }
 
@@ -164,7 +168,7 @@ class AuthenticationService extends ChangeNotifier {
       }
       log("Successfully send Verification Mail request to Firebase");
     } on FirebaseAuthException catch (e) {
-      onError("auth/" + e.code);
+      onError("auth/${e.code}");
     }
   }
 
@@ -178,7 +182,7 @@ class AuthenticationService extends ChangeNotifier {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
       onComplete("alertdialog/reset-password/message");
     } on FirebaseAuthException catch (e) {
-      onError("auth/" + e.code);
+      onError("auth/${e.code}");
     }
   }
 
@@ -191,12 +195,13 @@ class AuthenticationService extends ChangeNotifier {
       notifyListeners();
       onComplete("Successfully signed out from Firebase");
     } on FirebaseAuthException catch (e) {
-      onError("auth/" + e.code);
+      onError("auth/${e.code}");
     }
   }
 
   void updateLanguageCode(BuildContext context) {
     _firebaseAuth.setLanguageCode(
-        AppLocalizations.of(context)?.locale.languageCode ?? "en");
+      AppLocalizations.of(context)?.locale.languageCode ?? "en",
+    );
   }
 }

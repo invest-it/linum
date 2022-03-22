@@ -15,7 +15,8 @@ class LogoutForm extends StatefulWidget {
 class _LogoutFormState extends State<LogoutForm> {
   @override
   Widget build(BuildContext context) {
-    AuthenticationService auth = Provider.of<AuthenticationService>(context);
+    final AuthenticationService auth =
+        Provider.of<AuthenticationService>(context);
 
     return Column(
       children: [
@@ -33,11 +34,6 @@ class _LogoutFormState extends State<LogoutForm> {
         ),
         GradientButton(
           increaseHeightBy: proportionateScreenHeight(16),
-          child: Text(
-            AppLocalizations.of(context)!
-                .translate('settings_screen/system-settings/button-signout'),
-            style: Theme.of(context).textTheme.button,
-          ),
           callback: () => auth.signOut().then((_) {
             Provider.of<ScreenIndexProvider>(context, listen: false)
                 .setPageIndex(0);
@@ -45,12 +41,17 @@ class _LogoutFormState extends State<LogoutForm> {
           gradient: LinearGradient(
             colors: [
               Theme.of(context).colorScheme.primary,
-              createMaterialColor(Color(0xFFC1E695)),
+              createMaterialColor(const Color(0xFFC1E695)),
             ],
           ),
           elevation: 0,
           increaseWidthBy: double.infinity,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          child: Text(
+            AppLocalizations.of(context)!
+                .translate('settings_screen/system-settings/button-signout'),
+            style: Theme.of(context).textTheme.button,
+          ),
         ),
         SizedBox(
           height: proportionateScreenHeight(8),
