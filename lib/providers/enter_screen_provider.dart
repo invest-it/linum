@@ -23,7 +23,6 @@ class EnterScreenProvider with ChangeNotifier {
     num amount = 0.0,
     String category = "None",
     String name = "",
-    String repeat = "",
     String currency = "",
     String secondaryCategory = "None",
     DateTime? selectedDate,
