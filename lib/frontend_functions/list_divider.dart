@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
 class ListDivider extends StatelessWidget {
-  final double T, R, B, L;
+  final double T;
+  final double R;
+  final double B;
+  final double L;
 
-  ListDivider({this.T = 16.0, this.R = 0, this.B = 16.0, this.L = 0});
+  const ListDivider({this.T = 16.0, this.R = 0, this.B = 16.0, this.L = 0});
 
   @override
   Widget build(BuildContext context) {
