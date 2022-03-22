@@ -15,6 +15,7 @@ import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
+import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/screens/layout_screen.dart';
 import 'package:linum/screens/onboarding_screen.dart';
@@ -293,6 +294,17 @@ class _MyHomePageState extends State<MyHomePage> {
               ChangeNotifierProvider<ActionLipStatusProvider>(
                 create: (_) => ActionLipStatusProvider(),
               ),
+              ChangeNotifierProxyProvider2<ScreenIndexProvider,
+                      AuthenticationService, PinCodeProvider>(
+                  create: (context) => PinCodeProvider(context),
+                  update:
+                      (context, screenIndexProvider, auth, oldPinCodeProvider) {
+                    if (oldPinCodeProvider == null) {
+                      return PinCodeProvider(context);
+                    } else {
+                      return oldPinCodeProvider..updateSipAndAuth(context);
+                    }
+                  }),
             ],
             child: OnBoardingOrLayoutScreen(),
           );
@@ -348,18 +360,18 @@ Widget _wrapWithBanner(Widget child) {
 class OnBoardingOrLayoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final AuthenticationService auth =
-        Provider.of<AuthenticationService>(context);
-
-    return auth.isLoggedIn
-        ? LayoutScreen(key)
-        : MultiProvider(
-            providers: [
-              ChangeNotifierProvider<OnboardingScreenProvider>(
-                create: (_) => OnboardingScreenProvider(),
-              ),
-            ],
-            child: const OnboardingPage(),
-          );
+    AuthenticationService auth = Provider.of<AuthenticationService>(context);
+    if (auth.isLoggedIn) {
+      return LayoutScreen(key);
+    } else {
+      return MultiProvider(
+        providers: [
+          ChangeNotifierProvider<OnboardingScreenProvider>(
+            create: (_) => OnboardingScreenProvider(),
+          ),
+        ],
+        child: OnboardingPage(),
+      );
+    }
   }
 }

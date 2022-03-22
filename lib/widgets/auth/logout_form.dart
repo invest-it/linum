@@ -4,6 +4,7 @@ import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/authentication_service.dart';
+import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/providers/screen_index_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -37,6 +38,7 @@ class _LogoutFormState extends State<LogoutForm> {
           callback: () => auth.signOut().then((_) {
             Provider.of<ScreenIndexProvider>(context, listen: false)
                 .setPageIndex(0);
+            Provider.of<PinCodeProvider>(context, listen: false).resetSession();
           }),
           gradient: LinearGradient(
             colors: [

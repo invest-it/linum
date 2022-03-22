@@ -88,6 +88,12 @@ double proportionateScreenHeightFraction(ScreenFraction inputFraction) {
     case ScreenFraction.onefifth:
       scalingFactor = 1 / 5;
       break;
+    case ScreenFraction.ONETENTH:
+      scalingFactor = 1 / 10;
+      break;
+    case ScreenFraction.QUANTILE:
+      scalingFactor = 1 / 100;
+      break;
   }
 
   return ((scalingFactor * referenceScreenHeight) / referenceScreenHeight) *
@@ -130,6 +136,12 @@ double proportionateScreenWidthFraction(ScreenFraction inputFraction) {
     case ScreenFraction.onefifth:
       scalingFactor = 1 / 5;
       break;
+    case ScreenFraction.ONETENTH:
+      scalingFactor = 1 / 10;
+      break;
+    case ScreenFraction.QUANTILE:
+      scalingFactor = 1 / 100;
+      break;
   }
 
   return ((scalingFactor * referenceScreenWidth) / referenceScreenWidth) *
@@ -160,11 +172,13 @@ enum ScreenFraction {
   /* 100% */ full,
   /* 80%  */ fourfiths,
   /* 75%  */ threequearters,
-  /* 66%  */ twothirds,
+  /* 67%  */ twothirds,
   /* 60%  */ threefifths,
   /* 50%  */ half,
   /* 40%  */ twofifths,
   /* 33%  */ onethird,
   /* 25%  */ onequarter,
   /* 20%  */ onefifth,
+  /* 10%  */ onetenth,
+  /* 1%   */ quantile,
 }

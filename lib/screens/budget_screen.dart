@@ -8,6 +8,7 @@ import 'package:linum/widgets/screen_skeleton/app_bar_action.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
+/// Page Index: 1
 class BudgetScreen extends StatelessWidget {
   const BudgetScreen({Key? key}) : super(key: key);
 
