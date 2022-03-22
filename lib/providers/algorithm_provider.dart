@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_dynamic_calls
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -94,7 +96,8 @@ class AlgorithmProvider extends ChangeNotifier {
   /// sort algorithm will be used and so one. If every
   /// sort algorithm says 0, it will return 0.
   static int Function(dynamic, dynamic) combineSorter(
-      List<int Function(dynamic, dynamic)> sorterList) {
+    List<int Function(dynamic, dynamic)> sorterList,
+  ) {
     if (sorterList.isEmpty) {
       return (a, b) => 0;
     }
@@ -112,7 +115,8 @@ class AlgorithmProvider extends ChangeNotifier {
 
   /// Returns a filter that will remove an element if one filter doesnt let it pass
   static bool Function(dynamic) combineFilterStrict(
-      List<bool Function(dynamic)> filterList) {
+    List<bool Function(dynamic)> filterList,
+  ) {
     if (filterList.isEmpty) {
       return (a) => false;
     }
@@ -130,7 +134,8 @@ class AlgorithmProvider extends ChangeNotifier {
 
   /// Returns a filter that will remove an element only if every filter doesnt let it pass
   static bool Function(dynamic) combineFilterGentle(
-      List<bool Function(dynamic)> filterList) {
+    List<bool Function(dynamic)> filterList,
+  ) {
     if (filterList.isEmpty) {
       return (a) => false;
     }
@@ -191,7 +196,9 @@ class AlgorithmProvider extends ChangeNotifier {
   }
 
   static bool Function(dynamic) inBetween(
-      Timestamp timestamp1, Timestamp timestamp2) {
+    Timestamp timestamp1,
+    Timestamp timestamp2,
+  ) {
     return (dynamic a) =>
         (a["time"] as Timestamp).compareTo(timestamp1) <= 0 ||
         (a["time"] as Timestamp).compareTo(timestamp2) >= 0;
