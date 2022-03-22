@@ -9,13 +9,15 @@ void main() {
         (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          home: Builder(builder: (context) {
-            SizeGuide().init(context);
-            return TimeWidget(
-              displayValue: "Test text",
-              isTranslated: true,
-            );
-          }),
+          home: Builder(
+            builder: (context) {
+              SizeGuide().init(context);
+              return const TimeWidget(
+                displayValue: "Test text",
+                isTranslated: true,
+              );
+            },
+          ),
         ),
       );
 
