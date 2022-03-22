@@ -25,7 +25,7 @@ class BudgetScreen extends StatelessWidget {
     }
     return ScreenSkeleton(
       head: 'Budget',
-      leadingAction: AppBarAction.fromPreset(DefaultAction.ACADEMY),
+      leadingAction: AppBarAction.fromPreset(DefaultAction.academy),
       body: Column(
         children: [
           Row(

@@ -38,9 +38,9 @@ class _HomeScreenState extends State<HomeScreen> {
       head: 'Home',
       isInverted: true,
       hasHomeScreenCard: true,
-      leadingAction: AppBarAction.fromPreset(DefaultAction.ACADEMY),
+      leadingAction: AppBarAction.fromPreset(DefaultAction.academy),
       actions: [
-        AppBarAction.fromPreset(DefaultAction.SETTINGS),
+        AppBarAction.fromPreset(DefaultAction.settings),
       ],
       body: Stack(
         children: [
