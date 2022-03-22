@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -24,16 +23,20 @@ class OnboardingOpenMessageRobot {
     await tester.ensureVisible(textField);
     await tester.enterText(textField, text);
 
-    await tester.pumpAndSettle(Duration(seconds: 1));
+    await tester.pumpAndSettle(const Duration(seconds: 1));
   }
 
   Future<void> findAndClickWrongPasswordMessage() async {
-    await _findAndClickMessage("Login not successful",
-        "Your email or password is not correct. Check for spelling errors?");
+    await _findAndClickMessage(
+      "Login not successful",
+      "Your email or password is not correct. Check for spelling errors?",
+    );
   }
 
   Future<void> _findAndClickMessage(
-      String expectedMessageTitle, String expectedMessageBody) async {
+    String expectedMessageTitle,
+    String expectedMessageBody,
+  ) async {
     expect(find.text(expectedMessageTitle), findsOneWidget);
     expect(find.text(expectedMessageBody), findsOneWidget);
 
@@ -46,6 +49,6 @@ class OnboardingOpenMessageRobot {
     await tester.ensureVisible(okayButtonFinder);
     await tester.tap(okayButtonFinder);
 
-    await tester.pumpAndSettle(Duration(seconds: 1));
+    await tester.pumpAndSettle(const Duration(seconds: 1));
   }
 }

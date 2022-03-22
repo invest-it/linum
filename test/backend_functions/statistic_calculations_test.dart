@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_dynamic_calls
+
 import 'dart:math' as math;
 
 import 'package:flutter_test/flutter_test.dart';
@@ -5,19 +7,19 @@ import 'package:linum/backend_functions/statistic_calculations.dart';
 
 void main() {
   group("basic_statistic_calculation", () {
-    List<dynamic> exampleData1 = [
+    final List<dynamic> exampleData1 = [
       {"amount": 15},
       {"amount": 35.5},
       {"amount": 5},
       {"amount": 25.5},
     ];
-    List<dynamic> exampleData2 = [
+    final List<dynamic> exampleData2 = [
       {"amount": -0.5},
       {"amount": -2.5},
       {"amount": -2.5},
       {"amount": -0},
     ];
-    List<dynamic> exampleData3 = [
+    final List<dynamic> exampleData3 = [
       {"amount": -0.5},
       {"amount": -2.5},
       {"amount": -2.5},
@@ -27,7 +29,7 @@ void main() {
       {"amount": 25.5},
       {"amount": 4},
     ];
-    List<dynamic> exampleData4 = [
+    final List<dynamic> exampleData4 = [
       {"amount": -0.5},
       {"amount": -2.5},
       {"amount": -2.5},
@@ -39,24 +41,24 @@ void main() {
       {"amount": -20.5},
       {"amount": -23.5},
     ];
-    List<dynamic> exampleData5 = [
+    final List<dynamic> exampleData5 = [
       {"amount": -0},
       {"amount": -0},
       {"amount": -0},
       {"amount": -0},
     ];
-    List<dynamic> randomData = _createRandomStatisticData();
+    final List<dynamic> randomData = _createRandomStatisticData();
 
     group("balance", () {
       group("sum", () {
         test("empty data", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations([]);
-          num expectedSum = 0;
+          const num expectedSum = 0;
 
           // Act (Execution)
-          num sum = statisticsCalculations.sumBalance;
+          final num sum = statisticsCalculations.sumBalance;
 
           // Assert (Observation)
           expect(sum, expectedSum);
@@ -64,12 +66,12 @@ void main() {
 
         test("example data 1 (only incomes)", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData1);
-          num expectedSum = 81;
+          const num expectedSum = 81;
 
           // Act (Execution)
-          num sum = statisticsCalculations.sumBalance;
+          final num sum = statisticsCalculations.sumBalance;
 
           // Assert (Observation)
           expect(sum, expectedSum);
@@ -77,12 +79,12 @@ void main() {
 
         test("example data 2 (only expenses)", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData2);
-          num expectedSum = -5.5;
+          const num expectedSum = -5.5;
 
           // Act (Execution)
-          num sum = statisticsCalculations.sumBalance;
+          final num sum = statisticsCalculations.sumBalance;
 
           // Assert (Observation)
           expect(sum, expectedSum);
@@ -90,12 +92,12 @@ void main() {
 
         test("example data 3", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData3);
-          num expectedSum = 44;
+          const num expectedSum = 44;
 
           // Act (Execution)
-          num sum = statisticsCalculations.sumBalance;
+          final num sum = statisticsCalculations.sumBalance;
 
           // Assert (Observation)
           expect(sum, expectedSum);
@@ -103,12 +105,12 @@ void main() {
 
         test("example data 4 (adds up to 0)", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData4);
-          num expectedSum = 0;
+          const num expectedSum = 0;
 
           // Act (Execution)
-          num sum = statisticsCalculations.sumBalance;
+          final num sum = statisticsCalculations.sumBalance;
 
           // Assert (Observation)
           expect(sum, expectedSum);
@@ -116,12 +118,12 @@ void main() {
 
         test("example data 5 (only 0 expenses)", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData5);
-          num expectedSum = 0;
+          const num expectedSum = 0;
 
           // Act (Execution)
-          num sum = statisticsCalculations.sumBalance;
+          final num sum = statisticsCalculations.sumBalance;
 
           // Assert (Observation)
           expect(sum, expectedSum);
@@ -129,15 +131,15 @@ void main() {
 
         test("random data", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(randomData);
           num expectedSum = 0;
           for (int i = 0; i < randomData.length; i++) {
-            expectedSum += randomData[i]["amount"];
+            expectedSum += randomData[i]["amount"] as num;
           }
 
           // Act (Execution)
-          num sum = statisticsCalculations.sumBalance;
+          final num sum = statisticsCalculations.sumBalance;
 
           // Assert (Observation)
           expect(sum, expectedSum);
@@ -147,12 +149,12 @@ void main() {
       group("average", () {
         test("empty data", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations([]);
-          num expectedAverage = 0;
+          const num expectedAverage = 0;
 
           // Act (Execution)
-          num average = statisticsCalculations.averageBalance;
+          final num average = statisticsCalculations.averageBalance;
 
           // Assert (Observation)
           expect(average, expectedAverage);
@@ -160,12 +162,12 @@ void main() {
 
         test("example data 1 (only incomes)", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData1);
-          num expectedAverage = 20.25;
+          const num expectedAverage = 20.25;
 
           // Act (Execution)
-          num average = statisticsCalculations.averageBalance;
+          final num average = statisticsCalculations.averageBalance;
 
           // Assert (Observation)
           expect(average, expectedAverage);
@@ -173,12 +175,12 @@ void main() {
 
         test("example data 2 (only expenses)", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData2);
-          num expectedAverage = -1.375;
+          const num expectedAverage = -1.375;
 
           // Act (Execution)
-          num average = statisticsCalculations.averageBalance;
+          final num average = statisticsCalculations.averageBalance;
 
           // Assert (Observation)
           expect(average, expectedAverage);
@@ -186,12 +188,12 @@ void main() {
 
         test("example data 3", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData3);
-          num expectedAverage = 5.5;
+          const num expectedAverage = 5.5;
 
           // Act (Execution)
-          num average = statisticsCalculations.averageBalance;
+          final num average = statisticsCalculations.averageBalance;
 
           // Assert (Observation)
           expect(average, expectedAverage);
@@ -199,12 +201,12 @@ void main() {
 
         test("example data 4 (adds up to 0)", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData4);
-          num expectedAverage = 0;
+          const num expectedAverage = 0;
 
           // Act (Execution)
-          num average = statisticsCalculations.averageBalance;
+          final num average = statisticsCalculations.averageBalance;
 
           // Assert (Observation)
           expect(average, expectedAverage);
@@ -212,12 +214,12 @@ void main() {
 
         test("example data 5 (only 0 expenses)", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData5);
-          num expectedAverage = 0;
+          const num expectedAverage = 0;
 
           // Act (Execution)
-          num average = statisticsCalculations.averageBalance;
+          final num average = statisticsCalculations.averageBalance;
 
           // Assert (Observation)
           expect(average, expectedAverage);
@@ -225,16 +227,16 @@ void main() {
 
         test("random data", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(randomData);
           num expectedAverage = 0;
           for (int i = 0; i < randomData.length; i++) {
-            expectedAverage += randomData[i]["amount"];
+            expectedAverage += randomData[i]["amount"] as num;
           }
           expectedAverage /= randomData.length;
 
           // Act (Execution)
-          num average = statisticsCalculations.averageBalance;
+          final num average = statisticsCalculations.averageBalance;
 
           // Assert (Observation)
           expect(average, expectedAverage);
@@ -246,12 +248,12 @@ void main() {
       group("sum", () {
         test("empty data", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations([]);
-          num expectedSum = 0;
+          const num expectedSum = 0;
 
           // Act (Execution)
-          num sum = statisticsCalculations.sumIncomes;
+          final num sum = statisticsCalculations.sumIncomes;
 
           // Assert (Observation)
           expect(sum, expectedSum);
@@ -259,12 +261,12 @@ void main() {
 
         test("example data 1 (only incomes)", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData1);
-          num expectedSum = 81;
+          const num expectedSum = 81;
 
           // Act (Execution)
-          num sum = statisticsCalculations.sumIncomes;
+          final num sum = statisticsCalculations.sumIncomes;
 
           // Assert (Observation)
           expect(sum, expectedSum);
@@ -272,12 +274,12 @@ void main() {
 
         test("example data 2 (only expenses)", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData2);
-          num expectedSum = 0;
+          const num expectedSum = 0;
 
           // Act (Execution)
-          num sum = statisticsCalculations.sumIncomes;
+          final num sum = statisticsCalculations.sumIncomes;
 
           // Assert (Observation)
           expect(sum, expectedSum);
@@ -285,12 +287,12 @@ void main() {
 
         test("example data 3", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData3);
-          num expectedSum = 49.5;
+          const num expectedSum = 49.5;
 
           // Act (Execution)
-          num sum = statisticsCalculations.sumIncomes;
+          final num sum = statisticsCalculations.sumIncomes;
 
           // Assert (Observation)
           expect(sum, expectedSum);
@@ -298,12 +300,12 @@ void main() {
 
         test("example data 4 (adds up to 0)", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData4);
-          num expectedSum = 49.5;
+          const num expectedSum = 49.5;
 
           // Act (Execution)
-          num sum = statisticsCalculations.sumIncomes;
+          final num sum = statisticsCalculations.sumIncomes;
 
           // Assert (Observation)
           expect(sum, expectedSum);
@@ -311,12 +313,12 @@ void main() {
 
         test("example data 5 (only 0 expenses)", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData5);
-          num expectedSum = 0;
+          const num expectedSum = 0;
 
           // Act (Execution)
-          num sum = statisticsCalculations.sumIncomes;
+          final num sum = statisticsCalculations.sumIncomes;
 
           // Assert (Observation)
           expect(sum, expectedSum);
@@ -324,17 +326,17 @@ void main() {
 
         test("random data", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(randomData);
           num expectedSum = 0;
           for (int i = 0; i < randomData.length; i++) {
-            if (randomData[i]["amount"] > 0) {
-              expectedSum += randomData[i]["amount"];
+            if (randomData[i]["amount"] as num > 0) {
+              expectedSum += randomData[i]["amount"] as num;
             }
           }
 
           // Act (Execution)
-          num sum = statisticsCalculations.sumIncomes;
+          final num sum = statisticsCalculations.sumIncomes;
 
           // Assert (Observation)
           expect(sum, expectedSum);
@@ -343,12 +345,12 @@ void main() {
       group("average", () {
         test("empty data", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations([]);
-          num expectedAverage = 0;
+          const num expectedAverage = 0;
 
           // Act (Execution)
-          num average = statisticsCalculations.averageIncomes;
+          final num average = statisticsCalculations.averageIncomes;
 
           // Assert (Observation)
           expect(average, expectedAverage);
@@ -356,12 +358,12 @@ void main() {
 
         test("example data 1 (only incomes)", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData1);
-          num expectedAverage = 20.25;
+          const num expectedAverage = 20.25;
 
           // Act (Execution)
-          num average = statisticsCalculations.averageIncomes;
+          final num average = statisticsCalculations.averageIncomes;
 
           // Assert (Observation)
           expect(average, expectedAverage);
@@ -369,12 +371,12 @@ void main() {
 
         test("example data 2 (only expenses)", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData2);
-          num expectedAverage = 0;
+          const num expectedAverage = 0;
 
           // Act (Execution)
-          num average = statisticsCalculations.averageIncomes;
+          final num average = statisticsCalculations.averageIncomes;
 
           // Assert (Observation)
           expect(average, expectedAverage);
@@ -382,12 +384,12 @@ void main() {
 
         test("example data 3", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData3);
-          num expectedAverage = 12.375;
+          const num expectedAverage = 12.375;
 
           // Act (Execution)
-          num average = statisticsCalculations.averageIncomes;
+          final num average = statisticsCalculations.averageIncomes;
 
           // Assert (Observation)
           expect(average, expectedAverage);
@@ -395,12 +397,12 @@ void main() {
 
         test("example data 4 (adds up to 0)", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData4);
-          num expectedAverage = 12.375;
+          const num expectedAverage = 12.375;
 
           // Act (Execution)
-          num average = statisticsCalculations.averageIncomes;
+          final num average = statisticsCalculations.averageIncomes;
 
           // Assert (Observation)
           expect(average, expectedAverage);
@@ -408,12 +410,12 @@ void main() {
 
         test("example data 5 (only 0 expenses)", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData5);
-          num expectedAverage = 0;
+          const num expectedAverage = 0;
 
           // Act (Execution)
-          num average = statisticsCalculations.averageIncomes;
+          final num average = statisticsCalculations.averageIncomes;
 
           // Assert (Observation)
           expect(average, expectedAverage);
@@ -421,20 +423,20 @@ void main() {
 
         test("random data", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(randomData);
           num expectedAverage = 0;
           int incomes = 0;
           for (int i = 0; i < randomData.length; i++) {
-            if (randomData[i]["amount"] > 0) {
-              expectedAverage += randomData[i]["amount"];
+            if (randomData[i]["amount"] as num > 0) {
+              expectedAverage += randomData[i]["amount"] as num;
 
               incomes++;
             }
           }
           expectedAverage /= incomes;
           // Act (Execution)
-          num average = statisticsCalculations.averageIncomes;
+          final num average = statisticsCalculations.averageIncomes;
 
           // Assert (Observation)
           expect(average, expectedAverage);
@@ -446,12 +448,12 @@ void main() {
       group("sum", () {
         test("empty data", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations([]);
-          num expectedSum = 0;
+          const num expectedSum = 0;
 
           // Act (Execution)
-          num sum = statisticsCalculations.sumCosts;
+          final num sum = statisticsCalculations.sumCosts;
 
           // Assert (Observation)
           expect(sum, expectedSum);
@@ -459,12 +461,12 @@ void main() {
 
         test("example data 1 (only incomes)", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData1);
-          num expectedSum = 0;
+          const num expectedSum = 0;
 
           // Act (Execution)
-          num sum = statisticsCalculations.sumCosts;
+          final num sum = statisticsCalculations.sumCosts;
 
           // Assert (Observation)
           expect(sum, expectedSum);
@@ -472,12 +474,12 @@ void main() {
 
         test("example data 2 (only expenses)", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData2);
-          num expectedSum = -5.5;
+          const num expectedSum = -5.5;
 
           // Act (Execution)
-          num sum = statisticsCalculations.sumCosts;
+          final num sum = statisticsCalculations.sumCosts;
 
           // Assert (Observation)
           expect(sum, expectedSum);
@@ -485,12 +487,12 @@ void main() {
 
         test("example data 3", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData3);
-          num expectedSum = -5.5;
+          const num expectedSum = -5.5;
 
           // Act (Execution)
-          num sum = statisticsCalculations.sumCosts;
+          final num sum = statisticsCalculations.sumCosts;
 
           // Assert (Observation)
           expect(sum, expectedSum);
@@ -498,12 +500,12 @@ void main() {
 
         test("example data 4 (adds up to 0)", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData4);
-          num expectedSum = -49.5;
+          const num expectedSum = -49.5;
 
           // Act (Execution)
-          num sum = statisticsCalculations.sumCosts;
+          final num sum = statisticsCalculations.sumCosts;
 
           // Assert (Observation)
           expect(sum, expectedSum);
@@ -511,12 +513,12 @@ void main() {
 
         test("example data 5 (only 0 expenses)", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData5);
-          num expectedSum = 0;
+          const num expectedSum = 0;
 
           // Act (Execution)
-          num sum = statisticsCalculations.sumCosts;
+          final num sum = statisticsCalculations.sumCosts;
 
           // Assert (Observation)
           expect(sum, expectedSum);
@@ -524,17 +526,17 @@ void main() {
 
         test("random data", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(randomData);
           num expectedSum = 0;
           for (int i = 0; i < randomData.length; i++) {
-            if (randomData[i]["amount"] <= 0) {
-              expectedSum += randomData[i]["amount"];
+            if (randomData[i]["amount"] as num <= 0) {
+              expectedSum += randomData[i]["amount"] as num;
             }
           }
 
           // Act (Execution)
-          num sum = statisticsCalculations.sumCosts;
+          final num sum = statisticsCalculations.sumCosts;
 
           // Assert (Observation)
           expect(sum, expectedSum);
@@ -544,12 +546,12 @@ void main() {
       group("average", () {
         test("empty data", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations([]);
-          num expectedAverage = 0;
+          const num expectedAverage = 0;
 
           // Act (Execution)
-          num average = statisticsCalculations.averageCosts;
+          final num average = statisticsCalculations.averageCosts;
 
           // Assert (Observation)
           expect(average, expectedAverage);
@@ -557,12 +559,12 @@ void main() {
 
         test("example data 1 (only incomes)", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData1);
-          num expectedAverage = 0;
+          const num expectedAverage = 0;
 
           // Act (Execution)
-          num average = statisticsCalculations.averageCosts;
+          final num average = statisticsCalculations.averageCosts;
 
           // Assert (Observation)
           expect(average, expectedAverage);
@@ -570,12 +572,12 @@ void main() {
 
         test("example data 2 (only expenses)", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData2);
-          num expectedAverage = -1.375;
+          const num expectedAverage = -1.375;
 
           // Act (Execution)
-          num average = statisticsCalculations.averageCosts;
+          final num average = statisticsCalculations.averageCosts;
 
           // Assert (Observation)
           expect(average, expectedAverage);
@@ -583,12 +585,12 @@ void main() {
 
         test("example data 3", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData3);
-          num expectedAverage = -1.375;
+          const num expectedAverage = -1.375;
 
           // Act (Execution)
-          num average = statisticsCalculations.averageCosts;
+          final num average = statisticsCalculations.averageCosts;
 
           // Assert (Observation)
           expect(average, expectedAverage);
@@ -596,12 +598,12 @@ void main() {
 
         test("example data 4 (adds up to 0)", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData4);
-          num expectedAverage = -8.25;
+          const num expectedAverage = -8.25;
 
           // Act (Execution)
-          num average = statisticsCalculations.averageCosts;
+          final num average = statisticsCalculations.averageCosts;
 
           // Assert (Observation)
           expect(average, expectedAverage);
@@ -609,12 +611,12 @@ void main() {
 
         test("example data 5 (only 0 expenses)", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(exampleData5);
-          num expectedAverage = 0;
+          const num expectedAverage = 0;
 
           // Act (Execution)
-          num average = statisticsCalculations.averageCosts;
+          final num average = statisticsCalculations.averageCosts;
 
           // Assert (Observation)
           expect(average, expectedAverage);
@@ -622,20 +624,20 @@ void main() {
 
         test("random data", () {
           // Arrange (Initialization)
-          StatisticsCalculations statisticsCalculations =
+          final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(randomData);
           num expectedAverage = 0;
           int costs = 0;
           for (int i = 0; i < randomData.length; i++) {
-            if (randomData[i]["amount"] <= 0) {
-              expectedAverage += randomData[i]["amount"];
+            if (randomData[i]["amount"] as num <= 0) {
+              expectedAverage += randomData[i]["amount"] as num;
 
               costs++;
             }
           }
           expectedAverage /= costs;
           // Act (Execution)
-          num average = statisticsCalculations.averageCosts;
+          final num average = statisticsCalculations.averageCosts;
 
           // Assert (Observation)
           expect(average, expectedAverage);
@@ -646,9 +648,9 @@ void main() {
 }
 
 List<dynamic> _createRandomStatisticData() {
-  List<dynamic> returnList = [];
-  math.Random rand = math.Random();
-  int max = rand.nextInt(256);
+  final List<dynamic> returnList = [];
+  final math.Random rand = math.Random();
+  final int max = rand.nextInt(256);
   for (int i = 0; i < max; i++) {
     returnList.add({
       "amount":

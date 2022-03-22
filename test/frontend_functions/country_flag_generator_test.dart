@@ -5,10 +5,10 @@ void main() {
   group("country_flag_generator", () {
     test("gives correct german flag", () {
       // Arrange (Initialization)
-      String exprectedFlag = "🇩🇪";
+      const String exprectedFlag = "🇩🇪";
 
       // Act (Execution)
-      String flag = countryFlag("de");
+      final String flag = countryFlag("de");
 
       // Assert (Observation)
       expect(flag, exprectedFlag);
@@ -16,10 +16,10 @@ void main() {
 
     test("gives correct great britain flag", () {
       // Arrange (Initialization)
-      String exprectedFlag = "🇬🇧";
+      const String exprectedFlag = "🇬🇧";
 
       // Act (Execution)
-      String flag = countryFlag("gb");
+      final String flag = countryFlag("gb");
 
       // Assert (Observation)
       expect(flag, exprectedFlag);
@@ -27,10 +27,10 @@ void main() {
 
     test("gives correct flag of the Netherlands", () {
       // Arrange (Initialization)
-      String exprectedFlag = "🇳🇱";
+      const String exprectedFlag = "🇳🇱";
 
       // Act (Execution)
-      String flag = countryFlag("nl");
+      final String flag = countryFlag("nl");
 
       // Assert (Observation)
       expect(flag, exprectedFlag);
@@ -38,10 +38,10 @@ void main() {
 
     test("gives correct spain flag", () {
       // Arrange (Initialization)
-      String exprectedFlag = "🇪🇸";
+      const String exprectedFlag = "🇪🇸";
 
       // Act (Execution)
-      String flag = countryFlag("es");
+      final String flag = countryFlag("es");
 
       // Assert (Observation)
       expect(flag, exprectedFlag);
@@ -49,10 +49,10 @@ void main() {
 
     test("gives correct french flag", () {
       // Arrange (Initialization)
-      String exprectedFlag = "🇫🇷";
+      const String exprectedFlag = "🇫🇷";
 
       // Act (Execution)
-      String flag = countryFlag("fr");
+      final String flag = countryFlag("fr");
 
       // Assert (Observation)
       expect(flag, exprectedFlag);
