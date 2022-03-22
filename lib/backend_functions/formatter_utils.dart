@@ -3,14 +3,16 @@ import 'dart:math';
 import 'package:flutter/services.dart';
 
 TextEditingValue textManipulation(
-    TextEditingValue oldValue, TextEditingValue newValueParameter,
-    {TextInputFormatter? textInputFormatter,
-    String formatPattern(String filteredString)?}) {
+  TextEditingValue oldValue,
+  TextEditingValue newValueParameter, {
+  TextInputFormatter? textInputFormatter,
+  String Function(String filteredString)? formatPattern,
+}) {
   final originalUserInput = newValueParameter.text;
 
   // remove all invalid characters
 
-  TextEditingValue newValue = textInputFormatter != null
+  final TextEditingValue newValue = textInputFormatter != null
       ? textInputFormatter.formatEditUpdate(oldValue, newValueParameter)
       : newValueParameter;
 
@@ -57,7 +59,8 @@ TextEditingValue textManipulation(
   }
 
   return newValue.copyWith(
-      text: newText,
-      selection: TextSelection.collapsed(offset: selectionIndex),
-      composing: TextRange.empty);
+    text: newText,
+    selection: TextSelection.collapsed(offset: selectionIndex),
+    composing: TextRange.empty,
+  );
 }
