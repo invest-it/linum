@@ -116,8 +116,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 36, vertical: 16),
                 child: Text(
-                  AppLocalizations.of(context)!
-                      .translate(slide.description as String),
+                  AppLocalizations.of(context)!.translate(slide.description!),
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headline5,
                 ),
