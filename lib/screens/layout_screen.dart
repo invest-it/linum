@@ -9,17 +9,21 @@ import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/screens/academy_screen.dart';
+
+import 'package:linum/screens/budget_screen.dart';
+
 import 'package:linum/screens/lock_screen.dart';
 import 'package:linum/screens/statistics_screen.dart';
+
 import 'package:linum/screens/enter_screen.dart';
 import 'package:linum/screens/home_screen.dart';
 import 'package:linum/screens/settings_screen.dart';
-import 'package:linum/screens/budget_screen.dart';
+import 'package:linum/screens/statistics_screen.dart';
 import 'package:linum/widgets/bottom_app_bar.dart';
 import 'package:provider/provider.dart';
 
 class LayoutScreen extends StatefulWidget {
-  LayoutScreen(Key? key) : super(key: key);
+  const LayoutScreen(Key? key) : super(key: key);
 
   @override
   State<LayoutScreen> createState() => _LayoutScreenState();
@@ -59,10 +63,10 @@ class _LayoutScreenState extends State<LayoutScreen>
 
   @override
   Widget build(BuildContext context) {
-    AccountSettingsProvider _accountSettingsProvider =
+    final AccountSettingsProvider _accountSettingsProvider =
         Provider.of<AccountSettingsProvider>(context);
 
-    ScreenIndexProvider screenIndexProvider =
+    final ScreenIndexProvider screenIndexProvider =
         Provider.of<ScreenIndexProvider>(context);
 
     PinCodeProvider pinCodeProvider = Provider.of<PinCodeProvider>(context);
@@ -187,23 +191,24 @@ class _LayoutScreenState extends State<LayoutScreen>
     );
   }
 
-  void createRandomData(BuildContext context) async {
-    BalanceDataProvider balanceDataProvider =
+  Future<void> createRandomData(BuildContext context) async {
+    final BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context, listen: false);
     const List<String> categories = ["food", "clothing", "computer games"];
-    Random rand = Random();
+    final Random rand = Random();
     for (int i = 0; i < 365 * 5 * 4; i++) {
-      Timestamp time = Timestamp.fromDate(
-          DateTime.now().subtract(Duration(days: rand.nextInt(365 * 5))));
+      final Timestamp time = Timestamp.fromDate(
+        DateTime.now().subtract(Duration(days: rand.nextInt(365 * 5))),
+      );
       balanceDataProvider.addSingleBalance(
         amount: ((rand.nextDouble() * -10000).round()) / 100.0,
         category: categories[rand.nextInt(categories.length)],
         currency: "EUR",
-        name: "Random Item Number: " + i.toString(),
+        name: "Random Item Number: $i",
         time: time,
       );
-      dev.log(i.toString() + ". Hochgeladen");
-      await Future.delayed(Duration(milliseconds: 200));
+      dev.log("$i. Hochgeladen");
+      await Future.delayed(const Duration(milliseconds: 200));
     }
   }
 }

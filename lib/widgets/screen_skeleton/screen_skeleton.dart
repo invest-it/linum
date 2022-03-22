@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
@@ -81,6 +79,7 @@ import 'package:provider/provider.dart';
 /// Wichtig sind außerdem noch folgende Dinge:
 /// Ihr könnt kein eigenständiges AppBarAction Widget erstellen. Ihr müsst immer entweder .fromPreset() oder .fromParameters() nutzen.
 /// Wenn ihr weder actions: noch leadingAction: definiert, wird keine AppBar angelegt.
+// ignore: must_be_immutable
 class ScreenSkeleton extends StatelessWidget {
   final String head;
   final Widget body;
@@ -99,7 +98,7 @@ class ScreenSkeleton extends StatelessWidget {
     this.contentOverride = false,
     this.isInverted = false,
     this.hasHomeScreenCard = false,
-    this.initialActionLipStatus = ActionLipStatus.HIDDEN,
+    this.initialActionLipStatus = ActionLipStatus.hidden,
     this.providerKey,
     Widget? initialActionLipBody,
     this.actions,
@@ -111,28 +110,32 @@ class ScreenSkeleton extends StatelessWidget {
       _initialActionLipBody = initialActionLipBody;
     }
     if (providerKey == null) {
-      initialActionLipStatus = ActionLipStatus.DISABLED;
+      initialActionLipStatus = ActionLipStatus.disabled;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    BalanceDataProvider balanceDataProvider =
+    final BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
 
-    ActionLipStatusProvider actionLipStatusProvider =
+    final ActionLipStatusProvider actionLipStatusProvider =
         Provider.of<ActionLipStatusProvider>(context, listen: false);
 
     if (providerKey != null &&
         !actionLipStatusProvider.isActionStatusInitialized(providerKey!)) {
       actionLipStatusProvider.setActionLipStatusSilently(
-          providerKey: providerKey!, actionLipStatus: initialActionLipStatus);
+        providerKey: providerKey!,
+        actionLipStatus: initialActionLipStatus,
+      );
     }
 
     if (providerKey != null &&
         !actionLipStatusProvider.isBodyInitialized(providerKey!)) {
       actionLipStatusProvider.setActionLipSilently(
-          providerKey: providerKey!, actionLipBody: _initialActionLipBody);
+        providerKey: providerKey!,
+        actionLipBody: _initialActionLipBody,
+      );
     }
 
     if (!contentOverride) {
@@ -190,7 +193,7 @@ class ScreenSkeleton extends StatelessWidget {
 }
 
 enum ActionLipStatus {
-  HIDDEN,
-  ONVIEWPORT,
-  DISABLED,
+  hidden,
+  onviewport,
+  disabled,
 }

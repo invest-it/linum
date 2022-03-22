@@ -38,11 +38,12 @@
     "onboarding_screen/register-privacy/label-leading": "J'ai lu la ",
     "onboarding_screen/register-privacy/label-link": "déclaration de confidentalité",
     "onboarding_screen/register-privacy/label-trailing": " et je l'accepte.",
+    "onboarding_screen/register-privacy/label-error": "Vous devez accepter les CGU avant de pouvoir vous inscrire.",
 
 
     "home_screen/label-recent-transactions": "Transactions récentes",
     "home_screen/button-show-more": "AFFICHER PLUS",
-
+    "home_screen/free-text": "Gratis",
 
     "home_screen_card/home-screen-card-toast": "Balayez vers la gauche et la droite pour afficher les mois précédents ou à venir. Double-cliquez pour revenir au mois en cours.",
     "home_screen_card/label-current-balance": "Solde actuel",
@@ -130,7 +131,7 @@
     "enter_screen/label-repeat-none": "Ne répétez pas",
     "enter_screen/label-repeat-daily": "Tous les jours",
     "enter_screen/label-repeat-weekly": "Hebdomadaire",
-    "enter_screen/label-repeat-30days": "Tous les 30 jours",
+    "enter_screen/label-repeat-30days": "Mensuel",
     "enter_screen/label-repeat-monthly": "Au début du mois",
     "enter_screen/label-repeat-freeselect": "Choisir librement",
 
@@ -235,6 +236,8 @@
     "auth/weak-password": "The password you entered is too weak. Please choose a stronger password.",
 
     "auth/requires-recent-login": "For security reasons, please log in first.",
+    "auth/network-request-failed": "Le serveur n'a pas pu être contacté (timeout).",
+
 
     "auth/claims-too-large": "Nous recevons plus de demandes que ce qui est autorisé. Veuillez réessayer plus tard.",
     "auth/email-already-exists": "L'e-mail indiqué est déjà utilisé.",

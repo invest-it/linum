@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
@@ -21,6 +22,10 @@ class AuthenticationService extends ChangeNotifier {
 
   bool get isLoggedIn => uid != "";
 
+  bool get isInDebugMode => FirebaseFirestore.instance.settings.asMap["host"]
+      .toString()
+      .contains("localhost");
+
   /// Tries to sign the user in
   Future<void> signIn(
     String email,
@@ -31,7 +36,9 @@ class AuthenticationService extends ChangeNotifier {
   }) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: password);
+        email: email,
+        password: password,
+      );
 
       if (isEmailVerified) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -48,7 +55,8 @@ class AuthenticationService extends ChangeNotifier {
         }
       }
     } on FirebaseAuthException catch (e) {
-      onError("auth/" + e.code);
+      log(e.message.toString());
+      onError("auth/${e.code}");
     }
   }
 
@@ -62,7 +70,9 @@ class AuthenticationService extends ChangeNotifier {
   }) async {
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: password);
+        email: email,
+        password: password,
+      );
 
       if (isEmailVerified) {
         notifyListeners();
@@ -73,7 +83,8 @@ class AuthenticationService extends ChangeNotifier {
         onNotVerified();
       }
     } on FirebaseAuthException catch (e) {
-      onError("auth/" + e.code);
+      log(e.message.toString());
+      onError("auth/${e.code}");
     }
   }
 
@@ -101,6 +112,9 @@ class AuthenticationService extends ChangeNotifier {
   }
 
   bool get isEmailVerified {
+    if (isInDebugMode) {
+      return true;
+    }
     if (_firebaseAuth.currentUser != null) {
       return _firebaseAuth.currentUser!.emailVerified;
     }
@@ -139,7 +153,7 @@ class AuthenticationService extends ChangeNotifier {
         return;
       }
     } on FirebaseAuthException catch (e) {
-      onError("auth/" + e.code);
+      onError("auth/${e.code}");
     }
   }
 
@@ -157,7 +171,7 @@ class AuthenticationService extends ChangeNotifier {
       }
       log("Successfully send Verification Mail request to Firebase");
     } on FirebaseAuthException catch (e) {
-      onError("auth/" + e.code);
+      onError("auth/${e.code}");
     }
   }
 
@@ -171,7 +185,7 @@ class AuthenticationService extends ChangeNotifier {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
       onComplete("alertdialog/reset-password/message");
     } on FirebaseAuthException catch (e) {
-      onError("auth/" + e.code);
+      onError("auth/${e.code}");
     }
   }
 
@@ -185,12 +199,13 @@ class AuthenticationService extends ChangeNotifier {
       notifyListeners();
       onComplete("Successfully signed out from Firebase");
     } on FirebaseAuthException catch (e) {
-      onError("auth/" + e.code);
+      onError("auth/${e.code}");
     }
   }
 
   void updateLanguageCode(BuildContext context) {
     _firebaseAuth.setLanguageCode(
-        AppLocalizations.of(context)?.locale.languageCode ?? "en");
+      AppLocalizations.of(context)?.locale.languageCode ?? "en",
+    );
   }
 }

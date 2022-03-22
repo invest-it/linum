@@ -38,10 +38,12 @@
     "onboarding_screen/register-privacy/label-leading": "Ich habe die ",
     "onboarding_screen/register-privacy/label-link": "Datenschutzerklärung",
     "onboarding_screen/register-privacy/label-trailing": " gelesen und akzeptiere sie.",
+    "onboarding_screen/register-privacy/label-error": "Sie müssen die AGB akzeptieren, bevor Sie sich registrieren können.",
 
 
     "home_screen/label-recent-transactions": "Neueste Transaktionen",
     "home_screen/button-show-more": "MEHR",
+    "home_screen/free-text": "Gratis",
 
 
     "home_screen_card/home-screen-card-toast": "Swipe nach links und rechts, um vorige oder kommende Monate anzusehen. Doppelt tippen, um in den aktuellen Monat zurückzukehren.",
@@ -130,7 +132,7 @@
     "enter_screen/label-repeat-none": "Nicht wiederholen",
     "enter_screen/label-repeat-daily": "Täglich",
     "enter_screen/label-repeat-weekly": "Wöchentlich",
-    "enter_screen/label-repeat-30days": "Alle 30 Tage",
+    "enter_screen/label-repeat-30days": "Monatlich",
     "enter_screen/label-repeat-monthly": "Zum Monatsanfang",
     "enter_screen/label-repeat-freeselect": "Frei auswählen",
 
@@ -235,6 +237,8 @@
     "auth/weak-password": "Das eingegebene Passwort ist zu schwach. Bitte wähle ein stärkeres Passwort.",
 
     "auth/requires-recent-login": "Bitte melde dich aus Sicherheitsgründen zunächst an.",
+    "auth/network-request-failed": "Der Server konnte nicht kontaktiert werden (Timeout).",
+
 
     "auth/claims-too-large": "Es gehen mehr Anfragen als zulässig ein. Bitte versuche es später noch einmal.",
     "auth/email-already-exists": "Die angegebene E-Mail wird bereits verwendet.",

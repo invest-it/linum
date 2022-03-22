@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
-import 'package:linum/backend_functions/url-handler.dart';
+import 'package:linum/backend_functions/url_handler.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/widgets/screen_skeleton/app_bar_action.dart';
@@ -17,7 +17,7 @@ class AcademyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenIndexProvider screenIndexProvider =
+    final ScreenIndexProvider screenIndexProvider =
         Provider.of<ScreenIndexProvider>(context);
 
     return ScreenSkeleton(
@@ -31,12 +31,12 @@ class AcademyScreen extends StatelessWidget {
         children: [
           Container(
             height:
-                proportionateScreenHeightFraction(ScreenFraction.ONEQUARTER),
-            margin: EdgeInsets.all(32),
+                proportionateScreenHeightFraction(ScreenFraction.onequarter),
+            margin: const EdgeInsets.all(32),
             child: SvgPicture.asset('assets/svg/video-files.svg'),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 36),
+            padding: const EdgeInsets.symmetric(horizontal: 36),
             child: Text(
               AppLocalizations.of(context)!
                   .translate('academy_screen/label-title'),
@@ -45,7 +45,7 @@ class AcademyScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 36, vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 16),
             child: Text(
               AppLocalizations.of(context)!
                   .translate('academy_screen/label-description'),
@@ -54,13 +54,13 @@ class AcademyScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 36, vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 16),
             child: ElevatedButton(
               child: Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Wrap(
                   spacing: 12,
-                  children: [
+                  children: const [
                     Icon(Icons.open_in_new_rounded),
                     Text("Zum YouTube-Kanal"),
                   ],
@@ -72,7 +72,7 @@ class AcademyScreen extends StatelessWidget {
           // SizedBox(
           //   height: proportionateScreenHeight(230),
           // ),
-          Container(
+          SizedBox(
             width: double.infinity,
             child: Padding(
               padding: EdgeInsets.only(

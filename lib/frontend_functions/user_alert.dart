@@ -12,10 +12,12 @@ class UserAlert {
     String actionTitle = 'alertdialog/error/action-standard',
     bool userMustDismissWithButton = true,
   }) {
-    return (message) => showMyDialog(message,
-        title: title,
-        actionTitle: actionTitle,
-        userMustDismissWithButton: userMustDismissWithButton);
+    return (message) => showMyDialog(
+          message,
+          title: title,
+          actionTitle: actionTitle,
+          userMustDismissWithButton: userMustDismissWithButton,
+        );
   }
 
   Future<void> showMyDialog(
@@ -43,11 +45,13 @@ class UserAlert {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text(AppLocalizations.of(context)!.translate(actionTitle),
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1
-                      ?.copyWith(color: Theme.of(context).colorScheme.primary)),
+              child: Text(
+                AppLocalizations.of(context)!.translate(actionTitle),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText1
+                    ?.copyWith(color: Theme.of(context).colorScheme.primary),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },

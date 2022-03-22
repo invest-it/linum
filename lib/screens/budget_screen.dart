@@ -1,8 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
-import 'package:linum/frontend_functions/silent-scroll.dart';
+import 'package:linum/frontend_functions/silent_scroll.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/widgets/home_screen/home_screen_listview.dart';
@@ -16,10 +14,10 @@ class BudgetScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BalanceDataProvider balanceDataProvider =
+    final BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
 
-    AlgorithmProvider algorithmProvider =
+    final AlgorithmProvider algorithmProvider =
         Provider.of<AlgorithmProvider>(context);
 
     if (algorithmProvider.currentFilter != AlgorithmProvider.noFilter) {
@@ -28,19 +26,19 @@ class BudgetScreen extends StatelessWidget {
     }
     return ScreenSkeleton(
       head: 'Budget',
-      leadingAction: AppBarAction.fromPreset(DefaultAction.ACADEMY),
+      leadingAction: AppBarAction.fromPreset(DefaultAction.academy),
       body: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 15.0),
                 child: Text(
-                    AppLocalizations.of(context)!
-                        .translate('budget_screen/label-all-transactions'),
-                    style: Theme.of(context).textTheme.headline5),
+                  AppLocalizations.of(context)!
+                      .translate('budget_screen/label-all-transactions'),
+                  style: Theme.of(context).textTheme.headline5,
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 15.0),
@@ -60,7 +58,7 @@ class BudgetScreen extends StatelessWidget {
           ),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
               child: ScrollConfiguration(
                 behavior: SilentScroll(),
                 child: balanceDataProvider.fillListViewWithData(
@@ -72,7 +70,6 @@ class BudgetScreen extends StatelessWidget {
           ),
         ],
       ),
-      isInverted: false,
     );
   }
 }

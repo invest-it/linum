@@ -38,10 +38,12 @@
     "onboarding_screen/register-privacy/label-leading": "I have read and accept the ",
     "onboarding_screen/register-privacy/label-link": "Privacy Statement",
     "onboarding_screen/register-privacy/label-trailing": ".",
+    "onboarding_screen/register-privacy/label-error": "You must accept the T&Cs before you can register.",
 
 
     "home_screen/label-recent-transactions": "Recent transactions",
     "home_screen/button-show-more": "SHOW MORE",
+    "home_screen/free-text": "Free",
 
 
     "home_screen_card/home-screen-card-toast": "Swipe left and right to view previous or upcoming months. Double tap to return to the current month.",
@@ -130,7 +132,7 @@
     "enter_screen/label-repeat-none": "Don't repeat",
     "enter_screen/label-repeat-daily": "Daily",
     "enter_screen/label-repeat-weekly": "Weekly",
-    "enter_screen/label-repeat-30days": "Every 30 days",
+    "enter_screen/label-repeat-30days": "Monthly",
     "enter_screen/label-repeat-monthly": "Beginning of the month",
     "enter_screen/label-repeat-freeselect": "Custom",
 
@@ -235,6 +237,8 @@
     "auth/weak-password": "The password you entered is too weak. Please choose a stronger password.",
 
     "auth/requires-recent-login": "For security reasons, please log in first.",
+    "auth/network-request-failed": "The server could not be contacted (timeout).",
+
 
     "auth/claims-too-large": "More requests than allowed are received. Please try again later.",
     "auth/email-already-exists": "The specified e-mail is already in use.",

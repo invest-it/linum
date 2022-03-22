@@ -7,8 +7,8 @@ class SizeGuide {
   static late Orientation orientation;
   static late bool keyboardIsOpened;
   static late double keyboardHeight;
-  static final double referenceScreenWidth = 375.0;
-  static final double referenceScreenHeight = 812.0;
+  static const double referenceScreenWidth = 375.0;
+  static const double referenceScreenHeight = 812.0;
 
   void init(BuildContext context) {
     _mediaQueryData = MediaQuery.of(context);
@@ -41,8 +41,8 @@ class SizeGuide {
 // width: proportionateScreenWidthFraction(ScreenFraction.TWOTHIRDS),
 
 double proportionateScreenHeight(double inputHeight) {
-  double screenHeight = SizeGuide.screenHeight;
-  double referenceScreenHeight = SizeGuide.referenceScreenHeight;
+  final double screenHeight = SizeGuide.screenHeight;
+  const double referenceScreenHeight = SizeGuide.referenceScreenHeight;
   // In Figma, we use 375 x 812 as the Design Canvas.
   // That's equivalent to an iPhone 11 Pro / iPhone X.
 
@@ -53,39 +53,39 @@ double proportionateScreenHeight(double inputHeight) {
 }
 
 double proportionateScreenHeightFraction(ScreenFraction inputFraction) {
-  double screenHeight = SizeGuide.screenHeight;
-  double referenceScreenHeight = SizeGuide.referenceScreenHeight;
+  final double screenHeight = SizeGuide.screenHeight;
+  const double referenceScreenHeight = SizeGuide.referenceScreenHeight;
   double scalingFactor;
 
   switch (inputFraction) {
-    case ScreenFraction.FULL:
+    case ScreenFraction.full:
       scalingFactor = 1.0;
       break;
-    case ScreenFraction.FOURFITHS:
+    case ScreenFraction.fourfiths:
       scalingFactor = 4 / 5;
       break;
-    case ScreenFraction.THREEQUARTERS:
+    case ScreenFraction.threequearters:
       scalingFactor = 3 / 4;
       break;
-    case ScreenFraction.TWOTHIRDS:
+    case ScreenFraction.twothirds:
       scalingFactor = 2 / 3;
       break;
-    case ScreenFraction.THREEFIFTHS:
+    case ScreenFraction.threefifths:
       scalingFactor = 3 / 5;
       break;
-    case ScreenFraction.HALF:
+    case ScreenFraction.half:
       scalingFactor = 1 / 2;
       break;
-    case ScreenFraction.TWOFIFTHS:
+    case ScreenFraction.twofifths:
       scalingFactor = 2 / 5;
       break;
-    case ScreenFraction.ONETHIRD:
+    case ScreenFraction.onethird:
       scalingFactor = 1 / 3;
       break;
-    case ScreenFraction.ONEQUARTER:
+    case ScreenFraction.onequarter:
       scalingFactor = 1 / 4;
       break;
-    case ScreenFraction.ONEFIFTH:
+    case ScreenFraction.onefifth:
       scalingFactor = 1 / 5;
       break;
     case ScreenFraction.ONETENTH:
@@ -101,39 +101,39 @@ double proportionateScreenHeightFraction(ScreenFraction inputFraction) {
 }
 
 double proportionateScreenWidthFraction(ScreenFraction inputFraction) {
-  double screenWidth = SizeGuide.screenWidth;
-  double referenceScreenWidth = SizeGuide.referenceScreenWidth;
+  final double screenWidth = SizeGuide.screenWidth;
+  const double referenceScreenWidth = SizeGuide.referenceScreenWidth;
   double scalingFactor;
 
   switch (inputFraction) {
-    case ScreenFraction.FULL:
+    case ScreenFraction.full:
       scalingFactor = 1.0;
       break;
-    case ScreenFraction.FOURFITHS:
+    case ScreenFraction.fourfiths:
       scalingFactor = 4 / 5;
       break;
-    case ScreenFraction.THREEQUARTERS:
+    case ScreenFraction.threequearters:
       scalingFactor = 3 / 4;
       break;
-    case ScreenFraction.TWOTHIRDS:
+    case ScreenFraction.twothirds:
       scalingFactor = 2 / 3;
       break;
-    case ScreenFraction.THREEFIFTHS:
+    case ScreenFraction.threefifths:
       scalingFactor = 3 / 5;
       break;
-    case ScreenFraction.HALF:
+    case ScreenFraction.half:
       scalingFactor = 1 / 2;
       break;
-    case ScreenFraction.TWOFIFTHS:
+    case ScreenFraction.twofifths:
       scalingFactor = 2 / 5;
       break;
-    case ScreenFraction.ONETHIRD:
+    case ScreenFraction.onethird:
       scalingFactor = 1 / 3;
       break;
-    case ScreenFraction.ONEQUARTER:
+    case ScreenFraction.onequarter:
       scalingFactor = 1 / 4;
       break;
-    case ScreenFraction.ONEFIFTH:
+    case ScreenFraction.onefifth:
       scalingFactor = 1 / 5;
       break;
     case ScreenFraction.ONETENTH:
@@ -149,8 +149,8 @@ double proportionateScreenWidthFraction(ScreenFraction inputFraction) {
 }
 
 double proportionateScreenWidth(double inputWidth) {
-  double screenWidth = SizeGuide.screenWidth;
-  double referenceScreenWidth = SizeGuide.referenceScreenWidth;
+  final double screenWidth = SizeGuide.screenWidth;
+  const double referenceScreenWidth = SizeGuide.referenceScreenWidth;
   // In Figma, we use 375 x 812 as the Design Canvas.
   // That's equivalent to an iPhone 11 Pro / iPhone X.
 
@@ -169,39 +169,16 @@ double realScreenWidth() {
 }
 
 enum ScreenFraction {
-  /// 100%
-  FULL,
-
-  /// 80%
-  FOURFITHS,
-
-  /// 75%
-  THREEQUARTERS,
-
-  /// 67%
-  TWOTHIRDS,
-
-  /// 60%
-  THREEFIFTHS,
-
-  /// 50%
-  HALF,
-
-  /// 40%
-  TWOFIFTHS,
-
-  /// 33%
-  ONETHIRD,
-
-  /// 25%
-  ONEQUARTER,
-
-  /// 20%
-  ONEFIFTH,
-
-  /// 10%
-  ONETENTH,
-
-  /// 1%
-  QUANTILE,
+  /* 100% */ full,
+  /* 80%  */ fourfiths,
+  /* 75%  */ threequearters,
+  /* 67%  */ twothirds,
+  /* 60%  */ threefifths,
+  /* 50%  */ half,
+  /* 40%  */ twofifths,
+  /* 33%  */ onethird,
+  /* 25%  */ onequarter,
+  /* 20%  */ onefifth,
+  /* 10%  */ onetenth,
+  /* 1%   */ quantile,
 }
