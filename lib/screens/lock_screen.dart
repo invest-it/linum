@@ -45,7 +45,7 @@ class _LockScreenState extends State<LockScreen> {
                   padding: EdgeInsets.only(
                       top: 4.0,
                       bottom: proportionateScreenHeightFraction(
-                        ScreenFraction.QUANTILE,
+                        ScreenFraction.quantile,
                       )),
                   child: Text(
                     auth.userEmail.isNotEmpty

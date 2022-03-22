@@ -12,7 +12,7 @@ class PinField extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(
           horizontal:
-              proportionateScreenWidthFraction(ScreenFraction.QUANTILE) * 2),
+              proportionateScreenWidthFraction(ScreenFraction.quantile) * 2),
       width: proportionateScreenWidth(50),
       height: proportionateScreenWidth(50),
       decoration: BoxDecoration(

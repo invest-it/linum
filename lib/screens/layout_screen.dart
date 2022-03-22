@@ -130,10 +130,12 @@ class _LayoutScreenState extends State<LayoutScreen>
                           create: (_) {
                             return EnterScreenProvider(
                               category: _accountSettingsProvider
-                                      .settings['StandardCategoryExpense'] ??
+                                          .settings['StandardCategoryExpense']
+                                      as String? ??
                                   "None",
                               secondaryCategory: _accountSettingsProvider
-                                      .settings['StandardCategoryIncome'] ??
+                                          .settings['StandardCategoryIncome']
+                                      as String? ??
                                   "None",
                             );
                           },
