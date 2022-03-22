@@ -30,7 +30,7 @@ class AcademyScreen extends StatelessWidget {
         children: [
           Container(
             height:
-                proportionateScreenHeightFraction(ScreenFraction.ONEQUARTER),
+                proportionateScreenHeightFraction(ScreenFraction.onequarter),
             margin: EdgeInsets.all(32),
             child: SvgPicture.asset('assets/svg/video-files.svg'),
           ),

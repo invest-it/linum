@@ -133,7 +133,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       builder: (context) {
                         return Container(
                           height: proportionateScreenHeightFraction(
-                            ScreenFraction.HALF,
+                            ScreenFraction.half,
                           ),
                           color: Theme.of(context).colorScheme.onSecondary,
                           child: Column(
@@ -147,7 +147,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               ),
                               SizedBox(
                                 height: proportionateScreenHeightFraction(
-                                  ScreenFraction.TWOFIFTHS,
+                                  ScreenFraction.twofifths,
                                 ),
                                 child: _incomeListViewBuilder(
                                   accountSettingsProvider,

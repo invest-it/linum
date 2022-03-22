@@ -22,7 +22,7 @@ class LipSection extends StatelessWidget {
               ClipRRect(
                 child: Container(
                   alignment: Alignment.bottomCenter,
-                  width: proportionateScreenWidthFraction(ScreenFraction.FULL),
+                  width: proportionateScreenWidthFraction(ScreenFraction.full),
                   height: proportionateScreenHeight(164),
                   color: Theme.of(context).colorScheme.primary,
                   child: Baseline(

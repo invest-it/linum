@@ -40,9 +40,9 @@ class _ActionLipState extends State<ActionLip> {
           // log('the offset has been reduced by ' +
           // (SizeGuide.keyboardHeight / 2).toString());
           _lipYOffset = SizeGuide.keyboardIsOpened
-              ? proportionateScreenHeightFraction(ScreenFraction.TWOFIFTHS) -
+              ? proportionateScreenHeightFraction(ScreenFraction.twofifths) -
                   (SizeGuide.keyboardHeight / 2)
-              : proportionateScreenHeightFraction(ScreenFraction.TWOFIFTHS);
+              : proportionateScreenHeightFraction(ScreenFraction.twofifths);
         });
         break;
       case ActionLipStatus.DISABLED:
@@ -70,7 +70,7 @@ class _ActionLipState extends State<ActionLip> {
       ),
       child: Container(
         width: double.infinity,
-        height: proportionateScreenHeightFraction(ScreenFraction.THREEFIFTHS),
+        height: proportionateScreenHeightFraction(ScreenFraction.threefifths),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

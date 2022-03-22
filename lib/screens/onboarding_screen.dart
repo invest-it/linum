@@ -199,9 +199,9 @@ class _OnboardingScreenState extends State<OnboardingPage> {
         break;
       case 1:
         _loginYOffset = SizeGuide.keyboardIsOpened
-            ? proportionateScreenHeightFraction(ScreenFraction.TWOFIFTHS) -
+            ? proportionateScreenHeightFraction(ScreenFraction.twofifths) -
                 (SizeGuide.keyboardHeight / 2)
-            : proportionateScreenHeightFraction(ScreenFraction.TWOFIFTHS);
+            : proportionateScreenHeightFraction(ScreenFraction.twofifths);
         _registerYOffset = windowHeight;
         _loginXOffset = 0;
         _loginWidth = windowWidth;
@@ -209,14 +209,14 @@ class _OnboardingScreenState extends State<OnboardingPage> {
         break;
       case 2:
         _loginYOffset = SizeGuide.keyboardIsOpened
-            ? proportionateScreenHeightFraction(ScreenFraction.TWOFIFTHS) -
+            ? proportionateScreenHeightFraction(ScreenFraction.twofifths) -
                 (SizeGuide.keyboardHeight / 2) -
                 32
-            : proportionateScreenHeightFraction(ScreenFraction.TWOFIFTHS) - 32;
+            : proportionateScreenHeightFraction(ScreenFraction.twofifths) - 32;
         _registerYOffset = SizeGuide.keyboardIsOpened
-            ? proportionateScreenHeightFraction(ScreenFraction.TWOFIFTHS) -
+            ? proportionateScreenHeightFraction(ScreenFraction.twofifths) -
                 (SizeGuide.keyboardHeight / 2)
-            : proportionateScreenHeightFraction(ScreenFraction.TWOFIFTHS);
+            : proportionateScreenHeightFraction(ScreenFraction.twofifths);
         _loginXOffset = 20;
         _loginWidth = windowWidth - 40;
         _loginOpacity = 0.80;
@@ -450,7 +450,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                       bottom: SizeGuide.keyboardIsOpened
                           ? 0
                           : proportionateScreenHeightFraction(
-                              ScreenFraction.TWOFIFTHS,
+                              ScreenFraction.twofifths,
                             ),
                       right: 0,
                       child: ClipRRect(
