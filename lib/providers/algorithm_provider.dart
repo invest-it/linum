@@ -32,7 +32,7 @@ class AlgorithmProvider extends ChangeNotifier {
   void resetCurrentShownMonth() {
     _currentShownMonth =
         DateTime(DateTime.now().year, (DateTime.now().month) + 1)
-            .subtract(Duration(microseconds: 1));
+            .subtract(const Duration(microseconds: 1));
   }
 
   void nextMonth() {
@@ -49,14 +49,18 @@ class AlgorithmProvider extends ChangeNotifier {
     resetCurrentShownMonth();
     _currentSorter = timeNewToOld;
     _currentFilter = AlgorithmProvider.inBetween(
-      Timestamp.fromDate(DateTime(
-        DateTime.now().year,
-        DateTime.now().month,
-      ).subtract(Duration(microseconds: 1))),
-      Timestamp.fromDate(DateTime(
-        DateTime.now().year,
-        DateTime.now().month + 1,
-      )),
+      Timestamp.fromDate(
+        DateTime(
+          DateTime.now().year,
+          DateTime.now().month,
+        ).subtract(const Duration(microseconds: 1)),
+      ),
+      Timestamp.fromDate(
+        DateTime(
+          DateTime.now().year,
+          DateTime.now().month + 1,
+        ),
+      ),
     );
   }
 
