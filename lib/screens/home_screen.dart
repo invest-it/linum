@@ -27,7 +27,8 @@ class _HomeScreenState extends State<HomeScreen> {
     final BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
 
-    PinCodeProvider pinCodeProvider = Provider.of<PinCodeProvider>(context);
+    final PinCodeProvider pinCodeProvider =
+        Provider.of<PinCodeProvider>(context);
 
     // AlgorithmProvider algorithmProvider =
     //     Provider.of<AlgorithmProvider>(context, listen: false);

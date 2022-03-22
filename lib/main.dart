@@ -294,16 +294,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 create: (_) => ActionLipStatusProvider(),
               ),
               ChangeNotifierProxyProvider2<ScreenIndexProvider,
-                      AuthenticationService, PinCodeProvider>(
-                  create: (context) => PinCodeProvider(context),
-                  update:
-                      (context, screenIndexProvider, auth, oldPinCodeProvider) {
-                    if (oldPinCodeProvider == null) {
-                      return PinCodeProvider(context);
-                    } else {
-                      return oldPinCodeProvider..updateSipAndAuth(context);
-                    }
-                  }),
+                  AuthenticationService, PinCodeProvider>(
+                create: (context) => PinCodeProvider(context),
+                update:
+                    (context, screenIndexProvider, auth, oldPinCodeProvider) {
+                  if (oldPinCodeProvider == null) {
+                    return PinCodeProvider(context);
+                  } else {
+                    return oldPinCodeProvider..updateSipAndAuth(context);
+                  }
+                },
+              ),
             ],
             child: OnBoardingOrLayoutScreen(),
           );
@@ -359,7 +360,8 @@ Widget _wrapWithBanner(Widget child) {
 class OnBoardingOrLayoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    AuthenticationService auth = Provider.of<AuthenticationService>(context);
+    final AuthenticationService auth =
+        Provider.of<AuthenticationService>(context);
     if (auth.isLoggedIn) {
       return LayoutScreen(key);
     } else {
@@ -369,7 +371,7 @@ class OnBoardingOrLayoutScreen extends StatelessWidget {
             create: (_) => OnboardingScreenProvider(),
           ),
         ],
-        child: OnboardingPage(),
+        child: const OnboardingPage(),
       );
     }
   }

@@ -10,7 +10,8 @@ class NumericField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    PinCodeProvider pinCodeProvider = Provider.of<PinCodeProvider>(context);
+    final PinCodeProvider pinCodeProvider =
+        Provider.of<PinCodeProvider>(context);
 
     return Expanded(
       child: ConstrainedBox(
@@ -18,15 +19,15 @@ class NumericField extends StatelessWidget {
           minWidth: double.infinity,
         ),
         child: TextButton(
-          child: Text(
-            value.toString(),
-            style: Theme.of(context).textTheme.headline3,
-          ),
           onPressed: () {
             pinCodeProvider.addDigit(value);
           },
           style: TextButton.styleFrom(
-            shape: CircleBorder(),
+            shape: const CircleBorder(),
+          ),
+          child: Text(
+            value.toString(),
+            style: Theme.of(context).textTheme.headline3,
           ),
         ),
       ),

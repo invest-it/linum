@@ -9,14 +9,10 @@ import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/screens/academy_screen.dart';
-
 import 'package:linum/screens/budget_screen.dart';
-
-import 'package:linum/screens/lock_screen.dart';
-import 'package:linum/screens/statistics_screen.dart';
-
 import 'package:linum/screens/enter_screen.dart';
 import 'package:linum/screens/home_screen.dart';
+import 'package:linum/screens/lock_screen.dart';
 import 'package:linum/screens/settings_screen.dart';
 import 'package:linum/screens/statistics_screen.dart';
 import 'package:linum/widgets/bottom_app_bar.dart';
@@ -69,18 +65,19 @@ class _LayoutScreenState extends State<LayoutScreen>
     final ScreenIndexProvider screenIndexProvider =
         Provider.of<ScreenIndexProvider>(context);
 
-    PinCodeProvider pinCodeProvider = Provider.of<PinCodeProvider>(context);
+    final PinCodeProvider pinCodeProvider =
+        Provider.of<PinCodeProvider>(context);
 
-    CollectionReference balance =
+    final CollectionReference balance =
         FirebaseFirestore.instance.collection('balance');
 
     //list with all the "screens"
-    List<Widget> _page = <Widget>[
-      HomeScreen(), //0
-      BudgetScreen(), //1
-      StatisticsScreen(), //2
-      SettingsScreen(), //3
-      AcademyScreen(), //4
+    final List<Widget> _page = <Widget>[
+      const HomeScreen(), //0
+      const BudgetScreen(), //1
+      const StatisticsScreen(), //2
+      const SettingsScreen(), //3
+      const AcademyScreen(), //4
       LockScreen(), //5
     ];
 
@@ -92,19 +89,20 @@ class _LayoutScreenState extends State<LayoutScreen>
           builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
             //returns the page at the current index, or at the lock screen index if a) the PIN lock is active AND b) there is a code for the email used for login stored in sharedPreferences AND c) the pin code has not been recalled before
 
-            dev.log(pinCodeProvider.sessionIsSafe
-                ? "Session: SAFE"
-                : "Session: NOT SAFE");
+            dev.log(
+              pinCodeProvider.sessionIsSafe
+                  ? "Session: SAFE"
+                  : "Session: NOT SAFE",
+            );
             if (pinCodeProvider.pinActive && !pinCodeProvider.sessionIsSafe) {
-              dev.log("PIN ACTIVE for " +
-                  pinCodeProvider.lastEmail +
-                  ", triggering recall");
+              dev.log(
+                "PIN ACTIVE for ${pinCodeProvider.lastEmail}, triggering recall",
+              );
               pinCodeProvider.triggerPINRecall();
             } else {
               dev.log(
-                  "Checked if I should trigger a PIN recall, but either it is not active for " +
-                      pinCodeProvider.lastEmail +
-                      " or the session is safe.");
+                "Checked if I should trigger a PIN recall, but either it is not active for ${pinCodeProvider.lastEmail} or the session is safe.",
+              );
             }
             return _page.elementAt(screenIndexProvider.pageIndex);
           },
@@ -119,51 +117,52 @@ class _LayoutScreenState extends State<LayoutScreen>
           ? null
           : FloatingActionButton(
               onPressed: () {
-                BalanceDataProvider balanceDataProvider =
+                final BalanceDataProvider balanceDataProvider =
                     Provider.of<BalanceDataProvider>(context, listen: false);
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (innerContext) {
-                    return MultiProvider(
-                      providers: [
-                        ChangeNotifierProvider<EnterScreenProvider>(
-                          create: (_) {
-                            return EnterScreenProvider(
-                              category: _accountSettingsProvider
-                                          .settings['StandardCategoryExpense']
-                                      as String? ??
-                                  "None",
-                              secondaryCategory: _accountSettingsProvider
-                                          .settings['StandardCategoryIncome']
-                                      as String? ??
-                                  "None",
-                            );
-                          },
-                        ),
-                        ChangeNotifierProvider<BalanceDataProvider>(
-                          create: (_) {
-                            return balanceDataProvider..dontDisposeOneTime();
-                          },
-                        ),
-                        ChangeNotifierProvider<AccountSettingsProvider>(
-                          create: (_) {
-                            return _accountSettingsProvider
-                              ..dontDisposeOneTime();
-                          },
-                        ),
-                      ],
-                      child: EnterScreen(),
-                    );
-                    // ChangeNotifierProvider.value(
-                    // value: enterScreenProvider, child: EnterScreen());
-                  }
-                      //=> EnterScreen()),
-                      ),
+                  MaterialPageRoute(
+                    builder: (innerContext) {
+                      return MultiProvider(
+                        providers: [
+                          ChangeNotifierProvider<EnterScreenProvider>(
+                            create: (_) {
+                              return EnterScreenProvider(
+                                category: _accountSettingsProvider
+                                            .settings['StandardCategoryExpense']
+                                        as String? ??
+                                    "None",
+                                secondaryCategory: _accountSettingsProvider
+                                            .settings['StandardCategoryIncome']
+                                        as String? ??
+                                    "None",
+                              );
+                            },
+                          ),
+                          ChangeNotifierProvider<BalanceDataProvider>(
+                            create: (_) {
+                              return balanceDataProvider..dontDisposeOneTime();
+                            },
+                          ),
+                          ChangeNotifierProvider<AccountSettingsProvider>(
+                            create: (_) {
+                              return _accountSettingsProvider
+                                ..dontDisposeOneTime();
+                            },
+                          ),
+                        ],
+                        child: const EnterScreen(),
+                      );
+                      // ChangeNotifierProvider.value(
+                      // value: enterScreenProvider, child: EnterScreen());
+                    },
+                    //=> EnterScreen()),
+                  ),
                 );
               },
-              child: Icon(Icons.add),
               elevation: 2.0,
               backgroundColor: Theme.of(context).colorScheme.secondary,
+              child: const Icon(Icons.add),
             ),
       bottomNavigationBar: (screenIndexProvider.pageIndex == 5 ||
               (pinCodeProvider.pinActive &&
@@ -174,16 +173,20 @@ class _LayoutScreenState extends State<LayoutScreen>
               items: [
                 BottomAppBarItem(iconData: Icons.home, text: 'Home'),
                 BottomAppBarItem(
-                    iconData: Icons.savings_rounded, text: 'Budget'),
+                  iconData: Icons.savings_rounded,
+                  text: 'Budget',
+                ),
                 BottomAppBarItem(
-                    iconData: Icons.bar_chart_rounded, text: 'Stats'),
+                  iconData: Icons.bar_chart_rounded,
+                  text: 'Stats',
+                ),
                 BottomAppBarItem(iconData: Icons.person, text: 'Account'),
               ],
               backgroundColor: Theme.of(context).colorScheme.primary,
               centerItemText: '',
               color: Theme.of(context).colorScheme.background,
               selectedColor: Theme.of(context).colorScheme.secondary,
-              notchedShape: CircularNotchedRectangle(),
+              notchedShape: const CircularNotchedRectangle(),
               //gives the pageIndex the value (the current selected index in the
               //bottom navigation bar)
               onTabSelected: (int value) {

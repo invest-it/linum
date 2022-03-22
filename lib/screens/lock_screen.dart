@@ -9,8 +9,6 @@ import 'package:linum/widgets/lock_screen/pin_field.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/screen_index_provider.dart';
-
 /// Page Index: 5
 class LockScreen extends StatefulWidget {
   @override
@@ -20,10 +18,12 @@ class LockScreen extends StatefulWidget {
 class _LockScreenState extends State<LockScreen> {
   @override
   Widget build(BuildContext context) {
-    AuthenticationService auth = Provider.of<AuthenticationService>(context);
-    PinCodeProvider pinCodeProvider = Provider.of<PinCodeProvider>(context);
-    ScreenIndexProvider sip = Provider.of<ScreenIndexProvider>(context);
-    LockScreenAction screenIntent = pinCodeProvider.recallPINLockIntent();
+    final AuthenticationService auth =
+        Provider.of<AuthenticationService>(context);
+    final PinCodeProvider pinCodeProvider =
+        Provider.of<PinCodeProvider>(context);
+    //final ScreenIndexProvider sip = Provider.of<ScreenIndexProvider>(context);
+    final LockScreenAction screenIntent = pinCodeProvider.recallPINLockIntent();
 
     return ScreenSkeleton(
       head: 'Linum',
@@ -34,7 +34,6 @@ class _LockScreenState extends State<LockScreen> {
             flex: 2,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   AppLocalizations.of(context)!
@@ -43,10 +42,11 @@ class _LockScreenState extends State<LockScreen> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: 4.0,
-                      bottom: proportionateScreenHeightFraction(
-                        ScreenFraction.quantile,
-                      )),
+                    top: 4.0,
+                    bottom: proportionateScreenHeightFraction(
+                      ScreenFraction.quantile,
+                    ),
+                  ),
                   child: Text(
                     auth.userEmail.isNotEmpty
                         ? auth.userEmail
@@ -127,7 +127,7 @@ class _LockScreenState extends State<LockScreen> {
                           constraints: const BoxConstraints(
                             minWidth: double.infinity,
                           ),
-                          child: Material(
+                          child: const Material(
                             child: IconButton(
                               icon: Icon(Icons.fingerprint_rounded),
                               onPressed: null,
@@ -151,7 +151,6 @@ class _LockScreenState extends State<LockScreen> {
 
           /// Action Switch
           Expanded(
-            flex: 1,
             child: ConstrainedBox(
               constraints: const BoxConstraints(
                 minWidth: double.infinity,
@@ -162,6 +161,7 @@ class _LockScreenState extends State<LockScreen> {
                       .translate(screenIntent.actionTitle),
                 ),
                 onPressed: () {
+                  // ignore: avoid_dynamic_calls
                   screenIntent.function();
                 },
               ),

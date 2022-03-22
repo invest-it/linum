@@ -87,29 +87,32 @@ class UserAlert {
           ),
           actions: <Widget>[
             ...actions.map<Widget>(
-              (item) {
+              (DialogAction item) {
                 Color buttonColor;
                 switch (item.dialogPurpose) {
-                  case DialogPurpose.PRIMARY:
+                  case DialogPurpose.primary:
                     buttonColor = Theme.of(context).colorScheme.primary;
                     break;
-                  case DialogPurpose.SECONDARY:
+                  case DialogPurpose.secondary:
                     buttonColor = Theme.of(context).colorScheme.secondary;
                     break;
-                  case DialogPurpose.DANGER:
+                  case DialogPurpose.danger:
                     buttonColor = Theme.of(context).colorScheme.error;
                     break;
                 }
                 return TextButton(
-                    child: Text(
-                        AppLocalizations.of(context)!
-                            .translate(item.actionTitle),
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            // color: item.primaryButton
-                            //     ? Theme.of(context).colorScheme.primary
-                            //     : Theme.of(context).colorScheme.background)),
-                            color: buttonColor)),
-                    onPressed: () => item.function());
+                  child: Text(
+                    AppLocalizations.of(context)!.translate(item.actionTitle),
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          // color: item.primaryButton
+                          //     ? Theme.of(context).colorScheme.primary
+                          //     : Theme.of(context).colorScheme.background)),
+                          color: buttonColor,
+                        ),
+                  ),
+                  // ignore: avoid_dynamic_calls
+                  onPressed: () => item.function(),
+                );
               },
             )
           ],

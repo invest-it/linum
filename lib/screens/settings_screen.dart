@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
@@ -17,7 +16,6 @@ import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:linum/widgets/settings_screen/toggle_button_element.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 /// Page Index: 3
 class SettingsScreen extends StatefulWidget {
@@ -64,7 +62,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final ActionLipStatusProvider actionLipStatusProvider =
         Provider.of<ActionLipStatusProvider>(context);
 
-    PinCodeProvider pinCodeProvider = Provider.of<PinCodeProvider>(context);
+    final PinCodeProvider pinCodeProvider =
+        Provider.of<PinCodeProvider>(context);
 
     return ScreenSkeleton(
       head: 'Account',
@@ -285,12 +284,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             const ListDivider(),
 
-            ListHeader(
+            const ListHeader(
               'settings_screen/pin-lock/label-title',
               tooltipMessage: 'settings_screen/pin-lock/label-tooltip',
             ),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SwitchListTile(
                   title: Text(
@@ -309,10 +307,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 if (pinCodeProvider.pinActive)
                   ListTile(
                     dense: true,
-                    trailing: Icon(Icons.arrow_forward_ios_rounded),
+                    trailing: const Icon(Icons.arrow_forward_ios_rounded),
                     title: Text(
                       AppLocalizations.of(context)!.translate(
-                          "settings_screen/pin-lock/label-change-pin"),
+                        "settings_screen/pin-lock/label-change-pin",
+                      ),
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                     onTap: () {
@@ -321,7 +320,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
               ],
             ),
-            ListDivider(),
+            const ListDivider(),
 
             /// SPECIAL SETTINGS
             /// This setting will be hidden until implememted.
