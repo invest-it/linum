@@ -8,7 +8,7 @@ class StatisticsCalculations {
   StatisticsCalculations(List<dynamic> data) {
     _data = [];
     for (int i = 0; i < data.length; i++) {
-      _data.add(new Map<String, dynamic>.from(data[i]));
+      _data.add(Map<String, dynamic>.from(data[i] as Map<String, dynamic>));
     }
   }
 
@@ -25,46 +25,45 @@ class StatisticsCalculations {
   /// sum up the total data if data is empty = 0
   num get sumBalance {
     num sum = 0;
-    _data.forEach((value) {
-      sum += value["amount"];
-    });
+    for (final value in _data) {
+      sum += value["amount"] as num;
+    }
     return sum;
   }
 
   /// average of the sum. if data is empty = 0
-  num get averageBalance => _data.length == 0 ? sumBalance / _data.length : 0;
+  num get averageBalance => _data.isEmpty ? sumBalance / _data.length : 0;
 
   /// sum up the cost data
   num get sumCosts {
     num sum = 0;
-    _costData.forEach((value) {
-      sum += value["amount"];
-    });
+    for (final value in _costData) {
+      sum += value["amount"] as num;
+    }
     return sum;
   }
 
   /// average of the sum. if data is empty = 0
-  num get averageCosts =>
-      _costData.length == 0 ? sumCosts / _costData.length : 0;
+  num get averageCosts => _costData.isEmpty ? sumCosts / _costData.length : 0;
 
   /// sum up the income data. if data is empty = 0
   num get sumIncomes {
     num sum = 0;
-    _incomeData.forEach((value) {
-      sum += value["amount"];
-    });
+    for (final value in _incomeData) {
+      sum += value["amount"] as num;
+    }
     return sum;
   }
 
   /// average of the income data. if data is empty = 0
   num get averageIncomes =>
-      _incomeData.length == 0 ? sumIncomes / _incomeData.length : 0;
+      _incomeData.isEmpty ? sumIncomes / _incomeData.length : 0;
 
   static Duration parseDuration(String s) {
     int hours = 0;
     int minutes = 0;
     int micros;
-    List<String> parts = s.split(':');
+    final List<String> parts = s.split(':');
     if (parts.length > 2) {
       hours = int.parse(parts[parts.length - 3]);
     }

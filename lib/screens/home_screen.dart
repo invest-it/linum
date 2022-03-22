@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
-import 'package:linum/frontend_functions/silent-scroll.dart';
+import 'package:linum/frontend_functions/silent_scroll.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/widgets/home_screen/home_screen_listview.dart';
@@ -19,10 +19,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    ScreenIndexProvider screenIndexProvider =
+    final ScreenIndexProvider screenIndexProvider =
         Provider.of<ScreenIndexProvider>(context);
 
-    BalanceDataProvider balanceDataProvider =
+    final BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
 
     // AlgorithmProvider algorithmProvider =
@@ -38,9 +38,9 @@ class _HomeScreenState extends State<HomeScreen> {
       head: 'Home',
       isInverted: true,
       hasHomeScreenCard: true,
-      leadingAction: AppBarAction.fromPreset(DefaultAction.ACADEMY),
+      leadingAction: AppBarAction.fromPreset(DefaultAction.academy),
       actions: [
-        AppBarAction.fromPreset(DefaultAction.SETTINGS),
+        AppBarAction.fromPreset(DefaultAction.settings),
       ],
       body: Stack(
         children: [
@@ -50,14 +50,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.fromLTRB(5, 10, 25, 5),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0),
                       child: Text(
-                          AppLocalizations.of(context)!.translate(
-                              'home_screen/label-recent-transactions'),
-                          style: Theme.of(context).textTheme.headline5),
+                        AppLocalizations.of(context)!.translate(
+                          'home_screen/label-recent-transactions',
+                        ),
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
                     ),
                     TextButton(
                       onPressed: () {
@@ -77,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                   child: ScrollConfiguration(
                     behavior: SilentScroll(),
                     child: balanceDataProvider.fillListViewWithData(
