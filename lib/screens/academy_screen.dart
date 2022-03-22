@@ -16,7 +16,7 @@ class AcademyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenIndexProvider screenIndexProvider =
+    final ScreenIndexProvider screenIndexProvider =
         Provider.of<ScreenIndexProvider>(context);
 
     return ScreenSkeleton(
@@ -31,11 +31,11 @@ class AcademyScreen extends StatelessWidget {
           Container(
             height:
                 proportionateScreenHeightFraction(ScreenFraction.onequarter),
-            margin: EdgeInsets.all(32),
+            margin: const EdgeInsets.all(32),
             child: SvgPicture.asset('assets/svg/video-files.svg'),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 36),
+            padding: const EdgeInsets.symmetric(horizontal: 36),
             child: Text(
               AppLocalizations.of(context)!
                   .translate('academy_screen/label-title'),
@@ -44,7 +44,7 @@ class AcademyScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 36, vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 16),
             child: Text(
               AppLocalizations.of(context)!
                   .translate('academy_screen/label-description'),
@@ -53,13 +53,13 @@ class AcademyScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 36, vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 16),
             child: ElevatedButton(
               child: Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Wrap(
                   spacing: 12,
-                  children: [
+                  children: const [
                     Icon(Icons.open_in_new_rounded),
                     Text("Zum YouTube-Kanal"),
                   ],
@@ -71,7 +71,7 @@ class AcademyScreen extends StatelessWidget {
           // SizedBox(
           //   height: proportionateScreenHeight(230),
           // ),
-          Container(
+          SizedBox(
             width: double.infinity,
             child: Padding(
               padding: EdgeInsets.only(

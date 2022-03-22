@@ -8,16 +8,16 @@ import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/screens/academy_screen.dart';
-import 'package:linum/screens/statistics_screen.dart';
+import 'package:linum/screens/budget_screen.dart';
 import 'package:linum/screens/enter_screen.dart';
 import 'package:linum/screens/home_screen.dart';
 import 'package:linum/screens/settings_screen.dart';
-import 'package:linum/screens/budget_screen.dart';
+import 'package:linum/screens/statistics_screen.dart';
 import 'package:linum/widgets/bottom_app_bar.dart';
 import 'package:provider/provider.dart';
 
 class LayoutScreen extends StatefulWidget {
-  LayoutScreen(Key? key) : super(key: key);
+  const LayoutScreen(Key? key) : super(key: key);
 
   @override
   State<LayoutScreen> createState() => _LayoutScreenState();
@@ -26,22 +26,22 @@ class LayoutScreen extends StatefulWidget {
 class _LayoutScreenState extends State<LayoutScreen> {
   @override
   Widget build(BuildContext context) {
-    AccountSettingsProvider _accountSettingsProvider =
+    final AccountSettingsProvider _accountSettingsProvider =
         Provider.of<AccountSettingsProvider>(context);
 
-    ScreenIndexProvider screenIndexProvider =
+    final ScreenIndexProvider screenIndexProvider =
         Provider.of<ScreenIndexProvider>(context);
 
-    CollectionReference balance =
+    final CollectionReference balance =
         FirebaseFirestore.instance.collection('balance');
 
     //list with all the "screens"
-    List<Widget> _page = <Widget>[
-      HomeScreen(),
-      BudgetScreen(),
-      StatisticsScreen(),
-      SettingsScreen(),
-      AcademyScreen(),
+    final List<Widget> _page = <Widget>[
+      const HomeScreen(),
+      const BudgetScreen(),
+      const StatisticsScreen(),
+      const SettingsScreen(),
+      const AcademyScreen(),
     ];
 
     return Scaffold(
@@ -59,50 +59,51 @@ class _LayoutScreenState extends State<LayoutScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          BalanceDataProvider balanceDataProvider =
+          final BalanceDataProvider balanceDataProvider =
               Provider.of<BalanceDataProvider>(context, listen: false);
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (innerContext) {
-              return MultiProvider(
-                providers: [
-                  ChangeNotifierProvider<EnterScreenProvider>(
-                    create: (_) {
-                      return EnterScreenProvider(
-                        category: _accountSettingsProvider
-                                    .settings['StandardCategoryExpense']
-                                as String? ??
-                            "None",
-                        secondaryCategory: _accountSettingsProvider
-                                    .settings['StandardCategoryIncome']
-                                as String? ??
-                            "None",
-                      );
-                    },
-                  ),
-                  ChangeNotifierProvider<BalanceDataProvider>(
-                    create: (_) {
-                      return balanceDataProvider..dontDisposeOneTime();
-                    },
-                  ),
-                  ChangeNotifierProvider<AccountSettingsProvider>(
-                    create: (_) {
-                      return _accountSettingsProvider..dontDisposeOneTime();
-                    },
-                  ),
-                ],
-                child: EnterScreen(),
-              );
-              // ChangeNotifierProvider.value(
-              // value: enterScreenProvider, child: EnterScreen());
-            }
-                //=> EnterScreen()),
-                ),
+            MaterialPageRoute(
+              builder: (innerContext) {
+                return MultiProvider(
+                  providers: [
+                    ChangeNotifierProvider<EnterScreenProvider>(
+                      create: (_) {
+                        return EnterScreenProvider(
+                          category: _accountSettingsProvider
+                                      .settings['StandardCategoryExpense']
+                                  as String? ??
+                              "None",
+                          secondaryCategory: _accountSettingsProvider
+                                      .settings['StandardCategoryIncome']
+                                  as String? ??
+                              "None",
+                        );
+                      },
+                    ),
+                    ChangeNotifierProvider<BalanceDataProvider>(
+                      create: (_) {
+                        return balanceDataProvider..dontDisposeOneTime();
+                      },
+                    ),
+                    ChangeNotifierProvider<AccountSettingsProvider>(
+                      create: (_) {
+                        return _accountSettingsProvider..dontDisposeOneTime();
+                      },
+                    ),
+                  ],
+                  child: const EnterScreen(),
+                );
+                // ChangeNotifierProvider.value(
+                // value: enterScreenProvider, child: EnterScreen());
+              },
+              //=> EnterScreen()),
+            ),
           );
         },
-        child: Icon(Icons.add),
         elevation: 2.0,
         backgroundColor: Theme.of(context).colorScheme.secondary,
+        child: const Icon(Icons.add),
       ),
       bottomNavigationBar: FABBottomAppBar(
         items: [
@@ -115,7 +116,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
         centerItemText: '',
         color: Theme.of(context).colorScheme.background,
         selectedColor: Theme.of(context).colorScheme.secondary,
-        notchedShape: CircularNotchedRectangle(),
+        notchedShape: const CircularNotchedRectangle(),
         //gives the pageIndex the value (the current selected index in the
         //bottom navigation bar)
         onTabSelected: (int value) {
@@ -125,23 +126,24 @@ class _LayoutScreenState extends State<LayoutScreen> {
     );
   }
 
-  void createRandomData(BuildContext context) async {
-    BalanceDataProvider balanceDataProvider =
+  Future<void> createRandomData(BuildContext context) async {
+    final BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context, listen: false);
     const List<String> categories = ["food", "clothing", "computer games"];
-    Random rand = Random();
+    final Random rand = Random();
     for (int i = 0; i < 365 * 5 * 4; i++) {
-      Timestamp time = Timestamp.fromDate(
-          DateTime.now().subtract(Duration(days: rand.nextInt(365 * 5))));
+      final Timestamp time = Timestamp.fromDate(
+        DateTime.now().subtract(Duration(days: rand.nextInt(365 * 5))),
+      );
       balanceDataProvider.addSingleBalance(
         amount: ((rand.nextDouble() * -10000).round()) / 100.0,
         category: categories[rand.nextInt(categories.length)],
         currency: "EUR",
-        name: "Random Item Number: " + i.toString(),
+        name: "Random Item Number: $i",
         time: time,
       );
-      dev.log(i.toString() + ". Hochgeladen");
-      await Future.delayed(Duration(milliseconds: 200));
+      dev.log("$i. Hochgeladen");
+      await Future.delayed(const Duration(milliseconds: 200));
     }
   }
 }
