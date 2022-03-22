@@ -31,7 +31,7 @@ class EnterScreenProvider with ChangeNotifier {
     String? id,
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
-    RepeatDuration initRepeatDurationEnum = RepeatDuration.NONE,
+    RepeatDuration initRepeatDurationEnum = RepeatDuration.none,
   }) {
     _amount = amount <= 0 ? -1 * amount : amount;
     _expenseCategory = amount <= 0 ? category : secondaryCategory;

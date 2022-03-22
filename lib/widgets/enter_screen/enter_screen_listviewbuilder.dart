@@ -563,7 +563,7 @@ class _EnterScreenListViewBuilderState
           return Text(
             AppLocalizations.of(context)!.translate(
               AccountSettingsProvider
-                  .standardCategoryExpenses[StandardCategoryExpense.None]!
+                  .standardCategoryExpenses[StandardCategoryExpense.none]!
                   .label,
             ),
           );
@@ -585,7 +585,7 @@ class _EnterScreenListViewBuilderState
           return Text(
             AppLocalizations.of(context)!.translate(
               AccountSettingsProvider
-                  .standardCategoryIncomes[StandardCategoryIncome.None]!.label,
+                  .standardCategoryIncomes[StandardCategoryIncome.none]!.label,
             ),
           );
         }
