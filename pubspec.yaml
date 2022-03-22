@@ -39,6 +39,7 @@ dependencies:
   fluttertoast: ^8.0.8
   google_fonts: ^2.0.0
   gradient_widgets: ^0.6.0
+  intl: ^0.17.0
   package_info_plus: ^1.4.0
   provider: ^5.0.0
   shared_preferences: ^2.0.13

@@ -165,6 +165,7 @@ class EnterScreenProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  // ignore: use_setters_to_change_properties
   void setRepeatDurationEnumSilently(RepeatDuration repeatDuration) {
     _repeatDurationEnum = repeatDuration;
   }
