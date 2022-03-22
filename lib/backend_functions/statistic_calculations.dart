@@ -25,9 +25,9 @@ class StatisticsCalculations {
   /// sum up the total data if data is empty = 0
   num get sumBalance {
     num sum = 0;
-    _data.forEach((value) {
+    for (final value in _data) {
       sum += value["amount"] as num;
-    });
+    }
     return sum;
   }
 
@@ -37,9 +37,9 @@ class StatisticsCalculations {
   /// sum up the cost data
   num get sumCosts {
     num sum = 0;
-    _costData.forEach((value) {
+    for (final value in _costData) {
       sum += value["amount"] as num;
-    });
+    }
     return sum;
   }
 
@@ -49,9 +49,9 @@ class StatisticsCalculations {
   /// sum up the income data. if data is empty = 0
   num get sumIncomes {
     num sum = 0;
-    _incomeData.forEach((value) {
+    for (final value in _incomeData) {
       sum += value["amount"] as num;
-    });
+    }
     return sum;
   }
 
