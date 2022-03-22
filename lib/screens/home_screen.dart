@@ -19,10 +19,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    ScreenIndexProvider screenIndexProvider =
+    final ScreenIndexProvider screenIndexProvider =
         Provider.of<ScreenIndexProvider>(context);
 
-    BalanceDataProvider balanceDataProvider =
+    final BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
 
     // AlgorithmProvider algorithmProvider =
@@ -50,14 +50,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.fromLTRB(5, 10, 25, 5),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0),
                       child: Text(
-                          AppLocalizations.of(context)!.translate(
-                              'home_screen/label-recent-transactions'),
-                          style: Theme.of(context).textTheme.headline5),
+                        AppLocalizations.of(context)!.translate(
+                          'home_screen/label-recent-transactions',
+                        ),
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
                     ),
                     TextButton(
                       onPressed: () {
@@ -77,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                   child: ScrollConfiguration(
                     behavior: SilentScroll(),
                     child: balanceDataProvider.fillListViewWithData(
