@@ -290,7 +290,7 @@ class HomeScreenListView implements BalanceDataListView {
                                 onPressed: () {
                                   balanceDataProvider.removeRepeatedBalance(
                                     id: arrayElement["repeatId"] as String,
-                                    removeType: RemoveType.ALL_AFTER,
+                                    removeType: RemoveType.allAfter,
                                     time: arrayElement["time"] as Timestamp,
                                   );
                                   Navigator.of(context).pop(true);
@@ -312,7 +312,7 @@ class HomeScreenListView implements BalanceDataListView {
                                 onPressed: () {
                                   balanceDataProvider.removeRepeatedBalance(
                                     id: arrayElement["repeatId"] as String,
-                                    removeType: RemoveType.ALL,
+                                    removeType: RemoveType.all,
                                     time: arrayElement["time"] as Timestamp,
                                   );
                                   Navigator.of(context).pop(true);
@@ -528,7 +528,6 @@ class HomeScreenListView implements BalanceDataListView {
                           )
                       : Theme.of(context).textTheme.overline,
                 ),
-
                 trailing: arrayElement["amount"] == 0
                     ? Text(
                         AppLocalizations.of(context)!
@@ -536,7 +535,8 @@ class HomeScreenListView implements BalanceDataListView {
                         style: Theme.of(context).textTheme.bodyLarge,
                       )
                     : Text(
-                        (arrayElement["amount"] as num).toStringAsFixed(2) + "€",
+                        (arrayElement["amount"] as num).toStringAsFixed(2) +
+                            "€",
                         style: arrayElement["amount"] as num <= 0
                             ? Theme.of(context).textTheme.bodyText1?.copyWith(
                                 color: Theme.of(context).colorScheme.error)
