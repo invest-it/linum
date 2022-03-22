@@ -153,7 +153,7 @@ class ForgotPasswordButton extends StatelessWidget {
               )
             ],
           ),
-          actionLipStatus: ActionLipStatus.ONVIEWPORT,
+          actionLipStatus: ActionLipStatus.onviewport,
           actionLipTitle: AppLocalizations.of(context)!.translate(
             'action_lip/forgot-password/logged-out/label-title',
           ),
@@ -288,7 +288,7 @@ class ForgotPasswordButton extends StatelessWidget {
               )
             ],
           ),
-          actionLipStatus: ActionLipStatus.ONVIEWPORT,
+          actionLipStatus: ActionLipStatus.onviewport,
           actionLipTitle: AppLocalizations.of(context)!
               .translate('action_lip/forgot-password/logged-in/label-title'),
         );

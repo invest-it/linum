@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class TopBarActionItem extends StatelessWidget {
-  TopBarActionItem(
-      {this.buttonIcon = Icons.help_outline_rounded,
-      required this.onPressedAction});
+  const TopBarActionItem({
+    this.buttonIcon = Icons.help_outline_rounded,
+    required this.onPressedAction,
+  });
 
   final IconData buttonIcon;
   final Function onPressedAction;

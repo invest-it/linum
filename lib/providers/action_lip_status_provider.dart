@@ -8,7 +8,7 @@ class ActionLipStatusProvider extends ChangeNotifier {
 
   void setActionLipStatus({
     required ProviderKey providerKey,
-    ActionLipStatus actionLipStatus = ActionLipStatus.HIDDEN,
+    ActionLipStatus actionLipStatus = ActionLipStatus.hidden,
   }) {
     setActionLipStatusSilently(
       providerKey: providerKey,
@@ -19,7 +19,7 @@ class ActionLipStatusProvider extends ChangeNotifier {
 
   void setActionLipStatusSilently({
     required ProviderKey providerKey,
-    ActionLipStatus actionLipStatus = ActionLipStatus.HIDDEN,
+    ActionLipStatus actionLipStatus = ActionLipStatus.hidden,
   }) {
     _actionLipMap[providerKey] = actionLipStatus;
   }
@@ -74,7 +74,7 @@ class ActionLipStatusProvider extends ChangeNotifier {
   }
 
   ActionLipStatus getActionLipStatus(ProviderKey providerKey) {
-    return _actionLipMap[providerKey] ?? ActionLipStatus.DISABLED;
+    return _actionLipMap[providerKey] ?? ActionLipStatus.disabled;
   }
 
   bool isActionStatusInitialized(ProviderKey providerKey) {

@@ -25,12 +25,12 @@ class _ActionLipState extends State<ActionLip> {
 
     // log('Status when ActionLip was built:' + actionLipStatus.toString());
     switch (actionLipStatusProvider.getActionLipStatus(providerKey)) {
-      case ActionLipStatus.HIDDEN:
+      case ActionLipStatus.hidden:
         setState(() {
           _lipYOffset = realScreenHeight();
         });
         break;
-      case ActionLipStatus.ONVIEWPORT:
+      case ActionLipStatus.onviewport:
         setState(() {
           // log('The offset of the actionLip is currently' +
           // _lipYOffset.toString());
@@ -45,7 +45,7 @@ class _ActionLipState extends State<ActionLip> {
               : proportionateScreenHeightFraction(ScreenFraction.twofifths);
         });
         break;
-      case ActionLipStatus.DISABLED:
+      case ActionLipStatus.disabled:
         throw ArgumentError(
           'If the actionLipStatus is set to DISABLED, the ActionLip class must not be invoked.',
           'actionLipStatus',
