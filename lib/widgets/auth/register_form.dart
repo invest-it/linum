@@ -112,8 +112,10 @@ class _RegisterFormState extends State<RegisterForm> {
                         ),
                       ),
                       child: TextField(
+                        key: Key("registerEmailField"),
                         controller: _mailController,
                         keyboardType: TextInputType.emailAddress,
+                        autocorrect: false,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: AppLocalizations.of(context)!.translate(
@@ -141,6 +143,7 @@ class _RegisterFormState extends State<RegisterForm> {
                         ),
                       ),
                       child: TextField(
+                        key: Key("registerPasswordField"),
                         obscureText: true,
                         controller: _passController,
                         keyboardType: TextInputType.visiblePassword,

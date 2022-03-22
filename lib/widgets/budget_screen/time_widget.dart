@@ -3,7 +3,9 @@ import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 
 class TimeWidget extends StatelessWidget {
-  const TimeWidget({required this.displayValue, this.isTranslated = false});
+  TimeWidget({required this.displayValue, this.isTranslated = false, Key? key})
+      : super(key: key);
+
 
   final String displayValue;
   final bool isTranslated;

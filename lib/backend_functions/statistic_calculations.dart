@@ -15,7 +15,7 @@ class StatisticsCalculations {
   /// filter the data further down to only include the data with cost information (including 0 cost products)
   List<Map<String, dynamic>> get _costData =>
       List<Map<String, dynamic>>.from(_data)
-        ..removeWhere(AlgorithmProvider.amountAtLeast(0));
+        ..removeWhere(AlgorithmProvider.amountMoreThan(0));
 
   /// filter the data further down to only include the data with income information (excluding 0 cost products)
   List<Map<String, dynamic>> get _incomeData =>
@@ -32,7 +32,8 @@ class StatisticsCalculations {
   }
 
   /// average of the sum. if data is empty = 0
-  num get averageBalance => _data.isEmpty ? sumBalance / _data.length : 0;
+  num get averageBalance => !_data.isEmpty ? sumBalance / _data.length : 0;
+
 
   /// sum up the cost data
   num get sumCosts {
@@ -44,7 +45,7 @@ class StatisticsCalculations {
   }
 
   /// average of the sum. if data is empty = 0
-  num get averageCosts => _costData.isEmpty ? sumCosts / _costData.length : 0;
+  num get averageCosts => !_costData.isEmpty ? sumCosts / _costData.length : 0;
 
   /// sum up the income data. if data is empty = 0
   num get sumIncomes {
@@ -57,7 +58,8 @@ class StatisticsCalculations {
 
   /// average of the income data. if data is empty = 0
   num get averageIncomes =>
-      _incomeData.isEmpty ? sumIncomes / _incomeData.length : 0;
+      !_incomeData.isEmpty ? sumIncomes / _incomeData.length : 0;
+
 
   static Duration parseDuration(String s) {
     int hours = 0;
