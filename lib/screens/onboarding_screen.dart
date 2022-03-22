@@ -8,7 +8,7 @@ import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/backend_functions/url_handler.dart';
 import 'package:linum/frontend_functions/country_flag_generator.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
-import 'package:linum/frontend_functions/silent-scroll.dart';
+import 'package:linum/frontend_functions/silent_scroll.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
