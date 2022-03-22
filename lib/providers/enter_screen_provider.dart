@@ -46,6 +46,7 @@ class EnterScreenProvider with ChangeNotifier {
     _isTransaction = false;
     _formerId = id;
     _repeatDurationEnum = initRepeatDurationEnum;
+    _repeatDurationType = repeatDurationType;
   }
 
   bool get isExpenses {
