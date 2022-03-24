@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
@@ -52,7 +53,9 @@ void main() {
       await settingsPinlockRobot.dialInPIN();
 
       sleep(const Duration(seconds: 5));
-      settingsAuthRobot.pressLogoutButton();
+      final itemFinder = find.byKey(const Key("logoutButton"));
+      await tester.scrollUntilVisible(itemFinder, 250.0);
+      await settingsAuthRobot.pressLogoutButton();
     });
 
     // TODO Continue this testing procedure

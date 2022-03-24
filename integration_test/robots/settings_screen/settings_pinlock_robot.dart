@@ -12,9 +12,21 @@ class SettingsPinlockRobot extends GeneralRobot {
 
   // ALWAYS set 1234 as standard PIN
   Future<void> dialInPIN() async {
-    await pressVisibleButtonByString("1");
-    await pressVisibleButtonByString("2");
-    await pressVisibleButtonByString("3");
-    await pressVisibleButtonByString("4");
+    await pressVisibleButtonByString(
+      "1",
+      settleDuration: const Duration(milliseconds: 100),
+    );
+    await pressVisibleButtonByString(
+      "2",
+      settleDuration: const Duration(milliseconds: 100),
+    );
+    await pressVisibleButtonByString(
+      "3",
+      settleDuration: const Duration(milliseconds: 100),
+    );
+    await pressVisibleButtonByString(
+      "4",
+      settleDuration: const Duration(milliseconds: 100),
+    );
   }
 }
