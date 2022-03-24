@@ -139,15 +139,13 @@ class _OnboardingScreenState extends State<OnboardingPage> {
   }
 
 // responsive page indicator
-  Widget _buildPageIndicator() {
-    final Row row = Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-    );
+  Row _buildPageIndicator() {
+    final List<Widget> childrenList = <Widget>[];
 
     for (int i = 0; i < _slides.length; i++) {
-      row.children.add(_buildPageIndicatorItem(i));
+      childrenList.add(_buildPageIndicatorItem(i));
       if (i != _slides.length - 1) {
-        row.children.add(
+        childrenList.add(
           const SizedBox(
             width: 12,
           ),
@@ -155,7 +153,10 @@ class _OnboardingScreenState extends State<OnboardingPage> {
       }
     }
 
-    return row;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: childrenList,
+    );
   }
 
   // defines the style of one single page indicator
