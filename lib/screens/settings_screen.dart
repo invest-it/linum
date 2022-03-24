@@ -291,6 +291,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Column(
               children: [
                 SwitchListTile(
+                  key: const Key("pinActivationSwitch"),
                   title: Text(
                     AppLocalizations.of(context)!
                         .translate("settings_screen/pin-lock/switch-label"),

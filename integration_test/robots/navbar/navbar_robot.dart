@@ -7,18 +7,18 @@ class NavbarRobot extends GeneralRobot {
   const NavbarRobot(WidgetTester tester) : super(tester);
 
   Future<void> pressHomeButton() async {
-    await pressVisibleUniqueButton("Home", buttonType: InkWell);
+    await pressVisibleButtonByString("Home", buttonType: InkWell);
   }
 
   Future<void> pressBudgetButton() async {
-    await pressVisibleUniqueButton("Budget", buttonType: InkWell);
+    await pressVisibleButtonByString("Budget", buttonType: InkWell);
   }
 
   Future<void> pressStatsButton() async {
-    await pressVisibleUniqueButton("Stats", buttonType: InkWell);
+    await pressVisibleButtonByString("Stats", buttonType: InkWell);
   }
 
   Future<void> pressSettingsButton() async {
-    await pressVisibleUniqueButton("Account", buttonType: InkWell);
+    await pressVisibleButtonByString("Account", buttonType: InkWell);
   }
 }

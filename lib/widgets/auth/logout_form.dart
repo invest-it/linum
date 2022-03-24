@@ -34,6 +34,7 @@ class _LogoutFormState extends State<LogoutForm> {
           ),
         ),
         GradientButton(
+          key: const Key("logoutButton"),
           increaseHeightBy: proportionateScreenHeight(16),
           callback: () => auth.signOut().then((_) {
             Provider.of<ScreenIndexProvider>(context, listen: false)

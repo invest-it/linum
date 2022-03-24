@@ -8,11 +8,12 @@ class OnboardingRobot extends GeneralRobot {
   const OnboardingRobot(WidgetTester tester) : super(tester);
 
   Future<void> pressSignUpNow() async {
-    await pressVisibleUniqueButton("Sign up now!", buttonType: GradientButton);
+    await pressVisibleButtonByString("Sign up now!",
+        buttonType: GradientButton);
   }
 
   Future<void> pressIHaveAnAccount() async {
-    await pressVisibleUniqueButton(
+    await pressVisibleButtonByString(
       "I have an account",
       buttonType: CupertinoButton,
     );

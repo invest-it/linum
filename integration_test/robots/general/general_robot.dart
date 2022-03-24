@@ -8,20 +8,32 @@ class GeneralRobot {
 
   final WidgetTester tester;
 
-  Future<void> pressVisibleUniqueButton(
+  Future<void> pressVisibleButtonByString(
     String text, {
     Type buttonType = TextButton,
     Duration settleDuration = const Duration(seconds: 2),
     Duration sleepDuration = const Duration(milliseconds: 500),
   }) async {
-    final signInFinder = find.widgetWithText(buttonType, text);
+    final Finder targetFinder = find.widgetWithText(buttonType, text);
+    await _executePressButton(targetFinder, settleDuration, sleepDuration);
+  }
 
-    expect(signInFinder, findsOneWidget);
+  Future<void> pressVisibleButtonByKey(
+    String key, {
+    Duration settleDuration = const Duration(seconds: 2),
+    Duration sleepDuration = const Duration(milliseconds: 500),
+  }) async {
+    final Finder targetFinder = find.byKey(Key(key));
+    await _executePressButton(targetFinder, settleDuration, sleepDuration);
+  }
 
+  Future<void> _executePressButton(
+      Finder target, Duration settleDuration, Duration sleepDuration) async {
+    expect(target, findsOneWidget);
     sleep(sleepDuration);
 
-    await tester.ensureVisible(signInFinder);
-    await tester.tap(signInFinder);
+    await tester.ensureVisible(target);
+    await tester.tap(target);
 
     await tester.pumpAndSettle(settleDuration);
   }
