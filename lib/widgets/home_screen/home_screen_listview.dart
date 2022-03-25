@@ -428,11 +428,13 @@ class HomeScreenListView implements BalanceDataListView {
                 leading: Badge(
                   padding: const EdgeInsets.all(2),
                   toAnimate: false,
-                  position: BadgePosition(bottom: 19, start: 19),
+                  position: BadgePosition(bottom: 23, start: 23),
                   elevation: 0,
                   badgeColor: isFutureItem && arrayElement["repeatId"] != null
                       ? Theme.of(context).colorScheme.onSurface
+                      //badgeColor for current transactions
                       : arrayElement["amount"] > 0
+                          //badgeColor for future transactions
                           ? arrayElement["repeatId"] != null
                               ? Theme.of(context).colorScheme.tertiary
                               : Color(0x000000)
@@ -447,6 +449,7 @@ class HomeScreenListView implements BalanceDataListView {
                                   ? Theme.of(context).colorScheme.tertiary
                                   : Theme.of(context).colorScheme.errorContainer
                               : Theme.of(context).colorScheme.onSurface,
+                          size: 18,
                         )
                       : SizedBox(),
                   child: CircleAvatar(
