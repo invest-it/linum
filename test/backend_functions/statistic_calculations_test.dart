@@ -434,7 +434,9 @@ void main() {
               incomes++;
             }
           }
-          expectedAverage /= incomes;
+          if (incomes > 0) {
+            expectedAverage /= incomes;
+          }
           // Act (Execution)
           final num average = statisticsCalculations.averageIncomes;
 
@@ -635,7 +637,9 @@ void main() {
               costs++;
             }
           }
-          expectedAverage /= costs;
+          if (costs > 0) {
+            expectedAverage /= costs;
+          }
           // Act (Execution)
           final num average = statisticsCalculations.averageCosts;
 
