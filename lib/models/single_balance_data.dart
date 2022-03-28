@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uuid/uuid.dart';
 
 class SingleBalanceData {
   final num _amount;
@@ -13,14 +14,14 @@ class SingleBalanceData {
     required num amount,
     required String category,
     required String currency,
-    required String id,
+    String? id,
     required String name,
     String? repeatId,
     required Timestamp time,
   })  : _amount = amount,
         _category = category,
         _currency = currency,
-        _id = id,
+        _id = id ?? const Uuid().v4(),
         _name = name,
         _repeatId = repeatId,
         _time = time;
@@ -98,4 +99,12 @@ class SingleBalanceData {
         _repeatId.hashCode ^
         _time.hashCode;
   }
+
+  num get amount => _amount;
+  String get category => _category;
+  String get currency => _currency;
+  String get id => _id;
+  String get name => _name;
+  String? get repeatId => _repeatId;
+  Timestamp get time => _time;
 }

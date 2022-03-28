@@ -270,7 +270,8 @@ class HomeScreenListView implements BalanceDataListView {
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () {
-                                  balanceDataProvider.removeSingleBalance(
+                                  balanceDataProvider
+                                      .removeSingleBalanceUsingId(
                                     arrayElement["id"] as String,
                                   );
                                   Navigator.of(context).pop(true);
@@ -290,7 +291,8 @@ class HomeScreenListView implements BalanceDataListView {
                               ),
                               TextButton(
                                 onPressed: () {
-                                  balanceDataProvider.removeRepeatedBalance(
+                                  balanceDataProvider
+                                      .removeRepeatedBalanceUsingId(
                                     id: arrayElement["repeatId"] as String,
                                     removeType: RemoveType.allAfter,
                                     time: arrayElement["time"] as Timestamp,
@@ -312,7 +314,8 @@ class HomeScreenListView implements BalanceDataListView {
                               ),
                               TextButton(
                                 onPressed: () {
-                                  balanceDataProvider.removeRepeatedBalance(
+                                  balanceDataProvider
+                                      .removeRepeatedBalanceUsingId(
                                     id: arrayElement["repeatId"] as String,
                                     removeType: RemoveType.all,
                                     time: arrayElement["time"] as Timestamp,
@@ -390,7 +393,8 @@ class HomeScreenListView implements BalanceDataListView {
                               ),
                               TextButton(
                                 onPressed: () {
-                                  balanceDataProvider.removeSingleBalance(
+                                  balanceDataProvider
+                                      .removeSingleBalanceUsingId(
                                     arrayElement["id"] as String,
                                   );
                                   Navigator.of(context).pop(true);

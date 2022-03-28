@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:linum/models/repeat_duration_type_enum.dart';
+import 'package:uuid/uuid.dart';
 
 class RepeatBalanceData {
   final num _amount;
@@ -8,31 +9,29 @@ class RepeatBalanceData {
   final String _currency;
   final String _id;
   final String _name;
-  final String _repeatId;
 
   final Timestamp _initialTime;
   final Timestamp? _endTime;
-  final Timestamp _lastUpdate;
+  Timestamp? _lastUpdate;
   final int _repeatDuration;
   final RepeatDurationType _repeatDurationType;
+
   RepeatBalanceData({
     required num amount,
     required String category,
     required String currency,
-    required String id,
+    String? id,
     required String name,
-    required String repeatId,
     required Timestamp initialTime,
     Timestamp? endTime,
-    required Timestamp lastUpdate,
+    Timestamp? lastUpdate,
     required int repeatDuration,
-    required RepeatDurationType repeatDurationType,
+    RepeatDurationType repeatDurationType = RepeatDurationType.seconds,
   })  : _amount = amount,
         _category = category,
         _currency = currency,
-        _id = id,
+        _id = id ?? const Uuid().v4(),
         _name = name,
-        _repeatId = repeatId,
         _initialTime = initialTime,
         _endTime = endTime,
         _lastUpdate = lastUpdate,
@@ -58,7 +57,6 @@ class RepeatBalanceData {
       currency: currency ?? _currency,
       id: id ?? _id,
       name: name ?? _name,
-      repeatId: repeatId ?? _repeatId,
       initialTime: initialTime ?? _initialTime,
       endTime: endTime ?? _endTime,
       lastUpdate: lastUpdate ?? _lastUpdate,
@@ -74,7 +72,6 @@ class RepeatBalanceData {
       '_currency': _currency,
       '_id': _id,
       '_name': _name,
-      '_repeatId': _repeatId,
       '_initialTime': _initialTime,
       '_endTime': _endTime,
       '_lastUpdate': _lastUpdate,
@@ -90,18 +87,18 @@ class RepeatBalanceData {
       currency: map['currency'] as String,
       id: map['id'] as String,
       name: map['name'] as String,
-      repeatId: map['repeatId'] as String,
       initialTime: map['initialTime'] as Timestamp,
       endTime: map['endTime'] as Timestamp?,
       lastUpdate: map['lastUpdate'] as Timestamp,
       repeatDuration: map['repeatDuration'] as int,
-      repeatDurationType: map['repeatDurationType'] as RepeatDurationType,
+      repeatDurationType: map['repeatDurationType'] as RepeatDurationType? ??
+          RepeatDurationType.seconds,
     );
   }
 
   @override
   String toString() {
-    return 'RepeatBalanceData(_amount: $_amount, _category: $_category, _currency: $_currency, _id: $_id, _name: $_name, _repeatId: $_repeatId, _initialTime: $_initialTime, _endTime: $_endTime, _lastUpdate: $_lastUpdate, _repeatDuration: $_repeatDuration, _repeatDurationType: $_repeatDurationType)';
+    return 'RepeatBalanceData(_amount: $_amount, _category: $_category, _currency: $_currency, _id: $_id, _name: $_name, _initialTime: $_initialTime, _endTime: $_endTime, _lastUpdate: $_lastUpdate, _repeatDuration: $_repeatDuration, _repeatDurationType: $_repeatDurationType)';
   }
 
   @override
@@ -114,7 +111,6 @@ class RepeatBalanceData {
         other._currency == _currency &&
         other._id == _id &&
         other._name == _name &&
-        other._repeatId == _repeatId &&
         other._initialTime == _initialTime &&
         other._endTime == _endTime &&
         other._lastUpdate == _lastUpdate &&
@@ -129,11 +125,21 @@ class RepeatBalanceData {
         _currency.hashCode ^
         _id.hashCode ^
         _name.hashCode ^
-        _repeatId.hashCode ^
         _initialTime.hashCode ^
         _endTime.hashCode ^
         _lastUpdate.hashCode ^
         _repeatDuration.hashCode ^
         _repeatDurationType.hashCode;
   }
+
+  num get amount => _amount;
+  String get category => _category;
+  String get currency => _currency;
+  String get id => _id;
+  String get name => _name;
+  Timestamp get initialTime => _initialTime;
+  Timestamp? get endTime => _endTime;
+  Timestamp? get lastUpdate => _lastUpdate;
+  int get repeatDuration => _repeatDuration;
+  RepeatDurationType get repeatDurationType => _repeatDurationType;
 }
