@@ -1,11 +1,11 @@
 // ignore_for_file: unused_element
-
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/statistic_calculations.dart';
+import 'package:linum/models/remove_type_enum.dart';
 import 'package:linum/models/repeat_balance_data.dart';
 import 'package:linum/models/repeat_duration_type_enum.dart';
 import 'package:linum/models/single_balance_data.dart';
@@ -735,11 +735,4 @@ class BalanceDataProvider extends ChangeNotifier {
     final Map<String, dynamic>? data = snapshot.data();
     return data!["settings"] as Map<String, dynamic>;
   }
-}
-
-enum RemoveType {
-  all,
-  allBefore,
-  allAfter,
-  none,
 }

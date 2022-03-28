@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
+import 'package:linum/models/remove_type_enum.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
