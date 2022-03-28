@@ -28,35 +28,35 @@ class LayoutScreen extends StatefulWidget {
 
 class _LayoutScreenState extends State<LayoutScreen>
     with WidgetsBindingObserver {
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   WidgetsBinding.instance?.addObserver(this);
-  // }
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addObserver(this);
+  }
 
-  // @override
-  // void dispose() {
-  //   WidgetsBinding.instance?.removeObserver(this);
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    WidgetsBinding.instance?.removeObserver(this);
+    super.dispose();
+  }
 
-  // @override
-  // void didChangeAppLifecycleState(AppLifecycleState state) {
-  //   PinCodeProvider pinCodeProvider =
-  //       Provider.of<PinCodeProvider>(context, listen: false);
-  //   super.didChangeAppLifecycleState(state);
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    final PinCodeProvider pinCodeProvider =
+        Provider.of<PinCodeProvider>(context, listen: false);
+    super.didChangeAppLifecycleState(state);
 
-  //   if (state == AppLifecycleState.inactive ||
-  //       state == AppLifecycleState.detached) {
-  //     return;
-  //   }
+    if (state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.detached) {
+      return;
+    }
 
-  //   final isBackground = state == AppLifecycleState.paused;
+    final isBackground = state == AppLifecycleState.paused;
 
-  //   if (isBackground) {
-  //     pinCodeProvider.resetSession();
-  //   }
-  // }
+    if (isBackground) {
+      pinCodeProvider.resetSession();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,20 +98,20 @@ class _LayoutScreenState extends State<LayoutScreen>
           future: pinCodeProvider.initialIsPINActive(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              dev.log(
-                pinCodeProvider.sessionIsSafe
-                    ? "Session: SAFE"
-                    : "Session: NOT SAFE",
-              );
+              // dev.log(
+              //   pinCodeProvider.sessionIsSafe
+              //       ? "Session: SAFE"
+              //       : "Session: NOT SAFE",
+              // );
               if (pinCodeProvider.pinActive && !pinCodeProvider.sessionIsSafe) {
                 dev.log(
                   "PIN ACTIVE for ${pinCodeProvider.lastEmail}, triggering recall",
                 );
                 pinCodeProvider.triggerPINRecall();
               } else {
-                dev.log(
-                  "Checked if I should trigger a PIN recall, but either it is not active for ${pinCodeProvider.lastEmail} or the session is safe.",
-                );
+                // dev.log(
+                //   "Checked if I should trigger a PIN recall, but either it is not active for ${pinCodeProvider.lastEmail} or the session is safe.",
+                // );
               }
             }
             return StreamBuilder(
