@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
@@ -71,6 +72,15 @@ class _LayoutScreenState extends State<LayoutScreen>
     final CollectionReference balance =
         FirebaseFirestore.instance.collection('balance');
 
+    Widget loadingIndicator = Container(
+      color: Colors.grey[300],
+      width: proportionateScreenWidth(70.0),
+      height: proportionateScreenWidth(70.0),
+      child: const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+
     //list with all the "screens"
     final List<Widget> _page = <Widget>[
       const HomeScreen(), //0
@@ -84,27 +94,33 @@ class _LayoutScreenState extends State<LayoutScreen>
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Center(
-        child: StreamBuilder(
-          stream: balance.snapshots(),
-          builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
-            //returns the page at the current index, or at the lock screen index if a) the PIN lock is active AND b) there is a code for the email used for login stored in sharedPreferences AND c) the pin code has not been recalled before
-
-            dev.log(
-              pinCodeProvider.sessionIsSafe
-                  ? "Session: SAFE"
-                  : "Session: NOT SAFE",
-            );
-            if (pinCodeProvider.pinActive && !pinCodeProvider.sessionIsSafe) {
+        child: FutureBuilder(
+          future: pinCodeProvider.initialIsPINActive(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
               dev.log(
-                "PIN ACTIVE for ${pinCodeProvider.lastEmail}, triggering recall",
+                pinCodeProvider.sessionIsSafe
+                    ? "Session: SAFE"
+                    : "Session: NOT SAFE",
               );
-              pinCodeProvider.triggerPINRecall();
-            } else {
-              dev.log(
-                "Checked if I should trigger a PIN recall, but either it is not active for ${pinCodeProvider.lastEmail} or the session is safe.",
-              );
+              if (pinCodeProvider.pinActive && !pinCodeProvider.sessionIsSafe) {
+                dev.log(
+                  "PIN ACTIVE for ${pinCodeProvider.lastEmail}, triggering recall",
+                );
+                pinCodeProvider.triggerPINRecall();
+              } else {
+                dev.log(
+                  "Checked if I should trigger a PIN recall, but either it is not active for ${pinCodeProvider.lastEmail} or the session is safe.",
+                );
+              }
             }
-            return _page.elementAt(screenIndexProvider.pageIndex);
+            return StreamBuilder(
+              stream: balance.snapshots(),
+              builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
+                //returns the page at the current index, or at the lock screen index if a) the PIN lock is active AND b) there is a code for the email used for login stored in sharedPreferences AND c) the pin code has not been recalled before
+                return _page.elementAt(screenIndexProvider.pageIndex);
+              },
+            );
           },
         ),
       ),

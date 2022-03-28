@@ -28,7 +28,7 @@ class PinCodeProvider extends ChangeNotifier {
 
   PinCodeProvider(BuildContext context) {
     _initialLastEmail();
-    _initialIsPINActive();
+    initialIsPINActive();
     _screenIndexProvider = Provider.of<ScreenIndexProvider>(
       context,
       listen: false,
@@ -41,7 +41,7 @@ class PinCodeProvider extends ChangeNotifier {
     confirmKillswitch = UserAlert(context: _context);
   }
 
-  Future<void> _initialIsPINActive() async {
+  Future<void> initialIsPINActive() async {
     _pinActive = await _isPinActive();
     log(
       _pinActive
@@ -65,7 +65,7 @@ class PinCodeProvider extends ChangeNotifier {
     _lastEmail = null;
     _lastEmailStillLoading = true;
     _initialLastEmail();
-    _initialIsPINActive();
+    initialIsPINActive();
     _screenIndexProvider = Provider.of<ScreenIndexProvider>(
       context,
       listen: false,
