@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main({bool? testing}) {
   WidgetsFlutterBinding.ensureInitialized();
+  AwesomeNotifications().initialize('resource://drawable/background.png', [
+    NotificationChannel(
+      channelKey: 'scheduled_channel',
+      channelName: 'Scheduled Notifications',
+      channelDescription: 'All scheduled notifications',
+      importance: NotificationImportance.High,
+      defaultColor: Colors.green, //only for testing purposes
+      channelShowBadge: true,
+    )
+  ]);
 
   /// Force Portrait Mode
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);

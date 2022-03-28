@@ -1,6 +1,7 @@
 import 'dart:developer' as dev;
 import 'dart:math';
 
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/providers/account_settings_provider.dart';
@@ -25,6 +26,17 @@ class LayoutScreen extends StatefulWidget {
 
 class _LayoutScreenState extends State<LayoutScreen> {
   @override
+  void initState() {
+    super.initState();
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications()
+            .requestPermissionToSendNotifications()
+            .then((_) => Navigator.pop(context));
+      }
+    });
+  }
+
   Widget build(BuildContext context) {
     final AccountSettingsProvider _accountSettingsProvider =
         Provider.of<AccountSettingsProvider>(context);
