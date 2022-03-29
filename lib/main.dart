@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MaterialApp app = MaterialApp(
+    final MaterialApp app = MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Linum',
       theme: ThemeData(

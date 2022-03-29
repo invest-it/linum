@@ -72,7 +72,8 @@ class _LayoutScreenState extends State<LayoutScreen>
     final CollectionReference balance =
         FirebaseFirestore.instance.collection('balance');
 
-    Widget loadingIndicator = Container(
+    // ignore: unused_local_variable
+    final Widget loadingIndicator = Container(
       color: Colors.grey[300],
       width: proportionateScreenWidth(70.0),
       height: proportionateScreenWidth(70.0),

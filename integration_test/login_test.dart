@@ -25,7 +25,7 @@ void main() {
 
   group('e2e test', () {
     testWidgets('login directly', (WidgetTester tester) async {
-      app.main(testing: true);
+      await app.main(testing: true);
       sleep(const Duration(seconds: 2));
 
       await tester.pumpAndSettle(const Duration(seconds: 2));
@@ -38,14 +38,13 @@ void main() {
 
       await onboardingRobot.pressIHaveAnAccount();
 
-      await onboardingOpenSignInRobot
-          .fillInEmail("soencke.evers@investit-academy.de");
-      await onboardingOpenSignInRobot.fillInPassword("wrongPassword");
+      await onboardingOpenSignInRobot.fillInEmail("linum-tester-1@byom.de");
+      await onboardingOpenSignInRobot.fillInPassword("wrongPasswd");
       await onboardingOpenSignInRobot.pressSignIn();
 
       await onboardingOpenMessageRobot.findAndClickWrongPasswordMessage();
 
-      await onboardingOpenSignInRobot.fillInPassword("tempPasswort123");
+      await onboardingOpenSignInRobot.fillInPassword("123456");
       await onboardingOpenSignInRobot.pressSignIn();
     });
   });

@@ -28,11 +28,19 @@ class GeneralRobot {
   }
 
   Future<void> _executePressButton(
-      Finder target, Duration settleDuration, Duration sleepDuration) async {
+    Finder target,
+    Duration settleDuration,
+    Duration sleepDuration,
+  ) async {
     expect(target, findsOneWidget);
     sleep(sleepDuration);
 
-    await tester.ensureVisible(target);
+    await tester.dragUntilVisible(
+      target,
+      find.byType(ListView),
+      const Offset(0, 500),
+    );
+    sleep(sleepDuration);
     await tester.tap(target);
 
     await tester.pumpAndSettle(settleDuration);
