@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_dynamic_calls
+
 import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enum_to_string/enum_to_string.dart';
@@ -469,19 +471,19 @@ class HomeScreenListView implements BalanceDataListView {
                   badgeColor: isFutureItem && arrayElement["repeatId"] != null
                       ? Theme.of(context).colorScheme.onSurface
                       //badgeColor for current transactions
-                      : arrayElement["amount"] > 0
+                      : arrayElement["amount"] as num > 0
                           //badgeColor for future transactions
                           ? arrayElement["repeatId"] != null
                               ? Theme.of(context).colorScheme.tertiary
-                              : Color(0x000000)
+                              : const Color(0x000000)
                           : arrayElement["repeatId"] != null
                               ? Theme.of(context).colorScheme.errorContainer
-                              : Color(0x000000),
+                              : const Color(0x000000),
                   badgeContent: arrayElement["repeatId"] != null
                       ? Icon(
                           Icons.sync,
                           color: isFutureItem
-                              ? arrayElement["amount"] > 0
+                              ? arrayElement["amount"] as num > 0
                                   ? Theme.of(context).colorScheme.tertiary
                                   : Theme.of(context).colorScheme.errorContainer
                               : Theme.of(context).colorScheme.onSurface,
@@ -490,26 +492,27 @@ class HomeScreenListView implements BalanceDataListView {
                       : SizedBox(),
                   child: CircleAvatar(
                     backgroundColor: isFutureItem
-                        ? arrayElement['amount'] > 0
+                        ? arrayElement['amount'] as num > 0
                             ? Theme.of(context)
                                 .colorScheme
                                 .tertiary // FUTURE INCOME BACKGROUND
                             : Theme.of(context).colorScheme.errorContainer
                         // FUTURE EXPENSE BACKGROUND
-                        : arrayElement['amount'] > 0
+                        : arrayElement['amount'] as num > 0
                             ? Theme.of(context)
                                 .colorScheme
                                 .secondary // PRESENT INCOME BACKGROUND
                             : Theme.of(context)
                                 .colorScheme
                                 .secondary, // PRESENT EXPENSE BACKGROUND
-                    child: arrayElement['amount'] > 0
+                    child: arrayElement['amount'] as num > 0
                         ? Icon(
                             AccountSettingsProvider
                                     .standardCategoryIncomes[
                                         EnumToString.fromString(
-                                            StandardCategoryIncome.values,
-                                            arrayElement['category'])]
+                                  StandardCategoryIncome.values,
+                                  arrayElement['category'] as String,
+                                )]
                                     ?.icon ??
                                 Icons.error,
                             color: isFutureItem
@@ -524,8 +527,9 @@ class HomeScreenListView implements BalanceDataListView {
                             AccountSettingsProvider
                                     .standardCategoryExpenses[
                                         EnumToString.fromString(
-                                            StandardCategoryExpense.values,
-                                            arrayElement['category'])]
+                                  StandardCategoryExpense.values,
+                                  arrayElement['category'] as String,
+                                )]
                                     ?.icon ??
                                 Icons.error,
                             color: isFutureItem
