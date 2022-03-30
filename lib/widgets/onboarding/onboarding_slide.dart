@@ -2,7 +2,7 @@ class OnboardingSlide {
   String imageURL;
   String heading;
   String freepikURL;
-  var description;
+  String? description;
 
   OnboardingSlide({
     required this.imageURL,

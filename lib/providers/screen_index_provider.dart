@@ -12,7 +12,7 @@ class ScreenIndexProvider extends ChangeNotifier {
     _algorithmProvider = Provider.of<AlgorithmProvider>(context, listen: false);
   }
 
-  updateAlgorithmProvider(AlgorithmProvider algo) {
+  void updateAlgorithmProvider(AlgorithmProvider algo) {
     _algorithmProvider = algo;
   }
 
@@ -22,15 +22,22 @@ class ScreenIndexProvider extends ChangeNotifier {
 
     if (_pageIndex == 0) {
       _algorithmProvider.resetCurrentShownMonth();
-      _algorithmProvider.setCurrentFilterAlgorithm(AlgorithmProvider.inBetween(
-          Timestamp.fromDate(DateTime(
-            DateTime.now().year,
-            DateTime.now().month,
-          ).subtract(Duration(microseconds: 1))),
-          Timestamp.fromDate(DateTime(
-            DateTime.now().year,
-            DateTime.now().month + 1,
-          ))));
+      _algorithmProvider.setCurrentFilterAlgorithm(
+        AlgorithmProvider.inBetween(
+          Timestamp.fromDate(
+            DateTime(
+              DateTime.now().year,
+              DateTime.now().month,
+            ).subtract(const Duration(microseconds: 1)),
+          ),
+          Timestamp.fromDate(
+            DateTime(
+              DateTime.now().year,
+              DateTime.now().month + 1,
+            ),
+          ),
+        ),
+      );
     }
 
     notifyListeners();

@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
-import 'package:linum/backend_functions/url-handler.dart';
+import 'package:linum/backend_functions/url_handler.dart';
 import 'package:linum/frontend_functions/country_flag_generator.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
-import 'package:linum/frontend_functions/silent-scroll.dart';
+import 'package:linum/frontend_functions/silent_scroll.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
@@ -39,10 +39,11 @@ class _OnboardingScreenState extends State<OnboardingPage> {
     _currentPage = 0;
     _slides = [
       OnboardingSlide(
-          imageURL: 'assets/svg/mobile-login.svg',
-          heading: 'onboarding_screen/card1-title',
-          freepikURL: 'https://storyset.com/phone',
-          description: 'onboarding_screen/card1-description'),
+        imageURL: 'assets/svg/mobile-login.svg',
+        heading: 'onboarding_screen/card1-title',
+        freepikURL: 'https://storyset.com/phone',
+        description: 'onboarding_screen/card1-description',
+      ),
       OnboardingSlide(
         imageURL: 'assets/svg/refund.svg',
         heading: 'onboarding_screen/card2-title',
@@ -74,7 +75,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
   Widget _createSingleSlide(OnboardingSlide slide) {
     return Column(
       children: [
-        Container(
+        SizedBox(
           width: double.infinity,
           child: Padding(
             padding: EdgeInsets.only(
@@ -93,17 +94,17 @@ class _OnboardingScreenState extends State<OnboardingPage> {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 16,
         ),
         Expanded(
           child: Container(
-            margin: EdgeInsets.all(32),
+            margin: const EdgeInsets.all(32),
             child: SvgPicture.asset(slide.imageURL),
           ),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 36),
+          padding: const EdgeInsets.symmetric(horizontal: 36),
           child: Text(
             AppLocalizations.of(context)!.translate(slide.heading),
             textAlign: TextAlign.center,
@@ -112,14 +113,15 @@ class _OnboardingScreenState extends State<OnboardingPage> {
         ),
         slide.description != null
             ? Padding(
-                padding: EdgeInsets.symmetric(horizontal: 36, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 36, vertical: 16),
                 child: Text(
-                  AppLocalizations.of(context)!.translate(slide.description),
+                  AppLocalizations.of(context)!.translate(slide.description!),
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headline5,
                 ),
               )
-            : Padding(
+            : const Padding(
                 padding: EdgeInsets.zero,
               ),
         SizedBox(
@@ -137,22 +139,24 @@ class _OnboardingScreenState extends State<OnboardingPage> {
   }
 
 // responsive page indicator
-  Widget _buildPageIndicator() {
-    Row row = Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [],
-    );
+  Row _buildPageIndicator() {
+    final List<Widget> childrenList = <Widget>[];
 
     for (int i = 0; i < _slides.length; i++) {
-      row.children.add(_buildPageIndicatorItem(i));
+      childrenList.add(_buildPageIndicatorItem(i));
       if (i != _slides.length - 1) {
-        row.children.add(SizedBox(
-          width: 12,
-        ));
+        childrenList.add(
+          const SizedBox(
+            width: 12,
+          ),
+        );
       }
     }
 
-    return row;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: childrenList,
+    );
   }
 
   // defines the style of one single page indicator
@@ -180,7 +184,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
-    OnboardingScreenProvider onboardingScreenProvider =
+    final OnboardingScreenProvider onboardingScreenProvider =
         Provider.of<OnboardingScreenProvider>(
       context,
     );
@@ -195,9 +199,9 @@ class _OnboardingScreenState extends State<OnboardingPage> {
         break;
       case 1:
         _loginYOffset = SizeGuide.keyboardIsOpened
-            ? proportionateScreenHeightFraction(ScreenFraction.TWOFIFTHS) -
+            ? proportionateScreenHeightFraction(ScreenFraction.twofifths) -
                 (SizeGuide.keyboardHeight / 2)
-            : proportionateScreenHeightFraction(ScreenFraction.TWOFIFTHS);
+            : proportionateScreenHeightFraction(ScreenFraction.twofifths);
         _registerYOffset = windowHeight;
         _loginXOffset = 0;
         _loginWidth = windowWidth;
@@ -205,14 +209,14 @@ class _OnboardingScreenState extends State<OnboardingPage> {
         break;
       case 2:
         _loginYOffset = SizeGuide.keyboardIsOpened
-            ? proportionateScreenHeightFraction(ScreenFraction.TWOFIFTHS) -
+            ? proportionateScreenHeightFraction(ScreenFraction.twofifths) -
                 (SizeGuide.keyboardHeight / 2) -
                 32
-            : proportionateScreenHeightFraction(ScreenFraction.TWOFIFTHS) - 32;
+            : proportionateScreenHeightFraction(ScreenFraction.twofifths) - 32;
         _registerYOffset = SizeGuide.keyboardIsOpened
-            ? proportionateScreenHeightFraction(ScreenFraction.TWOFIFTHS) -
+            ? proportionateScreenHeightFraction(ScreenFraction.twofifths) -
                 (SizeGuide.keyboardHeight / 2)
-            : proportionateScreenHeightFraction(ScreenFraction.TWOFIFTHS);
+            : proportionateScreenHeightFraction(ScreenFraction.twofifths);
         _loginXOffset = 20;
         _loginWidth = windowWidth - 40;
         _loginOpacity = 0.80;
@@ -221,8 +225,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
     return ScreenSkeleton(
       head: '', // will not be displayed anyways
       contentOverride: true,
-      initialActionLipStatus: ActionLipStatus.HIDDEN,
-      providerKey: ProviderKey.ONBOARDING,
+      providerKey: ProviderKey.onboarding,
       body: GestureDetector(
         onTap: () {
           FocusManager.instance.primaryFocus?.unfocus();
@@ -235,13 +238,15 @@ class _OnboardingScreenState extends State<OnboardingPage> {
               child: PageView(
                 controller: _pageController,
                 onPageChanged: _handleOnPageChanged,
-                physics: PageScrollPhysics(),
+                physics: const PageScrollPhysics(),
                 children: [
                   ..._builtSlides(),
                 ],
               ),
             ),
             Positioned(
+              top: 0,
+              right: 0,
               child: SafeArea(
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
@@ -259,11 +264,13 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                       );
                     }).toList(),
                     value: countryFlagWithSpecialCases(
-                        AppLocalizations.of(context)!.locale.languageCode),
+                      AppLocalizations.of(context)!.locale.languageCode,
+                    ),
                     onChanged: (value) {
                       if (value != null) {
                         setState(() {
-                          Map<String, String> countryFlagsToCountryCode = {
+                          final Map<String, String> countryFlagsToCountryCode =
+                              {
                             countryFlag('de'): "de",
                             countryFlag('gb'): "en",
                             countryFlag('nl'): "nl",
@@ -271,17 +278,21 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                             countryFlag('fr'): "fr",
                           };
                           SharedPreferences.getInstance().then((pref) {
-                            pref.setString("languageCode",
-                                countryFlagsToCountryCode[value] ?? "en");
+                            pref.setString(
+                              "languageCode",
+                              countryFlagsToCountryCode[value] ?? "en",
+                            );
                           });
-                          String langString =
+                          final String langString =
                               countryFlagsToCountryCode[value] ?? "en";
                           AppLocalizations.of(context)!.load(
-                              locale: Locale(
-                                  langString,
-                                  langString != "en"
-                                      ? langString.toUpperCase()
-                                      : "US"));
+                            locale: Locale(
+                              langString,
+                              langString != "en"
+                                  ? langString.toUpperCase()
+                                  : "US",
+                            ),
+                          );
 
                           Provider.of<AuthenticationService>(
                             context,
@@ -293,8 +304,6 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                   ),
                 ),
               ),
-              top: 0,
-              right: 0,
             ),
             Positioned(
               left: 0,
@@ -307,29 +316,30 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                     height: proportionateScreenHeight(32),
                   ),
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 32),
+                    margin: const EdgeInsets.symmetric(horizontal: 32),
                     child: SizedBox(
                       width: double.infinity,
                       child: GradientButton(
-                        child: Text(
-                          AppLocalizations.of(context)!
-                              .translate('onboarding_screen/register-button'),
-                          style: Theme.of(context).textTheme.button,
-                        ),
                         callback: () => {
                           onboardingScreenProvider.setPageState(2),
                         },
                         gradient: LinearGradient(
                           colors: [
                             Theme.of(context).colorScheme.primary,
-                            createMaterialColor(Color(0xFFC1E695)),
+                            createMaterialColor(const Color(0xFFC1E695)),
                           ],
                         ),
                         elevation: 0,
                         increaseHeightBy: proportionateScreenHeight(56 - 24),
                         increaseWidthBy: double.infinity,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8)),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          AppLocalizations.of(context)!
+                              .translate('onboarding_screen/register-button'),
+                          style: Theme.of(context).textTheme.button,
+                        ),
                       ),
                     ),
                   ),
@@ -337,15 +347,17 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                     height: proportionateScreenHeight(10),
                   ),
                   CupertinoButton(
-                      child: Text(
-                        AppLocalizations.of(context)!
-                            .translate('onboarding_screen/login-button'),
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            color: Theme.of(context).colorScheme.onSurface),
-                      ),
-                      onPressed: () => {
-                            onboardingScreenProvider.setPageState(1),
-                          }),
+                    child: Text(
+                      AppLocalizations.of(context)!
+                          .translate('onboarding_screen/login-button'),
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                    ),
+                    onPressed: () => {
+                      onboardingScreenProvider.setPageState(1),
+                    },
+                  ),
                 ],
               ),
             ),
@@ -360,7 +372,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
               child: AnimatedContainer(
                 width: _loginWidth,
                 curve: Curves.fastLinearToSlowEaseIn,
-                duration: Duration(milliseconds: 1200),
+                duration: const Duration(milliseconds: 1200),
                 transform:
                     Matrix4.translationValues(_loginXOffset, _loginYOffset, 1),
                 decoration: BoxDecoration(
@@ -368,14 +380,15 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                       .colorScheme
                       .background
                       .withOpacity(_loginOpacity),
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(32),
                     topRight: Radius.circular(32),
                   ),
                   boxShadow: [
                     BoxShadow(
                       color: Theme.of(context).colorScheme.onSurface.withAlpha(
-                          onboardingScreenProvider.pageState == 0 ? 0 : 135),
+                            onboardingScreenProvider.pageState == 0 ? 0 : 135,
+                          ),
                       blurRadius: 16,
                     ),
                   ],
@@ -383,19 +396,18 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                 child: Stack(
                   children: [
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         AnimatedSize(
                           curve: Curves.fastLinearToSlowEaseIn,
-                          duration: Duration(milliseconds: 800),
+                          duration: const Duration(milliseconds: 800),
                           child: ClipRRect(
                             borderRadius: BorderRadius.only(
                               topLeft: onboardingScreenProvider.pageState == 2
-                                  ? Radius.circular(32)
-                                  : Radius.circular(0),
+                                  ? const Radius.circular(32)
+                                  : Radius.zero,
                               topRight: onboardingScreenProvider.pageState == 2
-                                  ? Radius.circular(32)
-                                  : Radius.circular(0),
+                                  ? const Radius.circular(32)
+                                  : Radius.zero,
                             ),
                             child: Container(
                               width: double.infinity,
@@ -404,24 +416,27 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                                   : 0,
                               color: Theme.of(context).colorScheme.primary,
                               child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 6.0),
-                                      child: Text(
-                                        AppLocalizations.of(context)!.translate(
-                                            'onboarding_screen/cta-login'),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1
-                                            ?.copyWith(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .onPrimary),
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 6.0),
+                                    child: Text(
+                                      AppLocalizations.of(context)!.translate(
+                                        'onboarding_screen/cta-login',
                                       ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1
+                                          ?.copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onPrimary,
+                                          ),
                                     ),
-                                  ]),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -435,10 +450,11 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                       bottom: SizeGuide.keyboardIsOpened
                           ? 0
                           : proportionateScreenHeightFraction(
-                              ScreenFraction.TWOFIFTHS),
+                              ScreenFraction.twofifths,
+                            ),
                       right: 0,
                       child: ClipRRect(
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(32),
                           topRight: Radius.circular(32),
                         ),
@@ -451,24 +467,27 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                             height: proportionateScreenHeight(42),
                             color: Theme.of(context).colorScheme.primary,
                             child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 8.0),
-                                    child: Text(
-                                      AppLocalizations.of(context)!.translate(
-                                          'onboarding_screen/cta-register'),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1
-                                          ?.copyWith(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .onPrimary),
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Text(
+                                    AppLocalizations.of(context)!.translate(
+                                      'onboarding_screen/cta-register',
                                     ),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        ?.copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary,
+                                        ),
                                   ),
-                                ]),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -484,11 +503,11 @@ class _OnboardingScreenState extends State<OnboardingPage> {
               },
               child: AnimatedContainer(
                 curve: Curves.fastLinearToSlowEaseIn,
-                duration: Duration(milliseconds: 800),
+                duration: const Duration(milliseconds: 800),
                 transform: Matrix4.translationValues(0, _registerYOffset, 0),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.background,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(32),
                     topRight: Radius.circular(32),
                   ),
@@ -503,7 +522,6 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                 child: Stack(
                   children: [
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         // CONTENTS OF REGISTER HERE
                         RegisterForm(),

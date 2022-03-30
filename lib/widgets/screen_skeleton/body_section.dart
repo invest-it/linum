@@ -20,16 +20,16 @@ class BodySection extends StatelessWidget {
             child: Container(
               color: Theme.of(context).colorScheme.primary,
               child: ClipRRect(
-                borderRadius: BorderRadius.vertical(
+                borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(64),
-                  bottom: Radius.zero,
                 ),
                 child: Container(
                   color: Theme.of(context).colorScheme.background,
                   child: Padding(
                     padding: hasHomeScreenCard
                         ? EdgeInsets.only(
-                            top: proportionateScreenHeight(196 - 25))
+                            top: proportionateScreenHeight(196 - 25),
+                          )
                         : EdgeInsets.zero,
                     child: body,
                   ),
