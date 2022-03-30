@@ -30,9 +30,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
     super.initState();
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
       if (!isAllowed) {
-        AwesomeNotifications()
-            .requestPermissionToSendNotifications()
-            .then((_) => Navigator.pop(context));
+        AwesomeNotifications().requestPermissionToSendNotifications();
       }
     });
   }

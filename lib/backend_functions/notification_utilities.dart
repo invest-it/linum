@@ -17,7 +17,7 @@ class NotificationWeekAndTime {
 Future<NotificationWeekAndTime?> pickSchedule(
   BuildContext context,
 ) async {
-  List<String> weekdays = [
+  final List<String> weekdays = [
     'Mon',
     'Tue',
     'Wed',
@@ -31,34 +31,36 @@ Future<NotificationWeekAndTime?> pickSchedule(
   int? selectedDay;
 
   await showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(
-            'I want to be reminded every:',
-            textAlign: TextAlign.center,
-          ),
-          content: Wrap(
-            alignment: WrapAlignment.center,
-            spacing: 3,
-            children: [
-              for (int index = 0; index < weekdays.length; index++)
-                ElevatedButton(
-                  onPressed: () {
-                    selectedDay = index + 1;
-                    Navigator.pop(context);
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                      Colors.teal,
-                    ),
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text(
+          'I want to be reminded every:',
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+        content: Wrap(
+          alignment: WrapAlignment.center,
+          spacing: 3,
+          children: [
+            for (int index = 0; index < weekdays.length; index++)
+              ElevatedButton(
+                onPressed: () {
+                  selectedDay = index + 1;
+                  Navigator.pop(context);
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                    Colors.teal,
                   ),
-                  child: Text(weekdays[index]),
                 ),
-            ],
-          ),
-        );
-      });
+                child: Text(weekdays[index]),
+              ),
+          ],
+        ),
+      );
+    },
+  );
 
   if (selectedDay != null) {
     timeOfDay = await showTimePicker(

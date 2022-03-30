@@ -24,7 +24,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main({bool? testing}) {
   WidgetsFlutterBinding.ensureInitialized();
-  AwesomeNotifications().initialize('resource://drawable/background.png', [
+  AwesomeNotifications().initialize(null, [
     NotificationChannel(
       channelKey: 'scheduled_channel',
       channelName: 'Scheduled Notifications',
