@@ -241,33 +241,6 @@ class _EnterScreenState extends State<EnterScreen> {
     }
   }
 
-/*
-  Not in use anymore 
-
-  String _nameChooser(EnterScreenProvider enterScreenProvider,
-      AccountSettingsProvider accountSettingsProvider, BuildContext context) {
-    if (enterScreenProvider.name == "") {
-      if (enterScreenProvider.isExpenses) {
-        return AppLocalizations.of(context)!.translate(accountSettingsProvider
-                .standardCategoryExpenses[EnumToString.fromString(
-                    StandardCategoryExpense.values,
-                    enterScreenProvider.category)]
-                ?.label ??
-            "settings_screen/standards-selector-none");
-      } else {
-        return AppLocalizations.of(context)!.translate(accountSettingsProvider
-                .standardCategoryIncomes[EnumToString.fromString(
-                    StandardCategoryIncome.values,
-                    enterScreenProvider.category)]
-                ?.label ??
-            "settings_screen/standards-selector-none");
-      }
-    } else {
-      return enterScreenProvider.name;
-    }
-  }
-  */
-
   void showAlertDialog(
     BuildContext context,
     EnterScreenProvider enterScreenProvider,
