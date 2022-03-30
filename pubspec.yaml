@@ -43,7 +43,6 @@ dependencies:
   package_info_plus: ^1.4.0
   provider: ^5.0.0
   shared_preferences: ^2.0.13
-  package_info_plus: ^1.4.0
   badges: ^2.0.2
   url_launcher: ^6.0.17
   uuid: ^3.0.5
