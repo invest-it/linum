@@ -1,6 +1,6 @@
 ---
 name: Bug report (User Feedback)
-about: Create a default bug ticket
+about: Register user-sourced bugs here
 title: ''
 labels: 'bug, s: user feedback, P4'
 assignees: ''
