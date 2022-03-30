@@ -72,6 +72,7 @@ class BalanceDataProvider extends ChangeNotifier {
     }
   }
 
+  /// Creates Document if it doesn't exist
   Future<List<dynamic>> _createDoc() async {
     dev.log("creating document");
     final DocumentSnapshot<Map<String, dynamic>> doc = await FirebaseFirestore
@@ -104,6 +105,7 @@ class BalanceDataProvider extends ChangeNotifier {
     return [ref.id];
   }
 
+  /// update [_uid] if it is new. redo the document connections
   void updateAuth(AuthenticationService? auth) {
     if (auth != null && auth.uid != _uid) {
       _uid = auth.uid;
@@ -111,6 +113,7 @@ class BalanceDataProvider extends ChangeNotifier {
     }
   }
 
+  /// update [_algorithmProvider] if it is new. redo the document connections
   void updateAlgorithmProvider(AlgorithmProvider? algorithm) {
     if (algorithm != null &&
         (_algorithmProvider != algorithm ||
@@ -180,6 +183,12 @@ class BalanceDataProvider extends ChangeNotifier {
     );
   }
 
+  /// use the snapshot to get all data from the document.
+  /// convert the List<dynamic> to a List<Map<String, dynamic>>
+  /// use the repeatedbalancedata to create the missing balance data
+  /// use the current _algorithmProvider filter
+  /// (will still be used after filter on firebase, because of repeated balanced)
+  /// may be moved into the data generation function
   List<List<Map<String, dynamic>>> prepareData(
     AsyncSnapshot<dynamic> snapshot,
   ) {
@@ -255,6 +264,7 @@ class BalanceDataProvider extends ChangeNotifier {
     return false;
   }
 
+  /// it is an alias for removeSingleBalanceUsingId(singleBalance.id);
   Future<bool> removeSingleBalance(SingleBalanceData singleBalance) {
     return removeSingleBalanceUsingId(singleBalance.id);
   }
@@ -289,14 +299,15 @@ class BalanceDataProvider extends ChangeNotifier {
       }
     }
     await _balance!.update(data);
-
     return true;
   }
 
+  /// balance data povider gets disposed after closing the enter screen. we want to skip disposing one time.
   void dontDisposeOneTime() {
     _dontDispose++;
   }
 
+  /// balance data povider gets disposed after closing the enter screen. we want to skip disposing one time.
   @override
   void dispose() {
     if (_dontDispose-- == 0) {
@@ -304,7 +315,7 @@ class BalanceDataProvider extends ChangeNotifier {
     }
   }
 
-  // .
+  /// add a repeated Balance and upload it (the stream will automatically show it in the app again)
   Future<bool> addRepeatedBalance(
     RepeatBalanceData repeatBalanceData,
   ) async {
@@ -335,8 +346,10 @@ class BalanceDataProvider extends ChangeNotifier {
     return true;
   }
 
-  // specify time if changeType != RepeatableChangeType.all
-  // resetEndTime, endTime are no available for allBefore
+  /// update a repeated balance
+  /// specify time if changeType != RepeatableChangeType.all
+  /// resetEndTime, endTime are no available for RepeatableChangeType.thisAndAllBefore
+  /// RepeatableChangeType.thisAndAllBefore and RepeatableChangeType.thisAndAllAfter will split the repeated balance to 2
   Future<bool> updateRepeatedBalance({
     required String id,
     required RepeatableChangeType changeType,
@@ -358,6 +371,14 @@ class BalanceDataProvider extends ChangeNotifier {
     if (changeType != RepeatableChangeType.all && time == null) {
       dev.log("specify time if changeType != RepeatableChangeType.all");
       return false;
+    }
+    if (changeType == RepeatableChangeType.thisAndAllBefore) {
+      if (resetEndTime ?? false || endTime != null) {
+        dev.log(
+          "resetEndTime, endTime are no available for RepeatableChangeType.thisAndAllBefore",
+        );
+        return false;
+      }
     }
     bool isEdited = false;
     final DocumentSnapshot<Map<String, dynamic>> snapshot =
@@ -706,6 +727,7 @@ class BalanceDataProvider extends ChangeNotifier {
     return true;
   }
 
+  /// it is an alias for removeRepeatedBalanceUsingId with that repeatBalanceData.id
   Future<bool> removeRepeatedBalance({
     required RepeatBalanceData repeatBalanceData,
     required RepeatableChangeType removeType,
@@ -718,6 +740,7 @@ class BalanceDataProvider extends ChangeNotifier {
     );
   }
 
+  /// goes trough the repeatable list and uses addSingleRepeatableToBalanceDataLocally
   void addAllRepeatablesToBalanceDataLocally(
     List<Map<String, dynamic>> repeatedBalance,
     List<Map<String, dynamic>> balanceData,
@@ -730,6 +753,7 @@ class BalanceDataProvider extends ChangeNotifier {
     }
   }
 
+  /// adds a repeatable for the whole needed duration up to one year with all needed "changes" into the balancedata
   void addSingleRepeatableToBalanceDataLocally(
     Map<String, dynamic> singleRepeatedBalance,
     List<Map<String, dynamic>> balanceData,
@@ -777,6 +801,7 @@ class BalanceDataProvider extends ChangeNotifier {
     }
   }
 
+  /// calculate next time step and decide for that if you need monthly steps or seconds as stepsize
   DateTime calculateNextCurrentTime(
     Map<String, dynamic> singleRepeatedBalance,
     DateTime currentTime,
@@ -803,6 +828,7 @@ class BalanceDataProvider extends ChangeNotifier {
     return newCurrentTime;
   }
 
+  /// avoid errors with 29th 30th and 31th
   DateTime currentTimeRecalculator(int year, int month, int day) {
     final DateTime temp = DateTime(year, month, day);
     if (temp.month == month || month == 13) {
@@ -812,6 +838,7 @@ class BalanceDataProvider extends ChangeNotifier {
     }
   }
 
+  /// after splitting a repeatable delete copied "changes" attributes that are out of the time limits of that repeatable
   void removeUnusedChangedAttributes(
     Map<String, dynamic> singleRepeatedBalance,
   ) {
@@ -841,6 +868,7 @@ class BalanceDataProvider extends ChangeNotifier {
 
   // Settings
 
+  /// upload one setting as map
   Future<void> uploadSettings(Map<String, dynamic> settings) async {
     if (_balance == null) {
       dev.log("_balance is null");
@@ -852,6 +880,7 @@ class BalanceDataProvider extends ChangeNotifier {
     await _balance!.set(data);
   }
 
+  /// get settings as map
   Future<Map<String, dynamic>> getSettings() async {
     if (_balance == null) {
       dev.log("_balance is null");
