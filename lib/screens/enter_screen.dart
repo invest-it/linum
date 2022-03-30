@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/models/repeat_balance_data.dart';
+import 'package:linum/models/repeatable_change_type.dart';
 import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
@@ -124,16 +125,31 @@ class _EnterScreenState extends State<EnterScreen> {
                     Navigator.of(context).pop();
 
                     if (enterScreenProvider.editMode) {
-                      balanceDataProvider.updateSingleBalance(
-                        id: enterScreenProvider.formerId ?? "",
-                        amount: _amountChooser(enterScreenProvider),
-                        category: enterScreenProvider.category,
-                        currency: "EUR",
-                        name: enterScreenProvider.name,
-                        time: Timestamp.fromDate(
-                          selectedDateDateTimeFormatted,
-                        ),
-                      );
+                      if (enterScreenProvider.repeatId == null) {
+                        balanceDataProvider.updateSingleBalance(
+                          id: enterScreenProvider.formerId ?? "",
+                          amount: _amountChooser(enterScreenProvider),
+                          category: enterScreenProvider.category,
+                          currency: "EUR",
+                          name: enterScreenProvider.name,
+                          time: Timestamp.fromDate(
+                            selectedDateDateTimeFormatted,
+                          ),
+                        );
+                      } else {
+                        // open popup
+                        balanceDataProvider.updateRepeatedBalance(
+                          id: enterScreenProvider.repeatId!,
+                          changeType: RepeatableChangeType.thisAndAllAfter,
+                          amount: _amountChooser(enterScreenProvider),
+                          category: enterScreenProvider.category,
+                          currency: "EUR",
+                          name: enterScreenProvider.name,
+                          time: Timestamp.fromDate(
+                            selectedDateDateTimeFormatted,
+                          ),
+                        );
+                      }
                     } else {
                       if (enterScreenProvider.repeatDuration == null ||
                           enterScreenProvider.repeatDurationTyp == null) {

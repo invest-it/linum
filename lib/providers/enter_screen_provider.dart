@@ -18,6 +18,7 @@ class EnterScreenProvider with ChangeNotifier {
 
   late bool _editMode;
   String? _formerId;
+  String? _repeatId;
 
   EnterScreenProvider({
     num amount = 0.0,
@@ -31,6 +32,7 @@ class EnterScreenProvider with ChangeNotifier {
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
     RepeatDuration initRepeatDurationEnum = RepeatDuration.none,
+    String? repeatId,
   }) {
     _amount = amount <= 0 ? -1 * amount : amount;
     _expenseCategory = amount <= 0 ? category : secondaryCategory;
@@ -46,6 +48,7 @@ class EnterScreenProvider with ChangeNotifier {
     _formerId = id;
     _repeatDurationEnum = initRepeatDurationEnum;
     _repeatDurationType = repeatDurationType;
+    _repeatId = repeatId;
   }
 
   bool get isExpenses {
@@ -99,6 +102,8 @@ class EnterScreenProvider with ChangeNotifier {
   RepeatDuration get repeatDurationEnum {
     return _repeatDurationEnum;
   }
+
+  String? get repeatId => _repeatId;
 
   void setExpense() {
     _isExpenses = true;
