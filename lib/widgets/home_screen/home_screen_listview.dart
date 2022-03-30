@@ -300,14 +300,14 @@ class HomeScreenListView implements BalanceDataListView {
                                       .removeRepeatedBalanceUsingId(
                                     id: arrayElement["repeatId"] as String,
                                     removeType:
-                                        RepeatableChangeType.thisAndAllAfter,
+                                        RepeatableChangeType.thisAndAllBefore,
                                     time: arrayElement["time"] as Timestamp,
                                   );
                                   Navigator.of(context).pop(true);
                                 },
                                 child: Text(
                                   AppLocalizations.of(context)!.translate(
-                                    "enter_screen/delete-entry/dialog-button-fromnow",
+                                    "enter_screen/delete-entry/dialog-button-untilnow",
                                   ),
                                   style: Theme.of(context)
                                       .textTheme
@@ -324,14 +324,14 @@ class HomeScreenListView implements BalanceDataListView {
                                       .removeRepeatedBalanceUsingId(
                                     id: arrayElement["repeatId"] as String,
                                     removeType:
-                                        RepeatableChangeType.thisAndAllBefore,
+                                        RepeatableChangeType.thisAndAllAfter,
                                     time: arrayElement["time"] as Timestamp,
                                   );
                                   Navigator.of(context).pop(true);
                                 },
                                 child: Text(
                                   AppLocalizations.of(context)!.translate(
-                                    "enter_screen/delete-entry/dialog-button-this-and-all-before",
+                                    "enter_screen/delete-entry/dialog-button-fromnow",
                                   ),
                                   style: Theme.of(context)
                                       .textTheme
