@@ -1,6 +1,6 @@
 ---
-name: Bug report
-about: Create a report to help us improve
+name: Bug report (Default)
+about: Create a default bug ticket
 title: ''
 labels: 'bug, s: dev team, P4'
 assignees: ''
