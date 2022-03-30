@@ -34,15 +34,24 @@ class GeneralRobot {
   ) async {
     expect(target, findsOneWidget);
     sleep(sleepDuration);
+    await tester.tap(target);
+    await tester.pumpAndSettle(settleDuration);
+  }
+
+  Future<void> dragToKey(
+    String targetKey,
+    String viewKey, {
+    Offset customOffset = const Offset(0.0, -4000.0),
+    Duration settleDuration = const Duration(seconds: 2),
+  }) async {
+    final Finder targetFinder = find.byKey(Key(targetKey));
+    final Finder viewFinder = find.byKey(Key(viewKey));
 
     await tester.dragUntilVisible(
-      target,
-      find.byType(ListView),
-      const Offset(0, 500),
+      targetFinder,
+      viewFinder,
+      customOffset,
     );
-    sleep(sleepDuration);
-    await tester.tap(target);
-
     await tester.pumpAndSettle(settleDuration);
   }
 

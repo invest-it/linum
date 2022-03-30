@@ -6,6 +6,7 @@ class SettingsAuthRobot extends GeneralRobot {
   const SettingsAuthRobot(WidgetTester tester) : super(tester);
 
   Future<void> pressLogoutButton() async {
+    await dragToKey("forgotPasswordButton", "settingsListView");
     await pressVisibleButtonByKey("logoutButton");
   }
 }

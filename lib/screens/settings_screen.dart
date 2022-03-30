@@ -72,6 +72,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: ScrollConfiguration(
         behavior: SilentScroll(),
         child: ListView(
+          key: const Key("accountListView"),
           padding: const EdgeInsets.symmetric(
             horizontal: 40.0,
             vertical: 24.0,
