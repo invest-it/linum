@@ -1,4 +1,4 @@
-import 'dart:developer';
+import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -43,7 +43,7 @@ class PinCodeProvider extends ChangeNotifier {
 
   Future<void> initialIsPINActive() async {
     _pinActive = await _isPinActive();
-    log(
+    dev.log(
       _pinActive
           ? "PIN lock is active for $_lastEmail"
           : "PIN lock is NOT ACTIVE for $_lastEmail",
@@ -74,6 +74,8 @@ class PinCodeProvider extends ChangeNotifier {
     _auth = Provider.of<AuthenticationService>(context);
 
     _context = context;
+
+    dev.log("PinCode test");
   }
 
   // If the intent of the PIN lock is not set before the screen is called, assume that we want to check whether user knows the code (classic recall)
@@ -136,11 +138,11 @@ class PinCodeProvider extends ChangeNotifier {
   Future<void> _storePIN(String code) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('${_lastEmail!}.code', code);
-    log(
+    dev.log(
       prefs.getString('${_lastEmail!}.code') ??
           "ERROR: No String stored in prefs!!!",
     );
-    log("PIN HAS BEEN STORED!");
+    dev.log("PIN HAS BEEN STORED!");
     _sessionIsSafe = true;
   }
 
@@ -319,7 +321,7 @@ class PinCodeProvider extends ChangeNotifier {
   Future<void> _checkCode(String _inputCode) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String _pin = prefs.getString('${_lastEmail!}.code') ?? 'ERROR';
-    log("pin:$_pin");
+    dev.log("pin:$_pin");
     if (_pin == _inputCode) {
       _correctCode();
     } else {
@@ -359,7 +361,8 @@ class PinCodeProvider extends ChangeNotifier {
       _sessionIsSafe = false;
       notifyListeners();
     } else {
-      log("No PIN code is active, therefore the session will not be reset.");
+      dev.log(
+          "No PIN code is active, therefore the session will not be reset.");
     }
   }
 
