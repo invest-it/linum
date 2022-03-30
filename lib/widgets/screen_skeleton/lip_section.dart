@@ -22,15 +22,17 @@ class LipSection extends StatelessWidget {
               ClipRRect(
                 child: Container(
                   alignment: Alignment.bottomCenter,
-                  width: proportionateScreenWidthFraction(ScreenFraction.FULL),
+                  width: proportionateScreenWidthFraction(ScreenFraction.full),
                   height: proportionateScreenHeight(164),
                   color: Theme.of(context).colorScheme.primary,
                   child: Baseline(
                     baselineType: TextBaseline.alphabetic,
-                    baseline: (proportionateScreenHeight(164) - 8),
-                    child: Text(lipTitle,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline6),
+                    baseline: proportionateScreenHeight(164) - 8,
+                    child: Text(
+                      lipTitle,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
                   ),
                 ),
               ),
@@ -54,8 +56,7 @@ class LipSection extends StatelessWidget {
         : Stack(
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.zero,
+                borderRadius: const BorderRadius.vertical(
                   bottom: Radius.circular(40),
                 ),
                 child: Container(
@@ -65,10 +66,12 @@ class LipSection extends StatelessWidget {
                   color: Theme.of(context).colorScheme.primary,
                   child: Baseline(
                     baselineType: TextBaseline.alphabetic,
-                    baseline: (proportionateScreenHeight(164) - 12),
-                    child: Text(lipTitle,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline6),
+                    baseline: proportionateScreenHeight(164) - 12,
+                    child: Text(
+                      lipTitle,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
                   ),
                 ),
               ),
@@ -93,13 +96,15 @@ class LipSection extends StatelessWidget {
   }
 
   List<Widget>? _actionHelper(
-      List<Widget Function(BuildContext context)>? functions,
-      BuildContext context) {
-    List<Widget> widgets = [];
-    if (functions != null)
+    List<Widget Function(BuildContext context)>? functions,
+    BuildContext context,
+  ) {
+    final List<Widget> widgets = [];
+    if (functions != null) {
       for (int i = 0; i < functions.length; i++) {
         widgets.add(functions[i](context));
       }
+    }
     return widgets;
   }
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_dynamic_calls
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +34,7 @@ class AlgorithmProvider extends ChangeNotifier {
   void resetCurrentShownMonth() {
     _currentShownMonth =
         DateTime(DateTime.now().year, (DateTime.now().month) + 1)
-            .subtract(Duration(microseconds: 1));
+            .subtract(const Duration(microseconds: 1));
   }
 
   void nextMonth() {
@@ -49,14 +51,18 @@ class AlgorithmProvider extends ChangeNotifier {
     resetCurrentShownMonth();
     _currentSorter = timeNewToOld;
     _currentFilter = AlgorithmProvider.inBetween(
-      Timestamp.fromDate(DateTime(
-        DateTime.now().year,
-        DateTime.now().month,
-      ).subtract(Duration(microseconds: 1))),
-      Timestamp.fromDate(DateTime(
-        DateTime.now().year,
-        DateTime.now().month + 1,
-      )),
+      Timestamp.fromDate(
+        DateTime(
+          DateTime.now().year,
+          DateTime.now().month,
+        ).subtract(const Duration(microseconds: 1)),
+      ),
+      Timestamp.fromDate(
+        DateTime(
+          DateTime.now().year,
+          DateTime.now().month + 1,
+        ),
+      ),
     );
   }
 
@@ -90,11 +96,12 @@ class AlgorithmProvider extends ChangeNotifier {
   /// sort algorithm will be used and so one. If every
   /// sort algorithm says 0, it will return 0.
   static int Function(dynamic, dynamic) combineSorter(
-      List<int Function(dynamic, dynamic)> sorterList) {
-    if (sorterList.length == 0) {
+    List<int Function(dynamic, dynamic)> sorterList,
+  ) {
+    if (sorterList.isEmpty) {
       return (a, b) => 0;
     }
-    int Function(dynamic, dynamic) returnFunc = (a, b) {
+    final int Function(dynamic, dynamic) returnFunc = (a, b) {
       for (int i = 0; i < sorterList.length; i++) {
         if (sorterList[i](a, b) != 0) {
           return sorterList[i](a, b);
@@ -108,11 +115,12 @@ class AlgorithmProvider extends ChangeNotifier {
 
   /// Returns a filter that will remove an element if one filter doesnt let it pass
   static bool Function(dynamic) combineFilterStrict(
-      List<bool Function(dynamic)> filterList) {
-    if (filterList.length == 0) {
+    List<bool Function(dynamic)> filterList,
+  ) {
+    if (filterList.isEmpty) {
       return (a) => false;
     }
-    bool Function(dynamic) returnFunc = (a) {
+    final bool Function(dynamic) returnFunc = (a) {
       for (int i = 0; i < filterList.length; i++) {
         if (filterList[i](a)) {
           return true;
@@ -126,11 +134,12 @@ class AlgorithmProvider extends ChangeNotifier {
 
   /// Returns a filter that will remove an element only if every filter doesnt let it pass
   static bool Function(dynamic) combineFilterGentle(
-      List<bool Function(dynamic)> filterList) {
-    if (filterList.length == 0) {
+    List<bool Function(dynamic)> filterList,
+  ) {
+    if (filterList.isEmpty) {
       return (a) => false;
     }
-    bool Function(dynamic) returnFunc = (a) {
+    final bool Function(dynamic) returnFunc = (a) {
       for (int i = 0; i < filterList.length; i++) {
         if (!filterList[i](a)) {
           return false;
@@ -143,35 +152,35 @@ class AlgorithmProvider extends ChangeNotifier {
   }
 
   static int amountLeastToMost(dynamic a, dynamic b) {
-    return a["amount"].compareTo(b["amount"]);
+    return (a["amount"] as num).compareTo(b["amount"] as num);
   }
 
   static int amountMostToLeast(dynamic b, dynamic a) {
-    return a["amount"].compareTo(b["amount"]);
+    return (a["amount"] as num).compareTo(b["amount"] as num);
   }
 
   static int categoryAlphabetically(dynamic a, dynamic b) {
-    return a["category"].compareTo(b["category"]);
+    return (a["category"] as String).compareTo(b["category"] as String);
   }
 
   static int categoryAlphabeticallyReversed(dynamic b, dynamic a) {
-    return a["category"].compareTo(b["category"]);
+    return (a["category"] as String).compareTo(b["category"] as String);
   }
 
   static int nameAlphabetically(dynamic a, dynamic b) {
-    return a["name"].compareTo(b["name"]);
+    return (a["name"] as String).compareTo(b["name"] as String);
   }
 
   static int nameAlphabeticallyReversed(dynamic b, dynamic a) {
-    return a["name"].compareTo(b["name"]);
+    return (a["name"] as String).compareTo(b["name"] as String);
   }
 
   static int timeNewToOld(dynamic a, dynamic b) {
-    return b["time"].compareTo(a["time"]);
+    return (b["time"] as Timestamp).compareTo(a["time"] as Timestamp);
   }
 
   static int timeOldToNew(dynamic b, dynamic a) {
-    return a["time"].compareTo(b["time"]);
+    return (a["time"] as Timestamp).compareTo(b["time"] as Timestamp);
   }
 
   static bool noFilter(dynamic a) {
@@ -179,33 +188,35 @@ class AlgorithmProvider extends ChangeNotifier {
   }
 
   static bool Function(dynamic) newerThan(Timestamp timestamp) {
-    return (dynamic a) => (a["time"].compareTo(timestamp) <= 0);
+    return (dynamic a) => (a["time"] as Timestamp).compareTo(timestamp) <= 0;
   }
 
   static bool Function(dynamic) olderThan(Timestamp timestamp) {
-    return (dynamic a) => (a["time"].compareTo(timestamp) >= 0);
+    return (dynamic a) => (a["time"] as Timestamp).compareTo(timestamp) >= 0;
   }
 
   static bool Function(dynamic) inBetween(
-      Timestamp timestamp1, Timestamp timestamp2) {
+    Timestamp timestamp1,
+    Timestamp timestamp2,
+  ) {
     return (dynamic a) =>
-        (a["time"].compareTo(timestamp1) <= 0) ||
-        (a["time"].compareTo(timestamp2) >= 0);
+        (a["time"] as Timestamp).compareTo(timestamp1) <= 0 ||
+        (a["time"] as Timestamp).compareTo(timestamp2) >= 0;
   }
 
   static bool Function(dynamic) amountMoreThan(num amount) {
-    return (dynamic a) => (a["amount"].compareTo(amount) > 0);
+    return (dynamic a) => (a["amount"] as num).compareTo(amount) > 0;
   }
 
   static bool Function(dynamic) amountAtLeast(num amount) {
-    return (dynamic a) => (a["amount"].compareTo(amount) >= 0);
+    return (dynamic a) => (a["amount"] as num).compareTo(amount) >= 0;
   }
 
   static bool Function(dynamic) amountLessThan(num amount) {
-    return (dynamic a) => (a["amount"].compareTo(amount) < 0);
+    return (dynamic a) => (a["amount"] as num).compareTo(amount) < 0;
   }
 
   static bool Function(dynamic) amountAtMost(num amount) {
-    return (dynamic a) => (a["amount"].compareTo(amount) <= 0);
+    return (dynamic a) => (a["amount"] as num).compareTo(amount) <= 0;
   }
 }

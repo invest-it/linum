@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:enum_to_string/enum_to_string.dart';
+import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/frontend_functions/country_flag_generator.dart';
 import 'package:linum/frontend_functions/list_divider.dart';
 import 'package:linum/frontend_functions/list_header.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
-import 'package:linum/frontend_functions/silent-scroll.dart';
+import 'package:linum/frontend_functions/silent_scroll.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
@@ -54,21 +54,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
   // final Function ontap = CurrencyList();
 
   Widget build(BuildContext context) {
-    AccountSettingsProvider accountSettingsProvider =
+    final AccountSettingsProvider accountSettingsProvider =
         Provider.of<AccountSettingsProvider>(context);
 
-    ActionLipStatusProvider actionLipStatusProvider =
+    final ActionLipStatusProvider actionLipStatusProvider =
         Provider.of<ActionLipStatusProvider>(context);
 
     return ScreenSkeleton(
       head: 'Account',
-      providerKey: ProviderKey.SETTINGS,
-      initialActionLipStatus: ActionLipStatus.HIDDEN,
+      providerKey: ProviderKey.settings,
       initialActionLipBody: Container(),
       body: ScrollConfiguration(
         behavior: SilentScroll(),
         child: ListView(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             horizontal: 40.0,
             vertical: 24.0,
           ),
@@ -114,7 +113,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             // ListDivider(T: 0),
 
             /// STANDARD CATEGORY
-            ListHeader(
+            const ListHeader(
               'settings_screen/standard-category/label-title',
               tooltipMessage: 'settings_screen/standard-category/label-tooltip',
             ),
@@ -126,30 +125,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   onTap: () {
                     //Request from SoTBurst - this fix is related to issue #46
                     actionLipStatusProvider.setActionLipStatus(
-                        providerKey: ProviderKey.SETTINGS);
+                      providerKey: ProviderKey.settings,
+                    );
 
                     showModalBottomSheet(
                       context: context,
                       builder: (context) {
                         return Container(
                           height: proportionateScreenHeightFraction(
-                              ScreenFraction.HALF),
+                            ScreenFraction.half,
+                          ),
                           color: Theme.of(context).colorScheme.onSecondary,
-                          child: Column(children: [
-                            ListTile(
-                              title: Text(
-                                AppLocalizations.of(context)!.translate(
-                                    'settings_screen/standard-income-selector/label-title'),
+                          child: Column(
+                            children: [
+                              ListTile(
+                                title: Text(
+                                  AppLocalizations.of(context)!.translate(
+                                    'settings_screen/standard-income-selector/label-title',
+                                  ),
+                                ),
                               ),
-                            ),
-                            Container(
-                              height: proportionateScreenHeightFraction(
-                                  ScreenFraction.TWOFIFTHS),
-                              child: _incomeListViewBuilder(
-                                accountSettingsProvider,
+                              SizedBox(
+                                height: proportionateScreenHeightFraction(
+                                  ScreenFraction.twofifths,
+                                ),
+                                child: _incomeListViewBuilder(
+                                  accountSettingsProvider,
+                                ),
                               ),
-                            ),
-                          ]),
+                            ],
+                          ),
                         );
                       },
                     );
@@ -158,32 +163,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     // onTap: ontap(),
                     title: Text(
                       AppLocalizations.of(context)!.translate(
-                              'settings_screen/standard-income-selector/label-title') +
+                            'settings_screen/standard-income-selector/label-title',
+                          ) +
                           AppLocalizations.of(context)!.translate(
-                              AccountSettingsProvider
-                                      .standardCategoryIncomes[EnumToString
-                                          .fromString<StandardCategoryIncome>(
-                                    StandardCategoryIncome.values,
-                                    (accountSettingsProvider.settings[
-                                            "StandardCategoryIncome"] ??
-                                        "None"),
-                                  )]
-                                      ?.label ??
-                                  "ChosenStandardIncome"), // yeah im sorry that is really complicated code. :( It translates the value from firebase
+                            AccountSettingsProvider
+                                    .standardCategoryIncomes[EnumToString
+                                        .fromString<StandardCategoryIncome>(
+                                  StandardCategoryIncome.values,
+                                  accountSettingsProvider.settings[
+                                              "StandardCategoryIncome"]
+                                          as String? ??
+                                      "None",
+                                )]
+                                    ?.label ??
+                                "ChosenStandardIncome",
+                          ), // yeah im sorry that is really complicated code. :( It translates the value from firebase
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                     trailing: Icon(
                       Icons.north_east,
-                      color: createMaterialColor(Color(0xFF97BC4E)),
+                      color: createMaterialColor(const Color(0xFF97BC4E)),
                     ),
                     leading: Icon(
                       AccountSettingsProvider
                               .standardCategoryIncomes[EnumToString.fromString<
                                   StandardCategoryIncome>(
                             StandardCategoryIncome.values,
-                            (accountSettingsProvider
-                                    .settings["StandardCategoryIncome"] ??
-                                "None"),
+                            accountSettingsProvider
+                                        .settings["StandardCategoryIncome"]
+                                    as String? ??
+                                "None",
                           )]
                               ?.icon ??
                           Icons.error,
@@ -195,28 +204,33 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   onTap: () {
                     //Request from SoTBurst - this fix is related to issue #46
                     actionLipStatusProvider.setActionLipStatus(
-                        providerKey: ProviderKey.SETTINGS);
+                      providerKey: ProviderKey.settings,
+                    );
 
                     showModalBottomSheet(
                       context: context,
                       builder: (context) {
                         return Container(
                           height: MediaQuery.of(context).size.height * 0.5,
-                          color: createMaterialColor(Color(0xFFFAFAFA)),
-                          child: Column(children: [
-                            ListTile(
-                              title: Text(
-                                AppLocalizations.of(context)!.translate(
-                                    'settings_screen/standard-expense-selector/label-title'),
+                          color: createMaterialColor(const Color(0xFFFAFAFA)),
+                          child: Column(
+                            children: [
+                              ListTile(
+                                title: Text(
+                                  AppLocalizations.of(context)!.translate(
+                                    'settings_screen/standard-expense-selector/label-title',
+                                  ),
+                                ),
                               ),
-                            ),
-                            Container(
-                              height: MediaQuery.of(context).size.height * 0.4,
-                              child: _expensesListViewBuilder(
-                                accountSettingsProvider,
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.4,
+                                child: _expensesListViewBuilder(
+                                  accountSettingsProvider,
+                                ),
                               ),
-                            ),
-                          ]),
+                            ],
+                          ),
                         );
                       },
                     );
@@ -225,21 +239,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     // onTap: ontap(),
                     title: Text(
                       AppLocalizations.of(context)!.translate(
-                              'settings_screen/standard-expense-selector/label-title') +
+                            'settings_screen/standard-expense-selector/label-title',
+                          ) +
                           AppLocalizations.of(context)!.translate(
-                              AccountSettingsProvider
-                                      .standardCategoryExpenses[EnumToString
-                                          .fromString<StandardCategoryExpense>(
-                                    StandardCategoryExpense.values,
-                                    (accountSettingsProvider.settings[
-                                            "StandardCategoryExpense"] ??
-                                        "None"),
-                                  )]
-                                      ?.label ??
-                                  "ChosenStandardExpense"), // yeah im sorry that is really complicated code. :( It translates the value from firebase
+                            AccountSettingsProvider
+                                    .standardCategoryExpenses[EnumToString
+                                        .fromString<StandardCategoryExpense>(
+                                  StandardCategoryExpense.values,
+                                  accountSettingsProvider.settings[
+                                              "StandardCategoryExpense"]
+                                          as String? ??
+                                      "None",
+                                )]
+                                    ?.label ??
+                                "ChosenStandardExpense",
+                          ), // yeah im sorry that is really complicated code. :( It translates the value from firebase
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
-                    trailing: Icon(
+                    trailing: const Icon(
                       Icons.south_east,
                       color: Colors.red,
                     ),
@@ -248,9 +265,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               .standardCategoryExpenses[EnumToString.fromString<
                                   StandardCategoryExpense>(
                             StandardCategoryExpense.values,
-                            (accountSettingsProvider
-                                    .settings["StandardCategoryExpense"] ??
-                                "None"),
+                            accountSettingsProvider
+                                        .settings["StandardCategoryExpense"]
+                                    as String? ??
+                                "None",
                           )]
                               ?.icon ??
                           Icons.error,
@@ -259,7 +277,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ],
             ),
-            ListDivider(),
+            const ListDivider(),
 
             /// SPECIAL SETTINGS
             /// This setting will be hidden until implememted.
@@ -295,19 +313,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
             // ListDivider(),
 
             /// LANGUAGE SWITCH
-            ListHeader(
+            const ListHeader(
               'settings_screen/language-settings/label-title',
             ),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SwitchListTile(
                   title: Text(
                     AppLocalizations.of(context)!.translate(
-                        'settings_screen/language-settings/label-systemlang'),
+                      'settings_screen/language-settings/label-systemlang',
+                    ),
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
-                  value: accountSettingsProvider.settings['systemLanguage'] ??
+                  value: accountSettingsProvider.settings['systemLanguage']
+                          as bool? ??
                       true,
                   activeColor: Theme.of(context).colorScheme.primary,
                   onChanged: (bool value) {
@@ -319,13 +338,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   direction: Axis.horizontal,
                   children: [
                     ToggleButtons(
-                      children: [
-                        ToggleButtonElement(countryFlag('de')),
-                        ToggleButtonElement(countryFlag('gb')),
-                        ToggleButtonElement(countryFlag('nl')),
-                        ToggleButtonElement(countryFlag('es')),
-                        ToggleButtonElement(countryFlag('fr')),
-                      ],
                       isSelected: [
                         accountSettingsProvider.settings['languageCode'] ==
                             'de-DE',
@@ -363,25 +375,33 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       langSelector = 'en-US';
                                   }
                                   accountSettingsProvider.updateSettings(
-                                      {'languageCode': langSelector});
+                                    {'languageCode': langSelector},
+                                  );
                                 }
                               : null,
                       borderRadius: BorderRadius.circular(32),
+                      children: [
+                        ToggleButtonElement(countryFlag('de')),
+                        ToggleButtonElement(countryFlag('gb')),
+                        ToggleButtonElement(countryFlag('nl')),
+                        ToggleButtonElement(countryFlag('es')),
+                        ToggleButtonElement(countryFlag('fr')),
+                      ],
                     ),
                   ],
                 ),
               ],
             ),
-            ListDivider(),
+            const ListDivider(),
 
             /// YOUR ACCOUNT
-            ListHeader('settings_screen/system-settings/label-title'),
+            const ListHeader('settings_screen/system-settings/label-title'),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // All Authentication Actions (including logOut will be handled via widgets/auth from now on.)
                 LogoutForm(),
-                ForgotPasswordButton(ProviderKey.SETTINGS),
+                ForgotPasswordButton(ProviderKey.settings),
               ],
             ),
             //TODO Add Version Display here
@@ -389,19 +409,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: Text(
-                _packageInfo.appName +
-                    ' Version ' +
-                    _packageInfo.version +
-                    ' (' +
-                    _packageInfo.buildNumber +
-                    ')',
+                '${_packageInfo.appName} Version ${_packageInfo.version} (${_packageInfo.buildNumber})',
                 style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                    color: Theme.of(context).colorScheme.tertiaryContainer,
-                    letterSpacing: 0),
+                      color: Theme.of(context).colorScheme.tertiaryContainer,
+                      letterSpacing: 0,
+                    ),
                 textAlign: TextAlign.center,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
           ],
@@ -413,83 +429,88 @@ class _SettingsScreenState extends State<SettingsScreen> {
   //ListView.builder für Standard Kategorien
 
   ListView _incomeListViewBuilder(
-      AccountSettingsProvider accountSettingsProvider) {
+    AccountSettingsProvider accountSettingsProvider,
+  ) {
     return ListView.builder(
       shrinkWrap: true,
       itemCount: StandardCategoryIncome.values.length,
       itemBuilder: (BuildContext context, int indexBuilder) {
         return ListTile(
-            //leading: Icon(widget.categories[index].icon),
-            title: Text(AppLocalizations.of(context)!.translate(
-                AccountSettingsProvider
-                        .standardCategoryIncomes[
-                            StandardCategoryIncome.values[indexBuilder]]
-                        ?.label ??
-                    "Category")),
-            selected: "StandardCategoryIncome." +
-                    (accountSettingsProvider
-                            .settings["StandardCategoryIncome"] ??
-                        "None") ==
-                StandardCategoryIncome.values[indexBuilder].toString(),
-            onTap: () {
-              List<String> stringArr = StandardCategoryIncome
-                  .values[indexBuilder]
-                  .toString()
-                  .split(".");
-              accountSettingsProvider.updateSettings({
-                stringArr[0]: stringArr[1],
-              });
-              Navigator.pop(context);
-            }
-            // trailing: ,
-            );
+          //leading: Icon(widget.categories[index].icon),
+          title: Text(
+            AppLocalizations.of(context)!.translate(
+              AccountSettingsProvider
+                      .standardCategoryIncomes[
+                          StandardCategoryIncome.values[indexBuilder]]
+                      ?.label ??
+                  "Category",
+            ),
+          ),
+          selected:
+              "StandardCategoryIncome.${accountSettingsProvider.settings["StandardCategoryIncome"] as String? ?? "None"}" ==
+                  StandardCategoryIncome.values[indexBuilder].toString(),
+          onTap: () {
+            final List<String> stringArr = StandardCategoryIncome
+                .values[indexBuilder]
+                .toString()
+                .split(".");
+            accountSettingsProvider.updateSettings({
+              stringArr[0]: stringArr[1],
+            });
+            Navigator.pop(context);
+          },
+          // trailing: ,
+        );
       },
     );
   }
 
   ListView _expensesListViewBuilder(
-      AccountSettingsProvider accountSettingsProvider) {
+    AccountSettingsProvider accountSettingsProvider,
+  ) {
     return ListView.builder(
       shrinkWrap: true,
       itemCount: StandardCategoryExpense.values.length,
       itemBuilder: (BuildContext context, int indexBuilder) {
         return ListTile(
-            //leading: Icon(widget.categories[index].icon),
-            title: Text(AppLocalizations.of(context)!.translate(
-                AccountSettingsProvider
-                        .standardCategoryExpenses[
-                            StandardCategoryExpense.values[indexBuilder]]
-                        ?.label ??
-                    "Category")),
-            selected: "StandardCategoryExpense." +
-                    (accountSettingsProvider
-                            .settings["StandardCategoryExpense"] ??
-                        "None") ==
-                StandardCategoryExpense.values[indexBuilder].toString(),
-            onTap: () {
-              List<String> stringArr = StandardCategoryExpense
-                  .values[indexBuilder]
-                  .toString()
-                  .split(".");
-              accountSettingsProvider.updateSettings({
-                stringArr[0]: stringArr[1],
-              });
-              Navigator.pop(context);
+          //leading: Icon(widget.categories[index].icon),
+          title: Text(
+            AppLocalizations.of(context)!.translate(
+              AccountSettingsProvider
+                      .standardCategoryExpenses[
+                          StandardCategoryExpense.values[indexBuilder]]
+                      ?.label ??
+                  "Category",
+            ),
+          ),
+          selected:
+              "StandardCategoryExpense.${accountSettingsProvider.settings["StandardCategoryExpense"] as String? ?? "None"}" ==
+                  StandardCategoryExpense.values[indexBuilder].toString(),
+          onTap: () {
+            final List<String> stringArr = StandardCategoryExpense
+                .values[indexBuilder]
+                .toString()
+                .split(".");
+            accountSettingsProvider.updateSettings({
+              stringArr[0]: stringArr[1],
             });
+            Navigator.pop(context);
+          },
+        );
       },
     );
   }
 }
 
 // ignore: unused_element
-ListView _currencyChange(_currency) {
+ListView _currencyChange(List<String> currency) {
   return ListView.builder(
     shrinkWrap: true,
-    itemCount: _currency.length,
+    itemCount: currency.length,
     itemBuilder: (BuildContext context, int indexBuilder) {
       return ListTile(
         //leading: Icon(widget.categories[index].icon),
-        title: Text(_currency[indexBuilder]),
+        title: Text(currency[indexBuilder]),
         // onTap: () => _selectCategoryItem(
         //     widget.categoriesCategoryIncome[indexBuilder],
         //     enterScreenProvider),

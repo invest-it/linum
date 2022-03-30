@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/backend_functions/statistic_calculations.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/widgets/abstract/abstract_statistic_panel.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart';
 
 class HomeScreenCard extends StatelessWidget {
   final num balance;
@@ -16,55 +16,63 @@ class HomeScreenCard extends StatelessWidget {
 
   final num expense;
 
-  const HomeScreenCard(
-      {Key? key,
-      required this.balance,
-      required this.income,
-      required this.expense})
-      : super(key: key);
+  const HomeScreenCard({
+    Key? key,
+    required this.balance,
+    required this.income,
+    required this.expense,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    AlgorithmProvider algorithmProvider =
+    final AlgorithmProvider algorithmProvider =
         Provider.of<AlgorithmProvider>(context);
 
-    String langCode = AppLocalizations.of(context)!.locale.languageCode;
+    final String langCode = AppLocalizations.of(context)!.locale.languageCode;
 
-    DateFormat dateFormat = DateFormat('MMMM yyyy', langCode);
+    final DateFormat dateFormat = DateFormat('MMMM yyyy', langCode);
 
     return GestureDetector(
       onHorizontalDragEnd: (DragEndDetails details) {
         // Note: Sensitivity is integer used when you don't want to mess up vertical drag
-        int sensitivity = 1;
+        const int sensitivity = 1;
         if (details.primaryVelocity! > sensitivity) {
           // Right Swipe, going back in time
           algorithmProvider.previousMonth();
           if (algorithmProvider.currentShownMonth.month ==
                   DateTime.now().month &&
               algorithmProvider.currentShownMonth.year == DateTime.now().year) {
-            algorithmProvider
-                .setCurrentFilterAlgorithm(AlgorithmProvider.inBetween(
-              Timestamp.fromDate(DateTime(
-                DateTime.now().year,
-                DateTime.now().month,
-              ).subtract(Duration(microseconds: 1))),
-              Timestamp.fromDate(DateTime(
-                DateTime.now().year,
-                DateTime.now().month + 1,
-              )),
-            ));
-          } else {
-            algorithmProvider
-                .setCurrentFilterAlgorithm(AlgorithmProvider.inBetween(
-              Timestamp.fromDate(
-                algorithmProvider.currentShownMonth
-                    .subtract(Duration(microseconds: 1)),
+            algorithmProvider.setCurrentFilterAlgorithm(
+              AlgorithmProvider.inBetween(
+                Timestamp.fromDate(
+                  DateTime(
+                    DateTime.now().year,
+                    DateTime.now().month,
+                  ).subtract(const Duration(microseconds: 1)),
+                ),
+                Timestamp.fromDate(
+                  DateTime(
+                    DateTime.now().year,
+                    DateTime.now().month + 1,
+                  ),
+                ),
               ),
-              Timestamp.fromDate(DateTime(
-                algorithmProvider.currentShownMonth.year,
-                algorithmProvider.currentShownMonth.month + 1,
-              )),
-            ));
+            );
+          } else {
+            algorithmProvider.setCurrentFilterAlgorithm(
+              AlgorithmProvider.inBetween(
+                Timestamp.fromDate(
+                  algorithmProvider.currentShownMonth
+                      .subtract(const Duration(microseconds: 1)),
+                ),
+                Timestamp.fromDate(
+                  DateTime(
+                    algorithmProvider.currentShownMonth.year,
+                    algorithmProvider.currentShownMonth.month + 1,
+                  ),
+                ),
+              ),
+            );
           }
         } else if (details.primaryVelocity! < -sensitivity) {
           //Left Swipe, going forward in time
@@ -72,29 +80,37 @@ class HomeScreenCard extends StatelessWidget {
           if (algorithmProvider.currentShownMonth.month ==
                   DateTime.now().month &&
               algorithmProvider.currentShownMonth.year == DateTime.now().year) {
-            algorithmProvider
-                .setCurrentFilterAlgorithm(AlgorithmProvider.inBetween(
-              Timestamp.fromDate(DateTime(
-                DateTime.now().year,
-                DateTime.now().month,
-              ).subtract(Duration(microseconds: 1))),
-              Timestamp.fromDate(DateTime(
-                DateTime.now().year,
-                DateTime.now().month + 1,
-              )),
-            ));
-          } else {
-            algorithmProvider
-                .setCurrentFilterAlgorithm(AlgorithmProvider.inBetween(
-              Timestamp.fromDate(
-                algorithmProvider.currentShownMonth
-                    .subtract(Duration(microseconds: 1)),
+            algorithmProvider.setCurrentFilterAlgorithm(
+              AlgorithmProvider.inBetween(
+                Timestamp.fromDate(
+                  DateTime(
+                    DateTime.now().year,
+                    DateTime.now().month,
+                  ).subtract(const Duration(microseconds: 1)),
+                ),
+                Timestamp.fromDate(
+                  DateTime(
+                    DateTime.now().year,
+                    DateTime.now().month + 1,
+                  ),
+                ),
               ),
-              Timestamp.fromDate(DateTime(
-                algorithmProvider.currentShownMonth.year,
-                algorithmProvider.currentShownMonth.month + 1,
-              )),
-            ));
+            );
+          } else {
+            algorithmProvider.setCurrentFilterAlgorithm(
+              AlgorithmProvider.inBetween(
+                Timestamp.fromDate(
+                  algorithmProvider.currentShownMonth
+                      .subtract(const Duration(microseconds: 1)),
+                ),
+                Timestamp.fromDate(
+                  DateTime(
+                    algorithmProvider.currentShownMonth.year,
+                    algorithmProvider.currentShownMonth.month + 1,
+                  ),
+                ),
+              ),
+            );
           }
         }
       },
@@ -108,16 +124,22 @@ class HomeScreenCard extends StatelessWidget {
       onDoubleTap: () {
         // Reset to current month
         algorithmProvider.resetCurrentShownMonth();
-        algorithmProvider.setCurrentFilterAlgorithm(AlgorithmProvider.inBetween(
-          Timestamp.fromDate(DateTime(
-            DateTime.now().year,
-            DateTime.now().month,
-          ).subtract(Duration(microseconds: 1))),
-          Timestamp.fromDate(DateTime(
-            DateTime.now().year,
-            DateTime.now().month + 1,
-          )),
-        ));
+        algorithmProvider.setCurrentFilterAlgorithm(
+          AlgorithmProvider.inBetween(
+            Timestamp.fromDate(
+              DateTime(
+                DateTime.now().year,
+                DateTime.now().month,
+              ).subtract(const Duration(microseconds: 1)),
+            ),
+            Timestamp.fromDate(
+              DateTime(
+                DateTime.now().year,
+                DateTime.now().month + 1,
+              ),
+            ),
+          ),
+        );
       },
       child: Column(
         children: [
@@ -129,21 +151,19 @@ class HomeScreenCard extends StatelessWidget {
               color: Colors.grey[100],
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
                         AppLocalizations.of(context)!.translate(
-                            'home_screen_card/label-current-balance'),
-                        style: MediaQuery.of(context).size.height < 650 ? Theme.of(context).textTheme.headline5 : Theme.of(context).textTheme.headline3,
+                          'home_screen_card/label-current-balance',
+                        ),
+                        style: MediaQuery.of(context).size.height < 650
+                            ? Theme.of(context).textTheme.headline5
+                            : Theme.of(context).textTheme.headline3,
                       ),
                       Text(
-                        '< ' +
-                            dateFormat
-                                .format(algorithmProvider.currentShownMonth) +
-                            ' >',
+                        '< ${dateFormat.format(algorithmProvider.currentShownMonth)} >',
                         style: Theme.of(context).textTheme.bodyText1,
                       ),
                     ],
@@ -155,9 +175,11 @@ class HomeScreenCard extends StatelessWidget {
                     children: [
                       Text(
                         balance.toStringAsFixed(2),
-                        style: MediaQuery.of(context).size.height < 650 ? Theme.of(context).textTheme.headline2 : Theme.of(context).textTheme.headline1,
+                        style: MediaQuery.of(context).size.height < 650
+                            ? Theme.of(context).textTheme.headline2
+                            : Theme.of(context).textTheme.headline1,
                       ),
-                      Text('\€', style: Theme.of(context).textTheme.bodyText1)
+                      Text('€', style: Theme.of(context).textTheme.bodyText1)
                     ],
                   ),
                   Padding(
@@ -168,7 +190,7 @@ class HomeScreenCard extends StatelessWidget {
                         Row(
                           children: [
                             Container(
-                              padding: EdgeInsets.all(5),
+                              padding: const EdgeInsets.all(5),
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: Theme.of(context).colorScheme.primary,
@@ -181,7 +203,7 @@ class HomeScreenCard extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             Column(
@@ -189,19 +211,23 @@ class HomeScreenCard extends StatelessWidget {
                               children: [
                                 Text(
                                   AppLocalizations.of(context)!.translate(
-                                      'home_screen_card/label-income'),
+                                    'home_screen_card/label-income',
+                                  ),
                                   style: Theme.of(context)
                                       .textTheme
                                       .overline!
                                       .copyWith(fontSize: 12),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 5,
                                 ),
-                                Text(income.toStringAsFixed(2) + '\ €',
-                                    style: TextStyle(
-                                        color: Colors.grey[700],
-                                        fontWeight: FontWeight.bold)),
+                                Text(
+                                  '${income.toStringAsFixed(2)} €',
+                                  style: TextStyle(
+                                    color: Colors.grey[700],
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ],
                             )
                           ],
@@ -209,7 +235,7 @@ class HomeScreenCard extends StatelessWidget {
                         Row(
                           children: [
                             Container(
-                              padding: EdgeInsets.all(5),
+                              padding: const EdgeInsets.all(5),
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: Theme.of(context).colorScheme.error,
@@ -222,7 +248,7 @@ class HomeScreenCard extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             Column(
@@ -230,17 +256,18 @@ class HomeScreenCard extends StatelessWidget {
                               children: [
                                 Text(
                                   AppLocalizations.of(context)!.translate(
-                                      'home_screen_card/label-expenses'),
+                                    'home_screen_card/label-expenses',
+                                  ),
                                   style: Theme.of(context)
                                       .textTheme
                                       .overline!
                                       .copyWith(fontSize: 12),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 5,
                                 ),
                                 Text(
-                                  expense.toStringAsFixed(2) + ' \€ ',
+                                  '${expense.toStringAsFixed(2)} € ',
                                   style: TextStyle(
                                     color: Colors.grey[700],
                                     fontWeight: FontWeight.bold,
@@ -266,15 +293,15 @@ class HomeScreenCard extends StatelessWidget {
 class HomeScreenCardManager implements AbstractStatisticPanel {
   late HomeScreenCard _homeScreenCard;
   HomeScreenCardManager() {
-    _homeScreenCard = HomeScreenCard(income: 0, expense: 0, balance: 0);
+    _homeScreenCard = const HomeScreenCard(income: 0, expense: 0, balance: 0);
   }
 
   @override
   void addStatisticData(StatisticsCalculations? statData) {
     if (statData != null) {
-      num income = statData.sumIncomes;
-      num expense = -(statData.sumCosts);
-      num balance = statData.sumBalance;
+      final num income = statData.sumIncomes;
+      final num expense = -statData.sumCosts;
+      final num balance = statData.sumBalance;
       _homeScreenCard =
           HomeScreenCard(income: income, expense: expense, balance: balance);
     }
