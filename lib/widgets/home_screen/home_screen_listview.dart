@@ -509,10 +509,13 @@ class HomeScreenListView implements BalanceDataListView {
                           //badgeColor for future transactions
                           ? arrayElement["repeatId"] != null
                               ? Theme.of(context).colorScheme.tertiary
+                              // ignore: use_full_hex_values_for_flutter_colors
                               : const Color(0x000000)
                           : arrayElement["repeatId"] != null
                               ? Theme.of(context).colorScheme.errorContainer
+                              // ignore: use_full_hex_values_for_flutter_colors
                               : const Color(0x000000),
+                  //cannot use the suggestion as it produces an unwanted white point
                   badgeContent: arrayElement["repeatId"] != null
                       ? Icon(
                           Icons.sync,
