@@ -51,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ontap: () {
                   pinCodeProvider.resetSession();
                 },
+                key: const Key("pinRecallButton"),
               ),
         AppBarAction.fromPreset(DefaultAction.settings),
       ],

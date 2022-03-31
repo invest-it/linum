@@ -362,7 +362,8 @@ class PinCodeProvider extends ChangeNotifier {
       notifyListeners();
     } else {
       dev.log(
-          "No PIN code is active, therefore the session will not be reset.");
+        "No PIN code is active, therefore the session will not be reset.",
+      );
     }
   }
 

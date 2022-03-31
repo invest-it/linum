@@ -7,7 +7,7 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:linum/main.dart' as app;
 
-import 'robots/home_robot.dart';
+import 'robots/home_screen/home_robot.dart';
 import 'robots/onboarding_screen/onboarding_open_message_robot.dart';
 import 'robots/onboarding_screen/onboarding_open_sign_in.dart';
 import 'robots/onboarding_screen/onboarding_open_sign_up.dart';

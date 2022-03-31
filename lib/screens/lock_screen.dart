@@ -91,6 +91,7 @@ class _LockScreenState extends State<LockScreen> {
                           ),
                           child: Material(
                             child: IconButton(
+                              key: const Key("pinlockBackspace"),
                               icon: Icon(
                                 Icons.backspace_outlined,
                                 color: Theme.of(context).colorScheme.secondary,
@@ -156,6 +157,7 @@ class _LockScreenState extends State<LockScreen> {
                 minWidth: double.infinity,
               ),
               child: TextButton(
+                key: const Key("pinActionSwitch"),
                 child: Text(
                   AppLocalizations.of(context)!
                       .translate(screenIntent.actionTitle),

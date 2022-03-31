@@ -308,6 +308,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 if (pinCodeProvider.pinActive)
                   ListTile(
+                    key: const Key("pinChangeSwitch"),
                     dense: true,
                     trailing: const Icon(Icons.arrow_forward_ios_rounded),
                     title: Text(
