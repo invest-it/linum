@@ -148,6 +148,8 @@ class _EnterScreenState extends State<EnterScreen> {
                                 DialogAction(
                                   actionTitle:
                                       "enter_screen/delete-entry/dialog-button-onlyonce",
+                                  // ignore: avoid_redundant_argument_values
+                                  dialogPurpose: DialogPurpose.primary,
                                   function: () {
                                     balanceDataProvider.updateRepeatedBalance(
                                       id: enterScreenProvider.repeatId!,
@@ -169,6 +171,7 @@ class _EnterScreenState extends State<EnterScreen> {
                                 DialogAction(
                                   actionTitle:
                                       "enter_screen/delete-entry/dialog-button-untilnow",
+                                  dialogPurpose: DialogPurpose.danger,
                                   function: () {
                                     balanceDataProvider.updateRepeatedBalance(
                                       id: enterScreenProvider.repeatId!,
@@ -190,6 +193,7 @@ class _EnterScreenState extends State<EnterScreen> {
                                 DialogAction(
                                   actionTitle:
                                       "enter_screen/delete-entry/dialog-button-fromnow",
+                                  dialogPurpose: DialogPurpose.danger,
                                   function: () {
                                     balanceDataProvider.updateRepeatedBalance(
                                       id: enterScreenProvider.repeatId!,
@@ -211,6 +215,7 @@ class _EnterScreenState extends State<EnterScreen> {
                                 DialogAction(
                                   actionTitle:
                                       "enter_screen/delete-entry/dialog-button-allentries",
+                                  dialogPurpose: DialogPurpose.danger,
                                   function: () {
                                     balanceDataProvider.updateRepeatedBalance(
                                       id: enterScreenProvider.repeatId!,
@@ -231,6 +236,7 @@ class _EnterScreenState extends State<EnterScreen> {
                                 DialogAction(
                                   actionTitle:
                                       "enter_screen/delete-entry/dialog-button-cancel",
+                                  dialogPurpose: DialogPurpose.secondary,
                                   function: () {
                                     Navigator.of(context).pop(false);
                                   },
