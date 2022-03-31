@@ -21,7 +21,8 @@ class FABBottomAppBar extends StatefulWidget {
   });
   final List<BottomAppBarItem> items;
   final String centerItemText;
-  final double height = 56; //proportionateScreenHeight(64);
+  final double height = proportionateScreenHeight(64);
+  final double minHeight = 64.0;
   final double iconSize = proportionateScreenHeight(24);
   final Color backgroundColor;
   final Color color;
@@ -88,8 +89,9 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
         ? widget.selectedColor
         : widget.color;
     return Expanded(
-      child: SizedBox(
+      child: Container(
         height: widget.height,
+        constraints: BoxConstraints(minHeight: widget.minHeight),
         child: Material(
           type: MaterialType.transparency,
           child: InkWell(
