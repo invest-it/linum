@@ -195,7 +195,6 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                       },
                     ),
                   ),
-
                   //the user chooses between expenses, income etc.
                   //standard is expenses
                   SizedBox(
@@ -290,6 +289,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                       ],
                     ),
                   ),
+
                   const SizedBox(
                     height: 8,
                   )
