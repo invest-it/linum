@@ -48,155 +48,175 @@ class _EnterScreenState extends State<EnterScreen> {
         //   leading: BackButton(),
         // ),
         resizeToAvoidBottomInset: false,
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            //the top, green lip
-            const EnterScreenTopInputField(),
-            enterScreenProvider.isTransaction
-                ? Center(
-                    child: Column(
+        body: GestureDetector(
+          onHorizontalDragEnd: (DragEndDetails details) {
+            int sensitivity = 1;
+            if (details.primaryVelocity! < -sensitivity) {
+              if (enterScreenProvider.isExpenses) {
+                enterScreenProvider.setIncome();
+              } else if (enterScreenProvider.isIncome) {
+                enterScreenProvider.setTransaction();
+              }
+              print("left swipe");
+            } else if (details.primaryVelocity! > sensitivity) {
+              if (enterScreenProvider.isIncome) {
+                enterScreenProvider.setExpense();
+              } else if (enterScreenProvider.isTransaction) {
+                enterScreenProvider.setIncome();
+              }
+            }
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              //the top, green lip
+              const EnterScreenTopInputField(),
+              enterScreenProvider.isTransaction
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TopBarActionItem(
+                            buttonIcon: Icons.build,
+                            onPressedAction: () => {},
+                          ),
+                          Text(
+                            AppLocalizations.of(context)!
+                                .translate('main/label-wip'),
+                          ),
+                        ],
+                      ),
+                    )
+                  : EnterScreenListViewBuilder(),
+              Expanded(
+                child:
+                    Container(color: Theme.of(context).colorScheme.background),
+              ),
+              /*enterScreenProvider.editMode
+                  ? Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        TopBarActionItem(
-                          buttonIcon: Icons.build,
-                          onPressedAction: () => {},
-                        ),
-                        Text(
-                          AppLocalizations.of(context)!
-                              .translate('main/label-wip'),
+                        ElevatedButton(
+                          onPressed: () {
+                            balanceDataProvider.removeSingleBalance(arrayElement["id"])
+                          },
+                          child: Text("Delete"),
+                          style: ElevatedButton.styleFrom(
+                              side: BorderSide(
+                                  width: 2,
+                                  color: Theme.of(context).colorScheme.error),
+                              textStyle: Theme.of(context).textTheme.button,
+                              primary: Theme.of(context).colorScheme.background,
+                              onPrimary: Theme.of(context).colorScheme.error,
+                              onSurface: Colors.white,
+                              fixedSize: Size(proportionateScreenWidth(300),
+                                  proportionateScreenHeight(40))),
                         ),
                       ],
-                    ),
-                  )
-                : EnterScreenListViewBuilder(),
-            Expanded(
-              child: Container(color: Theme.of(context).colorScheme.background),
-            ),
-            /*enterScreenProvider.editMode
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          balanceDataProvider.removeSingleBalance(arrayElement["id"])
-                        },
-                        child: Text("Delete"),
-                        style: ElevatedButton.styleFrom(
-                            side: BorderSide(
-                                width: 2,
-                                color: Theme.of(context).colorScheme.error),
-                            textStyle: Theme.of(context).textTheme.button,
-                            primary: Theme.of(context).colorScheme.background,
-                            onPrimary: Theme.of(context).colorScheme.error,
-                            onSurface: Colors.white,
-                            fixedSize: Size(proportionateScreenWidth(300),
-                                proportionateScreenHeight(40))),
+                    )
+                  : SizedBox(height: 0),*/
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      textStyle: Theme.of(context).textTheme.button,
+                      primary: Theme.of(context).colorScheme.primary,
+                      onPrimary: Theme.of(context).colorScheme.background,
+                      onSurface: Colors.white,
+                      fixedSize: Size(
+                        proportionateScreenWidth(300),
+                        proportionateScreenHeight(40),
                       ),
-                    ],
-                  )
-                : SizedBox(height: 0),*/
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    textStyle: Theme.of(context).textTheme.button,
-                    primary: Theme.of(context).colorScheme.primary,
-                    onPrimary: Theme.of(context).colorScheme.background,
-                    onSurface: Colors.white,
-                    fixedSize: Size(
-                      proportionateScreenWidth(300),
-                      proportionateScreenHeight(40),
                     ),
-                  ),
-                  onPressed: () {
-                    if (enterScreenProvider.isIncome &&
-                        _amountChooser(enterScreenProvider) <= 0) {
-                      showAlertDialog(context, enterScreenProvider);
-                      log(
-                        "amount was to low: ${_amountChooser(enterScreenProvider)}",
-                      );
-                      return;
-                    }
-                    Navigator.of(context).pop();
+                    onPressed: () {
+                      if (enterScreenProvider.isIncome &&
+                          _amountChooser(enterScreenProvider) <= 0) {
+                        showAlertDialog(context, enterScreenProvider);
+                        log(
+                          "amount was to low: ${_amountChooser(enterScreenProvider)}",
+                        );
+                        return;
+                      }
+                      Navigator.of(context).pop();
 
-                    if (enterScreenProvider.editMode) {
-                      balanceDataProvider.updateSingleBalance(
-                        id: enterScreenProvider.formerId ?? "",
-                        amount: _amountChooser(enterScreenProvider),
-                        category: enterScreenProvider.category,
-                        currency: "EUR",
-                        name: enterScreenProvider.name,
-                        time: Timestamp.fromDate(
-                          selectedDateDateTimeFormatted,
-                        ),
-                      );
-                    } else {
-                      if (enterScreenProvider.repeatDuration == null ||
-                          enterScreenProvider.repeatDurationTyp == null) {
-                        balanceDataProvider.addSingleBalance(
+                      if (enterScreenProvider.editMode) {
+                        balanceDataProvider.updateSingleBalance(
+                          id: enterScreenProvider.formerId ?? "",
                           amount: _amountChooser(enterScreenProvider),
                           category: enterScreenProvider.category,
                           currency: "EUR",
                           name: enterScreenProvider.name,
                           time: Timestamp.fromDate(
-                            DateTime(
-                              selectedDateDateTimeFormatted.year,
-                              selectedDateDateTimeFormatted.month,
-                              selectedDateDateTimeFormatted.day,
-                              selectedDateDateTimeFormatted.hour != 0
-                                  ? selectedDateDateTimeFormatted.hour
-                                  : DateTime.now().hour,
-                              selectedDateDateTimeFormatted.minute != 0
-                                  ? selectedDateDateTimeFormatted.minute
-                                  : DateTime.now().minute,
-                              selectedDateDateTimeFormatted.second != 0
-                                  ? selectedDateDateTimeFormatted.second
-                                  : DateTime.now().second,
-                            ),
+                            selectedDateDateTimeFormatted,
                           ),
                         );
                       } else {
-                        balanceDataProvider.addRepeatedBalance(
-                          amount: _amountChooser(enterScreenProvider),
-                          category: enterScreenProvider.category,
-                          currency: "EUR",
-                          name: enterScreenProvider.name,
-                          initialTime: Timestamp.fromDate(
-                            DateTime(
-                              selectedDateDateTimeFormatted.year,
-                              selectedDateDateTimeFormatted.month,
-                              selectedDateDateTimeFormatted.day,
-                              selectedDateDateTimeFormatted.hour != 0
-                                  ? selectedDateDateTimeFormatted.hour
-                                  : DateTime.now().hour,
-                              selectedDateDateTimeFormatted.minute != 0
-                                  ? selectedDateDateTimeFormatted.minute
-                                  : DateTime.now().minute,
-                              selectedDateDateTimeFormatted.second != 0
-                                  ? selectedDateDateTimeFormatted.second
-                                  : DateTime.now().second,
+                        if (enterScreenProvider.repeatDuration == null ||
+                            enterScreenProvider.repeatDurationTyp == null) {
+                          balanceDataProvider.addSingleBalance(
+                            amount: _amountChooser(enterScreenProvider),
+                            category: enterScreenProvider.category,
+                            currency: "EUR",
+                            name: enterScreenProvider.name,
+                            time: Timestamp.fromDate(
+                              DateTime(
+                                selectedDateDateTimeFormatted.year,
+                                selectedDateDateTimeFormatted.month,
+                                selectedDateDateTimeFormatted.day,
+                                selectedDateDateTimeFormatted.hour != 0
+                                    ? selectedDateDateTimeFormatted.hour
+                                    : DateTime.now().hour,
+                                selectedDateDateTimeFormatted.minute != 0
+                                    ? selectedDateDateTimeFormatted.minute
+                                    : DateTime.now().minute,
+                                selectedDateDateTimeFormatted.second != 0
+                                    ? selectedDateDateTimeFormatted.second
+                                    : DateTime.now().second,
+                              ),
                             ),
-                          ),
-                          repeatDuration: enterScreenProvider.repeatDuration!,
-                          repeatDurationType:
-                              enterScreenProvider.repeatDurationTyp!,
-                        );
+                          );
+                        } else {
+                          balanceDataProvider.addRepeatedBalance(
+                            amount: _amountChooser(enterScreenProvider),
+                            category: enterScreenProvider.category,
+                            currency: "EUR",
+                            name: enterScreenProvider.name,
+                            initialTime: Timestamp.fromDate(
+                              DateTime(
+                                selectedDateDateTimeFormatted.year,
+                                selectedDateDateTimeFormatted.month,
+                                selectedDateDateTimeFormatted.day,
+                                selectedDateDateTimeFormatted.hour != 0
+                                    ? selectedDateDateTimeFormatted.hour
+                                    : DateTime.now().hour,
+                                selectedDateDateTimeFormatted.minute != 0
+                                    ? selectedDateDateTimeFormatted.minute
+                                    : DateTime.now().minute,
+                                selectedDateDateTimeFormatted.second != 0
+                                    ? selectedDateDateTimeFormatted.second
+                                    : DateTime.now().second,
+                              ),
+                            ),
+                            repeatDuration: enterScreenProvider.repeatDuration!,
+                            repeatDurationType:
+                                enterScreenProvider.repeatDurationTyp!,
+                          );
+                        }
                       }
-                    }
-                  },
-                  child: Text(
-                    AppLocalizations.of(context)!
-                        .translate('enter_screen/button-save-entry'),
+                    },
+                    child: Text(
+                      AppLocalizations.of(context)!
+                          .translate('enter_screen/button-save-entry'),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-          ],
+                ],
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+            ],
+          ),
         ),
       ),
     );
