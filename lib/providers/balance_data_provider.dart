@@ -299,9 +299,10 @@ class BalanceDataProvider extends ChangeNotifier {
 
     // remove and upload
     if (repeatedBalanceDataManager.removeRepeatedBalanceFromData(
-      removeType: removeType,
       id: id,
       data: data,
+      removeType: removeType,
+      time: time,
     )) {
       await _balance!.set(data);
       return true;

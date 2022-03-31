@@ -24,9 +24,16 @@ class RepeatedBalanceDataManager {
     RepeatBalanceData repeatBalanceData,
     Map<String, dynamic> data,
   ) {
-    if (repeatBalanceData.category == "" || repeatBalanceData.currency == "") {
+    // conditions
+    if (repeatBalanceData.category == "") {
+      dev.log("repeatBalanceData.category must be != '' ");
       return false;
     }
+    if (repeatBalanceData.currency == "") {
+      dev.log("repeatBalanceData.currency must be != '' ");
+      return false;
+    }
+
     final Map<String, dynamic> singleRepeatedBalance = {
       "amount": repeatBalanceData.amount,
       "category": repeatBalanceData.category,
@@ -223,16 +230,18 @@ class RepeatedBalanceDataManager {
     Timestamp? time,
   }) {
     // conditions
-    if (removeType != RepeatableChangeType.all && time == null) {
+    if (removeType == RepeatableChangeType.thisAndAllBefore && time == null) {
+      dev.log(
+          "removeType == RepeatableChangeType.thisAndAllBefore => time != null");
       return false;
     }
-    if (removeType != RepeatableChangeType.thisAndAllBefore && time != null) {
+    if (removeType == RepeatableChangeType.thisAndAllAfter && time == null) {
+      dev.log(
+          "removeType == RepeatableChangeType.thisAndAllAfter => time != null");
       return false;
     }
-    if (removeType != RepeatableChangeType.thisAndAllAfter && time != null) {
-      return false;
-    }
-    if (removeType != RepeatableChangeType.onlyThisOne && time != null) {
+    if (removeType == RepeatableChangeType.onlyThisOne && time == null) {
+      dev.log("removeType == RepeatableChangeType.onlyThisOne => time != null");
       return false;
     }
 
