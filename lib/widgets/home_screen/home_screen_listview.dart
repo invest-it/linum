@@ -185,7 +185,7 @@ class HomeScreenListView implements BalanceDataListView {
                               selectedDate:
                                   (arrayElement["time"] as Timestamp).toDate(),
                               editMode: true,
-                              repeatId: arrayElement["repeatId"] as String,
+                              repeatId: arrayElement["repeatId"] as String?,
                               formerTime: arrayElement["formerTime"] != null
                                   ? arrayElement["formerTime"] as Timestamp
                                   : arrayElement["time"] as Timestamp,
