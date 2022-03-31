@@ -325,6 +325,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             const ListDivider(),
 
+            const ListHeader(
+              'settings_screen/app-reminder/label-title',
+              tooltipMessage: 'settings_screen/app-reminder/label-tooltip',
+            ),
+            Column(
+              children: [
+                SwitchListTile(
+                  title: Text(
+                    AppLocalizations.of(context)!
+                        .translate("settings_screen/app-reminder/switch-label"),
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  value: false,
+                  activeColor: Theme.of(context).colorScheme.primaryContainer,
+                  onChanged: null,
+                ),
+                if (true)
+                  ListTile(
+                    dense: true,
+                    trailing: const Icon(Icons.arrow_forward_ios_rounded),
+                    title: Text(
+                      AppLocalizations.of(context)!.translate(
+                        "settings_screen/app-reminder/label-change-reminder",
+                      ),
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                  ),
+              ],
+            ),
+            const ListDivider(),
+
             /// SPECIAL SETTINGS
             /// This setting will be hidden until implememted.
             // ListHeader('settings_screen/special-settings/label-title'),
