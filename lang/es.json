@@ -81,6 +81,11 @@
     "settings_screen/standard-account-selector/cash": "Efectivo",
     "settings_screen/standard-account-selector/deposit": "Depósito",
 
+    "settings_screen/pin-lock/label-title": "BLOQUEO DEL PIN",
+    "settings_screen/pin-lock/label-tooltip": "Si el bloqueo del PIN está activo, tendrás que introducir tu código PIN personal al iniciar la aplicación para proteger tus datos.",
+    "settings_screen/pin-lock/switch-label": "Bloqueo del PIN activo",
+    "settings_screen/pin-lock/label-change-pin": "Cambiar el código PIN",
+
     "settings_screen/standard-currency/label-title": "MONEDA ESTÁNDAR",
     "settings_screen/standard-currency/label-tooltip": "Esta moneda se utiliza por defecto para cada nueva transacción. También puede cambiarla individualmente.",
 
@@ -148,6 +153,19 @@
     "academy_screen/label-description": "El programa Invest it! La Academia le ayuda a navegar por el mundo de los negocios y las finanzas. Producimos vídeos de aprendizaje gratuitos e imparciales para usted. ¡Echa un vistazo ahora!",
 
 
+    "lock_screen/initialize/label-title": "Elija su PIN",
+    "lock_screen/initialize/label-button": "Cancelar",
+    "lock_screen/change/label-title": "Elija un nuevo PIN",
+    "lock_screen/change/label-button": "Cancelar",
+    "lock_screen/recall/label-title": "Introduzca el PIN",
+    "lock_screen/recall/label-button": "Cerrar sesión",
+
+    "lock_screen/toast-wrong-code": "El código introducido es incorrecto",
+    "lock_screen/toast-pin-deactivated": "Se ha desactivado el bloqueo del PIN.",
+    "lock_screen/toast-pin-set": "Ha activado correctamente el bloqueo del PIN.",
+    "lock_screen/toast-pin-changed": "El PIN ha sido cambiado con éxito.",
+
+
     "action_lip/forgot-password/logged-out/label-title": "Restablecer contraseña",
     "action_lip/forgot-password/logged-out/label-description": "Por favor, introduzca su dirección de correo electrónico conectada a su cuenta de Linum. Le enviaremos un código de verificación junto con las instrucciones para restablecer su contraseña.",
     "action_lip/forgot-password/logged-out/button-submit": "Solicitar código",
@@ -192,6 +210,21 @@
     "alertdialog/reset-password/message": "Te hemos enviado un enlace para restablecer tu contraseña. Haga clic en el enlace del correo electrónico para establecer una nueva contraseña. Por favor, compruebe también su carpeta de spam.",
     "alertdialog/reset-password/title": "Solicitud enviada",
     "alertdialog/reset-password/action": "Okay",
+
+    "alertdialog/killswitch-recall/title": "¿Está seguro?",
+    "alertdialog/killswitch-recall/message": "Al cerrar la sesión, el bloqueo del PIN se desactiva. Esto le permite iniciar la sesión normalmente con su correo electrónico y contraseña si olvida su código PIN.",
+    "alertdialog/killswitch-recall/action": "Cerrar la sesión y restablecer el PIN",
+    "alertdialog/killswitch-recall/cancel": "Cancelar",
+
+    "alertdialog/killswitch-initialize/title": "¿Está seguro?",
+    "alertdialog/killswitch-initialize/message": "Si cancela el proceso ahora, el bloqueo del PIN se desactivará de nuevo.",
+    "alertdialog/killswitch-initialize/action": "Cancelar",
+    "alertdialog/killswitch-initialize/cancel": "Volver a la edición",
+
+    "alertdialog/killswitch-change/title": "¿Está seguro?",
+    "alertdialog/killswitch-change/message": "Si cancela el proceso ahora, el antiguo PIN seguirá activo.",
+    "alertdialog/killswitch-change/action": "Cancelar",
+    "alertdialog/killswitch-change/cancel": "Volver a la edición",
 
     "auth/invalid-email": "Su correo electrónico o su contraseña no son correctos. ¿Comprobar errores ortográficos?",
     "auth/user-disabled": "El usuario ha sido desactivado por el sistema. Si cree que se trata de un error, póngase en contacto con support@investit-academy.de.",

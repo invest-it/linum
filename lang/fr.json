@@ -81,6 +81,11 @@
     "settings_screen/standard-account-selector/cash": "Espèces",
     "settings_screen/standard-account-selector/deposit": "Dépôt",
 
+    "settings_screen/pin-lock/label-title": "VERROUILLAGE DU PIN",
+    "settings_screen/pin-lock/label-tooltip": "Si le verrouillage du code PIN est activé, vous devrez saisir votre code PIN personnel au démarrage de l'application pour protéger vos données.",
+    "settings_screen/pin-lock/switch-label": "Verrouillage du PIN actif",
+    "settings_screen/pin-lock/label-change-pin": "Modifier le code PIN",
+
     "settings_screen/standard-currency/label-title": "DEVISE STANDARD",
     "settings_screen/standard-currency/label-tooltip": "Cette devise est utilisée par défaut pour chaque nouvelle transaction. Vous pouvez également la modifier individuellement.",
 
@@ -148,6 +153,19 @@
     "academy_screen/label-description": "L'école Invest it! Academy t'aide à t'orienter dans le monde de l'économie et de la finance. Nous produisons pour toi des vidéos d'apprentissage gratuites et impartiales. Regarde maintenant!",
 
 
+    "lock_screen/initialize/label-title": "Choisissez votre code PIN",
+    "lock_screen/initialize/label-button": "Annuler",
+    "lock_screen/change/label-title": "Choisissez votre code PIN",
+    "lock_screen/change/label-button": "Annuler",
+    "lock_screen/recall/label-title": "Veuillez entrer le PIN",
+    "lock_screen/recall/label-button": "Déconnexion",
+
+    "lock_screen/toast-wrong-code": "Le code saisi est incorrect",
+    "lock_screen/toast-pin-deactivated": "Le verrouillage du code PIN a été désactivé.",
+    "lock_screen/toast-pin-set": "Vous avez activé avec succès le verrouillage du NIP !",
+    "lock_screen/toast-pin-changed": "Le code PIN a été modifié avec succès.",
+
+
     "action_lip/forgot-password/logged-out/label-title": "Réinitialiser le mot de passe",
     "action_lip/forgot-password/logged-out/label-description": "Veuillez saisir votre adresse e-mail connectée à votre compte Linum. Nous vous enverrons un code de vérification ainsi que des instructions sur la façon de réinitialiser votre mot de passe.",
     "action_lip/forgot-password/logged-out/button-submit": "Envoyer la demande",
@@ -192,6 +210,21 @@
     "alertdialog/reset-password/message": "Nous t'avons envoyé un lien pour réinitialiser ton mot de passe. Veuillez cliquer sur le lien dans l'e-mail pour définir un nouveau mot de passe. Veuillez également vérifier votre dossier de courrier indésirable.",
     "alertdialog/reset-password/title": "Demande envoyée",
     "alertdialog/reset-password/action": "Okay",
+
+    "alertdialog/killswitch-recall/title": "Êtes-vous sûr?",
+    "alertdialog/killswitch-recall/message": "Lorsque vous vous déconnectez, le verrouillage du code PIN est désactivé. Cela vous permet de vous connecter normalement avec votre e-mail et votre mot de passe si vous oubliez votre code PIN.",
+    "alertdialog/killswitch-recall/action": "Déconnexion et réinitialisation du code PIN",
+    "alertdialog/killswitch-recall/cancel": "Annuler",
+
+    "alertdialog/killswitch-initialize/title": "Êtes-vous sûr?",
+    "alertdialog/killswitch-initialize/message": "Si vous annulez le processus maintenant, le verrouillage du code PIN sera à nouveau désactivé.",
+    "alertdialog/killswitch-initialize/action": "Annuler de toute façon",
+    "alertdialog/killswitch-initialize/cancel": "Retour à l'édition",
+
+    "alertdialog/killswitch-change/title": "Êtes-vous sûr?",
+    "alertdialog/killswitch-change/message": "Si vous annulez le processus maintenant, l'ancien code PIN restera actif.",
+    "alertdialog/killswitch-change/action": "Annuler de toute façon",
+    "alertdialog/killswitch-change/cancel": "Retour à l'édition",
 
     "auth/invalid-email": "Votre adresse électronique ou votre mot de passe n'est pas correct. Vérifier les fautes d'orthographe ?",
     "auth/user-disabled": "L'utilisateur a été désactivé par le système. Si vous pensez qu'il s'agit d'une erreur, veuillez contacter support@investit-academy.de.",

@@ -18,6 +18,11 @@ class ScreenIndexProvider extends ChangeNotifier {
 
   int get pageIndex => _pageIndex;
   void setPageIndex(int index) {
+    setPageIndexSilently(index);
+    notifyListeners();
+  }
+
+  void setPageIndexSilently(int index) {
     _pageIndex = index;
 
     if (_pageIndex == 0) {
@@ -39,7 +44,5 @@ class ScreenIndexProvider extends ChangeNotifier {
         ),
       );
     }
-
-    notifyListeners();
   }
 }
