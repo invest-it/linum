@@ -374,7 +374,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   value: accountSettingsProvider.settings['systemLanguage']
                           as bool? ??
                       true,
-                  activeColor: Theme.of(context).colorScheme.primary,
+                  activeColor: Theme.of(context).colorScheme.primaryContainer,
                   onChanged: (bool value) {
                     accountSettingsProvider
                         .updateSettings({'systemLanguage': value});
