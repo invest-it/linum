@@ -1,11 +1,26 @@
+import 'dart:developer' as dev;
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:linum/backend_functions/date_time_calculation_functions.dart';
+import 'package:linum/balance_data/repeated_balance_data_remover.dart';
+import 'package:linum/balance_data/repeated_balance_data_updater.dart';
 import 'package:linum/models/repeat_balance_data.dart';
+import 'package:linum/models/repeat_duration_type_enum.dart';
+import 'package:linum/models/repeatable_change_type.dart';
 import 'package:uuid/uuid.dart';
 
 class RepeatedBalanceDataManager {
+  late final RepeatedBalanceDataUpdater repeatedBalanceDataUpdater;
+  late final RepeatedBalanceDataRemover repeatedBalanceDataRemover;
+
+  RepeatedBalanceDataManager() {
+    repeatedBalanceDataUpdater = RepeatedBalanceDataUpdater();
+    repeatedBalanceDataRemover = RepeatedBalanceDataRemover();
+  }
+
   /// add a repeated Balance and upload it (the stream will automatically show it in the app again)
-  bool addRepeatedBalance(
+  bool addRepeatedBalanceToData(
     RepeatBalanceData repeatBalanceData,
     Map<String, dynamic> data,
   ) {
@@ -27,6 +42,223 @@ class RepeatedBalanceDataManager {
     (data["repeatedBalance"] as List<dynamic>).add(singleRepeatedBalance);
     return true;
   }
+
+  bool updateRepeatedBalanceInData({
+    required RepeatableChangeType changeType,
+    required String id,
+    required Map<String, dynamic> data,
+    num? amount,
+    String? category,
+    String? currency,
+    String? name,
+    Timestamp? initialTime,
+    int? repeatDuration,
+    RepeatDurationType? repeatDurationType,
+    Timestamp? endTime,
+    bool? resetEndTime,
+    Timestamp? time,
+    Timestamp? newTime,
+  }) {
+    // conditions
+    if (changeType == RepeatableChangeType.thisAndAllBefore) {
+      if (time == null) {
+        dev.log("RepeatableChangeType.thisAndAllBefore => time != null");
+        return false;
+      }
+      if (resetEndTime ?? false || endTime != null) {
+        dev.log(
+          "resetEndTime, endTime are no available for RepeatableChangeType.thisAndAllBefore",
+        );
+        return false;
+      }
+    }
+    if (changeType == RepeatableChangeType.thisAndAllAfter) {
+      if (time == null) {
+        dev.log("RepeatableChangeType.thisAndAllAfter => time != null");
+        return false;
+      }
+      if (initialTime != null) {
+        dev.log(
+          "initialTime is no available for RepeatableChangeType.thisAndAllAfter",
+        );
+        return false;
+      }
+    }
+    if (changeType == RepeatableChangeType.onlyThisOne) {
+      if (time == null) {
+        dev.log("RepeatableChangeType.onlyThisOne => time != null");
+        return false;
+      }
+    }
+
+    bool isEdited = false;
+
+    // check if changes happen
+
+    num? checkedAmount;
+    String? checkedCategory;
+    String? checkedCurrency;
+    String? checkedName;
+    Timestamp? checkedInitialTime;
+    int? checkedRepeatDuration;
+    RepeatDurationType? checkedRepeatDurationType;
+    Timestamp? checkedEndTime;
+    Timestamp? checkedNewTime;
+
+    for (final singleRepeatedBalance
+        in data["repeatedBalance"] as List<dynamic>) {
+      singleRepeatedBalance as Map<String, dynamic>;
+      if (!isEdited && (singleRepeatedBalance["id"] == id)) {
+        if (amount != singleRepeatedBalance["amount"]) {
+          checkedAmount = amount;
+        }
+        if (category != singleRepeatedBalance["category"]) {
+          checkedCategory = category;
+        }
+        if (currency != singleRepeatedBalance["currency"]) {
+          checkedCurrency = currency;
+        }
+        if (name != singleRepeatedBalance["name"]) {
+          checkedName = name;
+        }
+        if (initialTime != singleRepeatedBalance["initialTime"]) {
+          checkedInitialTime = initialTime;
+        }
+        if (repeatDuration != singleRepeatedBalance["repeatDuration"]) {
+          checkedRepeatDuration = repeatDuration;
+        }
+        if (repeatDurationType !=
+            EnumToString.fromString<RepeatDurationType>(
+              RepeatDurationType.values,
+              singleRepeatedBalance["repeatDurationType"] as String,
+            )) {
+          checkedRepeatDurationType = repeatDurationType;
+        }
+        if (endTime != singleRepeatedBalance["endTime"]) {
+          checkedEndTime = endTime;
+        }
+        if (newTime != time) {
+          checkedNewTime = newTime;
+        }
+
+        break;
+      }
+    }
+
+    switch (changeType) {
+      case RepeatableChangeType.all:
+        return repeatedBalanceDataUpdater.updateAll(
+          amount: checkedAmount,
+          category: checkedCategory,
+          changeType: changeType,
+          currency: checkedCurrency,
+          data: data,
+          endTime: checkedEndTime,
+          id: id,
+          initialTime: checkedInitialTime,
+          name: checkedName,
+          newTime: checkedNewTime,
+          repeatDuration: checkedRepeatDuration,
+          repeatDurationType: checkedRepeatDurationType,
+          resetEndTime: resetEndTime,
+          time: time,
+        );
+      case RepeatableChangeType.thisAndAllBefore:
+        return repeatedBalanceDataUpdater.updateThisAndAllBefore(
+          amount: checkedAmount,
+          category: checkedCategory,
+          changeType: changeType,
+          currency: checkedCurrency,
+          data: data,
+          endTime: checkedEndTime,
+          id: id,
+          initialTime: checkedInitialTime,
+          name: checkedName,
+          newTime: checkedNewTime,
+          repeatDuration: checkedRepeatDuration,
+          repeatDurationType: checkedRepeatDurationType,
+          resetEndTime: resetEndTime,
+          time: time!,
+        );
+      case RepeatableChangeType.thisAndAllAfter:
+        return repeatedBalanceDataUpdater.updateThisAndAllAfter(
+          amount: checkedAmount,
+          category: checkedCategory,
+          changeType: changeType,
+          currency: checkedCurrency,
+          data: data,
+          endTime: checkedEndTime,
+          id: id,
+          initialTime: checkedInitialTime,
+          name: checkedName,
+          newTime: checkedNewTime,
+          repeatDuration: checkedRepeatDuration,
+          repeatDurationType: checkedRepeatDurationType,
+          resetEndTime: resetEndTime,
+          time: time!,
+        );
+
+      case RepeatableChangeType.onlyThisOne:
+        return repeatedBalanceDataUpdater.updateOnlyThisOne(
+          amount: checkedAmount,
+          category: checkedCategory,
+          changeType: changeType,
+          currency: checkedCurrency,
+          data: data,
+          endTime: checkedEndTime,
+          id: id,
+          initialTime: checkedInitialTime,
+          name: checkedName,
+          newTime: checkedNewTime,
+          repeatDuration: checkedRepeatDuration,
+          repeatDurationType: checkedRepeatDurationType,
+          resetEndTime: resetEndTime,
+          time: time!,
+        );
+    }
+  }
+
+  bool removeRepeatedBalanceFromData({
+    required RepeatableChangeType removeType,
+    required String id,
+    required Map<String, dynamic> data,
+    Timestamp? time,
+  }) {
+    // conditions
+    if (removeType != RepeatableChangeType.all && time == null) {
+      return false;
+    }
+    if (removeType != RepeatableChangeType.thisAndAllBefore && time != null) {
+      return false;
+    }
+    if (removeType != RepeatableChangeType.thisAndAllAfter && time != null) {
+      return false;
+    }
+    if (removeType != RepeatableChangeType.onlyThisOne && time != null) {
+      return false;
+    }
+
+    switch (removeType) {
+      case RepeatableChangeType.all:
+        return repeatedBalanceDataRemover.removeAll(data, id);
+      case RepeatableChangeType.thisAndAllBefore:
+        return repeatedBalanceDataRemover.removeThisAndAllBefore(
+          data,
+          id,
+          time!,
+        );
+      case RepeatableChangeType.thisAndAllAfter:
+        return repeatedBalanceDataRemover.removeThisAndAllAfter(
+          data,
+          id,
+          time!,
+        );
+      case RepeatableChangeType.onlyThisOne:
+        return repeatedBalanceDataRemover.removeOnlyThisOne(data, id, time!);
+    }
+  }
+
+  // Local Data generation
 
   /// goes trough the repeatable list and uses addSingleRepeatableToBalanceDataLocally
   void addAllRepeatablesToBalanceDataLocally(
@@ -124,37 +356,11 @@ class RepeatedBalanceDataManager {
     }
   }
 
+  // Helpfunctions
+
   bool isMonthly(Map<String, dynamic> singleRepeatedBalance) {
     return singleRepeatedBalance["repeatDurationType"] != null &&
         (singleRepeatedBalance["repeatDurationType"] as String).toUpperCase() ==
             "MONTHS";
-  }
-
-  /// after splitting a repeatable delete copied "changes" attributes that are out of the time limits of that repeatable
-  void removeUnusedChangedAttributes(
-    Map<String, dynamic> singleRepeatedBalance,
-  ) {
-    if (singleRepeatedBalance["changes"] == null) {
-      return;
-    }
-    final List<String> keysToRemove = <String>[];
-    for (final timeStampString
-        in (singleRepeatedBalance["changes"] as Map<String, dynamic>).keys) {
-      if (!DateTime.fromMillisecondsSinceEpoch(
-            (num.tryParse(timeStampString) as int?) ?? 0,
-          ).isBefore(
-            (singleRepeatedBalance["initialTime"] as Timestamp).toDate(),
-          ) &&
-          !DateTime.fromMillisecondsSinceEpoch(
-            (num.tryParse(timeStampString) as int?) ?? 0,
-          ).isAfter(
-            (singleRepeatedBalance["endTime"] as Timestamp).toDate(),
-          )) {
-        keysToRemove.add(timeStampString);
-      }
-    }
-    for (final key in keysToRemove) {
-      (singleRepeatedBalance["changes"] as Map<String, dynamic>).remove(key);
-    }
   }
 }
