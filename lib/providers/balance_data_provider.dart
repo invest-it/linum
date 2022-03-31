@@ -797,7 +797,6 @@ class BalanceDataProvider extends ChangeNotifier {
                 "deleted": true,
               }
             });
-
             singleRepeatedBalance["changed"] = newChanged;
             break;
           }

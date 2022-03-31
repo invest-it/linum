@@ -285,7 +285,8 @@ class HomeScreenListView implements BalanceDataListView {
                                     id: arrayElement["repeatId"] as String,
                                     removeType:
                                         RepeatableChangeType.onlyThisOne,
-                                    time: arrayElement["time"] as Timestamp,
+                                    time:
+                                        arrayElement["formerTime"] as Timestamp,
                                   );
                                   Navigator.of(context).pop(true);
                                 },
@@ -309,7 +310,8 @@ class HomeScreenListView implements BalanceDataListView {
                                     id: arrayElement["repeatId"] as String,
                                     removeType:
                                         RepeatableChangeType.thisAndAllBefore,
-                                    time: arrayElement["time"] as Timestamp,
+                                    time:
+                                        arrayElement["formerTime"] as Timestamp,
                                   );
                                   Navigator.of(context).pop(true);
                                 },
@@ -333,7 +335,8 @@ class HomeScreenListView implements BalanceDataListView {
                                     id: arrayElement["repeatId"] as String,
                                     removeType:
                                         RepeatableChangeType.thisAndAllAfter,
-                                    time: arrayElement["time"] as Timestamp,
+                                    time:
+                                        arrayElement["formerTime"] as Timestamp,
                                   );
                                   Navigator.of(context).pop(true);
                                 },
@@ -356,7 +359,6 @@ class HomeScreenListView implements BalanceDataListView {
                                       .removeRepeatedBalanceUsingId(
                                     id: arrayElement["repeatId"] as String,
                                     removeType: RepeatableChangeType.all,
-                                    time: arrayElement["time"] as Timestamp,
                                   );
                                   Navigator.of(context).pop(true);
                                 },
