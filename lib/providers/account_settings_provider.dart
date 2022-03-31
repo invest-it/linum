@@ -210,6 +210,10 @@ class AccountSettingsProvider extends ChangeNotifier {
 
   @override
   void dispose() {
+    if (settingsListener != null) {
+      settingsListener!.cancel();
+    }
+
     if (_dontDispose-- == 0) {
       super.dispose();
     }
