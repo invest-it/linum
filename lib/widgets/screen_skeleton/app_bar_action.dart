@@ -47,10 +47,12 @@ abstract class AppBarAction {
     required IconData icon,
     required void Function() ontap,
     bool active = true,
+    Key? key,
   }) {
     return IconButton(
       icon: Icon(icon),
       onPressed: () => active ? ontap() : {},
+      key: key,
     );
   }
 

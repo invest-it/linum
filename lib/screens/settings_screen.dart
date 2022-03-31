@@ -9,6 +9,7 @@ import 'package:linum/frontend_functions/silent_scroll.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
+import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/widgets/auth/forgot_password.dart';
 import 'package:linum/widgets/auth/logout_form.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
@@ -16,6 +17,7 @@ import 'package:linum/widgets/settings_screen/toggle_button_element.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
+/// Page Index: 3
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({
     Key? key,
@@ -60,6 +62,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final ActionLipStatusProvider actionLipStatusProvider =
         Provider.of<ActionLipStatusProvider>(context);
 
+    final PinCodeProvider pinCodeProvider =
+        Provider.of<PinCodeProvider>(context);
+
     return ScreenSkeleton(
       head: 'Account',
       providerKey: ProviderKey.settings,
@@ -67,6 +72,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: ScrollConfiguration(
         behavior: SilentScroll(),
         child: ListView(
+          key: const Key("accountListView"),
           padding: const EdgeInsets.symmetric(
             horizontal: 40.0,
             vertical: 24.0,
@@ -275,6 +281,46 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                   ),
                 ),
+              ],
+            ),
+            const ListDivider(),
+
+            const ListHeader(
+              'settings_screen/pin-lock/label-title',
+              tooltipMessage: 'settings_screen/pin-lock/label-tooltip',
+            ),
+            Column(
+              children: [
+                SwitchListTile(
+                  key: const Key("pinActivationSwitch"),
+                  title: Text(
+                    AppLocalizations.of(context)!
+                        .translate("settings_screen/pin-lock/switch-label"),
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  value: pinCodeProvider.pinActive,
+                  activeColor: Theme.of(context).colorScheme.primaryContainer,
+                  onChanged: pinCodeProvider.pinActiveStillLoading
+                      ? null
+                      : (_) {
+                          pinCodeProvider.togglePINLock();
+                        },
+                ),
+                if (pinCodeProvider.pinActive)
+                  ListTile(
+                    key: const Key("pinChangeSwitch"),
+                    dense: true,
+                    trailing: const Icon(Icons.arrow_forward_ios_rounded),
+                    title: Text(
+                      AppLocalizations.of(context)!.translate(
+                        "settings_screen/pin-lock/label-change-pin",
+                      ),
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    onTap: () {
+                      pinCodeProvider.triggerPINChange();
+                    },
+                  ),
               ],
             ),
             const ListDivider(),

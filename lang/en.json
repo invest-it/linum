@@ -82,6 +82,11 @@
     "settings_screen/standard-account-selector/cash": "Cash",
     "settings_screen/standard-account-selector/deposit": "Deposit",
 
+    "settings_screen/pin-lock/label-title": "PIN LOCK",
+    "settings_screen/pin-lock/label-tooltip": "If the PIN lock is active, you will need to enter your personal PIN code upon starting the app to protect your data.",
+    "settings_screen/pin-lock/switch-label": "PIN lock active",
+    "settings_screen/pin-lock/label-change-pin": "Change PIN code",
+
     "settings_screen/standard-currency/label-title": "STANDARD CURRENCY",
     "settings_screen/standard-currency/label-tooltip": "This currency is used by default for every new transaction. You can also change it individually.",
 
@@ -150,6 +155,19 @@
     "academy_screen/label-description": "The Invest it! Academy helps you navigate the world of business and finance. We produce free, unbiased learning videos for you. Take a look now!",
 
 
+    "lock_screen/initialize/label-title": "Choose your PIN",
+    "lock_screen/initialize/label-button": "Cancel",
+    "lock_screen/change/label-title": "Choose a new PIN",
+    "lock_screen/change/label-button": "Cancel",
+    "lock_screen/recall/label-title": "Please enter PIN",
+    "lock_screen/recall/label-button": "Log out",
+
+    "lock_screen/toast-wrong-code": "The entered code is incorrect",
+    "lock_screen/toast-pin-deactivated": "The PIN lock has been deactivated.",
+    "lock_screen/toast-pin-set": "You have successfully activated the PIN lock!",
+    "lock_screen/toast-pin-changed": "The PIN has been changed successfully.",
+
+
     "action_lip/forgot-password/logged-out/label-title": "Reset Password",
     "action_lip/forgot-password/logged-out/label-description": "Please enter your email address connected to your Linum account. We will send you a verification code along with instructions on how to reset your password.",
     "action_lip/forgot-password/logged-out/button-submit": "Request code",
@@ -194,6 +212,21 @@
     "alertdialog/reset-password/message": "We have sent you a link to reset your password. Please click on the link in the email to set a new password. Please also check your spam folder.",
     "alertdialog/reset-password/title": "Request sent.",
     "alertdialog/reset-password/action": "Okay",
+
+    "alertdialog/killswitch-recall/title": "Are you sure?",
+    "alertdialog/killswitch-recall/message": "When you log out, the PIN lock is deactivated. This allows you to log in normally with your email and password if you forget your PIN code.",
+    "alertdialog/killswitch-recall/action": "Log out and reset PIN",
+    "alertdialog/killswitch-recall/cancel": "Cancel",
+
+    "alertdialog/killswitch-initialize/title": "Are you sure?",
+    "alertdialog/killswitch-initialize/message": "If you cancel the process now, the PIN lock will be deactivated again.",
+    "alertdialog/killswitch-initialize/action": "Cancel anyway",
+    "alertdialog/killswitch-initialize/cancel": "Back to editing",
+
+    "alertdialog/killswitch-change/title": "Are you sure?",
+    "alertdialog/killswitch-change/message": "If you cancel the process now, the old PIN will remain active.",
+    "alertdialog/killswitch-change/action": "Cancel anyway",
+    "alertdialog/killswitch-change/cancel": "Back to editing",
 
     "auth/invalid-email": "Your email or password is not correct. Check for spelling errors?",
     "auth/user-disabled": "The user has been deactivated by the system. If you think this is an error, please contact support@investit-academy.de.",

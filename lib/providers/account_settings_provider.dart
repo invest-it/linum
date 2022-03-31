@@ -1,4 +1,5 @@
-import 'dart:developer';
+import 'dart:async';
+import 'dart:developer' as dev;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,8 @@ import 'package:provider/provider.dart';
 class AccountSettingsProvider extends ChangeNotifier {
   /// _balance is the documentReference to get the balance data from the database. It will be null if the constructor isnt ready yet
   DocumentReference<Map<String, dynamic>>? _settings;
+
+  StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>? settingsListener;
 
   /// The uid of the user
   late String _uid;
@@ -148,14 +151,25 @@ class AccountSettingsProvider extends ChangeNotifier {
   void updateAuth(AuthenticationService auth, BuildContext context) {
     if (_uid != auth.uid) {
       _uid = auth.uid;
-
-      if (_uid != "") {
-        _settings =
-            FirebaseFirestore.instance.collection('account_settings').doc(_uid);
+      if (_uid == "") {
+        if (settingsListener != null) {
+          settingsListener!.cancel().then((_) {
+            updateAuthHelper(context);
+          });
+        } else {
+          updateAuthHelper(context);
+        }
       }
-      _createAutoUpdate(context);
-      notifyListeners();
     }
+  }
+
+  void updateAuthHelper(BuildContext context) {
+    if (_uid != "") {
+      _settings =
+          FirebaseFirestore.instance.collection('account_settings').doc(_uid);
+    }
+    _createAutoUpdate(context);
+    notifyListeners();
   }
 
   Future<void> _createAutoUpdate(BuildContext context) async {
@@ -163,28 +177,31 @@ class AccountSettingsProvider extends ChangeNotifier {
       return;
     }
     if (_settings == null) {
-      log("Auto update could not be set up. _settings == null");
+      dev.log("Auto update could not be set up. _settings == null");
       return;
     }
     if (!(await _settings!.get()).exists) {
       await _settings!.set({});
     }
-    _settings!
-        .snapshots()
-        .listen((DocumentSnapshot<Map<String, dynamic>> innerSnapshot) {
-      lastGrabbedData = innerSnapshot.data() ?? {};
+    settingsListener = _settings!.snapshots().listen(
+      (DocumentSnapshot<Map<String, dynamic>> innerSnapshot) {
+        lastGrabbedData = innerSnapshot.data() ?? {};
 
-      final String? langString = lastGrabbedData["languageCode"] as String?;
-      Locale? lang;
-      if (lastGrabbedData["systemLanguage"] == false && langString != null) {
-        final List<String> langArray = langString.split("-");
-        lang = Locale(langArray[0], langArray[1]);
-      }
-      AppLocalizations.of(context)!.load(locale: lang);
-      Provider.of<AuthenticationService>(context, listen: false)
-          .updateLanguageCode(context);
-      notifyListeners();
-    });
+        final String? langString = lastGrabbedData["languageCode"] as String?;
+        Locale? lang;
+        if (lastGrabbedData["systemLanguage"] == false && langString != null) {
+          final List<String> langArray = langString.split("-");
+          lang = Locale(langArray[0], langArray[1]);
+        }
+        AppLocalizations.of(context)!.load(locale: lang);
+        Provider.of<AuthenticationService>(context, listen: false)
+            .updateLanguageCode(context);
+        notifyListeners();
+      },
+      onError: (error, stackTrace) {
+        dev.log("i am evil $error and this is my path $stackTrace");
+      },
+    );
   }
 
   void dontDisposeOneTime() {
@@ -204,9 +221,11 @@ class AccountSettingsProvider extends ChangeNotifier {
 
   Future<bool> updateSettings(Map<String, dynamic> settings) async {
     if (_settings == null) {
-      log("Settings could not be set. _settings == null");
+      dev.log("Settings could not be set. _settings == null");
       return false;
     }
+
+    dev.log("updateSettings called");
 
     _settings!.update(settings);
 

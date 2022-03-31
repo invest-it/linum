@@ -15,14 +15,20 @@ import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
+import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/screens/layout_screen.dart';
 import 'package:linum/screens/onboarding_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void main({bool? testing}) {
+Future<void> main({bool? testing}) async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  if (testing != null && testing) {
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.clear();
+  }
 
   /// Force Portrait Mode
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -41,8 +47,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return _wrapWithBanner(MaterialApp(
-    return MaterialApp(
+    final MaterialApp app = MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Linum',
       theme: ThemeData(
@@ -180,6 +185,12 @@ class MyApp extends StatelessWidget {
         return supportedLocales.first;
       },
     );
+
+    if (testing != null && testing!) {
+      return _wrapWithBanner(app);
+    } else {
+      return app;
+    }
   }
 }
 
@@ -292,6 +303,18 @@ class _MyHomePageState extends State<MyHomePage> {
               ChangeNotifierProvider<ActionLipStatusProvider>(
                 create: (_) => ActionLipStatusProvider(),
               ),
+              ChangeNotifierProxyProvider2<ScreenIndexProvider,
+                  AuthenticationService, PinCodeProvider>(
+                create: (context) => PinCodeProvider(context),
+                update:
+                    (context, screenIndexProvider, auth, oldPinCodeProvider) {
+                  if (oldPinCodeProvider == null) {
+                    return PinCodeProvider(context);
+                  } else {
+                    return oldPinCodeProvider..updateSipAndAuth(context);
+                  }
+                },
+              ),
             ],
             child: OnBoardingOrLayoutScreen(),
           );
@@ -324,13 +347,12 @@ class _MyHomePageState extends State<MyHomePage> {
 // Defines the State of the App (in our MVP test phase, this will be "ALPHA" according
 // to the principles of versioning)
 
-// ignore: unused_element
 Widget _wrapWithBanner(Widget child) {
   return Directionality(
     textDirection: TextDirection.ltr,
     child: Banner(
       location: BannerLocation.bottomEnd,
-      message: 'ALPHA',
+      message: 'TESTING',
       color: Colors.white.withOpacity(1),
       textStyle: const TextStyle(
         fontWeight: FontWeight.w700,
@@ -349,16 +371,17 @@ class OnBoardingOrLayoutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final AuthenticationService auth =
         Provider.of<AuthenticationService>(context);
-
-    return auth.isLoggedIn
-        ? LayoutScreen(key)
-        : MultiProvider(
-            providers: [
-              ChangeNotifierProvider<OnboardingScreenProvider>(
-                create: (_) => OnboardingScreenProvider(),
-              ),
-            ],
-            child: const OnboardingPage(),
-          );
+    if (auth.isLoggedIn) {
+      return LayoutScreen(key);
+    } else {
+      return MultiProvider(
+        providers: [
+          ChangeNotifierProvider<OnboardingScreenProvider>(
+            create: (_) => OnboardingScreenProvider(),
+          ),
+        ],
+        child: const OnboardingPage(),
+      );
+    }
   }
 }

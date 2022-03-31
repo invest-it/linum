@@ -296,6 +296,7 @@ class ForgotPasswordButton extends StatelessWidget {
     }
 
     return OutlinedButton(
+      key: const Key("forgotPasswordButton"),
       onPressed: forgotPWactionLip,
       style: OutlinedButton.styleFrom(
         elevation: 8,

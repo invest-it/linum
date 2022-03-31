@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// The AuthenticationService authenticates the user
 /// and provides the information needed for other classes
@@ -40,11 +41,13 @@ class AuthenticationService extends ChangeNotifier {
       );
 
       if (isEmailVerified) {
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('lastMail', email);
         notifyListeners();
         onComplete("Successfully signed in to Firebase");
       } else {
         await sendVerificationEmail(email, onError: onError);
-        signOut();
+        await signOut();
         if (onNotVerified != null) {
           onNotVerified();
         } else {
@@ -192,6 +195,7 @@ class AuthenticationService extends ChangeNotifier {
   }) async {
     try {
       await _firebaseAuth.signOut();
+
       notifyListeners();
       onComplete("Successfully signed out from Firebase");
     } on FirebaseAuthException catch (e) {
