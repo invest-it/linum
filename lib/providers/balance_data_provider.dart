@@ -3,7 +3,10 @@ import 'dart:developer' as dev;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/backend_functions/date_time_calculation_functions.dart';
 import 'package:linum/backend_functions/statistic_calculations.dart';
+import 'package:linum/balance_data/repeated_balance_data_manager.dart';
+import 'package:linum/balance_data/single_balance_data_manager.dart';
 import 'package:linum/frontend_functions/loading_spinner.dart';
 import 'package:linum/models/repeat_balance_data.dart';
 import 'package:linum/models/repeat_duration_type_enum.dart';
@@ -30,8 +33,15 @@ class BalanceDataProvider extends ChangeNotifier {
 
   static const Duration futureDuration = Duration(days: 30 * 3);
 
+  late final SingleBalanceDataManager singleBalanceDataManager;
+
+  late final RepeatedBalanceDataManager repeatedBalanceDataManager;
+
   /// Creates the BalanceDataProvider. Inparticular it sets [_balance] correctly
   BalanceDataProvider(BuildContext context) {
+    singleBalanceDataManager = SingleBalanceDataManager();
+    repeatedBalanceDataManager = RepeatedBalanceDataManager();
+
     _uid = Provider.of<AuthenticationService>(context, listen: false).uid;
     _algorithmProvider = Provider.of<AlgorithmProvider>(context, listen: false);
     asynConstructor();
@@ -130,63 +140,6 @@ class BalanceDataProvider extends ChangeNotifier {
     return _balance?.snapshots();
   }
 
-  /// Returns a StreamBuilder that builds the ListView from the document-datastream
-  StreamBuilder fillListViewWithData(
-    BalanceDataListView blistview, {
-    required BuildContext context,
-  }) {
-    return StreamBuilder(
-      stream: _dataStream,
-      builder: (ctx, AsyncSnapshot<dynamic> snapshot) {
-        if (snapshot.connectionState == ConnectionState.none) {
-          return const LoadingSpinner();
-        }
-        if (snapshot.data == null) {
-          blistview.setBalanceData(
-            [
-              {"Error": "snapshot.data == null"}
-            ],
-            context: context,
-          );
-          return blistview.listview;
-        } else {
-          final List<List<Map<String, dynamic>>> arrayData =
-              prepareData(snapshot);
-          final List<Map<String, dynamic>> balanceData = arrayData[0];
-
-          // Future there could be an sort algorithm provider
-          // (and possibly also a filter algorithm provided)
-          balanceData.sort(_algorithmProvider.currentSorter);
-          blistview.setBalanceData(balanceData, context: context);
-          return blistview.listview;
-        }
-      },
-    );
-  }
-
-  /// Returns a StreamBuilder that builds the ListView from the document-datastream
-  StreamBuilder fillStatisticPanelWithData(
-    AbstractStatisticPanel statisticPanel,
-  ) {
-    return StreamBuilder(
-      stream: _dataStream,
-      builder: (ctx, AsyncSnapshot<dynamic> snapshot) {
-        if (snapshot.data == null) {
-          statisticPanel.addStatisticData(null);
-          return statisticPanel.returnWidget;
-        } else {
-          final List<List<Map<String, dynamic>>> arrayData =
-              prepareData(snapshot);
-          final List<Map<String, dynamic>> balanceData = arrayData[0];
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(balanceData);
-          statisticPanel.addStatisticData(statisticsCalculations);
-          return statisticPanel.returnWidget;
-        }
-      },
-    );
-  }
-
   /// use the snapshot to get all data from the document.
   /// convert the List<dynamic> to a List<Map<String, dynamic>>
   /// use the repeatedbalancedata to create the missing balance data
@@ -214,7 +167,10 @@ class BalanceDataProvider extends ChangeNotifier {
       repeatedBalance.add(singleRepeatable as Map<String, dynamic>);
     }
 
-    addAllRepeatablesToBalanceDataLocally(repeatedBalance, balanceData);
+    repeatedBalanceDataManager.addAllRepeatablesToBalanceDataLocally(
+      repeatedBalance,
+      balanceData,
+    );
 
     balanceData.removeWhere(_algorithmProvider.currentFilter);
     return [balanceData, repeatedBalance];
@@ -222,49 +178,37 @@ class BalanceDataProvider extends ChangeNotifier {
 
   /// add a single Balance and upload it
   Future<bool> addSingleBalance(SingleBalanceData singleBalance) async {
-    if (_balance == null) {
-      dev.log("_balance is null");
+    // get Data
+    final Map<String, dynamic>? data = await _getData();
+    if (data == null) {
       return false;
     }
-    if (singleBalance.category == "" || singleBalance.currency == "") {
-      return false;
+
+    // add and upload
+    if (singleBalanceDataManager.addSingleBalanceToData(singleBalance, data)) {
+      await _balance!.set(data);
+      return true;
     }
-    final Map<String, dynamic> singleBalanceMap = {
-      "amount": singleBalance.amount,
-      "category": singleBalance.category,
-      "currency": singleBalance.currency,
-      "name": singleBalance.name,
-      "time": singleBalance.time,
-      "id": const Uuid().v4(),
-    };
-    final DocumentSnapshot<Map<String, dynamic>> snapshot =
-        await _balance!.get();
-    final Map<String, dynamic>? dataAsMap = snapshot.data();
-    (dataAsMap!["balanceData"] as List<dynamic>).add(singleBalanceMap);
-    await _balance!.set(dataAsMap);
-    return true;
+
+    dev.log("couldn't add single balance");
+    return false;
   }
 
   /// remove a single Balance and upload it (identified using id)
   Future<bool> removeSingleBalanceUsingId(String id) async {
-    if (_balance == null) {
-      dev.log("_balance is null");
+    // get Data
+    final Map<String, dynamic>? data = await _getData();
+    if (data == null) {
       return false;
     }
 
-    final DocumentSnapshot<Map<String, dynamic>> snapshot =
-        await _balance!.get();
-    final Map<String, dynamic>? data = snapshot.data();
-    final int dataLength = (data!["balanceData"] as List<dynamic>).length;
-    (data["balanceData"] as List<dynamic>).removeWhere((value) {
-      return (value as Map<String, dynamic>)["id"] == id ||
-          value["id"] == null ||
-          value["repeatId"] != null; // Auto delete trash data
-    });
-    if (dataLength > (data["balanceData"] as List<dynamic>).length) {
+    // remove and upload
+    if (singleBalanceDataManager.removeSingleBalanceFromData(id, data)) {
       await _balance!.set(data);
       return true;
     }
+
+    dev.log("couldn't remove single balance");
     return false;
   }
 
@@ -282,72 +226,60 @@ class BalanceDataProvider extends ChangeNotifier {
     String? name,
     Timestamp? time,
   }) async {
-    if (_balance == null) {
-      dev.log("_balance is null");
+    // get Data
+    final Map<String, dynamic>? data = await _getData();
+    if (data == null) {
       return false;
     }
-    if (id == "") {
-      dev.log("no id provided");
-      return false;
+
+    // update and upload
+    if (singleBalanceDataManager.updateSingleBalanceInData(id, data)) {
+      await _balance!.set(data);
+      return true;
     }
-    final DocumentSnapshot<Map<String, dynamic>> snapshot =
-        await _balance!.get();
-    final Map<String, dynamic>? data = snapshot.data();
-    for (final value in data!["balanceData"] as List<dynamic>) {
-      if ((value as Map<String, dynamic>)["id"] == id) {
-        value["amount"] = amount ?? value["amount"];
-        value["category"] = category ?? value["category"];
-        value["currency"] = currency ?? value["currency"];
-        value["name"] = name ?? value["name"];
-        value["time"] = time ?? value["time"];
-      }
-    }
+
     await _balance!.update(data);
     return true;
   }
 
-  /// balance data povider gets disposed after closing the enter screen. we want to skip disposing one time.
-  void dontDisposeOneTime() {
-    _dontDispose++;
-  }
-
-  /// balance data povider gets disposed after closing the enter screen. we want to skip disposing one time.
-  @override
-  void dispose() {
-    if (_dontDispose-- == 0) {
-      super.dispose();
+  Future<Map<String, dynamic>?> _getData() async {
+    // check connection
+    if (_balance == null) {
+      dev.log("_balance is null");
+      return null;
     }
+
+    // get data
+    final DocumentSnapshot<Map<String, dynamic>> snapshot =
+        await _balance!.get();
+    final Map<String, dynamic>? data = snapshot.data();
+
+    // check if data exists
+    if (data == null) {
+      dev.log("Corrupted User Document");
+      return null;
+    }
+
+    return data;
   }
 
   /// add a repeated Balance and upload it (the stream will automatically show it in the app again)
   Future<bool> addRepeatedBalance(
     RepeatBalanceData repeatBalanceData,
   ) async {
-    if (_balance == null) {
-      dev.log("_balance is null");
+    // get Data
+    final Map<String, dynamic>? data = await _getData();
+    if (data == null) {
       return false;
     }
-    if (repeatBalanceData.category == "" || repeatBalanceData.currency == "") {
-      return false;
+
+    if (repeatedBalanceDataManager.addRepeatedBalance(
+        repeatBalanceData, data)) {
+      await _balance!.set(data);
+      return true;
     }
-    final Map<String, dynamic> singleRepeatedBalance = {
-      "amount": repeatBalanceData.amount,
-      "category": repeatBalanceData.category,
-      "currency": repeatBalanceData.currency,
-      "name": repeatBalanceData.name,
-      "initialTime": repeatBalanceData.initialTime,
-      "repeatDuration": repeatBalanceData.repeatDuration,
-      "repeatDurationType":
-          repeatBalanceData.repeatDurationType.toString().substring(19),
-      "endTime": repeatBalanceData.endTime,
-      "id": const Uuid().v4(),
-    };
-    final DocumentSnapshot<Map<String, dynamic>> snapshot =
-        await _balance!.get();
-    final Map<String, dynamic>? data = snapshot.data();
-    (data!["repeatedBalance"] as List<dynamic>).add(singleRepeatedBalance);
-    await _balance!.set(data);
-    return true;
+
+    return false;
   }
 
   /// update a repeated balance
@@ -615,8 +547,10 @@ class BalanceDataProvider extends ChangeNotifier {
             changes.removeWhere((_, value) => value == null);
             newRepeatedBalance.addAll(changes);
 
-            removeUnusedChangedAttributes(newRepeatedBalance);
-            removeUnusedChangedAttributes(oldRepeatedBalance);
+            repeatedBalanceDataManager
+                .removeUnusedChangedAttributes(newRepeatedBalance);
+            repeatedBalanceDataManager
+                .removeUnusedChangedAttributes(oldRepeatedBalance);
 
             isEdited = true;
           }
@@ -675,8 +609,10 @@ class BalanceDataProvider extends ChangeNotifier {
             changes.removeWhere((_, value) => value == null);
             newRepeatedBalance.addAll(changes);
 
-            removeUnusedChangedAttributes(newRepeatedBalance);
-            removeUnusedChangedAttributes(oldRepeatedBalance);
+            repeatedBalanceDataManager
+                .removeUnusedChangedAttributes(newRepeatedBalance);
+            repeatedBalanceDataManager
+                .removeUnusedChangedAttributes(oldRepeatedBalance);
 
             isEdited = true;
           }
@@ -730,8 +666,11 @@ class BalanceDataProvider extends ChangeNotifier {
     return true;
   }
 
-  Timestamp? changeThisAndAllAfterEndTimeHelpFunction(Timestamp? checkedEndTime,
-      Map<String, dynamic> newRepeatedBalance, Duration timeDifference) {
+  Timestamp? changeThisAndAllAfterEndTimeHelpFunction(
+    Timestamp? checkedEndTime,
+    Map<String, dynamic> newRepeatedBalance,
+    Duration timeDifference,
+  ) {
     if (checkedEndTime != null) {
       return checkedEndTime;
     }
@@ -868,7 +807,6 @@ class BalanceDataProvider extends ChangeNotifier {
 
         break;
     }
-    dev.log("");
     await _balance!.set(data);
     return true;
   }
@@ -886,198 +824,77 @@ class BalanceDataProvider extends ChangeNotifier {
     );
   }
 
-  /// goes trough the repeatable list and uses addSingleRepeatableToBalanceDataLocally
-  void addAllRepeatablesToBalanceDataLocally(
-    List<Map<String, dynamic>> repeatedBalance,
-    List<Map<String, dynamic>> balanceData,
-  ) {
-    for (final singleRepeatedBalance in repeatedBalance) {
-      addSingleRepeatableToBalanceDataLocally(
-        singleRepeatedBalance,
-        balanceData,
-      );
-    }
-  }
+  // Fill in data
 
-  /// adds a repeatable for the whole needed duration up to one year with all needed "changes" into the balancedata
-  void addSingleRepeatableToBalanceDataLocally(
-    Map<String, dynamic> singleRepeatedBalance,
-    List<Map<String, dynamic>> balanceData,
-  ) {
-    // dev.log("a");
-    // dev.log("b");
-    // dev.log("c");
-    // dev.log("d");
-
-    DateTime currentTime =
-        (singleRepeatedBalance["initialTime"] as Timestamp).toDate();
-
-    const Duration futureDuration = Duration(days: 365);
-
-    // while we are before 1 years after today / before endTime
-    while ((singleRepeatedBalance["endTime"] != null)
-        // !isbefore => currentime = endtime = true
-        ? !(singleRepeatedBalance["endTime"] as Timestamp).toDate().isBefore(
-              currentTime,
-            )
-        : DateTime.now().add(futureDuration).isAfter(currentTime)) {
-      // convert _internalHashMap to Map
-      /*
-      if (singleRepeatedBalance["changed"] != null) {
-        final Map<String, Map<String, dynamic>> newChanged =
-            <String, Map<String, dynamic>>{};
-        // ignore: avoid_dynamic_calls
-        singleRepeatedBalance["changed"].forEach((outerKey, innerMap) {
-          if (innerMap != null) {
-            newChanged[outerKey as String] = <String, dynamic>{};
-            // ignore: avoid_dynamic_calls
-            innerMap.forEach(
-              (innerKey, innerValue) {
-                newChanged[outerKey]![innerKey as String] = innerValue;
-              },
-            );
-          }
-        });
-
-        singleRepeatedBalance["changed"] = newChanged;
-      }
-      */
-
-      // if "changed" -> "this timestamp" -> deleted exist AND it is true, dont add this balance
-      if (singleRepeatedBalance["changed"] == null ||
-          (singleRepeatedBalance["changed"] as Map<String, dynamic>)[
-                  Timestamp.fromDate(currentTime)
-                      .millisecondsSinceEpoch
-                      .toString()] ==
-              null ||
-          ((singleRepeatedBalance["changed"] as Map<String, dynamic>)[
-                  Timestamp.fromDate(currentTime)
-                      .millisecondsSinceEpoch
-                      .toString()] as Map<String, dynamic>)["deleted"] ==
-              null ||
-          !(((singleRepeatedBalance["changed"]
-                  as Map<String, dynamic>)[Timestamp.fromDate(currentTime).millisecondsSinceEpoch.toString()]
-              as Map<String, dynamic>)["deleted"] as bool)) {
-        // dev.log("${Timestamp.fromDate(currentTime).millisecondsSinceEpoch}");
-        // dev.log(
-        //   (singleRepeatedBalance["changed"] as Map<String, dynamic>?)?[
-        //               Timestamp.fromDate(currentTime)
-        //                   .millisecondsSinceEpoch
-        //                   .toString()]
-        //           ?.toString() ??
-        //       "null",
-        // );
-        if (singleRepeatedBalance["amount"] == 5.59) {
-          // dev.log("${Timestamp.fromDate(currentTime).millisecondsSinceEpoch}");
-          // dev.log("test");
+  /// Returns a StreamBuilder that builds the ListView from the document-datastream
+  StreamBuilder fillListViewWithData(
+    BalanceDataListView blistview, {
+    required BuildContext context,
+  }) {
+    return StreamBuilder(
+      stream: _dataStream,
+      builder: (ctx, AsyncSnapshot<dynamic> snapshot) {
+        if (snapshot.connectionState == ConnectionState.none) {
+          return const LoadingSpinner();
         }
-        balanceData.add({
-          "amount":
-              ((singleRepeatedBalance["changed"] as Map<String, dynamic>?)?[
-                      Timestamp.fromDate(currentTime)
-                          .millisecondsSinceEpoch
-                          .toString()] as Map<String, dynamic>?)?["amount"] ??
-                  singleRepeatedBalance["amount"],
-          "category":
-              ((singleRepeatedBalance["changed"] as Map<String, dynamic>?)?[
-                      Timestamp.fromDate(currentTime)
-                          .millisecondsSinceEpoch
-                          .toString()] as Map<String, dynamic>?)?["category"] ??
-                  singleRepeatedBalance["category"],
-          "currency":
-              ((singleRepeatedBalance["changed"] as Map<String, dynamic>?)?[
-                      Timestamp.fromDate(currentTime)
-                          .millisecondsSinceEpoch
-                          .toString()] as Map<String, dynamic>?)?["currency"] ??
-                  singleRepeatedBalance["currency"],
-          "name": ((singleRepeatedBalance["changed"] as Map<String, dynamic>?)?[
-                  Timestamp.fromDate(currentTime)
-                      .millisecondsSinceEpoch
-                      .toString()] as Map<String, dynamic>?)?["name"] ??
-              singleRepeatedBalance["name"],
-          "time": ((singleRepeatedBalance["changed"] as Map<String, dynamic>?)?[
-                  Timestamp.fromDate(currentTime)
-                      .millisecondsSinceEpoch
-                      .toString()] as Map<String, dynamic>?)?["time"] ??
-              Timestamp.fromDate(currentTime),
-          "repeatId": singleRepeatedBalance["id"],
-          "id": const Uuid().v4(),
-        });
-        if (((singleRepeatedBalance["changed"] as Map<String, dynamic>?)?[
-                Timestamp.fromDate(currentTime)
-                    .millisecondsSinceEpoch
-                    .toString()] as Map<String, dynamic>?)?["time"] !=
-            null) {
-          balanceData.last["formerTime"] = Timestamp.fromDate(currentTime);
+        if (snapshot.data == null) {
+          blistview.setBalanceData(
+            [
+              {"Error": "snapshot.data == null"}
+            ],
+            context: context,
+          );
+          return blistview.listview;
+        } else {
+          final List<List<Map<String, dynamic>>> arrayData =
+              prepareData(snapshot);
+          final List<Map<String, dynamic>> balanceData = arrayData[0];
+
+          // Future there could be an sort algorithm provider
+          // (and possibly also a filter algorithm provided)
+          balanceData.sort(_algorithmProvider.currentSorter);
+          blistview.setBalanceData(balanceData, context: context);
+          return blistview.listview;
         }
-      }
-      currentTime =
-          calculateNextCurrentTime(singleRepeatedBalance, currentTime);
-    }
+      },
+    );
   }
 
-  /// calculate next time step and decide for that if you need monthly steps or seconds as stepsize
-  DateTime calculateNextCurrentTime(
-    Map<String, dynamic> singleRepeatedBalance,
-    DateTime currentTime,
+  /// Returns a StreamBuilder that builds the ListView from the document-datastream
+  StreamBuilder fillStatisticPanelWithData(
+    AbstractStatisticPanel statisticPanel,
   ) {
-    late DateTime newCurrentTime;
-    if (singleRepeatedBalance["repeatDurationType"] == null ||
-        (singleRepeatedBalance["repeatDurationType"] as String).toUpperCase() ==
-            "SECONDS") {
-      newCurrentTime = currentTime.add(
-        Duration(
-          seconds: singleRepeatedBalance["repeatDuration"] as int,
-        ),
-      );
-    } else if ((singleRepeatedBalance["repeatDurationType"] as String)
-            .toUpperCase() ==
-        "MONTHS") {
-      newCurrentTime = currentTimeRecalculator(
-        currentTime.year,
-        currentTime.month +
-            (singleRepeatedBalance["repeatDuration"] as num).floor(),
-        (singleRepeatedBalance["initialTime"] as Timestamp).toDate().day,
-      );
-    }
-    return newCurrentTime;
+    return StreamBuilder(
+      stream: _dataStream,
+      builder: (ctx, AsyncSnapshot<dynamic> snapshot) {
+        if (snapshot.data == null) {
+          statisticPanel.addStatisticData(null);
+          return statisticPanel.returnWidget;
+        } else {
+          final List<List<Map<String, dynamic>>> arrayData =
+              prepareData(snapshot);
+          final List<Map<String, dynamic>> balanceData = arrayData[0];
+          final StatisticsCalculations statisticsCalculations =
+              StatisticsCalculations(balanceData);
+          statisticPanel.addStatisticData(statisticsCalculations);
+          return statisticPanel.returnWidget;
+        }
+      },
+    );
   }
 
-  /// avoid errors with 29th 30th and 31th
-  DateTime currentTimeRecalculator(int year, int month, int day) {
-    final DateTime temp = DateTime(year, month, day);
-    if (temp.month == month || month == 13) {
-      return temp;
-    } else {
-      return DateTime(temp.year, temp.month).subtract(const Duration(days: 1));
-    }
+  // Dispose
+
+  /// balance data povider gets disposed after closing the enter screen. we want to skip disposing one time.
+  void dontDisposeOneTime() {
+    _dontDispose++;
   }
 
-  /// after splitting a repeatable delete copied "changes" attributes that are out of the time limits of that repeatable
-  void removeUnusedChangedAttributes(
-    Map<String, dynamic> singleRepeatedBalance,
-  ) {
-    if (singleRepeatedBalance["changes"] == null) {
-      return;
-    }
-    final List<String> keysToRemove = <String>[];
-    for (final timeStampString
-        in (singleRepeatedBalance["changes"] as Map<String, dynamic>).keys) {
-      if (!DateTime.fromMillisecondsSinceEpoch(
-            (num.tryParse(timeStampString) as int?) ?? 0,
-          ).isBefore(
-            (singleRepeatedBalance["initialTime"] as Timestamp).toDate(),
-          ) &&
-          !DateTime.fromMillisecondsSinceEpoch(
-            (num.tryParse(timeStampString) as int?) ?? 0,
-          ).isAfter(
-            (singleRepeatedBalance["endTime"] as Timestamp).toDate(),
-          )) {
-        keysToRemove.add(timeStampString);
-      }
-    }
-    for (final key in keysToRemove) {
-      (singleRepeatedBalance["changes"] as Map<String, dynamic>).remove(key);
+  /// balance data povider gets disposed after closing the enter screen. we want to skip disposing one time.
+  @override
+  void dispose() {
+    if (_dontDispose-- == 0) {
+      super.dispose();
     }
   }
 
