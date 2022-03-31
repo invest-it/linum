@@ -12,7 +12,6 @@ class RepeatBalanceData {
 
   final Timestamp _initialTime;
   final Timestamp? _endTime;
-  Timestamp? _lastUpdate;
   final int _repeatDuration;
   final RepeatDurationType _repeatDurationType;
 
@@ -24,7 +23,6 @@ class RepeatBalanceData {
     required String name,
     required Timestamp initialTime,
     Timestamp? endTime,
-    Timestamp? lastUpdate,
     required int repeatDuration,
     RepeatDurationType repeatDurationType = RepeatDurationType.seconds,
   })  : _amount = amount,
@@ -34,7 +32,6 @@ class RepeatBalanceData {
         _name = name,
         _initialTime = initialTime,
         _endTime = endTime,
-        _lastUpdate = lastUpdate,
         _repeatDuration = repeatDuration,
         _repeatDurationType = repeatDurationType;
 
@@ -47,7 +44,6 @@ class RepeatBalanceData {
     String? repeatId,
     Timestamp? initialTime,
     Timestamp? endTime,
-    Timestamp? lastUpdate,
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
   }) {
@@ -59,7 +55,6 @@ class RepeatBalanceData {
       name: name ?? _name,
       initialTime: initialTime ?? _initialTime,
       endTime: endTime ?? _endTime,
-      lastUpdate: lastUpdate ?? _lastUpdate,
       repeatDuration: repeatDuration ?? _repeatDuration,
       repeatDurationType: repeatDurationType ?? _repeatDurationType,
     );
@@ -74,7 +69,6 @@ class RepeatBalanceData {
       '_name': _name,
       '_initialTime': _initialTime,
       '_endTime': _endTime,
-      '_lastUpdate': _lastUpdate,
       '_repeatDuration': _repeatDuration,
       '_repeatDurationType': _repeatDurationType,
     };
@@ -89,7 +83,6 @@ class RepeatBalanceData {
       name: map['name'] as String,
       initialTime: map['initialTime'] as Timestamp,
       endTime: map['endTime'] as Timestamp?,
-      lastUpdate: map['lastUpdate'] as Timestamp,
       repeatDuration: map['repeatDuration'] as int,
       repeatDurationType: map['repeatDurationType'] as RepeatDurationType? ??
           RepeatDurationType.seconds,
@@ -98,7 +91,7 @@ class RepeatBalanceData {
 
   @override
   String toString() {
-    return 'RepeatBalanceData(_amount: $_amount, _category: $_category, _currency: $_currency, _id: $_id, _name: $_name, _initialTime: $_initialTime, _endTime: $_endTime, _lastUpdate: $_lastUpdate, _repeatDuration: $_repeatDuration, _repeatDurationType: $_repeatDurationType)';
+    return 'RepeatBalanceData(_amount: $_amount, _category: $_category, _currency: $_currency, _id: $_id, _name: $_name, _initialTime: $_initialTime, _endTime: $_endTime, _repeatDuration: $_repeatDuration, _repeatDurationType: $_repeatDurationType)';
   }
 
   @override
@@ -113,7 +106,6 @@ class RepeatBalanceData {
         other._name == _name &&
         other._initialTime == _initialTime &&
         other._endTime == _endTime &&
-        other._lastUpdate == _lastUpdate &&
         other._repeatDuration == _repeatDuration &&
         other._repeatDurationType == _repeatDurationType;
   }
@@ -127,7 +119,6 @@ class RepeatBalanceData {
         _name.hashCode ^
         _initialTime.hashCode ^
         _endTime.hashCode ^
-        _lastUpdate.hashCode ^
         _repeatDuration.hashCode ^
         _repeatDurationType.hashCode;
   }
@@ -139,7 +130,6 @@ class RepeatBalanceData {
   String get name => _name;
   Timestamp get initialTime => _initialTime;
   Timestamp? get endTime => _endTime;
-  Timestamp? get lastUpdate => _lastUpdate;
   int get repeatDuration => _repeatDuration;
   RepeatDurationType get repeatDurationType => _repeatDurationType;
 }
