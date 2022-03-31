@@ -353,10 +353,10 @@ class BalanceDataProvider extends ChangeNotifier {
   Future<bool> updateRepeatedBalance({
     required String id,
     required RepeatableChangeType changeType,
-    num? checkedAmount,
-    String? checkedCategory,
-    String? checkedCurrency,
-    String? checkedName,
+    num? amount,
+    String? category,
+    String? currency,
+    String? name,
     Timestamp? initialTime,
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
@@ -387,13 +387,48 @@ class BalanceDataProvider extends ChangeNotifier {
     if (data == null) {
       return false;
     }
+    num? checkedAmount;
+    String? checkedCategory;
+    String? checkedCurrency;
+    String? checkedName;
+    Timestamp? checkedInitialTime;
+    int? checkedRepeatDuration;
+    RepeatDurationType? checkedRepeatDurationType;
+    Timestamp? checkedEndTime;
+
     for (final singleRepeatedBalance
         in data["repeatedBalance"] as List<dynamic>) {
       singleRepeatedBalance as Map<String, dynamic>;
       if (!isEdited && (singleRepeatedBalance["id"] == id)) {
-        if (checkedAmount == singleRepeatedBalance["amount"]) {
-          checkedAmount = null;
+        if (amount != singleRepeatedBalance["amount"]) {
+          checkedAmount = amount;
         }
+        if (category != singleRepeatedBalance["category"]) {
+          checkedCategory = category;
+        }
+        if (currency != singleRepeatedBalance["currency"]) {
+          checkedCurrency = currency;
+        }
+        if (name != singleRepeatedBalance["name"]) {
+          checkedName = name;
+        }
+        if (initialTime != singleRepeatedBalance["initialTime"]) {
+          checkedInitialTime = initialTime;
+        }
+        if (repeatDuration != singleRepeatedBalance["repeatDuration"]) {
+          checkedRepeatDuration = repeatDuration;
+        }
+        if (repeatDurationType !=
+            EnumToString.fromString<RepeatDurationType>(
+              RepeatDurationType.values,
+              singleRepeatedBalance["repeatDurationType"] as String,
+            )) {
+          checkedRepeatDurationType = repeatDurationType;
+        }
+        if (endTime != singleRepeatedBalance["endTime"]) {
+          checkedEndTime = endTime;
+        }
+
         break;
       }
     }
@@ -422,38 +457,39 @@ class BalanceDataProvider extends ChangeNotifier {
               singleRepeatedBalance["name"] = checkedName;
               isEdited = true;
             }
-            if (initialTime != null &&
-                initialTime != singleRepeatedBalance["initialTime"]) {
-              singleRepeatedBalance["initialTime"] = initialTime;
+            if (checkedInitialTime != null &&
+                checkedInitialTime != singleRepeatedBalance["initialTime"]) {
+              singleRepeatedBalance["initialTime"] = checkedInitialTime;
               isEdited = true;
             }
-            if (repeatDuration != null &&
-                repeatDuration != singleRepeatedBalance["repeatDuration"]) {
-              singleRepeatedBalance["repeatDuration"] = repeatDuration;
+            if (checkedRepeatDuration != null &&
+                checkedRepeatDuration !=
+                    singleRepeatedBalance["repeatDuration"]) {
+              singleRepeatedBalance["repeatDuration"] = checkedRepeatDuration;
               isEdited = true;
             }
-            if (repeatDurationType != null &&
-                repeatDurationType !=
+            if (checkedRepeatDurationType != null &&
+                checkedRepeatDurationType !=
                     EnumToString.fromString<RepeatDurationType>(
                       RepeatDurationType.values,
                       singleRepeatedBalance["repeatDurationType"] as String,
                     )) {
               singleRepeatedBalance["repeatDuration"] =
-                  repeatDurationType.toString().substring(19);
+                  checkedRepeatDurationType.toString().substring(19);
               isEdited = true;
             }
-            if (endTime != null &&
-                endTime != singleRepeatedBalance["endTime"]) {
-              singleRepeatedBalance["endTime"] = endTime;
+            if (checkedEndTime != null &&
+                checkedEndTime != singleRepeatedBalance["endTime"]) {
+              singleRepeatedBalance["endTime"] = checkedEndTime;
               isEdited = true;
             }
             if (resetEndTime != null && resetEndTime) {
               singleRepeatedBalance["endTime"] = null;
               isEdited = true;
             }
-            if (initialTime != null ||
-                repeatDuration != null ||
-                repeatDurationType != null) {
+            if (checkedInitialTime != null ||
+                checkedRepeatDuration != null ||
+                checkedRepeatDurationType != null) {
               // FUTURE lazy approach. might think of something clever in the future
               // (what if repeat duration changes. single repeatable changes change time or not? use the nth? complicated...)
               singleRepeatedBalance.remove("changed");
@@ -521,9 +557,9 @@ class BalanceDataProvider extends ChangeNotifier {
               "category": checkedCategory,
               "currency": checkedCurrency,
               "name": checkedName,
-              "initialTime": initialTime,
-              "repeatDuration": repeatDuration,
-              "repeatDurationType": repeatDurationType,
+              "initialTime": checkedInitialTime,
+              "repeatDuration": checkedRepeatDuration,
+              "repeatDurationType": checkedRepeatDurationType,
               "endTime": time,
             };
             changes.removeWhere((_, value) => value == null);
@@ -574,8 +610,8 @@ class BalanceDataProvider extends ChangeNotifier {
               "currency": checkedCurrency,
               "name": checkedName,
               "initialTime": time,
-              "repeatDuration": repeatDuration,
-              "repeatDurationType": repeatDurationType,
+              "repeatDuration": checkedRepeatDuration,
+              "repeatDurationType": checkedRepeatDurationType,
             };
             changes.removeWhere((_, value) => value == null);
             newRepeatedBalance.addAll(changes);
@@ -590,6 +626,7 @@ class BalanceDataProvider extends ChangeNotifier {
 
         break;
       case RepeatableChangeType.onlyThisOne:
+        dev.log("test");
         for (final singleRepeatedBalance
             in data["repeatedBalance"] as List<dynamic>) {
           singleRepeatedBalance as Map<String, dynamic>;
@@ -598,9 +635,20 @@ class BalanceDataProvider extends ChangeNotifier {
               singleRepeatedBalance["changed"] =
                   <String, Map<String, dynamic>>{};
             }
-            (singleRepeatedBalance["changed"]
-                    as Map<String, Map<String, dynamic>>)
-                .addAll({
+            Map<String, Map<String, dynamic>> newChanged =
+                <String, Map<String, dynamic>>{};
+            // ignore: avoid_dynamic_calls
+            singleRepeatedBalance["changed"].forEach((outerKey, innerMap) {
+              newChanged[outerKey as String] = <String, dynamic>{};
+              // ignore: avoid_dynamic_calls
+              innerMap.forEach(
+                (innerKey, innerValue) {
+                  newChanged[outerKey]![innerKey as String] = innerValue;
+                },
+              );
+            });
+
+            newChanged.addAll({
               time!.millisecondsSinceEpoch.toString(): {
                 "amount": checkedAmount,
                 "category": checkedCategory,
@@ -608,13 +656,12 @@ class BalanceDataProvider extends ChangeNotifier {
                 "name": checkedName,
               }
             });
-            (singleRepeatedBalance["changed"]
-                        as Map<String, Map<String, dynamic>>)[
-                    time.millisecondsSinceEpoch.toString()]
+            newChanged[time.millisecondsSinceEpoch.toString()]
                 ?.removeWhere((_, value) => value == null);
+            singleRepeatedBalance["changed"] = newChanged;
             isEdited = true;
+            break;
           }
-          break;
         }
     }
 

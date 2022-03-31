@@ -144,10 +144,10 @@ class _EnterScreenState extends State<EnterScreen> {
                         balanceDataProvider.updateRepeatedBalance(
                           id: enterScreenProvider.repeatId!,
                           changeType: RepeatableChangeType.onlyThisOne,
-                          checkedAmount: _amountChooser(enterScreenProvider),
-                          checkedCategory: enterScreenProvider.category,
-                          checkedCurrency: "EUR",
-                          checkedName: enterScreenProvider.name,
+                          amount: _amountChooser(enterScreenProvider),
+                          category: enterScreenProvider.category,
+                          currency: "EUR",
+                          name: enterScreenProvider.name,
                           time: Timestamp.fromDate(
                             selectedDateDateTimeFormatted,
                           ),
