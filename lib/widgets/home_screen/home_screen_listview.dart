@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_dynamic_calls
 import 'dart:developer' as dev;
 
+import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
@@ -493,60 +494,102 @@ class HomeScreenListView implements BalanceDataListView {
                               )
                             ],
                           ),
+
+                          arrayElement["repeatId"] != null
+                        ? Positioned(
+                            bottom: 18,
+                            left: 18,
+                            child: Icon(Icons.repeat,
+                                color: Theme.of(context).colorScheme.secondary),
+                          )
+                        : SizedBox(),
                         );
                       });*/
 
               child: ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: isFutureItem
-                      ? arrayElement['amount'] as num > 0
-                          ? Theme.of(context)
-                              .colorScheme
-                              .tertiary // FUTURE INCOME BACKGROUND
-                          : Theme.of(context).colorScheme.errorContainer
-                      // FUTURE EXPENSE BACKGROUND
-                      : arrayElement['amount'] as num > 0
-                          ? Theme.of(context)
-                              .colorScheme
-                              .secondary // PRESENT INCOME BACKGROUND
-                          : Theme.of(context)
-                              .colorScheme
-                              .secondary, // PRESENT EXPENSE BACKGROUND
-                  child: arrayElement['amount'] as num > 0
+                leading: Badge(
+                  padding: const EdgeInsets.all(2),
+                  toAnimate: false,
+                  position: const BadgePosition(bottom: 23, start: 23),
+                  elevation: 1,
+                  badgeColor: isFutureItem && arrayElement["repeatId"] != null
+                      ? Theme.of(context).colorScheme.tertiaryContainer
+                      //badgeColor for current transactions
+                      : arrayElement["amount"] as num > 0
+                          //badgeColor for future transactions
+                          ? arrayElement["repeatId"] != null
+                              ? Theme.of(context).colorScheme.tertiary
+                              // ignore: use_full_hex_values_for_flutter_colors
+                              : const Color(0x000000)
+                          : arrayElement["repeatId"] != null
+                              ? Theme.of(context).colorScheme.errorContainer
+                              // ignore: use_full_hex_values_for_flutter_colors
+                              : const Color(0x000000),
+                  //cannot use the suggestion as it produces an unwanted white point
+                  badgeContent: arrayElement["repeatId"] != null
                       ? Icon(
-                          AccountSettingsProvider
-                                  .standardCategoryIncomes[
-                                      EnumToString.fromString(
-                                StandardCategoryIncome.values,
-                                arrayElement['category'] as String,
-                              )]
-                                  ?.icon ??
-                              Icons.error,
+                          Icons.autorenew_rounded,
                           color: isFutureItem
-                              ? Theme.of(context)
-                                  .colorScheme
-                                  .onPrimary // FUTURE INCOME ICON
+                              ? arrayElement["amount"] as num > 0
+                                  ? Theme.of(context).colorScheme.tertiary
+                                  : Theme.of(context).colorScheme.errorContainer
                               : Theme.of(context)
                                   .colorScheme
-                                  .tertiary, // PRESENT INCOME ICON
+                                  .secondaryContainer,
+                          size: 18,
                         )
-                      : Icon(
-                          AccountSettingsProvider
-                                  .standardCategoryExpenses[
-                                      EnumToString.fromString(
-                                StandardCategoryExpense.values,
-                                arrayElement['category'] as String,
-                              )]
-                                  ?.icon ??
-                              Icons.error,
-                          color: isFutureItem
-                              ? Theme.of(context)
-                                  .colorScheme
-                                  .onPrimary // FUTURE EXPENSE ICON
-                              : Theme.of(context)
-                                  .colorScheme
-                                  .errorContainer, // PRESENT EXPENSE ICON
-                        ),
+                      : const SizedBox(),
+                  child: CircleAvatar(
+                    backgroundColor: isFutureItem
+                        ? arrayElement['amount'] as num > 0
+                            ? Theme.of(context)
+                                .colorScheme
+                                .tertiary // FUTURE INCOME BACKGROUND
+                            : Theme.of(context).colorScheme.errorContainer
+                        // FUTURE EXPENSE BACKGROUND
+                        : arrayElement['amount'] as num > 0
+                            ? Theme.of(context)
+                                .colorScheme
+                                .secondary // PRESENT INCOME BACKGROUND
+                            : Theme.of(context)
+                                .colorScheme
+                                .secondary, // PRESENT EXPENSE BACKGROUND
+                    child: arrayElement['amount'] as num > 0
+                        ? Icon(
+                            AccountSettingsProvider
+                                    .standardCategoryIncomes[
+                                        EnumToString.fromString(
+                                  StandardCategoryIncome.values,
+                                  arrayElement['category'] as String,
+                                )]
+                                    ?.icon ??
+                                Icons.error,
+                            color: isFutureItem
+                                ? Theme.of(context)
+                                    .colorScheme
+                                    .onPrimary // FUTURE INCOME ICON
+                                : Theme.of(context)
+                                    .colorScheme
+                                    .tertiary, // PRESENT INCOME ICON
+                          )
+                        : Icon(
+                            AccountSettingsProvider
+                                    .standardCategoryExpenses[
+                                        EnumToString.fromString(
+                                  StandardCategoryExpense.values,
+                                  arrayElement['category'] as String,
+                                )]
+                                    ?.icon ??
+                                Icons.error,
+                            color: isFutureItem
+                                ? Theme.of(context)
+                                    .colorScheme
+                                    .onPrimary // FUTURE EXPENSE ICON
+                                : Theme.of(context)
+                                    .colorScheme
+                                    .errorContainer, // PRESENT EXPENSE ICON
+                          ),
+                  ),
                 ),
                 title: Text(
                   arrayElement["name"] as String != ""
