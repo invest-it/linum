@@ -3,7 +3,9 @@ import 'dart:developer' as dev;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:linum/backend_functions/statistic_calculations.dart';
+import 'package:linum/frontend_functions/loading_spinner.dart';
 import 'package:linum/models/repeat_balance_data.dart';
 import 'package:linum/models/repeat_duration_type_enum.dart';
 import 'package:linum/models/repeatable_change_type.dart';
@@ -137,6 +139,9 @@ class BalanceDataProvider extends ChangeNotifier {
     return StreamBuilder(
       stream: _dataStream,
       builder: (ctx, AsyncSnapshot<dynamic> snapshot) {
+        if (snapshot.connectionState == ConnectionState.none) {
+          return const LoadingSpinner();
+        }
         if (snapshot.data == null) {
           blistview.setBalanceData(
             [
