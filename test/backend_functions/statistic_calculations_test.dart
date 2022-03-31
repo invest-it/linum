@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_dynamic_calls
-
 import 'dart:math' as math;
 
 import 'package:flutter_test/flutter_test.dart';
@@ -7,19 +5,19 @@ import 'package:linum/backend_functions/statistic_calculations.dart';
 
 void main() {
   group("basic_statistic_calculation", () {
-    final List<dynamic> exampleData1 = [
+    final List<Map<String, dynamic>> exampleData1 = [
       {"amount": 15},
       {"amount": 35.5},
       {"amount": 5},
       {"amount": 25.5},
     ];
-    final List<dynamic> exampleData2 = [
+    final List<Map<String, dynamic>> exampleData2 = [
       {"amount": -0.5},
       {"amount": -2.5},
       {"amount": -2.5},
       {"amount": -0},
     ];
-    final List<dynamic> exampleData3 = [
+    final List<Map<String, dynamic>> exampleData3 = [
       {"amount": -0.5},
       {"amount": -2.5},
       {"amount": -2.5},
@@ -29,7 +27,7 @@ void main() {
       {"amount": 25.5},
       {"amount": 4},
     ];
-    final List<dynamic> exampleData4 = [
+    final List<Map<String, dynamic>> exampleData4 = [
       {"amount": -0.5},
       {"amount": -2.5},
       {"amount": -2.5},
@@ -41,13 +39,13 @@ void main() {
       {"amount": -20.5},
       {"amount": -23.5},
     ];
-    final List<dynamic> exampleData5 = [
+    final List<Map<String, dynamic>> exampleData5 = [
       {"amount": -0},
       {"amount": -0},
       {"amount": -0},
       {"amount": -0},
     ];
-    final List<dynamic> randomData = _createRandomStatisticData();
+    final List<Map<String, dynamic>> randomData = _createRandomStatisticData();
 
     group("balance", () {
       group("sum", () {
@@ -651,8 +649,8 @@ void main() {
   });
 }
 
-List<dynamic> _createRandomStatisticData() {
-  final List<dynamic> returnList = [];
+List<Map<String, dynamic>> _createRandomStatisticData() {
+  final List<Map<String, dynamic>> returnList = <Map<String, dynamic>>[];
   final math.Random rand = math.Random();
   final int max = rand.nextInt(256);
   for (int i = 0; i < max; i++) {
