@@ -57,7 +57,7 @@ void main() {
 
       // Check if PIN recall works
 
-      sleep(const Duration(seconds: 2));
+      sleep(const Duration(seconds: 1));
       await navbarRobot.pressHomeButton();
       await homeRobot.pressPINLockButton();
 
@@ -72,7 +72,7 @@ void main() {
 
       // Check change effectiveness
 
-      sleep(const Duration(seconds: 2));
+      sleep(const Duration(seconds: 1));
       await navbarRobot.pressHomeButton();
       await homeRobot.pressPINLockButton();
 
@@ -88,6 +88,8 @@ void main() {
 
       await onboardingOpenSignInRobot.fillInEmail("linum-tester-1@byom.de");
       await onboardingOpenSignInRobot.fillInPassword("123456");
+      await onboardingOpenSignInRobot.pressSignIn();
+
       await settingsPinlockRobot.dialInPIN(9, 1, 1, 0);
       await settingsPinlockRobot.dialInPIN(2, 4, 0, 3);
 
@@ -125,8 +127,9 @@ void main() {
       await settingsPinlockRobot.togglePINLock();
       await settingsPinlockRobot.dialInPIN(1, 2, 3, 4);
 
-      // LOGIN ACC 2 - SET PIN 5678
+      await settingsAuthRobot.pressLogoutButton();
 
+      // LOGIN ACC 2 - SET PIN 5678
       await onboardingRobot.pressIHaveAnAccount();
 
       await onboardingOpenSignInRobot.fillInEmail("linum-tester-2@byom.de");
@@ -184,14 +187,14 @@ void main() {
       await settingsPinlockRobot.togglePINChange();
       await settingsPinlockRobot.dialInPIN(7, 8, 9, 0);
 
-      sleep(const Duration(seconds: 2));
+      sleep(const Duration(seconds: 1));
       await navbarRobot.pressHomeButton();
       await homeRobot.pressPINLockButton();
 
       await settingsPinlockRobot.togglePINReset();
       await pinlockOpenMessageRobot.findAndClickResetPrompt();
 
-      sleep(const Duration(seconds: 4));
+      sleep(const Duration(seconds: 1));
 
       //now try to log in one last time
 
