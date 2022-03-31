@@ -11,8 +11,8 @@ class GeneralRobot {
   Future<void> pressVisibleButtonByString(
     String text, {
     Type buttonType = TextButton,
-    Duration settleDuration = const Duration(seconds: 2),
-    Duration sleepDuration = const Duration(milliseconds: 500),
+    Duration settleDuration = const Duration(milliseconds: 500),
+    Duration sleepDuration = const Duration(milliseconds: 250),
   }) async {
     final Finder targetFinder = find.widgetWithText(buttonType, text);
     await _executePressButton(targetFinder, settleDuration, sleepDuration);
