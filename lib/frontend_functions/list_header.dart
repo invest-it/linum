@@ -5,7 +5,8 @@ class ListHeader extends StatelessWidget {
   final String title;
   final String? tooltipMessage;
 
-  const ListHeader(this.title, {this.tooltipMessage});
+  // ignore: prefer_const_constructors_in_immutables
+  ListHeader(this.title, {this.tooltipMessage});
 
   @override
   Widget build(BuildContext context) {

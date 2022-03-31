@@ -119,7 +119,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             // ListDivider(T: 0),
 
             /// STANDARD CATEGORY
-            const ListHeader(
+            ListHeader(
               'settings_screen/standard-category/label-title',
               tooltipMessage: 'settings_screen/standard-category/label-tooltip',
             ),
@@ -285,7 +285,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             const ListDivider(),
 
-            const ListHeader(
+            ListHeader(
               'settings_screen/pin-lock/label-title',
               tooltipMessage: 'settings_screen/pin-lock/label-tooltip',
             ),
@@ -325,7 +325,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             const ListDivider(),
 
-            const ListHeader(
+            ListHeader(
               'settings_screen/app-reminder/label-title',
               tooltipMessage: 'settings_screen/app-reminder/label-tooltip',
             ),
@@ -390,7 +390,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             // ListDivider(),
 
             /// LANGUAGE SWITCH
-            const ListHeader(
+            ListHeader(
               'settings_screen/language-settings/label-title',
             ),
             Column(
@@ -472,7 +472,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             const ListDivider(),
 
             /// YOUR ACCOUNT
-            const ListHeader('settings_screen/system-settings/label-title'),
+            ListHeader('settings_screen/system-settings/label-title'),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
