@@ -1,4 +1,5 @@
 // ignore_for_file: avoid_dynamic_calls
+import 'dart:developer' as dev;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enum_to_string/enum_to_string.dart';
@@ -172,6 +173,10 @@ class HomeScreenListView implements BalanceDataListView {
                       providers: [
                         ChangeNotifierProvider<EnterScreenProvider>(
                           create: (_) {
+                            if (arrayElement["formerTime"] != null) {
+                              dev.log(arrayElement["formerTime"].toString());
+                              dev.log(arrayElement["time"].toString());
+                            }
                             return EnterScreenProvider(
                               id: arrayElement["id"] as String,
                               amount: arrayElement["amount"] as num,
@@ -180,7 +185,10 @@ class HomeScreenListView implements BalanceDataListView {
                               selectedDate:
                                   (arrayElement["time"] as Timestamp).toDate(),
                               editMode: true,
-                              repeatId: arrayElement["repeatId"] as String,
+                              repeatId: arrayElement["repeatId"] as String?,
+                              formerTime: arrayElement["formerTime"] != null
+                                  ? arrayElement["formerTime"] as Timestamp
+                                  : arrayElement["time"] as Timestamp,
                             );
                           },
                         ),
@@ -277,7 +285,8 @@ class HomeScreenListView implements BalanceDataListView {
                                     id: arrayElement["repeatId"] as String,
                                     removeType:
                                         RepeatableChangeType.onlyThisOne,
-                                    time: arrayElement["time"] as Timestamp,
+                                    time:
+                                        arrayElement["formerTime"] as Timestamp,
                                   );
                                   Navigator.of(context).pop(true);
                                 },
@@ -301,7 +310,8 @@ class HomeScreenListView implements BalanceDataListView {
                                     id: arrayElement["repeatId"] as String,
                                     removeType:
                                         RepeatableChangeType.thisAndAllBefore,
-                                    time: arrayElement["time"] as Timestamp,
+                                    time:
+                                        arrayElement["formerTime"] as Timestamp,
                                   );
                                   Navigator.of(context).pop(true);
                                 },
@@ -325,7 +335,8 @@ class HomeScreenListView implements BalanceDataListView {
                                     id: arrayElement["repeatId"] as String,
                                     removeType:
                                         RepeatableChangeType.thisAndAllAfter,
-                                    time: arrayElement["time"] as Timestamp,
+                                    time:
+                                        arrayElement["formerTime"] as Timestamp,
                                   );
                                   Navigator.of(context).pop(true);
                                 },
@@ -348,7 +359,6 @@ class HomeScreenListView implements BalanceDataListView {
                                       .removeRepeatedBalanceUsingId(
                                     id: arrayElement["repeatId"] as String,
                                     removeType: RepeatableChangeType.all,
-                                    time: arrayElement["time"] as Timestamp,
                                   );
                                   Navigator.of(context).pop(true);
                                 },

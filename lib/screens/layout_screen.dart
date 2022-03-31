@@ -134,8 +134,10 @@ class _LayoutScreenState extends State<LayoutScreen>
               : FloatingActionButton(
                   onPressed: () {
                     final BalanceDataProvider balanceDataProvider =
-                        Provider.of<BalanceDataProvider>(context,
-                            listen: false);
+                        Provider.of<BalanceDataProvider>(
+                      context,
+                      listen: false,
+                    );
                     Navigator.push(
                       context,
                       MaterialPageRoute(

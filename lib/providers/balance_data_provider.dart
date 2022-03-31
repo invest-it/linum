@@ -353,16 +353,17 @@ class BalanceDataProvider extends ChangeNotifier {
   Future<bool> updateRepeatedBalance({
     required String id,
     required RepeatableChangeType changeType,
-    num? checkedAmount,
-    String? checkedCategory,
-    String? checkedCurrency,
-    String? checkedName,
+    num? amount,
+    String? category,
+    String? currency,
+    String? name,
     Timestamp? initialTime,
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
     Timestamp? endTime,
     bool? resetEndTime,
     Timestamp? time,
+    Timestamp? newTime,
   }) async {
     if (_balance == null) {
       dev.log("_balance is null");
@@ -380,6 +381,15 @@ class BalanceDataProvider extends ChangeNotifier {
         return false;
       }
     }
+    if (changeType == RepeatableChangeType.thisAndAllAfter) {
+      if (initialTime != null) {
+        dev.log(
+          "initialTime is no available for RepeatableChangeType.thisAndAllAfter",
+        );
+        return false;
+      }
+    }
+    // dev.log("The editing time: ${time?.millisecondsSinceEpoch}");
     bool isEdited = false;
     final DocumentSnapshot<Map<String, dynamic>> snapshot =
         await _balance!.get();
@@ -387,13 +397,52 @@ class BalanceDataProvider extends ChangeNotifier {
     if (data == null) {
       return false;
     }
+    num? checkedAmount;
+    String? checkedCategory;
+    String? checkedCurrency;
+    String? checkedName;
+    Timestamp? checkedInitialTime;
+    int? checkedRepeatDuration;
+    RepeatDurationType? checkedRepeatDurationType;
+    Timestamp? checkedEndTime;
+    Timestamp? checkedNewTime;
+
     for (final singleRepeatedBalance
         in data["repeatedBalance"] as List<dynamic>) {
       singleRepeatedBalance as Map<String, dynamic>;
       if (!isEdited && (singleRepeatedBalance["id"] == id)) {
-        if (checkedAmount == singleRepeatedBalance["amount"]) {
-          checkedAmount = null;
+        if (amount != singleRepeatedBalance["amount"]) {
+          checkedAmount = amount;
         }
+        if (category != singleRepeatedBalance["category"]) {
+          checkedCategory = category;
+        }
+        if (currency != singleRepeatedBalance["currency"]) {
+          checkedCurrency = currency;
+        }
+        if (name != singleRepeatedBalance["name"]) {
+          checkedName = name;
+        }
+        if (initialTime != singleRepeatedBalance["initialTime"]) {
+          checkedInitialTime = initialTime;
+        }
+        if (repeatDuration != singleRepeatedBalance["repeatDuration"]) {
+          checkedRepeatDuration = repeatDuration;
+        }
+        if (repeatDurationType !=
+            EnumToString.fromString<RepeatDurationType>(
+              RepeatDurationType.values,
+              singleRepeatedBalance["repeatDurationType"] as String,
+            )) {
+          checkedRepeatDurationType = repeatDurationType;
+        }
+        if (endTime != singleRepeatedBalance["endTime"]) {
+          checkedEndTime = endTime;
+        }
+        if (newTime != time) {
+          checkedNewTime = newTime;
+        }
+
         break;
       }
     }
@@ -422,42 +471,63 @@ class BalanceDataProvider extends ChangeNotifier {
               singleRepeatedBalance["name"] = checkedName;
               isEdited = true;
             }
-            if (initialTime != null &&
-                initialTime != singleRepeatedBalance["initialTime"]) {
-              singleRepeatedBalance["initialTime"] = initialTime;
+            if (checkedInitialTime != null &&
+                checkedInitialTime != singleRepeatedBalance["initialTime"]) {
+              singleRepeatedBalance["initialTime"] = checkedInitialTime;
+              isEdited = true;
+            } else if (checkedNewTime != null && time != null) {
+              singleRepeatedBalance["initialTime"] = Timestamp.fromDate(
+                (singleRepeatedBalance["initialTime"] as Timestamp)
+                    .toDate()
+                    .subtract(
+                      time.toDate().difference(checkedNewTime.toDate()),
+                    ),
+              );
+              if (singleRepeatedBalance["endTime"] != null) {
+                singleRepeatedBalance["endTime"] = Timestamp.fromDate(
+                  (singleRepeatedBalance["endTime"] as Timestamp)
+                      .toDate()
+                      .subtract(
+                        time.toDate().difference(checkedNewTime.toDate()),
+                      ),
+                );
+              }
               isEdited = true;
             }
-            if (repeatDuration != null &&
-                repeatDuration != singleRepeatedBalance["repeatDuration"]) {
-              singleRepeatedBalance["repeatDuration"] = repeatDuration;
+            if (checkedRepeatDuration != null &&
+                checkedRepeatDuration !=
+                    singleRepeatedBalance["repeatDuration"]) {
+              singleRepeatedBalance["repeatDuration"] = checkedRepeatDuration;
               isEdited = true;
             }
-            if (repeatDurationType != null &&
-                repeatDurationType !=
+            if (checkedRepeatDurationType != null &&
+                checkedRepeatDurationType !=
                     EnumToString.fromString<RepeatDurationType>(
                       RepeatDurationType.values,
                       singleRepeatedBalance["repeatDurationType"] as String,
                     )) {
               singleRepeatedBalance["repeatDuration"] =
-                  repeatDurationType.toString().substring(19);
+                  checkedRepeatDurationType.toString().substring(19);
               isEdited = true;
             }
-            if (endTime != null &&
-                endTime != singleRepeatedBalance["endTime"]) {
-              singleRepeatedBalance["endTime"] = endTime;
+            if (checkedEndTime != null &&
+                checkedEndTime != singleRepeatedBalance["endTime"]) {
+              singleRepeatedBalance["endTime"] = checkedEndTime;
               isEdited = true;
             }
             if (resetEndTime != null && resetEndTime) {
               singleRepeatedBalance["endTime"] = null;
               isEdited = true;
             }
-            if (initialTime != null ||
-                repeatDuration != null ||
-                repeatDurationType != null) {
+            if (checkedInitialTime != null ||
+                checkedRepeatDuration != null ||
+                checkedRepeatDurationType != null ||
+                (checkedNewTime != null && time != null)) {
               // FUTURE lazy approach. might think of something clever in the future
               // (what if repeat duration changes. single repeatable changes change time or not? use the nth? complicated...)
               singleRepeatedBalance.remove("changed");
             }
+
             if (isEdited && singleRepeatedBalance["changed"] != null) {
               (singleRepeatedBalance["changed"] as Map<String, dynamic>)
                   .forEach((key, value) {
@@ -473,6 +543,9 @@ class BalanceDataProvider extends ChangeNotifier {
                   }
                   if (checkedName != null) {
                     (value as Map<String, dynamic>).remove("name");
+                  }
+                  if (checkedNewTime != null) {
+                    (value as Map<String, dynamic>).remove("time");
                   }
                   // dont need initialTime
                   // dont need repeatDuration
@@ -516,15 +589,24 @@ class BalanceDataProvider extends ChangeNotifier {
                     ),
               );
             }
+            final Duration timeDifference = time
+                .toDate()
+                .difference(checkedNewTime?.toDate() ?? time.toDate());
             final Map<String, dynamic> changes = <String, dynamic>{
               "amount": checkedAmount,
               "category": checkedCategory,
               "currency": checkedCurrency,
               "name": checkedName,
-              "initialTime": initialTime,
-              "repeatDuration": repeatDuration,
-              "repeatDurationType": repeatDurationType,
-              "endTime": time,
+              "initialTime": checkedInitialTime ??
+                  Timestamp.fromDate(
+                    (newRepeatedBalance["initialTime"] as Timestamp)
+                        .toDate()
+                        .subtract(timeDifference),
+                  ),
+              "repeatDuration": checkedRepeatDuration,
+              "repeatDurationType": checkedRepeatDurationType,
+              "endTime":
+                  Timestamp.fromDate(time.toDate().subtract(timeDifference)),
             };
             changes.removeWhere((_, value) => value == null);
             newRepeatedBalance.addAll(changes);
@@ -568,14 +650,23 @@ class BalanceDataProvider extends ChangeNotifier {
                     ),
               );
             }
+            final Duration timeDifference = time
+                .toDate()
+                .difference(checkedNewTime?.toDate() ?? time.toDate());
             final Map<String, dynamic> changes = <String, dynamic>{
               "amount": checkedAmount,
               "category": checkedCategory,
               "currency": checkedCurrency,
               "name": checkedName,
-              "initialTime": time,
-              "repeatDuration": repeatDuration,
-              "repeatDurationType": repeatDurationType,
+              "initialTime":
+                  Timestamp.fromDate(time.toDate().subtract(timeDifference)),
+              "repeatDuration": checkedRepeatDuration,
+              "repeatDurationType": checkedRepeatDurationType,
+              "endTime": changeThisAndAllAfterEndTimeHelpFunction(
+                checkedEndTime,
+                newRepeatedBalance,
+                timeDifference,
+              ),
             };
             changes.removeWhere((_, value) => value == null);
             newRepeatedBalance.addAll(changes);
@@ -598,23 +689,34 @@ class BalanceDataProvider extends ChangeNotifier {
               singleRepeatedBalance["changed"] =
                   <String, Map<String, dynamic>>{};
             }
-            (singleRepeatedBalance["changed"]
-                    as Map<String, Map<String, dynamic>>)
-                .addAll({
+            final Map<String, Map<String, dynamic>> newChanged =
+                <String, Map<String, dynamic>>{};
+            // ignore: avoid_dynamic_calls
+            singleRepeatedBalance["changed"].forEach((outerKey, innerMap) {
+              newChanged[outerKey as String] = <String, dynamic>{};
+              // ignore: avoid_dynamic_calls
+              innerMap.forEach(
+                (innerKey, innerValue) {
+                  newChanged[outerKey]![innerKey as String] = innerValue;
+                },
+              );
+            });
+
+            newChanged.addAll({
               time!.millisecondsSinceEpoch.toString(): {
                 "amount": checkedAmount,
                 "category": checkedCategory,
                 "currency": checkedCurrency,
                 "name": checkedName,
+                "time": checkedNewTime,
               }
             });
-            (singleRepeatedBalance["changed"]
-                        as Map<String, Map<String, dynamic>>)[
-                    time.millisecondsSinceEpoch.toString()]
+            newChanged[time.millisecondsSinceEpoch.toString()]
                 ?.removeWhere((_, value) => value == null);
+            singleRepeatedBalance["changed"] = newChanged;
             isEdited = true;
+            break;
           }
-          break;
         }
     }
 
@@ -622,6 +724,22 @@ class BalanceDataProvider extends ChangeNotifier {
       await _balance!.set(data);
     }
     return true;
+  }
+
+  Timestamp? changeThisAndAllAfterEndTimeHelpFunction(Timestamp? checkedEndTime,
+      Map<String, dynamic> newRepeatedBalance, Duration timeDifference) {
+    if (checkedEndTime != null) {
+      return checkedEndTime;
+    }
+    if (newRepeatedBalance["endTime"] != null) {
+      return Timestamp.fromDate(
+        (newRepeatedBalance["endTime"] as Timestamp)
+            .toDate()
+            .subtract(timeDifference),
+      );
+    } else {
+      return null;
+    }
   }
 
   /// [id] is the id of the repeatedBalance
@@ -721,13 +839,25 @@ class BalanceDataProvider extends ChangeNotifier {
               singleRepeatedBalance["changed"] =
                   <String, Map<String, dynamic>>{};
             }
-            (singleRepeatedBalance["changed"]
-                    as Map<String, Map<String, dynamic>>)
-                .addAll({
+            final Map<String, Map<String, dynamic>> newChanged =
+                <String, Map<String, dynamic>>{};
+            // ignore: avoid_dynamic_calls
+            singleRepeatedBalance["changed"].forEach((outerKey, innerMap) {
+              newChanged[outerKey as String] = <String, dynamic>{};
+              // ignore: avoid_dynamic_calls
+              innerMap.forEach(
+                (innerKey, innerValue) {
+                  newChanged[outerKey]![innerKey as String] = innerValue;
+                },
+              );
+            });
+
+            newChanged.addAll({
               time!.millisecondsSinceEpoch.toString(): {
                 "deleted": true,
               }
             });
+            singleRepeatedBalance["changed"] = newChanged;
             break;
           }
         }
@@ -770,6 +900,11 @@ class BalanceDataProvider extends ChangeNotifier {
     Map<String, dynamic> singleRepeatedBalance,
     List<Map<String, dynamic>> balanceData,
   ) {
+    // dev.log("a");
+    // dev.log("b");
+    // dev.log("c");
+    // dev.log("d");
+
     DateTime currentTime =
         (singleRepeatedBalance["initialTime"] as Timestamp).toDate();
 
@@ -782,8 +917,29 @@ class BalanceDataProvider extends ChangeNotifier {
               currentTime,
             )
         : DateTime.now().add(futureDuration).isAfter(currentTime)) {
-      // if "changed" -> "this timestamp" -> deleted exist AND it is true, dont add this balance
+      // convert _internalHashMap to Map
+      /*
+      if (singleRepeatedBalance["changed"] != null) {
+        final Map<String, Map<String, dynamic>> newChanged =
+            <String, Map<String, dynamic>>{};
+        // ignore: avoid_dynamic_calls
+        singleRepeatedBalance["changed"].forEach((outerKey, innerMap) {
+          if (innerMap != null) {
+            newChanged[outerKey as String] = <String, dynamic>{};
+            // ignore: avoid_dynamic_calls
+            innerMap.forEach(
+              (innerKey, innerValue) {
+                newChanged[outerKey]![innerKey as String] = innerValue;
+              },
+            );
+          }
+        });
 
+        singleRepeatedBalance["changed"] = newChanged;
+      }
+      */
+
+      // if "changed" -> "this timestamp" -> deleted exist AND it is true, dont add this balance
       if (singleRepeatedBalance["changed"] == null ||
           (singleRepeatedBalance["changed"] as Map<String, dynamic>)[
                   Timestamp.fromDate(currentTime)
@@ -798,6 +954,19 @@ class BalanceDataProvider extends ChangeNotifier {
           !(((singleRepeatedBalance["changed"]
                   as Map<String, dynamic>)[Timestamp.fromDate(currentTime).millisecondsSinceEpoch.toString()]
               as Map<String, dynamic>)["deleted"] as bool)) {
+        // dev.log("${Timestamp.fromDate(currentTime).millisecondsSinceEpoch}");
+        // dev.log(
+        //   (singleRepeatedBalance["changed"] as Map<String, dynamic>?)?[
+        //               Timestamp.fromDate(currentTime)
+        //                   .millisecondsSinceEpoch
+        //                   .toString()]
+        //           ?.toString() ??
+        //       "null",
+        // );
+        if (singleRepeatedBalance["amount"] == 5.59) {
+          // dev.log("${Timestamp.fromDate(currentTime).millisecondsSinceEpoch}");
+          // dev.log("test");
+        }
         balanceData.add({
           "amount":
               ((singleRepeatedBalance["changed"] as Map<String, dynamic>?)?[
@@ -830,6 +999,13 @@ class BalanceDataProvider extends ChangeNotifier {
           "repeatId": singleRepeatedBalance["id"],
           "id": const Uuid().v4(),
         });
+        if (((singleRepeatedBalance["changed"] as Map<String, dynamic>?)?[
+                Timestamp.fromDate(currentTime)
+                    .millisecondsSinceEpoch
+                    .toString()] as Map<String, dynamic>?)?["time"] !=
+            null) {
+          balanceData.last["formerTime"] = Timestamp.fromDate(currentTime);
+        }
       }
       currentTime =
           calculateNextCurrentTime(singleRepeatedBalance, currentTime);
