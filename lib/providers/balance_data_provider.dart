@@ -28,7 +28,7 @@ class BalanceDataProvider extends ChangeNotifier {
 
   num _dontDispose = 0;
 
-  static const Duration futureDuration = Duration(days: 30 * 3);
+  // Manager
 
   late final SingleBalanceDataManager singleBalanceDataManager;
 
@@ -237,6 +237,7 @@ class BalanceDataProvider extends ChangeNotifier {
       return false;
     }
 
+    // add and upload
     if (repeatedBalanceDataManager.addRepeatedBalanceToData(
       repeatBalanceData,
       data,
@@ -273,6 +274,7 @@ class BalanceDataProvider extends ChangeNotifier {
       return false;
     }
 
+    // update and upload
     if (repeatedBalanceDataManager.updateRepeatedBalanceInData(
       id: id,
       changeType: changeType,
