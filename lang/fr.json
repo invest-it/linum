@@ -81,6 +81,11 @@
     "settings_screen/standard-account-selector/cash": "Espèces",
     "settings_screen/standard-account-selector/deposit": "Dépôt",
 
+    "settings_screen/app-reminder/label-title": "NOTIFICATIONS PUSH",
+    "settings_screen/app-reminder/label-tooltip": "Si tu actives la fonction de rappel, l'application peut te rappeler régulièrement par des notifications push d'inscrire tes dépenses.",
+    "settings_screen/app-reminder/switch-label": "Mémoire active",
+    "settings_screen/app-reminder/label-change-reminder": "Modifier le moment",
+
     "settings_screen/pin-lock/label-title": "VERROUILLAGE DU PIN",
     "settings_screen/pin-lock/label-tooltip": "Si le verrouillage du code PIN est activé, vous devrez saisir votre code PIN personnel au démarrage de l'application pour protéger vos données.",
     "settings_screen/pin-lock/switch-label": "Verrouillage du PIN actif",

@@ -81,6 +81,11 @@
     "settings_screen/standard-account-selector/cash": "Efectivo",
     "settings_screen/standard-account-selector/deposit": "Depósito",
 
+    "settings_screen/app-reminder/label-title": "NOTIFICACIONES PUSH",
+    "settings_screen/app-reminder/label-tooltip": "Si activas la función de recordatorio, la aplicación puede recordarte periódicamente que introduzcas tus gastos mediante notificaciones push.",
+    "settings_screen/app-reminder/switch-label": "Recordatorio activo",
+    "settings_screen/app-reminder/label-change-reminder": "Tiempo de edición",
+
     "settings_screen/pin-lock/label-title": "BLOQUEO DEL PIN",
     "settings_screen/pin-lock/label-tooltip": "Si el bloqueo del PIN está activo, tendrás que introducir tu código PIN personal al iniciar la aplicación para proteger tus datos.",
     "settings_screen/pin-lock/switch-label": "Bloqueo del PIN activo",

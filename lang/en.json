@@ -82,6 +82,11 @@
     "settings_screen/standard-account-selector/cash": "Cash",
     "settings_screen/standard-account-selector/deposit": "Deposit",
 
+    "settings_screen/app-reminder/label-title": "PUSH REMINDER",
+    "settings_screen/app-reminder/label-tooltip": "If you activate the reminder function, the app can regularly remind you to enter your expenses via push notifications.",
+    "settings_screen/app-reminder/switch-label": "Reminder active",
+    "settings_screen/app-reminder/label-change-reminder": "Edit timetable",
+
     "settings_screen/pin-lock/label-title": "PIN LOCK",
     "settings_screen/pin-lock/label-tooltip": "If the PIN lock is active, you will need to enter your personal PIN code upon starting the app to protect your data.",
     "settings_screen/pin-lock/switch-label": "PIN lock active",

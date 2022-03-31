@@ -81,6 +81,11 @@
     "settings_screen/standard-account-selector/cash": "Cash",
     "settings_screen/standard-account-selector/deposit": "Deposit",
 
+    "settings_screen/app-reminder/label-title": "PUSH HERINNERING",
+    "settings_screen/app-reminder/label-tooltip": "Als u de herinneringsfunctie activeert, kan de app u er regelmatig aan herinneren om uw uitgaven in te voeren via pushmeldingen.",
+    "settings_screen/app-reminder/switch-label": "Herinnering actief",
+    "settings_screen/app-reminder/label-change-reminder": "Tijd bewerken",
+
     "settings_screen/pin-lock/label-title": "PIN SLOT",
     "settings_screen/pin-lock/label-tooltip": "Als de PIN slot actief is, moet u bij het starten van de app uw persoonlijke PIN-code invoeren om uw gegevens te beschermen.",
     "settings_screen/pin-lock/switch-label": "PIN slot actief",

@@ -82,6 +82,11 @@
     "settings_screen/standard-account-selector/cash": "Bargeld",
     "settings_screen/standard-account-selector/deposit": "Depot",
 
+    "settings_screen/app-reminder/label-title": "PUSH-ERINNERUNG",
+    "settings_screen/app-reminder/label-tooltip": "Wenn du die Erinnerungsfunktion aktivierst, kann die App dich regelmäßig per Push-Notifications daran erinnern, deine Ausgaben einzutragen.",
+    "settings_screen/app-reminder/switch-label": "Erinnerung aktiv",
+    "settings_screen/app-reminder/label-change-reminder": "Zeitpunkt bearbeiten",
+
     "settings_screen/pin-lock/label-title": "PIN-SPERRE",
     "settings_screen/pin-lock/label-tooltip": "Ist die PIN-Sperre aktiv, musst du beim Starten der App zum Schutz deiner Daten deinen persönlichen PIN-Code eingeben.",
     "settings_screen/pin-lock/switch-label": "PIN-Sperre aktiv",
