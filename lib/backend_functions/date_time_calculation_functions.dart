@@ -25,7 +25,7 @@ DateTime calculateOneTimeStep(
 /// avoid errors with 29th 30th and 31th
 DateTime monthlyStepCalculator(int year, int month, int day) {
   final DateTime temp = DateTime(year, month, day);
-  if (temp.month == month || month == 13) {
+  if ((temp.month % 12) == (month % 12)) {
     return temp;
   } else {
     return DateTime(temp.year, temp.month).subtract(const Duration(days: 1));
