@@ -143,7 +143,7 @@ class _EnterScreenState extends State<EnterScreen> {
                         final UserAlert userAlert = UserAlert(context: context);
                         userAlert
                             .showMyActionDialog(
-                              "enter_screen/change-entry/dialog-message",
+                              "enter_screen/change-entry/dialog-label-change",
                               <DialogAction>[
                                 DialogAction(
                                   actionTitle:
@@ -242,7 +242,8 @@ class _EnterScreenState extends State<EnterScreen> {
                                   },
                                 ),
                               ],
-                              title: "enter_screen/change-entry/dialog-title",
+                              title:
+                                  "enter_screen/delete-entry/dialog-label-title",
                             )
                             .then(
                               (value) => Navigator.of(context).pop(),

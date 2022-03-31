@@ -139,6 +139,7 @@
     "enter_screen/delete-entry/dialog-label-title": "Confirm",
     "enter_screen/delete-entry/dialog-label-deleterep": "Which entry do you want to delete?",
     "enter_screen/delete-entry/dialog-label-delete": "Do you really want to delete this entry?",
+    "enter_screen/change-entry/dialog-label-change": "Which entry do you want to change?",
     "enter_screen/delete-entry/dialog-button-onlyonce": "This entry",
     "enter_screen/delete-entry/dialog-button-untilnow": "This entry and all previous",
     "enter_screen/delete-entry/dialog-button-fromnow": "This entry and all subsequent",
