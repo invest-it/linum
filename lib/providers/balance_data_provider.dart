@@ -28,11 +28,8 @@ class BalanceDataProvider extends ChangeNotifier {
   num _dontDispose = 0;
 
   // Manager
-
   late final SingleBalanceDataManager singleBalanceDataManager;
-
   late final RepeatedBalanceDataManager repeatedBalanceDataManager;
-
   late final BalanceDataStreamBuilderManager balanceDataStreamBuilderManager;
 
   /// Creates the BalanceDataProvider. Inparticular it sets [_balance] correctly
