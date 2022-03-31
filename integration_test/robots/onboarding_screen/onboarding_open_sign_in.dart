@@ -17,7 +17,7 @@ class OnboardingOpenSignInRobot extends GeneralRobot {
   }
 
   Future<void> pressSignIn() async {
-    await pressVisibleUniqueButton("Sign in", buttonType: GradientButton);
+    await pressVisibleButtonByString("Sign in", buttonType: GradientButton);
 
     sleep(const Duration(milliseconds: 500));
   }
