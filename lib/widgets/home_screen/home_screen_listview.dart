@@ -501,9 +501,9 @@ class HomeScreenListView implements BalanceDataListView {
                   padding: const EdgeInsets.all(2),
                   toAnimate: false,
                   position: const BadgePosition(bottom: 23, start: 23),
-                  elevation: 0,
+                  elevation: 1,
                   badgeColor: isFutureItem && arrayElement["repeatId"] != null
-                      ? Theme.of(context).colorScheme.onSurface
+                      ? Theme.of(context).colorScheme.tertiaryContainer
                       //badgeColor for current transactions
                       : arrayElement["amount"] as num > 0
                           //badgeColor for future transactions
@@ -518,12 +518,14 @@ class HomeScreenListView implements BalanceDataListView {
                   //cannot use the suggestion as it produces an unwanted white point
                   badgeContent: arrayElement["repeatId"] != null
                       ? Icon(
-                          Icons.sync,
+                          Icons.autorenew_rounded,
                           color: isFutureItem
                               ? arrayElement["amount"] as num > 0
                                   ? Theme.of(context).colorScheme.tertiary
                                   : Theme.of(context).colorScheme.errorContainer
-                              : Theme.of(context).colorScheme.onSurface,
+                              : Theme.of(context)
+                                  .colorScheme
+                                  .secondaryContainer,
                           size: 18,
                         )
                       : const SizedBox(),
@@ -558,8 +560,8 @@ class HomeScreenListView implements BalanceDataListView {
                                     .onPrimary // FUTURE INCOME ICON
                                 : Theme.of(context)
                                     .colorScheme
-                                    .tertiary // PRESENT INCOME ICON
-                            )
+                                    .tertiary, // PRESENT INCOME ICON
+                          )
                         : Icon(
                             AccountSettingsProvider
                                     .standardCategoryExpenses[
