@@ -500,7 +500,7 @@ class HomeScreenListView implements BalanceDataListView {
                 leading: Badge(
                   padding: const EdgeInsets.all(2),
                   toAnimate: false,
-                  position: BadgePosition(bottom: 23, start: 23),
+                  position: const BadgePosition(bottom: 23, start: 23),
                   elevation: 0,
                   badgeColor: isFutureItem && arrayElement["repeatId"] != null
                       ? Theme.of(context).colorScheme.onSurface
@@ -523,7 +523,7 @@ class HomeScreenListView implements BalanceDataListView {
                               : Theme.of(context).colorScheme.onSurface,
                           size: 18,
                         )
-                      : SizedBox(),
+                      : const SizedBox(),
                   child: CircleAvatar(
                     backgroundColor: isFutureItem
                         ? arrayElement['amount'] as num > 0
