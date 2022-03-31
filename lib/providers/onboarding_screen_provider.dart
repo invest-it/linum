@@ -28,7 +28,7 @@ class OnboardingScreenProvider extends ChangeNotifier {
   }
 
   String get mailInput {
-    //Getter only works for one time, after that the "cache" is cleared.
+    // Getter only works for one time, after that the "cache" is cleared.
     final String _tempMail = _mailInput;
     _mailInput = "";
     return _tempMail;
