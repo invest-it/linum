@@ -353,10 +353,10 @@ class BalanceDataProvider extends ChangeNotifier {
   Future<bool> updateRepeatedBalance({
     required String id,
     required RepeatableChangeType changeType,
-    num? amount,
-    String? category,
-    String? currency,
-    String? name,
+    num? checkedAmount,
+    String? checkedCategory,
+    String? checkedCurrency,
+    String? checkedName,
     Timestamp? initialTime,
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
@@ -387,28 +387,39 @@ class BalanceDataProvider extends ChangeNotifier {
     if (data == null) {
       return false;
     }
+    for (final singleRepeatedBalance
+        in data["repeatedBalance"] as List<dynamic>) {
+      singleRepeatedBalance as Map<String, dynamic>;
+      if (!isEdited && (singleRepeatedBalance["id"] == id)) {
+        if (checkedAmount == singleRepeatedBalance["amount"]) {
+          checkedAmount = null;
+        }
+        break;
+      }
+    }
     switch (changeType) {
       case RepeatableChangeType.all:
         for (final singleRepeatedBalance
             in data["repeatedBalance"] as List<dynamic>) {
           singleRepeatedBalance as Map<String, dynamic>;
           if (!isEdited && (singleRepeatedBalance["id"] == id)) {
-            if (amount != null && amount != singleRepeatedBalance["amount"]) {
-              singleRepeatedBalance["amount"] = amount;
+            if (checkedAmount != null) {
+              singleRepeatedBalance["amount"] = checkedAmount;
               isEdited = true;
             }
-            if (category != null &&
-                category != singleRepeatedBalance["category"]) {
-              singleRepeatedBalance["category"] = category;
+            if (checkedCategory != null &&
+                checkedCategory != singleRepeatedBalance["category"]) {
+              singleRepeatedBalance["category"] = checkedCategory;
               isEdited = true;
             }
-            if (currency != null &&
-                currency != singleRepeatedBalance["currency"]) {
-              singleRepeatedBalance["currency"] = currency;
+            if (checkedCurrency != null &&
+                checkedCurrency != singleRepeatedBalance["currency"]) {
+              singleRepeatedBalance["currency"] = checkedCurrency;
               isEdited = true;
             }
-            if (name != null && name != singleRepeatedBalance["name"]) {
-              singleRepeatedBalance["name"] = name;
+            if (checkedName != null &&
+                checkedName != singleRepeatedBalance["name"]) {
+              singleRepeatedBalance["name"] = checkedName;
               isEdited = true;
             }
             if (initialTime != null &&
@@ -451,16 +462,16 @@ class BalanceDataProvider extends ChangeNotifier {
               (singleRepeatedBalance["changed"] as Map<String, dynamic>)
                   .forEach((key, value) {
                 if (value != null) {
-                  if (amount != null) {
+                  if (checkedAmount != null) {
                     (value as Map<String, dynamic>).remove("amount");
                   }
-                  if (category != null) {
+                  if (checkedCategory != null) {
                     (value as Map<String, dynamic>).remove("category");
                   }
-                  if (currency != null) {
+                  if (checkedCurrency != null) {
                     (value as Map<String, dynamic>).remove("currency");
                   }
-                  if (name != null) {
+                  if (checkedName != null) {
                     (value as Map<String, dynamic>).remove("name");
                   }
                   // dont need initialTime
@@ -506,10 +517,10 @@ class BalanceDataProvider extends ChangeNotifier {
               );
             }
             final Map<String, dynamic> changes = <String, dynamic>{
-              "amount": amount,
-              "category": category,
-              "currency": currency,
-              "name": name,
+              "amount": checkedAmount,
+              "category": checkedCategory,
+              "currency": checkedCurrency,
+              "name": checkedName,
               "initialTime": initialTime,
               "repeatDuration": repeatDuration,
               "repeatDurationType": repeatDurationType,
@@ -558,10 +569,10 @@ class BalanceDataProvider extends ChangeNotifier {
               );
             }
             final Map<String, dynamic> changes = <String, dynamic>{
-              "amount": amount,
-              "category": category,
-              "currency": currency,
-              "name": name,
+              "amount": checkedAmount,
+              "category": checkedCategory,
+              "currency": checkedCurrency,
+              "name": checkedName,
               "initialTime": time,
               "repeatDuration": repeatDuration,
               "repeatDurationType": repeatDurationType,
@@ -591,16 +602,17 @@ class BalanceDataProvider extends ChangeNotifier {
                     as Map<String, Map<String, dynamic>>)
                 .addAll({
               time!.millisecondsSinceEpoch.toString(): {
-                "amount": amount,
-                "category": category,
-                "currency": currency,
-                "name": name,
+                "amount": checkedAmount,
+                "category": checkedCategory,
+                "currency": checkedCurrency,
+                "name": checkedName,
               }
             });
             (singleRepeatedBalance["changed"]
                         as Map<String, Map<String, dynamic>>)[
                     time.millisecondsSinceEpoch.toString()]
                 ?.removeWhere((_, value) => value == null);
+            isEdited = true;
           }
           break;
         }
@@ -787,11 +799,34 @@ class BalanceDataProvider extends ChangeNotifier {
                   as Map<String, dynamic>)[Timestamp.fromDate(currentTime).millisecondsSinceEpoch.toString()]
               as Map<String, dynamic>)["deleted"] as bool)) {
         balanceData.add({
-          "amount": singleRepeatedBalance["amount"],
-          "category": singleRepeatedBalance["category"],
-          "currency": singleRepeatedBalance["currency"],
-          "name": singleRepeatedBalance["name"],
-          "time": Timestamp.fromDate(currentTime),
+          "amount":
+              ((singleRepeatedBalance["changed"] as Map<String, dynamic>?)?[
+                      Timestamp.fromDate(currentTime)
+                          .millisecondsSinceEpoch
+                          .toString()] as Map<String, dynamic>?)?["amount"] ??
+                  singleRepeatedBalance["amount"],
+          "category":
+              ((singleRepeatedBalance["changed"] as Map<String, dynamic>?)?[
+                      Timestamp.fromDate(currentTime)
+                          .millisecondsSinceEpoch
+                          .toString()] as Map<String, dynamic>?)?["category"] ??
+                  singleRepeatedBalance["category"],
+          "currency":
+              ((singleRepeatedBalance["changed"] as Map<String, dynamic>?)?[
+                      Timestamp.fromDate(currentTime)
+                          .millisecondsSinceEpoch
+                          .toString()] as Map<String, dynamic>?)?["currency"] ??
+                  singleRepeatedBalance["currency"],
+          "name": ((singleRepeatedBalance["changed"] as Map<String, dynamic>?)?[
+                  Timestamp.fromDate(currentTime)
+                      .millisecondsSinceEpoch
+                      .toString()] as Map<String, dynamic>?)?["name"] ??
+              singleRepeatedBalance["name"],
+          "time": ((singleRepeatedBalance["changed"] as Map<String, dynamic>?)?[
+                  Timestamp.fromDate(currentTime)
+                      .millisecondsSinceEpoch
+                      .toString()] as Map<String, dynamic>?)?["time"] ??
+              Timestamp.fromDate(currentTime),
           "repeatId": singleRepeatedBalance["id"],
           "id": const Uuid().v4(),
         });

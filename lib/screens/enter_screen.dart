@@ -143,11 +143,11 @@ class _EnterScreenState extends State<EnterScreen> {
                         // open popup
                         balanceDataProvider.updateRepeatedBalance(
                           id: enterScreenProvider.repeatId!,
-                          changeType: RepeatableChangeType.all,
-                          amount: _amountChooser(enterScreenProvider),
-                          category: enterScreenProvider.category,
-                          currency: "EUR",
-                          name: enterScreenProvider.name,
+                          changeType: RepeatableChangeType.onlyThisOne,
+                          checkedAmount: _amountChooser(enterScreenProvider),
+                          checkedCategory: enterScreenProvider.category,
+                          checkedCurrency: "EUR",
+                          checkedName: enterScreenProvider.name,
                           time: Timestamp.fromDate(
                             selectedDateDateTimeFormatted,
                           ),
