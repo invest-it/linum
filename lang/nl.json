@@ -139,6 +139,7 @@
     "enter_screen/delete-entry/dialog-label-deleterep": "Welk item wilt u verwijderen?",
     "enter_screen/delete-entry/dialog-label-delete": "Wil je dit bericht echt verwijderen?",
     "enter_screen/delete-entry/dialog-button-onlyonce": "Dit bericht",
+    "enter_screen/delete-entry/dialog-button-untilnow": "Dit bericht en alle vorige",
     "enter_screen/delete-entry/dialog-button-fromnow": "Dit bericht en alle volgende",
     "enter_screen/delete-entry/dialog-button-allentries": "Alle inzendingen",
     "enter_screen/delete-entry/dialog-button-delete": "Verwijderen",

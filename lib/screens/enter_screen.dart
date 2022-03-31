@@ -4,6 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/frontend_functions/user_alert.dart';
+import 'package:linum/models/repeat_balance_data.dart';
+import 'package:linum/models/repeatable_change_type.dart';
+import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/widgets/enter_screen/enter_screen_listviewbuilder.dart';
@@ -122,66 +126,87 @@ class _EnterScreenState extends State<EnterScreen> {
                     Navigator.of(context).pop();
 
                     if (enterScreenProvider.editMode) {
-                      balanceDataProvider.updateSingleBalance(
-                        id: enterScreenProvider.formerId ?? "",
-                        amount: _amountChooser(enterScreenProvider),
-                        category: enterScreenProvider.category,
-                        currency: "EUR",
-                        name: enterScreenProvider.name,
-                        time: Timestamp.fromDate(
-                          selectedDateDateTimeFormatted,
-                        ),
-                      );
-                    } else {
-                      if (enterScreenProvider.repeatDuration == null ||
-                          enterScreenProvider.repeatDurationTyp == null) {
-                        balanceDataProvider.addSingleBalance(
+                      if (enterScreenProvider.repeatId == null) {
+                        balanceDataProvider.updateSingleBalance(
+                          id: enterScreenProvider.formerId ?? "",
                           amount: _amountChooser(enterScreenProvider),
                           category: enterScreenProvider.category,
                           currency: "EUR",
                           name: enterScreenProvider.name,
                           time: Timestamp.fromDate(
-                            DateTime(
-                              selectedDateDateTimeFormatted.year,
-                              selectedDateDateTimeFormatted.month,
-                              selectedDateDateTimeFormatted.day,
-                              selectedDateDateTimeFormatted.hour != 0
-                                  ? selectedDateDateTimeFormatted.hour
-                                  : DateTime.now().hour,
-                              selectedDateDateTimeFormatted.minute != 0
-                                  ? selectedDateDateTimeFormatted.minute
-                                  : DateTime.now().minute,
-                              selectedDateDateTimeFormatted.second != 0
-                                  ? selectedDateDateTimeFormatted.second
-                                  : DateTime.now().second,
+                            selectedDateDateTimeFormatted,
+                          ),
+                        );
+                      } else {
+                        final UserAlert userAlert = UserAlert(context: context);
+
+                        // open popup
+                        balanceDataProvider.updateRepeatedBalance(
+                          id: enterScreenProvider.repeatId!,
+                          changeType: RepeatableChangeType.onlyThisOne,
+                          checkedAmount: _amountChooser(enterScreenProvider),
+                          checkedCategory: enterScreenProvider.category,
+                          checkedCurrency: "EUR",
+                          checkedName: enterScreenProvider.name,
+                          time: Timestamp.fromDate(
+                            selectedDateDateTimeFormatted,
+                          ),
+                        );
+                      }
+                    } else {
+                      if (enterScreenProvider.repeatDuration == null ||
+                          enterScreenProvider.repeatDurationTyp == null) {
+                        balanceDataProvider.addSingleBalance(
+                          SingleBalanceData(
+                            amount: _amountChooser(enterScreenProvider),
+                            category: enterScreenProvider.category,
+                            currency: "EUR",
+                            name: enterScreenProvider.name,
+                            time: Timestamp.fromDate(
+                              DateTime(
+                                selectedDateDateTimeFormatted.year,
+                                selectedDateDateTimeFormatted.month,
+                                selectedDateDateTimeFormatted.day,
+                                selectedDateDateTimeFormatted.hour != 0
+                                    ? selectedDateDateTimeFormatted.hour
+                                    : DateTime.now().hour,
+                                selectedDateDateTimeFormatted.minute != 0
+                                    ? selectedDateDateTimeFormatted.minute
+                                    : DateTime.now().minute,
+                                selectedDateDateTimeFormatted.second != 0
+                                    ? selectedDateDateTimeFormatted.second
+                                    : DateTime.now().second,
+                              ),
                             ),
                           ),
                         );
                       } else {
                         balanceDataProvider.addRepeatedBalance(
-                          amount: _amountChooser(enterScreenProvider),
-                          category: enterScreenProvider.category,
-                          currency: "EUR",
-                          name: enterScreenProvider.name,
-                          initialTime: Timestamp.fromDate(
-                            DateTime(
-                              selectedDateDateTimeFormatted.year,
-                              selectedDateDateTimeFormatted.month,
-                              selectedDateDateTimeFormatted.day,
-                              selectedDateDateTimeFormatted.hour != 0
-                                  ? selectedDateDateTimeFormatted.hour
-                                  : DateTime.now().hour,
-                              selectedDateDateTimeFormatted.minute != 0
-                                  ? selectedDateDateTimeFormatted.minute
-                                  : DateTime.now().minute,
-                              selectedDateDateTimeFormatted.second != 0
-                                  ? selectedDateDateTimeFormatted.second
-                                  : DateTime.now().second,
+                          RepeatBalanceData(
+                            amount: _amountChooser(enterScreenProvider),
+                            category: enterScreenProvider.category,
+                            currency: "EUR",
+                            name: enterScreenProvider.name,
+                            initialTime: Timestamp.fromDate(
+                              DateTime(
+                                selectedDateDateTimeFormatted.year,
+                                selectedDateDateTimeFormatted.month,
+                                selectedDateDateTimeFormatted.day,
+                                selectedDateDateTimeFormatted.hour != 0
+                                    ? selectedDateDateTimeFormatted.hour
+                                    : DateTime.now().hour,
+                                selectedDateDateTimeFormatted.minute != 0
+                                    ? selectedDateDateTimeFormatted.minute
+                                    : DateTime.now().minute,
+                                selectedDateDateTimeFormatted.second != 0
+                                    ? selectedDateDateTimeFormatted.second
+                                    : DateTime.now().second,
+                              ),
                             ),
+                            repeatDuration: enterScreenProvider.repeatDuration!,
+                            repeatDurationType:
+                                enterScreenProvider.repeatDurationTyp!,
                           ),
-                          repeatDuration: enterScreenProvider.repeatDuration!,
-                          repeatDurationType:
-                              enterScreenProvider.repeatDurationTyp!,
                         );
                       }
                     }
@@ -215,33 +240,6 @@ class _EnterScreenState extends State<EnterScreen> {
       return enterScreenProvider.amount;
     }
   }
-
-/*
-  Not in use anymore 
-
-  String _nameChooser(EnterScreenProvider enterScreenProvider,
-      AccountSettingsProvider accountSettingsProvider, BuildContext context) {
-    if (enterScreenProvider.name == "") {
-      if (enterScreenProvider.isExpenses) {
-        return AppLocalizations.of(context)!.translate(accountSettingsProvider
-                .standardCategoryExpenses[EnumToString.fromString(
-                    StandardCategoryExpense.values,
-                    enterScreenProvider.category)]
-                ?.label ??
-            "settings_screen/standards-selector-none");
-      } else {
-        return AppLocalizations.of(context)!.translate(accountSettingsProvider
-                .standardCategoryIncomes[EnumToString.fromString(
-                    StandardCategoryIncome.values,
-                    enterScreenProvider.category)]
-                ?.label ??
-            "settings_screen/standards-selector-none");
-      }
-    } else {
-      return enterScreenProvider.name;
-    }
-  }
-  */
 
   void showAlertDialog(
     BuildContext context,

@@ -140,6 +140,7 @@
     "enter_screen/delete-entry/dialog-label-deleterep": "Welchen Eintrag möchtest du löschen?",
     "enter_screen/delete-entry/dialog-label-delete": "Möchtest du diesen Eintrag wirklich löschen?",
     "enter_screen/delete-entry/dialog-button-onlyonce": "Diesen Eintrag",
+    "enter_screen/delete-entry/dialog-button-untilnow": "Diesen Eintrag und alle vorherigen",
     "enter_screen/delete-entry/dialog-button-fromnow": "Diesen Eintrag und alle folgenden",
     "enter_screen/delete-entry/dialog-button-allentries": "Alle Einträge",
     "enter_screen/delete-entry/dialog-button-delete": "Löschen",

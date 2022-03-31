@@ -95,7 +95,7 @@ class _EnterScreenListViewBuilderState
               padding: const EdgeInsets.all(8),
               //as repeat is the last item and we dont want to implement it
               //in the MVP the itemCount has to be cut by one
-              itemCount: enterScreenProvider.editMode ? 2 : 3,
+              itemCount: calculateItemCount(enterScreenProvider),
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
                   onTap: () => _onCategoryPressed(
@@ -182,6 +182,18 @@ class _EnterScreenListViewBuilderState
         ],
       ),
     );
+  }
+
+  int calculateItemCount(EnterScreenProvider enterScreenProvider) {
+    if (enterScreenProvider.editMode) {
+      if (enterScreenProvider.repeatId != null) {
+        return 1;
+      } else {
+        return 2;
+      }
+    } else {
+      return 3;
+    }
   }
 
   //function executed when one of the categories (category, account, date etc.) is tapped

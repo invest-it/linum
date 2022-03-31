@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
@@ -226,11 +227,13 @@ class _LayoutScreenState extends State<LayoutScreen>
         DateTime.now().subtract(Duration(days: rand.nextInt(365 * 5))),
       );
       balanceDataProvider.addSingleBalance(
-        amount: ((rand.nextDouble() * -10000).round()) / 100.0,
-        category: categories[rand.nextInt(categories.length)],
-        currency: "EUR",
-        name: "Random Item Number: $i",
-        time: time,
+        SingleBalanceData(
+          amount: ((rand.nextDouble() * -10000).round()) / 100.0,
+          category: categories[rand.nextInt(categories.length)],
+          currency: "EUR",
+          name: "Random Item Number: $i",
+          time: time,
+        ),
       );
       dev.log("$i. Hochgeladen");
       await Future.delayed(const Duration(milliseconds: 200));
