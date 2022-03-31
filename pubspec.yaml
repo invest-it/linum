@@ -21,6 +21,7 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
+  badges: ^2.0.2
   cloud_firestore: ^2.5.4
   cupertino_icons: ^1.0.2
   enum_to_string: ^2.0.1
@@ -35,6 +36,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
+  flutter_spinkit: ^5.1.0
   flutter_svg: ^1.0.0
   fluttertoast: ^8.0.8
   google_fonts: ^2.0.0

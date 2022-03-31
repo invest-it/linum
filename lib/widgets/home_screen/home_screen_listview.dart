@@ -1,11 +1,14 @@
 // ignore_for_file: avoid_dynamic_calls
+import 'dart:developer' as dev;
 
+import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
+import 'package:linum/models/repeatable_change_type.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
@@ -171,6 +174,10 @@ class HomeScreenListView implements BalanceDataListView {
                       providers: [
                         ChangeNotifierProvider<EnterScreenProvider>(
                           create: (_) {
+                            if (arrayElement["formerTime"] != null) {
+                              dev.log(arrayElement["formerTime"].toString());
+                              dev.log(arrayElement["time"].toString());
+                            }
                             return EnterScreenProvider(
                               id: arrayElement["id"] as String,
                               amount: arrayElement["amount"] as num,
@@ -179,6 +186,10 @@ class HomeScreenListView implements BalanceDataListView {
                               selectedDate:
                                   (arrayElement["time"] as Timestamp).toDate(),
                               editMode: true,
+                              repeatId: arrayElement["repeatId"] as String?,
+                              formerTime: arrayElement["formerTime"] != null
+                                  ? arrayElement["formerTime"] as Timestamp
+                                  : arrayElement["time"] as Timestamp,
                             );
                           },
                         ),
@@ -270,8 +281,13 @@ class HomeScreenListView implements BalanceDataListView {
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () {
-                                  balanceDataProvider.removeSingleBalance(
-                                    arrayElement["id"] as String,
+                                  balanceDataProvider
+                                      .removeRepeatedBalanceUsingId(
+                                    id: arrayElement["repeatId"] as String,
+                                    removeType:
+                                        RepeatableChangeType.onlyThisOne,
+                                    time:
+                                        arrayElement["formerTime"] as Timestamp,
                                   );
                                   Navigator.of(context).pop(true);
                                 },
@@ -290,10 +306,38 @@ class HomeScreenListView implements BalanceDataListView {
                               ),
                               TextButton(
                                 onPressed: () {
-                                  balanceDataProvider.removeRepeatedBalance(
+                                  balanceDataProvider
+                                      .removeRepeatedBalanceUsingId(
                                     id: arrayElement["repeatId"] as String,
-                                    removeType: RemoveType.allAfter,
-                                    time: arrayElement["time"] as Timestamp,
+                                    removeType:
+                                        RepeatableChangeType.thisAndAllBefore,
+                                    time:
+                                        arrayElement["formerTime"] as Timestamp,
+                                  );
+                                  Navigator.of(context).pop(true);
+                                },
+                                child: Text(
+                                  AppLocalizations.of(context)!.translate(
+                                    "enter_screen/delete-entry/dialog-button-untilnow",
+                                  ),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .copyWith(
+                                        color:
+                                            Theme.of(context).colorScheme.error,
+                                      ),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  balanceDataProvider
+                                      .removeRepeatedBalanceUsingId(
+                                    id: arrayElement["repeatId"] as String,
+                                    removeType:
+                                        RepeatableChangeType.thisAndAllAfter,
+                                    time:
+                                        arrayElement["formerTime"] as Timestamp,
                                   );
                                   Navigator.of(context).pop(true);
                                 },
@@ -312,10 +356,10 @@ class HomeScreenListView implements BalanceDataListView {
                               ),
                               TextButton(
                                 onPressed: () {
-                                  balanceDataProvider.removeRepeatedBalance(
+                                  balanceDataProvider
+                                      .removeRepeatedBalanceUsingId(
                                     id: arrayElement["repeatId"] as String,
-                                    removeType: RemoveType.all,
-                                    time: arrayElement["time"] as Timestamp,
+                                    removeType: RepeatableChangeType.all,
                                   );
                                   Navigator.of(context).pop(true);
                                 },
@@ -390,7 +434,8 @@ class HomeScreenListView implements BalanceDataListView {
                               ),
                               TextButton(
                                 onPressed: () {
-                                  balanceDataProvider.removeSingleBalance(
+                                  balanceDataProvider
+                                      .removeSingleBalanceUsingId(
                                     arrayElement["id"] as String,
                                   );
                                   Navigator.of(context).pop(true);
@@ -449,60 +494,102 @@ class HomeScreenListView implements BalanceDataListView {
                               )
                             ],
                           ),
+
+                          arrayElement["repeatId"] != null
+                        ? Positioned(
+                            bottom: 18,
+                            left: 18,
+                            child: Icon(Icons.repeat,
+                                color: Theme.of(context).colorScheme.secondary),
+                          )
+                        : SizedBox(),
                         );
                       });*/
 
               child: ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: isFutureItem
-                      ? arrayElement['amount'] as num > 0
-                          ? Theme.of(context)
-                              .colorScheme
-                              .tertiary // FUTURE INCOME BACKGROUND
-                          : Theme.of(context).colorScheme.errorContainer
-                      // FUTURE EXPENSE BACKGROUND
-                      : arrayElement['amount'] as num > 0
-                          ? Theme.of(context)
-                              .colorScheme
-                              .secondary // PRESENT INCOME BACKGROUND
-                          : Theme.of(context)
-                              .colorScheme
-                              .secondary, // PRESENT EXPENSE BACKGROUND
-                  child: arrayElement['amount'] as num > 0
+                leading: Badge(
+                  padding: const EdgeInsets.all(2),
+                  toAnimate: false,
+                  position: const BadgePosition(bottom: 23, start: 23),
+                  elevation: 1,
+                  badgeColor: isFutureItem && arrayElement["repeatId"] != null
+                      ? Theme.of(context).colorScheme.tertiaryContainer
+                      //badgeColor for current transactions
+                      : arrayElement["amount"] as num > 0
+                          //badgeColor for future transactions
+                          ? arrayElement["repeatId"] != null
+                              ? Theme.of(context).colorScheme.tertiary
+                              // ignore: use_full_hex_values_for_flutter_colors
+                              : const Color(0x000000)
+                          : arrayElement["repeatId"] != null
+                              ? Theme.of(context).colorScheme.errorContainer
+                              // ignore: use_full_hex_values_for_flutter_colors
+                              : const Color(0x000000),
+                  //cannot use the suggestion as it produces an unwanted white point
+                  badgeContent: arrayElement["repeatId"] != null
                       ? Icon(
-                          AccountSettingsProvider
-                                  .standardCategoryIncomes[
-                                      EnumToString.fromString(
-                                StandardCategoryIncome.values,
-                                arrayElement['category'] as String,
-                              )]
-                                  ?.icon ??
-                              Icons.error,
+                          Icons.autorenew_rounded,
                           color: isFutureItem
-                              ? Theme.of(context)
-                                  .colorScheme
-                                  .onPrimary // FUTURE INCOME ICON
+                              ? arrayElement["amount"] as num > 0
+                                  ? Theme.of(context).colorScheme.tertiary
+                                  : Theme.of(context).colorScheme.errorContainer
                               : Theme.of(context)
                                   .colorScheme
-                                  .tertiary, // PRESENT INCOME ICON
+                                  .secondaryContainer,
+                          size: 18,
                         )
-                      : Icon(
-                          AccountSettingsProvider
-                                  .standardCategoryExpenses[
-                                      EnumToString.fromString(
-                                StandardCategoryExpense.values,
-                                arrayElement['category'] as String,
-                              )]
-                                  ?.icon ??
-                              Icons.error,
-                          color: isFutureItem
-                              ? Theme.of(context)
-                                  .colorScheme
-                                  .onPrimary // FUTURE EXPENSE ICON
-                              : Theme.of(context)
-                                  .colorScheme
-                                  .errorContainer, // PRESENT EXPENSE ICON
-                        ),
+                      : const SizedBox(),
+                  child: CircleAvatar(
+                    backgroundColor: isFutureItem
+                        ? arrayElement['amount'] as num > 0
+                            ? Theme.of(context)
+                                .colorScheme
+                                .tertiary // FUTURE INCOME BACKGROUND
+                            : Theme.of(context).colorScheme.errorContainer
+                        // FUTURE EXPENSE BACKGROUND
+                        : arrayElement['amount'] as num > 0
+                            ? Theme.of(context)
+                                .colorScheme
+                                .secondary // PRESENT INCOME BACKGROUND
+                            : Theme.of(context)
+                                .colorScheme
+                                .secondary, // PRESENT EXPENSE BACKGROUND
+                    child: arrayElement['amount'] as num > 0
+                        ? Icon(
+                            AccountSettingsProvider
+                                    .standardCategoryIncomes[
+                                        EnumToString.fromString(
+                                  StandardCategoryIncome.values,
+                                  arrayElement['category'] as String,
+                                )]
+                                    ?.icon ??
+                                Icons.error,
+                            color: isFutureItem
+                                ? Theme.of(context)
+                                    .colorScheme
+                                    .onPrimary // FUTURE INCOME ICON
+                                : Theme.of(context)
+                                    .colorScheme
+                                    .tertiary, // PRESENT INCOME ICON
+                          )
+                        : Icon(
+                            AccountSettingsProvider
+                                    .standardCategoryExpenses[
+                                        EnumToString.fromString(
+                                  StandardCategoryExpense.values,
+                                  arrayElement['category'] as String,
+                                )]
+                                    ?.icon ??
+                                Icons.error,
+                            color: isFutureItem
+                                ? Theme.of(context)
+                                    .colorScheme
+                                    .onPrimary // FUTURE EXPENSE ICON
+                                : Theme.of(context)
+                                    .colorScheme
+                                    .errorContainer, // PRESENT EXPENSE ICON
+                          ),
+                  ),
                 ),
                 title: Text(
                   arrayElement["name"] as String != ""

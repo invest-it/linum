@@ -4,6 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/frontend_functions/user_alert.dart';
+import 'package:linum/models/dialog_action.dart';
+import 'package:linum/models/repeat_balance_data.dart';
+import 'package:linum/models/repeatable_change_type.dart';
+import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/widgets/enter_screen/enter_screen_listviewbuilder.dart';
@@ -129,18 +134,19 @@ class _EnterScreenState extends State<EnterScreen> {
                         proportionateScreenHeight(40),
                       ),
                     ),
-                    onPressed: () {
-                      if (enterScreenProvider.isIncome &&
-                          _amountChooser(enterScreenProvider) <= 0) {
-                        showAlertDialog(context, enterScreenProvider);
-                        log(
-                          "amount was to low: ${_amountChooser(enterScreenProvider)}",
-                        );
-                        return;
-                      }
-                      Navigator.of(context).pop();
+                  ),
+                  onPressed: () {
+                    if (enterScreenProvider.isIncome &&
+                        _amountChooser(enterScreenProvider) <= 0) {
+                      showAlertDialog(context, enterScreenProvider);
+                      log(
+                        "amount was to low: ${_amountChooser(enterScreenProvider)}",
+                      );
+                      return;
+                    }
 
-                      if (enterScreenProvider.editMode) {
+                    if (enterScreenProvider.editMode) {
+                      if (enterScreenProvider.repeatId == null) {
                         balanceDataProvider.updateSingleBalance(
                           id: enterScreenProvider.formerId ?? "",
                           amount: _amountChooser(enterScreenProvider),
@@ -149,12 +155,126 @@ class _EnterScreenState extends State<EnterScreen> {
                           name: enterScreenProvider.name,
                           time: Timestamp.fromDate(
                             selectedDateDateTimeFormatted,
+
                           ),
                         );
+                        Navigator.of(context).pop();
                       } else {
-                        if (enterScreenProvider.repeatDuration == null ||
-                            enterScreenProvider.repeatDurationTyp == null) {
-                          balanceDataProvider.addSingleBalance(
+                        // open popup
+                        final UserAlert userAlert = UserAlert(context: context);
+                        userAlert
+                            .showMyActionDialog(
+                              "enter_screen/change-entry/dialog-label-change",
+                              <DialogAction>[
+                                DialogAction(
+                                  actionTitle:
+                                      "enter_screen/delete-entry/dialog-button-onlyonce",
+                                  // ignore: avoid_redundant_argument_values
+                                  dialogPurpose: DialogPurpose.primary,
+                                  function: () {
+                                    balanceDataProvider.updateRepeatedBalance(
+                                      id: enterScreenProvider.repeatId!,
+                                      changeType:
+                                          RepeatableChangeType.onlyThisOne,
+                                      amount:
+                                          _amountChooser(enterScreenProvider),
+                                      category: enterScreenProvider.category,
+                                      currency: "EUR",
+                                      name: enterScreenProvider.name,
+                                      time: enterScreenProvider.formerTime,
+                                      newTime: Timestamp.fromDate(
+                                        selectedDateDateTimeFormatted,
+                                      ),
+                                    );
+                                    Navigator.of(context).pop(true);
+                                  },
+                                ),
+                                DialogAction(
+                                  actionTitle:
+                                      "enter_screen/delete-entry/dialog-button-untilnow",
+                                  dialogPurpose: DialogPurpose.danger,
+                                  function: () {
+                                    balanceDataProvider.updateRepeatedBalance(
+                                      id: enterScreenProvider.repeatId!,
+                                      changeType:
+                                          RepeatableChangeType.thisAndAllBefore,
+                                      amount:
+                                          _amountChooser(enterScreenProvider),
+                                      category: enterScreenProvider.category,
+                                      currency: "EUR",
+                                      name: enterScreenProvider.name,
+                                      time: enterScreenProvider.formerTime,
+                                      newTime: Timestamp.fromDate(
+                                        selectedDateDateTimeFormatted,
+                                      ),
+                                    );
+                                    Navigator.of(context).pop(true);
+                                  },
+                                ),
+                                DialogAction(
+                                  actionTitle:
+                                      "enter_screen/delete-entry/dialog-button-fromnow",
+                                  dialogPurpose: DialogPurpose.danger,
+                                  function: () {
+                                    balanceDataProvider.updateRepeatedBalance(
+                                      id: enterScreenProvider.repeatId!,
+                                      changeType:
+                                          RepeatableChangeType.thisAndAllAfter,
+                                      amount:
+                                          _amountChooser(enterScreenProvider),
+                                      category: enterScreenProvider.category,
+                                      currency: "EUR",
+                                      name: enterScreenProvider.name,
+                                      time: enterScreenProvider.formerTime,
+                                      newTime: Timestamp.fromDate(
+                                        selectedDateDateTimeFormatted,
+                                      ),
+                                    );
+                                    Navigator.of(context).pop(true);
+                                  },
+                                ),
+                                DialogAction(
+                                  actionTitle:
+                                      "enter_screen/delete-entry/dialog-button-allentries",
+                                  dialogPurpose: DialogPurpose.danger,
+                                  function: () {
+                                    balanceDataProvider.updateRepeatedBalance(
+                                      id: enterScreenProvider.repeatId!,
+                                      changeType: RepeatableChangeType.all,
+                                      amount:
+                                          _amountChooser(enterScreenProvider),
+                                      category: enterScreenProvider.category,
+                                      currency: "EUR",
+                                      name: enterScreenProvider.name,
+                                      time: enterScreenProvider.formerTime,
+                                      newTime: Timestamp.fromDate(
+                                        selectedDateDateTimeFormatted,
+                                      ),
+                                    );
+                                    Navigator.of(context).pop(true);
+                                  },
+                                ),
+                                DialogAction(
+                                  actionTitle:
+                                      "enter_screen/delete-entry/dialog-button-cancel",
+                                  dialogPurpose: DialogPurpose.secondary,
+                                  function: () {
+                                    Navigator.of(context).pop(false);
+                                  },
+                                ),
+                              ],
+                              title:
+                                  "enter_screen/delete-entry/dialog-label-title",
+                            )
+                            .then(
+                              (value) => Navigator.of(context).pop(),
+                            );
+                      }
+                    } else {
+                      if (enterScreenProvider.repeatDuration == null ||
+                          enterScreenProvider.repeatDurationTyp == null) {
+                        balanceDataProvider.addSingleBalance(
+                          SingleBalanceData(
                             amount: _amountChooser(enterScreenProvider),
                             category: enterScreenProvider.category,
                             currency: "EUR",
@@ -175,9 +295,11 @@ class _EnterScreenState extends State<EnterScreen> {
                                     : DateTime.now().second,
                               ),
                             ),
-                          );
-                        } else {
-                          balanceDataProvider.addRepeatedBalance(
+                          ),
+                        );
+                      } else {
+                        balanceDataProvider.addRepeatedBalance(
+                          RepeatBalanceData(
                             amount: _amountChooser(enterScreenProvider),
                             category: enterScreenProvider.category,
                             currency: "EUR",
@@ -201,14 +323,15 @@ class _EnterScreenState extends State<EnterScreen> {
                             repeatDuration: enterScreenProvider.repeatDuration!,
                             repeatDurationType:
                                 enterScreenProvider.repeatDurationTyp!,
-                          );
-                        }
+                          ),
+                        );
                       }
-                    },
-                    child: Text(
-                      AppLocalizations.of(context)!
-                          .translate('enter_screen/button-save-entry'),
-                    ),
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  child: Text(
+                    AppLocalizations.of(context)!
+                        .translate('enter_screen/button-save-entry'),
                   ),
                 ],
               ),
@@ -235,33 +358,6 @@ class _EnterScreenState extends State<EnterScreen> {
       return enterScreenProvider.amount;
     }
   }
-
-/*
-  Not in use anymore 
-
-  String _nameChooser(EnterScreenProvider enterScreenProvider,
-      AccountSettingsProvider accountSettingsProvider, BuildContext context) {
-    if (enterScreenProvider.name == "") {
-      if (enterScreenProvider.isExpenses) {
-        return AppLocalizations.of(context)!.translate(accountSettingsProvider
-                .standardCategoryExpenses[EnumToString.fromString(
-                    StandardCategoryExpense.values,
-                    enterScreenProvider.category)]
-                ?.label ??
-            "settings_screen/standards-selector-none");
-      } else {
-        return AppLocalizations.of(context)!.translate(accountSettingsProvider
-                .standardCategoryIncomes[EnumToString.fromString(
-                    StandardCategoryIncome.values,
-                    enterScreenProvider.category)]
-                ?.label ??
-            "settings_screen/standards-selector-none");
-      }
-    } else {
-      return enterScreenProvider.name;
-    }
-  }
-  */
 
   void showAlertDialog(
     BuildContext context,

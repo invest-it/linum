@@ -3,6 +3,7 @@
     "main/label-error": "Ein Fehler ist aufgetreten.",
     "main/label-wip": "Hier wird noch gearbeitet. Schau gerne später vorbei!",
 
+
     "onboarding_screen/card1-title": "Herzlich Willkommen!",
     "onboarding_screen/card1-description": "Dein neuer Budgeting-Assistent wartet schon auf dich.",
     "onboarding_screen/card2-title": "Tracke dein Geld",
@@ -81,6 +82,11 @@
     "settings_screen/standard-account-selector/cash": "Bargeld",
     "settings_screen/standard-account-selector/deposit": "Depot",
 
+    "settings_screen/pin-lock/label-title": "PIN-SPERRE",
+    "settings_screen/pin-lock/label-tooltip": "Ist die PIN-Sperre aktiv, musst du beim Starten der App zum Schutz deiner Daten deinen persönlichen PIN-Code eingeben.",
+    "settings_screen/pin-lock/switch-label": "PIN-Sperre aktiv",
+    "settings_screen/pin-lock/label-change-pin": "PIN-Code ändern",
+
     "settings_screen/standard-currency/label-title": "STANDARD-WÄHRUNG",
     "settings_screen/standard-currency/label-tooltip": "Diese Währung wird standardmäßig bei jeder neuen Transaktion genutzt. Du kannst diese auch individuell ändern.",
 
@@ -133,7 +139,9 @@
     "enter_screen/delete-entry/dialog-label-title": "Bestätigen",
     "enter_screen/delete-entry/dialog-label-deleterep": "Welchen Eintrag möchtest du löschen?",
     "enter_screen/delete-entry/dialog-label-delete": "Möchtest du diesen Eintrag wirklich löschen?",
+    "enter_screen/change-entry/dialog-label-change": "Welchen Eintrag möchtest du ändern?",
     "enter_screen/delete-entry/dialog-button-onlyonce": "Diesen Eintrag",
+    "enter_screen/delete-entry/dialog-button-untilnow": "Diesen Eintrag und alle vorherigen",
     "enter_screen/delete-entry/dialog-button-fromnow": "Diesen Eintrag und alle folgenden",
     "enter_screen/delete-entry/dialog-button-allentries": "Alle Einträge",
     "enter_screen/delete-entry/dialog-button-delete": "Löschen",
@@ -146,6 +154,19 @@
 
     "academy_screen/label-title": "Finanzen einfach erklärt.",
     "academy_screen/label-description": "Die Invest it! Academy hilft dir dabei, dich in der Wirtschafts- und Finanzwelt zurechtzufinden. Wir produzieren kostenlose, unparteiische Lernvideos für dich. Jetzt reinschauen!",
+
+
+    "lock_screen/initialize/label-title": "Wähle deine PIN",
+    "lock_screen/initialize/label-button": "Abbrechen",
+    "lock_screen/change/label-title": "Wähle eine neue PIN",
+    "lock_screen/change/label-button": "Abbrechen",
+    "lock_screen/recall/label-title": "Bitte PIN eingeben",
+    "lock_screen/recall/label-button": "Abmelden",
+
+    "lock_screen/toast-wrong-code": "Der eingegebene Code ist falsch",
+    "lock_screen/toast-pin-deactivated": "Die PIN-Sperre wurde deaktiviert.",
+    "lock_screen/toast-pin-set": "Du hast die PIN-Sperre erfolgreich aktiviert!",
+    "lock_screen/toast-pin-changed": "Die PIN wurde erfolgreich geändert.",
 
 
     "action_lip/forgot-password/logged-out/label-title": "Passwort zurücksetzen",
@@ -192,6 +213,21 @@
     "alertdialog/reset-password/message": "Wir haben dir einen Link zum Zurücksetzen deines Passworts geschickt. Bitte klicke auf den Link in der E-Mail, um ein neues Passwort zu setzen. Bitte überprüfe auch deinen Spam-Ordner.",
     "alertdialog/reset-password/title": "Anfrage gesendet",
     "alertdialog/reset-password/action": "Okay",
+
+    "alertdialog/killswitch-recall/title": "Bist du sicher?",
+    "alertdialog/killswitch-recall/message": "Wenn du dich abmeldest, wird die PIN-Sperre deaktiviert. So kannst du dich normal mit deiner E-Mail und deinem Passwort anmelden, falls du deinen PIN-Code vergessen hast.",
+    "alertdialog/killswitch-recall/action": "Abmelden und PIN zurücksetzen",
+    "alertdialog/killswitch-recall/cancel": "Nicht abmelden",
+
+    "alertdialog/killswitch-initialize/title": "Bist du sicher?",
+    "alertdialog/killswitch-initialize/message": "Wenn du den Vorgang jetzt abbrichst, wird die PIN-Sperre wieder deaktiviert.",
+    "alertdialog/killswitch-initialize/action": "Trotzdem abbrechen",
+    "alertdialog/killswitch-initialize/cancel": "Zurück",
+
+    "alertdialog/killswitch-change/title": "Bist du sicher?",
+    "alertdialog/killswitch-change/message": "Wenn du den Vorgang jetzt abbrichst, bleibt die alte PIN aktiv.",
+    "alertdialog/killswitch-change/action": "Trotzdem abbrechen",
+    "alertdialog/killswitch-change/cancel": "Zurück",
 
     "auth/invalid-email": "Deine E-Mail-Adresse ist ungültig. Vielleicht hast du dich vertippt?",
     "auth/user-disabled": "Der Benutzer wurde vom System deaktiviert. Falls du denkst, dass dies ein Fehler ist, wende dich bitte an support@investit-academy.de",

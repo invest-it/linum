@@ -1,8 +1,8 @@
 ---
-name: Feature request (default)
-about: Suggest an idea for this project
+name: Feature Request (User Feedback)
+about: Register confirmed user feedback into the issue system (features)
 title: ''
-labels: 'enhancement, s: dev team, P5'
+labels: 'enhancement, s: user feedback, P5'
 assignees: ''
 
 ---

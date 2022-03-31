@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/models/repeat_duration_type_enum.dart';
 import 'package:linum/providers/account_settings_provider.dart';
@@ -11,13 +12,15 @@ class EnterScreenProvider with ChangeNotifier {
   String _expenseCategory = "";
   String _incomeCategory = "";
   String _currency = "";
-  DateTime _selectedDate = DateTime.now();
+  late DateTime _selectedDate;
   int? _repeatDuration;
   RepeatDurationType? _repeatDurationType;
   late RepeatDuration _repeatDurationEnum;
 
   late bool _editMode;
   String? _formerId;
+  String? _repeatId;
+  Timestamp? _formerTime;
 
   EnterScreenProvider({
     num amount = 0.0,
@@ -31,6 +34,8 @@ class EnterScreenProvider with ChangeNotifier {
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
     RepeatDuration initRepeatDurationEnum = RepeatDuration.none,
+    String? repeatId,
+    Timestamp? formerTime,
   }) {
     _amount = amount <= 0 ? -1 * amount : amount;
     _expenseCategory = amount <= 0 ? category : secondaryCategory;
@@ -38,7 +43,6 @@ class EnterScreenProvider with ChangeNotifier {
     _name = name;
     _currency = currency;
     _editMode = editMode;
-    _selectedDate = selectedDate ?? DateTime.now();
     _isExpenses = amount <= 0;
     _repeatDuration = repeatDuration;
     _isIncome = !_isExpenses;
@@ -46,6 +50,12 @@ class EnterScreenProvider with ChangeNotifier {
     _formerId = id;
     _repeatDurationEnum = initRepeatDurationEnum;
     _repeatDurationType = repeatDurationType;
+    _repeatId = repeatId;
+    _formerTime = formerTime;
+    _selectedDate = formerTime != null ? formerTime.toDate() : DateTime.now();
+    if (selectedDate != null) {
+      _selectedDate = selectedDate;
+    }
   }
 
   bool get isExpenses {
@@ -99,6 +109,10 @@ class EnterScreenProvider with ChangeNotifier {
   RepeatDuration get repeatDurationEnum {
     return _repeatDurationEnum;
   }
+
+  String? get repeatId => _repeatId;
+
+  Timestamp? get formerTime => _formerTime;
 
   void setExpense() {
     _isExpenses = true;
