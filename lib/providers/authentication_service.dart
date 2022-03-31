@@ -42,12 +42,12 @@ class AuthenticationService extends ChangeNotifier {
 
       if (isEmailVerified) {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString('lastMail', email);
+        await prefs.setString('lastMail', email);
         notifyListeners();
         onComplete("Successfully signed in to Firebase");
       } else {
         await sendVerificationEmail(email, onError: onError);
-        signOut();
+        await signOut();
         if (onNotVerified != null) {
           onNotVerified();
         } else {

@@ -91,125 +91,128 @@ class _LayoutScreenState extends State<LayoutScreen>
       const AcademyScreen(), //4
       LockScreen(), //5
     ];
-
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Center(
-        child: FutureBuilder(
-          future: pinCodeProvider.initialIsPINActive(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              // dev.log(
-              //   pinCodeProvider.sessionIsSafe
-              //       ? "Session: SAFE"
-              //       : "Session: NOT SAFE",
-              // );
-              if (pinCodeProvider.pinActive && !pinCodeProvider.sessionIsSafe) {
-                dev.log(
-                  "PIN ACTIVE for ${pinCodeProvider.lastEmail}, triggering recall",
-                );
-                pinCodeProvider.triggerPINRecall();
-              } else {
-                // dev.log(
-                //   "Checked if I should trigger a PIN recall, but either it is not active for ${pinCodeProvider.lastEmail} or the session is safe.",
-                // );
-              }
-            }
-            return StreamBuilder(
+    return FutureBuilder(
+      future: pinCodeProvider.initialIsPINActive(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          // dev.log(
+          //   pinCodeProvider.sessionIsSafe
+          //       ? "Session: SAFE"
+          //       : "Session: NOT SAFE",
+          // );
+          if (pinCodeProvider.pinActive && !pinCodeProvider.sessionIsSafe) {
+            dev.log(
+              "PIN ACTIVE for ${pinCodeProvider.lastEmail}, triggering recall",
+            );
+            pinCodeProvider.triggerPINRecall();
+          } else {
+            // dev.log(
+            //   "Checked if I should trigger a PIN recall, but either it is not active for ${pinCodeProvider.lastEmail} or the session is safe.",
+            // );
+          }
+        }
+        return Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: Center(
+            child: StreamBuilder(
               stream: balance.snapshots(),
               builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
                 //returns the page at the current index, or at the lock screen index if a) the PIN lock is active AND b) there is a code for the email used for login stored in sharedPreferences AND c) the pin code has not been recalled before
                 return _page.elementAt(screenIndexProvider.pageIndex);
               },
-            );
-          },
-        ),
-      ),
-      //floatingactionbutton with bottomnavbar
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: (screenIndexProvider.pageIndex == 5 ||
-              (pinCodeProvider.pinActive &&
-                  !pinCodeProvider
-                      .sessionIsSafe)) //Check if the PIN lock is active
-          ? null
-          : FloatingActionButton(
-              onPressed: () {
-                final BalanceDataProvider balanceDataProvider =
-                    Provider.of<BalanceDataProvider>(context, listen: false);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (innerContext) {
-                      return MultiProvider(
-                        providers: [
-                          ChangeNotifierProvider<EnterScreenProvider>(
-                            create: (_) {
-                              return EnterScreenProvider(
-                                category: _accountSettingsProvider
-                                            .settings['StandardCategoryExpense']
-                                        as String? ??
-                                    "None",
-                                secondaryCategory: _accountSettingsProvider
-                                            .settings['StandardCategoryIncome']
-                                        as String? ??
-                                    "None",
-                              );
-                            },
-                          ),
-                          ChangeNotifierProvider<BalanceDataProvider>(
-                            create: (_) {
-                              return balanceDataProvider..dontDisposeOneTime();
-                            },
-                          ),
-                          ChangeNotifierProvider<AccountSettingsProvider>(
-                            create: (_) {
-                              return _accountSettingsProvider
-                                ..dontDisposeOneTime();
-                            },
-                          ),
-                        ],
-                        child: const EnterScreen(),
-                      );
-                      // ChangeNotifierProvider.value(
-                      // value: enterScreenProvider, child: EnterScreen());
-                    },
-                    //=> EnterScreen()),
-                  ),
-                );
-              },
-              elevation: 2.0,
-              backgroundColor: Theme.of(context).colorScheme.secondary,
-              child: const Icon(Icons.add),
             ),
-      bottomNavigationBar: (screenIndexProvider.pageIndex == 5 ||
-              (pinCodeProvider.pinActive &&
-                  !pinCodeProvider
-                      .sessionIsSafe)) //Check if the PIN lock is active
-          ? null
-          : FABBottomAppBar(
-              items: [
-                BottomAppBarItem(iconData: Icons.home, text: 'Home'),
-                BottomAppBarItem(
-                  iconData: Icons.savings_rounded,
-                  text: 'Budget',
+          ),
+          //floatingactionbutton with bottomnavbar
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: (screenIndexProvider.pageIndex == 5 ||
+                  (pinCodeProvider.pinActive &&
+                      !pinCodeProvider
+                          .sessionIsSafe)) //Check if the PIN lock is active
+              ? null
+              : FloatingActionButton(
+                  onPressed: () {
+                    final BalanceDataProvider balanceDataProvider =
+                        Provider.of<BalanceDataProvider>(context,
+                            listen: false);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (innerContext) {
+                          return MultiProvider(
+                            providers: [
+                              ChangeNotifierProvider<EnterScreenProvider>(
+                                create: (_) {
+                                  return EnterScreenProvider(
+                                    category: _accountSettingsProvider.settings[
+                                                'StandardCategoryExpense']
+                                            as String? ??
+                                        "None",
+                                    secondaryCategory:
+                                        _accountSettingsProvider.settings[
+                                                    'StandardCategoryIncome']
+                                                as String? ??
+                                            "None",
+                                  );
+                                },
+                              ),
+                              ChangeNotifierProvider<BalanceDataProvider>(
+                                create: (_) {
+                                  return balanceDataProvider
+                                    ..dontDisposeOneTime();
+                                },
+                              ),
+                              ChangeNotifierProvider<AccountSettingsProvider>(
+                                create: (_) {
+                                  return _accountSettingsProvider
+                                    ..dontDisposeOneTime();
+                                },
+                              ),
+                            ],
+                            child: const EnterScreen(),
+                          );
+                          // ChangeNotifierProvider.value(
+                          // value: enterScreenProvider, child: EnterScreen());
+                        },
+                        //=> EnterScreen()),
+                      ),
+                    );
+                  },
+                  elevation: 2.0,
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                  child: const Icon(Icons.add),
                 ),
-                BottomAppBarItem(
-                  iconData: Icons.bar_chart_rounded,
-                  text: 'Stats',
+          bottomNavigationBar: (screenIndexProvider.pageIndex == 5 ||
+                  (pinCodeProvider.pinActive &&
+                      !pinCodeProvider
+                          .sessionIsSafe)) //Check if the PIN lock is active
+              ? null
+              : FABBottomAppBar(
+                  items: [
+                    BottomAppBarItem(iconData: Icons.home, text: 'Home'),
+                    BottomAppBarItem(
+                      iconData: Icons.savings_rounded,
+                      text: 'Budget',
+                    ),
+                    BottomAppBarItem(
+                      iconData: Icons.bar_chart_rounded,
+                      text: 'Stats',
+                    ),
+                    BottomAppBarItem(iconData: Icons.person, text: 'Account'),
+                  ],
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  centerItemText: '',
+                  color: Theme.of(context).colorScheme.background,
+                  selectedColor: Theme.of(context).colorScheme.secondary,
+                  notchedShape: const CircularNotchedRectangle(),
+                  //gives the pageIndex the value (the current selected index in the
+                  //bottom navigation bar)
+                  onTabSelected: (int value) {
+                    screenIndexProvider.setPageIndex(value);
+                  },
                 ),
-                BottomAppBarItem(iconData: Icons.person, text: 'Account'),
-              ],
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              centerItemText: '',
-              color: Theme.of(context).colorScheme.background,
-              selectedColor: Theme.of(context).colorScheme.secondary,
-              notchedShape: const CircularNotchedRectangle(),
-              //gives the pageIndex the value (the current selected index in the
-              //bottom navigation bar)
-              onTabSelected: (int value) {
-                screenIndexProvider.setPageIndex(value);
-              },
-            ),
+        );
+      },
     );
   }
 
