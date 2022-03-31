@@ -21,6 +21,7 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
+  awesome_notifications: ^0.6.21
   cloud_firestore: ^2.5.4
   cupertino_icons: ^1.0.2
   enum_to_string: ^2.0.1
