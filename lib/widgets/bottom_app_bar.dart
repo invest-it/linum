@@ -21,7 +21,7 @@ class FABBottomAppBar extends StatefulWidget {
   });
   final List<BottomAppBarItem> items;
   final String centerItemText;
-  final double height = 56; ////proportionateScreenHeight(64);
+  final double height = 56; //proportionateScreenHeight(64);
   final double iconSize = proportionateScreenHeight(24);
   final Color backgroundColor;
   final Color color;
