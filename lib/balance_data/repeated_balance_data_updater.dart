@@ -196,7 +196,6 @@ class RepeatedBalanceDataUpdater {
         newRepeatedBalance.addAll(changes);
 
         removeUnusedChangedAttributes(newRepeatedBalance);
-
         removeUnusedChangedAttributes(oldRepeatedBalance);
 
         isEdited = true;
@@ -273,7 +272,6 @@ class RepeatedBalanceDataUpdater {
         newRepeatedBalance.addAll(changes);
 
         removeUnusedChangedAttributes(newRepeatedBalance);
-
         removeUnusedChangedAttributes(oldRepeatedBalance);
 
         isEdited = true;

@@ -2,7 +2,6 @@ import 'dart:developer' as dev;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/backend_functions/statistic_calculations.dart';
 import 'package:linum/balance_data/balance_data_stream_builder_manager.dart';
 import 'package:linum/balance_data/repeated_balance_data_manager.dart';
 import 'package:linum/balance_data/single_balance_data_manager.dart';

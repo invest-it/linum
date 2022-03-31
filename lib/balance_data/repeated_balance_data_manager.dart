@@ -91,8 +91,6 @@ class RepeatedBalanceDataManager {
       }
     }
 
-    bool isEdited = false;
-
     // check if changes happen
 
     num? checkedAmount;
@@ -108,7 +106,7 @@ class RepeatedBalanceDataManager {
     for (final singleRepeatedBalance
         in data["repeatedBalance"] as List<dynamic>) {
       singleRepeatedBalance as Map<String, dynamic>;
-      if (!isEdited && (singleRepeatedBalance["id"] == id)) {
+      if (singleRepeatedBalance["id"] == id) {
         if (amount != singleRepeatedBalance["amount"]) {
           checkedAmount = amount;
         }
