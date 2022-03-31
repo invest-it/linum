@@ -3,7 +3,6 @@ import 'dart:developer' as dev;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:linum/backend_functions/statistic_calculations.dart';
 import 'package:linum/frontend_functions/loading_spinner.dart';
 import 'package:linum/models/repeat_balance_data.dart';
