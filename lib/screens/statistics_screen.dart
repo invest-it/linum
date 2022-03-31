@@ -19,6 +19,8 @@ class StatisticsScreen extends StatefulWidget {
 }
 
 class _StatisticsScreenState extends State<StatisticsScreen> {
+  bool _notificationState = false;
+
   @override
   /*void initState() {
     super.initState();
@@ -63,8 +65,12 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         child: SwitchListTile(
           title: const Text("Daily Notifications"),
           activeColor: Theme.of(context).colorScheme.primary,
-          onChanged: (bool value) {},
-          value: false,
+          onChanged: (bool value) {
+            setState(() {
+              _notificationState = value;
+            });
+          },
+          value: _notificationState,
         ),
 
         /*Column(
