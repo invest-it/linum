@@ -363,6 +363,7 @@ class BalanceDataProvider extends ChangeNotifier {
     Timestamp? endTime,
     bool? resetEndTime,
     Timestamp? time,
+    Timestamp? newTime,
   }) async {
     if (_balance == null) {
       dev.log("_balance is null");
@@ -380,6 +381,7 @@ class BalanceDataProvider extends ChangeNotifier {
         return false;
       }
     }
+    dev.log("The editing time: ${time?.millisecondsSinceEpoch}");
     bool isEdited = false;
     final DocumentSnapshot<Map<String, dynamic>> snapshot =
         await _balance!.get();
@@ -395,6 +397,7 @@ class BalanceDataProvider extends ChangeNotifier {
     int? checkedRepeatDuration;
     RepeatDurationType? checkedRepeatDurationType;
     Timestamp? checkedEndTime;
+    Timestamp? checkedNewTime;
 
     for (final singleRepeatedBalance
         in data["repeatedBalance"] as List<dynamic>) {
@@ -427,6 +430,9 @@ class BalanceDataProvider extends ChangeNotifier {
         }
         if (endTime != singleRepeatedBalance["endTime"]) {
           checkedEndTime = endTime;
+        }
+        if (newTime != time) {
+          checkedNewTime = newTime;
         }
 
         break;
@@ -510,6 +516,9 @@ class BalanceDataProvider extends ChangeNotifier {
                   if (checkedName != null) {
                     (value as Map<String, dynamic>).remove("name");
                   }
+                  if (checkedNewTime != null) {
+                    (value as Map<String, dynamic>).remove("time");
+                  }
                   // dont need initialTime
                   // dont need repeatDuration
                   // dont need repeatDurationType
@@ -561,6 +570,7 @@ class BalanceDataProvider extends ChangeNotifier {
               "repeatDuration": checkedRepeatDuration,
               "repeatDurationType": checkedRepeatDurationType,
               "endTime": time,
+              "time": checkedNewTime,
             };
             changes.removeWhere((_, value) => value == null);
             newRepeatedBalance.addAll(changes);
@@ -612,6 +622,7 @@ class BalanceDataProvider extends ChangeNotifier {
               "initialTime": time,
               "repeatDuration": checkedRepeatDuration,
               "repeatDurationType": checkedRepeatDurationType,
+              "time": checkedNewTime,
             };
             changes.removeWhere((_, value) => value == null);
             newRepeatedBalance.addAll(changes);
@@ -626,7 +637,6 @@ class BalanceDataProvider extends ChangeNotifier {
 
         break;
       case RepeatableChangeType.onlyThisOne:
-        dev.log("test");
         for (final singleRepeatedBalance
             in data["repeatedBalance"] as List<dynamic>) {
           singleRepeatedBalance as Map<String, dynamic>;
@@ -635,7 +645,7 @@ class BalanceDataProvider extends ChangeNotifier {
               singleRepeatedBalance["changed"] =
                   <String, Map<String, dynamic>>{};
             }
-            Map<String, Map<String, dynamic>> newChanged =
+            final Map<String, Map<String, dynamic>> newChanged =
                 <String, Map<String, dynamic>>{};
             // ignore: avoid_dynamic_calls
             singleRepeatedBalance["changed"].forEach((outerKey, innerMap) {
@@ -654,6 +664,7 @@ class BalanceDataProvider extends ChangeNotifier {
                 "category": checkedCategory,
                 "currency": checkedCurrency,
                 "name": checkedName,
+                "time": checkedNewTime,
               }
             });
             newChanged[time.millisecondsSinceEpoch.toString()]
@@ -768,13 +779,26 @@ class BalanceDataProvider extends ChangeNotifier {
               singleRepeatedBalance["changed"] =
                   <String, Map<String, dynamic>>{};
             }
-            (singleRepeatedBalance["changed"]
-                    as Map<String, Map<String, dynamic>>)
-                .addAll({
+            final Map<String, Map<String, dynamic>> newChanged =
+                <String, Map<String, dynamic>>{};
+            // ignore: avoid_dynamic_calls
+            singleRepeatedBalance["changed"].forEach((outerKey, innerMap) {
+              newChanged[outerKey as String] = <String, dynamic>{};
+              // ignore: avoid_dynamic_calls
+              innerMap.forEach(
+                (innerKey, innerValue) {
+                  newChanged[outerKey]![innerKey as String] = innerValue;
+                },
+              );
+            });
+
+            newChanged.addAll({
               time!.millisecondsSinceEpoch.toString(): {
                 "deleted": true,
               }
             });
+
+            singleRepeatedBalance["changed"] = newChanged;
             break;
           }
         }
@@ -817,6 +841,11 @@ class BalanceDataProvider extends ChangeNotifier {
     Map<String, dynamic> singleRepeatedBalance,
     List<Map<String, dynamic>> balanceData,
   ) {
+    // dev.log("a");
+    // dev.log("b");
+    // dev.log("c");
+    // dev.log("d");
+
     DateTime currentTime =
         (singleRepeatedBalance["initialTime"] as Timestamp).toDate();
 
@@ -829,8 +858,29 @@ class BalanceDataProvider extends ChangeNotifier {
               currentTime,
             )
         : DateTime.now().add(futureDuration).isAfter(currentTime)) {
-      // if "changed" -> "this timestamp" -> deleted exist AND it is true, dont add this balance
+      // convert _internalHashMap to Map
+      /*
+      if (singleRepeatedBalance["changed"] != null) {
+        final Map<String, Map<String, dynamic>> newChanged =
+            <String, Map<String, dynamic>>{};
+        // ignore: avoid_dynamic_calls
+        singleRepeatedBalance["changed"].forEach((outerKey, innerMap) {
+          if (innerMap != null) {
+            newChanged[outerKey as String] = <String, dynamic>{};
+            // ignore: avoid_dynamic_calls
+            innerMap.forEach(
+              (innerKey, innerValue) {
+                newChanged[outerKey]![innerKey as String] = innerValue;
+              },
+            );
+          }
+        });
 
+        singleRepeatedBalance["changed"] = newChanged;
+      }
+      */
+
+      // if "changed" -> "this timestamp" -> deleted exist AND it is true, dont add this balance
       if (singleRepeatedBalance["changed"] == null ||
           (singleRepeatedBalance["changed"] as Map<String, dynamic>)[
                   Timestamp.fromDate(currentTime)
@@ -845,6 +895,19 @@ class BalanceDataProvider extends ChangeNotifier {
           !(((singleRepeatedBalance["changed"]
                   as Map<String, dynamic>)[Timestamp.fromDate(currentTime).millisecondsSinceEpoch.toString()]
               as Map<String, dynamic>)["deleted"] as bool)) {
+        // dev.log("${Timestamp.fromDate(currentTime).millisecondsSinceEpoch}");
+        // dev.log(
+        //   (singleRepeatedBalance["changed"] as Map<String, dynamic>?)?[
+        //               Timestamp.fromDate(currentTime)
+        //                   .millisecondsSinceEpoch
+        //                   .toString()]
+        //           ?.toString() ??
+        //       "null",
+        // );
+        if (singleRepeatedBalance["amount"] == 5.59) {
+          // dev.log("${Timestamp.fromDate(currentTime).millisecondsSinceEpoch}");
+          // dev.log("test");
+        }
         balanceData.add({
           "amount":
               ((singleRepeatedBalance["changed"] as Map<String, dynamic>?)?[
@@ -877,6 +940,13 @@ class BalanceDataProvider extends ChangeNotifier {
           "repeatId": singleRepeatedBalance["id"],
           "id": const Uuid().v4(),
         });
+        if (((singleRepeatedBalance["changed"] as Map<String, dynamic>?)?[
+                Timestamp.fromDate(currentTime)
+                    .millisecondsSinceEpoch
+                    .toString()] as Map<String, dynamic>?)?["time"] !=
+            null) {
+          balanceData.last["formerTime"] = Timestamp.fromDate(currentTime);
+        }
       }
       currentTime =
           calculateNextCurrentTime(singleRepeatedBalance, currentTime);

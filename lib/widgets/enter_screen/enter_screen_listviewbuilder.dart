@@ -186,11 +186,7 @@ class _EnterScreenListViewBuilderState
 
   int calculateItemCount(EnterScreenProvider enterScreenProvider) {
     if (enterScreenProvider.editMode) {
-      if (enterScreenProvider.repeatId != null) {
-        return 1;
-      } else {
-        return 2;
-      }
+      return 2;
     } else {
       return 3;
     }

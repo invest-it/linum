@@ -148,9 +148,9 @@ class _EnterScreenState extends State<EnterScreen> {
                           category: enterScreenProvider.category,
                           currency: "EUR",
                           name: enterScreenProvider.name,
-                          time: Timestamp.fromDate(
-                            selectedDateDateTimeFormatted,
-                          ),
+                          time: enterScreenProvider.formerTime,
+                          newTime:
+                              Timestamp.fromDate(selectedDateDateTimeFormatted),
                         );
                       }
                     } else {
