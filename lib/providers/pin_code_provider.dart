@@ -54,6 +54,9 @@ class PinCodeProvider extends ChangeNotifier {
     if (!_pinActive) {
       _sessionIsSafe = true;
     }
+    if (_auth.uid == "") {
+      _sessionIsSafe = false;
+    }
   }
 
   Future<void> _initialLastEmail() async {
@@ -239,10 +242,6 @@ class PinCodeProvider extends ChangeNotifier {
                     _auth.signOut().then((_) {
                       Provider.of<ScreenIndexProvider>(_context, listen: false)
                           .setPageIndex(0);
-
-                      // TODO does this solve the testing issue?
-                      Provider.of<PinCodeProvider>(_context, listen: false)
-                          .resetSession();
                       Navigator.of(_context).pop();
                     });
                   },
