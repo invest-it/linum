@@ -4,7 +4,50 @@ import 'package:linum/backend_functions/date_time_calculation_functions.dart';
 
 void main() {
   group("date_time_calculation_functions", () {
-    group("calculateOneTimeStep", () {});
+    group("calculateOneTimeStep", () {
+      test("random data test (seconds)", () {
+        final math.Random rand = math.Random();
+        for (int i = 0; i < 1000; i++) {
+          // Arrange (Initialization)
+          final int stepsize =
+              (math.sqrt(rand.nextInt(400 * 400)).floor() + 1) * 60 * 60 * 24;
+          final DateTime currentTime = DateTime(
+            rand.nextInt(40) + 2000,
+            rand.nextInt(12) + 1,
+            rand.nextInt(31) + 1,
+          );
+
+          final DateTime expectedDateTime =
+              currentTime.add(Duration(seconds: stepsize));
+          // Act (Execution)
+          final DateTime dateTime =
+              calculateOneTimeStep(stepsize, currentTime, monthly: false);
+
+          // Assert (Observation)
+          expect(dateTime, expectedDateTime);
+        }
+      });
+
+      test("example data test (monthly)", () {
+        // Arrange (Initialization)
+        final DateTime currentTime = DateTime(2020, 7, 31);
+
+        const int monthStep = 4;
+
+        final DateTime expectedDateTime = DateTime(2020, 11, 30);
+
+        // Act (Execution)
+        final DateTime dateTime = calculateOneTimeStep(
+          monthStep,
+          currentTime,
+          monthly: true,
+          dayOfTheMonth: currentTime.day,
+        );
+
+        // Assert (Observation)
+        expect(dateTime, expectedDateTime);
+      });
+    });
     group("monthlyStepCalculator", () {
       test("example 1 (day = 29)", () {
         // Arrange (Initialization)
@@ -151,7 +194,7 @@ void main() {
 
       test("random year, month and day (with day <= 28)", () {
         final math.Random rand = math.Random();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 200; i++) {
           // Arrange (Initialization)
           final int year = rand.nextInt(40) + 2000;
           final int month = rand.nextInt(12) + 1;
