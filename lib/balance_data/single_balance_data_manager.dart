@@ -59,10 +59,20 @@ class SingleBalanceDataManager {
     String? name,
     Timestamp? time,
   }) {
+    // conditions
     if (id == "") {
       dev.log("no id provided");
       return false;
     }
+    if (category == "") {
+      dev.log("category must be != '' ");
+      return false;
+    }
+    if (currency == "") {
+      dev.log("currency must be != '' ");
+      return false;
+    }
+
     for (final value in data["balanceData"] as List<dynamic>) {
       if ((value as Map<String, dynamic>)["id"] == id) {
         value["amount"] = amount ?? value["amount"];
