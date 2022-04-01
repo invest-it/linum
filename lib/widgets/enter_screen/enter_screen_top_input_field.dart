@@ -93,7 +93,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                       //     return 'Enter a value!';
                       //   }
                       // },
-                      autofocus: true,
+                      autofocus: !enterScreenProvider.editMode,
                       cursorWidth: 0,
                       maxLength: 15,
                       textAlign: TextAlign.center,
