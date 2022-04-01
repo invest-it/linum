@@ -170,7 +170,15 @@ class BalanceDataProvider extends ChangeNotifier {
     }
 
     // update and upload
-    if (singleBalanceDataManager.updateSingleBalanceInData(id, data)) {
+    if (singleBalanceDataManager.updateSingleBalanceInData(
+      id,
+      data,
+      amount: amount,
+      category: category,
+      currency: currency,
+      name: name,
+      time: time,
+    )) {
       await _balance!.set(data);
       return true;
     }
