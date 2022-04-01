@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/backend_functions/statistic_calculations.dart';
+import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/widgets/abstract/abstract_home_screen_card.dart';
@@ -174,8 +175,20 @@ class HomeScreenCard extends StatelessWidget {
                       Text(
                         balance.toStringAsFixed(2),
                         style: MediaQuery.of(context).size.height < 650
-                            ? Theme.of(context).textTheme.headline2
-                            : Theme.of(context).textTheme.headline1,
+                            ? Theme.of(context).textTheme.headline2?.copyWith(
+                                  color: balance < 0
+                                      ? Theme.of(context).colorScheme.error
+                                      : createMaterialColor(
+                                          const Color(0xFF202020),
+                                        ),
+                                )
+                            : Theme.of(context).textTheme.headline1?.copyWith(
+                                  color: balance < 0
+                                      ? Theme.of(context).colorScheme.error
+                                      : createMaterialColor(
+                                          const Color(0xFF505050),
+                                        ),
+                                ),
                       ),
                       Text('€', style: Theme.of(context).textTheme.bodyText1)
                     ],

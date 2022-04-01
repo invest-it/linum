@@ -145,6 +145,7 @@ class ScreenSkeleton extends StatelessWidget {
             children: [
               LipSection(
                 lipTitle: head,
+                hasHomeScreenCard: hasHomeScreenCard,
                 isInverted: isInverted,
                 actions: actions,
                 leadingAction: leadingAction,
