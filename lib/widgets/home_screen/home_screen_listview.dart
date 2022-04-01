@@ -1,5 +1,4 @@
 // ignore_for_file: avoid_dynamic_calls
-import 'dart:developer' as dev;
 
 import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -175,10 +174,6 @@ class HomeScreenListView implements BalanceDataListView {
                       providers: [
                         ChangeNotifierProvider<EnterScreenProvider>(
                           create: (_) {
-                            if (arrayElement["formerTime"] != null) {
-                              dev.log(arrayElement["formerTime"].toString());
-                              dev.log(arrayElement["time"].toString());
-                            }
                             return EnterScreenProvider(
                               id: arrayElement["id"] as String,
                               amount: arrayElement["amount"] as num,
@@ -188,9 +183,9 @@ class HomeScreenListView implements BalanceDataListView {
                                   (arrayElement["time"] as Timestamp).toDate(),
                               editMode: true,
                               repeatId: arrayElement["repeatId"] as String?,
-                              formerTime: arrayElement["formerTime"] != null
-                                  ? arrayElement["formerTime"] as Timestamp
-                                  : arrayElement["time"] as Timestamp,
+                              formerTime:
+                                  (arrayElement["formerTime"] as Timestamp?) ??
+                                      arrayElement["time"] as Timestamp,
                             );
                           },
                         ),

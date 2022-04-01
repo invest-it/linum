@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_dynamic_calls
-
 import 'dart:math' as math;
 
 import 'package:flutter_test/flutter_test.dart';
@@ -7,19 +5,19 @@ import 'package:linum/backend_functions/statistic_calculations.dart';
 
 void main() {
   group("basic_statistic_calculation", () {
-    final List<dynamic> exampleData1 = [
+    final List<Map<String, dynamic>> exampleData1 = [
       {"amount": 15},
       {"amount": 35.5},
       {"amount": 5},
       {"amount": 25.5},
     ];
-    final List<dynamic> exampleData2 = [
+    final List<Map<String, dynamic>> exampleData2 = [
       {"amount": -0.5},
       {"amount": -2.5},
       {"amount": -2.5},
       {"amount": -0},
     ];
-    final List<dynamic> exampleData3 = [
+    final List<Map<String, dynamic>> exampleData3 = [
       {"amount": -0.5},
       {"amount": -2.5},
       {"amount": -2.5},
@@ -29,7 +27,7 @@ void main() {
       {"amount": 25.5},
       {"amount": 4},
     ];
-    final List<dynamic> exampleData4 = [
+    final List<Map<String, dynamic>> exampleData4 = [
       {"amount": -0.5},
       {"amount": -2.5},
       {"amount": -2.5},
@@ -41,13 +39,12 @@ void main() {
       {"amount": -20.5},
       {"amount": -23.5},
     ];
-    final List<dynamic> exampleData5 = [
+    final List<Map<String, dynamic>> exampleData5 = [
       {"amount": -0},
       {"amount": -0},
       {"amount": -0},
       {"amount": -0},
     ];
-    final List<dynamic> randomData = _createRandomStatisticData();
 
     group("balance", () {
       group("sum", () {
@@ -130,19 +127,24 @@ void main() {
         });
 
         test("random data", () {
-          // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(randomData);
-          num expectedSum = 0;
-          for (int i = 0; i < randomData.length; i++) {
-            expectedSum += randomData[i]["amount"] as num;
+          final math.Random rand = math.Random();
+          for (int i = 0; i < 10000; i++) {
+            // Arrange (Initialization)
+            final List<Map<String, dynamic>> randomData =
+                _createRandomStatisticData(rand);
+            final StatisticsCalculations statisticsCalculations =
+                StatisticsCalculations(randomData);
+            num expectedSum = 0;
+            for (int i = 0; i < randomData.length; i++) {
+              expectedSum += randomData[i]["amount"] as num;
+            }
+
+            // Act (Execution)
+            final num sum = statisticsCalculations.sumBalance;
+
+            // Assert (Observation)
+            expect(sum, expectedSum);
           }
-
-          // Act (Execution)
-          final num sum = statisticsCalculations.sumBalance;
-
-          // Assert (Observation)
-          expect(sum, expectedSum);
         });
       });
 
@@ -226,20 +228,25 @@ void main() {
         });
 
         test("random data", () {
-          // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(randomData);
-          num expectedAverage = 0;
-          for (int i = 0; i < randomData.length; i++) {
-            expectedAverage += randomData[i]["amount"] as num;
+          final math.Random rand = math.Random();
+          for (int i = 0; i < 10000; i++) {
+            // Arrange (Initialization)
+            final List<Map<String, dynamic>> randomData =
+                _createRandomStatisticData(rand);
+            final StatisticsCalculations statisticsCalculations =
+                StatisticsCalculations(randomData);
+            num expectedAverage = 0;
+            for (int i = 0; i < randomData.length; i++) {
+              expectedAverage += randomData[i]["amount"] as num;
+            }
+            expectedAverage /= randomData.length;
+
+            // Act (Execution)
+            final num average = statisticsCalculations.averageBalance;
+
+            // Assert (Observation)
+            expect(average, expectedAverage);
           }
-          expectedAverage /= randomData.length;
-
-          // Act (Execution)
-          final num average = statisticsCalculations.averageBalance;
-
-          // Assert (Observation)
-          expect(average, expectedAverage);
         });
       });
     });
@@ -325,21 +332,26 @@ void main() {
         });
 
         test("random data", () {
-          // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(randomData);
-          num expectedSum = 0;
-          for (int i = 0; i < randomData.length; i++) {
-            if (randomData[i]["amount"] as num > 0) {
-              expectedSum += randomData[i]["amount"] as num;
+          final math.Random rand = math.Random();
+          for (int i = 0; i < 10000; i++) {
+            // Arrange (Initialization)
+            final List<Map<String, dynamic>> randomData =
+                _createRandomStatisticData(rand);
+            final StatisticsCalculations statisticsCalculations =
+                StatisticsCalculations(randomData);
+            num expectedSum = 0;
+            for (int i = 0; i < randomData.length; i++) {
+              if (randomData[i]["amount"] as num > 0) {
+                expectedSum += randomData[i]["amount"] as num;
+              }
             }
+
+            // Act (Execution)
+            final num sum = statisticsCalculations.sumIncomes;
+
+            // Assert (Observation)
+            expect(sum, expectedSum);
           }
-
-          // Act (Execution)
-          final num sum = statisticsCalculations.sumIncomes;
-
-          // Assert (Observation)
-          expect(sum, expectedSum);
         });
       });
       group("average", () {
@@ -422,26 +434,31 @@ void main() {
         });
 
         test("random data", () {
-          // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(randomData);
-          num expectedAverage = 0;
-          int incomes = 0;
-          for (int i = 0; i < randomData.length; i++) {
-            if (randomData[i]["amount"] as num > 0) {
-              expectedAverage += randomData[i]["amount"] as num;
+          final math.Random rand = math.Random();
+          for (int i = 0; i < 10000; i++) {
+            // Arrange (Initialization)
+            final List<Map<String, dynamic>> randomData =
+                _createRandomStatisticData(rand);
+            final StatisticsCalculations statisticsCalculations =
+                StatisticsCalculations(randomData);
+            num expectedAverage = 0;
+            int incomes = 0;
+            for (int i = 0; i < randomData.length; i++) {
+              if (randomData[i]["amount"] as num > 0) {
+                expectedAverage += randomData[i]["amount"] as num;
 
-              incomes++;
+                incomes++;
+              }
             }
-          }
-          if (incomes > 0) {
-            expectedAverage /= incomes;
-          }
-          // Act (Execution)
-          final num average = statisticsCalculations.averageIncomes;
+            if (incomes > 0) {
+              expectedAverage /= incomes;
+            }
+            // Act (Execution)
+            final num average = statisticsCalculations.averageIncomes;
 
-          // Assert (Observation)
-          expect(average, expectedAverage);
+            // Assert (Observation)
+            expect(average, expectedAverage);
+          }
         });
       });
     });
@@ -527,21 +544,26 @@ void main() {
         });
 
         test("random data", () {
-          // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(randomData);
-          num expectedSum = 0;
-          for (int i = 0; i < randomData.length; i++) {
-            if (randomData[i]["amount"] as num <= 0) {
-              expectedSum += randomData[i]["amount"] as num;
+          final math.Random rand = math.Random();
+          for (int i = 0; i < 10000; i++) {
+            // Arrange (Initialization)
+            final List<Map<String, dynamic>> randomData =
+                _createRandomStatisticData(rand);
+            final StatisticsCalculations statisticsCalculations =
+                StatisticsCalculations(randomData);
+            num expectedSum = 0;
+            for (int i = 0; i < randomData.length; i++) {
+              if (randomData[i]["amount"] as num <= 0) {
+                expectedSum += randomData[i]["amount"] as num;
+              }
             }
+
+            // Act (Execution)
+            final num sum = statisticsCalculations.sumCosts;
+
+            // Assert (Observation)
+            expect(sum, expectedSum);
           }
-
-          // Act (Execution)
-          final num sum = statisticsCalculations.sumCosts;
-
-          // Assert (Observation)
-          expect(sum, expectedSum);
         });
       });
 
@@ -625,36 +647,40 @@ void main() {
         });
 
         test("random data", () {
-          // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(randomData);
-          num expectedAverage = 0;
-          int costs = 0;
-          for (int i = 0; i < randomData.length; i++) {
-            if (randomData[i]["amount"] as num <= 0) {
-              expectedAverage += randomData[i]["amount"] as num;
+          final math.Random rand = math.Random();
+          for (int i = 0; i < 10000; i++) {
+            // Arrange (Initialization)
+            final List<Map<String, dynamic>> randomData =
+                _createRandomStatisticData(rand);
+            final StatisticsCalculations statisticsCalculations =
+                StatisticsCalculations(randomData);
+            num expectedAverage = 0;
+            int costs = 0;
+            for (int i = 0; i < randomData.length; i++) {
+              if (randomData[i]["amount"] as num <= 0) {
+                expectedAverage += randomData[i]["amount"] as num;
 
-              costs++;
+                costs++;
+              }
             }
-          }
-          if (costs > 0) {
-            expectedAverage /= costs;
-          }
-          // Act (Execution)
-          final num average = statisticsCalculations.averageCosts;
+            if (costs > 0) {
+              expectedAverage /= costs;
+            }
+            // Act (Execution)
+            final num average = statisticsCalculations.averageCosts;
 
-          // Assert (Observation)
-          expect(average, expectedAverage);
+            // Assert (Observation)
+            expect(average, expectedAverage);
+          }
         });
       });
     });
   });
 }
 
-List<dynamic> _createRandomStatisticData() {
-  final List<dynamic> returnList = [];
-  final math.Random rand = math.Random();
-  final int max = rand.nextInt(256);
+List<Map<String, dynamic>> _createRandomStatisticData(math.Random rand) {
+  final List<Map<String, dynamic>> returnList = <Map<String, dynamic>>[];
+  final int max = rand.nextInt(256) + 1;
   for (int i = 0; i < max; i++) {
     returnList.add({
       "amount":
