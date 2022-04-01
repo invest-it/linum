@@ -11,7 +11,6 @@ import '../backend_functions/repeated_balance_help_functions.dart';
 
 class RepeatedBalanceDataUpdater {
   bool updateAll({
-    required RepeatableChangeType changeType,
     required Map<String, dynamic> data,
     required String id,
     num? amount,
@@ -134,7 +133,6 @@ class RepeatedBalanceDataUpdater {
   }
 
   bool updateThisAndAllBefore({
-    required RepeatableChangeType changeType,
     required Map<String, dynamic> data,
     required String id,
     required Timestamp time,
@@ -210,7 +208,6 @@ class RepeatedBalanceDataUpdater {
   }
 
   bool updateThisAndAllAfter({
-    required RepeatableChangeType changeType,
     required Map<String, dynamic> data,
     required String id,
     required Timestamp time,
@@ -286,7 +283,6 @@ class RepeatedBalanceDataUpdater {
   }
 
   bool updateOnlyThisOne({
-    required RepeatableChangeType changeType,
     required Map<String, dynamic> data,
     required String id,
     required Timestamp time,

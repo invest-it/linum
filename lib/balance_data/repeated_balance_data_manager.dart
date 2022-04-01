@@ -168,7 +168,6 @@ class RepeatedBalanceDataManager {
         return repeatedBalanceDataUpdater.updateAll(
           amount: checkedAmount,
           category: checkedCategory,
-          changeType: changeType,
           currency: checkedCurrency,
           data: data,
           endTime: checkedEndTime,
@@ -185,7 +184,6 @@ class RepeatedBalanceDataManager {
         return repeatedBalanceDataUpdater.updateThisAndAllBefore(
           amount: checkedAmount,
           category: checkedCategory,
-          changeType: changeType,
           currency: checkedCurrency,
           data: data,
           endTime: checkedEndTime,
@@ -202,7 +200,6 @@ class RepeatedBalanceDataManager {
         return repeatedBalanceDataUpdater.updateThisAndAllAfter(
           amount: checkedAmount,
           category: checkedCategory,
-          changeType: changeType,
           currency: checkedCurrency,
           data: data,
           endTime: checkedEndTime,
@@ -220,7 +217,6 @@ class RepeatedBalanceDataManager {
         return repeatedBalanceDataUpdater.updateOnlyThisOne(
           amount: checkedAmount,
           category: checkedCategory,
-          changeType: changeType,
           currency: checkedCurrency,
           data: data,
           id: id,
