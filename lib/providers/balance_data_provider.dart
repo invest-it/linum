@@ -11,7 +11,7 @@ import 'package:linum/models/repeatable_change_type.dart';
 import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
-import 'package:linum/widgets/abstract/abstract_statistic_panel.dart';
+import 'package:linum/widgets/abstract/abstract_home_screen_card.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
@@ -166,7 +166,7 @@ class BalanceDataProvider extends ChangeNotifier {
 
   /// Returns a StreamBuilder that builds the ListView from the document-datastream
   StreamBuilder fillStatisticPanelWithData(
-    AbstractStatisticPanel statisticPanel,
+    AbstractHomeScreenCard statisticPanel,
   ) {
     return StreamBuilder(
       stream: _dataStream,

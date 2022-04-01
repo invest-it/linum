@@ -6,14 +6,12 @@ import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/backend_functions/statistic_calculations.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/algorithm_provider.dart';
-import 'package:linum/widgets/abstract/abstract_statistic_panel.dart';
+import 'package:linum/widgets/abstract/abstract_home_screen_card.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreenCard extends StatelessWidget {
   final num balance;
-
   final num income;
-
   final num expense;
 
   const HomeScreenCard({
@@ -290,7 +288,7 @@ class HomeScreenCard extends StatelessWidget {
   }
 }
 
-class HomeScreenCardManager implements AbstractStatisticPanel {
+class HomeScreenCardManager implements AbstractHomeScreenCard {
   late HomeScreenCard _homeScreenCard;
   HomeScreenCardManager() {
     _homeScreenCard = const HomeScreenCard(income: 0, expense: 0, balance: 0);
