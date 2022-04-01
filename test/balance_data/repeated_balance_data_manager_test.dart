@@ -715,6 +715,68 @@ void main() {
           expect(singleRepeatedBalance["endTime"], endTime);
         }
       });
+
+      test("random data test changeType=all (only newTime)", () {
+        final math.Random rand = math.Random();
+
+        final RepeatedBalanceDataManager repeatedBalanceDataManager =
+            RepeatedBalanceDataManager();
+
+        final int max = rand.nextInt(200) + 1;
+        for (int i = 0; i < max; i++) {
+          // Arrange (Initialization)
+
+          final Map<String, List<Map<String, dynamic>>> data =
+              generateRandomData();
+          final int expectedLength = data["repeatedBalance"]!.length;
+          final int idIndex = rand.nextInt(expectedLength);
+          final String id = data["repeatedBalance"]![idIndex]["id"] as String;
+
+          final Map<String, dynamic> singleRepeatedBalance =
+              data["repeatedBalance"]![idIndex];
+
+          final Timestamp newTime = Timestamp.fromDate(
+            DateTime.now().subtract(const Duration(days: 365 * 4)).add(
+                  Duration(
+                    days: rand.nextInt(365 * 4 * 2),
+                  ),
+                ),
+          );
+          final Timestamp formerInitialTime =
+              singleRepeatedBalance["initialTime"] as Timestamp;
+
+          final Timestamp? formerEndTime =
+              singleRepeatedBalance["endTime"] as Timestamp?;
+
+          // Act (Execution)
+          final bool result =
+              repeatedBalanceDataManager.updateRepeatedBalanceInData(
+            id: id,
+            data: data,
+            changeType: RepeatableChangeType.all,
+            newTime: newTime,
+            time: formerInitialTime,
+          );
+
+          // Assert (Observation)
+          expect(result, true);
+          expect(data["repeatedBalance"]!.length, expectedLength);
+          if (formerEndTime == null) {
+            expect(singleRepeatedBalance["endTime"], null);
+          } else {
+            expect(
+              (singleRepeatedBalance["endTime"] as Timestamp).toDate(),
+              formerEndTime.toDate().subtract(
+                    formerInitialTime.toDate().difference(
+                          newTime.toDate(),
+                        ),
+                  ),
+            );
+          }
+          expect(singleRepeatedBalance["initialTime"], newTime);
+        }
+      });
+
 /*
       test("random data test changeType=all", () {
         final math.Random rand = math.Random();
