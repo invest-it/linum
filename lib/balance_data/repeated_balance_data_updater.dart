@@ -6,6 +6,8 @@ import 'package:linum/models/repeat_duration_type_enum.dart';
 import 'package:linum/models/repeatable_change_type.dart';
 import 'package:uuid/uuid.dart';
 
+import '../backend_functions/repeated_balance_help_functions.dart';
+
 class RepeatedBalanceDataUpdater {
   bool updateAll({
     required RepeatableChangeType changeType,
@@ -262,7 +264,7 @@ class RepeatedBalanceDataUpdater {
               Timestamp.fromDate(time.toDate().subtract(timeDifference)),
           "repeatDuration": repeatDuration,
           "repeatDurationType": repeatDurationType,
-          "endTime": _changeThisAndAllAfterEndTimeHelpFunction(
+          "endTime": changeThisAndAllAfterEndTimeHelpFunction(
             endTime,
             newRepeatedBalance,
             timeDifference,
@@ -329,54 +331,5 @@ class RepeatedBalanceDataUpdater {
       }
     }
     return false;
-  }
-
-  // Helpfunctions
-
-  /// after splitting a repeatable delete copied "changes" attributes that are out of the time limits of that repeatable
-  void removeUnusedChangedAttributes(
-    Map<String, dynamic> singleRepeatedBalance,
-  ) {
-    if (singleRepeatedBalance["changes"] == null) {
-      return;
-    }
-    final List<String> keysToRemove = <String>[];
-    for (final timeStampString
-        in (singleRepeatedBalance["changes"] as Map<String, dynamic>).keys) {
-      if (!DateTime.fromMillisecondsSinceEpoch(
-            (num.tryParse(timeStampString) as int?) ?? 0,
-          ).isBefore(
-            (singleRepeatedBalance["initialTime"] as Timestamp).toDate(),
-          ) &&
-          !DateTime.fromMillisecondsSinceEpoch(
-            (num.tryParse(timeStampString) as int?) ?? 0,
-          ).isAfter(
-            (singleRepeatedBalance["endTime"] as Timestamp).toDate(),
-          )) {
-        keysToRemove.add(timeStampString);
-      }
-    }
-    for (final key in keysToRemove) {
-      (singleRepeatedBalance["changes"] as Map<String, dynamic>).remove(key);
-    }
-  }
-
-  Timestamp? _changeThisAndAllAfterEndTimeHelpFunction(
-    Timestamp? checkedEndTime,
-    Map<String, dynamic> newRepeatedBalance,
-    Duration timeDifference,
-  ) {
-    if (checkedEndTime != null) {
-      return checkedEndTime;
-    }
-    if (newRepeatedBalance["endTime"] != null) {
-      return Timestamp.fromDate(
-        (newRepeatedBalance["endTime"] as Timestamp)
-            .toDate()
-            .subtract(timeDifference),
-      );
-    } else {
-      return null;
-    }
   }
 }
