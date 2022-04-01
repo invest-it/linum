@@ -275,6 +275,17 @@ class BalanceDataProvider extends ChangeNotifier {
       id: id,
       changeType: changeType,
       data: data,
+      amount: amount,
+      category: category,
+      currency: currency,
+      name: name,
+      initialTime: initialTime,
+      repeatDuration: repeatDuration,
+      repeatDurationType: repeatDurationType,
+      endTime: endTime,
+      resetEndTime: resetEndTime,
+      time: time,
+      newTime: newTime,
     )) {
       await _balance!.set(data);
       return true;

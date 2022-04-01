@@ -1,4 +1,4 @@
-import 'dart:developer';
+import 'dart:developer' as dev;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -119,7 +119,7 @@ class _EnterScreenState extends State<EnterScreen> {
                     if (enterScreenProvider.isIncome &&
                         _amountChooser(enterScreenProvider) <= 0) {
                       showAlertDialog(context, enterScreenProvider);
-                      log(
+                      dev.log(
                         "amount was to low: ${_amountChooser(enterScreenProvider)}",
                       );
                       return;
@@ -173,6 +173,7 @@ class _EnterScreenState extends State<EnterScreen> {
                                       "enter_screen/delete-entry/dialog-button-untilnow",
                                   dialogPurpose: DialogPurpose.danger,
                                   function: () {
+                                    dev.log("");
                                     balanceDataProvider.updateRepeatedBalance(
                                       id: enterScreenProvider.repeatId!,
                                       changeType:
