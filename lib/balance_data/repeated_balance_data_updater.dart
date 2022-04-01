@@ -156,11 +156,11 @@ class RepeatedBalanceDataUpdater {
                 .toUpperCase() ==
             "MONTHS") {
           oldRepeatedBalance["initialTime"] = Timestamp.fromDate(
-            DateTime(
-              time.toDate().year,
-              time.toDate().month +
-                  (oldRepeatedBalance["repeatDuration"] as int),
-              time.toDate().day,
+            calculateOneTimeStep(
+              oldRepeatedBalance["repeatDuration"] as int,
+              time.toDate(),
+              monthly: true,
+              dayOfTheMonth: time.toDate().day,
             ),
           );
         } else {

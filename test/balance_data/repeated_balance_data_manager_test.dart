@@ -869,6 +869,7 @@ void main() {
                 monthly: isMonthly(
                   data["repeatedBalance"]![idIndex],
                 ),
+                dayOfTheMonth: time.toDate().day,
               ),
             ),
           );
