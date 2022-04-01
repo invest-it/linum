@@ -3,7 +3,7 @@ DateTime calculateOneTimeStep(
   int stepsize,
   DateTime currentTime, {
   required bool monthly,
-  int dayOfTheMonth = 1,
+  int? dayOfTheMonth,
 }) {
   late DateTime newCurrentTime;
   if (!monthly) {
@@ -16,7 +16,7 @@ DateTime calculateOneTimeStep(
     newCurrentTime = monthlyStepCalculator(
       currentTime.year,
       currentTime.month + stepsize,
-      dayOfTheMonth,
+      dayOfTheMonth ?? currentTime.day,
     );
   }
   return newCurrentTime;
