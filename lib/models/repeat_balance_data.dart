@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:linum/models/repeat_duration_type_enum.dart';
 import 'package:uuid/uuid.dart';
 
-class RepeatBalanceData {
+class RepeatedBalanceData {
   final num _amount;
   final String _category;
   final String _currency;
@@ -15,7 +15,7 @@ class RepeatBalanceData {
   final int _repeatDuration;
   final RepeatDurationType _repeatDurationType;
 
-  RepeatBalanceData({
+  RepeatedBalanceData({
     required num amount,
     required String category,
     required String currency,
@@ -35,7 +35,7 @@ class RepeatBalanceData {
         _repeatDuration = repeatDuration,
         _repeatDurationType = repeatDurationType;
 
-  RepeatBalanceData copyWith({
+  RepeatedBalanceData copyWith({
     num? amount,
     String? category,
     String? currency,
@@ -47,7 +47,7 @@ class RepeatBalanceData {
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
   }) {
-    return RepeatBalanceData(
+    return RepeatedBalanceData(
       amount: amount ?? _amount,
       category: category ?? _category,
       currency: currency ?? _currency,
@@ -74,8 +74,8 @@ class RepeatBalanceData {
     };
   }
 
-  factory RepeatBalanceData.fromMap(Map<String, dynamic> map) {
-    return RepeatBalanceData(
+  factory RepeatedBalanceData.fromMap(Map<String, dynamic> map) {
+    return RepeatedBalanceData(
       amount: map['amount'] as num,
       category: map['category'] as String,
       currency: map['currency'] as String,
@@ -98,7 +98,7 @@ class RepeatBalanceData {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is RepeatBalanceData &&
+    return other is RepeatedBalanceData &&
         other._amount == _amount &&
         other._category == _category &&
         other._currency == _currency &&

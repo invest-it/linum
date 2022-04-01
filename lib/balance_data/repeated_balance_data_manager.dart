@@ -3,6 +3,7 @@ import 'dart:developer' as dev;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:linum/backend_functions/date_time_calculation_functions.dart';
+import 'package:linum/backend_functions/repeated_balance_help_functions.dart';
 import 'package:linum/balance_data/repeated_balance_data_remover.dart';
 import 'package:linum/balance_data/repeated_balance_data_updater.dart';
 import 'package:linum/models/repeat_balance_data.dart';
@@ -21,7 +22,7 @@ class RepeatedBalanceDataManager {
 
   /// add a repeated Balance and upload it (the stream will automatically show it in the app again)
   bool addRepeatedBalanceToData(
-    RepeatBalanceData repeatBalanceData,
+    RepeatedBalanceData repeatBalanceData,
     Map<String, dynamic> data,
   ) {
     // conditions
@@ -224,9 +225,9 @@ class RepeatedBalanceDataManager {
   }
 
   bool removeRepeatedBalanceFromData({
-    required RepeatableChangeType removeType,
     required String id,
     required Map<String, dynamic> data,
+    required RepeatableChangeType removeType,
     Timestamp? time,
   }) {
     // conditions
@@ -361,13 +362,5 @@ class RepeatedBalanceDataManager {
             (singleRepeatedBalance["initialTime"] as Timestamp).toDate().day,
       );
     }
-  }
-
-  // Helpfunctions
-
-  bool isMonthly(Map<String, dynamic> singleRepeatedBalance) {
-    return singleRepeatedBalance["repeatDurationType"] != null &&
-        (singleRepeatedBalance["repeatDurationType"] as String).toUpperCase() ==
-            "MONTHS";
   }
 }

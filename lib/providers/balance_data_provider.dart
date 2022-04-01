@@ -225,7 +225,7 @@ class BalanceDataProvider extends ChangeNotifier {
 
   /// add a repeated Balance and upload it (the stream will automatically show it in the app again)
   Future<bool> addRepeatedBalance(
-    RepeatBalanceData repeatBalanceData,
+    RepeatedBalanceData repeatBalanceData,
   ) async {
     // get Data
     final Map<String, dynamic>? data = await _getData();
@@ -313,7 +313,7 @@ class BalanceDataProvider extends ChangeNotifier {
 
   /// it is an alias for removeRepeatedBalanceUsingId with that repeatBalanceData.id
   Future<bool> removeRepeatedBalance({
-    required RepeatBalanceData repeatBalanceData,
+    required RepeatedBalanceData repeatBalanceData,
     required RepeatableChangeType removeType,
     Timestamp? time,
   }) async {

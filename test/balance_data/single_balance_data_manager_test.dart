@@ -20,7 +20,7 @@ void main() {
 
         final SingleBalanceDataManager singleBalanceDataManager =
             SingleBalanceDataManager();
-        final Map<String, dynamic> data = {};
+        final Map<String, dynamic> data = {"balanceData": []};
 
         // Act (Execution)
         final bool result = singleBalanceDataManager.addSingleBalanceToData(
@@ -30,14 +30,14 @@ void main() {
 
         // Assert (Observation)
         expect(result, false);
-        expect(data.keys.length, 0);
+        expect((data["balanceData"] as List<dynamic>).length, 0);
       });
 
       test("singleBalance.currency == ''", () {
         // Arrange (Initialization)
         final SingleBalanceData singleBalance = SingleBalanceData(
           amount: 5.55,
-          category: "None",
+          category: "none",
           currency: "",
           name: "",
           time: Timestamp.fromDate(DateTime.now()),
@@ -45,7 +45,7 @@ void main() {
 
         final SingleBalanceDataManager singleBalanceDataManager =
             SingleBalanceDataManager();
-        final Map<String, dynamic> data = {};
+        final Map<String, dynamic> data = {"balanceData": []};
 
         // Act (Execution)
         final bool result = singleBalanceDataManager.addSingleBalanceToData(
@@ -55,7 +55,7 @@ void main() {
 
         // Assert (Observation)
         expect(result, false);
-        expect(data.keys.length, 0);
+        expect((data["balanceData"] as List<dynamic>).length, 0);
       });
 
       test("random data test", () {
@@ -79,7 +79,7 @@ void main() {
 
           final SingleBalanceData singleBalance = SingleBalanceData(
             amount: amount,
-            category: "None",
+            category: "none",
             currency: "EUR",
             name: "Item Nr $i",
             time: time,

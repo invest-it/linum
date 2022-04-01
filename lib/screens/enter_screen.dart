@@ -278,7 +278,7 @@ class _EnterScreenState extends State<EnterScreen> {
                         );
                       } else {
                         balanceDataProvider.addRepeatedBalance(
-                          RepeatBalanceData(
+                          RepeatedBalanceData(
                             amount: _amountChooser(enterScreenProvider),
                             category: enterScreenProvider.category,
                             currency: "EUR",
