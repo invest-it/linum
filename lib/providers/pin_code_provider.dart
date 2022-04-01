@@ -43,11 +43,11 @@ class PinCodeProvider extends ChangeNotifier {
 
   Future<void> initialIsPINActive() async {
     _pinActive = await _isPinActive();
-    dev.log(
-      _pinActive
-          ? "PIN lock is active for $_lastEmail"
-          : "PIN lock is NOT ACTIVE for $_lastEmail",
-    );
+    // dev.log(
+    //   _pinActive
+    //       ? "PIN lock is active for $_lastEmail"
+    //       : "PIN lock is NOT ACTIVE for $_lastEmail",
+    // );
     _pinActiveStillLoading = false;
 
     //Set Session to Safe if there is no PIN lock
@@ -77,8 +77,6 @@ class PinCodeProvider extends ChangeNotifier {
     _auth = Provider.of<AuthenticationService>(context);
 
     _context = context;
-
-    dev.log("PinCode test");
   }
 
   // If the intent of the PIN lock is not set before the screen is called, assume that we want to check whether user knows the code (classic recall)
@@ -141,11 +139,11 @@ class PinCodeProvider extends ChangeNotifier {
   Future<void> _storePIN(String code) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('${_lastEmail!}.code', code);
-    dev.log(
-      prefs.getString('${_lastEmail!}.code') ??
-          "ERROR: No String stored in prefs!!!",
-    );
-    dev.log("PIN HAS BEEN STORED!");
+    // dev.log(
+    //   prefs.getString('${_lastEmail!}.code') ??
+    //       "ERROR: No String stored in prefs!!!",
+    // );
+    // dev.log("PIN HAS BEEN STORED!");
     _sessionIsSafe = true;
   }
 
@@ -324,7 +322,7 @@ class PinCodeProvider extends ChangeNotifier {
   Future<void> _checkCode(String _inputCode) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String _pin = prefs.getString('${_lastEmail!}.code') ?? 'ERROR';
-    dev.log("pin:$_pin");
+    // dev.log("pin:$_pin");
     if (_pin == _inputCode) {
       _correctCode();
     } else {
@@ -364,9 +362,9 @@ class PinCodeProvider extends ChangeNotifier {
       _sessionIsSafe = false;
       notifyListeners();
     } else {
-      dev.log(
-        "No PIN code is active, therefore the session will not be reset.",
-      );
+      // dev.log(
+      //   "No PIN code is active, therefore the session will not be reset.",
+      // );
     }
   }
 

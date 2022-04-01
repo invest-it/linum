@@ -102,9 +102,9 @@ class _LayoutScreenState extends State<LayoutScreen>
           //       : "Session: NOT SAFE",
           // );
           if (pinCodeProvider.pinActive && !pinCodeProvider.sessionIsSafe) {
-            dev.log(
-              "PIN ACTIVE for ${pinCodeProvider.lastEmail}, triggering recall",
-            );
+            // dev.log(
+            //   "PIN ACTIVE for ${pinCodeProvider.lastEmail}, triggering recall",
+            // );
             pinCodeProvider.triggerPINRecall();
           } else {
             // dev.log(
