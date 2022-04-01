@@ -191,7 +191,7 @@ class RepeatedBalanceDataUpdater {
                     .subtract(timeDifference),
               ),
           "repeatDuration": repeatDuration,
-          "repeatDurationType": repeatDurationType,
+          "repeatDurationType": repeatDurationType?.toString().substring(19),
           "endTime": Timestamp.fromDate(time.toDate().subtract(timeDifference)),
         };
         changes.removeWhere((_, value) => value == null);
@@ -263,7 +263,7 @@ class RepeatedBalanceDataUpdater {
           "initialTime":
               Timestamp.fromDate(time.toDate().subtract(timeDifference)),
           "repeatDuration": repeatDuration,
-          "repeatDurationType": repeatDurationType,
+          "repeatDurationType": repeatDurationType?.toString().substring(19),
           "endTime": changeThisAndAllAfterEndTimeHelpFunction(
             endTime,
             newRepeatedBalance,
