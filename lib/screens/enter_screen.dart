@@ -1,4 +1,4 @@
-import 'dart:developer';
+import 'dart:developer' as dev;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -138,7 +138,7 @@ class _EnterScreenState extends State<EnterScreen> {
                       if (enterScreenProvider.isIncome &&
                           _amountChooser(enterScreenProvider) <= 0) {
                         showAlertDialog(context, enterScreenProvider);
-                        log(
+                        dev.log(
                           "amount was to low: ${_amountChooser(enterScreenProvider)}",
                         );
                         return;
@@ -193,6 +193,7 @@ class _EnterScreenState extends State<EnterScreen> {
                                         "enter_screen/delete-entry/dialog-button-untilnow",
                                     dialogPurpose: DialogPurpose.danger,
                                     function: () {
+                                      dev.log("");
                                       balanceDataProvider.updateRepeatedBalance(
                                         id: enterScreenProvider.repeatId!,
                                         changeType: RepeatableChangeType
@@ -279,26 +280,13 @@ class _EnterScreenState extends State<EnterScreen> {
                               currency: "EUR",
                               name: enterScreenProvider.name,
                               time: Timestamp.fromDate(
-                                DateTime(
-                                  selectedDateDateTimeFormatted.year,
-                                  selectedDateDateTimeFormatted.month,
-                                  selectedDateDateTimeFormatted.day,
-                                  selectedDateDateTimeFormatted.hour != 0
-                                      ? selectedDateDateTimeFormatted.hour
-                                      : DateTime.now().hour,
-                                  selectedDateDateTimeFormatted.minute != 0
-                                      ? selectedDateDateTimeFormatted.minute
-                                      : DateTime.now().minute,
-                                  selectedDateDateTimeFormatted.second != 0
-                                      ? selectedDateDateTimeFormatted.second
-                                      : DateTime.now().second,
-                                ),
+                                selectedDateDateTimeFormatted,
                               ),
                             ),
                           );
                         } else {
                           balanceDataProvider.addRepeatedBalance(
-                            RepeatBalanceData(
+                            RepeatedBalanceData(
                               amount: _amountChooser(enterScreenProvider),
                               category: enterScreenProvider.category,
                               currency: "EUR",
