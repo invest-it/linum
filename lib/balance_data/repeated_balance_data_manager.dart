@@ -68,6 +68,10 @@ class RepeatedBalanceDataManager {
     Timestamp? newTime,
   }) {
     // conditions
+    if (id == "") {
+      dev.log("no id provided");
+      return false;
+    }
     if (changeType == RepeatableChangeType.thisAndAllBefore) {
       if (time == null) {
         dev.log("RepeatableChangeType.thisAndAllBefore => time != null");
@@ -97,6 +101,14 @@ class RepeatedBalanceDataManager {
         dev.log("RepeatableChangeType.onlyThisOne => time != null");
         return false;
       }
+    }
+    if (category == "") {
+      dev.log("category must be != '' ");
+      return false;
+    }
+    if (currency == "") {
+      dev.log("currency must be != '' ");
+      return false;
     }
 
     // check if changes happen
@@ -211,14 +223,9 @@ class RepeatedBalanceDataManager {
           changeType: changeType,
           currency: checkedCurrency,
           data: data,
-          endTime: checkedEndTime,
           id: id,
-          initialTime: checkedInitialTime,
           name: checkedName,
           newTime: checkedNewTime,
-          repeatDuration: checkedRepeatDuration,
-          repeatDurationType: checkedRepeatDurationType,
-          resetEndTime: resetEndTime,
           time: time!,
         );
     }

@@ -76,7 +76,7 @@ class RepeatedBalanceDataUpdater {
                   RepeatDurationType.values,
                   singleRepeatedBalance["repeatDurationType"] as String,
                 )) {
-          singleRepeatedBalance["repeatDuration"] =
+          singleRepeatedBalance["repeatDurationType"] =
               repeatDurationType.toString().substring(19);
           isEdited = true;
         }
@@ -290,13 +290,8 @@ class RepeatedBalanceDataUpdater {
     num? amount,
     String? category,
     String? currency,
-    Timestamp? endTime,
-    Timestamp? initialTime,
     String? name,
     Timestamp? newTime,
-    int? repeatDuration,
-    RepeatDurationType? repeatDurationType,
-    bool? resetEndTime,
   }) {
     for (final singleRepeatedBalance
         in data["repeatedBalance"] as List<dynamic>) {
