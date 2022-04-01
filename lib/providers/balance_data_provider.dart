@@ -731,7 +731,7 @@ class BalanceDataProvider extends ChangeNotifier {
   }
 
   Timestamp? changeThisAndAllAfterEndTimeHelpFunction(Timestamp? checkedEndTime,
-      Map<String, dynamic> newRepeatedBalance, Duration timeDifference) {
+      Map<String, dynamic> newRepeatedBalance, Duration timeDifference,) {
     if (checkedEndTime != null) {
       return checkedEndTime;
     }

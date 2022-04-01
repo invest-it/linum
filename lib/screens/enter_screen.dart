@@ -55,14 +55,13 @@ class _EnterScreenState extends State<EnterScreen> {
         resizeToAvoidBottomInset: false,
         body: GestureDetector(
           onHorizontalDragEnd: (DragEndDetails details) {
-            int sensitivity = 1;
+            const int sensitivity = 1;
             if (details.primaryVelocity! < -sensitivity) {
               if (enterScreenProvider.isExpenses) {
                 enterScreenProvider.setIncome();
               } else if (enterScreenProvider.isIncome) {
                 enterScreenProvider.setTransaction();
               }
-              print("left swipe");
             } else if (details.primaryVelocity! > sensitivity) {
               if (enterScreenProvider.isIncome) {
                 enterScreenProvider.setExpense();
