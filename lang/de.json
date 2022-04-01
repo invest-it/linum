@@ -117,6 +117,7 @@
     "enter_screen/button-expenses-label": "Ausgabe",
     "enter_screen/button-income-label": "Einnahme",
     "enter_screen/button-transaction-label": "Transaktion",
+    "enter_screen/button-delete-entry": "Eintrag löschen",
     "enter_screen/button-save-entry": "Eintrag speichern",
     "enter_screen/expenses-textfield-title": "Was hast du gekauft?",
     "enter_screen/income-textfield-title": "Wie heißt dieses Einkommen?",

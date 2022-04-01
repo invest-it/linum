@@ -3,6 +3,7 @@ import 'dart:developer' as dev;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
+import 'package:linum/frontend_functions/delete_entry_popup.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/frontend_functions/user_alert.dart';
 import 'package:linum/models/dialog_action.dart';
@@ -62,7 +63,6 @@ class _EnterScreenState extends State<EnterScreen> {
               } else if (enterScreenProvider.isIncome) {
                 enterScreenProvider.setTransaction();
               }
-              print("left swipe");
             } else if (details.primaryVelocity! > sensitivity) {
               if (enterScreenProvider.isIncome) {
                 enterScreenProvider.setExpense();
@@ -97,29 +97,36 @@ class _EnterScreenState extends State<EnterScreen> {
                 child:
                     Container(color: Theme.of(context).colorScheme.background),
               ),
-              /*enterScreenProvider.editMode
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            balanceDataProvider.removeSingleBalance(arrayElement["id"])
-                          },
-                          child: Text("Delete"),
-                          style: ElevatedButton.styleFrom(
-                              side: BorderSide(
-                                  width: 2,
-                                  color: Theme.of(context).colorScheme.error),
-                              textStyle: Theme.of(context).textTheme.button,
-                              primary: Theme.of(context).colorScheme.background,
-                              onPrimary: Theme.of(context).colorScheme.error,
-                              onSurface: Colors.white,
-                              fixedSize: Size(proportionateScreenWidth(300),
-                                  proportionateScreenHeight(40))),
+              enterScreenProvider.editMode
+                  ? TextButton(
+                      style: TextButton.styleFrom(
+                        textStyle: Theme.of(context).textTheme.button,
+                        fixedSize: Size(
+                          proportionateScreenWidth(300),
+                          proportionateScreenHeight(40),
                         ),
-                      ],
+                      ),
+                      onPressed: () {
+                        generateDeletePopup(
+                          context,
+                          balanceDataProvider,
+                          enterScreenProvider.repeatId ??
+                              enterScreenProvider.formerId!,
+                          isRepeatable: enterScreenProvider.repeatId != null,
+                          formerTime: enterScreenProvider.formerTime,
+                        ).then(
+                          (_) => Navigator.of(context).pop(),
+                        );
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)!
+                            .translate("enter_screen/button-delete-entry"),
+                        style: Theme.of(context).textTheme.button?.copyWith(
+                              color: Theme.of(context).colorScheme.error,
+                            ),
+                      ),
                     )
-                  : SizedBox(height: 0),*/
+                  : Container(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

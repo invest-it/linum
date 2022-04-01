@@ -116,6 +116,7 @@
     "enter_screen/button-expenses-label": "Dépenses",
     "enter_screen/button-income-label": "Revenu",
     "enter_screen/button-transaction-label": "Transaction",
+    "enter_screen/button-delete-entry": "Supprimer l'entrée",
     "enter_screen/button-save-entry": "Sauvegarder l'entrée",
     "enter_screen/expenses-textfield-title": "Qu'avez-vous acheté?",
     "enter_screen/income-textfield-title": "Comment appelle-t-on ce revenu?",
