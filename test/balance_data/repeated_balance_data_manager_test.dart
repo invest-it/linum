@@ -1001,9 +1001,6 @@ void main() {
           final String oldRepeatDurationTypeAsString =
               oldSingleRepeatedBalance["repeatDurationType"] as String;
 
-          final Timestamp? oldEndTime =
-              oldSingleRepeatedBalance["endTime"] as Timestamp?;
-
           final Timestamp oldInitialTime =
               oldSingleRepeatedBalance["initialTime"] as Timestamp;
 
@@ -1172,6 +1169,76 @@ void main() {
         }
       });
 
+      test("random data test changeType=onlyThisOne", () {
+        final math.Random rand = math.Random();
+
+        final RepeatedBalanceDataManager repeatedBalanceDataManager =
+            RepeatedBalanceDataManager();
+
+        final int max = rand.nextInt(200) + 1;
+        for (int i = 0; i < max; i++) {
+          // Arrange (Initialization)
+
+          final Map<String, List<Map<String, dynamic>>> data =
+              generateRandomData();
+          final int expectedLength = data["repeatedBalance"]!.length;
+          final int idIndex = rand.nextInt(expectedLength - 1);
+          final String id = data["repeatedBalance"]![idIndex]["id"] as String;
+
+          final Map<String, dynamic> singleRepeatedBalance =
+              data["repeatedBalance"]![idIndex];
+
+          final Timestamp initialTime =
+              singleRepeatedBalance["initialTime"] as Timestamp;
+
+          num newAmount = rand.nextInt(100000) / 100.0;
+          newAmount = -1 * math.pow(newAmount, 2);
+
+          final Timestamp time = Timestamp.fromDate(
+            calculateOneTimeStep(
+              data["repeatedBalance"]![idIndex]["repeatDuration"] as int,
+              initialTime.toDate(),
+              monthly: isMonthly(
+                data["repeatedBalance"]![idIndex],
+              ),
+            ),
+          );
+
+          final Duration moveDuration = Duration(seconds: rand.nextInt(100));
+
+          final Timestamp newTime = Timestamp.fromDate(
+            time.toDate().add(moveDuration),
+          );
+
+          // Act (Execution)
+          final bool result =
+              repeatedBalanceDataManager.updateRepeatedBalanceInData(
+            id: id,
+            data: data,
+            changeType: RepeatableChangeType.onlyThisOne,
+            amount: newAmount,
+            category: "food",
+            currency: "USD",
+            name: "New Name $i",
+            time: time,
+            newTime: newTime,
+          );
+
+          // Assert (Observation)
+          expect(result, true);
+          expect(data["repeatedBalance"]!.length, expectedLength);
+          expect(singleRepeatedBalance["changed"] != null, true);
+
+          final Map<String, dynamic> singleRepeatedBalanceChanged =
+              (singleRepeatedBalance["changed"] as Map<String, dynamic>)[
+                      time.millisecondsSinceEpoch.toString()]
+                  as Map<String, dynamic>;
+          expect(singleRepeatedBalanceChanged["amount"], newAmount);
+          expect(singleRepeatedBalanceChanged["category"], "food");
+          expect(singleRepeatedBalanceChanged["currency"], "USD");
+          expect(singleRepeatedBalanceChanged["name"], "New Name $i");
+        }
+      });
 /*
       test("random data test changeType=all", () {
         final math.Random rand = math.Random();

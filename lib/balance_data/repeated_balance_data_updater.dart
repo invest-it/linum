@@ -1,13 +1,9 @@
-import 'dart:developer' as dev;
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enum_to_string/enum_to_string.dart';
+import 'package:linum/backend_functions/date_time_calculation_functions.dart';
+import 'package:linum/backend_functions/repeated_balance_help_functions.dart';
 import 'package:linum/models/repeat_duration_type_enum.dart';
-import 'package:linum/models/repeatable_change_type.dart';
 import 'package:uuid/uuid.dart';
-
-import '../backend_functions/date_time_calculation_functions.dart';
-import '../backend_functions/repeated_balance_help_functions.dart';
 
 class RepeatedBalanceDataUpdater {
   bool updateAll({

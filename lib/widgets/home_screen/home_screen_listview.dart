@@ -1,5 +1,4 @@
 // ignore_for_file: avoid_dynamic_calls
-import 'dart:developer' as dev;
 
 import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

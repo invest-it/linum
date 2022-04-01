@@ -70,8 +70,11 @@ void main() {
 
           final DateTime dateTime2 = calculateOneTimeStep(
             stepsize,
-            calculateOneTimeStepBackwards(stepsize, currentTime,
-                monthly: false),
+            calculateOneTimeStepBackwards(
+              stepsize,
+              currentTime,
+              monthly: false,
+            ),
             monthly: false,
           );
 

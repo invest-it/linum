@@ -236,12 +236,12 @@ class RepeatedBalanceDataManager {
     // conditions
     if (removeType == RepeatableChangeType.thisAndAllBefore && time == null) {
       dev.log(
-          "removeType == RepeatableChangeType.thisAndAllBefore => time != null");
+          "removeType == RepeatableChangeType.thisAndAllBefore => time != null",);
       return false;
     }
     if (removeType == RepeatableChangeType.thisAndAllAfter && time == null) {
       dev.log(
-          "removeType == RepeatableChangeType.thisAndAllAfter => time != null");
+          "removeType == RepeatableChangeType.thisAndAllAfter => time != null",);
       return false;
     }
     if (removeType == RepeatableChangeType.onlyThisOne && time == null) {
