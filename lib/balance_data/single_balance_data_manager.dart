@@ -9,9 +9,16 @@ class SingleBalanceDataManager {
     SingleBalanceData singleBalance,
     Map<String, dynamic> data,
   ) {
-    if (singleBalance.category == "" || singleBalance.currency == "") {
+    // conditions
+    if (singleBalance.category == "") {
+      dev.log("singleBalance.category must be != '' ");
       return false;
     }
+    if (singleBalance.currency == "") {
+      dev.log("singleBalance.currency must be != '' ");
+      return false;
+    }
+
     final Map<String, dynamic> singleBalanceMap = {
       "amount": singleBalance.amount,
       "category": singleBalance.category,
@@ -38,6 +45,8 @@ class SingleBalanceDataManager {
     if (dataLength > (data["balanceData"] as List<dynamic>).length) {
       return true;
     }
+
+    dev.log("couldn't find the balance with id: $id");
     return false;
   }
 
@@ -67,6 +76,7 @@ class SingleBalanceDataManager {
       }
     }
 
+    dev.log("couldn't find the balance with id: $id");
     return false;
   }
 }
