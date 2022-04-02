@@ -194,15 +194,21 @@ class HomeScreenCard extends StatelessWidget {
                             onPressed: () {},
                             icon: const Icon(Icons.arrow_back_ios_new_rounded),
                           ),
-                          FittedBox(
+                          Expanded(
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.baseline,
                               textBaseline: TextBaseline.alphabetic,
                               children: [
-                                Text(
-                                  balance.toStringAsFixed(2),
-                                  style:
-                                      MediaQuery.of(context).size.height < 650
+                                Flexible(
+                                  child: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: Text(
+                                      balance.toStringAsFixed(2),
+                                      style: MediaQuery.of(context)
+                                                  .size
+                                                  .height <
+                                              650
                                           ? Theme.of(context)
                                               .textTheme
                                               .headline2
@@ -227,6 +233,8 @@ class HomeScreenCard extends StatelessWidget {
                                                         const Color(0xFF505050),
                                                       ),
                                               ),
+                                    ),
+                                  ),
                                 ),
                                 Text(
                                   '€',
