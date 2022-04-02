@@ -32,9 +32,7 @@ class AlgorithmProvider extends ChangeNotifier {
   }
 
   void resetCurrentShownMonth() {
-    _currentShownMonth =
-        DateTime(DateTime.now().year, (DateTime.now().month) + 1)
-            .subtract(const Duration(microseconds: 1));
+    _currentShownMonth = DateTime(DateTime.now().year, DateTime.now().month);
   }
 
   void nextMonth() {

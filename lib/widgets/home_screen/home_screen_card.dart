@@ -1,4 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:developer' as dev;
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -31,6 +32,9 @@ class HomeScreenCard extends StatelessWidget {
     final String langCode = AppLocalizations.of(context)!.locale.languageCode;
 
     final DateFormat dateFormat = DateFormat('MMMM yyyy', langCode);
+    DateTime now = DateTime.now();
+
+    // dev.log(algorithmProvider.currentShownMonth.toString());
 
     return GestureDetector(
       onHorizontalDragEnd: (DragEndDetails details) {
@@ -51,24 +55,7 @@ class HomeScreenCard extends StatelessWidget {
         );
       },
       onLongPress: () {
-        // Reset to current month
-        algorithmProvider.resetCurrentShownMonth();
-        algorithmProvider.setCurrentFilterAlgorithm(
-          AlgorithmProvider.inBetween(
-            Timestamp.fromDate(
-              DateTime(
-                DateTime.now().year,
-                DateTime.now().month,
-              ).subtract(const Duration(microseconds: 1)),
-            ),
-            Timestamp.fromDate(
-              DateTime(
-                DateTime.now().year,
-                DateTime.now().month + 1,
-              ),
-            ),
-          ),
-        );
+        goToCurrentTime(algorithmProvider);
       },
       child: Column(
         children: [
@@ -188,7 +175,11 @@ class HomeScreenCard extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 24.0),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment:
+                              algorithmProvider.currentShownMonth !=
+                                      DateTime(now.year, now.month)
+                                  ? MainAxisAlignment.center
+                                  : MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
                               children: [
@@ -237,6 +228,24 @@ class HomeScreenCard extends StatelessWidget {
                                 )
                               ],
                             ),
+                            algorithmProvider.currentShownMonth !=
+                                    DateTime(
+                                      now.year,
+                                      now.month,
+                                    )
+                                ? Expanded(
+                                    child: IconButton(
+                                      icon: const Icon(Icons.today_rounded),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface
+                                          .withAlpha(64),
+                                      onPressed: () {
+                                        goToCurrentTime(algorithmProvider);
+                                      },
+                                    ),
+                                  )
+                                : Container(),
                             Row(
                               children: [
                                 Column(

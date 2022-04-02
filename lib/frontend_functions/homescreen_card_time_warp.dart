@@ -78,3 +78,24 @@ void goForwardInTime(AlgorithmProvider algorithmProvider) {
     );
   }
 }
+
+void goToCurrentTime(AlgorithmProvider algorithmProvider) {
+  // Reset to current month
+  algorithmProvider.resetCurrentShownMonth();
+  algorithmProvider.setCurrentFilterAlgorithm(
+    AlgorithmProvider.inBetween(
+      Timestamp.fromDate(
+        DateTime(
+          DateTime.now().year,
+          DateTime.now().month,
+        ).subtract(const Duration(microseconds: 1)),
+      ),
+      Timestamp.fromDate(
+        DateTime(
+          DateTime.now().year,
+          DateTime.now().month + 1,
+        ),
+      ),
+    ),
+  );
+}
