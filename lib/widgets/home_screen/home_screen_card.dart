@@ -142,156 +142,211 @@ class HomeScreenCard extends StatelessWidget {
       },
       child: Column(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Container(
-              width: proportionateScreenWidth(345),
-              height: proportionateScreenHeight(196),
-              color: Colors.grey[100],
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.translate(
-                          'home_screen_card/label-current-balance',
-                        ),
-                        style: MediaQuery.of(context).size.height < 650
-                            ? Theme.of(context).textTheme.headline5
-                            : Theme.of(context).textTheme.headline3,
-                      ),
-                      Text(
-                        '< ${dateFormat.format(algorithmProvider.currentShownMonth)} >',
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.baseline,
-                    textBaseline: TextBaseline.alphabetic,
-                    children: [
-                      Text(
-                        balance.toStringAsFixed(2),
-                        style: MediaQuery.of(context).size.height < 650
-                            ? Theme.of(context).textTheme.headline2?.copyWith(
-                                  color: balance < 0
-                                      ? Theme.of(context).colorScheme.error
-                                      : createMaterialColor(
-                                          const Color(0xFF202020),
-                                        ),
-                                )
-                            : Theme.of(context).textTheme.headline1?.copyWith(
-                                  color: balance < 0
-                                      ? Theme.of(context).colorScheme.error
-                                      : createMaterialColor(
-                                          const Color(0xFF505050),
-                                        ),
-                                ),
-                      ),
-                      Text('€', style: Theme.of(context).textTheme.bodyText1)
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
-                              child: Center(
-                                child: Icon(
-                                  Icons.arrow_upward_rounded,
-                                  color:
-                                      Theme.of(context).colorScheme.background,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  AppLocalizations.of(context)!.translate(
-                                    'home_screen_card/label-income',
-                                  ),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .overline!
-                                      .copyWith(fontSize: 12),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  '${income.toStringAsFixed(2)} €',
-                                  style: TextStyle(
-                                    color: Colors.grey[700],
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Theme.of(context).colorScheme.error,
-                              ),
-                              child: Center(
-                                child: Icon(
-                                  Icons.arrow_downward_rounded,
-                                  color:
-                                      Theme.of(context).colorScheme.background,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  AppLocalizations.of(context)!.translate(
-                                    'home_screen_card/label-expenses',
-                                  ),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .overline!
-                                      .copyWith(fontSize: 12),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  '${expense.toStringAsFixed(2)} € ',
-                                  style: TextStyle(
-                                    color: Colors.grey[700],
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
-                        )
-                      ],
+          Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Theme.of(context).colorScheme.onSurface.withAlpha(64),
+                  blurRadius: 16.0,
+                  spreadRadius: 1.0,
+                  offset: Offset(0, 4), // shadow direction: bottom right
+                )
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Material(
+                child: Container(
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/images/v01-cubes-12.png"),
+                      opacity: 0.6,
+                      fit: BoxFit.cover,
                     ),
-                  )
-                ],
+                  ),
+                  width: proportionateScreenWidth(345),
+                  height: proportionateScreenHeight(196),
+                  // color: Colors.grey[100],
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.translate(
+                              'home_screen_card/label-current-balance',
+                            ),
+                            style: MediaQuery.of(context).size.height < 650
+                                ? Theme.of(context).textTheme.headline5
+                                : Theme.of(context).textTheme.headline3,
+                          ),
+                          Text(
+                            dateFormat
+                                .format(algorithmProvider.currentShownMonth),
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Icons.arrow_back_ios_new_rounded),
+                          ),
+                          FittedBox(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.baseline,
+                              textBaseline: TextBaseline.alphabetic,
+                              children: [
+                                Text(
+                                  balance.toStringAsFixed(2),
+                                  style:
+                                      MediaQuery.of(context).size.height < 650
+                                          ? Theme.of(context)
+                                              .textTheme
+                                              .headline2
+                                              ?.copyWith(
+                                                color: balance < 0
+                                                    ? Theme.of(context)
+                                                        .colorScheme
+                                                        .error
+                                                    : createMaterialColor(
+                                                        const Color(0xFF202020),
+                                                      ),
+                                              )
+                                          : Theme.of(context)
+                                              .textTheme
+                                              .headline1
+                                              ?.copyWith(
+                                                color: balance < 0
+                                                    ? Theme.of(context)
+                                                        .colorScheme
+                                                        .error
+                                                    : createMaterialColor(
+                                                        const Color(0xFF505050),
+                                                      ),
+                                              ),
+                                ),
+                                Text(
+                                  '€',
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                ),
+                              ],
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.arrow_forward_ios_rounded,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                  ),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.arrow_upward_rounded,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .background,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      AppLocalizations.of(context)!.translate(
+                                        'home_screen_card/label-income',
+                                      ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .overline!
+                                          .copyWith(fontSize: 12),
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      '${income.toStringAsFixed(2)} €',
+                                      style: TextStyle(
+                                        color: Colors.grey[700],
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      AppLocalizations.of(context)!.translate(
+                                        'home_screen_card/label-expenses',
+                                      ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .overline!
+                                          .copyWith(fontSize: 12),
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      '${expense.toStringAsFixed(2)} € ',
+                                      style: TextStyle(
+                                        color: Colors.grey[700],
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Theme.of(context).colorScheme.error,
+                                  ),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.arrow_downward_rounded,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .background,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
