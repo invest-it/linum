@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/backend_functions/statistic_calculations.dart';
+import 'package:linum/frontend_functions/homescreen_card_time_warp.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/algorithm_provider.dart';
@@ -36,81 +37,10 @@ class HomeScreenCard extends StatelessWidget {
         // Note: Sensitivity is integer used when you don't want to mess up vertical drag
         const int sensitivity = 1;
         if (details.primaryVelocity! > sensitivity) {
-          // Right Swipe, going back in time
-          algorithmProvider.previousMonth();
-          if (algorithmProvider.currentShownMonth.month ==
-                  DateTime.now().month &&
-              algorithmProvider.currentShownMonth.year == DateTime.now().year) {
-            algorithmProvider.setCurrentFilterAlgorithm(
-              AlgorithmProvider.inBetween(
-                Timestamp.fromDate(
-                  DateTime(
-                    DateTime.now().year,
-                    DateTime.now().month,
-                  ).subtract(const Duration(microseconds: 1)),
-                ),
-                Timestamp.fromDate(
-                  DateTime(
-                    DateTime.now().year,
-                    DateTime.now().month + 1,
-                  ),
-                ),
-              ),
-            );
-          } else {
-            algorithmProvider.setCurrentFilterAlgorithm(
-              AlgorithmProvider.inBetween(
-                Timestamp.fromDate(
-                  algorithmProvider.currentShownMonth
-                      .subtract(const Duration(microseconds: 1)),
-                ),
-                Timestamp.fromDate(
-                  DateTime(
-                    algorithmProvider.currentShownMonth.year,
-                    algorithmProvider.currentShownMonth.month + 1,
-                  ),
-                ),
-              ),
-            );
-          }
+          //Right Swipe, going back in time
+          goBackInTime(algorithmProvider);
         } else if (details.primaryVelocity! < -sensitivity) {
-          //Left Swipe, going forward in time
-          algorithmProvider.nextMonth();
-          if (algorithmProvider.currentShownMonth.month ==
-                  DateTime.now().month &&
-              algorithmProvider.currentShownMonth.year == DateTime.now().year) {
-            algorithmProvider.setCurrentFilterAlgorithm(
-              AlgorithmProvider.inBetween(
-                Timestamp.fromDate(
-                  DateTime(
-                    DateTime.now().year,
-                    DateTime.now().month,
-                  ).subtract(const Duration(microseconds: 1)),
-                ),
-                Timestamp.fromDate(
-                  DateTime(
-                    DateTime.now().year,
-                    DateTime.now().month + 1,
-                  ),
-                ),
-              ),
-            );
-          } else {
-            algorithmProvider.setCurrentFilterAlgorithm(
-              AlgorithmProvider.inBetween(
-                Timestamp.fromDate(
-                  algorithmProvider.currentShownMonth
-                      .subtract(const Duration(microseconds: 1)),
-                ),
-                Timestamp.fromDate(
-                  DateTime(
-                    algorithmProvider.currentShownMonth.year,
-                    algorithmProvider.currentShownMonth.month + 1,
-                  ),
-                ),
-              ),
-            );
-          }
+          goForwardInTime(algorithmProvider);
         }
       },
       onTap: () {
@@ -120,7 +50,7 @@ class HomeScreenCard extends StatelessWidget {
           toastLength: Toast.LENGTH_SHORT,
         );
       },
-      onDoubleTap: () {
+      onLongPress: () {
         // Reset to current month
         algorithmProvider.resetCurrentShownMonth();
         algorithmProvider.setCurrentFilterAlgorithm(
@@ -149,7 +79,7 @@ class HomeScreenCard extends StatelessWidget {
                   color: Theme.of(context).colorScheme.onSurface.withAlpha(64),
                   blurRadius: 16.0,
                   spreadRadius: 1.0,
-                  offset: Offset(0, 4), // shadow direction: bottom right
+                  offset: const Offset(0, 4),
                 )
               ],
             ),
@@ -191,7 +121,9 @@ class HomeScreenCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              goBackInTime(algorithmProvider);
+                            },
                             icon: const Icon(Icons.arrow_back_ios_new_rounded),
                           ),
                           Expanded(
@@ -244,7 +176,9 @@ class HomeScreenCard extends StatelessWidget {
                             ),
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              goForwardInTime(algorithmProvider);
+                            },
                             icon: const Icon(
                               Icons.arrow_forward_ios_rounded,
                             ),
