@@ -74,6 +74,7 @@ class LipSection extends StatelessWidget {
                       lipTitle,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headline6,
+                      textScaleFactor: 1.0,
                     ),
                   ),
                 ),
