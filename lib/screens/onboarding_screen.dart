@@ -76,6 +76,35 @@ class _OnboardingScreenState extends State<OnboardingPage> {
     });
   }
 
+  void _handleOnDropdownChanged(String? value) {
+    if (value != null) {
+      setState(() {
+
+        SharedPreferences.getInstance().then((pref) {
+          pref.setString(
+            "languageCode",
+            countryFlagsToCountryCode[value] ?? "en",
+          );
+        });
+        final String langString =
+            countryFlagsToCountryCode[value] ?? "en";
+        AppLocalizations.of(context)!.load(
+          locale: Locale(
+            langString,
+            langString != "en"
+                ? langString.toUpperCase()
+                : "US",
+          ),
+        );
+
+        Provider.of<AuthenticationService>(
+          context,
+          listen: false,
+        ).updateLanguageCode(context);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final OnboardingScreenProvider onboardingScreenProvider =
@@ -112,56 +141,17 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
                     elevation: 1,
-                    items: <String>[
-                      countryFlag('de'),
-                      countryFlag('gb'),
-                      countryFlag('nl'),
-                      countryFlag('es'),
-                      countryFlag('fr'),
-                    ].map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
+                    items: countryFlagsToCountryCode.keys
+                      .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
                     value: countryFlagWithSpecialCases(
                       AppLocalizations.of(context)!.locale.languageCode,
                     ),
-                    onChanged: (value) {
-                      if (value != null) {
-                        setState(() {
-                          final Map<String, String> countryFlagsToCountryCode =
-                              {
-                            countryFlag('de'): "de",
-                            countryFlag('gb'): "en",
-                            countryFlag('nl'): "nl",
-                            countryFlag('es'): "es",
-                            countryFlag('fr'): "fr",
-                          };
-                          SharedPreferences.getInstance().then((pref) {
-                            pref.setString(
-                              "languageCode",
-                              countryFlagsToCountryCode[value] ?? "en",
-                            );
-                          });
-                          final String langString =
-                              countryFlagsToCountryCode[value] ?? "en";
-                          AppLocalizations.of(context)!.load(
-                            locale: Locale(
-                              langString,
-                              langString != "en"
-                                  ? langString.toUpperCase()
-                                  : "US",
-                            ),
-                          );
-
-                          Provider.of<AuthenticationService>(
-                            context,
-                            listen: false,
-                          ).updateLanguageCode(context);
-                        });
-                      }
-                    },
+                    onChanged: _handleOnDropdownChanged,
                   ),
                 ),
               ),
@@ -228,10 +218,21 @@ class _OnboardingScreenState extends State<OnboardingPage> {
             const LoginScreen(),
             const RegisterScreen(),
 
-
           ],
         ),
       ),
     );
   }
 }
+
+
+
+final Map<String, String> countryFlagsToCountryCode =
+{
+  countryFlag('de'): "de",
+  countryFlag('gb'): "en",
+  countryFlag('nl'): "nl",
+  countryFlag('es'): "es",
+  countryFlag('fr'): "fr",
+};
+// TODO: Move into an extra file
