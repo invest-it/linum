@@ -1,8 +1,8 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -86,6 +86,18 @@ class AuthenticationService extends ChangeNotifier {
       log(e.message.toString());
       onError("auth/${e.code}");
     }
+  }
+
+  Future<void> signInWithGoogle() async {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    _firebaseAuth.signInWithCredential(credential);
   }
 
   /// returns the uid, and if the user isnt logged in return ""

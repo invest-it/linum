@@ -29,7 +29,7 @@ class _RegisterFormState extends State<RegisterForm> {
     final OnboardingScreenProvider onboardingScreenProvider =
         Provider.of<OnboardingScreenProvider>(context);
 
-    if (onboardingScreenProvider.pageState == 2 &&
+    if (onboardingScreenProvider.pageState == OnboardingPageState.register &&
         onboardingScreenProvider.hasPageChanged) {
       _mailController.clear();
       _passController.clear();
@@ -70,7 +70,7 @@ class _RegisterFormState extends State<RegisterForm> {
           _agbCheck = false;
           _mailValidate = false;
           _passValidate = false;
-          onboardingScreenProvider.setPageState(1);
+          onboardingScreenProvider.setPageState(OnboardingPageState.login);
         },
       );
     }

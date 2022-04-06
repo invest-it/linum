@@ -40,6 +40,7 @@ dependencies:
   flutter_svg: ^1.0.0
   fluttertoast: ^8.0.8
   google_fonts: ^2.0.0
+  google_sign_in: ^5.2.4
   gradient_widgets: ^0.6.0
   intl: ^0.17.0
   package_info_plus: ^1.4.0
