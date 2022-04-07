@@ -6,6 +6,7 @@ import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/statistic_calculations.dart';
 import 'package:linum/widgets/abstract/abstract_home_screen_card.dart';
+import 'package:linum/widgets/home_screen/card_sides/back_side.dart';
 import 'package:linum/widgets/home_screen/card_sides/front_side.dart';
 
 class HomeScreenCard extends StatefulWidget {
@@ -39,11 +40,13 @@ class _HomeScreenCardState extends State<HomeScreenCard> {
     return FlipCard(
       controller: _flipCardController,
       front: FrontSide(
+        flipCardController: _flipCardController,
         balance: widget.balance,
         income: widget.income,
         expense: widget.expense,
       ),
-      back: FrontSide(
+      back: BackSide(
+        flipCardController: _flipCardController,
         balance: widget.balance,
         income: widget.income,
         expense: widget.expense,

@@ -9,13 +9,13 @@ import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:provider/provider.dart';
 
-class FrontSide extends StatelessWidget {
+class BackSide extends StatelessWidget {
   final num balance;
   final num income;
   final num expense;
   FlipCardController flipCardController;
 
-  FrontSide({
+  BackSide({
     Key? key,
     required this.flipCardController,
     required this.balance,
@@ -34,16 +34,6 @@ class FrontSide extends StatelessWidget {
     final DateTime now = DateTime.now();
 
     return GestureDetector(
-      onHorizontalDragEnd: (DragEndDetails details) {
-        // Note: Sensitivity is integer used when you don't want to mess up vertical drag
-        const int sensitivity = 1;
-        if (details.primaryVelocity! > sensitivity) {
-          //Right Swipe, going back in time
-          goBackInTime(algorithmProvider);
-        } else if (details.primaryVelocity! < -sensitivity) {
-          goForwardInTime(algorithmProvider);
-        }
-      },
       onTap: () {
         flipCardController.hint(
           duration: const Duration(
@@ -53,14 +43,11 @@ class FrontSide extends StatelessWidget {
             seconds: 2,
           ),
         );
-        Fluttertoast.showToast(
-          msg: AppLocalizations.of(context)!
-              .translate('home_screen_card/home-screen-card-toast'),
-          toastLength: Toast.LENGTH_SHORT,
-        );
-      },
-      onLongPress: () {
-        goToCurrentTime(algorithmProvider);
+        // Fluttertoast.showToast(
+        //   msg: AppLocalizations.of(context)!
+        //       .translate('home_screen_card/home-screen-card-toast'),
+        //   toastLength: Toast.LENGTH_SHORT,
+        // );
       },
       child: Column(
         children: [
@@ -100,9 +87,7 @@ class FrontSide extends StatelessWidget {
                               const Spacer(),
                               Center(
                                 child: Text(
-                                  dateFormat.format(
-                                    algorithmProvider.currentShownMonth,
-                                  ),
+                                  "Kontostand",
                                   style: MediaQuery.of(context).size.height <
                                           650
                                       ? Theme.of(context).textTheme.headline5
@@ -126,8 +111,7 @@ class FrontSide extends StatelessWidget {
                             ],
                           ),
                           Text(
-                            AppLocalizations.of(context)!.translate(
-                                'home_screen_card/label-current-balance'),
+                            "seit Nutzungsbeginn",
                             style: Theme.of(context).textTheme.headline5,
                           ),
                         ],
@@ -135,12 +119,6 @@ class FrontSide extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          IconButton(
-                            onPressed: () {
-                              goBackInTime(algorithmProvider);
-                            },
-                            icon: const Icon(Icons.arrow_back_ios_new_rounded),
-                          ),
                           Expanded(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -190,14 +168,6 @@ class FrontSide extends StatelessWidget {
                               ],
                             ),
                           ),
-                          IconButton(
-                            onPressed: () {
-                              goForwardInTime(algorithmProvider);
-                            },
-                            icon: const Icon(
-                              Icons.arrow_forward_ios_rounded,
-                            ),
-                          ),
                         ],
                       ),
                       Padding(
@@ -213,8 +183,9 @@ class FrontSide extends StatelessWidget {
                                     padding: const EdgeInsets.all(5),
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .tertiaryContainer,
                                     ),
                                     child: Center(
                                       child: Icon(
@@ -329,8 +300,9 @@ class FrontSide extends StatelessWidget {
                                     padding: const EdgeInsets.all(5),
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color:
-                                          Theme.of(context).colorScheme.error,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
                                     ),
                                     child: Center(
                                       child: Icon(
