@@ -175,11 +175,7 @@ class HomeScreenCard extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 24.0),
                         child: Row(
-                          mainAxisAlignment:
-                              algorithmProvider.currentShownMonth !=
-                                      DateTime(now.year, now.month)
-                                  ? MainAxisAlignment.center
-                                  : MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
                               children: [
@@ -228,24 +224,29 @@ class HomeScreenCard extends StatelessWidget {
                                 )
                               ],
                             ),
-                            algorithmProvider.currentShownMonth !=
-                                    DateTime(
-                                      now.year,
-                                      now.month,
-                                    )
-                                ? Expanded(
-                                    child: IconButton(
-                                      icon: const Icon(Icons.today_rounded),
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSurface
-                                          .withAlpha(64),
-                                      onPressed: () {
-                                        goToCurrentTime(algorithmProvider);
-                                      },
-                                    ),
-                                  )
-                                : Container(),
+                            Flexible(
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: algorithmProvider.currentShownMonth !=
+                                        DateTime(
+                                          now.year,
+                                          now.month,
+                                        )
+                                    ? Expanded(
+                                        child: IconButton(
+                                          icon: const Icon(Icons.today_rounded),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSurface
+                                              .withAlpha(64),
+                                          onPressed: () {
+                                            goToCurrentTime(algorithmProvider);
+                                          },
+                                        ),
+                                      )
+                                    : Container(),
+                              ),
+                            ),
                             Row(
                               children: [
                                 Column(
