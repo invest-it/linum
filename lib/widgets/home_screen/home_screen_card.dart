@@ -177,54 +177,59 @@ class HomeScreenCard extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                  ),
-                                  child: Center(
-                                    child: Icon(
-                                      Icons.arrow_upward_rounded,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .background,
+                            Expanded(
+                              flex: 10,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      AppLocalizations.of(context)!.translate(
-                                        'home_screen_card/label-income',
-                                      ),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .overline!
-                                          .copyWith(fontSize: 12),
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      '${income.toStringAsFixed(2)} €',
-                                      style: TextStyle(
-                                        color: Colors.grey[700],
-                                        fontWeight: FontWeight.bold,
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.arrow_upward_rounded,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .background,
                                       ),
                                     ),
-                                  ],
-                                )
-                              ],
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        AppLocalizations.of(context)!.translate(
+                                          'home_screen_card/label-income',
+                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .overline!
+                                            .copyWith(fontSize: 12),
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        '${income.toStringAsFixed(2)} €',
+                                        style: TextStyle(
+                                          color: Colors.grey[700],
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
-                            Flexible(
+                            Expanded(
+                              flex: 3,
                               child: FittedBox(
                                 fit: BoxFit.scaleDown,
                                 child: algorithmProvider.currentShownMonth !=
@@ -232,66 +237,84 @@ class HomeScreenCard extends StatelessWidget {
                                           now.year,
                                           now.month,
                                         )
-                                    ? Expanded(
-                                        child: IconButton(
-                                          icon: const Icon(Icons.today_rounded),
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSurface
-                                              .withAlpha(64),
-                                          onPressed: () {
-                                            goToCurrentTime(algorithmProvider);
-                                          },
-                                        ),
+                                    ? IconButton(
+                                        icon: const Icon(Icons.today_rounded),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurface
+                                            .withAlpha(64),
+                                        onPressed: () {
+                                          goToCurrentTime(algorithmProvider);
+                                        },
                                       )
-                                    : Container(),
+
+                                    // I am not proud of this.
+                                    // If someone finds a better way of handling this without creating layout issues,
+                                    // you're more than welcome to make it better. For now,
+                                    // I only care that it works.
+
+                                    : IconButton(
+                                        icon: const Icon(Icons.error),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurface
+                                            .withAlpha(0),
+                                        splashColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        onPressed: () {},
+                                      ),
                               ),
                             ),
-                            Row(
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      AppLocalizations.of(context)!.translate(
-                                        'home_screen_card/label-expenses',
+                            Expanded(
+                              flex: 10,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        AppLocalizations.of(context)!.translate(
+                                          'home_screen_card/label-expenses',
+                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .overline!
+                                            .copyWith(fontSize: 12),
                                       ),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .overline!
-                                          .copyWith(fontSize: 12),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        '${expense.toStringAsFixed(2)} € ',
+                                        style: TextStyle(
+                                          color: Colors.grey[700],
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color:
+                                          Theme.of(context).colorScheme.error,
                                     ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      '${expense.toStringAsFixed(2)} € ',
-                                      style: TextStyle(
-                                        color: Colors.grey[700],
-                                        fontWeight: FontWeight.bold,
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.arrow_downward_rounded,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .background,
                                       ),
                                     ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Theme.of(context).colorScheme.error,
                                   ),
-                                  child: Center(
-                                    child: Icon(
-                                      Icons.arrow_downward_rounded,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .background,
-                                    ),
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             )
                           ],
                         ),
