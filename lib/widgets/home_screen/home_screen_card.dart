@@ -90,16 +90,16 @@ class HomeScreenCard extends StatelessWidget {
                       Column(
                         children: [
                           Text(
-                            AppLocalizations.of(context)!.translate(
-                              'home_screen_card/label-current-balance',
+                            dateFormat.format(
+                              algorithmProvider.currentShownMonth,
                             ),
                             style: MediaQuery.of(context).size.height < 650
                                 ? Theme.of(context).textTheme.headline5
                                 : Theme.of(context).textTheme.headline3,
                           ),
                           Text(
-                            dateFormat
-                                .format(algorithmProvider.currentShownMonth),
+                            AppLocalizations.of(context)!.translate(
+                                'home_screen_card/label-current-balance'),
                             style: Theme.of(context).textTheme.headline5,
                           ),
                         ],
