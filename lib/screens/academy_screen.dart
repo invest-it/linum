@@ -27,57 +27,60 @@ class AcademyScreen extends StatelessWidget {
         ontap: () => screenIndexProvider.setPageIndex(0),
       ),
       isInverted: true,
-      body: Column(
-        children: [
-          Container(
-            height:
-                proportionateScreenHeightFraction(ScreenFraction.onequarter),
-            margin: const EdgeInsets.all(32),
-            child: SvgPicture.asset('assets/svg/video-files.svg'),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 36),
-            child: Text(
-              AppLocalizations.of(context)!
-                  .translate('academy_screen/label-title'),
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline3,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height:
+                  proportionateScreenHeightFraction(ScreenFraction.onequarter),
+              child: SvgPicture.asset('assets/svg/video-files.svg'),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 16),
-            child: Text(
-              AppLocalizations.of(context)!
-                  .translate('academy_screen/label-description'),
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyText1,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Text(
+                AppLocalizations.of(context)!
+                    .translate('academy_screen/label-title'),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headline3,
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 16),
-            child: ElevatedButton(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Wrap(
-                  spacing: 12,
-                  children: const [
-                    Icon(Icons.open_in_new_rounded),
-                    Text("Zum YouTube-Kanal"),
-                  ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              child: Text(
+                AppLocalizations.of(context)!
+                    .translate('academy_screen/label-description'),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24,
+              ),
+              child: ElevatedButton(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Wrap(
+                    spacing: 12,
+                    children: [
+                      const Icon(Icons.open_in_new_rounded),
+                      Text(
+                        AppLocalizations.of(context)!
+                            .translate("academy_screen/label-button"),
+                      ),
+                    ],
+                  ),
                 ),
+                onPressed: () =>
+                    launchURL('https://youtube.investit-academy.de'),
               ),
-              onPressed: () => launchURL('https://youtube.investit-academy.de'),
             ),
-          ),
-          // SizedBox(
-          //   height: proportionateScreenHeight(230),
-          // ),
-          SizedBox(
-            width: double.infinity,
-            child: Padding(
-              padding: EdgeInsets.only(
-                top: proportionateScreenHeight(24),
-              ),
+            // SizedBox(
+            //   height: proportionateScreenHeight(230),
+            // ),
+            SizedBox(
+              width: double.infinity,
               child: CupertinoButton(
                 child: Text(
                   AppLocalizations.of(context)!
@@ -90,8 +93,8 @@ class AcademyScreen extends StatelessWidget {
                 },
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
