@@ -62,13 +62,13 @@ class UserAlert {
     );
   }
 
-  Future<void> showMyActionDialog(
+  Future<bool?> showMyActionDialog(
     String message,
     List<DialogAction> actions, {
     String title = 'alertdialog/error/title-standard',
     bool userMustDismissWithButton = true,
   }) async {
-    return showDialog<void>(
+    return showDialog<bool?>(
       context: _context,
       barrierDismissible:
           !userMustDismissWithButton, // user must tap button if userMustDismissWithButton is true

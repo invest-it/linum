@@ -1,8 +1,9 @@
-import 'dart:developer';
+import 'dart:developer' as dev;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
+import 'package:linum/frontend_functions/delete_entry_popup.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/frontend_functions/user_alert.dart';
 import 'package:linum/models/dialog_action.dart';
@@ -96,29 +97,36 @@ class _EnterScreenState extends State<EnterScreen> {
                 child:
                     Container(color: Theme.of(context).colorScheme.background),
               ),
-              /*enterScreenProvider.editMode
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            balanceDataProvider.removeSingleBalance(arrayElement["id"])
-                          },
-                          child: Text("Delete"),
-                          style: ElevatedButton.styleFrom(
-                              side: BorderSide(
-                                  width: 2,
-                                  color: Theme.of(context).colorScheme.error),
-                              textStyle: Theme.of(context).textTheme.button,
-                              primary: Theme.of(context).colorScheme.background,
-                              onPrimary: Theme.of(context).colorScheme.error,
-                              onSurface: Colors.white,
-                              fixedSize: Size(proportionateScreenWidth(300),
-                                  proportionateScreenHeight(40))),
+              enterScreenProvider.editMode
+                  ? TextButton(
+                      style: TextButton.styleFrom(
+                        textStyle: Theme.of(context).textTheme.button,
+                        fixedSize: Size(
+                          proportionateScreenWidth(300),
+                          proportionateScreenHeight(40),
                         ),
-                      ],
+                      ),
+                      onPressed: () {
+                        generateDeletePopup(
+                          context,
+                          balanceDataProvider,
+                          enterScreenProvider.repeatId ??
+                              enterScreenProvider.formerId!,
+                          isRepeatable: enterScreenProvider.repeatId != null,
+                          formerTime: enterScreenProvider.formerTime,
+                        ).then(
+                          (_) => Navigator.of(context).pop(),
+                        );
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)!
+                            .translate("enter_screen/button-delete-entry"),
+                        style: Theme.of(context).textTheme.button?.copyWith(
+                              color: Theme.of(context).colorScheme.error,
+                            ),
+                      ),
                     )
-                  : SizedBox(height: 0),*/
+                  : Container(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -137,7 +145,7 @@ class _EnterScreenState extends State<EnterScreen> {
                       if (enterScreenProvider.isIncome &&
                           _amountChooser(enterScreenProvider) <= 0) {
                         showAlertDialog(context, enterScreenProvider);
-                        log(
+                        dev.log(
                           "amount was to low: ${_amountChooser(enterScreenProvider)}",
                         );
                         return;
@@ -192,6 +200,7 @@ class _EnterScreenState extends State<EnterScreen> {
                                         "enter_screen/delete-entry/dialog-button-untilnow",
                                     dialogPurpose: DialogPurpose.danger,
                                     function: () {
+                                      dev.log("");
                                       balanceDataProvider.updateRepeatedBalance(
                                         id: enterScreenProvider.repeatId!,
                                         changeType: RepeatableChangeType
@@ -278,26 +287,13 @@ class _EnterScreenState extends State<EnterScreen> {
                               currency: "EUR",
                               name: enterScreenProvider.name,
                               time: Timestamp.fromDate(
-                                DateTime(
-                                  selectedDateDateTimeFormatted.year,
-                                  selectedDateDateTimeFormatted.month,
-                                  selectedDateDateTimeFormatted.day,
-                                  selectedDateDateTimeFormatted.hour != 0
-                                      ? selectedDateDateTimeFormatted.hour
-                                      : DateTime.now().hour,
-                                  selectedDateDateTimeFormatted.minute != 0
-                                      ? selectedDateDateTimeFormatted.minute
-                                      : DateTime.now().minute,
-                                  selectedDateDateTimeFormatted.second != 0
-                                      ? selectedDateDateTimeFormatted.second
-                                      : DateTime.now().second,
-                                ),
+                                selectedDateDateTimeFormatted,
                               ),
                             ),
                           );
                         } else {
                           balanceDataProvider.addRepeatedBalance(
-                            RepeatBalanceData(
+                            RepeatedBalanceData(
                               amount: _amountChooser(enterScreenProvider),
                               category: enterScreenProvider.category,
                               currency: "EUR",
