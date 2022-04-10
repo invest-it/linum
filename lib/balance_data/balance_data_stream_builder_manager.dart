@@ -4,7 +4,7 @@ import 'package:linum/backend_functions/statistic_calculations.dart';
 import 'package:linum/balance_data/repeated_balance_data_manager.dart';
 import 'package:linum/frontend_functions/loading_spinner.dart';
 import 'package:linum/providers/algorithm_provider.dart';
-import 'package:linum/widgets/abstract/abstract_statistic_panel.dart';
+import 'package:linum/widgets/abstract/abstract_home_screen_card.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
 
 class BalanceDataStreamBuilderManager {
@@ -32,7 +32,6 @@ class BalanceDataStreamBuilderManager {
           return blistview.listview;
         } else {
           final List<List<Map<String, dynamic>>> arrayData = prepareData(
-            algorithmProvider,
             repeatedBalanceDataManager,
             snapshot,
           );
@@ -40,6 +39,7 @@ class BalanceDataStreamBuilderManager {
 
           // Future there could be an sort algorithm provider
           // (and possibly also a filter algorithm provided)
+          balanceData.removeWhere(algorithmProvider.currentFilter);
           balanceData.sort(algorithmProvider.currentSorter);
           blistview.setBalanceData(balanceData, context: context);
           return blistview.listview;
@@ -53,7 +53,7 @@ class BalanceDataStreamBuilderManager {
     required AlgorithmProvider algorithmProvider,
     required Stream<DocumentSnapshot<Map<String, dynamic>>>? dataStream,
     required RepeatedBalanceDataManager repeatedBalanceDataManager,
-    required AbstractStatisticPanel statisticPanel,
+    required AbstractHomeScreenCard statisticPanel,
   }) {
     return StreamBuilder(
       stream: dataStream,
@@ -63,13 +63,12 @@ class BalanceDataStreamBuilderManager {
           return statisticPanel.returnWidget;
         } else {
           final List<List<Map<String, dynamic>>> arrayData = prepareData(
-            algorithmProvider,
             repeatedBalanceDataManager,
             snapshot,
           );
           final List<Map<String, dynamic>> balanceData = arrayData[0];
           final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(balanceData);
+              StatisticsCalculations(balanceData, algorithmProvider);
           statisticPanel.addStatisticData(statisticsCalculations);
           return statisticPanel.returnWidget;
         }
@@ -84,7 +83,6 @@ class BalanceDataStreamBuilderManager {
   /// (will still be used after filter on firebase, because of repeated balanced)
   /// may be moved into the data generation function
   List<List<Map<String, dynamic>>> prepareData(
-    AlgorithmProvider algorithmProvider,
     RepeatedBalanceDataManager repeatedBalanceDataManager,
     AsyncSnapshot<dynamic> snapshot,
   ) {
@@ -111,7 +109,6 @@ class BalanceDataStreamBuilderManager {
       balanceData,
     );
 
-    balanceData.removeWhere(algorithmProvider.currentFilter);
     return [balanceData, repeatedBalance];
   }
 }

@@ -83,7 +83,7 @@ class AccountSettingsProvider extends ChangeNotifier {
     ),
     StandardCategoryIncome.childSupport: const EntryCategory(
       label: "settings_screen/standard-income-selector/childsupport",
-      icon: Icons.baby_changing_station_rounded,
+      icon: Icons.family_restroom_rounded,
     ),
     StandardCategoryIncome.interest: const EntryCategory(
       label: "settings_screen/standard-income-selector/interest",

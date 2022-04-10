@@ -69,14 +69,15 @@ class _HomeScreenCardState extends State<HomeScreenCard> {
           //TODO This doesnt work - the gestureDetector crashes after performing a hint. I guess it has something to do with the detector being transformed by the card.
           // Any help is much appreciated!
 
-          // _flipCardController.hint(
-          //   duration: const Duration(
-          //     milliseconds: 200,
-          //   ),
-          //   total: const Duration(
-          //     milliseconds: 500,
-          //   ),
-          // );
+          _flipCardController.hint(
+            duration: const Duration(
+              milliseconds: 100,
+            ),
+            total: const Duration(
+              milliseconds: 500,
+            ),
+          );
+
           Fluttertoast.showToast(
             msg: AppLocalizations.of(context)!
                 .translate('home_screen_card/home-screen-card-toast'),
@@ -393,14 +394,14 @@ class _HomeScreenCardState extends State<HomeScreenCard> {
           //TODO This doesnt work - the gestureDetector crashes after performing a hint. I guess it has something to do with the detector being transformed by the card.
           // Any help is much appreciated!
 
-          // _flipCardController.hint(
-          //   duration: const Duration(
-          //     milliseconds: 750,
-          //   ),
-          //   total: const Duration(
-          //     seconds: 2,
-          //   ),
-          // );
+          _flipCardController.hint(
+            duration: const Duration(
+              milliseconds: 100,
+            ),
+            total: const Duration(
+              milliseconds: 500,
+            ),
+          );
 
           Fluttertoast.showToast(
             msg: AppLocalizations.of(context)!
