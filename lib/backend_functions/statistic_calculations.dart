@@ -13,7 +13,7 @@ class StatisticsCalculations {
   List<Map<String, dynamic>> get _allTimeData =>
       List<Map<String, dynamic>>.from(_allData)
         ..removeWhere(
-          AlgorithmProvider.newerThan(
+          AlgorithmProvider.olderThan(
             Timestamp.fromDate(
               DateTime(
                 DateTime.now().year,
