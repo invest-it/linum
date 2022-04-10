@@ -218,13 +218,18 @@ class AuthenticationService extends ChangeNotifier {
     void Function(String) onError = log,
   }) async {
     try {
+      final isSignedInWithGoogle = await GoogleSignIn().isSignedIn();
+      if (isSignedInWithGoogle) {
+        await GoogleSignIn().signOut();
+      }
       await _firebaseAuth.signOut();
-
       notifyListeners();
       onComplete("Successfully signed out from Firebase");
     } on FirebaseAuthException catch (e) {
       onError("auth/${e.code}");
     }
+
+
   }
 
   void updateLanguageCode(BuildContext context) {
