@@ -4,12 +4,14 @@ import 'package:linum/frontend_functions/size_guide.dart';
 class LipSection extends StatelessWidget {
   final String lipTitle;
   final bool isInverted;
+  final bool hasHomeScreenCard;
   final Widget Function(BuildContext)? leadingAction;
   final List<Widget Function(BuildContext)>? actions;
 
   const LipSection({
     required this.lipTitle,
     required this.isInverted,
+    required this.hasHomeScreenCard,
     this.leadingAction,
     this.actions,
   });
@@ -27,7 +29,9 @@ class LipSection extends StatelessWidget {
                   color: Theme.of(context).colorScheme.primary,
                   child: Baseline(
                     baselineType: TextBaseline.alphabetic,
-                    baseline: proportionateScreenHeight(164) - 8,
+                    baseline: hasHomeScreenCard
+                        ? proportionateScreenHeight(144)
+                        : proportionateScreenHeight(164) - 8,
                     child: Text(
                       lipTitle,
                       textAlign: TextAlign.center,

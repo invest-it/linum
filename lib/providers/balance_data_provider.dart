@@ -11,7 +11,7 @@ import 'package:linum/models/repeatable_change_type.dart';
 import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
-import 'package:linum/widgets/abstract/abstract_statistic_panel.dart';
+import 'package:linum/widgets/abstract/abstract_home_screen_card.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
 import 'package:provider/provider.dart';
 
@@ -300,6 +300,7 @@ class BalanceDataProvider extends ChangeNotifier {
     }
 
     return false;
+
   }
 
   /// [id] is the id of the repeatedBalance
