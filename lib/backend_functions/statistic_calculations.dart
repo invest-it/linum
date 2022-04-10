@@ -1,12 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 
 class StatisticsCalculations {
   /// the data that should be processed
-  late List<Map<String, dynamic>> _allTimeData;
+  late List<Map<String, dynamic>> _allData;
 
   /// the data that should be processed for monthly calculations
   List<Map<String, dynamic>> get _currentData =>
-      _allTimeData..removeWhere(_algorithmProvider.currentFilter);
+      _allData..removeWhere(_algorithmProvider.currentFilter);
+
+  List<Map<String, dynamic>> get _allTimeData =>
+      _allData..removeWhere(AlgorithmProvider.newerThan(Timestamp.now()));
 
   late AlgorithmProvider _algorithmProvider;
 
@@ -15,10 +19,9 @@ class StatisticsCalculations {
     List<dynamic> data,
     AlgorithmProvider algorithmProvider,
   ) {
-    _allTimeData = [];
+    _allData = [];
     for (int i = 0; i < data.length; i++) {
-      _allTimeData
-          .add(Map<String, dynamic>.from(data[i] as Map<String, dynamic>));
+      _allData.add(Map<String, dynamic>.from(data[i] as Map<String, dynamic>));
     }
     _algorithmProvider = algorithmProvider;
   }
@@ -29,7 +32,7 @@ class StatisticsCalculations {
         ..removeWhere(AlgorithmProvider.amountAtMost(0));
 
   List<Map<String, dynamic>> get _allTimeIncomeData =>
-      List<Map<String, dynamic>>.from(_allTimeData)
+      List<Map<String, dynamic>>.from(_allData)
         ..removeWhere(AlgorithmProvider.amountAtMost(0));
 
   /// filter the data further down to only include the data with cost information (including 0 cost products)
@@ -38,7 +41,7 @@ class StatisticsCalculations {
         ..removeWhere(AlgorithmProvider.amountMoreThan(0));
 
   List<Map<String, dynamic>> get _allTimeCostData =>
-      List<Map<String, dynamic>>.from(_allTimeData)
+      List<Map<String, dynamic>>.from(_allData)
         ..removeWhere(AlgorithmProvider.amountMoreThan(0));
 
   /// sum up the total data if data is empty = 0
