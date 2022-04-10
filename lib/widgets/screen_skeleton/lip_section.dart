@@ -36,6 +36,9 @@ class LipSection extends StatelessWidget {
                       lipTitle,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headline6,
+
+                      /// Headlines are considered decorative elements and should therefore not be affected by system accessibility modifications - fixes #47
+                      textScaleFactor: 1.0,
                     ),
                   ),
                 ),
@@ -75,6 +78,7 @@ class LipSection extends StatelessWidget {
                       lipTitle,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headline6,
+                      textScaleFactor: 1.0,
                     ),
                   ),
                 ),
