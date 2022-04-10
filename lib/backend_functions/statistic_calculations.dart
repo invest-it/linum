@@ -7,10 +7,24 @@ class StatisticsCalculations {
 
   /// the data that should be processed for monthly calculations
   List<Map<String, dynamic>> get _currentData =>
-      _allData..removeWhere(_algorithmProvider.currentFilter);
+      List<Map<String, dynamic>>.from(_allData)
+        ..removeWhere(_algorithmProvider.currentFilter);
 
   List<Map<String, dynamic>> get _allTimeData =>
-      _allData..removeWhere(AlgorithmProvider.newerThan(Timestamp.now()));
+      List<Map<String, dynamic>>.from(_allData)
+        ..removeWhere(
+          AlgorithmProvider.newerThan(
+            Timestamp.fromDate(
+              DateTime(
+                DateTime.now().year,
+                DateTime.now().month,
+                DateTime.now().day + 1,
+              ).subtract(
+                const Duration(microseconds: 1),
+              ),
+            ),
+          ),
+        );
 
   late AlgorithmProvider _algorithmProvider;
 
