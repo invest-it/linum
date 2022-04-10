@@ -32,7 +32,6 @@ class BalanceDataStreamBuilderManager {
           return blistview.listview;
         } else {
           final List<List<Map<String, dynamic>>> arrayData = prepareData(
-            algorithmProvider,
             repeatedBalanceDataManager,
             snapshot,
           );
@@ -40,6 +39,7 @@ class BalanceDataStreamBuilderManager {
 
           // Future there could be an sort algorithm provider
           // (and possibly also a filter algorithm provided)
+          balanceData.removeWhere(algorithmProvider.currentFilter);
           balanceData.sort(algorithmProvider.currentSorter);
           blistview.setBalanceData(balanceData, context: context);
           return blistview.listview;
@@ -63,13 +63,12 @@ class BalanceDataStreamBuilderManager {
           return statisticPanel.returnWidget;
         } else {
           final List<List<Map<String, dynamic>>> arrayData = prepareData(
-            algorithmProvider,
             repeatedBalanceDataManager,
             snapshot,
           );
           final List<Map<String, dynamic>> balanceData = arrayData[0];
           final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(balanceData);
+              StatisticsCalculations(balanceData, algorithmProvider);
           statisticPanel.addStatisticData(statisticsCalculations);
           return statisticPanel.returnWidget;
         }
@@ -84,7 +83,6 @@ class BalanceDataStreamBuilderManager {
   /// (will still be used after filter on firebase, because of repeated balanced)
   /// may be moved into the data generation function
   List<List<Map<String, dynamic>>> prepareData(
-    AlgorithmProvider algorithmProvider,
     RepeatedBalanceDataManager repeatedBalanceDataManager,
     AsyncSnapshot<dynamic> snapshot,
   ) {
@@ -111,7 +109,6 @@ class BalanceDataStreamBuilderManager {
       balanceData,
     );
 
-    balanceData.removeWhere(algorithmProvider.currentFilter);
     return [balanceData, repeatedBalance];
   }
 }
