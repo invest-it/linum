@@ -71,7 +71,7 @@ class _HomeScreenCardState extends State<HomeScreenCard> {
 
           _flipCardController.hint(
             duration: const Duration(
-              milliseconds: 200,
+              milliseconds: 100,
             ),
             total: const Duration(
               milliseconds: 500,
@@ -396,10 +396,10 @@ class _HomeScreenCardState extends State<HomeScreenCard> {
 
           _flipCardController.hint(
             duration: const Duration(
-              milliseconds: 750,
+              milliseconds: 100,
             ),
             total: const Duration(
-              seconds: 2,
+              milliseconds: 500,
             ),
           );
 
