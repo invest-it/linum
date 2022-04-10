@@ -88,7 +88,10 @@ class AuthenticationService extends ChangeNotifier {
     }
   }
 
-  Future<void> signInWithGoogle() async {
+  Future<void> signInWithGoogle({
+    void Function(String) onComplete = log,
+    void Function(String) onError = log,
+  }) async {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
     final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
 
@@ -97,7 +100,16 @@ class AuthenticationService extends ChangeNotifier {
       idToken: googleAuth?.idToken,
     );
 
-    _firebaseAuth.signInWithCredential(credential);
+
+    try {
+      await _firebaseAuth.signInWithCredential(credential);
+      notifyListeners();
+      onComplete("Successfully signed in to Firebase");
+    } on FirebaseAuthException catch (e) {
+      log(e.message.toString());
+      onError("auth/${e.code}");
+    }
+
   }
 
   /// returns the uid, and if the user isnt logged in return ""

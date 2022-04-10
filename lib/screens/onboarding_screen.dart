@@ -209,6 +209,19 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                       onboardingScreenProvider.setPageState(OnboardingPageState.login),
                     },
                   ),
+                  CupertinoButton(
+                    child: Text(
+                      "Sign in with Google",
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
+                    onPressed: () => {
+                    Provider.of<AuthenticationService>(context, listen: false)
+                      .signInWithGoogle()
+                      // onboardingScreenProvider.setPageState(OnboardingPageState.google),
+                    },
+                  ),
                 ],
               ),
             ),

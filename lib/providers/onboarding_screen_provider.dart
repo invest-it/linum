@@ -38,5 +38,6 @@ class OnboardingScreenProvider extends ChangeNotifier {
 enum OnboardingPageState {
   none,
   login,
-  register
+  register,
+  google // TODO: Check if state still needed
 }
