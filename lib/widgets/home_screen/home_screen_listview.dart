@@ -391,7 +391,11 @@ class HomeScreenListView implements BalanceDataListView {
     } else {
       // log("HomeScreenListView: " + balanceData[0]["Error"].toString());
     }
-    _listview = ListView(padding: EdgeInsets.zero, children: list);
+    _listview = ListView(
+        padding: const EdgeInsets.only(
+          bottom: 32.0,
+        ),
+        children: list);
   }
 
   String translateCategory(

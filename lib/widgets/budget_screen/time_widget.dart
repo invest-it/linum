@@ -16,7 +16,7 @@ class TimeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: proportionateScreenHeight(48),
+      height: proportionateScreenHeight(32),
       child: Align(
         alignment: Alignment.centerLeft,
         child: Text(

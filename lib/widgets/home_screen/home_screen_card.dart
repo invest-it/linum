@@ -19,12 +19,18 @@ class HomeScreenCard extends StatefulWidget {
   final num balance;
   final num income;
   final num expense;
+  final num allTimeBalance;
+  final num allTimeIncome;
+  final num allTimeExpense;
 
   const HomeScreenCard({
     Key? key,
     required this.balance,
     required this.income,
     required this.expense,
+    required this.allTimeBalance,
+    required this.allTimeIncome,
+    required this.allTimeExpense,
   }) : super(key: key);
 
   @override
@@ -66,9 +72,6 @@ class _HomeScreenCardState extends State<HomeScreenCard> {
           }
         },
         onTap: () {
-          //TODO This doesnt work - the gestureDetector crashes after performing a hint. I guess it has something to do with the detector being transformed by the card.
-          // Any help is much appreciated!
-
           _flipCardController.hint(
             duration: const Duration(
               milliseconds: 100,
@@ -391,9 +394,6 @@ class _HomeScreenCardState extends State<HomeScreenCard> {
       ),
       back: GestureDetector(
         onTap: () {
-          //TODO This doesnt work - the gestureDetector crashes after performing a hint. I guess it has something to do with the detector being transformed by the card.
-          // Any help is much appreciated!
-
           _flipCardController.hint(
             duration: const Duration(
               milliseconds: 100,
@@ -448,7 +448,7 @@ class _HomeScreenCardState extends State<HomeScreenCard> {
                                 const Spacer(),
                                 Center(
                                   child: Text(
-                                    "Kontostand",
+                                    "Kontostand heute",
                                     style: MediaQuery.of(context).size.height <
                                             650
                                         ? Theme.of(context).textTheme.headline5
@@ -490,15 +490,18 @@ class _HomeScreenCardState extends State<HomeScreenCard> {
                                     child: FittedBox(
                                       fit: BoxFit.scaleDown,
                                       child: Text(
-                                        widget.balance.toStringAsFixed(2),
-                                        style:
-                                            MediaQuery.of(context).size.height <
-                                                    650
-                                                ? Theme.of(context)
-                                                    .textTheme
-                                                    .headline2
-                                                    ?.copyWith(
-                                                      color: widget.balance < 0
+                                        widget.allTimeBalance
+                                            .toStringAsFixed(2),
+                                        style: MediaQuery.of(context)
+                                                    .size
+                                                    .height <
+                                                650
+                                            ? Theme.of(context)
+                                                .textTheme
+                                                .headline2
+                                                ?.copyWith(
+                                                  color:
+                                                      widget.allTimeBalance < 0
                                                           ? Theme.of(context)
                                                               .colorScheme
                                                               .error
@@ -506,12 +509,13 @@ class _HomeScreenCardState extends State<HomeScreenCard> {
                                                               const Color(
                                                                   0xFF202020),
                                                             ),
-                                                    )
-                                                : Theme.of(context)
-                                                    .textTheme
-                                                    .headline1
-                                                    ?.copyWith(
-                                                      color: widget.balance < 0
+                                                )
+                                            : Theme.of(context)
+                                                .textTheme
+                                                .headline1
+                                                ?.copyWith(
+                                                  color:
+                                                      widget.allTimeBalance < 0
                                                           ? Theme.of(context)
                                                               .colorScheme
                                                               .error
@@ -519,7 +523,7 @@ class _HomeScreenCardState extends State<HomeScreenCard> {
                                                               const Color(
                                                                   0xFF505050),
                                                             ),
-                                                    ),
+                                                ),
                                       ),
                                     ),
                                   ),
@@ -580,7 +584,7 @@ class _HomeScreenCardState extends State<HomeScreenCard> {
                                           height: 5,
                                         ),
                                         Text(
-                                          '${widget.income.toStringAsFixed(2)} €',
+                                          '${widget.allTimeIncome.toStringAsFixed(2)} €',
                                           style: TextStyle(
                                             color: Colors.grey[700],
                                             fontWeight: FontWeight.bold,
@@ -651,7 +655,7 @@ class _HomeScreenCardState extends State<HomeScreenCard> {
                                           height: 5,
                                         ),
                                         Text(
-                                          '${widget.expense.toStringAsFixed(2)} € ',
+                                          '${widget.allTimeExpense.toStringAsFixed(2)} € ',
                                           style: TextStyle(
                                             color: Colors.grey[700],
                                             fontWeight: FontWeight.bold,
@@ -701,7 +705,14 @@ class _HomeScreenCardState extends State<HomeScreenCard> {
 class HomeScreenCardManager implements AbstractHomeScreenCard {
   late HomeScreenCard _homeScreenCard;
   HomeScreenCardManager() {
-    _homeScreenCard = const HomeScreenCard(income: 0, expense: 0, balance: 0);
+    _homeScreenCard = const HomeScreenCard(
+      income: 0,
+      expense: 0,
+      balance: 0,
+      allTimeBalance: 0,
+      allTimeExpense: 0,
+      allTimeIncome: 0,
+    );
   }
 
   @override
@@ -710,8 +721,17 @@ class HomeScreenCardManager implements AbstractHomeScreenCard {
       final num income = statData.sumIncomes;
       final num expense = -statData.sumCosts;
       final num balance = statData.sumBalance;
-      _homeScreenCard =
-          HomeScreenCard(income: income, expense: expense, balance: balance);
+      final num allTimeIncome = statData.allTimeSumIncomes;
+      final num allTimeExpense = -statData.allTimeSumCosts;
+      final num allTimeBalance = statData.allTimeSumBalance;
+      _homeScreenCard = HomeScreenCard(
+        income: income,
+        expense: expense,
+        balance: balance,
+        allTimeBalance: allTimeBalance,
+        allTimeExpense: -allTimeExpense,
+        allTimeIncome: allTimeIncome,
+      );
     }
   }
 
