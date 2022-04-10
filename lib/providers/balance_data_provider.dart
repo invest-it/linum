@@ -300,7 +300,6 @@ class BalanceDataProvider extends ChangeNotifier {
     }
 
     return false;
-
   }
 
   /// [id] is the id of the repeatedBalance
@@ -362,7 +361,7 @@ class BalanceDataProvider extends ChangeNotifier {
 
   /// Returns a StreamBuilder that builds the ListView from the document-datastream
   StreamBuilder fillStatisticPanelWithData(
-    AbstractStatisticPanel statisticPanel,
+    AbstractHomeScreenCard statisticPanel,
   ) {
     return balanceDataStreamBuilderManager.fillStatisticPanelWithData(
       algorithmProvider: _algorithmProvider,

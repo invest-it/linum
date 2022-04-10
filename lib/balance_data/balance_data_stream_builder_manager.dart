@@ -4,7 +4,7 @@ import 'package:linum/backend_functions/statistic_calculations.dart';
 import 'package:linum/balance_data/repeated_balance_data_manager.dart';
 import 'package:linum/frontend_functions/loading_spinner.dart';
 import 'package:linum/providers/algorithm_provider.dart';
-import 'package:linum/widgets/abstract/abstract_statistic_panel.dart';
+import 'package:linum/widgets/abstract/abstract_home_screen_card.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
 
 class BalanceDataStreamBuilderManager {
@@ -53,7 +53,7 @@ class BalanceDataStreamBuilderManager {
     required AlgorithmProvider algorithmProvider,
     required Stream<DocumentSnapshot<Map<String, dynamic>>>? dataStream,
     required RepeatedBalanceDataManager repeatedBalanceDataManager,
-    required AbstractStatisticPanel statisticPanel,
+    required AbstractHomeScreenCard statisticPanel,
   }) {
     return StreamBuilder(
       stream: dataStream,
