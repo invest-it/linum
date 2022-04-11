@@ -322,7 +322,7 @@ class _RegisterFormState extends State<RegisterForm> {
               SizedBox(
                 height: proportionateScreenHeight(8),
               ),
-              const GoogleSignInButton()
+              GoogleSignInButton() // Won't reload on Language-Switch if const
 // SAVE THIS SPACE FOR ALTERNATE SIGNUP FUNCTIONS
 
               // OutlinedButton(

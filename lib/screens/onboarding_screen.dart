@@ -215,8 +215,8 @@ class _OnboardingScreenState extends State<OnboardingPage> {
 
             // Auth Screens
 
-            const LoginScreen(),
-            const RegisterScreen(),
+            LoginScreen(), // Won't reload on Language-Switch if const
+            RegisterScreen(), // Won't reload on Language-Switch if const
 
           ],
         ),
