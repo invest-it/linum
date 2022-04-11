@@ -39,5 +39,5 @@ enum OnboardingPageState {
   none,
   login,
   register,
-  google // TODO: Check if state still needed
+  // google
 }

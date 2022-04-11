@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/button_list.dart';
-import 'package:flutter_signin_button/button_view.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/frontend_functions/country_flag_generator.dart';
@@ -211,28 +209,6 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                       onboardingScreenProvider.setPageState(OnboardingPageState.login),
                     },
                   ),
-                  CupertinoButton(
-                    child: Text(
-                      AppLocalizations.of(context)!
-                          .translate('onboarding_screen/google-button'),
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurface,
-                      ),
-                    ),
-                    onPressed: () => {
-                      Provider.of<AuthenticationService>(context, listen: false)
-                          .signInWithGoogle()
-                    },
-                  ),
-                  /* SignInButton(
-                      Buttons.Google,
-                      text: AppLocalizations.of(context)!
-                          .translate('onboarding_screen/google-button'),
-                      onPressed: () => {
-                        Provider.of<AuthenticationService>(context, listen: false)
-                            .signInWithGoogle()
-                      },
-                  ), */
                 ],
               ),
             ),
