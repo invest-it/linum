@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class OnboardingScreenProvider extends ChangeNotifier {
-  int _pageState = 0;
+  OnboardingPageState _pageState = OnboardingPageState.none;
   String _mailInput = "";
   bool _hasPageChanged = false;
 
   /// States: 0 = normal onboarding, 1 = login page, 2 = register page
-  void setPageState(int newState) {
+  void setPageState(OnboardingPageState newState) {
     if (newState != _pageState) {
       _hasPageChanged = true;
     }
@@ -20,7 +20,7 @@ class OnboardingScreenProvider extends ChangeNotifier {
     return _pageChangeTemp;
   }
 
-  int get pageState => _pageState;
+  OnboardingPageState get pageState => _pageState;
 
   ///Email Address of the Login Controller.
   void setEmailLoginInputSilently(String newMail) {
@@ -33,4 +33,11 @@ class OnboardingScreenProvider extends ChangeNotifier {
     _mailInput = "";
     return _tempMail;
   }
+}
+
+enum OnboardingPageState {
+  none,
+  login,
+  register,
+  // google
 }

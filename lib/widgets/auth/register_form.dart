@@ -8,6 +8,7 @@ import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/frontend_functions/user_alert.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
+import 'package:linum/widgets/auth/google_sign_in_btn.dart';
 import 'package:provider/provider.dart';
 
 class RegisterForm extends StatefulWidget {
@@ -29,7 +30,7 @@ class _RegisterFormState extends State<RegisterForm> {
     final OnboardingScreenProvider onboardingScreenProvider =
         Provider.of<OnboardingScreenProvider>(context);
 
-    if (onboardingScreenProvider.pageState == 2 &&
+    if (onboardingScreenProvider.pageState == OnboardingPageState.register &&
         onboardingScreenProvider.hasPageChanged) {
       _mailController.clear();
       _passController.clear();
@@ -70,7 +71,7 @@ class _RegisterFormState extends State<RegisterForm> {
           _agbCheck = false;
           _mailValidate = false;
           _passValidate = false;
-          onboardingScreenProvider.setPageState(1);
+          onboardingScreenProvider.setPageState(OnboardingPageState.login);
         },
       );
     }
@@ -321,7 +322,7 @@ class _RegisterFormState extends State<RegisterForm> {
               SizedBox(
                 height: proportionateScreenHeight(8),
               ),
-
+              GoogleSignInButton() // Won't reload on Language-Switch if const
 // SAVE THIS SPACE FOR ALTERNATE SIGNUP FUNCTIONS
 
               // OutlinedButton(
@@ -351,6 +352,7 @@ class _RegisterFormState extends State<RegisterForm> {
               //   ),
               // ),
             ],
+
           ),
         ),
       ],

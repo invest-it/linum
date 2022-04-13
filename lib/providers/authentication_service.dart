@@ -1,8 +1,8 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -86,6 +86,30 @@ class AuthenticationService extends ChangeNotifier {
       log(e.message.toString());
       onError("auth/${e.code}");
     }
+  }
+
+  Future<void> signInWithGoogle({
+    void Function(String) onComplete = log,
+    void Function(String) onError = log,
+  }) async {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+
+    try {
+      await _firebaseAuth.signInWithCredential(credential);
+      notifyListeners();
+      onComplete("Successfully signed in to Firebase");
+    } on FirebaseAuthException catch (e) {
+      log(e.message.toString());
+      onError("auth/${e.code}");
+    }
+
   }
 
   /// returns the uid, and if the user isnt logged in return ""
@@ -194,13 +218,18 @@ class AuthenticationService extends ChangeNotifier {
     void Function(String) onError = log,
   }) async {
     try {
+      final isSignedInWithGoogle = await GoogleSignIn().isSignedIn();
+      if (isSignedInWithGoogle) {
+        await GoogleSignIn().signOut();
+      }
       await _firebaseAuth.signOut();
-
       notifyListeners();
       onComplete("Successfully signed out from Firebase");
     } on FirebaseAuthException catch (e) {
       onError("auth/${e.code}");
     }
+
+
   }
 
   void updateLanguageCode(BuildContext context) {

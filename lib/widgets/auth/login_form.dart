@@ -28,7 +28,7 @@ class _LoginFormState extends State<LoginForm> {
     final OnboardingScreenProvider onboardingScreenProvider =
         Provider.of<OnboardingScreenProvider>(context);
 
-    if (onboardingScreenProvider.pageState == 1 &&
+    if (onboardingScreenProvider.pageState == OnboardingPageState.login &&
         onboardingScreenProvider.hasPageChanged) {
       _mailController = null;
       _passController.clear();
@@ -211,6 +211,11 @@ class _LoginFormState extends State<LoginForm> {
                 height: proportionateScreenHeight(8),
               ),
               ForgotPasswordButton(ProviderKey.onboarding),
+              SizedBox(
+                height: proportionateScreenHeight(8),
+              ),
+              // const GoogleSignInButton()
+              // TODO: Decide if the Google Sign in Button should also be shown on Sign in
             ],
           ),
         ),
