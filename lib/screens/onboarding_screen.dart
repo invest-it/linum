@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
+import 'package:linum/constants/country_codes.dart';
 import 'package:linum/frontend_functions/country_flag_generator.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/silent_scroll.dart';
@@ -227,12 +228,12 @@ class _OnboardingScreenState extends State<OnboardingPage> {
 
 
 
-final Map<String, String> countryFlagsToCountryCode =
-{
-  countryFlag('de'): "de",
-  countryFlag('gb'): "en",
-  countryFlag('nl'): "nl",
-  countryFlag('es'): "es",
-  countryFlag('fr'): "fr",
-};
-// TODO: Move into an extra file
+
+
+
+
+
+
+
+
+

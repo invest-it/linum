@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
-import 'package:linum/widgets/home_screen/home_screen_card.dart';
+import 'package:linum/widgets/home_screen/home_screen_card_manager.dart';
 import 'package:linum/widgets/onboarding/action_lip.dart';
 import 'package:linum/widgets/screen_skeleton/body_section.dart';
 import 'package:linum/widgets/screen_skeleton/lip_section.dart';
