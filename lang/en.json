@@ -51,6 +51,8 @@
     "home_screen_card/label-current-balance": "Current balance",
     "home_screen_card/label-income": "INCOME",
     "home_screen_card/label-expenses": "EXPENSES",
+    "home_screen_card/label-total-balance": "Balance",
+    "home_screen_card/label-total-balance-sub": "since start of use",
 
 
     "budget_screen/label-all-transactions": "All Transactions",

@@ -1,5 +1,6 @@
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/models/home_screen_card_data.dart';
 import 'package:linum/widgets/home_screen/home_screen_card_arrow.dart';
 import 'package:linum/widgets/home_screen/home_screen_card_side.dart';
@@ -20,14 +21,14 @@ class HomeScreenCardBack extends StatelessWidget {
         flipCardController: flipCardController,
         data: data,
         headline: Text(
-          "Kontostand",
+            AppLocalizations.of(context)!.translate('home_screen_card/label-total-balance'),
           style: MediaQuery.of(context).size.height <
               650
               ? Theme.of(context).textTheme.headline5
               : Theme.of(context).textTheme.headline3,
         ),
         subHeadline: Text(
-          "seit Nutzungsbeginn",
+          AppLocalizations.of(context)!.translate('home_screen_card/label-total-balance-sub'),
           style: Theme.of(context).textTheme.headline5,
         ),
         middleRow: Row(
