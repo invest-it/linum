@@ -564,3 +564,5 @@ ListView _currencyChange(List<String> currency) {
     },
   );
 }
+
+// TODO: Refactor
