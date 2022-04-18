@@ -215,7 +215,6 @@ class _LoginFormState extends State<LoginForm> {
                 height: proportionateScreenHeight(8),
               ),
               // const GoogleSignInButton()
-              // TODO: Decide if the Google Sign in Button should also be shown on Sign in
             ],
           ),
         ),

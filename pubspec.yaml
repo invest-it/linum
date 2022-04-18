@@ -23,12 +23,14 @@ environment:
 dependencies:
   badges: ^2.0.2
   cloud_firestore: ^2.5.4
+  collection: ^1.15.0
   cupertino_icons: ^1.0.2
   enum_to_string: ^2.0.1
 
   firebase_auth: ^3.2.0
   firebase_core: ^1.8.0
   firebase_core_web: ^1.4.0
+  flip_card: ^0.5.0 # Don't update to 0.6.0
 
   flutter:
     sdk: flutter
@@ -36,7 +38,6 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  flip_card: ^0.5.0 # Don't update to 0.6.0
   flutter_spinkit: ^5.1.0
   flutter_svg: ^1.0.0
   fluttertoast: ^8.0.8

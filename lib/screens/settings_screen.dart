@@ -1,6 +1,8 @@
-import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
+import 'package:linum/constants/settings_enums.dart';
+import 'package:linum/constants/standard_expense_categories.dart';
+import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/frontend_functions/country_flag_generator.dart';
 import 'package:linum/frontend_functions/list_divider.dart';
 import 'package:linum/frontend_functions/list_header.dart';
@@ -124,7 +126,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               tooltipMessage: 'settings_screen/standard-category/label-tooltip',
             ),
 
-            /// TODO this is not lean programming and needs a rework.
+            /// TODO this is not clean programming and needs a rework.
             Column(
               children: [
                 GestureDetector(
@@ -172,17 +174,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             'settings_screen/standard-income-selector/label-title',
                           ) +
                           AppLocalizations.of(context)!.translate(
-                            AccountSettingsProvider
-                                    .standardCategoryIncomes[EnumToString
-                                        .fromString<StandardCategoryIncome>(
-                                  StandardCategoryIncome.values,
-                                  accountSettingsProvider.settings[
-                                              "StandardCategoryIncome"]
-                                          as String? ??
-                                      "None",
-                                )]
-                                    ?.label ??
-                                "ChosenStandardIncome",
+                            accountSettingsProvider.getIncomeEntryCategory()?.label ?? "ChosenStandardIncome", // TODO: Does this make sense?
                           ), // yeah im sorry that is really complicated code. :( It translates the value from firebase
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
@@ -191,17 +183,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       color: createMaterialColor(const Color(0xFF97BC4E)),
                     ),
                     leading: Icon(
-                      AccountSettingsProvider
-                              .standardCategoryIncomes[EnumToString.fromString<
-                                  StandardCategoryIncome>(
-                            StandardCategoryIncome.values,
-                            accountSettingsProvider
-                                        .settings["StandardCategoryIncome"]
-                                    as String? ??
-                                "None",
-                          )]
-                              ?.icon ??
-                          Icons.error,
+                      accountSettingsProvider.getIncomeEntryCategory()?.icon ?? Icons.error,
                     ),
                   ),
                 ),
@@ -248,17 +230,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             'settings_screen/standard-expense-selector/label-title',
                           ) +
                           AppLocalizations.of(context)!.translate(
-                            AccountSettingsProvider
-                                    .standardCategoryExpenses[EnumToString
-                                        .fromString<StandardCategoryExpense>(
-                                  StandardCategoryExpense.values,
-                                  accountSettingsProvider.settings[
-                                              "StandardCategoryExpense"]
-                                          as String? ??
-                                      "None",
-                                )]
-                                    ?.label ??
-                                "ChosenStandardExpense",
+                            accountSettingsProvider.getExpenseEntryCategory()?.label ?? "ChosenStandardExpense",
                           ), // yeah im sorry that is really complicated code. :( It translates the value from firebase
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
@@ -267,17 +239,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       color: Colors.red,
                     ),
                     leading: Icon(
-                      AccountSettingsProvider
-                              .standardCategoryExpenses[EnumToString.fromString<
-                                  StandardCategoryExpense>(
-                            StandardCategoryExpense.values,
-                            accountSettingsProvider
-                                        .settings["StandardCategoryExpense"]
-                                    as String? ??
-                                "None",
-                          )]
-                              ?.icon ??
-                          Icons.error,
+                      accountSettingsProvider.getExpenseEntryCategory()?.icon ?? Icons.error,
                     ),
                   ),
                 ),
@@ -485,10 +447,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           //leading: Icon(widget.categories[index].icon),
           title: Text(
             AppLocalizations.of(context)!.translate(
-              AccountSettingsProvider
-                      .standardCategoryIncomes[
-                          StandardCategoryIncome.values[indexBuilder]]
-                      ?.label ??
+              standardCategoryIncomes[StandardCategoryIncome.values[indexBuilder]]
+                  ?.label ??
                   "Category",
             ),
           ),
@@ -522,10 +482,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           //leading: Icon(widget.categories[index].icon),
           title: Text(
             AppLocalizations.of(context)!.translate(
-              AccountSettingsProvider
-                      .standardCategoryExpenses[
-                          StandardCategoryExpense.values[indexBuilder]]
-                      ?.label ??
+              standardCategoryExpenses[StandardCategoryExpense.values[indexBuilder]]
+                  ?.label ??
                   "Category",
             ),
           ),
@@ -548,6 +506,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 }
 
+
+/*
 // ignore: unused_element
 ListView _currencyChange(List<String> currency) {
   return ListView.builder(
@@ -564,5 +524,6 @@ ListView _currencyChange(List<String> currency) {
     },
   );
 }
+*/
 
 // TODO: Refactor
