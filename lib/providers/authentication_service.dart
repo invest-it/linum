@@ -3,8 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:linum/backend_functions/cryptography.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 /// The AuthenticationService authenticates the user
 /// and provides the information needed for other classes
@@ -111,6 +113,37 @@ class AuthenticationService extends ChangeNotifier {
     }
 
   }
+
+  Future<void> signInWithApple({
+    void Function(String) onComplete = log,
+    void Function(String) onError = log,
+  }) async {
+    final rawNonce = generateNonce();
+    final nonce = sha256ofString(rawNonce);
+
+    final appleCredential = await SignInWithApple.getAppleIDCredential(
+      scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ],
+      nonce: nonce,
+    );
+
+    final oauthCredential = OAuthProvider("apple.com").credential(
+      idToken: appleCredential.identityToken,
+      rawNonce: rawNonce,
+    );
+
+    try {
+      await _firebaseAuth.signInWithCredential(oauthCredential);
+      notifyListeners();
+      onComplete("Successfully signed in to Firebase");
+    } on FirebaseAuthException catch (e) {
+      log(e.message.toString());
+      onError("auth/${e.code}");
+    }
+  }
+  // TODO: Refactor already??
 
   /// returns the uid, and if the user isnt logged in return ""
   String get uid {

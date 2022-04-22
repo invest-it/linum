@@ -10,6 +10,7 @@ import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
 import 'package:linum/widgets/auth/google_sign_in_btn.dart';
 import 'package:provider/provider.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class RegisterForm extends StatefulWidget {
   @override
@@ -322,7 +323,10 @@ class _RegisterFormState extends State<RegisterForm> {
               SizedBox(
                 height: proportionateScreenHeight(8),
               ),
-              GoogleSignInButton() // Won't reload on Language-Switch if const
+              GoogleSignInButton(), // Won't reload on Language-Switch if const
+              SignInWithAppleButton(
+                onPressed: auth.signInWithApple, // TODO: Test layout, Online enable for Apple Devices
+              ),
 // SAVE THIS SPACE FOR ALTERNATE SIGNUP FUNCTIONS
 
               // OutlinedButton(
