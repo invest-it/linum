@@ -45,7 +45,7 @@ class _LoginFormState extends State<LoginForm> {
 
     void logIn(String _mail, String _pass) {
       auth.signIn(
-        _mail,
+        _mail.trim(),
         _pass,
         onError: userAlert.showMyDialog,
         onNotVerified: () => userAlert.showMyDialog(
