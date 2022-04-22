@@ -46,7 +46,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
     void signUp(String _mail, String _pass) {
       auth.signUp(
-        _mail,
+        _mail.trim(),
         _pass,
         onError: (String message) {
           setState(() {
