@@ -336,10 +336,11 @@ class _RegisterFormState extends State<RegisterForm> {
                   onPressed: auth.signInWithApple,
                 )
               ],
+              /*
               // TODO: Remove in prod
-              SignInWithAppleButton(
+               SignInWithAppleButton(
                 onPressed: auth.signInWithApple,
-              )
+              ) */
 // SAVE THIS SPACE FOR ALTERNATE SIGNUP FUNCTIONS
 
               // OutlinedButton(
