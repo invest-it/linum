@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
-import 'package:linum/providers/authentication_service.dart';
-import 'package:provider/provider.dart';
 
-class GoogleSignInButton extends StatefulWidget {
-  const GoogleSignInButton({Key? key}) : super(key: key);
+class SignInWithGoogleButton extends StatelessWidget {
+  const SignInWithGoogleButton({
+    Key? key,
+    required this.onPressed,
+  }) : super(key: key);
 
-  @override
-  State<GoogleSignInButton> createState() => _GoogleSignInButtonState();
-}
+  final VoidCallback onPressed;
 
-class _GoogleSignInButtonState extends State<GoogleSignInButton> {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
@@ -23,10 +22,7 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
         ),
 
       ),
-      onPressed: () => {
-        Provider.of<AuthenticationService>(context, listen: false)
-            .signInWithGoogle()
-      },
+      onPressed: onPressed,
 
       child: Padding(
         padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
@@ -43,10 +39,11 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
               child: Text(
                 AppLocalizations.of(context)!
                     .translate('onboarding_screen/google-button'),
-                style: const TextStyle(
-                  fontSize: 14,
+                style: GoogleFonts.roboto(
+                  fontSize: 44 * 0.43, // 14,
                   color: Colors.black54,
-                  fontWeight: FontWeight.w600,
+                  // fontWeight: FontWeight.w600,
+                  letterSpacing: -0.41,
                 ),
               ),
             )

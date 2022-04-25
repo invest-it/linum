@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
@@ -8,7 +10,7 @@ import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/frontend_functions/user_alert.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
-import 'package:linum/widgets/auth/google_sign_in_btn.dart';
+import 'package:linum/widgets/auth/sign_in_with_google_button.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -321,12 +323,23 @@ class _RegisterFormState extends State<RegisterForm> {
                 ),
               ),
               SizedBox(
-                height: proportionateScreenHeight(8),
+                height: proportionateScreenHeight(12),
               ),
-              GoogleSignInButton(), // Won't reload on Language-Switch if const
+              SignInWithGoogleButton(
+                onPressed: auth.signInWithGoogle,
+              ),
+              SizedBox(
+                height: proportionateScreenHeight(6),
+              ),
+              if (Platform.isIOS)...[ // Works only on iOS at the moment (according to Google)
+                SignInWithAppleButton(
+                  onPressed: auth.signInWithApple,
+                )
+              ],
+              // TODO: Remove in prod
               SignInWithAppleButton(
-                onPressed: auth.signInWithApple, // TODO: Test layout, Online enable for Apple Devices
-              ),
+                onPressed: auth.signInWithApple,
+              )
 // SAVE THIS SPACE FOR ALTERNATE SIGNUP FUNCTIONS
 
               // OutlinedButton(
