@@ -134,24 +134,13 @@ class _EnterScreenListViewBuilderState
                           ),
                           child: Icon(
                             <IconData>[
-                              _selectIcon(
-                                    EnumToString.fromString(
-                                      enterScreenProvider.isExpenses
-                                          ? StandardCategoryExpense.values
-                                          : StandardCategoryIncome.values,
-                                      enterScreenProvider.category,
-                                    ),
-                                    enterScreenProvider,
-                                    accountSettingsProvider,
-                                  ).icon ??
-                                  Icons.error,
+                              _selectIcon(enterScreenProvider).icon ?? Icons.error,
                               timeEntryCategory.icon,
-                              categoriesRepeat[enterScreenProvider
-                                .repeatDurationEnum]!["entryCategory"]
-                                .icon as IconData,
+                              categoriesRepeat[enterScreenProvider.repeatDurationEnum]
+                              !["entryCategory"].icon as IconData,
                             ][index],
                           ),
-                        ), // WTF^2 ????? // TODO: REFACTOR REFACTOR REFACTOR!!!
+                        ),
                         const SizedBox(
                           width: 20,
                         ),
@@ -220,17 +209,7 @@ class _EnterScreenListViewBuilderState
                       padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
                       child: Icon(
                         <IconData>[
-                          _selectIcon(
-                                EnumToString.fromString(
-                                  enterScreenProvider.isExpenses
-                                      ? StandardCategoryExpense.values
-                                      : StandardCategoryIncome.values,
-                                  enterScreenProvider.category,
-                                ),
-                                enterScreenProvider,
-                                accountSettingsProvider,
-                              ).icon ??
-                              Icons.error,
+                          _selectIcon(enterScreenProvider).icon ?? Icons.error,
                           timeEntryCategory.icon,
                           repeatDurationEntryCategory.icon,
                         ][index],
@@ -602,31 +581,29 @@ class _EnterScreenListViewBuilderState
   }
 
   Icon _selectIcon(
-    dynamic index,
     EnterScreenProvider enterScreenProvider,
-    AccountSettingsProvider accountSettingsProvider,
   ) {
     if (enterScreenProvider.isExpenses) {
-      if (index.runtimeType != StandardCategoryExpense) {
+      /* if (index.runtimeType != StandardCategoryExpense) {
         log("Error index had wrong type to choose icon");
         log(
           "assumed: ${index.runtimeType} to be StandardCategoryExpense",
         );
         return const Icon(Icons.error);
-      }
+      } */
       return Icon(
-        standardCategoryExpenses[index]!.icon,
+        standardCategoryExpenses[enterScreenProvider.category]!.icon,
       );
     } else if (enterScreenProvider.isIncome) {
-      if (index.runtimeType != StandardCategoryIncome) {
+      /* if (index.runtimeType != StandardCategoryIncome) {
         log("Error index had wrong type to choose icon");
         log(
           "assumed: ${index.runtimeType} to be StandardCategoryIncome",
         );
 
         return const Icon(Icons.error);
-      }
-      return Icon(standardCategoryIncomes[index]!.icon);
+      } */
+      return Icon(standardCategoryIncomes[enterScreenProvider.category]!.icon);
     }
     return const Icon(Icons.error);
   }
