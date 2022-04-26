@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:linum/models/single_month_statistic.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 
 class StatisticsCalculations {
@@ -7,10 +8,10 @@ class StatisticsCalculations {
 
   /// the data that should be processed for monthly calculations
   List<Map<String, dynamic>> get _currentData =>
-      _allData..removeWhere(_algorithmProvider.currentFilter);
+      dataUsingFilter(_algorithmProvider.currentFilter);
 
   List<Map<String, dynamic>> get _allTimeData =>
-      _allData..removeWhere(AlgorithmProvider.newerThan(Timestamp.now()));
+      dataUsingFilter(AlgorithmProvider.newerThan(Timestamp.now()));
 
   late AlgorithmProvider _algorithmProvider;
 
@@ -28,21 +29,57 @@ class StatisticsCalculations {
 
   /// filter the data further down to only include the data with income information (excluding 0 cost products)
   List<Map<String, dynamic>> get _currentIncomeData =>
-      List<Map<String, dynamic>>.from(_currentData)
-        ..removeWhere(AlgorithmProvider.amountAtMost(0));
+      dataUsingFilter(AlgorithmProvider.amountAtMost(0), data: _currentData);
 
   List<Map<String, dynamic>> get _allTimeIncomeData =>
-      List<Map<String, dynamic>>.from(_allData)
-        ..removeWhere(AlgorithmProvider.amountAtMost(0));
+      dataUsingFilter(AlgorithmProvider.amountAtMost(0), data: _allTimeData);
 
   /// filter the data further down to only include the data with cost information (including 0 cost products)
   List<Map<String, dynamic>> get _currentCostData =>
-      List<Map<String, dynamic>>.from(_currentData)
-        ..removeWhere(AlgorithmProvider.amountMoreThan(0));
+      dataUsingFilter(AlgorithmProvider.amountMoreThan(0), data: _currentData);
 
   List<Map<String, dynamic>> get _allTimeCostData =>
-      List<Map<String, dynamic>>.from(_allData)
-        ..removeWhere(AlgorithmProvider.amountMoreThan(0));
+      dataUsingFilter(AlgorithmProvider.amountMoreThan(0), data: _allTimeData);
+
+  List<SingleMonthStatistic> getBundledDataPerMonth({
+    bool Function(dynamic)? additionalFilter,
+  }) {
+    final List<SingleMonthStatistic> result = [];
+    final DateTime now = DateTime.now();
+    for (int i = 0; i < 12; i++) {
+      final DateTime startDate = DateTime(now.year, now.month - i, now.day);
+      final DateTime endDate = DateTime(now.year, now.month - i + 1, now.day);
+
+      final List<bool Function(dynamic)> filterList = [
+        AlgorithmProvider.inBetween(
+            Timestamp.fromDate(startDate), Timestamp.fromDate(endDate))
+      ];
+
+      final List<Map<String, dynamic>> allThisMonthData =
+          dataUsingFilter(AlgorithmProvider.combineFilterStrict(filterList));
+
+      final List<Map<String, dynamic>> costsThisMonthData = dataUsingFilter(
+        AlgorithmProvider.amountMoreThan(0),
+        data: allThisMonthData,
+      );
+      final List<Map<String, dynamic>> incomesThisMonthData = dataUsingFilter(
+        AlgorithmProvider.amountAtMost(0),
+        data: allThisMonthData,
+      );
+
+      result.add(
+        SingleMonthStatistic(
+          sumBalance: _getSumFrom(allThisMonthData),
+          averageBalance: _getAverageFrom(allThisMonthData),
+          sumIncomes: _getSumFrom(incomesThisMonthData),
+          averageIncomes: _getAverageFrom(incomesThisMonthData),
+          sumCosts: _getSumFrom(costsThisMonthData),
+          averageCosts: _getAverageFrom(costsThisMonthData),
+        ),
+      );
+    }
+    return result;
+  }
 
   /// sum up the total data if data is empty = 0
   num get sumBalance {
@@ -101,5 +138,19 @@ class StatisticsCalculations {
       sum += value["amount"] as num;
     }
     return sum;
+  }
+
+  num _getAverageFrom(List<Map<String, dynamic>> data) {
+    return data.isNotEmpty ? _getSumFrom(data) / data.length : 0;
+  }
+
+  List<Map<String, dynamic>> dataUsingFilter(
+    bool Function(dynamic) filter, {
+    List<Map<String, dynamic>>? data,
+  }) {
+    if (data != null) {
+      return List<Map<String, dynamic>>.from(data)..removeWhere(filter);
+    }
+    return List<Map<String, dynamic>>.from(_allData)..removeWhere(filter);
   }
 }
