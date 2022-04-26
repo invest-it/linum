@@ -8,10 +8,10 @@ class StatisticsCalculations {
 
   /// the data that should be processed for monthly calculations
   List<Map<String, dynamic>> get _currentData =>
-      dataUsingFilter(_algorithmProvider.currentFilter);
+      getDataUsingFilter(_algorithmProvider.currentFilter);
 
   List<Map<String, dynamic>> get _allTimeData =>
-      dataUsingFilter(AlgorithmProvider.newerThan(Timestamp.now()));
+      getDataUsingFilter(AlgorithmProvider.newerThan(Timestamp.now()));
 
   late AlgorithmProvider _algorithmProvider;
 
@@ -29,17 +29,19 @@ class StatisticsCalculations {
 
   /// filter the data further down to only include the data with income information (excluding 0 cost products)
   List<Map<String, dynamic>> get _currentIncomeData =>
-      dataUsingFilter(AlgorithmProvider.amountAtMost(0), data: _currentData);
+      getDataUsingFilter(AlgorithmProvider.amountAtMost(0), data: _currentData);
 
   List<Map<String, dynamic>> get _allTimeIncomeData =>
-      dataUsingFilter(AlgorithmProvider.amountAtMost(0), data: _allTimeData);
+      getDataUsingFilter(AlgorithmProvider.amountAtMost(0), data: _allTimeData);
 
   /// filter the data further down to only include the data with cost information (including 0 cost products)
   List<Map<String, dynamic>> get _currentCostData =>
-      dataUsingFilter(AlgorithmProvider.amountMoreThan(0), data: _currentData);
+      getDataUsingFilter(AlgorithmProvider.amountMoreThan(0),
+          data: _currentData);
 
   List<Map<String, dynamic>> get _allTimeCostData =>
-      dataUsingFilter(AlgorithmProvider.amountMoreThan(0), data: _allTimeData);
+      getDataUsingFilter(AlgorithmProvider.amountMoreThan(0),
+          data: _allTimeData);
 
   List<SingleMonthStatistic> getBundledDataPerMonth({
     bool Function(dynamic)? additionalFilter,
@@ -56,13 +58,14 @@ class StatisticsCalculations {
       ];
 
       final List<Map<String, dynamic>> allThisMonthData =
-          dataUsingFilter(AlgorithmProvider.combineFilterStrict(filterList));
+          getDataUsingFilter(AlgorithmProvider.combineFilterStrict(filterList));
 
-      final List<Map<String, dynamic>> costsThisMonthData = dataUsingFilter(
+      final List<Map<String, dynamic>> costsThisMonthData = getDataUsingFilter(
         AlgorithmProvider.amountMoreThan(0),
         data: allThisMonthData,
       );
-      final List<Map<String, dynamic>> incomesThisMonthData = dataUsingFilter(
+      final List<Map<String, dynamic>> incomesThisMonthData =
+          getDataUsingFilter(
         AlgorithmProvider.amountAtMost(0),
         data: allThisMonthData,
       );
@@ -75,6 +78,8 @@ class StatisticsCalculations {
           averageIncomes: _getAverageFrom(incomesThisMonthData),
           sumCosts: _getSumFrom(costsThisMonthData),
           averageCosts: _getAverageFrom(costsThisMonthData),
+          costsSubcategories: _getSubcategoriesFrom(costsThisMonthData),
+          incomeSubcategories: _getSubcategoriesFrom(incomesThisMonthData),
         ),
       );
     }
@@ -144,7 +149,7 @@ class StatisticsCalculations {
     return data.isNotEmpty ? _getSumFrom(data) / data.length : 0;
   }
 
-  List<Map<String, dynamic>> dataUsingFilter(
+  List<Map<String, dynamic>> getDataUsingFilter(
     bool Function(dynamic) filter, {
     List<Map<String, dynamic>>? data,
   }) {
@@ -152,5 +157,19 @@ class StatisticsCalculations {
       return List<Map<String, dynamic>>.from(data)..removeWhere(filter);
     }
     return List<Map<String, dynamic>>.from(_allData)..removeWhere(filter);
+  }
+
+  List<String> _getSubcategoriesFrom(
+    List<Map<String, dynamic>> data,
+  ) {
+    final Set<String> result = {};
+
+    for (final singleBalance in data) {
+      if (singleBalance["category"] != null) {
+        result.add(singleBalance["category"] as String);
+      }
+    }
+
+    return result.toList();
   }
 }
