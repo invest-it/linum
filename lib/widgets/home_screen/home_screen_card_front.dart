@@ -17,12 +17,13 @@ class HomeScreenCardFront extends StatelessWidget {
 
   void _onHorizontalDragEnd(DragEndDetails details, BuildContext context) {
     // Note: Sensitivity is integer used when you don't want to mess up vertical drag
+    final algorithmProvider = Provider.of<AlgorithmProvider>(context, listen: false);
     const int sensitivity = 1;
     if (details.primaryVelocity! > sensitivity) {
       //Right Swipe, going back in time
-      goBackInTime(Provider.of<AlgorithmProvider>(context));
+      goBackInTime(algorithmProvider);
     } else if (details.primaryVelocity! < -sensitivity) {
-      goForwardInTime(Provider.of<AlgorithmProvider>(context));
+      goForwardInTime(algorithmProvider);
     }
   }
 
