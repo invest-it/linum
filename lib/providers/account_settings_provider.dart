@@ -150,16 +150,16 @@ class AccountSettingsProvider extends ChangeNotifier {
 
   void updateAuth(AuthenticationService auth, BuildContext context) {
     if (_uid != auth.uid) {
+      dev.log("this still works");
       _uid = auth.uid;
       if (_uid == "") {
         if (settingsListener != null) {
           settingsListener!.cancel().then((_) {
             updateAuthHelper(context);
           });
-        } else {
-          updateAuthHelper(context);
         }
       }
+      updateAuthHelper(context);
     }
   }
 
@@ -210,10 +210,9 @@ class AccountSettingsProvider extends ChangeNotifier {
 
   @override
   void dispose() {
-    settingsListener?.cancel();
-
     if (_dontDispose-- == 0) {
       super.dispose();
+      settingsListener?.cancel();
     }
   }
 
