@@ -14,8 +14,10 @@ Before running the script you need to add the *translator-config.json* to the sa
         "ES": "es.json",
         "FR": "f.json",
         "NL": "nl.json"
-        ...
-        "LANGUAGE_KEY": "LANGUAGE_FILE_RELATIVE TO LANGUAGE_BASE_DIR"
+
+        # Base structure, remove when copying:
+        "LANGUAGE_KEY": "LANGUAGE_FILE_RELATIVE TO LANGUAGE_BASE_DIR" 
+        
     }
 }
 ```
@@ -37,7 +39,8 @@ Add a new tag to the specified base language file (file to be translated) like t
 ```yaml
 {
   "main/label-loading": "Laden...",
-  ...
+  
+  # Base structure, remove when copying:
   "KEY": "TEXT",
 }
 ```
