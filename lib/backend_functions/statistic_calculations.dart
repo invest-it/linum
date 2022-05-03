@@ -35,13 +35,15 @@ class StatisticsCalculations {
       getDataUsingFilter(AlgorithmProvider.amountAtMost(0), data: _allTimeData);
 
   /// filter the data further down to only include the data with cost information (including 0 cost products)
-  List<Map<String, dynamic>> get _currentCostData =>
-      getDataUsingFilter(AlgorithmProvider.amountMoreThan(0),
-          data: _currentData);
+  List<Map<String, dynamic>> get _currentCostData => getDataUsingFilter(
+        AlgorithmProvider.amountMoreThan(0),
+        data: _currentData,
+      );
 
-  List<Map<String, dynamic>> get _allTimeCostData =>
-      getDataUsingFilter(AlgorithmProvider.amountMoreThan(0),
-          data: _allTimeData);
+  List<Map<String, dynamic>> get _allTimeCostData => getDataUsingFilter(
+        AlgorithmProvider.amountMoreThan(0),
+        data: _allTimeData,
+      );
 
   List<SingleMonthStatistic> getBundledDataPerMonth({
     bool Function(dynamic)? additionalFilter,
@@ -54,7 +56,9 @@ class StatisticsCalculations {
 
       final List<bool Function(dynamic)> filterList = [
         AlgorithmProvider.inBetween(
-            Timestamp.fromDate(startDate), Timestamp.fromDate(endDate))
+          Timestamp.fromDate(startDate),
+          Timestamp.fromDate(endDate),
+        )
       ];
 
       final List<Map<String, dynamic>> allThisMonthData =
