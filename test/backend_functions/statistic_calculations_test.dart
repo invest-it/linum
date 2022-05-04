@@ -8,44 +8,44 @@ import 'package:linum/providers/algorithm_provider.dart';
 void main() {
   group("basic_statistic_calculation", () {
     final List<Map<String, dynamic>> exampleData1 = [
-      {"amount": 15},
-      {"amount": 35.5},
-      {"amount": 5},
-      {"amount": 25.5},
+      {"amount": 15, "time": Timestamp.fromDate(DateTime(2022, 4, 5))},
+      {"amount": 35.5, "time": Timestamp.fromDate(DateTime(2022, 4))},
+      {"amount": 5, "time": Timestamp.fromDate(DateTime(2022, 4, 20))},
+      {"amount": 25.5, "time": Timestamp.fromDate(DateTime(2022, 2, 5))},
     ];
     final List<Map<String, dynamic>> exampleData2 = [
-      {"amount": -0.5},
-      {"amount": -2.5},
-      {"amount": -2.5},
-      {"amount": -0},
+      {"amount": -0.5, "time": Timestamp.fromDate(DateTime(2022, 6, 20))},
+      {"amount": -2.5, "time": Timestamp.fromDate(DateTime(2022, 7, 20))},
+      {"amount": -2.5, "time": Timestamp.fromDate(DateTime(2022, 6, 12))},
+      {"amount": -0, "time": Timestamp.fromDate(DateTime(2022, 6, 20))},
     ];
     final List<Map<String, dynamic>> exampleData3 = [
-      {"amount": -0.5},
-      {"amount": -2.5},
-      {"amount": -2.5},
-      {"amount": -0},
-      {"amount": 15},
-      {"amount": 5},
-      {"amount": 25.5},
-      {"amount": 4},
+      {"amount": -0.5, "time": Timestamp.fromDate(DateTime(2022, 6, 14))},
+      {"amount": -2.5, "time": Timestamp.fromDate(DateTime(2022, 6, 8))},
+      {"amount": -2.5, "time": Timestamp.fromDate(DateTime(2022, 6, 4))},
+      {"amount": -0, "time": Timestamp.fromDate(DateTime(2022, 6, 20))},
+      {"amount": 15, "time": Timestamp.fromDate(DateTime(2022, 6, 20))},
+      {"amount": 5, "time": Timestamp.fromDate(DateTime(2022, 6, 28))},
+      {"amount": 25.5, "time": Timestamp.fromDate(DateTime(2022, 6, 10))},
+      {"amount": 4, "time": Timestamp.fromDate(DateTime(2022, 6, 21))},
     ];
     final List<Map<String, dynamic>> exampleData4 = [
-      {"amount": -0.5},
-      {"amount": -2.5},
-      {"amount": -2.5},
-      {"amount": -0},
-      {"amount": 15},
-      {"amount": 5},
-      {"amount": 25.5},
-      {"amount": 4},
-      {"amount": -20.5},
-      {"amount": -23.5},
+      {"amount": -0.5, "time": Timestamp.fromDate(DateTime(2022, 4, 5))},
+      {"amount": -2.5, "time": Timestamp.fromDate(DateTime(2022, 3, 15))},
+      {"amount": -2.5, "time": Timestamp.fromDate(DateTime(2022, 4, 2))},
+      {"amount": -0, "time": Timestamp.fromDate(DateTime(2022, 4, 15))},
+      {"amount": 15, "time": Timestamp.fromDate(DateTime(2022, 4, 13))},
+      {"amount": 5, "time": Timestamp.fromDate(DateTime(2022, 4, 17))},
+      {"amount": 25.5, "time": Timestamp.fromDate(DateTime(2022, 4, 25))},
+      {"amount": 4, "time": Timestamp.fromDate(DateTime(2022, 4, 27))},
+      {"amount": -20.5, "time": Timestamp.fromDate(DateTime(2022, 4, 29))},
+      {"amount": -23.5, "time": Timestamp.fromDate(DateTime(2022, 4, 3))},
     ];
     final List<Map<String, dynamic>> exampleData5 = [
-      {"amount": -0},
-      {"amount": -0},
-      {"amount": -0},
-      {"amount": -0},
+      {"amount": -0, "time": Timestamp.fromDate(DateTime(2022, 3))},
+      {"amount": -0, "time": Timestamp.fromDate(DateTime(2022, 3))},
+      {"amount": -0, "time": Timestamp.fromDate(DateTime(2022, 3))},
+      {"amount": -0, "time": Timestamp.fromDate(DateTime(2022, 3))},
     ];
 
     group("all time", () {
