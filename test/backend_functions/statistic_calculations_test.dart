@@ -1034,7 +1034,11 @@ void main() {
             for (int i = 0; i < 10000; i++) {
               // Arrange (Initialization)
               final List<Map<String, dynamic>> randomData =
-                  _createRandomStatisticData(rand);
+                  _createRandomStatisticData(
+                rand,
+                baseDate: DateTime(2021, 6, 25),
+                maxPast: 20,
+              );
               final StatisticsCalculations statisticsCalculations =
                   StatisticsCalculations(
                 randomData,
@@ -1078,8 +1082,8 @@ void main() {
               exampleData1,
               AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
-            final num expectedAverage =
-                ((20.25 * exampleData1.length) - 25.5) / exampleData1.length;
+            final num expectedAverage = ((20.25 * exampleData1.length) - 25.5) /
+                (exampleData1.length - 1);
 
             // Act (Execution)
             final num average = statisticsCalculations.averageBalance;
@@ -1096,7 +1100,8 @@ void main() {
               AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             final num expectedAverage =
-                ((-1.375 * exampleData2.length) - (-2.5)) / exampleData2.length;
+                ((-1.375 * exampleData2.length) - (-2.5)) /
+                    (exampleData2.length - 1);
 
             // Act (Execution)
             final num average = statisticsCalculations.averageBalance;
@@ -1128,8 +1133,8 @@ void main() {
               exampleData4,
               AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
-            final num expectedAverage =
-                ((0 * exampleData4.length) - (-2.5)) / exampleData4.length;
+            final num expectedAverage = ((0 * exampleData4.length) - (-2.5)) /
+                (exampleData4.length - 1);
 
             // Act (Execution)
             final num average = statisticsCalculations.averageBalance;
@@ -1159,7 +1164,11 @@ void main() {
             for (int i = 0; i < 10000; i++) {
               // Arrange (Initialization)
               final List<Map<String, dynamic>> randomData =
-                  _createRandomStatisticData(rand);
+                  _createRandomStatisticData(
+                rand,
+                baseDate: DateTime(2021, 6, 25),
+                maxPast: 20,
+              );
               final StatisticsCalculations statisticsCalculations =
                   StatisticsCalculations(
                 randomData,
@@ -1284,7 +1293,11 @@ void main() {
             for (int i = 0; i < 10000; i++) {
               // Arrange (Initialization)
               final List<Map<String, dynamic>> randomData =
-                  _createRandomStatisticData(rand);
+                  _createRandomStatisticData(
+                rand,
+                baseDate: DateTime(2021, 6, 25),
+                maxPast: 20,
+              );
               final StatisticsCalculations statisticsCalculations =
                   StatisticsCalculations(
                 randomData,
@@ -1329,8 +1342,8 @@ void main() {
               exampleData1,
               AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
-            final num expectedAverage =
-                ((20.25 * exampleData1.length) - 25.5) / exampleData1.length;
+            final num expectedAverage = ((20.25 * exampleData1.length) - 25.5) /
+                (exampleData1.length - 1);
 
             // Act (Execution)
             final num average = statisticsCalculations.averageIncomes;
@@ -1408,7 +1421,11 @@ void main() {
             for (int i = 0; i < 10000; i++) {
               // Arrange (Initialization)
               final List<Map<String, dynamic>> randomData =
-                  _createRandomStatisticData(rand);
+                  _createRandomStatisticData(
+                rand,
+                baseDate: DateTime(2021, 6, 25),
+                maxPast: 20,
+              );
               final StatisticsCalculations statisticsCalculations =
                   StatisticsCalculations(
                 randomData,
@@ -1539,7 +1556,11 @@ void main() {
             for (int i = 0; i < 10000; i++) {
               // Arrange (Initialization)
               final List<Map<String, dynamic>> randomData =
-                  _createRandomStatisticData(rand);
+                  _createRandomStatisticData(
+                rand,
+                baseDate: DateTime(2021, 6, 25),
+                maxPast: 20,
+              );
               final StatisticsCalculations statisticsCalculations =
                   StatisticsCalculations(
                 randomData,
@@ -1602,7 +1623,8 @@ void main() {
               AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             final num expectedAverage =
-                ((-1.375 * exampleData2.length) - (-2.5)) / exampleData2.length;
+                ((-1.375 * exampleData2.length) - (-2.5)) /
+                    (exampleData2.length - 1);
 
             // Act (Execution)
             final num average = statisticsCalculations.averageCosts;
@@ -1634,8 +1656,7 @@ void main() {
               exampleData4,
               AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
-            final num expectedAverage =
-                ((-8.25 * exampleData4.length) - (-2.5)) / exampleData4.length;
+            const num expectedAverage = ((-8.25 * 6) - (-2.5)) / (5);
 
             // Act (Execution)
             final num average = statisticsCalculations.averageCosts;
@@ -1665,7 +1686,11 @@ void main() {
             for (int i = 0; i < 10000; i++) {
               // Arrange (Initialization)
               final List<Map<String, dynamic>> randomData =
-                  _createRandomStatisticData(rand);
+                  _createRandomStatisticData(
+                rand,
+                baseDate: DateTime(2021, 6, 25),
+                maxPast: 20,
+              );
               final StatisticsCalculations statisticsCalculations =
                   StatisticsCalculations(
                 randomData,
@@ -1696,7 +1721,11 @@ void main() {
   });
 }
 
-List<Map<String, dynamic>> _createRandomStatisticData(math.Random rand) {
+List<Map<String, dynamic>> _createRandomStatisticData(
+  math.Random rand, {
+  int maxPast = 512,
+  DateTime? baseDate,
+}) {
   final List<Map<String, dynamic>> returnList = <Map<String, dynamic>>[];
   final int max = rand.nextInt(256) + 1;
   for (int i = 0; i < max; i++) {
@@ -1705,7 +1734,8 @@ List<Map<String, dynamic>> _createRandomStatisticData(math.Random rand) {
           ((((0.5 - rand.nextDouble()) * 2 * 256) * 100).roundToDouble()) /
               100.0,
       "time": Timestamp.fromDate(
-        DateTime.now().subtract(Duration(days: rand.nextInt(512) + 1)),
+        (baseDate ?? DateTime.now())
+            .subtract(Duration(days: rand.nextInt(maxPast) + 1)),
       ),
     }); // create a random Number from -256 to 256
   }

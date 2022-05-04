@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 
 void goBackInTime(AlgorithmProvider algorithmProvider) {
