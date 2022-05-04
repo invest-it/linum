@@ -27,6 +27,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   enum_to_string: ^2.0.1
 
+  firebase_analytics: ^9.1.7
   firebase_auth: ^3.2.0
   firebase_core: ^1.8.0
   firebase_core_web: ^1.4.0
