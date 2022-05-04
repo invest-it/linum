@@ -933,9 +933,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    [],
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              [],
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedSum = 0;
 
             // Act (Execution)
@@ -949,9 +949,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData1,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData1,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedSum = 81;
 
             // Act (Execution)
@@ -965,9 +965,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData2,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData2,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedSum = -5.5;
 
             // Act (Execution)
@@ -981,9 +981,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData3,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData3,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedSum = 44;
 
             // Act (Execution)
@@ -997,9 +997,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData4,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData4,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedSum = 0;
 
             // Act (Execution)
@@ -1013,9 +1013,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData5,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData5,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedSum = 0;
 
             // Act (Execution)
@@ -1033,9 +1033,9 @@ void main() {
                   _createRandomStatisticData(rand);
               final StatisticsCalculations statisticsCalculations =
                   StatisticsCalculations(
-                      randomData,
-                      AlgorithmProvider()
-                        ..setCurrentShownMonth(DateTime(2022, 6)));
+                randomData,
+                AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              );
               num expectedSum = 0;
               for (int i = 0; i < randomData.length; i++) {
                 expectedSum += randomData[i]["amount"] as num;
@@ -1055,9 +1055,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    [],
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              [],
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedAverage = 0;
 
             // Act (Execution)
@@ -1071,9 +1071,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData1,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData1,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedAverage = 20.25;
 
             // Act (Execution)
@@ -1087,9 +1087,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData2,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData2,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedAverage = -1.375;
 
             // Act (Execution)
@@ -1103,9 +1103,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData3,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData3,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedAverage = 5.5;
 
             // Act (Execution)
@@ -1119,9 +1119,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData4,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData4,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedAverage = 0;
 
             // Act (Execution)
@@ -1135,9 +1135,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData5,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData5,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedAverage = 0;
 
             // Act (Execution)
@@ -1155,9 +1155,9 @@ void main() {
                   _createRandomStatisticData(rand);
               final StatisticsCalculations statisticsCalculations =
                   StatisticsCalculations(
-                      randomData,
-                      AlgorithmProvider()
-                        ..setCurrentShownMonth(DateTime(2022, 6)));
+                randomData,
+                AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              );
               num expectedAverage = 0;
               for (int i = 0; i < randomData.length; i++) {
                 expectedAverage += randomData[i]["amount"] as num;
@@ -1180,9 +1180,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    [],
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              [],
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedSum = 0;
 
             // Act (Execution)
@@ -1196,9 +1196,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData1,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData1,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedSum = 81;
 
             // Act (Execution)
@@ -1212,9 +1212,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData2,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData2,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedSum = 0;
 
             // Act (Execution)
@@ -1228,9 +1228,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData3,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData3,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedSum = 49.5;
 
             // Act (Execution)
@@ -1244,9 +1244,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData4,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData4,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedSum = 49.5;
 
             // Act (Execution)
@@ -1260,9 +1260,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData5,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData5,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedSum = 0;
 
             // Act (Execution)
@@ -1280,9 +1280,9 @@ void main() {
                   _createRandomStatisticData(rand);
               final StatisticsCalculations statisticsCalculations =
                   StatisticsCalculations(
-                      randomData,
-                      AlgorithmProvider()
-                        ..setCurrentShownMonth(DateTime(2022, 6)));
+                randomData,
+                AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              );
               num expectedSum = 0;
               for (int i = 0; i < randomData.length; i++) {
                 if (randomData[i]["amount"] as num > 0) {
@@ -1303,9 +1303,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    [],
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              [],
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedAverage = 0;
 
             // Act (Execution)
@@ -1319,9 +1319,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData1,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData1,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedAverage = 20.25;
 
             // Act (Execution)
@@ -1335,9 +1335,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData2,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData2,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedAverage = 0;
 
             // Act (Execution)
@@ -1351,9 +1351,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData3,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData3,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedAverage = 12.375;
 
             // Act (Execution)
@@ -1367,9 +1367,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData4,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData4,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedAverage = 12.375;
 
             // Act (Execution)
@@ -1383,9 +1383,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData5,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData5,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedAverage = 0;
 
             // Act (Execution)
@@ -1403,9 +1403,9 @@ void main() {
                   _createRandomStatisticData(rand);
               final StatisticsCalculations statisticsCalculations =
                   StatisticsCalculations(
-                      randomData,
-                      AlgorithmProvider()
-                        ..setCurrentShownMonth(DateTime(2022, 6)));
+                randomData,
+                AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              );
               num expectedAverage = 0;
               int incomes = 0;
               for (int i = 0; i < randomData.length; i++) {
@@ -1434,9 +1434,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    [],
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              [],
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedSum = 0;
 
             // Act (Execution)
@@ -1450,9 +1450,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData1,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData1,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedSum = 0;
 
             // Act (Execution)
@@ -1466,9 +1466,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData2,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData2,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedSum = -5.5;
 
             // Act (Execution)
@@ -1482,9 +1482,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData3,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData3,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedSum = -5.5;
 
             // Act (Execution)
@@ -1498,9 +1498,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData4,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData4,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedSum = -49.5;
 
             // Act (Execution)
@@ -1514,9 +1514,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData5,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData5,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedSum = 0;
 
             // Act (Execution)
@@ -1534,9 +1534,9 @@ void main() {
                   _createRandomStatisticData(rand);
               final StatisticsCalculations statisticsCalculations =
                   StatisticsCalculations(
-                      randomData,
-                      AlgorithmProvider()
-                        ..setCurrentShownMonth(DateTime(2022, 6)));
+                randomData,
+                AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              );
               num expectedSum = 0;
               for (int i = 0; i < randomData.length; i++) {
                 if (randomData[i]["amount"] as num <= 0) {
@@ -1558,9 +1558,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    [],
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              [],
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedAverage = 0;
 
             // Act (Execution)
@@ -1574,9 +1574,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData1,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData1,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedAverage = 0;
 
             // Act (Execution)
@@ -1590,9 +1590,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData2,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData2,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedAverage = -1.375;
 
             // Act (Execution)
@@ -1606,9 +1606,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData3,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData3,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedAverage = -1.375;
 
             // Act (Execution)
@@ -1622,9 +1622,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData4,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData4,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedAverage = -8.25;
 
             // Act (Execution)
@@ -1638,9 +1638,9 @@ void main() {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
-                    exampleData5,
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+              exampleData5,
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+            );
             const num expectedAverage = 0;
 
             // Act (Execution)
@@ -1658,9 +1658,9 @@ void main() {
                   _createRandomStatisticData(rand);
               final StatisticsCalculations statisticsCalculations =
                   StatisticsCalculations(
-                      randomData,
-                      AlgorithmProvider()
-                        ..setCurrentShownMonth(DateTime(2022, 6)));
+                randomData,
+                AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              );
               num expectedAverage = 0;
               int costs = 0;
               for (int i = 0; i < randomData.length; i++) {
