@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:linum/frontend_functions/filter_functions.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 
 void goBackInTime(AlgorithmProvider algorithmProvider) {
@@ -7,7 +8,7 @@ void goBackInTime(AlgorithmProvider algorithmProvider) {
   if (algorithmProvider.currentShownMonth.month == DateTime.now().month &&
       algorithmProvider.currentShownMonth.year == DateTime.now().year) {
     algorithmProvider.setCurrentFilterAlgorithm(
-      AlgorithmProvider.inBetween(
+      inBetween(
         Timestamp.fromDate(
           DateTime(
             DateTime.now().year,
@@ -24,7 +25,7 @@ void goBackInTime(AlgorithmProvider algorithmProvider) {
     );
   } else {
     algorithmProvider.setCurrentFilterAlgorithm(
-      AlgorithmProvider.inBetween(
+      inBetween(
         Timestamp.fromDate(
           algorithmProvider.currentShownMonth
               .subtract(const Duration(microseconds: 1)),
@@ -46,7 +47,7 @@ void goForwardInTime(AlgorithmProvider algorithmProvider) {
   if (algorithmProvider.currentShownMonth.month == DateTime.now().month &&
       algorithmProvider.currentShownMonth.year == DateTime.now().year) {
     algorithmProvider.setCurrentFilterAlgorithm(
-      AlgorithmProvider.inBetween(
+      inBetween(
         Timestamp.fromDate(
           DateTime(
             DateTime.now().year,
@@ -63,7 +64,7 @@ void goForwardInTime(AlgorithmProvider algorithmProvider) {
     );
   } else {
     algorithmProvider.setCurrentFilterAlgorithm(
-      AlgorithmProvider.inBetween(
+      inBetween(
         Timestamp.fromDate(
           algorithmProvider.currentShownMonth
               .subtract(const Duration(microseconds: 1)),
@@ -83,7 +84,7 @@ void goToCurrentTime(AlgorithmProvider algorithmProvider) {
   // Reset to current month
   algorithmProvider.resetCurrentShownMonth();
   algorithmProvider.setCurrentFilterAlgorithm(
-    AlgorithmProvider.inBetween(
+    inBetween(
       Timestamp.fromDate(
         DateTime(
           DateTime.now().year,

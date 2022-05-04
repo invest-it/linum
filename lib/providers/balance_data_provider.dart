@@ -411,3 +411,4 @@ class BalanceDataProvider extends ChangeNotifier {
     return data!["settings"] as Map<String, dynamic>;
   }
 }
+// TODO: Refactor

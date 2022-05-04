@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:linum/frontend_functions/filter_functions.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 
 class StatisticsCalculations {
@@ -10,7 +11,7 @@ class StatisticsCalculations {
       _allData..removeWhere(_algorithmProvider.currentFilter);
 
   List<Map<String, dynamic>> get _allTimeData =>
-      _allData..removeWhere(AlgorithmProvider.newerThan(Timestamp.now()));
+      _allData..removeWhere(newerThan(Timestamp.now()));
 
   late AlgorithmProvider _algorithmProvider;
 
@@ -29,20 +30,20 @@ class StatisticsCalculations {
   /// filter the data further down to only include the data with income information (excluding 0 cost products)
   List<Map<String, dynamic>> get _currentIncomeData =>
       List<Map<String, dynamic>>.from(_currentData)
-        ..removeWhere(AlgorithmProvider.amountAtMost(0));
+        ..removeWhere(amountAtMost(0));
 
   List<Map<String, dynamic>> get _allTimeIncomeData =>
       List<Map<String, dynamic>>.from(_allData)
-        ..removeWhere(AlgorithmProvider.amountAtMost(0));
+        ..removeWhere(amountAtMost(0));
 
   /// filter the data further down to only include the data with cost information (including 0 cost products)
   List<Map<String, dynamic>> get _currentCostData =>
       List<Map<String, dynamic>>.from(_currentData)
-        ..removeWhere(AlgorithmProvider.amountMoreThan(0));
+        ..removeWhere(amountMoreThan(0));
 
   List<Map<String, dynamic>> get _allTimeCostData =>
       List<Map<String, dynamic>>.from(_allData)
-        ..removeWhere(AlgorithmProvider.amountMoreThan(0));
+        ..removeWhere(amountMoreThan(0));
 
   /// sum up the total data if data is empty = 0
   num get sumBalance {

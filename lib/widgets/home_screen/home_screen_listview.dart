@@ -2,11 +2,12 @@
 
 import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
+import 'package:linum/constants/standard_expense_categories.dart';
+import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/frontend_functions/delete_entry_popup.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
@@ -302,13 +303,8 @@ class HomeScreenListView implements BalanceDataListView {
                                 .secondary, // PRESENT EXPENSE BACKGROUND
                     child: arrayElement['amount'] as num > 0
                         ? Icon(
-                            AccountSettingsProvider
-                                    .standardCategoryIncomes[
-                                        EnumToString.fromString(
-                                  StandardCategoryIncome.values,
-                                  arrayElement['category'] as String,
-                                )]
-                                    ?.icon ??
+                            standardCategoryIncomes[arrayElement['category'] as String]
+                                ?.icon ??
                                 Icons.error,
                             color: isFutureItem
                                 ? Theme.of(context)
@@ -319,13 +315,8 @@ class HomeScreenListView implements BalanceDataListView {
                                     .tertiary, // PRESENT INCOME ICON
                           )
                         : Icon(
-                            AccountSettingsProvider
-                                    .standardCategoryExpenses[
-                                        EnumToString.fromString(
-                                  StandardCategoryExpense.values,
-                                  arrayElement['category'] as String,
-                                )]
-                                    ?.icon ??
+                            standardCategoryExpenses[arrayElement['category'] as String]
+                                ?.icon ??
                                 Icons.error,
                             color: isFutureItem
                                 ? Theme.of(context)
@@ -400,23 +391,15 @@ class HomeScreenListView implements BalanceDataListView {
   }) {
     if (isExpense) {
       return AppLocalizations.of(context)!.translate(
-        AccountSettingsProvider
-                .standardCategoryExpenses[EnumToString.fromString(
-              StandardCategoryExpense.values,
-              category,
-            )]
-                ?.label ??
-            "",
+        standardCategoryExpenses[category]
+          ?.label ??
+          "",
       ); // TODO @Nightmind you could add a String here that will show something like "error translating your category"
     } else if (!isExpense) {
       return AppLocalizations.of(context)!.translate(
-        AccountSettingsProvider
-                .standardCategoryIncomes[EnumToString.fromString(
-              StandardCategoryIncome.values,
-              category,
-            )]
-                ?.label ??
-            "",
+        standardCategoryIncomes[category]
+        ?.label ??
+        "",
       ); // TODO @Nightmind you could add a String here that will show something like "error translating your category"
     }
     return "Error"; // This should never happen.
