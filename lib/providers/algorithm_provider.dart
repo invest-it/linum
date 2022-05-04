@@ -186,11 +186,11 @@ class AlgorithmProvider extends ChangeNotifier {
   }
 
   static bool Function(dynamic) newerThan(Timestamp timestamp) {
-    return (dynamic a) => (a["time"] as Timestamp).compareTo(timestamp) <= 0;
+    return (dynamic a) => (a["time"] as Timestamp).compareTo(timestamp) >= 0;
   }
 
   static bool Function(dynamic) olderThan(Timestamp timestamp) {
-    return (dynamic a) => (a["time"] as Timestamp).compareTo(timestamp) >= 0;
+    return (dynamic a) => (a["time"] as Timestamp).compareTo(timestamp) <= 0;
   }
 
   static bool Function(dynamic) inBetween(
