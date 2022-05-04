@@ -29,39 +29,30 @@ class AlgorithmProvider extends ChangeNotifier {
 
   void setCurrentShownMonth(DateTime inputMonth) {
     _currentShownMonth = DateTime(inputMonth.year, inputMonth.month);
+    _updateToCurrentShownMonthSilently();
   }
 
   void resetCurrentShownMonth() {
     _currentShownMonth = DateTime(DateTime.now().year, DateTime.now().month);
+    _updateToCurrentShownMonthSilently();
   }
 
   void nextMonth() {
     _currentShownMonth =
         DateTime(_currentShownMonth.year, _currentShownMonth.month + 1);
+    _updateToCurrentShownMonthSilently();
   }
 
   void previousMonth() {
     _currentShownMonth =
         DateTime(_currentShownMonth.year, _currentShownMonth.month - 1);
+
+    _updateToCurrentShownMonthSilently();
   }
 
   AlgorithmProvider() {
     resetCurrentShownMonth();
     _currentSorter = timeNewToOld;
-    _currentFilter = AlgorithmProvider.inBetween(
-      Timestamp.fromDate(
-        DateTime(
-          DateTime.now().year,
-          DateTime.now().month,
-        ).subtract(const Duration(microseconds: 1)),
-      ),
-      Timestamp.fromDate(
-        DateTime(
-          DateTime.now().year,
-          DateTime.now().month + 1,
-        ),
-      ),
-    );
   }
 
   void setCurrentSortAlgorithm(int Function(dynamic, dynamic) sorter) {
@@ -216,5 +207,41 @@ class AlgorithmProvider extends ChangeNotifier {
 
   static bool Function(dynamic) amountAtMost(num amount) {
     return (dynamic a) => (a["amount"] as num).compareTo(amount) <= 0;
+  }
+
+  void _updateToCurrentShownMonthSilently() {
+    if (currentShownMonth.month == DateTime.now().month &&
+        currentShownMonth.year == DateTime.now().year) {
+      setCurrentFilterAlgorithm(
+        AlgorithmProvider.inBetween(
+          Timestamp.fromDate(
+            DateTime(
+              DateTime.now().year,
+              DateTime.now().month,
+            ).subtract(const Duration(microseconds: 1)),
+          ),
+          Timestamp.fromDate(
+            DateTime(
+              DateTime.now().year,
+              DateTime.now().month + 1,
+            ),
+          ),
+        ),
+      );
+    } else {
+      setCurrentFilterAlgorithm(
+        AlgorithmProvider.inBetween(
+          Timestamp.fromDate(
+            currentShownMonth.subtract(const Duration(microseconds: 1)),
+          ),
+          Timestamp.fromDate(
+            DateTime(
+              currentShownMonth.year,
+              currentShownMonth.month + 1,
+            ),
+          ),
+        ),
+      );
+    }
   }
 }

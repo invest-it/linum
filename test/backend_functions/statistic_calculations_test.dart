@@ -181,6 +181,10 @@ void main() {
               // Act (Execution)
               final num sum = statisticsCalculations.allTimeSumBalance;
 
+              if (sum != expectedSum) {
+                print("test");
+              }
+
               // Assert (Observation)
               expect(sum, expectedSum);
             }
@@ -1701,7 +1705,7 @@ List<Map<String, dynamic>> _createRandomStatisticData(math.Random rand) {
           ((((0.5 - rand.nextDouble()) * 2 * 256) * 100).roundToDouble()) /
               100.0,
       "time": Timestamp.fromDate(
-        DateTime.now().subtract(Duration(days: rand.nextInt(512))),
+        DateTime.now().subtract(Duration(days: rand.nextInt(512) + 1)),
       ),
     }); // create a random Number from -256 to 256
   }
