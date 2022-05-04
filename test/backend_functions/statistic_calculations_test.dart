@@ -54,10 +54,7 @@ void main() {
           test("empty data", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-                    [],
-                    AlgorithmProvider()
-                      ..setCurrentShownMonth(DateTime(2022, 6)));
+                StatisticsCalculations([], AlgorithmProvider());
             const num expectedSum = 0;
 
             // Act (Execution)
@@ -929,7 +926,7 @@ void main() {
       });
     });
 
-    group("current filter (specific month)", () {
+    group("current filter (specific month [6] )", () {
       group("balance", () {
         group("sum", () {
           test("empty data", () {
