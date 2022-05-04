@@ -112,7 +112,7 @@ class StatisticsCalculations {
   }
 
   num get allTimeSumCosts {
-    return _getSumFrom(_allTimeData);
+    return _getSumFrom(_allTimeCostData);
   }
 
   /// average of the sum. if data is empty = 0
