@@ -54,13 +54,7 @@ void main() {
           test("empty data", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              [],
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations([], AlgorithmProvider());
             const num expectedSum = 0;
 
             // Act (Execution)
@@ -938,13 +932,7 @@ void main() {
           test("empty data", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              [],
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations([], AlgorithmProvider());
             const num expectedSum = 0;
 
             // Act (Execution)
@@ -957,13 +945,7 @@ void main() {
           test("example data 1 (only incomes)", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData1,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData1, AlgorithmProvider());
             const num expectedSum = 81;
 
             // Act (Execution)
@@ -976,13 +958,7 @@ void main() {
           test("example data 2 (only expenses)", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData2,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData2, AlgorithmProvider());
             const num expectedSum = -5.5;
 
             // Act (Execution)
@@ -995,13 +971,7 @@ void main() {
           test("example data 3", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData3,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData3, AlgorithmProvider());
             const num expectedSum = 44;
 
             // Act (Execution)
@@ -1014,13 +984,7 @@ void main() {
           test("example data 4 (adds up to 0)", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData4,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData4, AlgorithmProvider());
             const num expectedSum = 0;
 
             // Act (Execution)
@@ -1033,13 +997,7 @@ void main() {
           test("example data 5 (only 0 expenses)", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData5,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData5, AlgorithmProvider());
             const num expectedSum = 0;
 
             // Act (Execution)
@@ -1056,13 +1014,7 @@ void main() {
               final List<Map<String, dynamic>> randomData =
                   _createRandomStatisticData(rand);
               final StatisticsCalculations statisticsCalculations =
-                  StatisticsCalculations(
-                randomData,
-                AlgorithmProvider()
-                  ..setCurrentFilterAlgorithmSilently(
-                    AlgorithmProvider.noFilter,
-                  ),
-              );
+                  StatisticsCalculations(randomData, AlgorithmProvider());
               num expectedSum = 0;
               for (int i = 0; i < randomData.length; i++) {
                 expectedSum += randomData[i]["amount"] as num;
@@ -1081,13 +1033,7 @@ void main() {
           test("empty data", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              [],
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations([], AlgorithmProvider());
             const num expectedAverage = 0;
 
             // Act (Execution)
@@ -1100,13 +1046,7 @@ void main() {
           test("example data 1 (only incomes)", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData1,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData1, AlgorithmProvider());
             const num expectedAverage = 20.25;
 
             // Act (Execution)
@@ -1119,13 +1059,7 @@ void main() {
           test("example data 2 (only expenses)", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData2,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData2, AlgorithmProvider());
             const num expectedAverage = -1.375;
 
             // Act (Execution)
@@ -1138,13 +1072,7 @@ void main() {
           test("example data 3", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData3,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData3, AlgorithmProvider());
             const num expectedAverage = 5.5;
 
             // Act (Execution)
@@ -1157,13 +1085,7 @@ void main() {
           test("example data 4 (adds up to 0)", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData4,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData4, AlgorithmProvider());
             const num expectedAverage = 0;
 
             // Act (Execution)
@@ -1176,13 +1098,7 @@ void main() {
           test("example data 5 (only 0 expenses)", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData5,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData5, AlgorithmProvider());
             const num expectedAverage = 0;
 
             // Act (Execution)
@@ -1199,13 +1115,7 @@ void main() {
               final List<Map<String, dynamic>> randomData =
                   _createRandomStatisticData(rand);
               final StatisticsCalculations statisticsCalculations =
-                  StatisticsCalculations(
-                randomData,
-                AlgorithmProvider()
-                  ..setCurrentFilterAlgorithmSilently(
-                    AlgorithmProvider.noFilter,
-                  ),
-              );
+                  StatisticsCalculations(randomData, AlgorithmProvider());
               num expectedAverage = 0;
               for (int i = 0; i < randomData.length; i++) {
                 expectedAverage += randomData[i]["amount"] as num;
@@ -1227,13 +1137,7 @@ void main() {
           test("empty data", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              [],
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations([], AlgorithmProvider());
             const num expectedSum = 0;
 
             // Act (Execution)
@@ -1246,13 +1150,7 @@ void main() {
           test("example data 1 (only incomes)", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData1,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData1, AlgorithmProvider());
             const num expectedSum = 81;
 
             // Act (Execution)
@@ -1265,13 +1163,7 @@ void main() {
           test("example data 2 (only expenses)", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData2,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData2, AlgorithmProvider());
             const num expectedSum = 0;
 
             // Act (Execution)
@@ -1284,13 +1176,7 @@ void main() {
           test("example data 3", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData3,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData3, AlgorithmProvider());
             const num expectedSum = 49.5;
 
             // Act (Execution)
@@ -1303,13 +1189,7 @@ void main() {
           test("example data 4 (adds up to 0)", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData4,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData4, AlgorithmProvider());
             const num expectedSum = 49.5;
 
             // Act (Execution)
@@ -1322,13 +1202,7 @@ void main() {
           test("example data 5 (only 0 expenses)", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData5,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData5, AlgorithmProvider());
             const num expectedSum = 0;
 
             // Act (Execution)
@@ -1345,13 +1219,7 @@ void main() {
               final List<Map<String, dynamic>> randomData =
                   _createRandomStatisticData(rand);
               final StatisticsCalculations statisticsCalculations =
-                  StatisticsCalculations(
-                randomData,
-                AlgorithmProvider()
-                  ..setCurrentFilterAlgorithmSilently(
-                    AlgorithmProvider.noFilter,
-                  ),
-              );
+                  StatisticsCalculations(randomData, AlgorithmProvider());
               num expectedSum = 0;
               for (int i = 0; i < randomData.length; i++) {
                 if (randomData[i]["amount"] as num > 0) {
@@ -1371,13 +1239,7 @@ void main() {
           test("empty data", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              [],
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations([], AlgorithmProvider());
             const num expectedAverage = 0;
 
             // Act (Execution)
@@ -1390,13 +1252,7 @@ void main() {
           test("example data 1 (only incomes)", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData1,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData1, AlgorithmProvider());
             const num expectedAverage = 20.25;
 
             // Act (Execution)
@@ -1409,13 +1265,7 @@ void main() {
           test("example data 2 (only expenses)", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData2,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData2, AlgorithmProvider());
             const num expectedAverage = 0;
 
             // Act (Execution)
@@ -1428,13 +1278,7 @@ void main() {
           test("example data 3", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData3,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData3, AlgorithmProvider());
             const num expectedAverage = 12.375;
 
             // Act (Execution)
@@ -1447,13 +1291,7 @@ void main() {
           test("example data 4 (adds up to 0)", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData4,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData4, AlgorithmProvider());
             const num expectedAverage = 12.375;
 
             // Act (Execution)
@@ -1466,13 +1304,7 @@ void main() {
           test("example data 5 (only 0 expenses)", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData5,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData5, AlgorithmProvider());
             const num expectedAverage = 0;
 
             // Act (Execution)
@@ -1489,13 +1321,7 @@ void main() {
               final List<Map<String, dynamic>> randomData =
                   _createRandomStatisticData(rand);
               final StatisticsCalculations statisticsCalculations =
-                  StatisticsCalculations(
-                randomData,
-                AlgorithmProvider()
-                  ..setCurrentFilterAlgorithmSilently(
-                    AlgorithmProvider.noFilter,
-                  ),
-              );
+                  StatisticsCalculations(randomData, AlgorithmProvider());
               num expectedAverage = 0;
               int incomes = 0;
               for (int i = 0; i < randomData.length; i++) {
@@ -1523,13 +1349,7 @@ void main() {
           test("empty data", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              [],
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations([], AlgorithmProvider());
             const num expectedSum = 0;
 
             // Act (Execution)
@@ -1542,13 +1362,7 @@ void main() {
           test("example data 1 (only incomes)", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData1,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData1, AlgorithmProvider());
             const num expectedSum = 0;
 
             // Act (Execution)
@@ -1561,13 +1375,7 @@ void main() {
           test("example data 2 (only expenses)", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData2,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData2, AlgorithmProvider());
             const num expectedSum = -5.5;
 
             // Act (Execution)
@@ -1580,13 +1388,7 @@ void main() {
           test("example data 3", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData3,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData3, AlgorithmProvider());
             const num expectedSum = -5.5;
 
             // Act (Execution)
@@ -1599,13 +1401,7 @@ void main() {
           test("example data 4 (adds up to 0)", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData4,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData4, AlgorithmProvider());
             const num expectedSum = -49.5;
 
             // Act (Execution)
@@ -1618,13 +1414,7 @@ void main() {
           test("example data 5 (only 0 expenses)", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData5,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData5, AlgorithmProvider());
             const num expectedSum = 0;
 
             // Act (Execution)
@@ -1641,13 +1431,7 @@ void main() {
               final List<Map<String, dynamic>> randomData =
                   _createRandomStatisticData(rand);
               final StatisticsCalculations statisticsCalculations =
-                  StatisticsCalculations(
-                randomData,
-                AlgorithmProvider()
-                  ..setCurrentFilterAlgorithmSilently(
-                    AlgorithmProvider.noFilter,
-                  ),
-              );
+                  StatisticsCalculations(randomData, AlgorithmProvider());
               num expectedSum = 0;
               for (int i = 0; i < randomData.length; i++) {
                 if (randomData[i]["amount"] as num <= 0) {
@@ -1668,13 +1452,7 @@ void main() {
           test("empty data", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              [],
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations([], AlgorithmProvider());
             const num expectedAverage = 0;
 
             // Act (Execution)
@@ -1687,13 +1465,7 @@ void main() {
           test("example data 1 (only incomes)", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData1,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData1, AlgorithmProvider());
             const num expectedAverage = 0;
 
             // Act (Execution)
@@ -1706,13 +1478,7 @@ void main() {
           test("example data 2 (only expenses)", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData2,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData2, AlgorithmProvider());
             const num expectedAverage = -1.375;
 
             // Act (Execution)
@@ -1725,13 +1491,7 @@ void main() {
           test("example data 3", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData3,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData3, AlgorithmProvider());
             const num expectedAverage = -1.375;
 
             // Act (Execution)
@@ -1744,13 +1504,7 @@ void main() {
           test("example data 4 (adds up to 0)", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData4,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData4, AlgorithmProvider());
             const num expectedAverage = -8.25;
 
             // Act (Execution)
@@ -1763,13 +1517,7 @@ void main() {
           test("example data 5 (only 0 expenses)", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              exampleData5,
-              AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  AlgorithmProvider.noFilter,
-                ),
-            );
+                StatisticsCalculations(exampleData5, AlgorithmProvider());
             const num expectedAverage = 0;
 
             // Act (Execution)
@@ -1786,13 +1534,7 @@ void main() {
               final List<Map<String, dynamic>> randomData =
                   _createRandomStatisticData(rand);
               final StatisticsCalculations statisticsCalculations =
-                  StatisticsCalculations(
-                randomData,
-                AlgorithmProvider()
-                  ..setCurrentFilterAlgorithmSilently(
-                    AlgorithmProvider.noFilter,
-                  ),
-              );
+                  StatisticsCalculations(randomData, AlgorithmProvider());
               num expectedAverage = 0;
               int costs = 0;
               for (int i = 0; i < randomData.length; i++) {
