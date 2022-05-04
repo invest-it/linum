@@ -1701,7 +1701,7 @@ List<Map<String, dynamic>> _createRandomStatisticData(math.Random rand) {
           ((((0.5 - rand.nextDouble()) * 2 * 256) * 100).roundToDouble()) /
               100.0,
       "time": Timestamp.fromDate(
-        DateTime.now().subtract(Duration(days: rand.nextInt(512) - 256)),
+        DateTime.now().subtract(Duration(days: rand.nextInt(512))),
       ),
     }); // create a random Number from -256 to 256
   }
