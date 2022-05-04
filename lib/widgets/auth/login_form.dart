@@ -1,13 +1,13 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
-import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/frontend_functions/user_alert.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
 import 'package:linum/widgets/auth/forgot_password.dart';
+import 'package:linum/widgets/auth/login_button.dart';
 import 'package:provider/provider.dart';
 
 class LoginForm extends StatefulWidget {
@@ -22,6 +22,41 @@ class _LoginFormState extends State<LoginForm> {
 
   bool _mailValidate = false;
   bool _passValidate = false;
+
+  void logIn(String _mail, String _pass) {
+    final AuthenticationService auth =
+    Provider.of<AuthenticationService>(context);
+    final UserAlert userAlert = UserAlert(context: context); // TODO: The right context?
+
+    auth.signIn(
+      _mail.trim(),
+      _pass,
+      onError: userAlert.showMyDialog,
+      onNotVerified: () => userAlert.showMyDialog(
+        "alertdialog/login-verification/message",
+        title: "alertdialog/login-verification/title",
+        actionTitle: "alertdialog/login-verification/action",
+      ),
+    );
+  }
+
+  void onLoginButtonClicked() {
+     setState(() {
+        _mailController!.text.isEmpty
+            ? _mailValidate = true
+            : _mailValidate = false;
+        _passController.text.isEmpty
+            ? _passValidate = true
+            : _passValidate = false;
+      });
+
+      if (_mailValidate == false && _passValidate == false) {
+        logIn(_mailController!.text, _passController.text);
+        FirebaseAnalytics.instance.logLogin(loginMethod: 'Login Form');
+      }
+
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,23 +73,6 @@ class _LoginFormState extends State<LoginForm> {
 
     _mailController ??=
         TextEditingController(text: onboardingScreenProvider.mailInput);
-
-    final AuthenticationService auth =
-        Provider.of<AuthenticationService>(context);
-    final UserAlert userAlert = UserAlert(context: context);
-
-    void logIn(String _mail, String _pass) {
-      auth.signIn(
-        _mail.trim(),
-        _pass,
-        onError: userAlert.showMyDialog,
-        onNotVerified: () => userAlert.showMyDialog(
-          "alertdialog/login-verification/message",
-          title: "alertdialog/login-verification/title",
-          actionTitle: "alertdialog/login-verification/action",
-        ),
-      );
-    }
 
     return Column(
       children: [
@@ -174,39 +192,7 @@ class _LoginFormState extends State<LoginForm> {
               //   ),
               // ),
 
-              GradientButton(
-                increaseHeightBy: proportionateScreenHeight(16),
-                callback: () {
-                  setState(() {
-                    _mailController!.text.isEmpty
-                        ? _mailValidate = true
-                        : _mailValidate = false;
-                    _passController.text.isEmpty
-                        ? _passValidate = true
-                        : _passValidate = false;
-                  });
-
-                  if (_mailValidate == false && _passValidate == false) {
-                    logIn(_mailController!.text, _passController.text);
-                  }
-                },
-                gradient: LinearGradient(
-                  colors: [
-                    Theme.of(context).colorScheme.primary,
-                    createMaterialColor(const Color(0xFFC1E695)),
-                  ],
-                ),
-                elevation: 0,
-                increaseWidthBy: double.infinity,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  AppLocalizations.of(context)!
-                      .translate('onboarding_screen/login-lip-login-button'),
-                  style: Theme.of(context).textTheme.button,
-                ),
-              ),
+              LoginButton(callback: onLoginButtonClicked),
               SizedBox(
                 height: proportionateScreenHeight(8),
               ),

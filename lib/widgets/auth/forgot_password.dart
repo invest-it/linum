@@ -1,6 +1,8 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
+import 'package:linum/frontend_functions/ga_functions.dart';
 import 'package:linum/frontend_functions/materialcolor_creator.dart';
 import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/frontend_functions/user_alert.dart';
@@ -26,6 +28,7 @@ class ForgotPasswordButton extends StatelessWidget {
 
     void forgotPWactionLip() {
       // lip if the user is not logged in
+      FirebaseAnalytics.instance.logButton("reset_password");
       if (!authenticationService.isLoggedIn) {
         actionLipStatusProvider.setActionLip(
           providerKey: providerKey,

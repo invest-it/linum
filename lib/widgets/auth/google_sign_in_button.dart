@@ -1,16 +1,10 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:provider/provider.dart';
 
-class GoogleSignInButton extends StatefulWidget {
-  const GoogleSignInButton({Key? key}) : super(key: key);
-
-  @override
-  State<GoogleSignInButton> createState() => _GoogleSignInButtonState();
-}
-
-class _GoogleSignInButtonState extends State<GoogleSignInButton> {
+class GoogleSignInButton extends StatelessWidget  {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
@@ -25,7 +19,8 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
       ),
       onPressed: () => {
         Provider.of<AuthenticationService>(context, listen: false)
-            .signInWithGoogle()
+            .signInWithGoogle(),
+        FirebaseAnalytics.instance.logSignUp(signUpMethod: "Google Sign In")
       },
 
       child: Padding(
