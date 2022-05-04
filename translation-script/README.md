@@ -16,7 +16,7 @@ Before running the script you need to add the *translator-config.json* to the sa
         "NL": "nl.json"
 
         # Base structure, remove when copying:
-        "LANGUAGE_KEY": "LANGUAGE_FILE_RELATIVE TO LANGUAGE_BASE_DIR" 
+        "LANGUAGE_KEY": "LANGUAGE_FILE RELATIVE TO LANGUAGE_BASE_DIR" 
         
     }
 }
