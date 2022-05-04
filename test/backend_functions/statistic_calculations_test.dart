@@ -8,44 +8,44 @@ import 'package:linum/providers/algorithm_provider.dart';
 void main() {
   group("basic_statistic_calculation", () {
     final List<Map<String, dynamic>> exampleData1 = [
-      {"amount": 15, "time": Timestamp.fromDate(DateTime(2022, 6, 5))},
-      {"amount": 35.5, "time": Timestamp.fromDate(DateTime(2022, 6))},
-      {"amount": 5, "time": Timestamp.fromDate(DateTime(2022, 6, 20))},
-      {"amount": 25.5, "time": Timestamp.fromDate(DateTime(2022, 2, 5))},
+      {"amount": 15, "time": Timestamp.fromDate(DateTime(2021, 6, 5))},
+      {"amount": 35.5, "time": Timestamp.fromDate(DateTime(2021, 6))},
+      {"amount": 5, "time": Timestamp.fromDate(DateTime(2021, 6, 20))},
+      {"amount": 25.5, "time": Timestamp.fromDate(DateTime(2021, 2, 5))},
     ];
     final List<Map<String, dynamic>> exampleData2 = [
-      {"amount": -0.5, "time": Timestamp.fromDate(DateTime(2022, 6, 20))},
-      {"amount": -2.5, "time": Timestamp.fromDate(DateTime(2022, 7, 20))},
-      {"amount": -2.5, "time": Timestamp.fromDate(DateTime(2022, 6, 12))},
-      {"amount": -0, "time": Timestamp.fromDate(DateTime(2022, 6, 20))},
+      {"amount": -0.5, "time": Timestamp.fromDate(DateTime(2021, 6, 20))},
+      {"amount": -2.5, "time": Timestamp.fromDate(DateTime(2021, 7, 20))},
+      {"amount": -2.5, "time": Timestamp.fromDate(DateTime(2021, 6, 12))},
+      {"amount": -0, "time": Timestamp.fromDate(DateTime(2021, 6, 20))},
     ];
     final List<Map<String, dynamic>> exampleData3 = [
-      {"amount": -0.5, "time": Timestamp.fromDate(DateTime(2022, 6, 14))},
-      {"amount": -2.5, "time": Timestamp.fromDate(DateTime(2022, 6, 8))},
-      {"amount": -2.5, "time": Timestamp.fromDate(DateTime(2022, 6, 4))},
-      {"amount": -0, "time": Timestamp.fromDate(DateTime(2022, 6, 20))},
-      {"amount": 15, "time": Timestamp.fromDate(DateTime(2022, 6, 20))},
-      {"amount": 5, "time": Timestamp.fromDate(DateTime(2022, 6, 28))},
-      {"amount": 25.5, "time": Timestamp.fromDate(DateTime(2022, 6, 10))},
-      {"amount": 4, "time": Timestamp.fromDate(DateTime(2022, 6, 21))},
+      {"amount": -0.5, "time": Timestamp.fromDate(DateTime(2021, 6, 14))},
+      {"amount": -2.5, "time": Timestamp.fromDate(DateTime(2021, 6, 8))},
+      {"amount": -2.5, "time": Timestamp.fromDate(DateTime(2021, 6, 4))},
+      {"amount": -0, "time": Timestamp.fromDate(DateTime(2021, 6, 20))},
+      {"amount": 15, "time": Timestamp.fromDate(DateTime(2021, 6, 20))},
+      {"amount": 5, "time": Timestamp.fromDate(DateTime(2021, 6, 28))},
+      {"amount": 25.5, "time": Timestamp.fromDate(DateTime(2021, 6, 10))},
+      {"amount": 4, "time": Timestamp.fromDate(DateTime(2021, 6, 21))},
     ];
     final List<Map<String, dynamic>> exampleData4 = [
-      {"amount": -0.5, "time": Timestamp.fromDate(DateTime(2022, 6, 5))},
-      {"amount": -2.5, "time": Timestamp.fromDate(DateTime(2022, 3, 15))},
-      {"amount": -2.5, "time": Timestamp.fromDate(DateTime(2022, 6, 2))},
-      {"amount": -0, "time": Timestamp.fromDate(DateTime(2022, 6, 15))},
-      {"amount": 15, "time": Timestamp.fromDate(DateTime(2022, 6, 13))},
-      {"amount": 5, "time": Timestamp.fromDate(DateTime(2022, 6, 17))},
-      {"amount": 25.5, "time": Timestamp.fromDate(DateTime(2022, 6, 25))},
-      {"amount": 4, "time": Timestamp.fromDate(DateTime(2022, 6, 27))},
-      {"amount": -20.5, "time": Timestamp.fromDate(DateTime(2022, 6, 29))},
-      {"amount": -23.5, "time": Timestamp.fromDate(DateTime(2022, 6, 3))},
+      {"amount": -0.5, "time": Timestamp.fromDate(DateTime(2021, 6, 5))},
+      {"amount": -2.5, "time": Timestamp.fromDate(DateTime(2021, 3, 15))},
+      {"amount": -2.5, "time": Timestamp.fromDate(DateTime(2021, 6, 2))},
+      {"amount": -0, "time": Timestamp.fromDate(DateTime(2021, 6, 15))},
+      {"amount": 15, "time": Timestamp.fromDate(DateTime(2021, 6, 13))},
+      {"amount": 5, "time": Timestamp.fromDate(DateTime(2021, 6, 17))},
+      {"amount": 25.5, "time": Timestamp.fromDate(DateTime(2021, 6, 25))},
+      {"amount": 4, "time": Timestamp.fromDate(DateTime(2021, 6, 27))},
+      {"amount": -20.5, "time": Timestamp.fromDate(DateTime(2021, 6, 29))},
+      {"amount": -23.5, "time": Timestamp.fromDate(DateTime(2021, 6, 3))},
     ];
     final List<Map<String, dynamic>> exampleData5 = [
-      {"amount": -0, "time": Timestamp.fromDate(DateTime(2022, 6))},
-      {"amount": -0, "time": Timestamp.fromDate(DateTime(2022, 6))},
-      {"amount": -0, "time": Timestamp.fromDate(DateTime(2022, 6))},
-      {"amount": -0, "time": Timestamp.fromDate(DateTime(2022, 3))},
+      {"amount": -0, "time": Timestamp.fromDate(DateTime(2021, 6))},
+      {"amount": -0, "time": Timestamp.fromDate(DateTime(2021, 6))},
+      {"amount": -0, "time": Timestamp.fromDate(DateTime(2021, 6))},
+      {"amount": -0, "time": Timestamp.fromDate(DateTime(2021, 3))},
     ];
 
     group("all time", () {
@@ -934,7 +934,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               [],
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedSum = 0;
 
@@ -950,7 +950,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData1,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedSum = 81 - 25.5;
 
@@ -966,7 +966,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData2,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedSum = -5.5 - (-2.5);
 
@@ -982,7 +982,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData3,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedSum = 44;
 
@@ -998,7 +998,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData4,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedSum = 0 - (-2.5);
 
@@ -1014,7 +1014,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData5,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedSum = 0;
 
@@ -1034,7 +1034,7 @@ void main() {
               final StatisticsCalculations statisticsCalculations =
                   StatisticsCalculations(
                 randomData,
-                AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+                AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
               );
               num expectedSum = 0;
               for (int i = 0; i < randomData.length; i++) {
@@ -1056,7 +1056,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               [],
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedAverage = 0;
 
@@ -1072,7 +1072,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData1,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             final num expectedAverage =
                 ((20.25 * exampleData1.length) - 25.5) / exampleData1.length;
@@ -1089,7 +1089,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData2,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             final num expectedAverage =
                 ((-1.375 * exampleData2.length) - (-2.5)) / exampleData2.length;
@@ -1106,7 +1106,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData3,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedAverage = 5.5;
 
@@ -1122,7 +1122,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData4,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             final num expectedAverage =
                 ((0 * exampleData4.length) - (-2.5)) / exampleData4.length;
@@ -1139,7 +1139,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData5,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedAverage = 0;
 
@@ -1159,7 +1159,7 @@ void main() {
               final StatisticsCalculations statisticsCalculations =
                   StatisticsCalculations(
                 randomData,
-                AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+                AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
               );
               num expectedAverage = 0;
               for (int i = 0; i < randomData.length; i++) {
@@ -1184,7 +1184,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               [],
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedSum = 0;
 
@@ -1200,7 +1200,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData1,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedSum = 81 - 25.5;
 
@@ -1216,7 +1216,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData2,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedSum = 0;
 
@@ -1232,7 +1232,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData3,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedSum = 49.5;
 
@@ -1248,7 +1248,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData4,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedSum = 49.5;
 
@@ -1264,7 +1264,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData5,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedSum = 0;
 
@@ -1284,7 +1284,7 @@ void main() {
               final StatisticsCalculations statisticsCalculations =
                   StatisticsCalculations(
                 randomData,
-                AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+                AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
               );
               num expectedSum = 0;
               for (int i = 0; i < randomData.length; i++) {
@@ -1307,7 +1307,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               [],
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedAverage = 0;
 
@@ -1323,7 +1323,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData1,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             final num expectedAverage =
                 ((20.25 * exampleData1.length) - 25.5) / exampleData1.length;
@@ -1340,7 +1340,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData2,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedAverage = 0;
 
@@ -1356,7 +1356,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData3,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedAverage = 12.375;
 
@@ -1372,7 +1372,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData4,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedAverage = 12.375;
 
@@ -1388,7 +1388,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData5,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedAverage = 0;
 
@@ -1408,7 +1408,7 @@ void main() {
               final StatisticsCalculations statisticsCalculations =
                   StatisticsCalculations(
                 randomData,
-                AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+                AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
               );
               num expectedAverage = 0;
               int incomes = 0;
@@ -1439,7 +1439,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               [],
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedSum = 0;
 
@@ -1455,7 +1455,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData1,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedSum = 0;
 
@@ -1471,7 +1471,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData2,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedSum = -5.5 - (-2.5);
 
@@ -1487,7 +1487,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData3,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedSum = -5.5;
 
@@ -1503,7 +1503,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData4,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedSum = -49.5 - (-2.5);
 
@@ -1519,7 +1519,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData5,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedSum = 0;
 
@@ -1539,7 +1539,7 @@ void main() {
               final StatisticsCalculations statisticsCalculations =
                   StatisticsCalculations(
                 randomData,
-                AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+                AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
               );
               num expectedSum = 0;
               for (int i = 0; i < randomData.length; i++) {
@@ -1563,7 +1563,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               [],
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedAverage = 0;
 
@@ -1579,7 +1579,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData1,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedAverage = 0;
 
@@ -1595,7 +1595,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData2,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             final num expectedAverage =
                 ((-1.375 * exampleData2.length) - (-2.5)) / exampleData2.length;
@@ -1612,7 +1612,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData3,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedAverage = -1.375;
 
@@ -1628,7 +1628,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData4,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             final num expectedAverage =
                 ((-8.25 * exampleData4.length) - (-2.5)) / exampleData4.length;
@@ -1645,7 +1645,7 @@ void main() {
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData5,
-              AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+              AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
             );
             const num expectedAverage = 0;
 
@@ -1665,7 +1665,7 @@ void main() {
               final StatisticsCalculations statisticsCalculations =
                   StatisticsCalculations(
                 randomData,
-                AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
+                AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
               );
               num expectedAverage = 0;
               int costs = 0;
