@@ -952,7 +952,7 @@ void main() {
               exampleData1,
               AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
             );
-            const num expectedSum = 81;
+            const num expectedSum = 81 - 25.5;
 
             // Act (Execution)
             final num sum = statisticsCalculations.sumBalance;
@@ -968,7 +968,7 @@ void main() {
               exampleData2,
               AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
             );
-            const num expectedSum = -5.5;
+            const num expectedSum = -5.5 - (-2.5);
 
             // Act (Execution)
             final num sum = statisticsCalculations.sumBalance;
@@ -993,14 +993,14 @@ void main() {
             expect(sum, expectedSum);
           });
 
-          test("example data 4 (adds up to 0)", () {
+          test("example data 4", () {
             // Arrange (Initialization)
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               exampleData4,
               AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
             );
-            const num expectedSum = 0;
+            const num expectedSum = 0 - (-2.5);
 
             // Act (Execution)
             final num sum = statisticsCalculations.sumBalance;
@@ -1074,7 +1074,8 @@ void main() {
               exampleData1,
               AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
             );
-            const num expectedAverage = 20.25;
+            final num expectedAverage =
+                ((20.25 * exampleData1.length) - 25.5) / exampleData1.length;
 
             // Act (Execution)
             final num average = statisticsCalculations.averageBalance;
@@ -1090,7 +1091,8 @@ void main() {
               exampleData2,
               AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
             );
-            const num expectedAverage = -1.375;
+            final num expectedAverage =
+                ((-1.375 * exampleData2.length) - (-2.5)) / exampleData2.length;
 
             // Act (Execution)
             final num average = statisticsCalculations.averageBalance;
@@ -1122,7 +1124,8 @@ void main() {
               exampleData4,
               AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
             );
-            const num expectedAverage = 0;
+            final num expectedAverage =
+                ((0 * exampleData4.length) - (-2.5)) / exampleData4.length;
 
             // Act (Execution)
             final num average = statisticsCalculations.averageBalance;
@@ -1199,7 +1202,7 @@ void main() {
               exampleData1,
               AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
             );
-            const num expectedSum = 81;
+            const num expectedSum = 81 - 25.5;
 
             // Act (Execution)
             final num sum = statisticsCalculations.sumIncomes;
@@ -1322,7 +1325,8 @@ void main() {
               exampleData1,
               AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
             );
-            const num expectedAverage = 20.25;
+            final num expectedAverage =
+                ((20.25 * exampleData1.length) - 25.5) / exampleData1.length;
 
             // Act (Execution)
             final num average = statisticsCalculations.averageIncomes;
@@ -1469,7 +1473,7 @@ void main() {
               exampleData2,
               AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
             );
-            const num expectedSum = -5.5;
+            const num expectedSum = -5.5 - (-2.5);
 
             // Act (Execution)
             final num sum = statisticsCalculations.sumCosts;
@@ -1501,7 +1505,7 @@ void main() {
               exampleData4,
               AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
             );
-            const num expectedSum = -49.5;
+            const num expectedSum = -49.5 - (-2.5);
 
             // Act (Execution)
             final num sum = statisticsCalculations.sumCosts;
@@ -1593,7 +1597,8 @@ void main() {
               exampleData2,
               AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
             );
-            const num expectedAverage = -1.375;
+            final num expectedAverage =
+                ((-1.375 * exampleData2.length) - (-2.5)) / exampleData2.length;
 
             // Act (Execution)
             final num average = statisticsCalculations.averageCosts;
@@ -1625,7 +1630,8 @@ void main() {
               exampleData4,
               AlgorithmProvider()..setCurrentShownMonth(DateTime(2022, 6)),
             );
-            const num expectedAverage = -8.25;
+            final num expectedAverage =
+                ((-8.25 * exampleData4.length) - (-2.5)) / exampleData4.length;
 
             // Act (Execution)
             final num average = statisticsCalculations.averageCosts;
