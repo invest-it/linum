@@ -1039,9 +1039,22 @@ void main() {
                 baseDate: DateTime(2021, 6, 25),
                 maxPast: 20,
               );
+              final List<Map<String, dynamic>> randomAdditionalFutureData =
+                  _createRandomStatisticData(
+                rand,
+                baseDate: DateTime(2024),
+                maxPast: 400,
+              );
+              final List<Map<String, dynamic>> randomAdditionalPastData =
+                  _createRandomStatisticData(
+                rand,
+                baseDate: DateTime(2021),
+              );
               final StatisticsCalculations statisticsCalculations =
                   StatisticsCalculations(
-                randomData,
+                List<Map<String, dynamic>>.from(randomData)
+                  ..addAll(randomAdditionalFutureData)
+                  ..addAll(randomAdditionalPastData),
                 AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
               );
               num expectedSum = 0;
@@ -1169,9 +1182,22 @@ void main() {
                 baseDate: DateTime(2021, 6, 25),
                 maxPast: 20,
               );
+              final List<Map<String, dynamic>> randomAdditionalFutureData =
+                  _createRandomStatisticData(
+                rand,
+                baseDate: DateTime(2024),
+                maxPast: 400,
+              );
+              final List<Map<String, dynamic>> randomAdditionalPastData =
+                  _createRandomStatisticData(
+                rand,
+                baseDate: DateTime(2021),
+              );
               final StatisticsCalculations statisticsCalculations =
                   StatisticsCalculations(
-                randomData,
+                List<Map<String, dynamic>>.from(randomData)
+                  ..addAll(randomAdditionalFutureData)
+                  ..addAll(randomAdditionalPastData),
                 AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
               );
               num expectedAverage = 0;
@@ -1298,9 +1324,22 @@ void main() {
                 baseDate: DateTime(2021, 6, 25),
                 maxPast: 20,
               );
+              final List<Map<String, dynamic>> randomAdditionalFutureData =
+                  _createRandomStatisticData(
+                rand,
+                baseDate: DateTime(2024),
+                maxPast: 400,
+              );
+              final List<Map<String, dynamic>> randomAdditionalPastData =
+                  _createRandomStatisticData(
+                rand,
+                baseDate: DateTime(2021),
+              );
               final StatisticsCalculations statisticsCalculations =
                   StatisticsCalculations(
-                randomData,
+                List<Map<String, dynamic>>.from(randomData)
+                  ..addAll(randomAdditionalFutureData)
+                  ..addAll(randomAdditionalPastData),
                 AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
               );
               num expectedSum = 0;
@@ -1426,9 +1465,22 @@ void main() {
                 baseDate: DateTime(2021, 6, 25),
                 maxPast: 20,
               );
+              final List<Map<String, dynamic>> randomAdditionalFutureData =
+                  _createRandomStatisticData(
+                rand,
+                baseDate: DateTime(2024),
+                maxPast: 400,
+              );
+              final List<Map<String, dynamic>> randomAdditionalPastData =
+                  _createRandomStatisticData(
+                rand,
+                baseDate: DateTime(2021),
+              );
               final StatisticsCalculations statisticsCalculations =
                   StatisticsCalculations(
-                randomData,
+                List<Map<String, dynamic>>.from(randomData)
+                  ..addAll(randomAdditionalFutureData)
+                  ..addAll(randomAdditionalPastData),
                 AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
               );
               num expectedAverage = 0;
@@ -1561,9 +1613,22 @@ void main() {
                 baseDate: DateTime(2021, 6, 25),
                 maxPast: 20,
               );
+              final List<Map<String, dynamic>> randomAdditionalFutureData =
+                  _createRandomStatisticData(
+                rand,
+                baseDate: DateTime(2024),
+                maxPast: 400,
+              );
+              final List<Map<String, dynamic>> randomAdditionalPastData =
+                  _createRandomStatisticData(
+                rand,
+                baseDate: DateTime(2021),
+              );
               final StatisticsCalculations statisticsCalculations =
                   StatisticsCalculations(
-                randomData,
+                List<Map<String, dynamic>>.from(randomData)
+                  ..addAll(randomAdditionalFutureData)
+                  ..addAll(randomAdditionalPastData),
                 AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
               );
               num expectedSum = 0;
@@ -1691,9 +1756,22 @@ void main() {
                 baseDate: DateTime(2021, 6, 25),
                 maxPast: 20,
               );
+              final List<Map<String, dynamic>> randomAdditionalFutureData =
+                  _createRandomStatisticData(
+                rand,
+                baseDate: DateTime(2024),
+                maxPast: 400,
+              );
+              final List<Map<String, dynamic>> randomAdditionalPastData =
+                  _createRandomStatisticData(
+                rand,
+                baseDate: DateTime(2021),
+              );
               final StatisticsCalculations statisticsCalculations =
                   StatisticsCalculations(
-                randomData,
+                List<Map<String, dynamic>>.from(randomData)
+                  ..addAll(randomAdditionalFutureData)
+                  ..addAll(randomAdditionalPastData),
                 AlgorithmProvider()..setCurrentShownMonth(DateTime(2021, 6)),
               );
               num expectedAverage = 0;
