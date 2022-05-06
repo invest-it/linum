@@ -14,7 +14,8 @@
     "onboarding_screen/card4-description": "Linum genera automáticamente estadísticas relevantes para ti. De este modo, puedes hacer un seguimiento de cómo vas con tu presupuesto.",
     "onboarding_screen/register-button": "¡Inscríbase ahora!",
     "onboarding_screen/login-button": "Tengo una cuenta",
-    "onboarding_screen/google-button": "Acceder con Google",
+    "onboarding_screen/google-button": "Continuar con Google",
+    "onboarding_screen/apple-button": "Continuar con Apple",
     "onboarding_screen/svg-credit-label": "Ilustraciones de Freepik",
 
     "onboarding_screen/cta-login": "¿Tienes una cuenta? Inicie sesión aquí.",

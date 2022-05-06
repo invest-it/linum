@@ -334,6 +334,9 @@ class _RegisterFormState extends State<RegisterForm> {
               if (Platform.isIOS)...[ // Works only on iOS at the moment (according to Google)
                 SignInWithAppleButton(
                   onPressed: auth.signInWithApple,
+                  text: AppLocalizations.of(context)!.translate(
+                    'onboarding-screen/apple-button',
+                  ),
                 )
               ],
               /*

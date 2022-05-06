@@ -14,7 +14,8 @@
     "onboarding_screen/card4-description": "Linum genereert automatisch relevante statistieken voor u. Zo kunt u volgen hoe u het doet met uw budget.",
     "onboarding_screen/register-button": "Meld je nu aan!",
     "onboarding_screen/login-button": "Ik heb een account",
-    "onboarding_screen/google-button": "Log in met Google",
+    "onboarding_screen/google-button": "Doorgaan met Google",
+    "onboarding_screen/apple-button": "Doorgaan met Apple",
     "onboarding_screen/svg-credit-label": "Illustraties door Freepik",
 
     "onboarding_screen/cta-login": "Heeft u een account? Log hier in.",
