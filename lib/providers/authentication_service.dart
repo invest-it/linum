@@ -121,26 +121,31 @@ class AuthenticationService extends ChangeNotifier {
     final rawNonce = generateNonce();
     final nonce = sha256ofString(rawNonce);
 
-    final appleCredential = await SignInWithApple.getAppleIDCredential(
-      scopes: [
-        AppleIDAuthorizationScopes.email,
-        AppleIDAuthorizationScopes.fullName,
-      ],
-      nonce: nonce,
-    );
-
-    final oauthCredential = OAuthProvider("apple.com").credential(
-      idToken: appleCredential.identityToken,
-      rawNonce: rawNonce,
-    );
-
     try {
+      final appleCredential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+        nonce: nonce,
+      );
+      final oauthCredential = OAuthProvider("apple.com").credential(
+        idToken: appleCredential.identityToken,
+        rawNonce: rawNonce,
+      );
+
       await _firebaseAuth.signInWithCredential(oauthCredential);
       notifyListeners();
       onComplete("Successfully signed in to Firebase");
     } on FirebaseAuthException catch (e) {
       log(e.message.toString());
       onError("auth/${e.code}");
+    } on SignInWithAppleAuthorizationException catch (e) {
+      if (e.code == AuthorizationErrorCode.canceled) {
+        log("Sign in with Apple was aborted");
+      } else {
+        rethrow;
+      }
     }
   }
   // TODO: Refactor already??
