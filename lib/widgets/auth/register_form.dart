@@ -335,7 +335,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 SignInWithAppleButton(
                   onPressed: auth.signInWithApple,
                   text: AppLocalizations.of(context)!.translate(
-                    'onboarding-screen/apple-button',
+                    'onboarding_screen/apple-button',
                   ),
                 )
               ],

@@ -229,7 +229,7 @@ class _LoginFormState extends State<LoginForm> {
                 SignInWithAppleButton(
                   onPressed: auth.signInWithApple,
                   text: AppLocalizations.of(context)!.translate(
-                    'onboarding-screen/apple-button',
+                    'onboarding_screen/apple-button',
                   ),
                 )
               ],
