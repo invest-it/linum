@@ -8,7 +8,9 @@ import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
 import 'package:linum/widgets/auth/forgot_password.dart';
+import 'package:linum/widgets/auth/sign_in_with_google_button.dart';
 import 'package:provider/provider.dart';
+
 
 class LoginForm extends StatefulWidget {
   @override
@@ -214,8 +216,7 @@ class _LoginFormState extends State<LoginForm> {
               SizedBox(
                 height: proportionateScreenHeight(8),
               ),
-              // const GoogleSignInButton()
-              // TODO: Decide if the Google Sign in Button should also be shown on Sign in
+              SignInWithGoogleButton()
             ],
           ),
         ),

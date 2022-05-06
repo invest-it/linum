@@ -8,8 +8,9 @@ import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/frontend_functions/user_alert.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
-import 'package:linum/widgets/auth/google_sign_in_btn.dart';
+import 'package:linum/widgets/auth/sign_in_with_google_button.dart';
 import 'package:provider/provider.dart';
+
 
 class RegisterForm extends StatefulWidget {
   @override
@@ -322,7 +323,7 @@ class _RegisterFormState extends State<RegisterForm> {
               SizedBox(
                 height: proportionateScreenHeight(8),
               ),
-              GoogleSignInButton() // Won't reload on Language-Switch if const
+              SignInWithGoogleButton() // Won't reload on Language-Switch if const
 // SAVE THIS SPACE FOR ALTERNATE SIGNUP FUNCTIONS
 
               // OutlinedButton(
