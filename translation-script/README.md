@@ -5,19 +5,18 @@
 To install the required packages run <code>pip install -r requirements.txt</code>.
 
 
-Before running the script you need to add the *translator-config.json* to the same directory as the _translation.py_ file. There you have to add following json: <br>
+Before running the script you need to add the *translator-config.json* to the same directory as the _translate.py_ file. There you have to add following json: <br>
 ```yaml
 {
    "auth_key": "YOUR_PERSONAL_DEEPL_AUTH_KEY",
     "lang": {
         "EN-GB": "en.json",
         "ES": "es.json",
-        "FR": "f.json",
+        "FR": "fr.json",
         "NL": "nl.json"
 
         # Base structure, remove when copying:
         "LANGUAGE_KEY": "LANGUAGE_FILE RELATIVE TO LANGUAGE_BASE_DIR" 
-        
     }
 }
 ```
@@ -59,11 +58,13 @@ From the <code>translation-script</code> directory this resolves to: <br>
 The missing language-tags will now be added to the other files.
 <br>
 <br>
+**IMPORTANT:** At the moment the script only tracks newly added keys, if you change an existing value nothing will happen.
 
 
 <b>VS Code</b>
 
-To launch the script with one click add following lines to your <code>launch.json</code>: 
+To launch the script with one click add following lines to your <code>launch.json</code> (via _Run -> Add Configuration_): 
+
 ```yaml
 "configurations": [
         {
@@ -87,7 +88,7 @@ To launch the script with one click add following lines to your <code>launch.jso
     ]
 ```
 
-(via _Run -> Add Configuration_)
+You need to install the [Python Extension for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-python.python) first: 
 <br>
 You should now be able to simply run the script from _Run and Debug Window (Ctrl + Shift + D)_
 <br>
