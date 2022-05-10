@@ -91,12 +91,13 @@ class AlgorithmProvider extends ChangeNotifier {
     }
   }
 
-  /*
+  // TODO: Refactor the rest of the file
+
   /// returns a new sort algorithm. It sorts using the first
   /// sort algorithm, but if the sort algorithm says 0 the next
   /// sort algorithm will be used and so one. If every
   /// sort algorithm says 0, it will return 0.
-   static int Function(dynamic, dynamic) combineSorter(
+  static int Function(dynamic, dynamic) combineSorter(
     List<int Function(dynamic, dynamic)> sorterList,
   ) {
     if (sorterList.isEmpty) {
@@ -219,7 +220,5 @@ class AlgorithmProvider extends ChangeNotifier {
 
   static bool Function(dynamic) amountAtMost(num amount) {
     return (dynamic a) => (a["amount"] as num).compareTo(amount) <= 0;
-  } */
+  }
 }
-
-// TODO: Refactor
