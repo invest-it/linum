@@ -3,11 +3,11 @@ import 'dart:developer' as dev;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/models/entry_category.dart';
 import 'package:linum/providers/authentication_service.dart';
+import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class AccountSettingsProvider extends ChangeNotifier {

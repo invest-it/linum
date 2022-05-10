@@ -1,10 +1,10 @@
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
-import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
 import 'package:linum/models/home_screen_card_data.dart';
 import 'package:linum/providers/algorithm_provider.dart';
+import 'package:linum/utilities/backend/local_app_localizations.dart';
+import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
 import 'package:linum/widgets/home_screen/home_screen_card_arrow.dart';
 import 'package:linum/widgets/home_screen/home_screen_card_side.dart';
 import 'package:linum/widgets/home_screen/home_screen_functions.dart';
@@ -13,9 +13,11 @@ import 'package:provider/provider.dart';
 class HomeScreenCardFront extends StatelessWidget {
   final HomeScreenCardData data;
   final FlipCardController flipCardController;
-  const HomeScreenCardFront(
-      {Key? key, required this.data, required this.flipCardController})
-      : super(key: key);
+  const HomeScreenCardFront({
+    Key? key,
+    required this.data,
+    required this.flipCardController,
+  }) : super(key: key);
 
   void _onHorizontalDragEnd(DragEndDetails details, BuildContext context) {
     // Note: Sensitivity is integer used when you don't want to mess up vertical drag

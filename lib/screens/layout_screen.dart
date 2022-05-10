@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
@@ -17,6 +16,7 @@ import 'package:linum/screens/home_screen.dart';
 import 'package:linum/screens/lock_screen.dart';
 import 'package:linum/screens/settings_screen.dart';
 import 'package:linum/screens/statistics_screen.dart';
+import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/bottom_app_bar.dart';
 import 'package:provider/provider.dart';
 

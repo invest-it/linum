@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:linum/utilities/frontend/filter_functions.dart';
 import 'package:linum/providers/algorithm_provider.dart';
+import 'package:linum/utilities/frontend/filter_functions.dart';
 
 void goBackInTime(AlgorithmProvider algorithmProvider) {
   // Right Swipe, going back in time

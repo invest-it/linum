@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
-import 'package:linum/utilities/frontend/materialcolor_creator.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/providers/screen_index_provider.dart';
+import 'package:linum/utilities/backend/local_app_localizations.dart';
+import 'package:linum/utilities/frontend/materialcolor_creator.dart';
+import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:provider/provider.dart';
 
 class LogoutForm extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/models/home_screen_card_data.dart';
+import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/widgets/home_screen/home_screen_card_arrow.dart';
 import 'package:linum/widgets/home_screen/home_screen_card_side.dart';
 import 'package:linum/widgets/home_screen/home_screen_functions.dart';
@@ -10,9 +10,11 @@ class HomeScreenCardBack extends StatelessWidget {
   final HomeScreenCardData data;
   final FlipCardController flipCardController;
 
-  const HomeScreenCardBack(
-      {Key? key, required this.data, required this.flipCardController})
-      : super(key: key);
+  const HomeScreenCardBack({
+    Key? key,
+    required this.data,
+    required this.flipCardController,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,9 +1,9 @@
 import 'dart:math' as math;
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/utilities/backend/statistic_calculations.dart';
 import 'package:linum/utilities/frontend/filter_functions.dart';
-import 'package:linum/providers/algorithm_provider.dart';
 
 void main() {
   group("basic_statistic_calculation", () {

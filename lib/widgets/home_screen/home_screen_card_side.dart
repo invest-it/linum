@@ -1,7 +1,7 @@
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/models/home_screen_card_data.dart';
+import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/home_screen/home_screen_card_arrow.dart';
 import 'package:linum/widgets/home_screen/home_screen_card_bottom_row.dart';
 
@@ -75,7 +75,8 @@ class HomeScreenCardSide extends StatelessWidget {
                                     flipCardController.toggleCard();
                                   },
                                   icon: const Icon(
-                                      Icons.flip_camera_android_rounded),
+                                    Icons.flip_camera_android_rounded,
+                                  ),
                                 ),
                               ),
                             ),

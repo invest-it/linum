@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:linum/models/dialog_action.dart';
 import 'package:linum/models/repeatable_change_type.dart';
 import 'package:linum/providers/balance_data_provider.dart';
+import 'package:linum/utilities/frontend/user_alert.dart';
 
 Future<bool?> generateDeletePopupFromArrayElement(
   BuildContext context,
