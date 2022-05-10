@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/providers/screen_index_provider.dart';
 import 'package:provider/provider.dart';
 

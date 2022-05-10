@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:linum/backend_functions/local_app_localizations.dart';
-import 'package:linum/frontend_functions/silent_scroll.dart';
+import 'package:linum/utilities/backend/local_app_localizations.dart';
+import 'package:linum/utilities/frontend/silent_scroll.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/providers/screen_index_provider.dart';

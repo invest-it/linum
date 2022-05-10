@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:linum/backend_functions/local_app_localizations.dart';
-import 'package:linum/frontend_functions/user_alert.dart';
+import 'package:linum/utilities/backend/local_app_localizations.dart';
+import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:linum/models/dialog_action.dart';
 import 'package:linum/models/lock_screen_action.dart';
 import 'package:linum/providers/authentication_service.dart';

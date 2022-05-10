@@ -2,8 +2,8 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/frontend_functions/filter_functions.dart';
-import 'package:linum/frontend_functions/sort_functions.dart';
+import 'package:linum/utilities/frontend/filter_functions.dart';
+import 'package:linum/utilities/frontend/sort_functions.dart';
 
 /// gives sort algorithm (later it will probably also have filter algorithm) and
 /// all algorithm will have an active version instead of being static

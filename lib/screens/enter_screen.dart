@@ -2,10 +2,10 @@ import 'dart:developer' as dev;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/backend_functions/local_app_localizations.dart';
-import 'package:linum/frontend_functions/delete_entry_popup.dart';
-import 'package:linum/frontend_functions/size_guide.dart';
-import 'package:linum/frontend_functions/user_alert.dart';
+import 'package:linum/utilities/backend/local_app_localizations.dart';
+import 'package:linum/utilities/frontend/delete_entry_popup.dart';
+import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:linum/models/dialog_action.dart';
 import 'package:linum/models/repeat_balance_data.dart';
 import 'package:linum/models/repeatable_change_type.dart';

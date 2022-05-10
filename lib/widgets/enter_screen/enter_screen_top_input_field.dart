@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:linum/backend_functions/local_app_localizations.dart';
-import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/utilities/backend/local_app_localizations.dart';
+import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/widgets/text_container.dart';
 import 'package:provider/provider.dart';

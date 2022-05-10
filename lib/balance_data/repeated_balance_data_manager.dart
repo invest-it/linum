@@ -2,8 +2,8 @@ import 'dart:developer' as dev;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enum_to_string/enum_to_string.dart';
-import 'package:linum/backend_functions/date_time_calculation_functions.dart';
-import 'package:linum/backend_functions/repeated_balance_help_functions.dart';
+import 'package:linum/utilities/backend/date_time_calculation_functions.dart';
+import 'package:linum/utilities/backend/repeated_balance_help_functions.dart';
 import 'package:linum/balance_data/repeated_balance_data_remover.dart';
 import 'package:linum/balance_data/repeated_balance_data_updater.dart';
 import 'package:linum/models/repeat_balance_data.dart';
@@ -236,12 +236,14 @@ class RepeatedBalanceDataManager {
     // conditions
     if (removeType == RepeatableChangeType.thisAndAllBefore && time == null) {
       dev.log(
-          "removeType == RepeatableChangeType.thisAndAllBefore => time != null",);
+        "removeType == RepeatableChangeType.thisAndAllBefore => time != null",
+      );
       return false;
     }
     if (removeType == RepeatableChangeType.thisAndAllAfter && time == null) {
       dev.log(
-          "removeType == RepeatableChangeType.thisAndAllAfter => time != null",);
+        "removeType == RepeatableChangeType.thisAndAllAfter => time != null",
+      );
       return false;
     }
     if (removeType == RepeatableChangeType.onlyThisOne && time == null) {

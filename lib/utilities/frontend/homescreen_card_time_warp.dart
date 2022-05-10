@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:linum/frontend_functions/filter_functions.dart';
+import 'package:linum/utilities/frontend/filter_functions.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 
 void goBackInTime(AlgorithmProvider algorithmProvider) {

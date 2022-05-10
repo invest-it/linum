@@ -1,10 +1,9 @@
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/models/home_screen_card_data.dart';
 import 'package:linum/widgets/home_screen/home_screen_card_arrow.dart';
 import 'package:linum/widgets/home_screen/home_screen_card_bottom_row.dart';
-
 
 class HomeScreenCardSide extends StatelessWidget {
   final FlipCardController flipCardController;
@@ -25,7 +24,6 @@ class HomeScreenCardSide extends StatelessWidget {
     required this.downwardArrow,
   }) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -34,8 +32,7 @@ class HomeScreenCardSide extends StatelessWidget {
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color:
-                Theme.of(context).colorScheme.onSurface.withAlpha(64),
+                color: Theme.of(context).colorScheme.onSurface.withAlpha(64),
                 blurRadius: 16.0,
                 spreadRadius: 1.0,
                 offset: const Offset(0, 4),
@@ -77,7 +74,8 @@ class HomeScreenCardSide extends StatelessWidget {
                                   onPressed: () {
                                     flipCardController.toggleCard();
                                   },
-                                  icon: const Icon(Icons.flip_camera_android_rounded),
+                                  icon: const Icon(
+                                      Icons.flip_camera_android_rounded),
                                 ),
                               ),
                             ),

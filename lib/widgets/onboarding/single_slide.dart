@@ -3,9 +3,9 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:linum/backend_functions/local_app_localizations.dart';
-import 'package:linum/backend_functions/url_handler.dart';
-import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/utilities/backend/local_app_localizations.dart';
+import 'package:linum/utilities/backend/url_handler.dart';
+import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/models/onboarding_slide_data.dart';
 
 class SingleSlide extends StatefulWidget {
@@ -60,17 +60,18 @@ class _SingleSlideState extends State<SingleSlide> {
         ),
         widget.slide.description != null
             ? Padding(
-          padding:
-          const EdgeInsets.symmetric(horizontal: 36, vertical: 16),
-          child: Text(
-            AppLocalizations.of(context)!.translate(widget.slide.description!),
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline5,
-          ),
-        )
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 36, vertical: 16),
+                child: Text(
+                  AppLocalizations.of(context)!
+                      .translate(widget.slide.description!),
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline5,
+                ),
+              )
             : const Padding(
-          padding: EdgeInsets.zero,
-        ),
+                padding: EdgeInsets.zero,
+              ),
         SizedBox(
           height: proportionateScreenHeight(230),
         )

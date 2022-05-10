@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
 import 'package:linum/widgets/auth/register_form.dart';
 import 'package:provider/provider.dart';
@@ -18,9 +18,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final OnboardingScreenProvider onboardingScreenProvider =
-    Provider.of<OnboardingScreenProvider>(
+        Provider.of<OnboardingScreenProvider>(
       context,
     );
 
@@ -32,10 +31,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
         _registerYOffset = windowHeight;
         break;
       case OnboardingPageState.register:
-
         _registerYOffset = SizeGuide.keyboardIsOpened
             ? proportionateScreenHeightFraction(ScreenFraction.twofifths) -
-            (SizeGuide.keyboardHeight / 2)
+                (SizeGuide.keyboardHeight / 2)
             : proportionateScreenHeightFraction(ScreenFraction.twofifths);
     }
 
@@ -56,8 +54,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
           boxShadow: [
             BoxShadow(
-              color:
-              Theme.of(context).colorScheme.onSurface.withAlpha(80),
+              color: Theme.of(context).colorScheme.onSurface.withAlpha(80),
               blurRadius: 16,
             ),
           ],

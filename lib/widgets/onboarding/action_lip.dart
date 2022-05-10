@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';

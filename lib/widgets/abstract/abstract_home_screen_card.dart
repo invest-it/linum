@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:linum/backend_functions/statistic_calculations.dart';
+import 'package:linum/utilities/backend/statistic_calculations.dart';
 
 abstract class AbstractHomeScreenCard {
   /// [statData] will calculate all needed Data. It also already has the filter implemented

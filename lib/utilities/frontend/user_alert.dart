@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:linum/backend_functions/local_app_localizations.dart';
+import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/models/dialog_action.dart';
 
 class UserAlert {
