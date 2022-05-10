@@ -23,7 +23,8 @@ class AccountSettingsProvider extends ChangeNotifier {
   Map<String, dynamic> lastGrabbedData = {};
 
   EntryCategory? getIncomeEntryCategory() {
-    final String categoryId = settings["StandardCategoryIncome"] as String? ?? "None";
+    final String categoryId =
+        settings["StandardCategoryIncome"] as String? ?? "None";
 
     /* final StandardCategoryIncome? standardCategoryIncome = EnumToString
         .fromString<StandardCategoryIncome>(
@@ -34,7 +35,8 @@ class AccountSettingsProvider extends ChangeNotifier {
   }
 
   EntryCategory? getExpenseEntryCategory() {
-    final String categoryId = settings["StandardCategoryExpense"] as String? ?? "None";
+    final String categoryId =
+        settings["StandardCategoryExpense"] as String? ?? "None";
     final EntryCategory? catExp = standardCategoryExpenses[categoryId];
     return catExp;
   }
@@ -135,6 +137,3 @@ class AccountSettingsProvider extends ChangeNotifier {
     return true;
   }
 }
-
-
-

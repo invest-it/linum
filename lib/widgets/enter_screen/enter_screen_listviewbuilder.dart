@@ -2,7 +2,6 @@
 
 import 'dart:developer';
 
-import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
@@ -48,7 +47,6 @@ class _EnterScreenListViewBuilderState
 
   @override
   void dispose() {
-
     if (myController != null) {
       myController!.dispose();
     }
@@ -134,10 +132,12 @@ class _EnterScreenListViewBuilderState
                           ),
                           child: Icon(
                             <IconData>[
-                              _selectIcon(enterScreenProvider).icon ?? Icons.error,
+                              _selectIcon(enterScreenProvider).icon ??
+                                  Icons.error,
                               timeEntryCategory.icon,
-                              categoriesRepeat[enterScreenProvider.repeatDurationEnum]
-                              !["entryCategory"].icon as IconData,
+                              categoriesRepeat[enterScreenProvider
+                                      .repeatDurationEnum]!["entryCategory"]
+                                  .icon as IconData,
                             ][index],
                           ),
                         ),
@@ -328,13 +328,15 @@ class _EnterScreenListViewBuilderState
           itemBuilder: (BuildContext context, int indexBuilder) {
             return ListTile(
               leading: Icon(
-                standardCategoryExpenses[StandardCategoryExpense.values[indexBuilder]]!
-                  .icon,
+                standardCategoryExpenses[
+                        StandardCategoryExpense.values[indexBuilder]]!
+                    .icon,
               ),
               title: Text(
                 AppLocalizations.of(context)!.translate(
-                standardCategoryExpenses[StandardCategoryExpense.values[indexBuilder]]!
-                  .label,
+                  standardCategoryExpenses[
+                          StandardCategoryExpense.values[indexBuilder]]!
+                      .label,
                 ),
               ),
               //selects the item as the categories value
@@ -343,7 +345,8 @@ class _EnterScreenListViewBuilderState
                     .toString()
                     .split(".")[1],
                 enterScreenProvider,
-                standardCategoryExpenses[StandardCategoryExpense.values[indexBuilder]]!
+                standardCategoryExpenses[
+                        StandardCategoryExpense.values[indexBuilder]]!
                     .icon,
               ),
             );
@@ -355,13 +358,15 @@ class _EnterScreenListViewBuilderState
           itemBuilder: (BuildContext context, int indexBuilder) {
             return ListTile(
               leading: Icon(
-                standardCategoryIncomes[StandardCategoryIncome.values[indexBuilder]]!
-                  .icon,
+                standardCategoryIncomes[
+                        StandardCategoryIncome.values[indexBuilder]]!
+                    .icon,
               ),
               title: Text(
                 AppLocalizations.of(context)!.translate(
-                  standardCategoryIncomes[StandardCategoryIncome.values[indexBuilder]]!
-                    .label,
+                  standardCategoryIncomes[
+                          StandardCategoryIncome.values[indexBuilder]]!
+                      .label,
                 ),
               ),
               //selects the item as the categories value
@@ -370,7 +375,8 @@ class _EnterScreenListViewBuilderState
                     .toString()
                     .split(".")[1],
                 enterScreenProvider,
-                standardCategoryIncomes[StandardCategoryExpense.values[indexBuilder]]!
+                standardCategoryIncomes[
+                        StandardCategoryExpense.values[indexBuilder]]!
                     .icon,
               ),
             );
@@ -399,13 +405,15 @@ class _EnterScreenListViewBuilderState
           return ListTile(
             leading: Icon(
               categoriesRepeat[RepeatDuration.values[indexBuilder]]
-                ?["entryCategory"].icon as IconData? ??
-                Icons.error,
+                          ?["entryCategory"]
+                      .icon as IconData? ??
+                  Icons.error,
             ),
             title: Text(
               AppLocalizations.of(context)!.translate(
                 categoriesRepeat[RepeatDuration.values[indexBuilder]]
-                  ?["entryCategory"].label as String,
+                        ?["entryCategory"]
+                    .label as String,
               ),
             ),
             //selects the item as the repeat value
@@ -432,13 +440,15 @@ class _EnterScreenListViewBuilderState
         itemBuilder: (BuildContext context, int indexBuilder) {
           return ListTile(
             leading: Icon(
-              standardCategoryIncomes[StandardCategoryIncome.values[indexBuilder]]!
+              standardCategoryIncomes[
+                      StandardCategoryIncome.values[indexBuilder]]!
                   .icon,
             ),
             title: Text(
               AppLocalizations.of(context)!.translate(
-                standardCategoryIncomes[StandardCategoryIncome.values[indexBuilder]]!
-                  .label,
+                standardCategoryIncomes[
+                        StandardCategoryIncome.values[indexBuilder]]!
+                    .label,
               ),
             ),
             onTap: () => _selectCategoryItemIncome(
@@ -446,7 +456,8 @@ class _EnterScreenListViewBuilderState
                   .toString()
                   .split(".")[1],
               enterScreenProvider,
-              standardCategoryIncomes[StandardCategoryIncome.values[indexBuilder]]!
+              standardCategoryIncomes[
+                      StandardCategoryIncome.values[indexBuilder]]!
                   .icon,
             ),
           );
@@ -473,13 +484,15 @@ class _EnterScreenListViewBuilderState
           return ListTile(
             leading: Icon(
               categoriesRepeat[RepeatDuration.values[indexBuilder]]
-                ?["entryCategory"].icon as IconData? ??
-                Icons.error,
+                          ?["entryCategory"]
+                      .icon as IconData? ??
+                  Icons.error,
             ),
             title: Text(
               AppLocalizations.of(context)!.translate(
-                  categoriesRepeat[RepeatDuration.values[indexBuilder]]
-                    ?["entryCategory"].label as String,
+                categoriesRepeat[RepeatDuration.values[indexBuilder]]
+                        ?["entryCategory"]
+                    .label as String,
               ),
             ),
             onTap: () => _selectRepeatItem(
@@ -505,13 +518,15 @@ class _EnterScreenListViewBuilderState
         return ListTile(
           leading: Icon(
             categoriesRepeat[RepeatDuration.values[indexBuilder]]
-                ?["entryCategory"].icon as IconData? ??
+                        ?["entryCategory"]
+                    .icon as IconData? ??
                 Icons.error,
           ),
           title: Text(
             AppLocalizations.of(context)!.translate(
               categoriesRepeat[RepeatDuration.values[indexBuilder]]
-                  ?["entryCategory"].label as String,
+                      ?["entryCategory"]
+                  .label as String,
             ),
           ),
           onTap: () => _selectRepeatItem(
@@ -541,8 +556,7 @@ class _EnterScreenListViewBuilderState
         }
         return Text(
           AppLocalizations.of(context)!.translate(
-            standardCategoryExpenses[enterScreenProvider.category]
-                ?.label ??
+            standardCategoryExpenses[enterScreenProvider.category]?.label ??
                 'chosen expense',
           ),
         );
@@ -556,8 +570,7 @@ class _EnterScreenListViewBuilderState
         }
         return Text(
           AppLocalizations.of(context)!.translate(
-            standardCategoryIncomes[enterScreenProvider.category]
-                ?.label ??
+            standardCategoryIncomes[enterScreenProvider.category]?.label ??
                 'chosen income',
           ),
         );
@@ -571,7 +584,8 @@ class _EnterScreenListViewBuilderState
       return Text(
         AppLocalizations.of(context)!.translate(
           categoriesRepeat[enterScreenProvider.repeatDurationEnum]
-          ?["entryCategory"].label as String,
+                  ?["entryCategory"]
+              .label as String,
         ),
       );
     } else {
@@ -646,12 +660,11 @@ class _EnterScreenListViewBuilderState
     enterScreenProvider
         .setRepeatDurationEnumSilently(RepeatDuration.values[index]);
     enterScreenProvider.setRepeatDuration(
-      categoriesRepeat[RepeatDuration.values[index]]
-          ?["duration"] as int?,
+      categoriesRepeat[RepeatDuration.values[index]]?["duration"] as int?,
     );
     enterScreenProvider.setRepeatDurationType(
-      categoriesRepeat[RepeatDuration.values[index]]
-          ?["durationType"] as RepeatDurationType,
+      categoriesRepeat[RepeatDuration.values[index]]?["durationType"]
+          as RepeatDurationType,
     );
   }
 
@@ -706,5 +719,3 @@ class _EnterScreenListViewBuilderState
   // }
 }
 // TODO: Refactor!!
-
-
