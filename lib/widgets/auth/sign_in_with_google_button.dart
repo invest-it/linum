@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:linum/backend_functions/local_app_localizations.dart';
+import 'package:linum/frontend_functions/size_guide.dart';
 
 class SignInWithGoogleButton extends StatelessWidget {
   const SignInWithGoogleButton({
@@ -13,22 +13,25 @@ class SignInWithGoogleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(Colors.white),
-        shape: MaterialStateProperty.all(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
+      style: OutlinedButton.styleFrom(
+        backgroundColor: Colors.white,
+        minimumSize: Size(
+          double.infinity,
+          proportionateScreenHeight(40),
         ),
-
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        side: BorderSide(
+          width: 1.5,
+          color: Theme.of(context).colorScheme.secondary.withAlpha(64),
+        ),
       ),
       onPressed: onPressed,
-
       child: Padding(
         padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-
           children: <Widget>[
             const Image(
               image: AssetImage("assets/images/btn_google.png"),
@@ -39,12 +42,12 @@ class SignInWithGoogleButton extends StatelessWidget {
               child: Text(
                 AppLocalizations.of(context)!
                     .translate('onboarding_screen/google-button'),
-                style: GoogleFonts.roboto(
-                  fontSize: 44 * 0.43, // 14,
-                  color: Colors.black54,
-                  // fontWeight: FontWeight.w600,
-                  letterSpacing: -0.41,
-                ),
+                style: Theme.of(context).textTheme.button?.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: Theme.of(context).colorScheme.secondary,
+                      letterSpacing: -0.41,
+                      fontFamily: 'Roboto',
+                    ),
               ),
             )
           ],

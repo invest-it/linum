@@ -14,7 +14,6 @@ import 'package:linum/widgets/auth/sign_in_with_google_button.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
-
 class LoginForm extends StatefulWidget {
   @override
   State<LoginForm> createState() => _LoginFormState();
@@ -219,20 +218,22 @@ class _LoginFormState extends State<LoginForm> {
               SizedBox(
                 height: proportionateScreenHeight(8),
               ),
-              // const GoogleSignInButton()
               SignInWithGoogleButton(
                 onPressed: auth.signInWithGoogle,
               ),
               SizedBox(
-                height: proportionateScreenHeight(6),
+                height: proportionateScreenHeight(8),
               ),
-              if (Platform.isIOS)...[ // Works only on iOS at the moment (according to Google)
+              // if (Platform.isIOS)
+              ...[
+                // Works only on iOS at the moment (according to Google)
                 SignInWithAppleButton(
                   onPressed: auth.signInWithApple,
                   text: AppLocalizations.of(context)!.translate(
                     'onboarding_screen/apple-button',
                   ),
-                )
+                  height: proportionateScreenHeight(40),
+                ),
               ],
             ],
           ),
