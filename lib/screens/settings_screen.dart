@@ -7,7 +7,6 @@ import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/country_flag_generator.dart';
-import 'package:linum/utilities/frontend/materialcolor_creator.dart';
 import 'package:linum/utilities/frontend/silent_scroll.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/auth/forgot_password.dart';
@@ -181,9 +180,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ), // yeah im sorry that is really complicated code. :( It translates the value from firebase
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
-                    trailing: Icon(
+                    trailing: const Icon(
                       Icons.north_east,
-                      color: createMaterialColor(const Color(0xFF97BC4E)),
+                      color: Color(0xFF97BC4E),
                     ),
                     leading: Icon(
                       accountSettingsProvider.getIncomeEntryCategory()?.icon ??
@@ -204,7 +203,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       builder: (context) {
                         return Container(
                           height: MediaQuery.of(context).size.height * 0.5,
-                          color: createMaterialColor(const Color(0xFFFAFAFA)),
+                          color: const Color(0xFFFAFAFA),
                           child: Column(
                             children: [
                               ListTile(

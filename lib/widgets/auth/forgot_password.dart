@@ -3,7 +3,6 @@ import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
-import 'package:linum/utilities/frontend/materialcolor_creator.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
@@ -133,7 +132,7 @@ class ForgotPasswordButton extends StatelessWidget {
                       gradient: LinearGradient(
                         colors: [
                           Theme.of(context).colorScheme.primary,
-                          createMaterialColor(const Color(0xFFC1E695)),
+                          const Color(0xFFC1E695),
                         ],
                       ),
                       elevation: 0,
@@ -268,7 +267,7 @@ class ForgotPasswordButton extends StatelessWidget {
                       gradient: LinearGradient(
                         colors: [
                           Theme.of(context).colorScheme.primary,
-                          createMaterialColor(const Color(0xFFC1E695)),
+                          const Color(0xFFC1E695),
                         ],
                       ),
                       elevation: 0,

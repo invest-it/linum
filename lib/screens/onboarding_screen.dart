@@ -8,7 +8,6 @@ import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/country_flag_generator.dart';
-import 'package:linum/utilities/frontend/materialcolor_creator.dart';
 import 'package:linum/utilities/frontend/silent_scroll.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/onboarding/login_screen.dart';
@@ -176,7 +175,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                         gradient: LinearGradient(
                           colors: [
                             Theme.of(context).colorScheme.primary,
-                            createMaterialColor(const Color(0xFFC1E695)),
+                            const Color(0xFFC1E695),
                           ],
                         ),
                         elevation: 0,

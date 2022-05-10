@@ -2,19 +2,18 @@ import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
-import 'package:linum/utilities/frontend/materialcolor_creator.dart';
 
 TextStyle? getBalanceTextStyle(BuildContext context, num balance) {
   return MediaQuery.of(context).size.height < 650
       ? Theme.of(context).textTheme.headline2?.copyWith(
             color: balance < 0
                 ? Theme.of(context).colorScheme.error
-                : createMaterialColor(const Color(0xFF202020)),
+                : const Color(0xFF202020),
           )
       : Theme.of(context).textTheme.headline1?.copyWith(
             color: balance < 0
                 ? Theme.of(context).colorScheme.error
-                : createMaterialColor(const Color(0xFF505050)),
+                : const Color(0xFF505050),
           );
 }
 

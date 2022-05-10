@@ -17,7 +17,6 @@ import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/screens/layout_screen.dart';
 import 'package:linum/screens/onboarding_screen.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
-import 'package:linum/utilities/frontend/materialcolor_creator.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -57,21 +56,20 @@ class MyApp extends StatelessWidget {
         //them all as required
 
         //use like this: Theme.of(context).colorScheme.NAME_OF_COLOR_STYLE
-        colorScheme: ColorScheme(
-          primary: createMaterialColor(const Color(0xFF97BC4E)),
+        colorScheme: const ColorScheme(
+          primary: Color(0xFF97BC4E),
           primaryContainer: Colors.green,
-          secondary: createMaterialColor(const Color(0xFF505050)),
+          secondary: Color(0xFF505050),
           secondaryContainer: Colors.white,
-          tertiary: createMaterialColor(const Color(0xFFC1E695)),
-          tertiaryContainer: createMaterialColor(const Color(0xFF808080)),
-          surface: createMaterialColor(const Color(0xFFC1E695)),
-          background: createMaterialColor(const Color(0xFFFAFAFA)),
-          error: createMaterialColor(const Color(0xFFEB5757)),
-          errorContainer:
-              createMaterialColor(const Color.fromARGB(255, 250, 171, 171)),
-          onPrimary: createMaterialColor(const Color(0xFFFAFAFA)),
-          onSecondary: createMaterialColor(const Color(0xFFFAFAFA)),
-          onSurface: createMaterialColor(const Color(0xFF505050)),
+          tertiary: Color(0xFFC1E695),
+          tertiaryContainer: Color(0xFF808080),
+          surface: Color(0xFFC1E695),
+          background: Color(0xFFFAFAFA),
+          error: Color(0xFFEB5757),
+          errorContainer: Color.fromARGB(255, 250, 171, 171),
+          onPrimary: Color(0xFFFAFAFA),
+          onSecondary: Color(0xFFFAFAFA),
+          onSurface: Color(0xFF505050),
           onBackground: Colors.black12,
           onError: Colors.teal,
           brightness: Brightness.light,
@@ -91,37 +89,35 @@ class MyApp extends StatelessWidget {
             fontSize: 39.81,
             fontWeight: FontWeight.w700,
             letterSpacing: -1.5,
-            color: createMaterialColor(const Color(0xFF303030)),
+            color: const Color(0xFF303030),
           ),
           headline2: GoogleFonts.dmSans(
             fontSize: 33.18,
             fontWeight: FontWeight.w500,
-            color: createMaterialColor(const Color(0xFF303030)),
+            color: const Color(0xFF303030),
           ),
           headline3: GoogleFonts.dmSans(
             fontSize: 27.65,
             fontWeight: FontWeight.w500,
-            color: createMaterialColor(const Color(0xFF303030)),
+            color: const Color(0xFF303030),
           ),
           headline4: GoogleFonts.dmSans(
             fontSize: 23.04,
             fontWeight: FontWeight.w500,
             letterSpacing: 0.25,
-            color: createMaterialColor(const Color(0xFF303030)),
+            color: const Color(0xFF303030),
           ),
           headline5: GoogleFonts.dmSans(
             fontSize: 19.2,
             fontWeight: FontWeight.w500,
-            color: createMaterialColor(const Color(0xFF202020)),
+            color: const Color(0xFF202020),
           ),
           //the text theme for the big headlines telling the page's name
           headline6: GoogleFonts.dmSans(
             fontSize: 84,
             letterSpacing: -1.5,
             fontWeight: FontWeight.w700,
-            color: createMaterialColor(
-              const Color(0xFFC1E695),
-            ),
+            color: const Color(0xFFC1E695),
           ),
           bodyText1: GoogleFonts.dmSans(
             fontSize: 16,
@@ -137,13 +133,13 @@ class MyApp extends StatelessWidget {
             fontSize: 10,
             fontWeight: FontWeight.w700,
             letterSpacing: 1.5,
-            color: createMaterialColor(const Color(0xFF505050)),
+            color: const Color(0xFF505050),
           ),
           button: GoogleFonts.dmSans(
             fontSize: 19.2,
             fontWeight: FontWeight.w500,
             letterSpacing: 0.15,
-            color: createMaterialColor(const Color(0xFFFAFAFA)),
+            color: const Color(0xFFFAFAFA),
           ),
         ),
       ),
