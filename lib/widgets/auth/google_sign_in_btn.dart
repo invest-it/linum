@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/providers/authentication_service.dart';
+import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class GoogleSignInButton extends StatefulWidget {
@@ -21,18 +21,15 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
             borderRadius: BorderRadius.circular(8),
           ),
         ),
-
       ),
       onPressed: () => {
         Provider.of<AuthenticationService>(context, listen: false)
             .signInWithGoogle()
       },
-
       child: Padding(
         padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-
           children: <Widget>[
             const Image(
               image: AssetImage("assets/images/btn_google.png"),

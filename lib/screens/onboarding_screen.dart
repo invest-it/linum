@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
-import 'package:linum/backend_functions/local_app_localizations.dart';
-import 'package:linum/frontend_functions/country_flag_generator.dart';
-import 'package:linum/frontend_functions/materialcolor_creator.dart';
-import 'package:linum/frontend_functions/silent_scroll.dart';
-import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/constants/country_codes.dart';
 import 'package:linum/models/onboarding_slide_data.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
+import 'package:linum/utilities/backend/local_app_localizations.dart';
+import 'package:linum/utilities/frontend/country_flag_generator.dart';
+import 'package:linum/utilities/frontend/silent_scroll.dart';
+import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/onboarding/login_screen.dart';
 import 'package:linum/widgets/onboarding/page_indicator.dart';
 import 'package:linum/widgets/onboarding/register_screen.dart';
@@ -26,7 +26,6 @@ class OnboardingPage extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingPage> {
-
   int _currentPage = 0;
   List<OnboardingSlideData> _slides = [];
   late PageController _pageController = PageController();
@@ -69,7 +68,6 @@ class _OnboardingScreenState extends State<OnboardingPage> {
     return _slides.map((slide) => SingleSlide(slide: slide)).toList();
   }
 
-
   void _handleOnPageChanged(int page) {
     setState(() {
       _currentPage = page;
@@ -79,21 +77,17 @@ class _OnboardingScreenState extends State<OnboardingPage> {
   void _handleOnDropdownChanged(String? value) {
     if (value != null) {
       setState(() {
-
         SharedPreferences.getInstance().then((pref) {
           pref.setString(
             "languageCode",
             countryFlagsToCountryCode[value] ?? "en",
           );
         });
-        final String langString =
-            countryFlagsToCountryCode[value] ?? "en";
+        final String langString = countryFlagsToCountryCode[value] ?? "en";
         AppLocalizations.of(context)!.load(
           locale: Locale(
             langString,
-            langString != "en"
-                ? langString.toUpperCase()
-                : "US",
+            langString != "en" ? langString.toUpperCase() : "US",
           ),
         );
 
@@ -142,12 +136,12 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                   child: DropdownButton<String>(
                     elevation: 1,
                     items: countryFlagsToCountryCode.keys
-                      .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
                     value: countryFlagWithSpecialCases(
                       AppLocalizations.of(context)!.locale.languageCode,
                     ),
@@ -162,7 +156,10 @@ class _OnboardingScreenState extends State<OnboardingPage> {
               bottom: 0,
               child: Column(
                 children: [
-                  PageIndicator(slideCount: _slides.length, currentSlide: _currentPage),
+                  PageIndicator(
+                    slideCount: _slides.length,
+                    currentSlide: _currentPage,
+                  ),
                   SizedBox(
                     height: proportionateScreenHeight(32),
                   ),
@@ -172,12 +169,13 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                       width: double.infinity,
                       child: GradientButton(
                         callback: () => {
-                          onboardingScreenProvider.setPageState(OnboardingPageState.register),
+                          onboardingScreenProvider
+                              .setPageState(OnboardingPageState.register),
                         },
                         gradient: LinearGradient(
                           colors: [
                             Theme.of(context).colorScheme.primary,
-                            createMaterialColor(const Color(0xFFC1E695)),
+                            const Color(0xFFC1E695),
                           ],
                         ),
                         elevation: 0,
@@ -206,7 +204,8 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                           ),
                     ),
                     onPressed: () => {
-                      onboardingScreenProvider.setPageState(OnboardingPageState.login),
+                      onboardingScreenProvider
+                          .setPageState(OnboardingPageState.login),
                     },
                   ),
                 ],
@@ -215,24 +214,13 @@ class _OnboardingScreenState extends State<OnboardingPage> {
 
             // Auth Screens
 
+            // ignore: prefer_const_constructors
             LoginScreen(), // Won't reload on Language-Switch if const
+            // ignore: prefer_const_constructors
             RegisterScreen(), // Won't reload on Language-Switch if const
-
           ],
         ),
       ),
     );
   }
 }
-
-
-
-final Map<String, String> countryFlagsToCountryCode =
-{
-  countryFlag('de'): "de",
-  countryFlag('gb'): "en",
-  countryFlag('nl'): "nl",
-  countryFlag('es'): "es",
-  countryFlag('fr'): "fr",
-};
-// TODO: Move into an extra file
