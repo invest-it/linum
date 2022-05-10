@@ -5,7 +5,7 @@
 To install the required packages run <code>pip install -r requirements.txt</code>.
 
 
-Before running the script you need to add the *translator-config.json* to the same directory as the _translation.py_ file. There you have to add following json: <br>
+Before running the script you need to add the *translator-config.json* to the same directory as the _translate.py_ file. There you have to add following json: <br>
 ```yaml
 {
    "auth_key": "YOUR_PERSONAL_DEEPL_AUTH_KEY",
