@@ -224,8 +224,7 @@ class _LoginFormState extends State<LoginForm> {
               SizedBox(
                 height: proportionateScreenHeight(8),
               ),
-              // if (Platform.isIOS)
-              ...[
+              if (Platform.isIOS) ...[
                 // Works only on iOS at the moment (according to Google)
                 SignInWithAppleButton(
                   onPressed: auth.signInWithApple,
