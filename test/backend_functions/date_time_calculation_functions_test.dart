@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter_test/flutter_test.dart';
-import 'package:linum/backend_functions/date_time_calculation_functions.dart';
+import 'package:linum/utilities/backend/date_time_calculation_functions.dart';
 
 void main() {
   group("date_time_calculation_functions", () {

@@ -14,6 +14,7 @@
     "onboarding_screen/card4-description": "Linum génère automatiquement des statistiques pertinentes pour vous. Vous pouvez ainsi suivre l'évolution de votre budget.",
     "onboarding_screen/register-button": "Inscrivez-vous dès maintenant!",
     "onboarding_screen/login-button": "J'ai un compte",
+    "onboarding_screen/google-button": "Se connecter avec Google",
     "onboarding_screen/svg-credit-label": "Illustrations par Freepik",
 
     "onboarding_screen/cta-login": "Vous avez un compte? Connectez-vous ici.",
@@ -49,6 +50,8 @@
     "home_screen_card/label-current-balance": "Bilan mensuel actuel",
     "home_screen_card/label-income": "REVENU",
     "home_screen_card/label-expenses": "DÉPENSES",
+    "home_screen_card/label-total-balance": "Bilan",
+    "home_screen_card/label-total-balance-sub": "depuis le début de l'utilisation",
 
 
     "budget_screen/label-all-transactions": "Toutes les transactions",
@@ -154,6 +157,7 @@
 
     "academy_screen/label-title": "La finance expliquée simplement.",
     "academy_screen/label-description": "L'école Invest it! Academy t'aide à t'orienter dans le monde de l'économie et de la finance. Nous produisons pour toi des vidéos d'apprentissage gratuites et impartiales. Regarde maintenant!",
+    "academy_screen/label-button": "Vers la chaîne YouTube",
 
 
     "lock_screen/initialize/label-title": "Choisissez votre code PIN",

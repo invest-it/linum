@@ -23,12 +23,14 @@ environment:
 dependencies:
   badges: ^2.0.2
   cloud_firestore: ^2.5.4
+  collection: ^1.15.0
   cupertino_icons: ^1.0.2
   enum_to_string: ^2.0.1
 
   firebase_auth: ^3.2.0
   firebase_core: ^1.8.0
   firebase_core_web: ^1.4.0
+  flip_card: ^0.5.0 # Don't update to 0.6.0
 
   flutter:
     sdk: flutter
@@ -36,15 +38,15 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  flip_card: ^0.5.0 # Don't update to 0.6.0
   flutter_spinkit: ^5.1.0
   flutter_svg: ^1.0.0
   fluttertoast: ^8.0.8
   google_fonts: ^2.0.0
+  google_sign_in: ^5.2.4
   gradient_widgets: ^0.6.0
   intl: ^0.17.0
   package_info_plus: ^1.4.0
-  provider: ^5.0.0
+  provider: ^6.0.2
   shared_preferences: ^2.0.13
   url_launcher: ^6.0.17
   uuid: ^3.0.5
@@ -94,11 +96,7 @@ flutter:
   assets:
     - assets/images/
     - assets/svg/
-    - lang/de.json
-    - lang/en.json
-    - lang/nl.json
-    - lang/es.json
-    - lang/fr.json
+    - lang/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -1,17 +1,18 @@
-import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/backend_functions/local_app_localizations.dart';
-import 'package:linum/frontend_functions/country_flag_generator.dart';
-import 'package:linum/frontend_functions/list_divider.dart';
-import 'package:linum/frontend_functions/list_header.dart';
-import 'package:linum/frontend_functions/materialcolor_creator.dart';
-import 'package:linum/frontend_functions/silent_scroll.dart';
-import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/constants/settings_enums.dart';
+import 'package:linum/constants/standard_expense_categories.dart';
+import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
+import 'package:linum/utilities/backend/local_app_localizations.dart';
+import 'package:linum/utilities/frontend/country_flag_generator.dart';
+import 'package:linum/utilities/frontend/silent_scroll.dart';
+import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/auth/forgot_password.dart';
 import 'package:linum/widgets/auth/logout_form.dart';
+import 'package:linum/widgets/list_divider.dart';
+import 'package:linum/widgets/list_header.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:linum/widgets/settings_screen/toggle_button_element.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -124,7 +125,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               tooltipMessage: 'settings_screen/standard-category/label-tooltip',
             ),
 
-            /// TODO this is not lean programming and needs a rework.
+            /// TODO this is not clean programming and needs a rework.
             Column(
               children: [
                 GestureDetector(
@@ -172,35 +173,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             'settings_screen/standard-income-selector/label-title',
                           ) +
                           AppLocalizations.of(context)!.translate(
-                            AccountSettingsProvider
-                                    .standardCategoryIncomes[EnumToString
-                                        .fromString<StandardCategoryIncome>(
-                                  StandardCategoryIncome.values,
-                                  accountSettingsProvider.settings[
-                                              "StandardCategoryIncome"]
-                                          as String? ??
-                                      "None",
-                                )]
+                            accountSettingsProvider
+                                    .getIncomeEntryCategory()
                                     ?.label ??
-                                "ChosenStandardIncome",
+                                "ChosenStandardIncome", // TODO: Does this make sense?
                           ), // yeah im sorry that is really complicated code. :( It translates the value from firebase
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
-                    trailing: Icon(
+                    trailing: const Icon(
                       Icons.north_east,
-                      color: createMaterialColor(const Color(0xFF97BC4E)),
+                      color: Color(0xFF97BC4E),
                     ),
                     leading: Icon(
-                      AccountSettingsProvider
-                              .standardCategoryIncomes[EnumToString.fromString<
-                                  StandardCategoryIncome>(
-                            StandardCategoryIncome.values,
-                            accountSettingsProvider
-                                        .settings["StandardCategoryIncome"]
-                                    as String? ??
-                                "None",
-                          )]
-                              ?.icon ??
+                      accountSettingsProvider.getIncomeEntryCategory()?.icon ??
                           Icons.error,
                     ),
                   ),
@@ -218,7 +203,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       builder: (context) {
                         return Container(
                           height: MediaQuery.of(context).size.height * 0.5,
-                          color: createMaterialColor(const Color(0xFFFAFAFA)),
+                          color: const Color(0xFFFAFAFA),
                           child: Column(
                             children: [
                               ListTile(
@@ -248,15 +233,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             'settings_screen/standard-expense-selector/label-title',
                           ) +
                           AppLocalizations.of(context)!.translate(
-                            AccountSettingsProvider
-                                    .standardCategoryExpenses[EnumToString
-                                        .fromString<StandardCategoryExpense>(
-                                  StandardCategoryExpense.values,
-                                  accountSettingsProvider.settings[
-                                              "StandardCategoryExpense"]
-                                          as String? ??
-                                      "None",
-                                )]
+                            accountSettingsProvider
+                                    .getExpenseEntryCategory()
                                     ?.label ??
                                 "ChosenStandardExpense",
                           ), // yeah im sorry that is really complicated code. :( It translates the value from firebase
@@ -267,16 +245,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       color: Colors.red,
                     ),
                     leading: Icon(
-                      AccountSettingsProvider
-                              .standardCategoryExpenses[EnumToString.fromString<
-                                  StandardCategoryExpense>(
-                            StandardCategoryExpense.values,
-                            accountSettingsProvider
-                                        .settings["StandardCategoryExpense"]
-                                    as String? ??
-                                "None",
-                          )]
-                              ?.icon ??
+                      accountSettingsProvider.getExpenseEntryCategory()?.icon ??
                           Icons.error,
                     ),
                   ),
@@ -485,8 +454,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           //leading: Icon(widget.categories[index].icon),
           title: Text(
             AppLocalizations.of(context)!.translate(
-              AccountSettingsProvider
-                      .standardCategoryIncomes[
+              standardCategoryIncomes[
                           StandardCategoryIncome.values[indexBuilder]]
                       ?.label ??
                   "Category",
@@ -522,8 +490,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           //leading: Icon(widget.categories[index].icon),
           title: Text(
             AppLocalizations.of(context)!.translate(
-              AccountSettingsProvider
-                      .standardCategoryExpenses[
+              standardCategoryExpenses[
                           StandardCategoryExpense.values[indexBuilder]]
                       ?.label ??
                   "Category",
@@ -548,6 +515,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 }
 
+
+/*
 // ignore: unused_element
 ListView _currencyChange(List<String> currency) {
   return ListView.builder(
@@ -564,3 +533,6 @@ ListView _currencyChange(List<String> currency) {
     },
   );
 }
+*/
+
+// TODO: Refactor

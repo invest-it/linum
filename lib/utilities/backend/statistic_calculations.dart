@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:linum/providers/algorithm_provider.dart';
+import 'package:linum/utilities/frontend/filter_functions.dart';
 
 class StatisticsCalculations {
   /// the data that should be processed
@@ -43,20 +44,18 @@ class StatisticsCalculations {
   /// filter the data further down to only include the data with income information (excluding 0 cost products)
   List<Map<String, dynamic>> get _currentIncomeData =>
       List<Map<String, dynamic>>.from(_currentData)
-        ..removeWhere(AlgorithmProvider.amountAtMost(0));
+        ..removeWhere(amountAtMost(0));
 
   List<Map<String, dynamic>> get _allTimeIncomeData =>
-      List<Map<String, dynamic>>.from(_allData)
-        ..removeWhere(AlgorithmProvider.amountAtMost(0));
+      List<Map<String, dynamic>>.from(_allData)..removeWhere(amountAtMost(0));
 
   /// filter the data further down to only include the data with cost information (including 0 cost products)
   List<Map<String, dynamic>> get _currentCostData =>
       List<Map<String, dynamic>>.from(_currentData)
-        ..removeWhere(AlgorithmProvider.amountMoreThan(0));
+        ..removeWhere(amountMoreThan(0));
 
   List<Map<String, dynamic>> get _allTimeCostData =>
-      List<Map<String, dynamic>>.from(_allData)
-        ..removeWhere(AlgorithmProvider.amountMoreThan(0));
+      List<Map<String, dynamic>>.from(_allData)..removeWhere(amountMoreThan(0));
 
   /// sum up the total data if data is empty = 0
   num get sumBalance {

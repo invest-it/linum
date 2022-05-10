@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:linum/backend_functions/local_app_localizations.dart';
+import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:linum/widgets/top_bar_action_item.dart';
 
