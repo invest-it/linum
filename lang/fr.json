@@ -14,7 +14,8 @@
     "onboarding_screen/card4-description": "Linum génère automatiquement des statistiques pertinentes pour vous. Vous pouvez ainsi suivre l'évolution de votre budget.",
     "onboarding_screen/register-button": "Inscrivez-vous dès maintenant!",
     "onboarding_screen/login-button": "J'ai un compte",
-    "onboarding_screen/google-button": "Se connecter avec Google",
+    "onboarding_screen/google-button": "Continuer avec Google",
+    "onboarding_screen/apple-button": "Continuer avec Apple",
     "onboarding_screen/svg-credit-label": "Illustrations par Freepik",
 
     "onboarding_screen/cta-login": "Vous avez un compte? Connectez-vous ici.",
@@ -36,10 +37,9 @@
     "onboarding_screen/register-email-errorlabel": "Veuillez saisir une adresse e-mail valide.",
     "onboarding_screen/register-password-errorlabel": "Veuillez saisir un mot de passe d'au moins 6 caractères.",
 
-    "onboarding_screen/register-privacy/label-leading": "J'ai lu la ",
+    "onboarding_screen/register-privacy/label-leading": "En t'inscrivant, tu acceptes notre ",
     "onboarding_screen/register-privacy/label-link": "déclaration de confidentalité",
-    "onboarding_screen/register-privacy/label-trailing": " et je l'accepte.",
-    "onboarding_screen/register-privacy/label-error": "Vous devez accepter les CGU avant de pouvoir vous inscrire.",
+    "onboarding_screen/register-privacy/label-trailing": ".",
 
 
     "home_screen/label-recent-transactions": "Transactions récentes",
