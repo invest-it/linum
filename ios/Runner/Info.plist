@@ -65,5 +65,11 @@
     	</dict>
     </array>
     <!-- End of the Google Sign-in Section -->
+    <!-- Apple Sign-in Section -->
+    <key>com.apple.developer.applesignin</key>
+    <array>
+        <string>Default</string>
+    </array>
+    <!-- End of the Apple Sign-in Section -->
 </dict>
 </plist>
