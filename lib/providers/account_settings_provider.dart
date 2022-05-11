@@ -3,11 +3,11 @@ import 'dart:developer' as dev;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/models/entry_category.dart';
 import 'package:linum/providers/authentication_service.dart';
+import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class AccountSettingsProvider extends ChangeNotifier {
@@ -23,7 +23,8 @@ class AccountSettingsProvider extends ChangeNotifier {
   Map<String, dynamic> lastGrabbedData = {};
 
   EntryCategory? getIncomeEntryCategory() {
-    final String categoryId = settings["StandardCategoryIncome"] as String? ?? "None";
+    final String categoryId =
+        settings["StandardCategoryIncome"] as String? ?? "None";
 
     /* final StandardCategoryIncome? standardCategoryIncome = EnumToString
         .fromString<StandardCategoryIncome>(
@@ -34,7 +35,8 @@ class AccountSettingsProvider extends ChangeNotifier {
   }
 
   EntryCategory? getExpenseEntryCategory() {
-    final String categoryId = settings["StandardCategoryExpense"] as String? ?? "None";
+    final String categoryId =
+        settings["StandardCategoryExpense"] as String? ?? "None";
     final EntryCategory? catExp = standardCategoryExpenses[categoryId];
     return catExp;
   }
@@ -51,16 +53,16 @@ class AccountSettingsProvider extends ChangeNotifier {
 
   void updateAuth(AuthenticationService auth, BuildContext context) {
     if (_uid != auth.uid) {
+      dev.log("this still works");
       _uid = auth.uid;
       if (_uid == "") {
         if (settingsListener != null) {
           settingsListener!.cancel().then((_) {
             updateAuthHelper(context);
           });
-        } else {
-          updateAuthHelper(context);
         }
       }
+      updateAuthHelper(context);
     }
   }
 
@@ -111,10 +113,9 @@ class AccountSettingsProvider extends ChangeNotifier {
 
   @override
   void dispose() {
-    settingsListener?.cancel();
-
     if (_dontDispose-- == 0) {
       super.dispose();
+      settingsListener?.cancel();
     }
   }
 
@@ -135,6 +136,3 @@ class AccountSettingsProvider extends ChangeNotifier {
     return true;
   }
 }
-
-
-

@@ -1,8 +1,8 @@
 import 'dart:math' as math;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:linum/balance_data/single_balance_data_manager.dart';
 import 'package:linum/models/single_balance_data.dart';
+import 'package:linum/utilities/balance_data/single_balance_data_manager.dart';
 import 'package:uuid/uuid.dart';
 
 void main() {

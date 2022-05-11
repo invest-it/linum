@@ -61,9 +61,16 @@
     		<array>
     			<!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
     			<string>com.googleusercontent.apps.704109638785-vdogvirir21e8l356geelo8s4bqagpl4</string>
+    			<string>com.googleusercontent.apps.658687609050-rbu75cu0l6k38965sl8h88v65vpvl7ha</string>
     		</array>
     	</dict>
     </array>
     <!-- End of the Google Sign-in Section -->
+    <!-- Apple Sign-in Section -->
+    <key>com.apple.developer.applesignin</key>
+    <array>
+        <string>Default</string>
+    </array>
+    <!-- End of the Apple Sign-in Section -->
 </dict>
 </plist>

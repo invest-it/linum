@@ -14,7 +14,8 @@
     "onboarding_screen/card4-description": "Linum genera automáticamente estadísticas relevantes para ti. De este modo, puedes hacer un seguimiento de cómo vas con tu presupuesto.",
     "onboarding_screen/register-button": "¡Inscríbase ahora!",
     "onboarding_screen/login-button": "Tengo una cuenta",
-    "onboarding_screen/google-button": "Acceder con Google",
+    "onboarding_screen/google-button": "Continuar con Google",
+    "onboarding_screen/apple-button": "Continuar con Apple",
     "onboarding_screen/svg-credit-label": "Ilustraciones de Freepik",
 
     "onboarding_screen/cta-login": "¿Tienes una cuenta? Inicie sesión aquí.",
@@ -36,22 +37,21 @@
     "onboarding_screen/register-email-errorlabel": "Por favor, introduzca una dirección de correo electrónico válida.",
     "onboarding_screen/register-password-errorlabel": "Por favor, introduzca una contraseña con al menos 6 caracteres.",
 
-    "onboarding_screen/register-privacy/label-leading": "He leído y acepto la ",
+    "onboarding_screen/register-privacy/label-leading": "Al registrarse, acepta nuestra ",
     "onboarding_screen/register-privacy/label-link": "política de privacidad",
     "onboarding_screen/register-privacy/label-trailing": ".",
-    "onboarding_screen/register-privacy/label-error": "Debe aceptar las condiciones generales antes de registrarse.",
 
 
     "home_screen/label-recent-transactions": "Transacciones recientes",
     "home_screen/button-show-more": "MOSTRAR MÁS",
     "home_screen/free-text": "Gratis",
 
-    "home_screen_card/home-screen-card-toast": "Desliza el dedo hacia la izquierda y hacia la derecha para ver los meses anteriores o los próximos. Pulse dos veces para volver al mes actual.",
+    "home_screen_card/home-screen-card-toast": "Deslice el dedo hacia la izquierda y hacia la derecha para ver los meses anteriores o los próximos. Mantenga pulsado para volver al mes actual.",
     "home_screen_card/label-current-balance": "Saldo mensual actual",
     "home_screen_card/label-income": "INGRESOS",
     "home_screen_card/label-expenses": "GASTOS",
     "home_screen_card/label-total-balance": "Saldo",
-    "home_screen_card/label-total-balance-sub": "desde el inicio del uso",
+    "home_screen_card/label-total-balance-sub": "hasta hoy",
 
     "budget_screen/label-all-transactions": "Todas las transacciones",
     "budget_screen/button-filter": "FILTRO",

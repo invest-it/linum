@@ -4,8 +4,8 @@ class HomeScreenCardData {
   final num expense;
 
   const HomeScreenCardData({
-  required this.balance,
-  required this.income,
-  required this.expense,
+    required this.balance,
+    required this.income,
+    required this.expense,
   });
 }

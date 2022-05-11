@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:linum/backend_functions/formatter_utils.dart';
+import 'package:linum/utilities/backend/formatter_utils.dart';
 
 class CurrencyInputFormatter extends TextInputFormatter {
   final int decimalPlaces;

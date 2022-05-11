@@ -7,17 +7,14 @@ import 'package:linum/models/home_screen_card_data.dart';
 import 'package:linum/widgets/home_screen/home_screen_card_back.dart';
 import 'package:linum/widgets/home_screen/home_screen_card_front.dart';
 
-
 class HomeScreenCard extends StatefulWidget {
-  final num balance;
-  final num income;
-  final num expense;
+  final HomeScreenCardData frontData;
+  final HomeScreenCardData backData;
 
   const HomeScreenCard({
     Key? key,
-    required this.balance,
-    required this.income,
-    required this.expense,
+    required this.frontData,
+    required this.backData,
   }) : super(key: key);
 
   @override
@@ -35,32 +32,16 @@ class _HomeScreenCardState extends State<HomeScreenCard> {
 
   @override
   Widget build(BuildContext context) {
-
     return FlipCard(
       controller: _flipCardController,
       front: HomeScreenCardFront(
-        data: HomeScreenCardData(
-            balance: widget.balance,
-            income: widget.income,
-            expense: widget.expense,
-        ),
+        data: widget.frontData,
         flipCardController: _flipCardController,
       ),
       back: HomeScreenCardBack(
-        data: HomeScreenCardData(
-            balance: widget.balance,
-            income: widget.income,
-            expense: widget.expense,
-        ),
+        data: widget.backData,
         flipCardController: _flipCardController,
       ),
     );
   }
 }
-
-
-
-
-
-
-
