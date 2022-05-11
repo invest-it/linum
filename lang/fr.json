@@ -51,7 +51,7 @@
     "home_screen_card/label-income": "REVENU",
     "home_screen_card/label-expenses": "DÉPENSES",
     "home_screen_card/label-total-balance": "Bilan",
-    "home_screen_card/label-total-balance-sub": "depuis le début de l'utilisation",
+    "home_screen_card/label-total-balance-sub": "jusqu'à aujourd'hui",
 
 
     "budget_screen/label-all-transactions": "Toutes les transactions",
