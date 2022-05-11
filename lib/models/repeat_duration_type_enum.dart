@@ -1,4 +1,4 @@
 enum RepeatDurationType {
-  SECONDS,
-  MONTHS,
+  seconds,
+  months,
 }

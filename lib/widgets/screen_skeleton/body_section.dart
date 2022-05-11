@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/utilities/frontend/size_guide.dart';
 
 class BodySection extends StatelessWidget {
   final Widget body;
@@ -20,16 +20,16 @@ class BodySection extends StatelessWidget {
             child: Container(
               color: Theme.of(context).colorScheme.primary,
               child: ClipRRect(
-                borderRadius: BorderRadius.vertical(
+                borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(64),
-                  bottom: Radius.zero,
                 ),
                 child: Container(
                   color: Theme.of(context).colorScheme.background,
                   child: Padding(
                     padding: hasHomeScreenCard
                         ? EdgeInsets.only(
-                            top: proportionateScreenHeight(196 - 25))
+                            top: proportionateScreenHeight(196 - 25),
+                          )
                         : EdgeInsets.zero,
                     child: body,
                   ),

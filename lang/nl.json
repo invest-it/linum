@@ -14,6 +14,8 @@
     "onboarding_screen/card4-description": "Linum genereert automatisch relevante statistieken voor u. Zo kunt u volgen hoe u het doet met uw budget.",
     "onboarding_screen/register-button": "Meld je nu aan!",
     "onboarding_screen/login-button": "Ik heb een account",
+    "onboarding_screen/google-button": "Doorgaan met Google",
+    "onboarding_screen/apple-button": "Doorgaan met Apple",
     "onboarding_screen/svg-credit-label": "Illustraties door Freepik",
 
     "onboarding_screen/cta-login": "Heeft u een account? Log hier in.",
@@ -27,7 +29,6 @@
     "onboarding_screen/login-email-errorlabel": "Voer een geldig e-mailadres in.",
     "onboarding_screen/login-password-errorlabel": "Voer uw wachtwoord in.",
 
-
     "onboarding_screen/register-lip-title": "SIGN UP",
     "onboarding_screen/register-email-hintlabel": "Emailadres",
     "onboarding_screen/register-password-hintlabel": "Wachtwoord",
@@ -36,21 +37,21 @@
     "onboarding_screen/register-email-errorlabel": "Voer een geldig e-mailadres in.",
     "onboarding_screen/register-password-errorlabel": "Voer een wachtwoord in van ten minste 6 tekens.",
 
-
-    "onboarding_screen/register-privacy/label-leading": "Ik heb de ",
+    "onboarding_screen/register-privacy/label-leading": "Door u te registreren gaat u akkoord met ons ",
     "onboarding_screen/register-privacy/label-link": "privacyverklaaring",
-    "onboarding_screen/register-privacy/label-trailing": " gelezen en accepteer deze.",
-    "onboarding_screen/register-privacy/label-error": "U moet de algemene voorwaarden accepteren voordat u zich kunt inschrijven.",
+    "onboarding_screen/register-privacy/label-trailing": ".",
 
 
     "home_screen/label-recent-transactions": "Recente transacties",
     "home_screen/button-show-more": "MEER ZIEN",
+    "home_screen/free-text": "Gratis",
 
-
-    "home_screen_card/home-screen-card-toast": "Veeg naar links en rechts om vorige of komende maanden te bekijken. Tik dubbel om terug te keren naar de huidige maand.",
-    "home_screen_card/label-current-balance": "Huidig saldo",
+    "home_screen_card/home-screen-card-toast": "Veeg naar links en rechts om de vorige of komende maanden te bekijken. Ingedrukt houden om terug te keren naar de huidige maand.",
+    "home_screen_card/label-current-balance": "Huidig maandelijks saldo",
     "home_screen_card/label-income": "INKOMEN",
     "home_screen_card/label-expenses": "UITGAVEN",
+    "home_screen_card/label-total-balance": "Saldo",
+    "home_screen_card/label-total-balance-sub": "tot vandaag",
 
 
     "budget_screen/label-all-transactions": "Alle Verrichtingen",
@@ -83,6 +84,11 @@
     "settings_screen/standard-account-selector/cash": "Cash",
     "settings_screen/standard-account-selector/deposit": "Deposit",
 
+    "settings_screen/pin-lock/label-title": "PIN SLOT",
+    "settings_screen/pin-lock/label-tooltip": "Als de PIN slot actief is, moet u bij het starten van de app uw persoonlijke PIN-code invoeren om uw gegevens te beschermen.",
+    "settings_screen/pin-lock/switch-label": "PIN slot actief",
+    "settings_screen/pin-lock/label-change-pin": "Wijzig PIN code",
+
     "settings_screen/standard-currency/label-title": "STANDAARDVALUTA",
     "settings_screen/standard-currency/label-tooltip": "Deze valuta wordt standaard gebruikt voor elke nieuwe transactie. U kunt deze ook individueel wijzigen.",
 
@@ -113,7 +119,8 @@
     "enter_screen/button-expenses-label": "Uitgaven",
     "enter_screen/button-income-label": "Inkomen",
     "enter_screen/button-transaction-label": "Transaction",
-    "enter_screen/button-save-entry": "Bewaar toegang",
+    "enter_screen/button-delete-entry": "Item verwijderen",
+    "enter_screen/button-save-entry": "Item opslaan",
     "enter_screen/expenses-textfield-title": "Wat heb je gekocht?",
     "enter_screen/income-textfield-title": "Hoe wordt dit inkomen genoemd?",
     "enter_screen/transaction-textfield-title": "Hoe wordt deze transactie genoemd?",
@@ -135,7 +142,9 @@
     "enter_screen/delete-entry/dialog-label-title": "Bevestig",
     "enter_screen/delete-entry/dialog-label-deleterep": "Welk item wilt u verwijderen?",
     "enter_screen/delete-entry/dialog-label-delete": "Wil je dit bericht echt verwijderen?",
+    "enter_screen/change-entry/dialog-label-change": "Welk item wilt u veranderen?",
     "enter_screen/delete-entry/dialog-button-onlyonce": "Dit bericht",
+    "enter_screen/delete-entry/dialog-button-untilnow": "Dit bericht en alle vorige",
     "enter_screen/delete-entry/dialog-button-fromnow": "Dit bericht en alle volgende",
     "enter_screen/delete-entry/dialog-button-allentries": "Alle inzendingen",
     "enter_screen/delete-entry/dialog-button-delete": "Verwijderen",
@@ -148,6 +157,20 @@
 
     "academy_screen/label-title": "Financiën eenvoudig uitgelegd.",
     "academy_screen/label-description": "De Investeer het! Academy helpt je navigeren in de wereld van business en financiën. Wij produceren gratis, onbevooroordeelde leervideo's voor u. Kijk nu eens!",
+    "academy_screen/label-button": "Naar het YouTube kanaal",
+
+
+    "lock_screen/initialize/label-title": "Kies uw PIN",
+    "lock_screen/initialize/label-button": "Annuleren",
+    "lock_screen/change/label-title": "Kies een nieuwe PIN",
+    "lock_screen/change/label-button": "Annuleren",
+    "lock_screen/recall/label-title": "Voer PIN in",
+    "lock_screen/recall/label-button": "Log uit",
+
+    "lock_screen/toast-wrong-code": "De ingevoerde code is onjuist",
+    "lock_screen/toast-pin-deactivated": "De PIN slot is gedeactiveerd.",
+    "lock_screen/toast-pin-set": "De PIN slot is succesvol geactiveerd!",
+    "lock_screen/toast-pin-changed": "De PIN is succesvol gewijzigd.",
 
 
     "action_lip/forgot-password/logged-out/label-title": "Reset Wachtwoord",
@@ -194,6 +217,21 @@
     "alertdialog/reset-password/message": "Wij hebben u een link gestuurd om uw wachtwoord te resetten. Klik op de link in de e-mail om een nieuw wachtwoord in te stellen. Controleer ook uw spam-map.",
     "alertdialog/reset-password/title": "Verzoek verzonden",
     "alertdialog/reset-password/action": "Okay",
+
+    "alertdialog/killswitch-recall/title": "Ben je zeker?",
+    "alertdialog/killswitch-recall/message": "Als je uitlogt, wordt het PIN slot gedeactiveerd. Hierdoor kun je normaal inloggen met je e-mail en wachtwoord als je je PIN code vergeten bent.",
+    "alertdialog/killswitch-recall/action": "Log uit en reset PIN",
+    "alertdialog/killswitch-recall/cancel": "Annuleren",
+
+    "alertdialog/killswitch-initialize/title": "Ben je zeker?",
+    "alertdialog/killswitch-initialize/message": "Als je het proces nu annuleert, wordt het PIN-slot weer gedeactiveerd.",
+    "alertdialog/killswitch-initialize/action": "Annuleren toch",
+    "alertdialog/killswitch-initialize/cancel": "Terug naar bewerken",
+
+    "alertdialog/killswitch-change/title": "Ben je zeker?",
+    "alertdialog/killswitch-change/message": "Als je het proces nu annuleert, zal de oude PIN actief blijven.",
+    "alertdialog/killswitch-change/action": "Annuleren toch",
+    "alertdialog/killswitch-change/cancel": "Terug naar bewerken",
 
     "auth/invalid-email": "Uw e-mail of wachtwoord is niet correct. Controleer op spelfouten?",
     "auth/user-disabled": "De gebruiker is gedeactiveerd door het systeem. Als u denkt dat dit een fout is, neem dan contact op met support@investit-academy.de.",

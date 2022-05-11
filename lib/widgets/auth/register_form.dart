@@ -1,14 +1,18 @@
+import 'dart:io';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
-import 'package:linum/backend_functions/local_app_localizations.dart';
-import 'package:linum/backend_functions/url-handler.dart';
-import 'package:linum/frontend_functions/materialcolor_creator.dart';
-import 'package:linum/frontend_functions/size_guide.dart';
-import 'package:linum/frontend_functions/user_alert.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
+import 'package:linum/utilities/backend/local_app_localizations.dart';
+import 'package:linum/utilities/backend/url_handler.dart';
+import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/utilities/frontend/user_alert.dart';
+import 'package:linum/widgets/auth/sign_in_with_google_button.dart';
 import 'package:provider/provider.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+
 
 class RegisterForm extends StatefulWidget {
   @override
@@ -19,54 +23,52 @@ class _RegisterFormState extends State<RegisterForm> {
   final _mailController = TextEditingController();
   final _passController = TextEditingController();
 
-  bool _agbCheck = false;
-  bool _agbNullCheck = false;
   bool _mailValidate = false;
   bool _passValidate = false;
 
   @override
   Widget build(BuildContext context) {
-    OnboardingScreenProvider onboardingScreenProvider =
+    final OnboardingScreenProvider onboardingScreenProvider =
         Provider.of<OnboardingScreenProvider>(context);
 
-    if (onboardingScreenProvider.pageState == 2 &&
+    if (onboardingScreenProvider.pageState == OnboardingPageState.register &&
         onboardingScreenProvider.hasPageChanged) {
       _mailController.clear();
       _passController.clear();
-      _agbCheck = false;
-      _agbNullCheck = false;
       _mailValidate = false;
       _passValidate = false;
     }
 
-    AuthenticationService auth = Provider.of<AuthenticationService>(context);
-    UserAlert userAlert = UserAlert(context: context);
+    final AuthenticationService auth =
+        Provider.of<AuthenticationService>(context);
+    final UserAlert userAlert = UserAlert(context: context);
 
     void signUp(String _mail, String _pass) {
-      auth.signUp(_mail, _pass, onError: (String message) {
-        setState(() {
-          userAlert.showMyDialog(message);
+      auth.signUp(
+        _mail.trim(),
+        _pass,
+        onError: (String message) {
+          setState(() {
+            userAlert.showMyDialog(message);
+            _passController.clear();
+            _mailValidate = false;
+            _passValidate = false;
+          });
+        },
+        onNotVerified: () {
+          userAlert.showMyDialog(
+            'alertdialog/signup-verification/message',
+            title: 'alertdialog/signup-verification/title',
+            actionTitle: 'alertdialog/signup-verification/action',
+          );
+          onboardingScreenProvider.setEmailLoginInputSilently(_mail);
+          _mailController.clear();
           _passController.clear();
-          _agbCheck = false;
-          _agbNullCheck = false;
           _mailValidate = false;
           _passValidate = false;
-        });
-      }, onNotVerified: () {
-        userAlert.showMyDialog(
-          'alertdialog/signup-verification/message',
-          title: 'alertdialog/signup-verification/title',
-          actionTitle: 'alertdialog/signup-verification/action',
-        );
-        onboardingScreenProvider.setEmailLoginInputSilently(_mail);
-        _mailController.clear();
-        _passController.clear();
-        _agbNullCheck = false;
-        _agbCheck = false;
-        _mailValidate = false;
-        _passValidate = false;
-        onboardingScreenProvider.setPageState(1);
-      });
+          onboardingScreenProvider.setPageState(OnboardingPageState.login);
+        },
+      );
     }
 
     return Column(
@@ -84,54 +86,60 @@ class _RegisterFormState extends State<RegisterForm> {
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.all(5.0),
+                padding: const EdgeInsets.all(5.0),
                 decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.onSecondary,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Theme.of(context).colorScheme.onBackground,
-                        blurRadius: 20.0,
-                        offset: Offset(0, 10),
-                      ),
-                    ]),
+                  color: Theme.of(context).colorScheme.onSecondary,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Theme.of(context).colorScheme.onBackground,
+                      blurRadius: 20.0,
+                      offset: const Offset(0, 10),
+                    ),
+                  ],
+                ),
                 child: Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
                         border: Border(
                           bottom: BorderSide(color: Colors.grey.shade100),
                         ),
                       ),
                       child: TextField(
+                        key: const Key("registerEmailField"),
                         controller: _mailController,
                         keyboardType: TextInputType.emailAddress,
+                        autocorrect: false,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: AppLocalizations.of(context)!.translate(
-                              'onboarding_screen/register-email-hintlabel'),
+                            'onboarding_screen/register-email-hintlabel',
+                          ),
                           hintStyle: Theme.of(context)
                               .textTheme
                               .bodyText1
                               ?.copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary),
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
                           errorText: _mailValidate
                               ? AppLocalizations.of(context)!.translate(
-                                  'onboarding_screen/register-email-errorlabel')
+                                  'onboarding_screen/register-email-errorlabel',
+                                )
                               : null,
                         ),
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
                         border: Border(
                           bottom: BorderSide(color: Colors.grey.shade100),
                         ),
                       ),
                       child: TextField(
+                        key: const Key("registerPasswordField"),
                         obscureText: true,
                         controller: _passController,
                         keyboardType: TextInputType.visiblePassword,
@@ -146,16 +154,18 @@ class _RegisterFormState extends State<RegisterForm> {
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: AppLocalizations.of(context)!.translate(
-                              'onboarding_screen/register-password-hintlabel'),
+                            'onboarding_screen/register-password-hintlabel',
+                          ),
                           hintStyle: Theme.of(context)
                               .textTheme
                               .bodyText1
                               ?.copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary),
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
                           errorText: _passValidate
                               ? AppLocalizations.of(context)!.translate(
-                                  'onboarding_screen/register-password-errorlabel')
+                                  'onboarding_screen/register-password-errorlabel',
+                                )
                               : null,
                         ),
                       ),
@@ -165,59 +175,6 @@ class _RegisterFormState extends State<RegisterForm> {
               ),
               SizedBox(
                 height: proportionateScreenHeight(16),
-              ),
-              CheckboxListTile(
-                // title: Text(
-                //     'Ich habe die AGB und die Erklärung zum Datenschutz gelesen und akzeptiere sie.',
-                //     style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                //         fontWeight: FontWeight.w600,
-                //         color: Theme.of(context).colorScheme.onSurface)),
-                title: RichText(
-                  text: TextSpan(children: [
-                    TextSpan(
-                        text: AppLocalizations.of(context)!.translate(
-                            'onboarding_screen/register-privacy/label-leading'),
-                        style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: Theme.of(context).colorScheme.onSurface)),
-                    TextSpan(
-                      text: AppLocalizations.of(context)!.translate(
-                          'onboarding_screen/register-privacy/label-link'),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () async {
-                          launchURL('https://investit-academy.de/privacy');
-                        },
-                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: Theme.of(context).colorScheme.primary,
-                            decoration: TextDecoration.underline,
-                          ),
-                    ),
-                    TextSpan(
-                        text: AppLocalizations.of(context)!.translate(
-                            'onboarding_screen/register-privacy/label-trailing'),
-                        style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: Theme.of(context).colorScheme.onSurface)),
-                  ]),
-                ),
-                value: _agbCheck,
-                onChanged: (newVal) {
-                  setState(() {
-                    _agbCheck = newVal!;
-                    newVal == true
-                        ? _agbNullCheck = false
-                        : _agbNullCheck = true;
-                  });
-                },
-                controlAffinity: ListTileControlAffinity.trailing,
-                checkColor: Theme.of(context).colorScheme.onPrimary,
-                activeColor: Theme.of(context).colorScheme.primaryContainer,
-                secondary: Icon(Icons.verified_user_rounded),
-                visualDensity: VisualDensity(horizontal: -4, vertical: 0),
-              ),
-              SizedBox(
-                height: proportionateScreenHeight(32),
               ),
               // Container(
               //   height: 50,
@@ -237,62 +194,104 @@ class _RegisterFormState extends State<RegisterForm> {
               //     ),
               //   ),
               // ),
-              Text(
-                _agbNullCheck
-                    ? AppLocalizations.of(context)!.translate(
-                        "onboarding_screen/register-privacy/label-error")
-                    : '',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                    color: Theme.of(context).colorScheme.error,
-                    fontWeight: FontWeight.bold),
-              ),
               GradientButton(
                 increaseHeightBy: proportionateScreenHeight(16),
-                child: Text(
-                  AppLocalizations.of(context)!.translate(
-                      'onboarding_screen/register-lip-signup-button'),
-                  style: Theme.of(context).textTheme.button,
-                ),
-                callback: _agbCheck
-                    ? () {
-                        setState(() {
-                          _mailController.text.isEmpty
-                              ? _mailValidate = true
-                              : _mailValidate = false;
-                          _passController.text.isEmpty
-                              ? _passValidate = true
-                              : _passValidate = false;
-                        });
+                callback: () {
+                  setState(() {
+                    _mailController.text.isEmpty
+                        ? _mailValidate = true
+                        : _mailValidate = false;
+                    _passController.text.isEmpty
+                        ? _passValidate = true
+                        : _passValidate = false;
+                  });
 
-                        if (_mailValidate == false && _passValidate == false) {
-                          signUp(_mailController.text, _passController.text);
-                        }
-                      }
-                    : () => setState(() {
-                          _mailController.text.isEmpty
-                              ? _mailValidate = true
-                              : _mailValidate = false;
-                          _passController.text.isEmpty
-                              ? _passValidate = true
-                              : _passValidate = false;
-                          _agbNullCheck = true;
-                        }),
+                  if (_mailValidate == false && _passValidate == false) {
+                    signUp(_mailController.text, _passController.text);
+                  }
+                },
                 gradient: LinearGradient(
                   colors: [
                     Theme.of(context).colorScheme.primary,
-                    createMaterialColor(Color(0xFFC1E695)),
+                    const Color(0xFFC1E695),
                   ],
                 ),
                 elevation: 0,
                 increaseWidthBy: double.infinity,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  AppLocalizations.of(context)!.translate(
+                    'onboarding_screen/register-lip-signup-button',
+                  ),
+                  style: Theme.of(context).textTheme.button,
+                ),
               ),
               SizedBox(
-                height: proportionateScreenHeight(8),
+                height: proportionateScreenHeight(12),
               ),
-
+              SignInWithGoogleButton(
+                onPressed: auth.signInWithGoogle,
+              ),
+              SizedBox(
+                height: proportionateScreenHeight(6),
+              ),
+              if (Platform.isIOS)...[ // Works only on iOS at the moment (according to Google)
+                SignInWithAppleButton(
+                  onPressed: auth.signInWithApple,
+                  text: AppLocalizations.of(context)!.translate(
+                    'onboarding_screen/apple-button',
+                  ),
+                )
+              ],
+              SizedBox(
+                height: proportionateScreenHeight(32),
+              ),
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: AppLocalizations.of(context)!.translate(
+                        'onboarding_screen/register-privacy/label-leading',
+                      ),
+                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
+                    TextSpan(
+                      text: AppLocalizations.of(context)!.translate(
+                        'onboarding_screen/register-privacy/label-link',
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () async {
+                          launchURL('https://investit-academy.de/privacy');
+                        },
+                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).colorScheme.primary,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                    TextSpan(
+                      text: AppLocalizations.of(context)!.translate(
+                        'onboarding_screen/register-privacy/label-trailing',
+                      ),
+                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
+                  ],
+                ),
+                textAlign: TextAlign.center,
+              ),
+              /*
+              // TODO: Remove in prod
+               SignInWithAppleButton(
+                onPressed: auth.signInWithApple,
+              ) */
 // SAVE THIS SPACE FOR ALTERNATE SIGNUP FUNCTIONS
 
               // OutlinedButton(

@@ -1,14 +1,17 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
-import 'package:linum/backend_functions/local_app_localizations.dart';
-import 'package:linum/frontend_functions/materialcolor_creator.dart';
-import 'package:linum/frontend_functions/size_guide.dart';
-import 'package:linum/frontend_functions/user_alert.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
+import 'package:linum/utilities/backend/local_app_localizations.dart';
+import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:linum/widgets/auth/forgot_password.dart';
+import 'package:linum/widgets/auth/sign_in_with_google_button.dart';
 import 'package:provider/provider.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -25,10 +28,10 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    OnboardingScreenProvider onboardingScreenProvider =
+    final OnboardingScreenProvider onboardingScreenProvider =
         Provider.of<OnboardingScreenProvider>(context);
 
-    if (onboardingScreenProvider.pageState == 1 &&
+    if (onboardingScreenProvider.pageState == OnboardingPageState.login &&
         onboardingScreenProvider.hasPageChanged) {
       _mailController = null;
       _passController.clear();
@@ -36,17 +39,16 @@ class _LoginFormState extends State<LoginForm> {
       _passValidate = false;
     }
 
-    if (_mailController == null) {
-      _mailController =
-          TextEditingController(text: onboardingScreenProvider.mailInput);
-    }
+    _mailController ??=
+        TextEditingController(text: onboardingScreenProvider.mailInput);
 
-    AuthenticationService auth = Provider.of<AuthenticationService>(context);
-    UserAlert userAlert = UserAlert(context: context);
+    final AuthenticationService auth =
+        Provider.of<AuthenticationService>(context);
+    final UserAlert userAlert = UserAlert(context: context);
 
     void logIn(String _mail, String _pass) {
       auth.signIn(
-        _mail,
+        _mail.trim(),
         _pass,
         onError: userAlert.showMyDialog,
         onNotVerified: () => userAlert.showMyDialog(
@@ -72,74 +74,81 @@ class _LoginFormState extends State<LoginForm> {
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.all(5.0),
+                padding: const EdgeInsets.all(5.0),
                 decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.onSecondary,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Theme.of(context).colorScheme.onBackground,
-                        blurRadius: 20.0,
-                        offset: Offset(0, 10),
-                      ),
-                    ]),
+                  color: Theme.of(context).colorScheme.onSecondary,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Theme.of(context).colorScheme.onBackground,
+                      blurRadius: 20.0,
+                      offset: const Offset(0, 10),
+                    ),
+                  ],
+                ),
                 child: Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
                         border: Border(
                           bottom: BorderSide(color: Colors.grey.shade100),
                         ),
                       ),
                       child: TextField(
+                        key: const Key("loginEmailField"),
                         controller: _mailController,
                         keyboardType: TextInputType.emailAddress,
                         autocorrect: false,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: AppLocalizations.of(context)!.translate(
-                              'onboarding_screen/login-email-hintlabel'),
+                            'onboarding_screen/login-email-hintlabel',
+                          ),
                           hintStyle: Theme.of(context)
                               .textTheme
                               .bodyText1
                               ?.copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary),
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
                           errorText: _mailValidate
                               ? AppLocalizations.of(context)!.translate(
-                                  'onboarding_screen/login-email-errorlabel')
+                                  'onboarding_screen/login-email-errorlabel',
+                                )
                               : null,
                         ),
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
                         border: Border(
                           bottom: BorderSide(color: Colors.grey.shade100),
                         ),
                       ),
                       child: TextField(
+                        key: const Key("loginPasswordField"),
                         obscureText: true,
                         controller: _passController,
                         keyboardType: TextInputType.visiblePassword,
-                        onSubmitted: (_) =>
-                            logIn(_mailController!.text, _passController.text),
+                        //onSubmitted: (_) =>
+                        //    logIn(_mailController!.text, _passController.text),
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: AppLocalizations.of(context)!.translate(
-                              'onboarding_screen/login-password-hintlabel'),
+                            'onboarding_screen/login-password-hintlabel',
+                          ),
                           errorText: _passValidate
                               ? AppLocalizations.of(context)!.translate(
-                                  'onboarding_screen/login-password-errorlabel')
+                                  'onboarding_screen/login-password-errorlabel',
+                                )
                               : null,
                           hintStyle: Theme.of(context)
                               .textTheme
                               .bodyText1
                               ?.copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary),
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
                         ),
                       ),
                     ),
@@ -170,11 +179,6 @@ class _LoginFormState extends State<LoginForm> {
 
               GradientButton(
                 increaseHeightBy: proportionateScreenHeight(16),
-                child: Text(
-                  AppLocalizations.of(context)!
-                      .translate('onboarding_screen/login-lip-login-button'),
-                  style: Theme.of(context).textTheme.button,
-                ),
                 callback: () {
                   setState(() {
                     _mailController!.text.isEmpty
@@ -192,18 +196,43 @@ class _LoginFormState extends State<LoginForm> {
                 gradient: LinearGradient(
                   colors: [
                     Theme.of(context).colorScheme.primary,
-                    createMaterialColor(Color(0xFFC1E695)),
+                    const Color(0xFFC1E695),
                   ],
                 ),
                 elevation: 0,
                 increaseWidthBy: double.infinity,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  AppLocalizations.of(context)!
+                      .translate('onboarding_screen/login-lip-login-button'),
+                  style: Theme.of(context).textTheme.button,
+                ),
               ),
               SizedBox(
                 height: proportionateScreenHeight(8),
               ),
-              ForgotPasswordButton(ProviderKey.ONBOARDING),
+              ForgotPasswordButton(ProviderKey.onboarding),
+              SizedBox(
+                height: proportionateScreenHeight(8),
+              ),
+              SignInWithGoogleButton(
+                onPressed: auth.signInWithGoogle,
+              ),
+              SizedBox(
+                height: proportionateScreenHeight(8),
+              ),
+              if (Platform.isIOS) ...[
+                // Works only on iOS at the moment (according to Google)
+                SignInWithAppleButton(
+                  onPressed: auth.signInWithApple,
+                  text: AppLocalizations.of(context)!.translate(
+                    'onboarding_screen/apple-button',
+                  ),
+                  height: proportionateScreenHeight(40),
+                ),
+              ],
             ],
           ),
         ),

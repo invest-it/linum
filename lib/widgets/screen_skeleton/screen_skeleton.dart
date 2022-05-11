@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
-import 'package:linum/widgets/home_screen/home_screen_card.dart';
+import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/widgets/home_screen/home_screen_card_manager.dart';
 import 'package:linum/widgets/onboarding/action_lip.dart';
 import 'package:linum/widgets/screen_skeleton/body_section.dart';
 import 'package:linum/widgets/screen_skeleton/lip_section.dart';
@@ -98,7 +98,7 @@ class ScreenSkeleton extends StatelessWidget {
     this.contentOverride = false,
     this.isInverted = false,
     this.hasHomeScreenCard = false,
-    this.initialActionLipStatus = ActionLipStatus.HIDDEN,
+    this.initialActionLipStatus = ActionLipStatus.hidden,
     this.providerKey,
     Widget? initialActionLipBody,
     this.actions,
@@ -110,28 +110,32 @@ class ScreenSkeleton extends StatelessWidget {
       _initialActionLipBody = initialActionLipBody;
     }
     if (providerKey == null) {
-      initialActionLipStatus = ActionLipStatus.DISABLED;
+      initialActionLipStatus = ActionLipStatus.disabled;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    BalanceDataProvider balanceDataProvider =
+    final BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
 
-    ActionLipStatusProvider actionLipStatusProvider =
+    final ActionLipStatusProvider actionLipStatusProvider =
         Provider.of<ActionLipStatusProvider>(context, listen: false);
 
     if (providerKey != null &&
         !actionLipStatusProvider.isActionStatusInitialized(providerKey!)) {
       actionLipStatusProvider.setActionLipStatusSilently(
-          providerKey: providerKey!, actionLipStatus: initialActionLipStatus);
+        providerKey: providerKey!,
+        actionLipStatus: initialActionLipStatus,
+      );
     }
 
     if (providerKey != null &&
         !actionLipStatusProvider.isBodyInitialized(providerKey!)) {
       actionLipStatusProvider.setActionLipSilently(
-          providerKey: providerKey!, actionLipBody: _initialActionLipBody);
+        providerKey: providerKey!,
+        actionLipBody: _initialActionLipBody,
+      );
     }
 
     if (!contentOverride) {
@@ -141,6 +145,7 @@ class ScreenSkeleton extends StatelessWidget {
             children: [
               LipSection(
                 lipTitle: head,
+                hasHomeScreenCard: hasHomeScreenCard,
                 isInverted: isInverted,
                 actions: actions,
                 leadingAction: leadingAction,
@@ -189,7 +194,7 @@ class ScreenSkeleton extends StatelessWidget {
 }
 
 enum ActionLipStatus {
-  HIDDEN,
-  ONVIEWPORT,
-  DISABLED,
+  hidden,
+  onviewport,
+  disabled,
 }

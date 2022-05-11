@@ -1,8 +1,8 @@
 ---
-name: Feature request
+name: Feature request (default)
 about: Suggest an idea for this project
 title: ''
-labels: 'enhancement'
+labels: 'enhancement, s: dev team, P5'
 assignees: ''
 
 ---

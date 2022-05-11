@@ -3,6 +3,7 @@
     "main/label-error": "Ein Fehler ist aufgetreten.",
     "main/label-wip": "Hier wird noch gearbeitet. Schau gerne später vorbei!",
 
+
     "onboarding_screen/card1-title": "Herzlich Willkommen!",
     "onboarding_screen/card1-description": "Dein neuer Budgeting-Assistent wartet schon auf dich.",
     "onboarding_screen/card2-title": "Tracke dein Geld",
@@ -13,6 +14,8 @@
     "onboarding_screen/card4-description": "Linum generiert ganz automatisch relevante Statistiken für dich. So kannst du nachvollziehen, wie du mit deinem Budget umgehst.",
     "onboarding_screen/register-button": "Jetzt registrieren!",
     "onboarding_screen/login-button": "Ich habe einen Account",
+    "onboarding_screen/google-button": "Mit Google fortfahren",
+    "onboarding_screen/apple-button": "Mit Apple fortfahren",
     "onboarding_screen/svg-credit-label": "Illustrationen von Freepik",
 
     "onboarding_screen/cta-login": "Du hast einen Account? Hier einloggen",
@@ -34,20 +37,21 @@
     "onboarding_screen/register-email-errorlabel": "Bitte gib eine gültige E-Mail-Adresse ein.",
     "onboarding_screen/register-password-errorlabel": "Bitte gib ein Passwort mit mindestens 6 Zeichen ein.",
 
-    "onboarding_screen/register-privacy/label-leading": "Ich habe die ",
+    "onboarding_screen/register-privacy/label-leading": "Durch die Anmeldung erklärst du dich mit unserer ",
     "onboarding_screen/register-privacy/label-link": "Datenschutzerklärung",
-    "onboarding_screen/register-privacy/label-trailing": " gelesen und akzeptiere sie.",
-    "onboarding_screen/register-privacy/label-error": "Sie müssen die AGB akzeptieren, bevor Sie sich registrieren können.",
-
+    "onboarding_screen/register-privacy/label-trailing": " einverstanden.",
 
     "home_screen/label-recent-transactions": "Neueste Transaktionen",
     "home_screen/button-show-more": "MEHR",
+    "home_screen/free-text": "Gratis",
 
 
-    "home_screen_card/home-screen-card-toast": "Swipe nach links und rechts, um vorige oder kommende Monate anzusehen. Doppelt tippen, um in den aktuellen Monat zurückzukehren.",
-    "home_screen_card/label-current-balance": "Aktueller Kontostand",
+    "home_screen_card/home-screen-card-toast": "Swipe nach links und rechts, um vorige oder kommende Monate anzusehen. Gedrückt halten, um in den aktuellen Monat zurückzukehren.",
+    "home_screen_card/label-current-balance": "Aktuelle Monatsbilanz",
     "home_screen_card/label-income": "EINNAHMEN",
     "home_screen_card/label-expenses": "AUSGABEN",
+    "home_screen_card/label-total-balance": "Kontostand",
+    "home_screen_card/label-total-balance-sub": "bis Heute",
 
 
     "budget_screen/label-all-transactions": "Alle Transaktionen",
@@ -80,6 +84,11 @@
     "settings_screen/standard-account-selector/cash": "Bargeld",
     "settings_screen/standard-account-selector/deposit": "Depot",
 
+    "settings_screen/pin-lock/label-title": "PIN-SPERRE",
+    "settings_screen/pin-lock/label-tooltip": "Ist die PIN-Sperre aktiv, musst du beim Starten der App zum Schutz deiner Daten deinen persönlichen PIN-Code eingeben.",
+    "settings_screen/pin-lock/switch-label": "PIN-Sperre aktiv",
+    "settings_screen/pin-lock/label-change-pin": "PIN-Code ändern",
+
     "settings_screen/standard-currency/label-title": "STANDARD-WÄHRUNG",
     "settings_screen/standard-currency/label-tooltip": "Diese Währung wird standardmäßig bei jeder neuen Transaktion genutzt. Du kannst diese auch individuell ändern.",
 
@@ -110,6 +119,7 @@
     "enter_screen/button-expenses-label": "Ausgabe",
     "enter_screen/button-income-label": "Einnahme",
     "enter_screen/button-transaction-label": "Transaktion",
+    "enter_screen/button-delete-entry": "Eintrag löschen",
     "enter_screen/button-save-entry": "Eintrag speichern",
     "enter_screen/expenses-textfield-title": "Was hast du gekauft?",
     "enter_screen/income-textfield-title": "Wie heißt dieses Einkommen?",
@@ -132,7 +142,9 @@
     "enter_screen/delete-entry/dialog-label-title": "Bestätigen",
     "enter_screen/delete-entry/dialog-label-deleterep": "Welchen Eintrag möchtest du löschen?",
     "enter_screen/delete-entry/dialog-label-delete": "Möchtest du diesen Eintrag wirklich löschen?",
+    "enter_screen/change-entry/dialog-label-change": "Welchen Eintrag möchtest du ändern?",
     "enter_screen/delete-entry/dialog-button-onlyonce": "Diesen Eintrag",
+    "enter_screen/delete-entry/dialog-button-untilnow": "Diesen Eintrag und alle vorherigen",
     "enter_screen/delete-entry/dialog-button-fromnow": "Diesen Eintrag und alle folgenden",
     "enter_screen/delete-entry/dialog-button-allentries": "Alle Einträge",
     "enter_screen/delete-entry/dialog-button-delete": "Löschen",
@@ -145,6 +157,20 @@
 
     "academy_screen/label-title": "Finanzen einfach erklärt.",
     "academy_screen/label-description": "Die Invest it! Academy hilft dir dabei, dich in der Wirtschafts- und Finanzwelt zurechtzufinden. Wir produzieren kostenlose, unparteiische Lernvideos für dich. Jetzt reinschauen!",
+    "academy_screen/label-button": "Zum YouTube-Kanal",
+
+
+    "lock_screen/initialize/label-title": "Wähle deine PIN",
+    "lock_screen/initialize/label-button": "Abbrechen",
+    "lock_screen/change/label-title": "Wähle eine neue PIN",
+    "lock_screen/change/label-button": "Abbrechen",
+    "lock_screen/recall/label-title": "Bitte PIN eingeben",
+    "lock_screen/recall/label-button": "Abmelden",
+
+    "lock_screen/toast-wrong-code": "Der eingegebene Code ist falsch",
+    "lock_screen/toast-pin-deactivated": "Die PIN-Sperre wurde deaktiviert.",
+    "lock_screen/toast-pin-set": "Du hast die PIN-Sperre erfolgreich aktiviert!",
+    "lock_screen/toast-pin-changed": "Die PIN wurde erfolgreich geändert.",
 
 
     "action_lip/forgot-password/logged-out/label-title": "Passwort zurücksetzen",
@@ -191,6 +217,21 @@
     "alertdialog/reset-password/message": "Wir haben dir einen Link zum Zurücksetzen deines Passworts geschickt. Bitte klicke auf den Link in der E-Mail, um ein neues Passwort zu setzen. Bitte überprüfe auch deinen Spam-Ordner.",
     "alertdialog/reset-password/title": "Anfrage gesendet",
     "alertdialog/reset-password/action": "Okay",
+
+    "alertdialog/killswitch-recall/title": "Bist du sicher?",
+    "alertdialog/killswitch-recall/message": "Wenn du dich abmeldest, wird die PIN-Sperre deaktiviert. So kannst du dich normal mit deiner E-Mail und deinem Passwort anmelden, falls du deinen PIN-Code vergessen hast.",
+    "alertdialog/killswitch-recall/action": "Abmelden und PIN zurücksetzen",
+    "alertdialog/killswitch-recall/cancel": "Nicht abmelden",
+
+    "alertdialog/killswitch-initialize/title": "Bist du sicher?",
+    "alertdialog/killswitch-initialize/message": "Wenn du den Vorgang jetzt abbrichst, wird die PIN-Sperre wieder deaktiviert.",
+    "alertdialog/killswitch-initialize/action": "Trotzdem abbrechen",
+    "alertdialog/killswitch-initialize/cancel": "Zurück",
+
+    "alertdialog/killswitch-change/title": "Bist du sicher?",
+    "alertdialog/killswitch-change/message": "Wenn du den Vorgang jetzt abbrichst, bleibt die alte PIN aktiv.",
+    "alertdialog/killswitch-change/action": "Trotzdem abbrechen",
+    "alertdialog/killswitch-change/cancel": "Zurück",
 
     "auth/invalid-email": "Deine E-Mail-Adresse ist ungültig. Vielleicht hast du dich vertippt?",
     "auth/user-disabled": "Der Benutzer wurde vom System deaktiviert. Falls du denkst, dass dies ein Fehler ist, wende dich bitte an support@investit-academy.de",

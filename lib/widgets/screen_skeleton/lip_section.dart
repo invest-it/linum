@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/utilities/frontend/size_guide.dart';
 
 class LipSection extends StatelessWidget {
   final String lipTitle;
   final bool isInverted;
+  final bool hasHomeScreenCard;
   final Widget Function(BuildContext)? leadingAction;
   final List<Widget Function(BuildContext)>? actions;
 
   const LipSection({
     required this.lipTitle,
     required this.isInverted,
+    required this.hasHomeScreenCard,
     this.leadingAction,
     this.actions,
   });
@@ -22,15 +24,22 @@ class LipSection extends StatelessWidget {
               ClipRRect(
                 child: Container(
                   alignment: Alignment.bottomCenter,
-                  width: proportionateScreenWidthFraction(ScreenFraction.FULL),
+                  width: proportionateScreenWidthFraction(ScreenFraction.full),
                   height: proportionateScreenHeight(164),
                   color: Theme.of(context).colorScheme.primary,
                   child: Baseline(
                     baselineType: TextBaseline.alphabetic,
-                    baseline: (proportionateScreenHeight(164) - 8),
-                    child: Text(lipTitle,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline6),
+                    baseline: hasHomeScreenCard
+                        ? proportionateScreenHeight(144)
+                        : proportionateScreenHeight(164) - 8,
+                    child: Text(
+                      lipTitle,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headline6,
+
+                      /// Headlines are considered decorative elements and should therefore not be affected by system accessibility modifications - fixes #47
+                      textScaleFactor: 1.0,
+                    ),
                   ),
                 ),
               ),
@@ -54,8 +63,7 @@ class LipSection extends StatelessWidget {
         : Stack(
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.zero,
+                borderRadius: const BorderRadius.vertical(
                   bottom: Radius.circular(40),
                 ),
                 child: Container(
@@ -65,10 +73,13 @@ class LipSection extends StatelessWidget {
                   color: Theme.of(context).colorScheme.primary,
                   child: Baseline(
                     baselineType: TextBaseline.alphabetic,
-                    baseline: (proportionateScreenHeight(164) - 12),
-                    child: Text(lipTitle,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline6),
+                    baseline: proportionateScreenHeight(164) - 12,
+                    child: Text(
+                      lipTitle,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headline6,
+                      textScaleFactor: 1.0,
+                    ),
                   ),
                 ),
               ),
@@ -93,13 +104,15 @@ class LipSection extends StatelessWidget {
   }
 
   List<Widget>? _actionHelper(
-      List<Widget Function(BuildContext context)>? functions,
-      BuildContext context) {
-    List<Widget> widgets = [];
-    if (functions != null)
+    List<Widget Function(BuildContext context)>? functions,
+    BuildContext context,
+  ) {
+    final List<Widget> widgets = [];
+    if (functions != null) {
       for (int i = 0; i < functions.length; i++) {
         widgets.add(functions[i](context));
       }
+    }
     return widgets;
   }
 }

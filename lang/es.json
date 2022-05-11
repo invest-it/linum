@@ -14,6 +14,8 @@
     "onboarding_screen/card4-description": "Linum genera automáticamente estadísticas relevantes para ti. De este modo, puedes hacer un seguimiento de cómo vas con tu presupuesto.",
     "onboarding_screen/register-button": "¡Inscríbase ahora!",
     "onboarding_screen/login-button": "Tengo una cuenta",
+    "onboarding_screen/google-button": "Continuar con Google",
+    "onboarding_screen/apple-button": "Continuar con Apple",
     "onboarding_screen/svg-credit-label": "Ilustraciones de Freepik",
 
     "onboarding_screen/cta-login": "¿Tienes una cuenta? Inicie sesión aquí.",
@@ -35,21 +37,21 @@
     "onboarding_screen/register-email-errorlabel": "Por favor, introduzca una dirección de correo electrónico válida.",
     "onboarding_screen/register-password-errorlabel": "Por favor, introduzca una contraseña con al menos 6 caracteres.",
 
-    "onboarding_screen/register-privacy/label-leading": "He leído y acepto la ",
+    "onboarding_screen/register-privacy/label-leading": "Al registrarse, acepta nuestra ",
     "onboarding_screen/register-privacy/label-link": "política de privacidad",
     "onboarding_screen/register-privacy/label-trailing": ".",
-    "onboarding_screen/register-privacy/label-error": "Debe aceptar las condiciones generales antes de registrarse.",
 
 
     "home_screen/label-recent-transactions": "Transacciones recientes",
     "home_screen/button-show-more": "MOSTRAR MÁS",
+    "home_screen/free-text": "Gratis",
 
-
-    "home_screen_card/home-screen-card-toast": "Desliza el dedo hacia la izquierda y hacia la derecha para ver los meses anteriores o los próximos. Pulse dos veces para volver al mes actual.",
-    "home_screen_card/label-current-balance": "Saldo actual",
+    "home_screen_card/home-screen-card-toast": "Deslice el dedo hacia la izquierda y hacia la derecha para ver los meses anteriores o los próximos. Mantenga pulsado para volver al mes actual.",
+    "home_screen_card/label-current-balance": "Saldo mensual actual",
     "home_screen_card/label-income": "INGRESOS",
     "home_screen_card/label-expenses": "GASTOS",
-
+    "home_screen_card/label-total-balance": "Saldo",
+    "home_screen_card/label-total-balance-sub": "hasta hoy",
 
     "budget_screen/label-all-transactions": "Todas las transacciones",
     "budget_screen/button-filter": "FILTRO",
@@ -81,6 +83,11 @@
     "settings_screen/standard-account-selector/cash": "Efectivo",
     "settings_screen/standard-account-selector/deposit": "Depósito",
 
+    "settings_screen/pin-lock/label-title": "BLOQUEO DEL PIN",
+    "settings_screen/pin-lock/label-tooltip": "Si el bloqueo del PIN está activo, tendrás que introducir tu código PIN personal al iniciar la aplicación para proteger tus datos.",
+    "settings_screen/pin-lock/switch-label": "Bloqueo del PIN activo",
+    "settings_screen/pin-lock/label-change-pin": "Cambiar el código PIN",
+
     "settings_screen/standard-currency/label-title": "MONEDA ESTÁNDAR",
     "settings_screen/standard-currency/label-tooltip": "Esta moneda se utiliza por defecto para cada nueva transacción. También puede cambiarla individualmente.",
 
@@ -111,6 +118,7 @@
     "enter_screen/button-expenses-label": "Gastos",
     "enter_screen/button-income-label": "Ingresos",
     "enter_screen/button-transaction-label": "Transacción",
+    "enter_screen/button-delete-entry": "Borrar entrada",
     "enter_screen/button-save-entry": "Guardar entrada",
     "enter_screen/expenses-textfield-title": "¿Qué has comprado?",
     "enter_screen/income-textfield-title": "¿Cómo se llaman estos ingresos?",
@@ -146,6 +154,20 @@
 
     "academy_screen/label-title": "Las finanzas explicadas de forma sencilla.",
     "academy_screen/label-description": "El programa Invest it! La Academia le ayuda a navegar por el mundo de los negocios y las finanzas. Producimos vídeos de aprendizaje gratuitos e imparciales para usted. ¡Echa un vistazo ahora!",
+    "academy_screen/label-button": "Al canal de YouTube",
+
+
+    "lock_screen/initialize/label-title": "Elija su PIN",
+    "lock_screen/initialize/label-button": "Cancelar",
+    "lock_screen/change/label-title": "Elija un nuevo PIN",
+    "lock_screen/change/label-button": "Cancelar",
+    "lock_screen/recall/label-title": "Introduzca el PIN",
+    "lock_screen/recall/label-button": "Cerrar sesión",
+
+    "lock_screen/toast-wrong-code": "El código introducido es incorrecto",
+    "lock_screen/toast-pin-deactivated": "Se ha desactivado el bloqueo del PIN.",
+    "lock_screen/toast-pin-set": "Ha activado correctamente el bloqueo del PIN.",
+    "lock_screen/toast-pin-changed": "El PIN ha sido cambiado con éxito.",
 
 
     "action_lip/forgot-password/logged-out/label-title": "Restablecer contraseña",
@@ -192,6 +214,21 @@
     "alertdialog/reset-password/message": "Te hemos enviado un enlace para restablecer tu contraseña. Haga clic en el enlace del correo electrónico para establecer una nueva contraseña. Por favor, compruebe también su carpeta de spam.",
     "alertdialog/reset-password/title": "Solicitud enviada",
     "alertdialog/reset-password/action": "Okay",
+
+    "alertdialog/killswitch-recall/title": "¿Está seguro?",
+    "alertdialog/killswitch-recall/message": "Al cerrar la sesión, el bloqueo del PIN se desactiva. Esto le permite iniciar la sesión normalmente con su correo electrónico y contraseña si olvida su código PIN.",
+    "alertdialog/killswitch-recall/action": "Cerrar la sesión y restablecer el PIN",
+    "alertdialog/killswitch-recall/cancel": "Cancelar",
+
+    "alertdialog/killswitch-initialize/title": "¿Está seguro?",
+    "alertdialog/killswitch-initialize/message": "Si cancela el proceso ahora, el bloqueo del PIN se desactivará de nuevo.",
+    "alertdialog/killswitch-initialize/action": "Cancelar",
+    "alertdialog/killswitch-initialize/cancel": "Volver a la edición",
+
+    "alertdialog/killswitch-change/title": "¿Está seguro?",
+    "alertdialog/killswitch-change/message": "Si cancela el proceso ahora, el antiguo PIN seguirá activo.",
+    "alertdialog/killswitch-change/action": "Cancelar",
+    "alertdialog/killswitch-change/cancel": "Volver a la edición",
 
     "auth/invalid-email": "Su correo electrónico o su contraseña no son correctos. ¿Comprobar errores ortográficos?",
     "auth/user-disabled": "El usuario ha sido desactivado por el sistema. Si cree que se trata de un error, póngase en contacto con support@investit-academy.de.",

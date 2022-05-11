@@ -3,20 +3,21 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:linum/backend_functions/local_app_localizations.dart';
-import 'package:linum/backend_functions/url-handler.dart';
-import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/screen_index_provider.dart';
+import 'package:linum/utilities/backend/local_app_localizations.dart';
+import 'package:linum/utilities/backend/url_handler.dart';
+import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/screen_skeleton/app_bar_action.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
+/// Page Index: 4
 class AcademyScreen extends StatelessWidget {
   const AcademyScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    ScreenIndexProvider screenIndexProvider =
+    final ScreenIndexProvider screenIndexProvider =
         Provider.of<ScreenIndexProvider>(context);
 
     return ScreenSkeleton(
@@ -26,57 +27,60 @@ class AcademyScreen extends StatelessWidget {
         ontap: () => screenIndexProvider.setPageIndex(0),
       ),
       isInverted: true,
-      body: Column(
-        children: [
-          Container(
-            height:
-                proportionateScreenHeightFraction(ScreenFraction.ONEQUARTER),
-            margin: EdgeInsets.all(32),
-            child: SvgPicture.asset('assets/svg/video-files.svg'),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 36),
-            child: Text(
-              AppLocalizations.of(context)!
-                  .translate('academy_screen/label-title'),
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline3,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height:
+                  proportionateScreenHeightFraction(ScreenFraction.onequarter),
+              child: SvgPicture.asset('assets/svg/video-files.svg'),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 36, vertical: 16),
-            child: Text(
-              AppLocalizations.of(context)!
-                  .translate('academy_screen/label-description'),
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyText1,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Text(
+                AppLocalizations.of(context)!
+                    .translate('academy_screen/label-title'),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headline3,
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 36, vertical: 16),
-            child: ElevatedButton(
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Wrap(
-                  spacing: 12,
-                  children: [
-                    Icon(Icons.open_in_new_rounded),
-                    Text("Zum YouTube-Kanal"),
-                  ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              child: Text(
+                AppLocalizations.of(context)!
+                    .translate('academy_screen/label-description'),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24,
+              ),
+              child: ElevatedButton(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Wrap(
+                    spacing: 12,
+                    children: [
+                      const Icon(Icons.open_in_new_rounded),
+                      Text(
+                        AppLocalizations.of(context)!
+                            .translate("academy_screen/label-button"),
+                      ),
+                    ],
+                  ),
                 ),
+                onPressed: () =>
+                    launchURL('https://youtube.investit-academy.de'),
               ),
-              onPressed: () => launchURL('https://youtube.investit-academy.de'),
             ),
-          ),
-          // SizedBox(
-          //   height: proportionateScreenHeight(230),
-          // ),
-          Container(
-            width: double.infinity,
-            child: Padding(
-              padding: EdgeInsets.only(
-                top: proportionateScreenHeight(24),
-              ),
+            // SizedBox(
+            //   height: proportionateScreenHeight(230),
+            // ),
+            SizedBox(
+              width: double.infinity,
               child: CupertinoButton(
                 child: Text(
                   AppLocalizations.of(context)!
@@ -89,8 +93,8 @@ class AcademyScreen extends StatelessWidget {
                 },
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

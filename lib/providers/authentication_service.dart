@@ -3,7 +3,11 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/backend_functions/local_app_localizations.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:linum/backend_functions/cryptography.dart';
+import 'package:linum/utilities/backend/local_app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 /// The AuthenticationService authenticates the user
 /// and provides the information needed for other classes
@@ -35,14 +39,18 @@ class AuthenticationService extends ChangeNotifier {
   }) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: password);
+        email: email,
+        password: password,
+      );
 
       if (isEmailVerified) {
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('lastMail', email);
         notifyListeners();
         onComplete("Successfully signed in to Firebase");
       } else {
         await sendVerificationEmail(email, onError: onError);
-        signOut();
+        await signOut();
         if (onNotVerified != null) {
           onNotVerified();
         } else {
@@ -51,7 +59,7 @@ class AuthenticationService extends ChangeNotifier {
       }
     } on FirebaseAuthException catch (e) {
       log(e.message.toString());
-      onError("auth/" + e.code);
+      onError("auth/${e.code}");
     }
   }
 
@@ -65,7 +73,9 @@ class AuthenticationService extends ChangeNotifier {
   }) async {
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: password);
+        email: email,
+        password: password,
+      );
 
       if (isEmailVerified) {
         notifyListeners();
@@ -77,9 +87,68 @@ class AuthenticationService extends ChangeNotifier {
       }
     } on FirebaseAuthException catch (e) {
       log(e.message.toString());
-      onError("auth/" + e.code);
+      onError("auth/${e.code}");
     }
   }
+
+  Future<void> signInWithGoogle({
+    void Function(String) onComplete = log,
+    void Function(String) onError = log,
+  }) async {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    try {
+      await _firebaseAuth.signInWithCredential(credential);
+      notifyListeners();
+      onComplete("Successfully signed in to Firebase");
+    } on FirebaseAuthException catch (e) {
+      log(e.message.toString());
+      onError("auth/${e.code}");
+    }
+  }
+
+  Future<void> signInWithApple({
+    void Function(String) onComplete = log,
+    void Function(String) onError = log,
+  }) async {
+    final rawNonce = generateNonce();
+    final nonce = sha256ofString(rawNonce);
+
+    try {
+      final appleCredential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+        nonce: nonce,
+      );
+      final oauthCredential = OAuthProvider("apple.com").credential(
+        idToken: appleCredential.identityToken,
+        rawNonce: rawNonce,
+      );
+
+      await _firebaseAuth.signInWithCredential(oauthCredential);
+      notifyListeners();
+      onComplete("Successfully signed in to Firebase");
+    } on FirebaseAuthException catch (e) {
+      log(e.message.toString());
+      onError("auth/${e.code}");
+    } on SignInWithAppleAuthorizationException catch (e) {
+      if (e.code == AuthorizationErrorCode.canceled) {
+        log("Sign in with Apple was aborted");
+      } else {
+        rethrow;
+      }
+    }
+  }
+  // TODO: Refactor already??
 
   /// returns the uid, and if the user isnt logged in return ""
   String get uid {
@@ -146,7 +215,7 @@ class AuthenticationService extends ChangeNotifier {
         return;
       }
     } on FirebaseAuthException catch (e) {
-      onError("auth/" + e.code);
+      onError("auth/${e.code}");
     }
   }
 
@@ -164,7 +233,7 @@ class AuthenticationService extends ChangeNotifier {
       }
       log("Successfully send Verification Mail request to Firebase");
     } on FirebaseAuthException catch (e) {
-      onError("auth/" + e.code);
+      onError("auth/${e.code}");
     }
   }
 
@@ -178,7 +247,7 @@ class AuthenticationService extends ChangeNotifier {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
       onComplete("alertdialog/reset-password/message");
     } on FirebaseAuthException catch (e) {
-      onError("auth/" + e.code);
+      onError("auth/${e.code}");
     }
   }
 
@@ -187,16 +256,21 @@ class AuthenticationService extends ChangeNotifier {
     void Function(String) onError = log,
   }) async {
     try {
+      final isSignedInWithGoogle = await GoogleSignIn().isSignedIn();
+      if (isSignedInWithGoogle) {
+        await GoogleSignIn().signOut();
+      }
       await _firebaseAuth.signOut();
       notifyListeners();
       onComplete("Successfully signed out from Firebase");
     } on FirebaseAuthException catch (e) {
-      onError("auth/" + e.code);
+      onError("auth/${e.code}");
     }
   }
 
   void updateLanguageCode(BuildContext context) {
     _firebaseAuth.setLanguageCode(
-        AppLocalizations.of(context)?.locale.languageCode ?? "en");
+      AppLocalizations.of(context)?.locale.languageCode ?? "en",
+    );
   }
 }

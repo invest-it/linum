@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/screen_index_provider.dart';
+import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:provider/provider.dart';
 
 class BottomAppBarItem {
@@ -18,12 +18,11 @@ class FABBottomAppBar extends StatefulWidget {
     required this.selectedColor,
     required this.notchedShape,
     required this.onTabSelected,
-  }) {
-    assert(this.items.length == 2 || this.items.length == 4);
-  }
+  });
   final List<BottomAppBarItem> items;
   final String centerItemText;
   final double height = proportionateScreenHeight(64);
+  final double minHeight = 64.0;
   final double iconSize = proportionateScreenHeight(24);
   final Color backgroundColor;
   final Color color;
@@ -38,10 +37,10 @@ class FABBottomAppBar extends StatefulWidget {
 class FABBottomAppBarState extends State<FABBottomAppBar> {
   @override
   Widget build(BuildContext context) {
-    ScreenIndexProvider screenIndexProvider =
+    final ScreenIndexProvider screenIndexProvider =
         Provider.of<ScreenIndexProvider>(context);
 
-    List<Widget> items = List.generate(widget.items.length, (int index) {
+    final List<Widget> items = List.generate(widget.items.length, (int index) {
       return _buildTabItem(
         item: widget.items[index],
         index: index,
@@ -53,12 +52,11 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
 
     return BottomAppBar(
       shape: widget.notchedShape,
+      color: widget.backgroundColor,
       child: Row(
-        mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: items,
       ),
-      color: widget.backgroundColor,
     );
   }
 
@@ -87,12 +85,13 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
     required ValueChanged<int> onPressed,
     required ScreenIndexProvider screenIndexProvider,
   }) {
-    Color color = screenIndexProvider.pageIndex == index
+    final Color color = screenIndexProvider.pageIndex == index
         ? widget.selectedColor
         : widget.color;
     return Expanded(
-      child: SizedBox(
+      child: Container(
         height: widget.height,
+        constraints: BoxConstraints(minHeight: widget.minHeight),
         child: Material(
           type: MaterialType.transparency,
           child: InkWell(
@@ -105,7 +104,9 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
                 Text(
                   item.text,
                   style: TextStyle(
-                      color: color, fontSize: proportionateScreenHeight(12)),
+                    color: color,
+                    fontSize: proportionateScreenHeight(12),
+                  ),
                 )
               ],
             ),
