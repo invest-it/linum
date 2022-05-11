@@ -52,7 +52,7 @@
     "home_screen_card/label-income": "EINNAHMEN",
     "home_screen_card/label-expenses": "AUSGABEN",
     "home_screen_card/label-total-balance": "Kontostand",
-    "home_screen_card/label-total-balance-sub": "seit Nutzungsbeginn",
+    "home_screen_card/label-total-balance-sub": "bis Heute",
 
 
     "budget_screen/label-all-transactions": "Alle Transaktionen",
