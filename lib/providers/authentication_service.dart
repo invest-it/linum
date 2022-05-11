@@ -3,8 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/backend_functions/cryptography.dart';
-import 'package:linum/backend_functions/local_app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -95,13 +95,13 @@ class AuthenticationService extends ChangeNotifier {
     void Function(String) onError = log,
   }) async {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
 
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
-
 
     try {
       await _firebaseAuth.signInWithCredential(credential);
@@ -111,7 +111,6 @@ class AuthenticationService extends ChangeNotifier {
       log(e.message.toString());
       onError("auth/${e.code}");
     }
-
   }
 
   Future<void> signInWithApple({
@@ -266,8 +265,6 @@ class AuthenticationService extends ChangeNotifier {
     } on FirebaseAuthException catch (e) {
       onError("auth/${e.code}");
     }
-
-
   }
 
   void updateLanguageCode(BuildContext context) {

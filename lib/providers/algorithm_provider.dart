@@ -2,6 +2,8 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/utilities/frontend/filter_functions.dart';
+import 'package:linum/utilities/frontend/sort_functions.dart';
 
 /// gives sort algorithm (later it will probably also have filter algorithm) and
 /// all algorithm will have an active version instead of being static
@@ -29,26 +31,31 @@ class AlgorithmProvider extends ChangeNotifier {
 
   void setCurrentShownMonth(DateTime inputMonth) {
     _currentShownMonth = DateTime(inputMonth.year, inputMonth.month);
+    _updateToCurrentShownMonthSilently();
   }
 
   void resetCurrentShownMonth() {
     _currentShownMonth = DateTime(DateTime.now().year, DateTime.now().month);
+    _updateToCurrentShownMonthSilently();
   }
 
   void nextMonth() {
     _currentShownMonth =
         DateTime(_currentShownMonth.year, _currentShownMonth.month + 1);
+    _updateToCurrentShownMonthSilently();
   }
 
   void previousMonth() {
     _currentShownMonth =
         DateTime(_currentShownMonth.year, _currentShownMonth.month - 1);
+
+    _updateToCurrentShownMonthSilently();
   }
 
   AlgorithmProvider() {
     resetCurrentShownMonth();
     _currentSorter = timeNewToOld;
-    _currentFilter = AlgorithmProvider.inBetween(
+    _currentFilter = inBetween(
       Timestamp.fromDate(
         DateTime(
           DateTime.now().year,
@@ -88,6 +95,8 @@ class AlgorithmProvider extends ChangeNotifier {
       _balanceDataUnnoticedChanges = 0;
     }
   }
+
+  // TODO: Refactor the rest of the file
 
   /// returns a new sort algorithm. It sorts using the first
   /// sort algorithm, but if the sort algorithm says 0 the next
@@ -186,11 +195,11 @@ class AlgorithmProvider extends ChangeNotifier {
   }
 
   static bool Function(dynamic) newerThan(Timestamp timestamp) {
-    return (dynamic a) => (a["time"] as Timestamp).compareTo(timestamp) <= 0;
+    return (dynamic a) => (a["time"] as Timestamp).compareTo(timestamp) >= 0;
   }
 
   static bool Function(dynamic) olderThan(Timestamp timestamp) {
-    return (dynamic a) => (a["time"] as Timestamp).compareTo(timestamp) >= 0;
+    return (dynamic a) => (a["time"] as Timestamp).compareTo(timestamp) <= 0;
   }
 
   static bool Function(dynamic) inBetween(
@@ -216,5 +225,41 @@ class AlgorithmProvider extends ChangeNotifier {
 
   static bool Function(dynamic) amountAtMost(num amount) {
     return (dynamic a) => (a["amount"] as num).compareTo(amount) <= 0;
+  }
+
+  void _updateToCurrentShownMonthSilently() {
+    if (currentShownMonth.month == DateTime.now().month &&
+        currentShownMonth.year == DateTime.now().year) {
+      setCurrentFilterAlgorithm(
+        AlgorithmProvider.inBetween(
+          Timestamp.fromDate(
+            DateTime(
+              DateTime.now().year,
+              DateTime.now().month,
+            ).subtract(const Duration(microseconds: 1)),
+          ),
+          Timestamp.fromDate(
+            DateTime(
+              DateTime.now().year,
+              DateTime.now().month + 1,
+            ),
+          ),
+        ),
+      );
+    } else {
+      setCurrentFilterAlgorithm(
+        AlgorithmProvider.inBetween(
+          Timestamp.fromDate(
+            currentShownMonth.subtract(const Duration(microseconds: 1)),
+          ),
+          Timestamp.fromDate(
+            DateTime(
+              currentShownMonth.year,
+              currentShownMonth.month + 1,
+            ),
+          ),
+        ),
+      );
+    }
   }
 }
