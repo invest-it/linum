@@ -51,7 +51,7 @@
     "home_screen_card/label-income": "INGRESOS",
     "home_screen_card/label-expenses": "GASTOS",
     "home_screen_card/label-total-balance": "Saldo",
-    "home_screen_card/label-total-balance-sub": "desde el inicio del uso",
+    "home_screen_card/label-total-balance-sub": "hasta hoy",
 
     "budget_screen/label-all-transactions": "Todas las transacciones",
     "budget_screen/button-filter": "FILTRO",
