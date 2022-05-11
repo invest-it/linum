@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:linum/backend_functions/local_app_localizations.dart';
-import 'package:linum/frontend_functions/size_guide.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
+import 'package:linum/utilities/backend/local_app_localizations.dart';
+import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/auth/login_form.dart';
 import 'package:provider/provider.dart';
-
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -25,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final OnboardingScreenProvider onboardingScreenProvider =
-    Provider.of<OnboardingScreenProvider>(
+        Provider.of<OnboardingScreenProvider>(
       context,
     );
 
@@ -39,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
       case OnboardingPageState.login:
         _loginYOffset = SizeGuide.keyboardIsOpened
             ? proportionateScreenHeightFraction(ScreenFraction.twofifths) -
-            (SizeGuide.keyboardHeight / 2)
+                (SizeGuide.keyboardHeight / 2)
             : proportionateScreenHeightFraction(ScreenFraction.twofifths);
 
         _loginXOffset = 0;
@@ -49,8 +48,8 @@ class _LoginScreenState extends State<LoginScreen> {
       case OnboardingPageState.register:
         _loginYOffset = SizeGuide.keyboardIsOpened
             ? proportionateScreenHeightFraction(ScreenFraction.twofifths) -
-            (SizeGuide.keyboardHeight / 2) -
-            32
+                (SizeGuide.keyboardHeight / 2) -
+                32
             : proportionateScreenHeightFraction(ScreenFraction.twofifths) - 32;
         _loginXOffset = 20;
         _loginWidth = windowWidth - 40;
@@ -66,8 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
         width: _loginWidth,
         curve: Curves.fastLinearToSlowEaseIn,
         duration: const Duration(milliseconds: 1200),
-        transform:
-        Matrix4.translationValues(_loginXOffset, _loginYOffset, 1),
+        transform: Matrix4.translationValues(_loginXOffset, _loginYOffset, 1),
         decoration: BoxDecoration(
           color: Theme.of(context)
               .colorScheme
@@ -80,8 +78,11 @@ class _LoginScreenState extends State<LoginScreen> {
           boxShadow: [
             BoxShadow(
               color: Theme.of(context).colorScheme.onSurface.withAlpha(
-                onboardingScreenProvider.pageState == OnboardingPageState.none ? 0 : 135,
-              ),
+                    onboardingScreenProvider.pageState ==
+                            OnboardingPageState.none
+                        ? 0
+                        : 135,
+                  ),
               blurRadius: 16,
             ),
           ],
@@ -95,16 +96,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   duration: const Duration(milliseconds: 800),
                   child: ClipRRect(
                     borderRadius: BorderRadius.only(
-                      topLeft: onboardingScreenProvider.pageState == OnboardingPageState.register
+                      topLeft: onboardingScreenProvider.pageState ==
+                              OnboardingPageState.register
                           ? const Radius.circular(32)
                           : Radius.zero,
-                      topRight: onboardingScreenProvider.pageState == OnboardingPageState.register
+                      topRight: onboardingScreenProvider.pageState ==
+                              OnboardingPageState.register
                           ? const Radius.circular(32)
                           : Radius.zero,
                     ),
                     child: Container(
                       width: double.infinity,
-                      height: onboardingScreenProvider.pageState == OnboardingPageState.register
+                      height: onboardingScreenProvider.pageState ==
+                              OnboardingPageState.register
                           ? 32 * 1.2
                           : 0,
                       color: Theme.of(context).colorScheme.primary,
@@ -122,10 +126,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   .textTheme
                                   .bodyText1
                                   ?.copyWith(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onPrimary,
-                              ),
+                                    color:
+                                        Theme.of(context).colorScheme.onPrimary,
+                                  ),
                             ),
                           ),
                         ],
@@ -136,7 +139,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 //CONTENTS OF LOGIN HERE
                 LoginForm(),
-
               ],
             ),
             Positioned(
@@ -144,8 +146,8 @@ class _LoginScreenState extends State<LoginScreen> {
               bottom: SizeGuide.keyboardIsOpened
                   ? 0
                   : proportionateScreenHeightFraction(
-                ScreenFraction.twofifths,
-              ),
+                      ScreenFraction.twofifths,
+                    ),
               right: 0,
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(
@@ -154,7 +156,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 child: GestureDetector(
                   onTap: () {
-                    onboardingScreenProvider.setPageState(OnboardingPageState.register);
+                    onboardingScreenProvider
+                        .setPageState(OnboardingPageState.register);
                   },
                   child: Container(
                     width: double.infinity,
@@ -174,10 +177,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 .textTheme
                                 .bodyText1
                                 ?.copyWith(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onPrimary,
-                            ),
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary,
+                                ),
                           ),
                         ),
                       ],

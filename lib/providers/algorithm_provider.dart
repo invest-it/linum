@@ -2,6 +2,8 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/utilities/frontend/filter_functions.dart';
+import 'package:linum/utilities/frontend/sort_functions.dart';
 
 /// gives sort algorithm (later it will probably also have filter algorithm) and
 /// all algorithm will have an active version instead of being static
@@ -53,6 +55,20 @@ class AlgorithmProvider extends ChangeNotifier {
   AlgorithmProvider() {
     resetCurrentShownMonth();
     _currentSorter = timeNewToOld;
+    _currentFilter = inBetween(
+      Timestamp.fromDate(
+        DateTime(
+          DateTime.now().year,
+          DateTime.now().month,
+        ).subtract(const Duration(microseconds: 1)),
+      ),
+      Timestamp.fromDate(
+        DateTime(
+          DateTime.now().year,
+          DateTime.now().month + 1,
+        ),
+      ),
+    );
   }
 
   void setCurrentSortAlgorithm(int Function(dynamic, dynamic) sorter) {
@@ -79,6 +95,8 @@ class AlgorithmProvider extends ChangeNotifier {
       _balanceDataUnnoticedChanges = 0;
     }
   }
+
+  // TODO: Refactor the rest of the file
 
   /// returns a new sort algorithm. It sorts using the first
   /// sort algorithm, but if the sort algorithm says 0 the next

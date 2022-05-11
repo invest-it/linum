@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
-import 'package:linum/backend_functions/statistic_calculations.dart';
-import 'package:linum/balance_data/repeated_balance_data_manager.dart';
-import 'package:linum/frontend_functions/loading_spinner.dart';
 import 'package:linum/providers/algorithm_provider.dart';
+import 'package:linum/utilities/backend/statistic_calculations.dart';
+import 'package:linum/utilities/balance_data/repeated_balance_data_manager.dart';
 import 'package:linum/widgets/abstract/abstract_home_screen_card.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
+import 'package:linum/widgets/loading_spinner.dart';
 
 class BalanceDataStreamBuilderManager {
   /// Returns a StreamBuilder that builds the ListView from the document-datastream

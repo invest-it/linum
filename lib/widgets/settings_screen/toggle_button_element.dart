@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/utilities/frontend/size_guide.dart';
 
 class ToggleButtonElement extends StatelessWidget {
   final String label;

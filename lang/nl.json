@@ -50,6 +50,8 @@
     "home_screen_card/label-current-balance": "Huidig maandelijks saldo",
     "home_screen_card/label-income": "INKOMEN",
     "home_screen_card/label-expenses": "UITGAVEN",
+    "home_screen_card/label-total-balance": "Saldo",
+    "home_screen_card/label-total-balance-sub": "sinds ingebruikname",
 
 
     "budget_screen/label-all-transactions": "Alle Verrichtingen",

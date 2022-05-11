@@ -1,13 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
-import 'package:linum/backend_functions/local_app_localizations.dart';
-import 'package:linum/backend_functions/url_handler.dart';
-import 'package:linum/frontend_functions/materialcolor_creator.dart';
-import 'package:linum/frontend_functions/size_guide.dart';
-import 'package:linum/frontend_functions/user_alert.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
+import 'package:linum/utilities/backend/local_app_localizations.dart';
+import 'package:linum/utilities/backend/url_handler.dart';
+import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:linum/widgets/auth/google_sign_in_btn.dart';
 import 'package:provider/provider.dart';
 
@@ -304,7 +303,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 gradient: LinearGradient(
                   colors: [
                     Theme.of(context).colorScheme.primary,
-                    createMaterialColor(const Color(0xFFC1E695)),
+                    const Color(0xFFC1E695),
                   ],
                 ),
                 elevation: 0,
@@ -322,9 +321,9 @@ class _RegisterFormState extends State<RegisterForm> {
               SizedBox(
                 height: proportionateScreenHeight(8),
               ),
+              // ignore: prefer_const_constructors
               GoogleSignInButton() // Won't reload on Language-Switch if const
-// SAVE THIS SPACE FOR ALTERNATE SIGNUP FUNCTIONS
-
+              // SAVE THIS SPACE FOR ALTERNATE SIGNUP FUNCTIONS
               // OutlinedButton(
               //   //to-do: implement this functionality
               //   onPressed: null,
@@ -352,7 +351,6 @@ class _RegisterFormState extends State<RegisterForm> {
               //   ),
               // ),
             ],
-
           ),
         ),
       ],
