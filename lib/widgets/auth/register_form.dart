@@ -285,6 +285,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     ),
                   ],
                 ),
+                textAlign: TextAlign.center,
               ),
               /*
               // TODO: Remove in prod
