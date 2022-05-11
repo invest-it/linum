@@ -61,7 +61,7 @@ class HomeScreenCardBack extends StatelessWidget {
               ),
             ),
           ],
-        ), //TODO: Could be refactored even more
+        ),
         upwardArrow: HomeScreenCardArrow(
           arrowBoxColor: Theme.of(context).colorScheme.tertiaryContainer,
           arrowColor: Theme.of(context).colorScheme.background,
