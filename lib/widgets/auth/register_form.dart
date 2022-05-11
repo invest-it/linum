@@ -23,8 +23,6 @@ class _RegisterFormState extends State<RegisterForm> {
   final _mailController = TextEditingController();
   final _passController = TextEditingController();
 
-  bool _agbCheck = false;
-  bool _agbNullCheck = false;
   bool _mailValidate = false;
   bool _passValidate = false;
 
@@ -37,8 +35,6 @@ class _RegisterFormState extends State<RegisterForm> {
         onboardingScreenProvider.hasPageChanged) {
       _mailController.clear();
       _passController.clear();
-      _agbCheck = false;
-      _agbNullCheck = false;
       _mailValidate = false;
       _passValidate = false;
     }
@@ -55,8 +51,6 @@ class _RegisterFormState extends State<RegisterForm> {
           setState(() {
             userAlert.showMyDialog(message);
             _passController.clear();
-            _agbCheck = false;
-            _agbNullCheck = false;
             _mailValidate = false;
             _passValidate = false;
           });
@@ -70,8 +64,6 @@ class _RegisterFormState extends State<RegisterForm> {
           onboardingScreenProvider.setEmailLoginInputSilently(_mail);
           _mailController.clear();
           _passController.clear();
-          _agbNullCheck = false;
-          _agbCheck = false;
           _mailValidate = false;
           _passValidate = false;
           onboardingScreenProvider.setPageState(OnboardingPageState.login);
@@ -184,70 +176,6 @@ class _RegisterFormState extends State<RegisterForm> {
               SizedBox(
                 height: proportionateScreenHeight(16),
               ),
-              CheckboxListTile(
-                // title: Text(
-                //     'Ich habe die AGB und die Erklärung zum Datenschutz gelesen und akzeptiere sie.',
-                //     style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                //         fontWeight: FontWeight.w600,
-                //         color: Theme.of(context).colorScheme.onSurface)),
-                title: RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: AppLocalizations.of(context)!.translate(
-                          'onboarding_screen/register-privacy/label-leading',
-                        ),
-                        style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: Theme.of(context).colorScheme.onSurface,
-                            ),
-                      ),
-                      TextSpan(
-                        text: AppLocalizations.of(context)!.translate(
-                          'onboarding_screen/register-privacy/label-link',
-                        ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () async {
-                            launchURL('https://investit-academy.de/privacy');
-                          },
-                        style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: Theme.of(context).colorScheme.primary,
-                              decoration: TextDecoration.underline,
-                            ),
-                      ),
-                      TextSpan(
-                        text: AppLocalizations.of(context)!.translate(
-                          'onboarding_screen/register-privacy/label-trailing',
-                        ),
-                        style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: Theme.of(context).colorScheme.onSurface,
-                            ),
-                      ),
-                    ],
-                  ),
-                ),
-                value: _agbCheck,
-                onChanged: (newVal) {
-                  setState(() {
-                    _agbCheck = newVal!;
-                    newVal == true
-                        ? _agbNullCheck = false
-                        : _agbNullCheck = true;
-                  });
-                },
-                controlAffinity: ListTileControlAffinity.trailing,
-                checkColor: Theme.of(context).colorScheme.onPrimary,
-                activeColor: Theme.of(context).colorScheme.primaryContainer,
-                secondary: const Icon(Icons.verified_user_rounded),
-                visualDensity: const VisualDensity(
-                  horizontal: -4,
-                ),
-              ),
-              SizedBox(
-                height: proportionateScreenHeight(32),
-              ),
               // Container(
               //   height: 50,
               //   decoration: BoxDecoration(
@@ -266,44 +194,22 @@ class _RegisterFormState extends State<RegisterForm> {
               //     ),
               //   ),
               // ),
-              Text(
-                _agbNullCheck
-                    ? AppLocalizations.of(context)!.translate(
-                        "onboarding_screen/register-privacy/label-error",
-                      )
-                    : '',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                      color: Theme.of(context).colorScheme.error,
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
               GradientButton(
                 increaseHeightBy: proportionateScreenHeight(16),
-                callback: _agbCheck
-                    ? () {
-                        setState(() {
-                          _mailController.text.isEmpty
-                              ? _mailValidate = true
-                              : _mailValidate = false;
-                          _passController.text.isEmpty
-                              ? _passValidate = true
-                              : _passValidate = false;
-                        });
+                callback: () {
+                  setState(() {
+                    _mailController.text.isEmpty
+                        ? _mailValidate = true
+                        : _mailValidate = false;
+                    _passController.text.isEmpty
+                        ? _passValidate = true
+                        : _passValidate = false;
+                  });
 
-                        if (_mailValidate == false && _passValidate == false) {
-                          signUp(_mailController.text, _passController.text);
-                        }
-                      }
-                    : () => setState(() {
-                          _mailController.text.isEmpty
-                              ? _mailValidate = true
-                              : _mailValidate = false;
-                          _passController.text.isEmpty
-                              ? _passValidate = true
-                              : _passValidate = false;
-                          _agbNullCheck = true;
-                        }),
+                  if (_mailValidate == false && _passValidate == false) {
+                    signUp(_mailController.text, _passController.text);
+                  }
+                },
                 gradient: LinearGradient(
                   colors: [
                     Theme.of(context).colorScheme.primary,
@@ -339,6 +245,47 @@ class _RegisterFormState extends State<RegisterForm> {
                   ),
                 )
               ],
+              SizedBox(
+                height: proportionateScreenHeight(32),
+              ),
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: AppLocalizations.of(context)!.translate(
+                        'onboarding_screen/register-privacy/label-leading',
+                      ),
+                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
+                    TextSpan(
+                      text: AppLocalizations.of(context)!.translate(
+                        'onboarding_screen/register-privacy/label-link',
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () async {
+                          launchURL('https://investit-academy.de/privacy');
+                        },
+                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).colorScheme.primary,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                    TextSpan(
+                      text: AppLocalizations.of(context)!.translate(
+                        'onboarding_screen/register-privacy/label-trailing',
+                      ),
+                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               /*
               // TODO: Remove in prod
                SignInWithAppleButton(
