@@ -13,6 +13,7 @@ class HomeScreenCardSide extends StatelessWidget {
   final Row middleRow;
   final HomeScreenCardArrow upwardArrow;
   final HomeScreenCardArrow downwardArrow;
+  final bool isBack;
   const HomeScreenCardSide({
     Key? key,
     required this.flipCardController,
@@ -22,6 +23,7 @@ class HomeScreenCardSide extends StatelessWidget {
     required this.middleRow,
     required this.upwardArrow,
     required this.downwardArrow,
+    required this.isBack,
   }) : super(key: key);
 
   @override
@@ -92,6 +94,7 @@ class HomeScreenCardSide extends StatelessWidget {
                         data: data,
                         upwardArrow: upwardArrow,
                         downwardArrow: downwardArrow,
+                        isBack: isBack,
                       ),
                     )
                   ],

@@ -49,6 +49,7 @@ class HomeScreenCardFront extends StatelessWidget {
       child: HomeScreenCardSide(
         flipCardController: flipCardController,
         data: data,
+        isBack: false,
         headline: Text(
           dateFormat.format(
             algorithmProvider.currentShownMonth,

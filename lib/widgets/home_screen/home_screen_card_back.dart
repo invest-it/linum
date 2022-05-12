@@ -23,6 +23,7 @@ class HomeScreenCardBack extends StatelessWidget {
       child: HomeScreenCardSide(
         flipCardController: flipCardController,
         data: data,
+        isBack: true,
         headline: Text(
           AppLocalizations.of(context)!
               .translate('home_screen_card/label-total-balance'),

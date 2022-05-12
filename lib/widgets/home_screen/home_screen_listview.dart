@@ -387,7 +387,8 @@ class HomeScreenListView implements BalanceDataListView {
         padding: const EdgeInsets.only(
           bottom: 32.0,
         ),
-        children: list);
+        children: list,
+    );
   }
 
   String translateCategory(

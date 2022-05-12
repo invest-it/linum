@@ -14,7 +14,8 @@
     "onboarding_screen/card4-description": "Linum generiert ganz automatisch relevante Statistiken für dich. So kannst du nachvollziehen, wie du mit deinem Budget umgehst.",
     "onboarding_screen/register-button": "Jetzt registrieren!",
     "onboarding_screen/login-button": "Ich habe einen Account",
-    "onboarding_screen/google-button": "Anmelden mit Google",
+    "onboarding_screen/google-button": "Mit Google fortfahren",
+    "onboarding_screen/apple-button": "Mit Apple fortfahren",
     "onboarding_screen/svg-credit-label": "Illustrationen von Freepik",
 
     "onboarding_screen/cta-login": "Du hast einen Account? Hier einloggen",
@@ -36,23 +37,21 @@
     "onboarding_screen/register-email-errorlabel": "Bitte gib eine gültige E-Mail-Adresse ein.",
     "onboarding_screen/register-password-errorlabel": "Bitte gib ein Passwort mit mindestens 6 Zeichen ein.",
 
-    "onboarding_screen/register-privacy/label-leading": "Ich habe die ",
+    "onboarding_screen/register-privacy/label-leading": "Durch die Anmeldung erklärst du dich mit unserer ",
     "onboarding_screen/register-privacy/label-link": "Datenschutzerklärung",
-    "onboarding_screen/register-privacy/label-trailing": " gelesen und akzeptiere sie.",
-    "onboarding_screen/register-privacy/label-error": "Sie müssen die AGB akzeptieren, bevor Sie sich registrieren können.",
-
+    "onboarding_screen/register-privacy/label-trailing": " einverstanden.",
 
     "home_screen/label-recent-transactions": "Neueste Transaktionen",
     "home_screen/button-show-more": "MEHR",
     "home_screen/free-text": "Gratis",
 
 
-    "home_screen_card/home-screen-card-toast": "Swipe nach links und rechts, um vorige oder kommende Monate anzusehen. Doppelt tippen, um in den aktuellen Monat zurückzukehren.",
+    "home_screen_card/home-screen-card-toast": "Swipe nach links und rechts, um vorige oder kommende Monate anzusehen. Gedrückt halten, um in den aktuellen Monat zurückzukehren.",
     "home_screen_card/label-current-balance": "Aktuelle Monatsbilanz",
     "home_screen_card/label-income": "EINNAHMEN",
     "home_screen_card/label-expenses": "AUSGABEN",
     "home_screen_card/label-total-balance": "Kontostand",
-    "home_screen_card/label-total-balance-sub": "seit Nutzungsbeginn",
+    "home_screen_card/label-total-balance-sub": "bis Heute",
 
 
     "budget_screen/label-all-transactions": "Alle Transaktionen",

@@ -10,12 +10,14 @@ class HomeScreenCardBottomRow extends StatelessWidget {
   final HomeScreenCardData data;
   final HomeScreenCardArrow upwardArrow;
   final HomeScreenCardArrow downwardArrow;
+  final bool isBack;
 
   const HomeScreenCardBottomRow({
     Key? key,
     required this.data,
     required this.upwardArrow,
     required this.downwardArrow,
+    this.isBack = false,
   }) : super(key: key);
 
   IconButton _buildGoToCurrentDateIcon(BuildContext context) {
@@ -23,7 +25,9 @@ class HomeScreenCardBottomRow extends StatelessWidget {
         Provider.of<AlgorithmProvider>(context);
     final DateTime now = DateTime.now();
 
-    return algorithmProvider.currentShownMonth != DateTime(now.year, now.month)
+    return (algorithmProvider.currentShownMonth !=
+                DateTime(now.year, now.month) &&
+            !isBack)
         ? IconButton(
             icon: const Icon(Icons.today_rounded),
             color: Theme.of(context).colorScheme.onSurface.withAlpha(64),
