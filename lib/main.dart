@@ -1,7 +1,9 @@
+import 'dart:developer' as dev;
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -208,6 +210,21 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final bool? testing;
   _MyHomePageState({this.testing});
+
+  @override
+  void initState() {
+    super.initState();
+
+    FirebaseMessaging.instance.getInitialMessage();
+
+    //Foreground Work
+    FirebaseMessaging.onMessage.listen((message) {
+      if (message.notification != null) {
+        dev.log(message.notification!.title.toString());
+        dev.log(message.notification!.body.toString());
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
