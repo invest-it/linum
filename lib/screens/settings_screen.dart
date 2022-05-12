@@ -254,45 +254,47 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             const ListDivider(),
 
-            const ListHeader(
-              'settings_screen/pin-lock/label-title',
-              tooltipMessage: 'settings_screen/pin-lock/label-tooltip',
-            ),
-            Column(
-              children: [
-                SwitchListTile(
-                  key: const Key("pinActivationSwitch"),
-                  title: Text(
-                    AppLocalizations.of(context)!
-                        .translate("settings_screen/pin-lock/switch-label"),
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                  value: pinCodeProvider.pinActive,
-                  activeColor: Theme.of(context).colorScheme.primaryContainer,
-                  onChanged: pinCodeProvider.pinActiveStillLoading
-                      ? null
-                      : (_) {
-                          pinCodeProvider.togglePINLock();
-                        },
-                ),
-                if (pinCodeProvider.pinActive)
-                  ListTile(
-                    key: const Key("pinChangeSwitch"),
-                    dense: true,
-                    trailing: const Icon(Icons.arrow_forward_ios_rounded),
-                    title: Text(
-                      AppLocalizations.of(context)!.translate(
-                        "settings_screen/pin-lock/label-change-pin",
-                      ),
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                    onTap: () {
-                      pinCodeProvider.triggerPINChange();
-                    },
-                  ),
-              ],
-            ),
-            const ListDivider(),
+            /// PIN Feature will be turned off until we have time to fix issue #181 properly.
+
+            // const ListHeader(
+            //   'settings_screen/pin-lock/label-title',
+            //   tooltipMessage: 'settings_screen/pin-lock/label-tooltip',
+            // ),
+            // Column(
+            //   children: [
+            //     SwitchListTile(
+            //       key: const Key("pinActivationSwitch"),
+            //       title: Text(
+            //         AppLocalizations.of(context)!
+            //             .translate("settings_screen/pin-lock/switch-label"),
+            //         style: Theme.of(context).textTheme.bodyText1,
+            //       ),
+            //       value: pinCodeProvider.pinActive,
+            //       activeColor: Theme.of(context).colorScheme.primaryContainer,
+            //       onChanged: pinCodeProvider.pinActiveStillLoading
+            //           ? null
+            //           : (_) {
+            //               pinCodeProvider.togglePINLock();
+            //             },
+            //     ),
+            //     if (pinCodeProvider.pinActive)
+            //       ListTile(
+            //         key: const Key("pinChangeSwitch"),
+            //         dense: true,
+            //         trailing: const Icon(Icons.arrow_forward_ios_rounded),
+            //         title: Text(
+            //           AppLocalizations.of(context)!.translate(
+            //             "settings_screen/pin-lock/label-change-pin",
+            //           ),
+            //           style: Theme.of(context).textTheme.bodyText1,
+            //         ),
+            //         onTap: () {
+            //           pinCodeProvider.triggerPINChange();
+            //         },
+            //       ),
+            //   ],
+            // ),
+            // const ListDivider(),
 
             /// SPECIAL SETTINGS
             /// This setting will be hidden until implememted.
