@@ -1,7 +1,7 @@
 import 'dart:io';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
@@ -9,8 +9,8 @@ import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:linum/widgets/auth/forgot_password.dart';
-import 'package:linum/widgets/auth/sign_in_with_google_button.dart';
 import 'package:linum/widgets/auth/login_button.dart';
+import 'package:linum/widgets/auth/sign_in_with_google_button.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -66,6 +66,9 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     final OnboardingScreenProvider onboardingScreenProvider =
         Provider.of<OnboardingScreenProvider>(context);
+
+    final AuthenticationService auth =
+        Provider.of<AuthenticationService>(context);
 
     if (onboardingScreenProvider.pageState == OnboardingPageState.login &&
         onboardingScreenProvider.hasPageChanged) {
@@ -196,39 +199,7 @@ class _LoginFormState extends State<LoginForm> {
               //   ),
               // ),
 
-              GradientButton(
-                increaseHeightBy: proportionateScreenHeight(16),
-                callback: () {
-                  setState(() {
-                    _mailController!.text.isEmpty
-                        ? _mailValidate = true
-                        : _mailValidate = false;
-                    _passController.text.isEmpty
-                        ? _passValidate = true
-                        : _passValidate = false;
-                  });
-
-                  if (_mailValidate == false && _passValidate == false) {
-                    logIn(_mailController!.text, _passController.text);
-                  }
-                },
-                gradient: LinearGradient(
-                  colors: [
-                    Theme.of(context).colorScheme.primary,
-                    const Color(0xFFC1E695),
-                  ],
-                ),
-                elevation: 0,
-                increaseWidthBy: double.infinity,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  AppLocalizations.of(context)!
-                      .translate('onboarding_screen/login-lip-login-button'),
-                  style: Theme.of(context).textTheme.button,
-                ),
-              ),
+              LoginButton(callback: onLoginButtonClicked),
               SizedBox(
                 height: proportionateScreenHeight(8),
               ),

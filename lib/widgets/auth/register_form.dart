@@ -1,16 +1,16 @@
 import 'dart:io';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/backend/url_handler.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
-import 'package:linum/widgets/auth/sign_in_with_google_button.dart';
 import 'package:linum/widgets/auth/register_button.dart';
+import 'package:linum/widgets/auth/sign_in_with_google_button.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -43,8 +43,6 @@ class _RegisterFormState extends State<RegisterForm> {
         setState(() {
           userAlert.showMyDialog(message);
           _passController.clear();
-          _agbCheck = false;
-          _agbNullCheck = false;
           _mailValidate = false;
           _passValidate = false;
         });
@@ -58,8 +56,6 @@ class _RegisterFormState extends State<RegisterForm> {
         onboardingScreenProvider.setEmailLoginInputSilently(_mail);
         _mailController.clear();
         _passController.clear();
-        _agbNullCheck = false;
-        _agbCheck = false;
         _mailValidate = false;
         _passValidate = false;
         onboardingScreenProvider.setPageState(OnboardingPageState.login);
@@ -68,37 +64,27 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   void onRegisterButtonClicked() {
-    if (_agbCheck) {
-      setState(() {
-        _mailController.text.isEmpty
-            ? _mailValidate = true
-            : _mailValidate = false;
-        _passController.text.isEmpty
-            ? _passValidate = true
-            : _passValidate = false;
-      });
-      if (_mailValidate == false && _passValidate == false) {
-        _signUp(_mailController.text, _passController.text);
-        FirebaseAnalytics.instance.logSignUp(signUpMethod: "Register Form");
-      }
-    } else {
-      setState(() {
-        _mailController.text.isEmpty
-            ? _mailValidate = true
-            : _mailValidate = false;
-        _passController.text.isEmpty
-            ? _passValidate = true
-            : _passValidate = false;
-        _agbNullCheck = true;
-      });
+    setState(() {
+      _mailController.text.isEmpty
+          ? _mailValidate = true
+          : _mailValidate = false;
+      _passController.text.isEmpty
+          ? _passValidate = true
+          : _passValidate = false;
+    });
+    if (_mailValidate == false && _passValidate == false) {
+      _signUp(_mailController.text, _passController.text);
+      FirebaseAnalytics.instance.logSignUp(signUpMethod: "Register Form");
     }
-
   }
 
   @override
   Widget build(BuildContext context) {
     final OnboardingScreenProvider onboardingScreenProvider =
         Provider.of<OnboardingScreenProvider>(context);
+
+    final AuthenticationService auth =
+      Provider.of<AuthenticationService>(context);
 
     if (onboardingScreenProvider.pageState == OnboardingPageState.register &&
         onboardingScreenProvider.hasPageChanged) {
@@ -109,33 +95,6 @@ class _RegisterFormState extends State<RegisterForm> {
     }
 
 
-    void signUp(String _mail, String _pass) {
-      auth.signUp(
-        _mail.trim(),
-        _pass,
-        onError: (String message) {
-          setState(() {
-            userAlert.showMyDialog(message);
-            _passController.clear();
-            _mailValidate = false;
-            _passValidate = false;
-          });
-        },
-        onNotVerified: () {
-          userAlert.showMyDialog(
-            'alertdialog/signup-verification/message',
-            title: 'alertdialog/signup-verification/title',
-            actionTitle: 'alertdialog/signup-verification/action',
-          );
-          onboardingScreenProvider.setEmailLoginInputSilently(_mail);
-          _mailController.clear();
-          _passController.clear();
-          _mailValidate = false;
-          _passValidate = false;
-          onboardingScreenProvider.setPageState(OnboardingPageState.login);
-        },
-      );
-    }
 
     return Column(
       children: [
@@ -260,40 +219,7 @@ class _RegisterFormState extends State<RegisterForm> {
               //     ),
               //   ),
               // ),
-              GradientButton(
-                increaseHeightBy: proportionateScreenHeight(16),
-                callback: () {
-                  setState(() {
-                    _mailController.text.isEmpty
-                        ? _mailValidate = true
-                        : _mailValidate = false;
-                    _passController.text.isEmpty
-                        ? _passValidate = true
-                        : _passValidate = false;
-                  });
-
-                  if (_mailValidate == false && _passValidate == false) {
-                    signUp(_mailController.text, _passController.text);
-                  }
-                },
-                gradient: LinearGradient(
-                  colors: [
-                    Theme.of(context).colorScheme.primary,
-                    const Color(0xFFC1E695),
-                  ],
-                ),
-                elevation: 0,
-                increaseWidthBy: double.infinity,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  AppLocalizations.of(context)!.translate(
-                    'onboarding_screen/register-lip-signup-button',
-                  ),
-                  style: Theme.of(context).textTheme.button,
-                ),
-              ),
+              RegisterButton(callback: onRegisterButtonClicked),
               SizedBox(
                 height: proportionateScreenHeight(12),
               ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
-import 'package:linum/backend_functions/local_app_localizations.dart';
-import 'package:linum/frontend_functions/materialcolor_creator.dart';
-import 'package:linum/frontend_functions/size_guide.dart';
+import 'package:linum/utilities/backend/local_app_localizations.dart';
+import 'package:linum/utilities/frontend/size_guide.dart';
+
 
 class LoginButton extends StatelessWidget {
   final VoidCallback callback;
@@ -16,7 +16,7 @@ class LoginButton extends StatelessWidget {
       gradient: LinearGradient(
         colors: [
           Theme.of(context).colorScheme.primary,
-          createMaterialColor(const Color(0xFFC1E695)),
+          const Color(0xFFC1E695),
         ],
       ),
       elevation: 0,
