@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -136,6 +138,8 @@ class PinCodeProvider extends ChangeNotifier {
   /// Stores a new value for the PIN on the device
   Future<void> _storePIN(String code) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    log(_lastEmail ?? "No mail found"); // TODO: Remove
+    log(code);
     prefs.setString('${_lastEmail!}.code', code);
     // dev.log(
     //   prefs.getString('${_lastEmail!}.code') ??
@@ -269,7 +273,7 @@ class PinCodeProvider extends ChangeNotifier {
       _pinSlot++;
       _ringColor = const Color(0XFF279E44);
 
-      //if code # is complete, check if it is correct
+      // if code # is complete, check if it is correct
       // is not an invariant boolean
       // ignore: invariant_booleans
       if (_code.length == 4) {
@@ -277,22 +281,22 @@ class PinCodeProvider extends ChangeNotifier {
           case PINLockIntent.initialize:
             if (_lastEmail != 'Error!') {
               _storePIN(_code);
+              toastFromTranslationKey("lock_screen/toast-pin-set");
+            } else {
+              toastFromTranslationKey("lock_screen/errors/last-mail-missing");
             }
-            Fluttertoast.showToast(
-              msg: AppLocalizations.of(_context)!
-                  .translate("lock_screen/toast-pin-set"),
-            );
+
             _screenIndexProvider.setPageIndex(3);
             _emptyCode();
             break;
           case PINLockIntent.change:
             if (_lastEmail != 'Error!') {
               _storePIN(_code);
+              toastFromTranslationKey("lock_screen/toast-pin-changed");
+            } else {
+              toastFromTranslationKey("lock_screen/errors/last-mail-missing");
             }
-            Fluttertoast.showToast(
-              msg: AppLocalizations.of(_context)!
-                  .translate("lock_screen/toast-pin-changed"),
-            );
+
             _screenIndexProvider.setPageIndex(3);
             _emptyCode();
             break;
@@ -304,6 +308,13 @@ class PinCodeProvider extends ChangeNotifier {
       }
       notifyListeners();
     }
+  }
+
+  void toastFromTranslationKey(String key) {
+    Fluttertoast.showToast(
+      msg: AppLocalizations.of(_context)!
+          .translate(key),
+    );
   }
 
   /// If there is at least one digit in the [_code] input variable, remove the last character.

@@ -16,6 +16,16 @@ class LockScreen extends StatefulWidget {
 }
 
 class _LockScreenState extends State<LockScreen> {
+
+  List<NumericField> _generateNumericFields(List<int> numbers, PinCodeProvider pinCodeProvider) {
+    final fields = <NumericField>[];
+    for (final number in numbers) {
+      final field = NumericField(number, pinCodeProvider.addDigit);
+      fields.add(field);
+    }
+    return fields;
+  }
+
   @override
   Widget build(BuildContext context) {
     final AuthenticationService auth =
@@ -80,9 +90,7 @@ class _LockScreenState extends State<LockScreen> {
                 Expanded(
                   child: Column(
                     children: [
-                      NumericField(1, () {}),
-                      NumericField(4, () {}),
-                      NumericField(7, () {}),
+                      ..._generateNumericFields([1, 4, 7], pinCodeProvider),
                       //Backspace
                       Expanded(
                         child: ConstrainedBox(
@@ -108,20 +116,13 @@ class _LockScreenState extends State<LockScreen> {
                 ),
                 Expanded(
                   child: Column(
-                    children: [
-                      NumericField(2, () {}),
-                      NumericField(5, () {}),
-                      NumericField(8, () {}),
-                      NumericField(0, () {}),
-                    ],
+                    children: _generateNumericFields([2, 5, 8, 0], pinCodeProvider),
                   ),
                 ),
                 Expanded(
                   child: Column(
                     children: [
-                      NumericField(3, () {}),
-                      NumericField(6, () {}),
-                      NumericField(9, () {}),
+                      ..._generateNumericFields([3, 6, 9], pinCodeProvider),
                       // If Fingerprint is enabled, trigger dialog here
                       Expanded(
                         child: ConstrainedBox(

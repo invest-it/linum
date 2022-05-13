@@ -44,8 +44,7 @@ class AuthenticationService extends ChangeNotifier {
       );
 
       if (isEmailVerified) {
-        final SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('lastMail', email);
+        await setLastMail(email);
         notifyListeners();
         onComplete("Successfully signed in to Firebase");
       } else {
@@ -78,6 +77,7 @@ class AuthenticationService extends ChangeNotifier {
       );
 
       if (isEmailVerified) {
+        await setLastMail(email);
         notifyListeners();
         onComplete("Successfully signed up to Firebase");
       } else {
@@ -106,6 +106,7 @@ class AuthenticationService extends ChangeNotifier {
 
     try {
       await _firebaseAuth.signInWithCredential(credential);
+      await setLastMail(_firebaseAuth.currentUser!.email);
       notifyListeners();
       onComplete("Successfully signed in to Firebase");
     } on FirebaseAuthException catch (e) {
@@ -135,6 +136,7 @@ class AuthenticationService extends ChangeNotifier {
       );
 
       await _firebaseAuth.signInWithCredential(oauthCredential);
+      await setLastMail(_firebaseAuth.currentUser!.email);
       notifyListeners();
       onComplete("Successfully signed in to Firebase");
     } on FirebaseAuthException catch (e) {
@@ -266,6 +268,14 @@ class AuthenticationService extends ChangeNotifier {
     } on FirebaseAuthException catch (e) {
       onError("auth/${e.code}");
     }
+  }
+
+  Future<void> setLastMail(String? email) async {
+    if (email == null) {
+      return;
+    }
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('lastMail', email);
   }
 
   void updateLanguageCode(BuildContext context) {
