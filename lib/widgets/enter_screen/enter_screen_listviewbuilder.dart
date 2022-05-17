@@ -64,115 +64,133 @@ class _EnterScreenListViewBuilderState
     //     Provider.of<BalanceDataProvider>(context);
     myController ??= TextEditingController(text: enterScreenProvider.name);
     return Center(
-      child: Column(
-        children: [
-          SizedBox(
-            height: proportionateScreenHeight(50),
-          ),
-          //the text field where the user describes e.g. what he bought
-          SizedBox(
-            width: proportionateScreenWidth(281),
-            child: TextField(
-              maxLength: 32,
-              controller: myController,
-              showCursor: true,
-              decoration: InputDecoration(
-                hintText: _hintTextChooser(enterScreenProvider),
-                hintStyle: const TextStyle(),
-                counter: const SizedBox.shrink(),
-                border: InputBorder.none,
-                focusedBorder: InputBorder.none,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: proportionateScreenHeight(50),
+            ),
+            //the text field where the user describes e.g. what he bought
+            SizedBox(
+              width: proportionateScreenWidth(281),
+              child: TextField(
+                maxLength: 32,
+                controller: myController,
+                showCursor: true,
+                decoration: InputDecoration(
+                  hintText: _hintTextChooser(enterScreenProvider),
+                  hintStyle: const TextStyle(),
+                  counter: const SizedBox.shrink(),
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                ),
+                style: Theme.of(context).textTheme.headline5,
+                onChanged: (_) {
+                  enterScreenProvider.setName(myController!.text);
+                },
               ),
-              style: Theme.of(context).textTheme.headline5,
-              onChanged: (_) {
-                enterScreenProvider.setName(myController!.text);
-              },
             ),
-          ),
 
-          SizedBox(
-            width: proportionateScreenWidth(300),
-            //the list view that contains the different categories
-            child: ListView.separated(
-              shrinkWrap: true,
-              padding: const EdgeInsets.all(8),
-              //as repeat is the last item and we dont want to implement it
-              //in the MVP the itemCount has to be cut by one
-              itemCount: calculateItemCount(enterScreenProvider),
-              itemBuilder: (BuildContext context, int index) {
-                return GestureDetector(
-                  onTap: () => _onCategoryPressed(
-                    index,
-                    // widget.categoriesTransaction,
-                    enterScreenProvider,
-                    accountSettingsProvider,
-                  ),
-                  child: SizedBox(
-                    height: 50,
-                    child: Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(8.0),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(
-                              color: Theme.of(context).colorScheme.background,
-                            ),
-                            borderRadius: BorderRadius.circular(5),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.grey,
-                                blurRadius: 2.0,
-                                offset: Offset(
-                                  0.5,
-                                  2.0,
-                                ), // shadow direction: bottom right
-                              )
-                            ],
-                          ),
-                          child: Icon(
-                            <IconData>[
-                              _selectIcon(enterScreenProvider).icon ??
-                                  Icons.error,
-                              timeEntryCategory.icon,
-                              categoriesRepeat[enterScreenProvider
-                                      .repeatDurationEnum]!["entryCategory"]
-                                  .icon as IconData,
-                            ][index],
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          "${AppLocalizations.of(context)!.translate(
-                            [
-                              "enter_screen_attribute_category",
-                              timeEntryCategory.label,
-                              repeatDurationEntryCategory.label,
-                            ][index],
-                          )}: ",
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        //displays the selecte option behind the category/repetiton etc.
-                        //e.g. Category : Food <-- Food is the select Text
-                        _selectText(
-                          index,
-                          enterScreenProvider,
-                          accountSettingsProvider,
-                        ),
-                      ],
+            SizedBox(
+              width: proportionateScreenWidth(300),
+              //the list view that contains the different categories
+              child: ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                //primary: true,
+                padding: const EdgeInsets.all(8),
+                //as repeat is the last item and we dont want to implement it
+                //in the MVP the itemCount has to be cut by one
+                itemCount: calculateItemCount(enterScreenProvider),
+                itemBuilder: (BuildContext context, int index) {
+                  return GestureDetector(
+                    onTap: () => _onCategoryPressed(
+                      index,
+                      // widget.categoriesTransaction,
+                      enterScreenProvider,
+                      accountSettingsProvider,
                     ),
-                  ),
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) =>
-                  const Divider(),
+                    child: SizedBox(
+                      height: 50,
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(
+                                color: Theme.of(context).colorScheme.background,
+                              ),
+                              borderRadius: BorderRadius.circular(5),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.grey,
+                                  blurRadius: 2.0,
+                                  offset: Offset(
+                                    0.5,
+                                    2.0,
+                                  ), // shadow direction: bottom right
+                                )
+                              ],
+                            ),
+                            child: Icon(
+                              <IconData>[
+                                _selectIcon(enterScreenProvider).icon ??
+                                    Icons.error,
+                                timeEntryCategory.icon,
+                                categoriesRepeat[enterScreenProvider
+                                        .repeatDurationEnum]!["entryCategory"]
+                                    .icon as IconData,
+                              ][index],
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Text(
+                            "${AppLocalizations.of(context)!.translate(
+                              [
+                                "enter_screen_attribute_category",
+                                timeEntryCategory.label,
+                                repeatDurationEntryCategory.label,
+                              ][index],
+                            )}: ",
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          //displays the selecte option behind the category/repetiton etc.
+                          //e.g. Category : Food <-- Food is the select Text
+                          _selectText(
+                            index,
+                            enterScreenProvider,
+                            accountSettingsProvider,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) =>
+                    const Divider(),
+              ),
             ),
-          ),
-        ],
+            SizedBox(
+              width: proportionateScreenWidth(281),
+              child: TextField(
+                textInputAction: TextInputAction.newline,
+                minLines: 1,
+                maxLines: 5,
+                showCursor: true,
+                decoration: const InputDecoration(
+                  hintText: "Description",
+                ),
+                style: Theme.of(context).textTheme.bodyText1,
+                onChanged: null,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
