@@ -13,6 +13,7 @@ import 'package:linum/widgets/auth/forgot_password.dart';
 import 'package:linum/widgets/auth/logout_form.dart';
 import 'package:linum/widgets/list_divider.dart';
 import 'package:linum/widgets/list_header.dart';
+import 'package:linum/widgets/settings_screen/survey_button.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:linum/widgets/settings_screen/toggle_button_element.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -416,6 +417,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: [
                 // All Authentication Actions (including logOut will be handled via widgets/auth from now on.)
                 LogoutForm(),
+                const SurveyButton(),
                 ForgotPasswordButton(ProviderKey.settings),
               ],
             ),
