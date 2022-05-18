@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:linum/auth/firebase_options.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/algorithm_provider.dart';
@@ -206,7 +207,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   /// The future is part of the state of our widget. We should not call `initializeApp`
   /// directly inside [build].
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   final bool? testing;
   _MyHomePageState({this.testing});
@@ -215,15 +218,15 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
 
-    FirebaseMessaging.instance.getInitialMessage();
+    //   FirebaseMessaging.instance.getInitialMessage();
 
-    //Foreground Work
-    FirebaseMessaging.onMessage.listen((message) {
-      if (message.notification != null) {
-        dev.log(message.notification!.title.toString());
-        dev.log(message.notification!.body.toString());
-      }
-    });
+    //   //Foreground Work
+    //   FirebaseMessaging.onMessage.listen((message) {
+    //     if (message.notification != null) {
+    //       dev.log(message.notification!.title.toString());
+    //       dev.log(message.notification!.body.toString());
+    //     }
+    //   });
   }
 
   @override

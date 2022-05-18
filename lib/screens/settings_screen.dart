@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linum/auth/firebase_options.dart';
 import 'package:linum/constants/settings_enums.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
@@ -425,13 +426,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
             Padding(
               padding: const EdgeInsets.all(12.0),
-              child: Text(
-                '${_packageInfo.appName} Version ${_packageInfo.version} (${_packageInfo.buildNumber})',
-                style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                      color: Theme.of(context).colorScheme.tertiaryContainer,
-                      letterSpacing: 0,
+              child: Column(
+                children: [
+                  Text(
+                    '${_packageInfo.appName} Version ${_packageInfo.version} (${_packageInfo.buildNumber})',
+                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                          color:
+                              Theme.of(context).colorScheme.tertiaryContainer,
+                          letterSpacing: 0,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                  if (DefaultFirebaseOptions.android.projectId == "linum-dev")
+                    const Text(
+                      "Warning: You are using the linum dev Firebase.",
                     ),
-                textAlign: TextAlign.center,
+                ],
               ),
             ),
             const SizedBox(
