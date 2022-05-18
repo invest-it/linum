@@ -37,7 +37,7 @@ class _SurveyButtonState extends State<SurveyButton> {
         ),
       ),
       child: Text(
-        "Zur Umfrage",
+        "Feedback geben", //TODO translate this
         style: Theme.of(context)
             .textTheme
             .button

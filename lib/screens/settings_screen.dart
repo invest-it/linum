@@ -410,6 +410,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             const ListDivider(),
 
+            /// SURVEY
+            const ListHeader("APP-FEEDBACK"), //TODO translate this
+            const Padding(
+              padding: EdgeInsets.only(top: 16),
+              child: SurveyButton(),
+            ),
+            const ListDivider(),
+
             /// YOUR ACCOUNT
             const ListHeader('settings_screen/system-settings/label-title'),
             Column(
@@ -417,7 +425,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: [
                 // All Authentication Actions (including logOut will be handled via widgets/auth from now on.)
                 LogoutForm(),
-                const SurveyButton(),
                 ForgotPasswordButton(ProviderKey.settings),
               ],
             ),
