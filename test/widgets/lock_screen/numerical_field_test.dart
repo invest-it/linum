@@ -23,7 +23,7 @@ void main() {
 
     testWidgets('Pressing the button works as expected', (tester) async {
       int thisValue = 0;
-      GeneralRobot generalRobot = GeneralRobot(tester);
+      final GeneralRobot generalRobot = GeneralRobot(tester);
 
       await tester.pumpWidget(
         MaterialApp(
