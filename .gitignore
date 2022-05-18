@@ -45,7 +45,12 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 /android/app/google-services.json
+
+# Söncke
 /android/app/UsersUSER_NAMEupload-keystore.jks
+
+# Otis
+/android/app/upload-keystore.jks
 
 # IOS
 /ios/Runner/GoogleService-Info.plist
