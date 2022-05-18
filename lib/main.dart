@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:linum/constants/main_text_theme.dart';
+import 'package:linum/constants/main_theme_data.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/algorithm_provider.dart';
@@ -49,100 +51,7 @@ class MyApp extends StatelessWidget {
     final MaterialApp app = MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Linum',
-      theme: ThemeData(
-        //This is the colorScheme where we store the colors
-        //the names should be self explaining
-        //all those that are not custom are just fillers as ColorScheme lists
-        //them all as required
-
-        //use like this: Theme.of(context).colorScheme.NAME_OF_COLOR_STYLE
-        colorScheme: const ColorScheme(
-          primary: Color(0xFF97BC4E),
-          primaryContainer: Colors.green,
-          secondary: Color(0xFF505050),
-          secondaryContainer: Colors.white,
-          tertiary: Color(0xFFC1E695),
-          tertiaryContainer: Color(0xFF808080),
-          surface: Color(0xFFC1E695),
-          background: Color(0xFFFAFAFA),
-          error: Color(0xFFEB5757),
-          errorContainer: Color.fromARGB(255, 250, 171, 171),
-          onPrimary: Color(0xFFFAFAFA),
-          onSecondary: Color(0xFFFAFAFA),
-          onSurface: Color(0xFF505050),
-          onBackground: Colors.black12,
-          onError: Colors.teal,
-          brightness: Brightness.light,
-        ),
-
-        // This is the generic textTheme where we store most basic applications
-        // of different text styles. The names should be self-explaining.
-        //use like this: Theme.of(context).textTheme.THEME_TYPE
-
-        //we should discuss as whether to augment bis by adding an own @TODO
-        // e.g. for the HEADLINER function
-        textSelectionTheme: const TextSelectionThemeData(
-          selectionHandleColor: Colors.transparent,
-        ),
-        textTheme: TextTheme(
-          headline1: GoogleFonts.dmSans(
-            fontSize: 39.81,
-            fontWeight: FontWeight.w700,
-            letterSpacing: -1.5,
-            color: const Color(0xFF303030),
-          ),
-          headline2: GoogleFonts.dmSans(
-            fontSize: 33.18,
-            fontWeight: FontWeight.w500,
-            color: const Color(0xFF303030),
-          ),
-          headline3: GoogleFonts.dmSans(
-            fontSize: 27.65,
-            fontWeight: FontWeight.w500,
-            color: const Color(0xFF303030),
-          ),
-          headline4: GoogleFonts.dmSans(
-            fontSize: 23.04,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 0.25,
-            color: const Color(0xFF303030),
-          ),
-          headline5: GoogleFonts.dmSans(
-            fontSize: 19.2,
-            fontWeight: FontWeight.w500,
-            color: const Color(0xFF202020),
-          ),
-          //the text theme for the big headlines telling the page's name
-          headline6: GoogleFonts.dmSans(
-            fontSize: 84,
-            letterSpacing: -1.5,
-            fontWeight: FontWeight.w700,
-            color: const Color(0xFFC1E695),
-          ),
-          bodyText1: GoogleFonts.dmSans(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 0.16,
-          ),
-          bodyText2: GoogleFonts.dmSans(
-            fontSize: 13.33,
-            fontWeight: FontWeight.w400,
-            letterSpacing: 0.08,
-          ),
-          overline: GoogleFonts.dmSans(
-            fontSize: 10,
-            fontWeight: FontWeight.w700,
-            letterSpacing: 1.5,
-            color: const Color(0xFF505050),
-          ),
-          button: GoogleFonts.dmSans(
-            fontSize: 19.2,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 0.15,
-            color: const Color(0xFFFAFAFA),
-          ),
-        ),
-      ),
+      theme: MainThemeData.lightTheme,
 
       // End of Theme Data.
       home: MyHomePage(title: 'Linum', testing: testing),
@@ -212,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     // Initialize Size Guide for responsive behaviour
-    SizeGuide().init(context);
+    SizeGuide.init(context);
 
     return FutureBuilder(
       // Initialize FlutterFire:

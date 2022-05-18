@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:linum/constants/ring_colors.dart';
 import 'package:linum/models/dialog_action.dart';
 import 'package:linum/models/lock_screen_action.dart';
 import 'package:linum/providers/authentication_service.dart';
@@ -13,7 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class PinCodeProvider extends ChangeNotifier {
   String _code = '';
   int _pinSlot = 0;
-  Color _ringColor = const Color(0XFF279E44);
+  Color _ringColor = RingColors.green;
   bool _sessionIsSafe = false;
   late BuildContext _context;
   late ScreenIndexProvider _screenIndexProvider;
@@ -267,8 +268,7 @@ class PinCodeProvider extends ChangeNotifier {
       _code = _code + digit.toString();
       // log(_code);
       _pinSlot++;
-      _ringColor = const Color(0XFF279E44);
-
+      _ringColor = RingColors.green;
       //if code # is complete, check if it is correct
       // is not an invariant boolean
       // ignore: invariant_booleans
@@ -339,7 +339,7 @@ class PinCodeProvider extends ChangeNotifier {
   /// Reset [_code] and give visual and haptic feedback that the code did not match the locally stored PIN.
   void _wrongCode() {
     HapticFeedback.vibrate();
-    _ringColor = const Color(0XFFEB5757);
+    _ringColor = RingColors.red;
     Fluttertoast.showToast(
       msg: AppLocalizations.of(_context)!
           .translate("lock_screen/toast-wrong-code"),
