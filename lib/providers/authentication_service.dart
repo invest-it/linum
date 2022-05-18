@@ -1,17 +1,21 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:linum/backend_functions/cryptography.dart';
+import 'package:linum/types/buildable_provider.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 /// The AuthenticationService authenticates the user
 /// and provides the information needed for other classes
-class AuthenticationService extends ChangeNotifier {
+class AuthenticationService extends ChangeNotifier implements BuildableProvider {
   /// The FirebaseAuth Object of the Project
   final FirebaseAuth _firebaseAuth;
 
@@ -281,6 +285,27 @@ class AuthenticationService extends ChangeNotifier {
   void updateLanguageCode(BuildContext context) {
     _firebaseAuth.setLanguageCode(
       AppLocalizations.of(context)?.locale.languageCode ?? "en",
+    );
+  }
+
+
+  static SingleChildWidget provider(BuildContext context, {bool testing = false}) {
+    return ChangeNotifierProvider<AuthenticationService>(
+      key: const Key("AuthenticationChangeNotifierProvider"),
+      create: (_) {
+        final AuthenticationService auth =
+          AuthenticationService(FirebaseAuth.instance, context);
+        if (testing) {
+          auth.signOut();
+          while (auth.isLoggedIn) {
+            sleep(const Duration(milliseconds: 50));
+          // this should only be called when we are testing.
+          }
+        }
+
+        return auth;
+      },
+      lazy: false,
     );
   }
 }

@@ -7,10 +7,12 @@ import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/models/entry_category.dart';
 import 'package:linum/providers/authentication_service.dart';
+import 'package:linum/types/buildable_provider.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 
-class AccountSettingsProvider extends ChangeNotifier {
+class AccountSettingsProvider extends ChangeNotifier implements BuildableProvider {
   /// _balance is the documentReference to get the balance data from the database. It will be null if the constructor isnt ready yet
   DocumentReference<Map<String, dynamic>>? _settings;
 
@@ -113,6 +115,7 @@ class AccountSettingsProvider extends ChangeNotifier {
 
   @override
   void dispose() {
+    // TODO:
     if (_dontDispose-- == 0) {
       super.dispose();
       settingsListener?.cancel();
@@ -134,5 +137,23 @@ class AccountSettingsProvider extends ChangeNotifier {
     _settings!.update(settings);
 
     return true;
+  }
+
+
+  static SingleChildWidget provider(BuildContext context, {bool testing = false}) {
+    return ChangeNotifierProxyProvider<AuthenticationService,
+        AccountSettingsProvider>(
+      create: (ctx) {
+        return AccountSettingsProvider(ctx);
+      },
+      update: (ctx, auth, oldAccountSettings) {
+        if (oldAccountSettings != null) {
+          return oldAccountSettings..updateAuth(auth, ctx);
+        } else {
+          return AccountSettingsProvider(ctx);
+        }
+      },
+      lazy: false,
+    );
   }
 }

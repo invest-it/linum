@@ -189,16 +189,11 @@ class HomeScreenListView implements BalanceDataListView {
                             );
                           },
                         ),
-                        ChangeNotifierProvider<BalanceDataProvider>(
-                          create: (_) {
-                            return balanceDataProvider..dontDisposeOneTime();
-                          },
+                        ChangeNotifierProvider<BalanceDataProvider>.value(
+                          value: balanceDataProvider,
                         ),
-                        ChangeNotifierProvider<AccountSettingsProvider>(
-                          create: (_) {
-                            return accountSettingsProvider
-                              ..dontDisposeOneTime();
-                          },
+                        ChangeNotifierProvider<AccountSettingsProvider>.value(
+                          value: accountSettingsProvider,
                         ),
                       ],
                       child: const EnterScreen(),
