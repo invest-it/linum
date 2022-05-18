@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:linum/providers/pin_code_provider.dart';
-import 'package:provider/provider.dart';
 
 class NumericField extends StatelessWidget {
-  final int value;
-  final Function? onPress;
+  final int digit;
+  final void Function(int) onPress;
 
-  const NumericField(this.value, this.onPress);
+  const NumericField(this.digit, this.onPress);
 
   @override
   Widget build(BuildContext context) {
-    final PinCodeProvider pinCodeProvider =
-        Provider.of<PinCodeProvider>(context);
-
     return Expanded(
       child: ConstrainedBox(
         constraints: const BoxConstraints(
@@ -20,13 +15,13 @@ class NumericField extends StatelessWidget {
         ),
         child: TextButton(
           onPressed: () {
-            pinCodeProvider.addDigit(value);
+            onPress(digit);
           },
           style: TextButton.styleFrom(
             shape: const CircleBorder(),
           ),
           child: Text(
-            value.toString(),
+            digit.toString(),
             style: Theme.of(context).textTheme.headline3,
           ),
         ),

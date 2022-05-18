@@ -25,6 +25,8 @@ class _LockScreenState extends State<LockScreen> {
     //final ScreenIndexProvider sip = Provider.of<ScreenIndexProvider>(context);
     final LockScreenAction screenIntent = pinCodeProvider.recallPINLockIntent();
 
+    final void Function(int) addDigit = pinCodeProvider.addDigit;
+
     return ScreenSkeleton(
       head: 'Linum',
       body: Column(
@@ -80,9 +82,9 @@ class _LockScreenState extends State<LockScreen> {
                 Expanded(
                   child: Column(
                     children: [
-                      NumericField(1, () {}),
-                      NumericField(4, () {}),
-                      NumericField(7, () {}),
+                      NumericField(1, addDigit),
+                      NumericField(4, addDigit),
+                      NumericField(7, addDigit),
                       //Backspace
                       Expanded(
                         child: ConstrainedBox(
@@ -109,19 +111,19 @@ class _LockScreenState extends State<LockScreen> {
                 Expanded(
                   child: Column(
                     children: [
-                      NumericField(2, () {}),
-                      NumericField(5, () {}),
-                      NumericField(8, () {}),
-                      NumericField(0, () {}),
+                      NumericField(2, addDigit),
+                      NumericField(5, addDigit),
+                      NumericField(8, addDigit),
+                      NumericField(0, addDigit),
                     ],
                   ),
                 ),
                 Expanded(
                   child: Column(
                     children: [
-                      NumericField(3, () {}),
-                      NumericField(6, () {}),
-                      NumericField(9, () {}),
+                      NumericField(3, addDigit),
+                      NumericField(6, addDigit),
+                      NumericField(9, addDigit),
                       // If Fingerprint is enabled, trigger dialog here
                       Expanded(
                         child: ConstrainedBox(
