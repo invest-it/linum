@@ -63,7 +63,7 @@ class _EnterScreenListViewBuilderState
     // BalanceDataProvider balanceDataProvider =
     //     Provider.of<BalanceDataProvider>(context);
     myController ??= TextEditingController(text: enterScreenProvider.name);
-    return Center(
+    return Expanded(
       child: SingleChildScrollView(
         child: Column(
           children: [
