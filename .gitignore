@@ -44,7 +44,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-/android/app/google-services.json
 /android/app/UsersUSER_NAMEupload-keystore.jks
 
 # IOS
@@ -54,3 +53,10 @@ app.*.map.json
 pubspec.lock
 
 translator-config.json
+
+
+### FIREBASE RULES
+
+google-services.json
+firebase_app_id_file.json
+firebase_options.dart
