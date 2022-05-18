@@ -11,7 +11,7 @@ void main() {
         MaterialApp(
           home: Builder(
             builder: (context) {
-              SizeGuide().init(context);
+              SizeGuide.init(context);
               return const TimeWidget(
                 displayValue: "Test text",
                 isTranslated: true,
