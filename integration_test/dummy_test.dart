@@ -8,8 +8,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:linum/main.dart' as app;
 
 void main() {
-  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized()
-      as IntegrationTestWidgetsFlutterBinding;
+  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('dummy test', () {
     testWidgets('this test cant fail and only resets your session',

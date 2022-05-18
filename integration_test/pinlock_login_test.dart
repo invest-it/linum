@@ -15,8 +15,7 @@ import 'robots/pinlock/pinlock_robot.dart';
 import 'robots/settings_screen/settings_auth_robot.dart';
 
 void main() {
-  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized()
-      as IntegrationTestWidgetsFlutterBinding;
+  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   OnboardingRobot onboardingRobot;
   OnboardingOpenSignInRobot onboardingOpenSignInRobot;

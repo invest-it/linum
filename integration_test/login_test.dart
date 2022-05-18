@@ -14,8 +14,7 @@ import 'robots/onboarding_screen/onboarding_open_sign_up.dart';
 import 'robots/onboarding_screen/onboarding_robot.dart';
 
 void main() {
-  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized()
-      as IntegrationTestWidgetsFlutterBinding;
+  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   HomeRobot homeRobot;
   OnboardingRobot onboardingRobot;
