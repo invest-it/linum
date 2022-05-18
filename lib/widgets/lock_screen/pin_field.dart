@@ -5,7 +5,8 @@ class PinField extends StatelessWidget {
   final int index;
   final int selectedIndex;
   final Color ringColor;
-  const PinField(this.index, this.selectedIndex, this.ringColor);
+  const PinField(this.index, this.selectedIndex, this.ringColor, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class PinField extends StatelessWidget {
           BoxShadow(
             color: selectedIndex == index - 1
                 ? ringColor
-                : Colors.black.withAlpha(0),
+                : Colors.black.withAlpha(0), // no color
             spreadRadius: 2,
           ),
         ],
