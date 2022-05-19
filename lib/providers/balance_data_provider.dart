@@ -14,6 +14,7 @@ import 'package:linum/utilities/balance_data/single_balance_data_manager.dart';
 import 'package:linum/widgets/abstract/abstract_home_screen_card.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 
 /// Provides the balance data from the database using the uid.
 class BalanceDataProvider extends ChangeNotifier {
@@ -409,6 +410,24 @@ class BalanceDataProvider extends ChangeNotifier {
         await _balance!.get();
     final Map<String, dynamic>? data = snapshot.data();
     return data!["settings"] as Map<String, dynamic>;
+  }
+
+  static SingleChildWidget provider(BuildContext context, {bool testing = false}) {
+    return ChangeNotifierProxyProvider2<AuthenticationService,
+        AlgorithmProvider, BalanceDataProvider>(
+      create: (ctx) {
+        return BalanceDataProvider(ctx);
+      },
+      update: (ctx, auth, algo, oldBalance) {
+        if (oldBalance != null) {
+          oldBalance.updateAuth(auth);
+          return oldBalance..updateAlgorithmProvider(algo);
+        } else {
+          return BalanceDataProvider(ctx);
+        }
+      },
+      lazy: false,
+    );
   }
 }
 // TODO: Refactor

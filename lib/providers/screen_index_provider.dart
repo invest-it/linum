@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/utilities/frontend/filter_functions.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 
 class ScreenIndexProvider extends ChangeNotifier {
   int _pageIndex = 0;
@@ -45,5 +46,20 @@ class ScreenIndexProvider extends ChangeNotifier {
         ),
       );
     }
+  }
+
+  static SingleChildWidget provider(BuildContext context, {bool testing = false}) {
+    return ChangeNotifierProxyProvider<AlgorithmProvider,
+        ScreenIndexProvider>(
+      create: (ctx) => ScreenIndexProvider(ctx),
+      update: (ctx, algo, oldScreenIndexProvider) {
+        if (oldScreenIndexProvider == null) {
+          return ScreenIndexProvider(ctx);
+        } else {
+          return oldScreenIndexProvider
+            ..updateAlgorithmProvider(algo);
+        }
+      },
+    );
   }
 }

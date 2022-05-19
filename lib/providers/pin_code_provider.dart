@@ -11,6 +11,7 @@ import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PinCodeProvider extends ChangeNotifier {
@@ -385,6 +386,22 @@ class PinCodeProvider extends ChangeNotifier {
   String get lastEmail => !_lastEmailStillLoading ? _lastEmail! : 'Loading...';
   bool get pinActiveStillLoading => _pinActiveStillLoading;
   bool get lastEmailStillLoading => _lastEmailStillLoading;
+
+
+  static SingleChildWidget provider(BuildContext context, {bool testing = false}) {
+    return ChangeNotifierProxyProvider2<ScreenIndexProvider,
+        AuthenticationService, PinCodeProvider>(
+      create: (context) => PinCodeProvider(context),
+      update:
+          (context, screenIndexProvider, auth, oldPinCodeProvider) {
+        if (oldPinCodeProvider == null) {
+          return PinCodeProvider(context);
+        } else {
+          return oldPinCodeProvider..updateSipAndAuth(context);
+        }
+      },
+    );
+  }
 }
 
 enum PINLockIntent {

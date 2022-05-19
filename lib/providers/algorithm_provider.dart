@@ -2,6 +2,8 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 
 /// gives sort algorithm (later it will probably also have filter algorithm) and
 /// all algorithm will have an active version instead of being static
@@ -259,5 +261,13 @@ class AlgorithmProvider extends ChangeNotifier {
         ),
       );
     }
+  }
+
+
+  static SingleChildWidget provider(BuildContext context, {bool testing = false}) {
+    return ChangeNotifierProvider<AlgorithmProvider>(
+      create: (_) => AlgorithmProvider(),
+      lazy: false,
+    );
   }
 }

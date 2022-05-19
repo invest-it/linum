@@ -18,6 +18,7 @@ import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/screens/layout_screen.dart';
 import 'package:linum/screens/onboarding_screen.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
+import 'package:linum/utilities/frontend/multi_provider_builder.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -139,89 +140,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
-          return MultiProvider(
-            key: const Key("MainMultiProvider"),
-            providers: [
-              ChangeNotifierProvider<AuthenticationService>(
-                key: const Key("AuthenticationChangeNotifierProvider"),
-                create: (_) {
-                  final AuthenticationService auth =
-                      AuthenticationService(FirebaseAuth.instance, context);
-                  if (testing != null && testing!) {
-                    auth.signOut();
-                    while (auth.isLoggedIn) {
-                      sleep(const Duration(milliseconds: 50));
-                      // this should only be called when we are testing.
-                    }
-                  }
 
-                  return auth;
-                },
-                lazy: false,
-              ),
-              ChangeNotifierProxyProvider<AuthenticationService,
-                  AccountSettingsProvider>(
-                create: (ctx) {
-                  return AccountSettingsProvider(ctx);
-                },
-                update: (ctx, auth, oldAccountSettings) {
-                  if (oldAccountSettings != null) {
-                    return oldAccountSettings..updateAuth(auth, ctx);
-                  } else {
-                    return AccountSettingsProvider(ctx);
-                  }
-                },
-                lazy: false,
-              ),
-              ChangeNotifierProvider<AlgorithmProvider>(
-                create: (_) => AlgorithmProvider(),
-                lazy: false,
-              ),
-              ChangeNotifierProxyProvider2<AuthenticationService,
-                  AlgorithmProvider, BalanceDataProvider>(
-                create: (ctx) {
-                  return BalanceDataProvider(ctx);
-                },
-                update: (ctx, auth, algo, oldBalance) {
-                  if (oldBalance != null) {
-                    oldBalance.updateAuth(auth);
-                    return oldBalance..updateAlgorithmProvider(algo);
-                  } else {
-                    return BalanceDataProvider(ctx);
-                  }
-                },
-                lazy: false,
-              ),
-              ChangeNotifierProxyProvider<AlgorithmProvider,
-                  ScreenIndexProvider>(
-                create: (ctx) => ScreenIndexProvider(ctx),
-                update: (ctx, algo, oldScreenIndexProvider) {
-                  if (oldScreenIndexProvider == null) {
-                    return ScreenIndexProvider(ctx);
-                  } else {
-                    return oldScreenIndexProvider
-                      ..updateAlgorithmProvider(algo);
-                  }
-                },
-              ),
-              ChangeNotifierProvider<ActionLipStatusProvider>(
-                create: (_) => ActionLipStatusProvider(),
-              ),
-              ChangeNotifierProxyProvider2<ScreenIndexProvider,
-                  AuthenticationService, PinCodeProvider>(
-                create: (context) => PinCodeProvider(context),
-                update:
-                    (context, screenIndexProvider, auth, oldPinCodeProvider) {
-                  if (oldPinCodeProvider == null) {
-                    return PinCodeProvider(context);
-                  } else {
-                    return oldPinCodeProvider..updateSipAndAuth(context);
-                  }
-                },
-              ),
-            ],
-            child: OnBoardingOrLayoutScreen(),
-          );
+
+          return MultiProviderBuilder(context: context, child: OnBoardingOrLayoutScreen())
+            .withKey("MainMultiProvider")
+            .useProvider(AuthenticationService.provider)
+            .useProvider(AccountSettingsProvider.provider)
+            .useProvider(AlgorithmProvider.provider)
+            .useProvider(BalanceDataProvider.provider)
+            .useProvider(ScreenIndexProvider.provider)
+            .useProvider(ActionLipStatusProvider.provider)
+            .useProvider(PinCodeProvider.provider)
+            .build();
         }
 
         // Otherwise, show something whilst waiting for initialization to complete

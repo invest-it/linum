@@ -71,29 +71,33 @@ class HomeScreenListView implements BalanceDataListView {
     List<dynamic> balanceDataList, {
     required BuildContext context,
   }) {
+
+    _listview = ListView(
+        padding: const EdgeInsets.only(
+          bottom: 32.0,
+        ),
+        children: buildList(context, balanceDataList),
+    );
+  }
+
+  List<Widget> buildList(BuildContext context, List<dynamic> balanceDataList) {
     initializeDateFormatting();
 
     final String langCode = AppLocalizations.of(context)!.locale.languageCode;
-
-    final DateFormat formatter = DateFormat('EEEE, dd. MMMM yyyy', langCode);
-
     final DateFormat monthFormatter = DateFormat('MMMM', langCode);
     final DateFormat monthAndYearFormatter = DateFormat('MMMM yyyy', langCode);
-    final BalanceDataProvider balanceDataProvider =
-        Provider.of<BalanceDataProvider>(context);
 
-    final AccountSettingsProvider accountSettingsProvider =
-        Provider.of<AccountSettingsProvider>(context);
 
     // remember last used index in the list
     int currentIndex = 0;
     DateTime? currentTime;
 
-    //log(balanceData.toString());
     final List<Widget> list = [];
     if (balanceDataList.isEmpty) {
       list.add(const TimeWidget(displayValue: "listview/label-no-entries"));
-    } else if (balanceDataList[0] != null && balanceDataList[0]["Error"] == null) {
+      return list;
+    }
+    if (balanceDataList[0] != null && balanceDataList[0]["Error"] == null) {
       for (final balanceData in balanceDataList) {
         final DateTime date = (balanceData["time"] as Timestamp).toDate();
         final bool isFutureItem = date.isAfter(
@@ -107,27 +111,18 @@ class HomeScreenListView implements BalanceDataListView {
         currentTime ??= DateTime(date.year, date.month + 2);
         if (isFutureItem) {
           if (date.isBefore(currentTime)) {
-            if (list.isEmpty &&
-                DateTime(date.year, date.month) ==
-                    DateTime(
-                      DateTime.now().year,
-                      DateTime.now().month,
-                    )) {
-              list.add(
-                const TimeWidget(
-                  displayValue: "listview/label-future",
-                ),
-              );
-            } else {
-              list.add(
-                TimeWidget(
-                  displayValue: date.year == DateTime.now().year
-                      ? monthFormatter.format(date)
-                      : monthAndYearFormatter.format(date),
-                  isTranslated: true,
-                ),
+            var timeWidget = const TimeWidget(
+              displayValue: "listview/label-future",
+            );
+            if (!(list.isEmpty && isCurrentMonth(date))) {
+              timeWidget = TimeWidget(
+                displayValue: date.year == DateTime.now().year
+                    ? monthFormatter.format(date)
+                    : monthAndYearFormatter.format(date),
+                isTranslated: true,
               );
             }
+            list.add(timeWidget);
             currentTime = DateTime(date.year, date.month);
           }
         } else if (currentIndex < _timeWidgets.length &&
@@ -150,224 +145,226 @@ class HomeScreenListView implements BalanceDataListView {
         if (date.isBefore(DateTime.now()) &&
             (list.isEmpty || list.last.runtimeType != TimeWidget) &&
             date.isBefore(currentTime)) {
-          list.add(
-            TimeWidget(
-              displayValue: date.year == DateTime.now().year
-                  ? monthFormatter.format(date)
-                  : monthAndYearFormatter.format(date),
-              isTranslated: true,
-            ),
+
+          final timeWidget = TimeWidget(
+            displayValue: date.year == DateTime.now().year
+                ? monthFormatter.format(date)
+                : monthAndYearFormatter.format(date),
+            isTranslated: true,
           );
+
+          list.add(timeWidget);
           currentTime = DateTime(date.year, date.month - 1);
 
           currentIndex = 4; // idk why exactly but now we are save
         }
 
-        list.add(
-          GestureDetector(
-            onTap: () {
-              final BalanceDataProvider balanceDataProvider =
-                  Provider.of<BalanceDataProvider>(context, listen: false);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (innerContext) {
-                    final enterScreenProvider = ChangeNotifierProvider<EnterScreenProvider>(
-                      create: (_) {
-                        return EnterScreenProvider.fromBalanceData(balanceData);
-                      },
-                    );
-                    return MultiProviderBuilder(context: context, child: const EnterScreen())
-                      .addProvider(enterScreenProvider)
-                      .useExistingProvider<AccountSettingsProvider>()
-                      .useExistingProvider<BalanceDataProvider>()
-                      .build();
-                  },
-                ),
+        list.add(buildGestureDetector(context, balanceData, isFutureItem));
+      }
+    }
+    return list;
+  }
+
+  GestureDetector buildGestureDetector(BuildContext context, dynamic balanceData, bool isFutureItem) {
+    final BalanceDataProvider balanceDataProvider = Provider.of<BalanceDataProvider>(context);
+    final String langCode = AppLocalizations.of(context)!.locale.languageCode;
+    final DateFormat formatter = DateFormat('EEEE, dd. MMMM yyyy', langCode);
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (innerContext) {
+              final enterScreenProvider = ChangeNotifierProvider<EnterScreenProvider>(
+                create: (_) {
+                  return EnterScreenProvider.fromBalanceData(balanceData);
+                },
               );
+              return MultiProviderBuilder(context: context, child: const EnterScreen())
+                  .addProvider(enterScreenProvider)
+                  .useExistingProvider<AccountSettingsProvider>()
+                  .useExistingProvider<BalanceDataProvider>()
+                  .build();
             },
-            //print(arrayElement["amount"].toString()),
-            child: Dismissible(
-              background: Container(
-                color: Colors.red,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.center,
+          ),
+        );
+      },
+      //print(arrayElement["amount"].toString()),
+      child: Dismissible(
+        background: Container(
+          color: Colors.red,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 30),
+                child: Wrap(
+                  alignment: WrapAlignment.center,
+                  spacing: 16.0,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 30),
-                      child: Wrap(
-                        alignment: WrapAlignment.center,
-                        spacing: 16.0,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.translate(
-                              "listview/dismissible/label-delete",
-                            ),
-                            style: Theme.of(context).textTheme.button,
-                          ),
-                          Icon(
-                            Icons.delete,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .secondaryContainer,
-                          ),
-                        ],
+                    Text(
+                      AppLocalizations.of(context)!.translate(
+                        "listview/dismissible/label-delete",
                       ),
+                      style: Theme.of(context).textTheme.button,
+                    ),
+                    Icon(
+                      Icons.delete,
+                      color: Theme.of(context)
+                          .colorScheme
+                          .secondaryContainer,
                     ),
                   ],
                 ),
               ),
-              key: balanceData["id"] != null
-                  ? Key(balanceData["id"] as String)
-                  : const Key("one"),
-              direction: DismissDirection.endToStart,
-              dismissThresholds: const {
-                DismissDirection.endToStart: 0.5,
-              },
-              confirmDismiss: (DismissDirection direction) async {
-                return generateDeletePopupFromArrayElement(
-                  context,
-                  balanceDataProvider,
-                  balanceData as Map<String, dynamic>,
-                );
-              },
-              child: ListTile(
-                leading: Badge(
-                  padding: const EdgeInsets.all(2),
-                  toAnimate: false,
-                  position: const BadgePosition(bottom: 23, start: 23),
-                  elevation: 1,
-                  badgeColor: isFutureItem && balanceData["repeatId"] != null
-                      ? Theme.of(context).colorScheme.tertiaryContainer
-                      //badgeColor for current transactions
-                      : balanceData["amount"] as num > 0
-                          //badgeColor for future transactions
-                          ? balanceData["repeatId"] != null
-                              ? Theme.of(context).colorScheme.tertiary
-                              // ignore: use_full_hex_values_for_flutter_colors
-                              : const Color(0x000000)
-                          : balanceData["repeatId"] != null
-                              ? Theme.of(context).colorScheme.errorContainer
-                              // ignore: use_full_hex_values_for_flutter_colors
-                              : const Color(0x000000),
-                  //cannot use the suggestion as it produces an unwanted white point
-                  badgeContent: balanceData["repeatId"] != null
-                      ? Icon(
-                          Icons.autorenew_rounded,
-                          color: isFutureItem
-                              ? balanceData["amount"] as num > 0
-                                  ? Theme.of(context).colorScheme.tertiary
-                                  : Theme.of(context).colorScheme.errorContainer
-                              : Theme.of(context)
-                                  .colorScheme
-                                  .secondaryContainer,
-                          size: 18,
-                        )
-                      : const SizedBox(),
-                  child: CircleAvatar(
-                    backgroundColor: isFutureItem
-                        ? balanceData['amount'] as num > 0
-                            ? Theme.of(context)
-                                .colorScheme
-                                .tertiary // FUTURE INCOME BACKGROUND
-                            : Theme.of(context).colorScheme.errorContainer
-                        // FUTURE EXPENSE BACKGROUND
-                        : balanceData['amount'] as num > 0
-                            ? Theme.of(context)
-                                .colorScheme
-                                .secondary // PRESENT INCOME BACKGROUND
-                            : Theme.of(context)
-                                .colorScheme
-                                .secondary, // PRESENT EXPENSE BACKGROUND
-                    child: balanceData['amount'] as num > 0
-                        ? Icon(
-                            standardCategoryIncomes[
-                                        balanceData['category'] as String]
-                                    ?.icon ??
-                                Icons.error,
-                            color: isFutureItem
-                                ? Theme.of(context)
-                                    .colorScheme
-                                    .onPrimary // FUTURE INCOME ICON
-                                : Theme.of(context)
-                                    .colorScheme
-                                    .tertiary, // PRESENT INCOME ICON
-                          )
-                        : Icon(
-                            standardCategoryExpenses[
-                                        balanceData['category'] as String]
-                                    ?.icon ??
-                                Icons.error,
-                            color: isFutureItem
-                                ? Theme.of(context)
-                                    .colorScheme
-                                    .onPrimary // FUTURE EXPENSE ICON
-                                : Theme.of(context)
-                                    .colorScheme
-                                    .errorContainer, // PRESENT EXPENSE ICON
-                          ),
-                  ),
-                ),
-                title: Text(
-                  balanceData["name"] as String != ""
-                      ? balanceData["name"] as String
-                      : translateCategory(
-                          balanceData["category"] as String,
-                          context,
-                          isExpense: balanceData["amount"] as num <= 0,
-                        ),
-                  style: isFutureItem
-                      ? Theme.of(context).textTheme.bodyText1!.copyWith(
-                            fontStyle: FontStyle.italic,
-                            color: Theme.of(context).colorScheme.onSurface,
-                          )
-                      : Theme.of(context).textTheme.bodyText1,
-                ),
-                subtitle: Text(
-                  formatter
-                      .format(
-                        (balanceData["time"] as Timestamp).toDate(),
-                      )
-                      .toUpperCase(),
-                  style: isFutureItem
-                      ? Theme.of(context).textTheme.overline!.copyWith(
-                            fontStyle: FontStyle.italic,
-                            color: Theme.of(context).colorScheme.onSurface,
-                          )
-                      : Theme.of(context).textTheme.overline,
-                ),
-                trailing: balanceData["amount"] == 0
-                    ? Text(
-                        AppLocalizations.of(context)!
-                            .translate('home_screen/free-text'),
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      )
-                    : Text(
-                        "${(balanceData["amount"] as num).toStringAsFixed(2)}€",
-                        style: balanceData["amount"] as num <= 0
-                            ? Theme.of(context).textTheme.bodyText1?.copyWith(
-                                  color: Theme.of(context).colorScheme.error,
-                                )
-                            : Theme.of(context).textTheme.bodyText1?.copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.onSurface,
-                                ),
-                      ),
+            ],
+          ),
+        ),
+        key: balanceData["id"] != null
+            ? Key(balanceData["id"] as String)
+            : const Key("one"),
+        direction: DismissDirection.endToStart,
+        dismissThresholds: const {
+          DismissDirection.endToStart: 0.5,
+        },
+        confirmDismiss: (DismissDirection direction) async {
+          return generateDeletePopupFromArrayElement(
+            context,
+            balanceDataProvider,
+            balanceData as Map<String, dynamic>,
+          );
+        },
+        child: ListTile(
+          leading: Badge(
+            padding: const EdgeInsets.all(2),
+            toAnimate: false,
+            position: const BadgePosition(bottom: 23, start: 23),
+            elevation: 1,
+            badgeColor: isFutureItem && balanceData["repeatId"] != null
+                ? Theme.of(context).colorScheme.tertiaryContainer
+            //badgeColor for current transactions
+                : balanceData["amount"] as num > 0
+            //badgeColor for future transactions
+                ? balanceData["repeatId"] != null
+                ? Theme.of(context).colorScheme.tertiary
+            // ignore: use_full_hex_values_for_flutter_colors
+                : const Color(0x000000)
+                : balanceData["repeatId"] != null
+                ? Theme.of(context).colorScheme.errorContainer
+            // ignore: use_full_hex_values_for_flutter_colors
+                : const Color(0x000000),
+            //cannot use the suggestion as it produces an unwanted white point
+            badgeContent: balanceData["repeatId"] != null
+                ? Icon(
+              Icons.autorenew_rounded,
+              color: isFutureItem
+                  ? balanceData["amount"] as num > 0
+                  ? Theme.of(context).colorScheme.tertiary
+                  : Theme.of(context).colorScheme.errorContainer
+                  : Theme.of(context)
+                  .colorScheme
+                  .secondaryContainer,
+              size: 18,
+            )
+                : const SizedBox(),
+            child: CircleAvatar(
+              backgroundColor: isFutureItem
+                  ? balanceData['amount'] as num > 0
+                  ? Theme.of(context)
+                  .colorScheme
+                  .tertiary // FUTURE INCOME BACKGROUND
+                  : Theme.of(context).colorScheme.errorContainer
+              // FUTURE EXPENSE BACKGROUND
+                  : balanceData['amount'] as num > 0
+                  ? Theme.of(context)
+                  .colorScheme
+                  .secondary // PRESENT INCOME BACKGROUND
+                  : Theme.of(context)
+                  .colorScheme
+                  .secondary, // PRESENT EXPENSE BACKGROUND
+              child: balanceData['amount'] as num > 0
+                  ? Icon(
+                standardCategoryIncomes[
+                balanceData['category'] as String]
+                    ?.icon ??
+                    Icons.error,
+                color: isFutureItem
+                    ? Theme.of(context)
+                    .colorScheme
+                    .onPrimary // FUTURE INCOME ICON
+                    : Theme.of(context)
+                    .colorScheme
+                    .tertiary, // PRESENT INCOME ICON
+              )
+                  : Icon(
+                standardCategoryExpenses[
+                balanceData['category'] as String]
+                    ?.icon ??
+                    Icons.error,
+                color: isFutureItem
+                    ? Theme.of(context)
+                    .colorScheme
+                    .onPrimary // FUTURE EXPENSE ICON
+                    : Theme.of(context)
+                    .colorScheme
+                    .errorContainer, // PRESENT EXPENSE ICON
               ),
             ),
           ),
-        );
-      }
-    } else {
-      // log("HomeScreenListView: " + balanceData[0]["Error"].toString());
-    }
-    _listview = ListView(
-        padding: const EdgeInsets.only(
-          bottom: 32.0,
+          title: Text(
+            balanceData["name"] as String != ""
+                ? balanceData["name"] as String
+                : translateCategory(
+              balanceData["category"] as String,
+              context,
+              isExpense: balanceData["amount"] as num <= 0,
+            ),
+            style: isFutureItem
+                ? Theme.of(context).textTheme.bodyText1!.copyWith(
+              fontStyle: FontStyle.italic,
+              color: Theme.of(context).colorScheme.onSurface,
+            )
+                : Theme.of(context).textTheme.bodyText1,
+          ),
+          subtitle: Text(
+            formatter
+                .format(
+              (balanceData["time"] as Timestamp).toDate(),
+            )
+                .toUpperCase(),
+            style: isFutureItem
+                ? Theme.of(context).textTheme.overline!.copyWith(
+              fontStyle: FontStyle.italic,
+              color: Theme.of(context).colorScheme.onSurface,
+            )
+                : Theme.of(context).textTheme.overline,
+          ),
+          trailing: balanceData["amount"] == 0
+              ? Text(
+            AppLocalizations.of(context)!
+                .translate('home_screen/free-text'),
+            style: Theme.of(context).textTheme.bodyLarge,
+          )
+              : Text(
+            "${(balanceData["amount"] as num).toStringAsFixed(2)}€",
+            style: balanceData["amount"] as num <= 0
+                ? Theme.of(context).textTheme.bodyText1?.copyWith(
+              color: Theme.of(context).colorScheme.error,
+            )
+                : Theme.of(context).textTheme.bodyText1?.copyWith(
+              color:
+              Theme.of(context).colorScheme.onSurface,
+            ),
+          ),
         ),
-        children: list,
+      ),
     );
+  }
+
+  bool isCurrentMonth(DateTime date) {
+    return DateTime(date.year, date.month) == DateTime(DateTime.now().year, DateTime.now().month);
   }
 
   String translateCategory(
