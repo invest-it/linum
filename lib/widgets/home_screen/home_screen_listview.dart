@@ -8,11 +8,13 @@ import 'package:intl/intl.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/providers/account_settings_provider.dart';
+import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/screens/enter_screen.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/delete_entry_popup.dart';
+import 'package:linum/utilities/frontend/multi_provider_builder.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
 import 'package:linum/widgets/budget_screen/time_widget.dart';
 import 'package:provider/provider.dart';
@@ -66,7 +68,7 @@ class HomeScreenListView implements BalanceDataListView {
 
   @override
   void setBalanceData(
-    List<dynamic> balanceData, {
+    List<dynamic> balanceDataList, {
     required BuildContext context,
   }) {
     initializeDateFormatting();
@@ -89,11 +91,11 @@ class HomeScreenListView implements BalanceDataListView {
 
     //log(balanceData.toString());
     final List<Widget> list = [];
-    if (balanceData.isEmpty) {
+    if (balanceDataList.isEmpty) {
       list.add(const TimeWidget(displayValue: "listview/label-no-entries"));
-    } else if (balanceData[0] != null && balanceData[0]["Error"] == null) {
-      for (final arrayElement in balanceData) {
-        final DateTime date = (arrayElement["time"] as Timestamp).toDate();
+    } else if (balanceDataList[0] != null && balanceDataList[0]["Error"] == null) {
+      for (final balanceData in balanceDataList) {
+        final DateTime date = (balanceData["time"] as Timestamp).toDate();
         final bool isFutureItem = date.isAfter(
           DateTime(
             DateTime.now().year,
@@ -170,34 +172,16 @@ class HomeScreenListView implements BalanceDataListView {
                 context,
                 MaterialPageRoute(
                   builder: (innerContext) {
-                    return MultiProvider(
-                      providers: [
-                        ChangeNotifierProvider<EnterScreenProvider>(
-                          create: (_) {
-                            return EnterScreenProvider(
-                              id: arrayElement["id"] as String,
-                              amount: arrayElement["amount"] as num,
-                              category: arrayElement["category"] as String,
-                              name: arrayElement["name"] as String,
-                              selectedDate:
-                                  (arrayElement["time"] as Timestamp).toDate(),
-                              editMode: true,
-                              repeatId: arrayElement["repeatId"] as String?,
-                              formerTime:
-                                  (arrayElement["formerTime"] as Timestamp?) ??
-                                      arrayElement["time"] as Timestamp,
-                            );
-                          },
-                        ),
-                        ChangeNotifierProvider<BalanceDataProvider>.value(
-                          value: balanceDataProvider,
-                        ),
-                        ChangeNotifierProvider<AccountSettingsProvider>.value(
-                          value: accountSettingsProvider,
-                        ),
-                      ],
-                      child: const EnterScreen(),
+                    final enterScreenProvider = ChangeNotifierProvider<EnterScreenProvider>(
+                      create: (_) {
+                        return EnterScreenProvider.fromBalanceData(balanceData);
+                      },
                     );
+                    return MultiProviderBuilder(context: context, child: const EnterScreen())
+                      .addProvider(enterScreenProvider)
+                      .useExistingProvider<AccountSettingsProvider>()
+                      .useExistingProvider<BalanceDataProvider>()
+                      .build();
                   },
                 ),
               );
@@ -234,8 +218,8 @@ class HomeScreenListView implements BalanceDataListView {
                   ],
                 ),
               ),
-              key: arrayElement["id"] != null
-                  ? Key(arrayElement["id"] as String)
+              key: balanceData["id"] != null
+                  ? Key(balanceData["id"] as String)
                   : const Key("one"),
               direction: DismissDirection.endToStart,
               dismissThresholds: const {
@@ -245,7 +229,7 @@ class HomeScreenListView implements BalanceDataListView {
                 return generateDeletePopupFromArrayElement(
                   context,
                   balanceDataProvider,
-                  arrayElement as Map<String, dynamic>,
+                  balanceData as Map<String, dynamic>,
                 );
               },
               child: ListTile(
@@ -254,25 +238,25 @@ class HomeScreenListView implements BalanceDataListView {
                   toAnimate: false,
                   position: const BadgePosition(bottom: 23, start: 23),
                   elevation: 1,
-                  badgeColor: isFutureItem && arrayElement["repeatId"] != null
+                  badgeColor: isFutureItem && balanceData["repeatId"] != null
                       ? Theme.of(context).colorScheme.tertiaryContainer
                       //badgeColor for current transactions
-                      : arrayElement["amount"] as num > 0
+                      : balanceData["amount"] as num > 0
                           //badgeColor for future transactions
-                          ? arrayElement["repeatId"] != null
+                          ? balanceData["repeatId"] != null
                               ? Theme.of(context).colorScheme.tertiary
                               // ignore: use_full_hex_values_for_flutter_colors
                               : const Color(0x000000)
-                          : arrayElement["repeatId"] != null
+                          : balanceData["repeatId"] != null
                               ? Theme.of(context).colorScheme.errorContainer
                               // ignore: use_full_hex_values_for_flutter_colors
                               : const Color(0x000000),
                   //cannot use the suggestion as it produces an unwanted white point
-                  badgeContent: arrayElement["repeatId"] != null
+                  badgeContent: balanceData["repeatId"] != null
                       ? Icon(
                           Icons.autorenew_rounded,
                           color: isFutureItem
-                              ? arrayElement["amount"] as num > 0
+                              ? balanceData["amount"] as num > 0
                                   ? Theme.of(context).colorScheme.tertiary
                                   : Theme.of(context).colorScheme.errorContainer
                               : Theme.of(context)
@@ -283,23 +267,23 @@ class HomeScreenListView implements BalanceDataListView {
                       : const SizedBox(),
                   child: CircleAvatar(
                     backgroundColor: isFutureItem
-                        ? arrayElement['amount'] as num > 0
+                        ? balanceData['amount'] as num > 0
                             ? Theme.of(context)
                                 .colorScheme
                                 .tertiary // FUTURE INCOME BACKGROUND
                             : Theme.of(context).colorScheme.errorContainer
                         // FUTURE EXPENSE BACKGROUND
-                        : arrayElement['amount'] as num > 0
+                        : balanceData['amount'] as num > 0
                             ? Theme.of(context)
                                 .colorScheme
                                 .secondary // PRESENT INCOME BACKGROUND
                             : Theme.of(context)
                                 .colorScheme
                                 .secondary, // PRESENT EXPENSE BACKGROUND
-                    child: arrayElement['amount'] as num > 0
+                    child: balanceData['amount'] as num > 0
                         ? Icon(
                             standardCategoryIncomes[
-                                        arrayElement['category'] as String]
+                                        balanceData['category'] as String]
                                     ?.icon ??
                                 Icons.error,
                             color: isFutureItem
@@ -312,7 +296,7 @@ class HomeScreenListView implements BalanceDataListView {
                           )
                         : Icon(
                             standardCategoryExpenses[
-                                        arrayElement['category'] as String]
+                                        balanceData['category'] as String]
                                     ?.icon ??
                                 Icons.error,
                             color: isFutureItem
@@ -326,12 +310,12 @@ class HomeScreenListView implements BalanceDataListView {
                   ),
                 ),
                 title: Text(
-                  arrayElement["name"] as String != ""
-                      ? arrayElement["name"] as String
+                  balanceData["name"] as String != ""
+                      ? balanceData["name"] as String
                       : translateCategory(
-                          arrayElement["category"] as String,
+                          balanceData["category"] as String,
                           context,
-                          isExpense: arrayElement["amount"] as num <= 0,
+                          isExpense: balanceData["amount"] as num <= 0,
                         ),
                   style: isFutureItem
                       ? Theme.of(context).textTheme.bodyText1!.copyWith(
@@ -343,7 +327,7 @@ class HomeScreenListView implements BalanceDataListView {
                 subtitle: Text(
                   formatter
                       .format(
-                        (arrayElement["time"] as Timestamp).toDate(),
+                        (balanceData["time"] as Timestamp).toDate(),
                       )
                       .toUpperCase(),
                   style: isFutureItem
@@ -353,15 +337,15 @@ class HomeScreenListView implements BalanceDataListView {
                           )
                       : Theme.of(context).textTheme.overline,
                 ),
-                trailing: arrayElement["amount"] == 0
+                trailing: balanceData["amount"] == 0
                     ? Text(
                         AppLocalizations.of(context)!
                             .translate('home_screen/free-text'),
                         style: Theme.of(context).textTheme.bodyLarge,
                       )
                     : Text(
-                        "${(arrayElement["amount"] as num).toStringAsFixed(2)}€",
-                        style: arrayElement["amount"] as num <= 0
+                        "${(balanceData["amount"] as num).toStringAsFixed(2)}€",
+                        style: balanceData["amount"] as num <= 0
                             ? Theme.of(context).textTheme.bodyText1?.copyWith(
                                   color: Theme.of(context).colorScheme.error,
                                 )

@@ -12,7 +12,7 @@ import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
-class AccountSettingsProvider extends ChangeNotifier implements BuildableProvider {
+class AccountSettingsProvider extends ChangeNotifier {
   /// _balance is the documentReference to get the balance data from the database. It will be null if the constructor isnt ready yet
   DocumentReference<Map<String, dynamic>>? _settings;
 

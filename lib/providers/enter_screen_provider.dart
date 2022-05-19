@@ -37,7 +37,7 @@ class EnterScreenProvider with ChangeNotifier {
     String? repeatId,
     Timestamp? formerTime,
   }) {
-    _amount = amount <= 0 ? -1 * amount : amount;
+    _amount = amount.abs();
     _expenseCategory = amount <= 0 ? category : secondaryCategory;
     _incomeCategory = amount > 0 ? category : secondaryCategory;
     _name = name;
@@ -56,6 +56,22 @@ class EnterScreenProvider with ChangeNotifier {
     if (selectedDate != null) {
       _selectedDate = selectedDate;
     }
+  }
+
+  factory EnterScreenProvider.fromBalanceData(dynamic balanceData, {bool editMode = true}) {
+    return EnterScreenProvider(
+      id: balanceData["id"] as String,
+      amount: balanceData["amount"] as num,
+      category: balanceData["category"] as String,
+      name: balanceData["name"] as String,
+      selectedDate:
+      (balanceData["time"] as Timestamp).toDate(),
+      editMode: editMode,
+      repeatId: balanceData["repeatId"] as String?,
+      formerTime:
+      (balanceData["formerTime"] as Timestamp?) ??
+          balanceData["time"] as Timestamp,
+    );
   }
 
   bool get isExpenses {
