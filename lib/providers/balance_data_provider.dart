@@ -372,21 +372,6 @@ class BalanceDataProvider extends ChangeNotifier {
     );
   }
 
-  // Dispose
-
-  /// balance data povider gets disposed after closing the enter screen. we want to skip disposing one time.
-  void dontDisposeOneTime() {
-    _dontDispose++;
-  }
-
-  /// balance data povider gets disposed after closing the enter screen. we want to skip disposing one time.
-  @override
-  void dispose() {
-    if (_dontDispose-- == 0) {
-      super.dispose();
-    }
-  }
-
   // Settings
 
   /// upload one setting as map

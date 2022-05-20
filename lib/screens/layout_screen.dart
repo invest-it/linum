@@ -16,6 +16,7 @@ import 'package:linum/screens/home_screen.dart';
 import 'package:linum/screens/lock_screen.dart';
 import 'package:linum/screens/settings_screen.dart';
 import 'package:linum/screens/statistics_screen.dart';
+import 'package:linum/utilities/frontend/multi_provider_builder.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/bottom_app_bar.dart';
 import 'package:provider/provider.dart';
@@ -142,38 +143,25 @@ class _LayoutScreenState extends State<LayoutScreen>
                       context,
                       MaterialPageRoute(
                         builder: (innerContext) {
-                          return MultiProvider(
-                            providers: [
-                              ChangeNotifierProvider<EnterScreenProvider>(
-                                create: (_) {
-                                  return EnterScreenProvider(
-                                    category: _accountSettingsProvider.settings[
-                                                'StandardCategoryExpense']
-                                            as String? ??
-                                        "None",
-                                    secondaryCategory:
-                                        _accountSettingsProvider.settings[
-                                                    'StandardCategoryIncome']
-                                                as String? ??
-                                            "None",
-                                  );
-                                },
-                              ),
-                              ChangeNotifierProvider<BalanceDataProvider>(
-                                create: (_) {
-                                  return balanceDataProvider
-                                    ..dontDisposeOneTime();
-                                },
-                              ),
-                              ChangeNotifierProvider<AccountSettingsProvider>(
-                                create: (_) {
-                                  return _accountSettingsProvider
-                                    ..dontDisposeOneTime();
-                                },
-                              ),
-                            ],
-                            child: const EnterScreen(),
+                          final enterScreenProvider = ChangeNotifierProvider<EnterScreenProvider>(
+                            create: (_) {
+                              return EnterScreenProvider(
+                                category: _accountSettingsProvider.settings[
+                                'StandardCategoryExpense']
+                                as String? ??
+                                    "None",
+                                secondaryCategory:
+                                _accountSettingsProvider.settings[
+                                'StandardCategoryIncome']
+                                as String? ??
+                                    "None",
+                              );
+                            },
                           );
+                          return MultiProviderBuilder(context: context, child: const EnterScreen())
+                            .useExistingProvider<BalanceDataProvider>()
+                            .useExistingProvider<AccountSettingsProvider>()
+                            .build();
                           // ChangeNotifierProvider.value(
                           // value: enterScreenProvider, child: EnterScreen());
                         },
