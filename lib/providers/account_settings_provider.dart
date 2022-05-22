@@ -19,7 +19,6 @@ class AccountSettingsProvider extends ChangeNotifier {
 
   /// The uid of the user
   late String _uid;
-  int _dontDispose = 0;
 
   Map<String, dynamic> lastGrabbedData = {};
 

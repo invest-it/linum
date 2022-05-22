@@ -8,7 +8,6 @@ import 'package:intl/intl.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/providers/account_settings_provider.dart';
-import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/screens/enter_screen.dart';
@@ -159,13 +158,17 @@ class HomeScreenListView implements BalanceDataListView {
           currentIndex = 4; // idk why exactly but now we are save
         }
 
-        list.add(buildGestureDetector(context, balanceData, isFutureItem));
+        list.add(buildGestureDetector(context, balanceData, isFutureItem: isFutureItem));
       }
     }
     return list;
   }
 
-  GestureDetector buildGestureDetector(BuildContext context, dynamic balanceData, bool isFutureItem) {
+  GestureDetector buildGestureDetector(
+      BuildContext context,
+      dynamic balanceData,
+      {bool isFutureItem = false, }
+      ) {
     final BalanceDataProvider balanceDataProvider = Provider.of<BalanceDataProvider>(context);
     final String langCode = AppLocalizations.of(context)!.locale.languageCode;
     final DateFormat formatter = DateFormat('EEEE, dd. MMMM yyyy', langCode);

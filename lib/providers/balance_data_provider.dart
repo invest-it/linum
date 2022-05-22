@@ -26,8 +26,6 @@ class BalanceDataProvider extends ChangeNotifier {
 
   late AlgorithmProvider _algorithmProvider;
 
-  num _dontDispose = 0;
-
   // Manager
   late final SingleBalanceDataManager singleBalanceDataManager;
   late final RepeatedBalanceDataManager repeatedBalanceDataManager;
