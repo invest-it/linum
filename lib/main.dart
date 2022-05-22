@@ -140,7 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
           return MultiProviderBuilder(context: context, child: OnBoardingOrLayoutScreen())
-            .withKey("MainMultiProvider")
+            .setKey("MainMultiProvider")
             .useProvider(AuthenticationService.provider)
             .useProvider(AccountSettingsProvider.provider)
             .useProvider(AlgorithmProvider.provider)

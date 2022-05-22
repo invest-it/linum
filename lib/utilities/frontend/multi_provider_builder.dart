@@ -21,6 +21,21 @@ class MultiProviderBuilder {
     return this;
   }
 
+
+  /// Add a Provider to the MultiProvider via a ChangeNotifierProviderBuilder-Method. <br>
+  /// <br>
+  /// If a provider of this type already exists in the widget-tree it will be
+  /// used instead. <br>
+  /// <br>
+  /// If no generic type argument is specified, the method will default to using
+  /// the provided build-Method. <br>
+  /// <br>
+  /// **IMPORTANT:** Without a generic type argument the function cannot check
+  /// if a provider of the same type already exists.
+  /// A duplicate Provider might crash the app! <br>
+  /// <br>
+  /// Be careful with ProxyProviders, because they depend on other providers
+  /// which might no be initialized yet.
   MultiProviderBuilder useProvider<P extends ChangeNotifier>(
       ChangeNotifierProviderBuilder builder,
       ) {
@@ -35,12 +50,15 @@ class MultiProviderBuilder {
       provider = builder(_context, testing: _testing);
     }
 
-    // TODO: This piece of code needs a very thorough documentation
-
-    _providers.add(provider); // TODO: Check if this is always true
+    _providers.add(provider);
     return this;
   }
 
+  /// Add a existing Provider to the MultiProvider. <br>
+  /// <br>
+  /// The generic type argument **IS REQUIRED** - otherwise the function will be skipped. <br>
+  /// <br>
+  /// If the Provider does not already exist in the widget-tree, the function will be skipped.
   MultiProviderBuilder useExistingProvider<P extends ChangeNotifier>() {
     developer.log("Provider has Type: $P");
     if (P == ChangeNotifier) {
@@ -59,51 +77,41 @@ class MultiProviderBuilder {
     return this;
   }
 
-  MultiProviderBuilder addProvider(SingleChildWidget provider) {
+  /// Add a entirely new Provider to the MultiProvider. <br>
+  /// <br>
+  /// The generic type argument is not required.
+  MultiProviderBuilder addProvider<T extends ChangeNotifier>(ChangeNotifierProvider<T> provider) {
     _providers.add(provider);
     return this;
   }
 
+  /// Add a entirely new ProxyProvider to the MultiProvider. <br>
+  /// <br>
+  /// The generic type argument is not required.
+  /// <br>
+  /// Will throw an error if no ChangeNotifier of the second generic type
+  /// argument can be found.
   MultiProviderBuilder addProxyProvider<T, R extends ChangeNotifier?>
       (ChangeNotifierProxyProvider<T, R> provider) {
     _providers.add(provider);
     return this;
   }
 
-  MultiProviderBuilder withKey(String key) {
+  /// Set the Key for the MultiProvider.
+  ///
+  /// Using the Method twice will override the previous key.
+  MultiProviderBuilder setKey(String key) {
     _key = Key(key);
     return this;
   }
 
+  /// Call this method to build the MultiProvider after setting up its configuration
   MultiProvider build() {
     return MultiProvider(providers: _providers, key: _key, child: _child,);
   }
 }
 
-/*
-*
-* return MultiProvider(
-                      providers: [
-                        ChangeNotifierProvider<EnterScreenProvider>(
-                          create: (_) {
-                            return EnterScreenProvider(
-                              balanceData: balanceData,
-                              editMode: true,
-                            );
-                          },
-                        ),
-                        ChangeNotifierProvider<BalanceDataProvider>.value(
-                          value: balanceDataProvider,
-                        ),
-                        ChangeNotifierProvider<AccountSettingsProvider>.value(
-                          value: accountSettingsProvider,
-                        ),
-                      ],
-                      child: const EnterScreen(),
-                    );
-*
-*
-* */
+
 
 
 
