@@ -134,11 +134,6 @@ class _LayoutScreenState extends State<LayoutScreen>
               ? null
               : FloatingActionButton(
                   onPressed: () {
-                    final BalanceDataProvider balanceDataProvider =
-                        Provider.of<BalanceDataProvider>(
-                      context,
-                      listen: false,
-                    );
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -161,6 +156,7 @@ class _LayoutScreenState extends State<LayoutScreen>
                           return MultiProviderBuilder(context: context, child: const EnterScreen())
                             .useExistingProvider<BalanceDataProvider>()
                             .useExistingProvider<AccountSettingsProvider>()
+                            .addProvider(enterScreenProvider)
                             .build();
                           // ChangeNotifierProvider.value(
                           // value: enterScreenProvider, child: EnterScreen());

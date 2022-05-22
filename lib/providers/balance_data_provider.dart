@@ -128,7 +128,8 @@ class BalanceDataProvider extends ChangeNotifier {
             _algorithmProvider.balanceNeedsNotice)) {
       _algorithmProvider = algorithm;
       _algorithmProvider.balanceDataNotice();
-      notifyListeners();
+      // notifyListeners(); // Called during update,
+      // which already notifies its listeners
     }
   }
 
