@@ -1,3 +1,9 @@
+//  Algorithm Provider - Handles Sort Algorithms used in displaying and filtering Data from Firebase
+//
+//  Author: SoTBurst
+//  Co-Author: NightmindOfficial
+//  (Refactored by damattl)
+
 // ignore_for_file: avoid_dynamic_calls
 
 import 'package:cloud_firestore/cloud_firestore.dart';

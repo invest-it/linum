@@ -1,3 +1,9 @@
+//  Authentication Service - Provider that handles all FirebaseAuth Functions and User State Persistence
+//
+//  Author: SoTBurst
+//  Co-Author: NightmindOfficial, damattl
+//  (Refactored)
+
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
