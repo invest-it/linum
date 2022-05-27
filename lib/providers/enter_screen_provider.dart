@@ -31,6 +31,7 @@ class EnterScreenProvider with ChangeNotifier {
     String secondaryCategory = "None",
     DateTime? selectedDate,
     bool editMode = false,
+    String description = "",
     String? id,
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
@@ -44,6 +45,7 @@ class EnterScreenProvider with ChangeNotifier {
     _name = name;
     _currency = currency;
     _editMode = editMode;
+    _description = description;
     _isExpenses = amount <= 0;
     _repeatDuration = repeatDuration;
     _isIncome = !_isExpenses;

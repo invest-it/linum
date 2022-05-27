@@ -190,9 +190,9 @@ class _EnterScreenListViewBuilderState
                 //scrollPadding: EdgeInsets.only(bottom: bottomInsets + 40),
                 textInputAction: TextInputAction.newline,
                 controller: descriptionController,
-                minLines: 1,
-                maxLines: 5,
                 showCursor: true,
+                minLines: 1,
+                maxLines: 2,
                 decoration: const InputDecoration(
                   hintText: "Description",
                 ),
