@@ -1,3 +1,9 @@
+//  General Robot - A Robot File that can perform user-like interactions in integration tests.
+//
+//  Author: SoTBurst
+//  Co-Author: NightmindOfficial
+//
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';

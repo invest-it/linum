@@ -1,3 +1,9 @@
+//  Country Flag Generator - Takes String Inputs and returns the appropriate Emoji Flag
+//  CAUTION: For this function to work, the input String must adhere to the ISO Guidelines.
+//  Author: NightmindOfficial
+//  Co-Author: SoTBurst
+//
+
 String countryFlag(String countryCode) {
   final String flag = countryCode.toUpperCase().replaceAllMapped(
         RegExp('[A-Z]'),

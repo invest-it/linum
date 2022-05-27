@@ -1,3 +1,9 @@
+//  DialogAction - Model for displaying a standard Action Button within a Popup Dialog including the type of action implied (Error, Warning, Info)
+//
+//  Author: NightmindOfficial
+//  Co-Author: SoTBurst
+//
+
 class DialogAction {
   final Function function;
   final String actionTitle;

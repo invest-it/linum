@@ -1,3 +1,9 @@
+//  Home Screen Card Front - Front Side of the Home Screen Card displaying monthly data statistics
+//
+//  Author: NightmindOfficial
+//  Co-Author: SoTBurst
+//  (Refactored by damattl)
+
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

@@ -1,3 +1,9 @@
+//  Standard Expense Categories - Contains Styles of EntryCategories for all Enums specified in settings_enums.dart
+//
+//  Author: NightmindOfficial, thebluebaronx
+//  Co-Author: damattl
+//  (Refactored)
+
 import 'package:flutter/material.dart';
 import 'package:linum/constants/settings_enums.dart';
 import 'package:linum/models/entry_category.dart';
@@ -7,7 +13,8 @@ import 'package:linum/types/category_map.dart';
 /// e.g. Söncke usually incurs expenses for WATER, therefore he can choose FOOD
 /// as his Standard Category for Expenses so he does not have to choose FOOD as a category when adding as an expense.
 // TODO: RENAME? => StandardExpenseCategories
-final CategoryMap<StandardCategoryExpense> standardCategoryExpenses = CategoryMap.fromMap({
+final CategoryMap<StandardCategoryExpense> standardCategoryExpenses =
+    CategoryMap.fromMap({
   StandardCategoryExpense.none: const EntryCategory(
     label: 'settings_screen/standards-selector-none',
     icon: Icons.check_box_outline_blank_rounded,

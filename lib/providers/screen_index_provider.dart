@@ -1,3 +1,9 @@
+//  Screen Index Provider - Essential Provider that determines the current viewport state of the app
+//  NOTE: THIS PROVIDER IS GOING TO BE REPLACED SOON.
+//  Author: SoTBurst
+//  Co-Author: NightmindOfficial, thebluebaronx
+//  (Partly refactored by damattl)
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/providers/algorithm_provider.dart';

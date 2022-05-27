@@ -1,3 +1,9 @@
+//  Login Screen - A specialized ActionLip specifically designed to accommodate the LoginForm on the OnboardingScreen.
+//
+//  Author: NightmindOfficial
+//  Co-Author: n/a
+//
+
 import 'package:flutter/material.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';

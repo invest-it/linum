@@ -1,3 +1,9 @@
+//  Home Screen Listview - Specific ListView settings for the Home Screen
+//
+//  Author: SoTBurst
+//  Co-Author: thebluebaronx, NightmindOfficial
+//
+
 // ignore_for_file: avoid_dynamic_calls
 
 import 'package:badges/badges.dart';

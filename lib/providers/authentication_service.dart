@@ -1,3 +1,9 @@
+//  Authentication Service - Provider that handles all FirebaseAuth Functions and User State Persistence
+//
+//  Author: SoTBurst
+//  Co-Author: NightmindOfficial, damattl
+//  (Refactored)
+
 import 'dart:developer';
 import 'dart:io';
 
@@ -5,8 +11,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:linum/backend_functions/cryptography.dart';
 import 'package:linum/types/buildable_provider.dart';
+import 'package:linum/utilities/backend/cryptography.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';

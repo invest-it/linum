@@ -1,3 +1,9 @@
+//  Statistics Screen - Screen allowing basic as well as complex visualization of transaction statistics
+//
+//  Author: thebluebaronx (In the Future)
+//  Co-Author: n/a
+/// PAGE INDEX 2
+
 import 'dart:developer';
 
 import 'package:flutter/material.dart';

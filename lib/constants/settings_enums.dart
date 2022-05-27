@@ -1,3 +1,9 @@
+//  Settings Enums - Contains all enums used in the Settings Screen (Different Settings)
+//
+//  Author: NightmindOfficial
+//  Co-Author: damattl
+//  (Refactored)
+
 enum StandardCategoryIncome {
   none,
   income,

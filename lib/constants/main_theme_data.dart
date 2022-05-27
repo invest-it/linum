@@ -1,3 +1,9 @@
+//  Main Theme Data - Contains the entire MaterialTheme used in main.dart
+//
+//  Author: NightmindOfficial
+//  Co-Author: damattl
+//  (Refactored)
+
 import 'package:flutter/material.dart';
 import 'package:linum/constants/main_text_theme.dart';
 

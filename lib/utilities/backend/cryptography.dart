@@ -1,3 +1,9 @@
+//  Cryptography - Accommodates basic encryption functions, mainly Secure Hash Algorithm Class 2 (SHA-2) functions.
+//
+//  Author: damattl
+//  Co-Author: NightmindOfficial (Not for the code, only regarding Security Concerns)
+//
+
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 

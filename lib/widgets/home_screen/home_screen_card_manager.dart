@@ -1,3 +1,9 @@
+//  Home Screen Card Manager - Chooser for which Side to display & more helper functions
+//
+//  Author: damattl
+//  Co-Author: NightmindOfficial
+//  (Refactored)
+
 import 'package:flutter/cupertino.dart';
 import 'package:linum/models/home_screen_card_data.dart';
 import 'package:linum/utilities/backend/statistic_calculations.dart';

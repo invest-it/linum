@@ -1,3 +1,9 @@
+//  Statistic Calculations - Retrieves sorted and/or filtered data from FirebaseFirestore
+//
+//  Author: SoTBurst
+//  Co-Author: n/a
+//
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:linum/models/single_month_statistic.dart';
 import 'package:linum/providers/algorithm_provider.dart';

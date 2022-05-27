@@ -1,3 +1,9 @@
+//  List Divider - pretty much the equivalent of an <hr/> HTML Tag. Used mostly on the Settings Screen.
+//
+//  Author: NightmindOfficial
+//  Co-Author: n/a
+//
+
 import 'package:flutter/material.dart';
 
 class ListDivider extends StatelessWidget {

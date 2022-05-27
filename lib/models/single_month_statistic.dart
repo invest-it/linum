@@ -1,3 +1,9 @@
+//  Single Month Statistic - Model to aggregate financial/statistical data upon a single selected month
+//
+//  Author: SoTBurst
+//  Co-Author: n/a
+//
+
 import 'dart:convert';
 
 // ignore: depend_on_referenced_packages

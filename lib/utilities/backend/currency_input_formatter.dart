@@ -1,3 +1,9 @@
+//  Currency Input Formatter - Formats Currency Inputs to a generally accepted format
+//
+//  Author: NightmindOfficial
+//  Co-Author: SoTBurst
+//
+
 import 'dart:math';
 
 import 'package:flutter/services.dart';

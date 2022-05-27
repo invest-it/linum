@@ -1,3 +1,9 @@
+//  Login Test - An Integration Test designed to extensively test the functionality of the Login (NOT THE SIGNUP) function of the app.
+//
+//  Author: SoTBurst
+//  Co-Author: NightmindOfficial
+//
+
 // ignore_for_file: unused_local_variable
 
 import 'dart:io';
@@ -14,8 +20,7 @@ import 'robots/onboarding_screen/onboarding_open_sign_up.dart';
 import 'robots/onboarding_screen/onboarding_robot.dart';
 
 void main() {
-  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized()
-      as IntegrationTestWidgetsFlutterBinding;
+  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   HomeRobot homeRobot;
   OnboardingRobot onboardingRobot;

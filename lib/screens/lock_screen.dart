@@ -1,3 +1,9 @@
+//  Lock Screen - PIN Lock Screen that prevents unauthorized access to sensitive user data if activated by the user
+//
+//  Author: NightmindOfficial
+//  Co-Author: SoTBurst, damattl
+/// PAGE INDEX 5
+
 import 'package:flutter/material.dart';
 import 'package:linum/models/lock_screen_action.dart';
 import 'package:linum/providers/authentication_service.dart';
@@ -16,8 +22,10 @@ class LockScreen extends StatefulWidget {
 }
 
 class _LockScreenState extends State<LockScreen> {
-
-  List<NumericField> _generateNumericFields(List<int> numbers, PinCodeProvider pinCodeProvider) {
+  List<NumericField> _generateNumericFields(
+    List<int> numbers,
+    PinCodeProvider pinCodeProvider,
+  ) {
     final fields = <NumericField>[];
     for (final number in numbers) {
       final field = NumericField(number, pinCodeProvider.addDigit);
@@ -35,6 +43,8 @@ class _LockScreenState extends State<LockScreen> {
     //final ScreenIndexProvider sip = Provider.of<ScreenIndexProvider>(context);
     final LockScreenAction screenIntent = pinCodeProvider.recallPINLockIntent();
 
+    //TODO check if we need this or not
+    // ignore: unused_local_variable
     final void Function(int) addDigit = pinCodeProvider.addDigit;
 
     return ScreenSkeleton(
@@ -118,7 +128,8 @@ class _LockScreenState extends State<LockScreen> {
                 ),
                 Expanded(
                   child: Column(
-                    children: _generateNumericFields([2, 5, 8, 0], pinCodeProvider),
+                    children:
+                        _generateNumericFields([2, 5, 8, 0], pinCodeProvider),
                   ),
                 ),
                 Expanded(

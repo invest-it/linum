@@ -1,22 +1,22 @@
+//  Layout Screen - Basic Screen Switcher
+//  NOTE: THIS SCREEN IS GOING TO BE REPLACED BY A NEW NAVIGATION SYSTEM SOON. //TODO @NightmindOfficial change this description once this has been performed.
+//  Author: thebluebaronx
+//  Co-Author: SoTBurst, NightmindOfficial
+/// NO PAGE INDEX (This Screen is always invoked)
+
 import 'dart:developer' as dev;
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/constants/screens.dart';
 import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/providers/screen_index_provider.dart';
-import 'package:linum/screens/academy_screen.dart';
-import 'package:linum/screens/budget_screen.dart';
 import 'package:linum/screens/enter_screen.dart';
-import 'package:linum/screens/home_screen.dart';
-import 'package:linum/screens/lock_screen.dart';
-import 'package:linum/screens/settings_screen.dart';
-import 'package:linum/screens/statistics_screen.dart';
-import 'package:linum/utilities/frontend/multi_provider_builder.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/bottom_app_bar.dart';
 import 'package:provider/provider.dart';
@@ -33,12 +33,12 @@ class _LayoutScreenState extends State<LayoutScreen>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance?.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -84,15 +84,6 @@ class _LayoutScreenState extends State<LayoutScreen>
       ),
     );
 
-    //list with all the "screens"
-    final List<Widget> _page = <Widget>[
-      const HomeScreen(), //0
-      const BudgetScreen(), //1
-      const StatisticsScreen(), //2
-      const SettingsScreen(), //3
-      const AcademyScreen(), //4
-      LockScreen(), //5
-    ];
     return FutureBuilder(
       future: pinCodeProvider.initialIsPINActive(),
       builder: (context, snapshot) {
@@ -120,7 +111,7 @@ class _LayoutScreenState extends State<LayoutScreen>
               stream: balance.snapshots(),
               builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
                 //returns the page at the current index, or at the lock screen index if a) the PIN lock is active AND b) there is a code for the email used for login stored in sharedPreferences AND c) the pin code has not been recalled before
-                return _page.elementAt(screenIndexProvider.pageIndex);
+                return screens.elementAt(screenIndexProvider.pageIndex);
               },
             ),
           ),
