@@ -1,3 +1,9 @@
+//  Forgot Password - Button that provides functionalities to reset the user password
+//
+//  Author: NightmindOfficial
+//  Co-Author: SoTBurst
+//
+
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';

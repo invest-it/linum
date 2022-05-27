@@ -1,3 +1,9 @@
+//  Login Form - Form for signing the user in
+//
+//  Author: NightmindOfficial
+//  Co-Author: n/a
+//  (Refactored)
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';

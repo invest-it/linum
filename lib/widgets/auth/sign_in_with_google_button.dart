@@ -1,3 +1,9 @@
+//  Sign in with Google Button - Google Sign In Functionality on Login AND Register
+//
+//  Author: damattl
+//  Co-Author: n/a
+//
+
 import 'package:flutter/material.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
