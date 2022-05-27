@@ -1,3 +1,9 @@
+//  HomeScreen Card Time Warp - Time Machine for the HomeScreenCard (return the statistics for a given month)
+//
+//  Author: NightmindOfficial
+//  Co-Author: n/a
+//
+
 import 'package:linum/providers/algorithm_provider.dart';
 
 void goBackInTime(AlgorithmProvider algorithmProvider) {

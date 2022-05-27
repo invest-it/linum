@@ -1,3 +1,9 @@
+//  Delete Entry Popup - Generates a UserAlert widget capable of removing balances
+//
+//  Author: NightmindOfficial (pls refer to Co-Author for any questions regarding existing code)
+//  Co-Author: SoTBurst
+//
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
