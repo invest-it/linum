@@ -1,5 +1,4 @@
 import 'dart:developer' as dev;
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/models/dialog_action.dart';
@@ -106,7 +105,7 @@ class _EnterScreenState extends State<EnterScreen> {
                                   textStyle: Theme.of(context).textTheme.button,
                                   fixedSize: Size(
                                     proportionateScreenWidth(300),
-                                    proportionateScreenHeight(40),
+                                    proportionateScreenHeight(50),
                                   ),
                                 ),
                                 onPressed: () {
@@ -387,7 +386,6 @@ class _EnterScreenState extends State<EnterScreen> {
                         ),
                       ],
                     ),
-
               const SizedBox(
                 height: 30,
               ),

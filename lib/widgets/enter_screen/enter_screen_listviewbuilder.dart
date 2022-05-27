@@ -68,8 +68,7 @@ class _EnterScreenListViewBuilderState
 
     final EnterScreenProvider enterScreenProvider =
         Provider.of<EnterScreenProvider>(context);
-    // BalanceDataProvider balanceDataProvider =
-    //     Provider.of<BalanceDataProvider>(context);
+
     nameController ??= TextEditingController(text: enterScreenProvider.name);
     nameController ??=
         TextEditingController(text: enterScreenProvider.description);
