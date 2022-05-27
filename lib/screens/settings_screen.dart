@@ -1,3 +1,9 @@
+//  Settings Screen - Screen that allows changing user Settings as well as logging out, changing languages and performing "Danger Zone" tasks
+//
+//  Author: aronzimmermann
+//  Co-Author: SoTBurst, NightmindOfficial, Partly refactored by damattl
+/// PAGE INDEX 3
+
 import 'package:flutter/material.dart';
 import 'package:linum/constants/settings_enums.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
@@ -514,7 +520,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 }
-
 
 /*
 // ignore: unused_element

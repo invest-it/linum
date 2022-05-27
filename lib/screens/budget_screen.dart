@@ -1,3 +1,9 @@
+//  Budget Screen - Screen listing all Balances ever made without any filtering (future entries not recognized)
+//  NOTE: THE SCOPE OF THIS SCREEN IS GOING TO CHANGE SOON. //TODO @thebluebaronx pleas change this description once the change has been fulfilled.
+//  Author: NightmindOfficial
+//  Co-Author: SoTBurst
+/// PAGE INDEX 1
+
 import 'package:flutter/material.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';

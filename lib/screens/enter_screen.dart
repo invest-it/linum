@@ -1,3 +1,9 @@
+//  Enter Screen - Input Screen for Adding new Transactions as well as to Edit existing ones. Note: This screen will not be part of the default routes.
+//
+//  Author: SoTBurst (thebluebaronx before the grand overhaul)
+//  Co-Author: NightmindOfficial, thebluebaronx
+/// NO PAGE INDEX (This screen is not part of the default route and needs to be pushed onto the Navigator)
+
 import 'dart:developer' as dev;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
