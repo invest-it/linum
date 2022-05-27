@@ -39,7 +39,9 @@ class _EnterScreenListViewBuilderState
   final firstDate = DateTime(2000);
   final lastDate = DateTime(DateTime.now().year + 5, 12);
 
-  TextEditingController? myController;
+  TextEditingController? nameController;
+  TextEditingController? descriptionController;
+
   @override
   void initState() {
     super.initState();
@@ -47,14 +49,20 @@ class _EnterScreenListViewBuilderState
 
   @override
   void dispose() {
-    if (myController != null) {
-      myController!.dispose();
+    if (nameController != null) {
+      nameController!.dispose();
+    }
+    super.dispose();
+    if (descriptionController != null) {
+      descriptionController!.dispose();
     }
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    double bottomInsets = MediaQuery.of(context).viewInsets.bottom;
+
     final AccountSettingsProvider accountSettingsProvider =
         Provider.of<AccountSettingsProvider>(context);
 
@@ -62,7 +70,9 @@ class _EnterScreenListViewBuilderState
         Provider.of<EnterScreenProvider>(context);
     // BalanceDataProvider balanceDataProvider =
     //     Provider.of<BalanceDataProvider>(context);
-    myController ??= TextEditingController(text: enterScreenProvider.name);
+    nameController ??= TextEditingController(text: enterScreenProvider.name);
+    nameController ??=
+        TextEditingController(text: enterScreenProvider.description);
     return Expanded(
       child: SingleChildScrollView(
         child: Column(
@@ -75,7 +85,7 @@ class _EnterScreenListViewBuilderState
               width: proportionateScreenWidth(281),
               child: TextField(
                 maxLength: 32,
-                controller: myController,
+                controller: nameController,
                 showCursor: true,
                 decoration: InputDecoration(
                   hintText: _hintTextChooser(enterScreenProvider),
@@ -86,11 +96,10 @@ class _EnterScreenListViewBuilderState
                 ),
                 style: Theme.of(context).textTheme.headline5,
                 onChanged: (_) {
-                  enterScreenProvider.setName(myController!.text);
+                  enterScreenProvider.setName(nameController!.text);
                 },
               ),
             ),
-
             SizedBox(
               width: proportionateScreenWidth(300),
               //the list view that contains the different categories
@@ -178,7 +187,9 @@ class _EnterScreenListViewBuilderState
             SizedBox(
               width: proportionateScreenWidth(281),
               child: TextField(
+                //scrollPadding: EdgeInsets.only(bottom: bottomInsets + 40),
                 textInputAction: TextInputAction.newline,
+                controller: descriptionController,
                 minLines: 1,
                 maxLines: 5,
                 showCursor: true,
@@ -186,7 +197,10 @@ class _EnterScreenListViewBuilderState
                   hintText: "Description",
                 ),
                 style: Theme.of(context).textTheme.bodyText1,
-                onChanged: null,
+                onChanged: (_) {
+                  enterScreenProvider
+                      .setDescription(descriptionController!.text);
+                },
               ),
             ),
           ],
