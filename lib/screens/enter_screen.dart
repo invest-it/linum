@@ -47,13 +47,9 @@ class _EnterScreenState extends State<EnterScreen> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
+
         // extendBodyBehindAppBar: true,
-        // appBar: AppBar(
-        //   backgroundColor: Colors.transparent,
-        //   elevation: 0,
-        //   leading: BackButton(),
-        // ),
-        resizeToAvoidBottomInset: false,
         body: GestureDetector(
           onHorizontalDragEnd: (DragEndDetails details) {
             const int sensitivity = 1;
@@ -93,10 +89,12 @@ class _EnterScreenState extends State<EnterScreen> {
                       ),
                     )
                   : EnterScreenListViewBuilder(),
-              Expanded(
-                child:
-                    Container(color: Theme.of(context).colorScheme.background),
-              ),
+              /*SizedBox(
+                height: MediaQuery.of(context).viewInsets.bottom,
+              ),*/
+              /*Expanded(
+                child: Container(color: Colors.red),
+              ),*/
               enterScreenProvider.editMode
                   ? TextButton(
                       style: TextButton.styleFrom(
@@ -127,210 +125,232 @@ class _EnterScreenState extends State<EnterScreen> {
                       ),
                     )
                   : Container(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      textStyle: Theme.of(context).textTheme.button,
-                      primary: Theme.of(context).colorScheme.primary,
-                      onPrimary: Theme.of(context).colorScheme.background,
-                      onSurface: Colors.white,
-                      fixedSize: Size(
-                        proportionateScreenWidth(300),
-                        proportionateScreenHeight(40),
-                      ),
-                    ),
-                    onPressed: () {
-                      if (enterScreenProvider.isIncome &&
-                          _amountChooser(enterScreenProvider) <= 0) {
-                        showAlertDialog(context, enterScreenProvider);
-                        dev.log(
-                          "amount was to low: ${_amountChooser(enterScreenProvider)}",
-                        );
-                        return;
-                      }
-
-                      if (enterScreenProvider.editMode) {
-                        if (enterScreenProvider.repeatId == null) {
-                          balanceDataProvider.updateSingleBalance(
-                            id: enterScreenProvider.formerId ?? "",
-                            amount: _amountChooser(enterScreenProvider),
-                            category: enterScreenProvider.category,
-                            currency: "EUR",
-                            name: enterScreenProvider.name,
-                            time: Timestamp.fromDate(
-                              selectedDateDateTimeFormatted,
+              SizeGuide.keyboardIsOpened
+                  ? Container()
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            textStyle: Theme.of(context).textTheme.button,
+                            primary: Theme.of(context).colorScheme.primary,
+                            onPrimary: Theme.of(context).colorScheme.background,
+                            onSurface: Colors.white,
+                            fixedSize: Size(
+                              proportionateScreenWidth(300),
+                              proportionateScreenHeight(40),
                             ),
-                          );
-                          Navigator.of(context).pop();
-                        } else {
-                          // open popup
-                          final UserAlert userAlert =
-                              UserAlert(context: context);
-                          userAlert
-                              .showMyActionDialog(
-                                "enter_screen/change-entry/dialog-label-change",
-                                <DialogAction>[
-                                  DialogAction(
-                                    actionTitle:
-                                        "enter_screen/delete-entry/dialog-button-onlyonce",
-                                    // ignore: avoid_redundant_argument_values
-                                    dialogPurpose: DialogPurpose.primary,
-                                    function: () {
-                                      balanceDataProvider.updateRepeatedBalance(
-                                        id: enterScreenProvider.repeatId!,
-                                        changeType:
-                                            RepeatableChangeType.onlyThisOne,
-                                        amount:
-                                            _amountChooser(enterScreenProvider),
-                                        category: enterScreenProvider.category,
-                                        currency: "EUR",
-                                        name: enterScreenProvider.name,
-                                        time: enterScreenProvider.formerTime,
-                                        newTime: Timestamp.fromDate(
-                                          selectedDateDateTimeFormatted,
-                                        ),
-                                      );
-                                      Navigator.of(context).pop(true);
-                                    },
-                                  ),
-                                  DialogAction(
-                                    actionTitle:
-                                        "enter_screen/delete-entry/dialog-button-untilnow",
-                                    dialogPurpose: DialogPurpose.danger,
-                                    function: () {
-                                      dev.log("");
-                                      balanceDataProvider.updateRepeatedBalance(
-                                        id: enterScreenProvider.repeatId!,
-                                        changeType: RepeatableChangeType
-                                            .thisAndAllBefore,
-                                        amount:
-                                            _amountChooser(enterScreenProvider),
-                                        category: enterScreenProvider.category,
-                                        currency: "EUR",
-                                        name: enterScreenProvider.name,
-                                        time: enterScreenProvider.formerTime,
-                                        newTime: Timestamp.fromDate(
-                                          selectedDateDateTimeFormatted,
-                                        ),
-                                      );
-                                      Navigator.of(context).pop(true);
-                                    },
-                                  ),
-                                  DialogAction(
-                                    actionTitle:
-                                        "enter_screen/delete-entry/dialog-button-fromnow",
-                                    dialogPurpose: DialogPurpose.danger,
-                                    function: () {
-                                      balanceDataProvider.updateRepeatedBalance(
-                                        id: enterScreenProvider.repeatId!,
-                                        changeType: RepeatableChangeType
-                                            .thisAndAllAfter,
-                                        amount:
-                                            _amountChooser(enterScreenProvider),
-                                        category: enterScreenProvider.category,
-                                        currency: "EUR",
-                                        name: enterScreenProvider.name,
-                                        time: enterScreenProvider.formerTime,
-                                        newTime: Timestamp.fromDate(
-                                          selectedDateDateTimeFormatted,
-                                        ),
-                                      );
-                                      Navigator.of(context).pop(true);
-                                    },
-                                  ),
-                                  DialogAction(
-                                    actionTitle:
-                                        "enter_screen/delete-entry/dialog-button-allentries",
-                                    dialogPurpose: DialogPurpose.danger,
-                                    function: () {
-                                      balanceDataProvider.updateRepeatedBalance(
-                                        id: enterScreenProvider.repeatId!,
-                                        changeType: RepeatableChangeType.all,
-                                        amount:
-                                            _amountChooser(enterScreenProvider),
-                                        category: enterScreenProvider.category,
-                                        currency: "EUR",
-                                        name: enterScreenProvider.name,
-                                        time: enterScreenProvider.formerTime,
-                                        newTime: Timestamp.fromDate(
-                                          selectedDateDateTimeFormatted,
-                                        ),
-                                      );
-                                      Navigator.of(context).pop(true);
-                                    },
-                                  ),
-                                  DialogAction(
-                                    actionTitle:
-                                        "enter_screen/delete-entry/dialog-button-cancel",
-                                    dialogPurpose: DialogPurpose.secondary,
-                                    function: () {
-                                      Navigator.of(context).pop(false);
-                                    },
-                                  ),
-                                ],
-                                title:
-                                    "enter_screen/delete-entry/dialog-label-title",
-                              )
-                              .then(
-                                (value) => Navigator.of(context).pop(),
+                          ),
+                          onPressed: () {
+                            if (enterScreenProvider.isIncome &&
+                                _amountChooser(enterScreenProvider) <= 0) {
+                              showAlertDialog(context, enterScreenProvider);
+                              dev.log(
+                                "amount was to low: ${_amountChooser(enterScreenProvider)}",
                               );
-                        }
-                      } else {
-                        if (enterScreenProvider.repeatDuration == null ||
-                            enterScreenProvider.repeatDurationTyp == null) {
-                          balanceDataProvider.addSingleBalance(
-                            SingleBalanceData(
-                              amount: _amountChooser(enterScreenProvider),
-                              category: enterScreenProvider.category,
-                              currency: "EUR",
-                              name: enterScreenProvider.name,
-                              time: Timestamp.fromDate(
-                                selectedDateDateTimeFormatted,
-                              ),
-                            ),
-                          );
-                        } else {
-                          balanceDataProvider.addRepeatedBalance(
-                            RepeatedBalanceData(
-                              amount: _amountChooser(enterScreenProvider),
-                              category: enterScreenProvider.category,
-                              currency: "EUR",
-                              name: enterScreenProvider.name,
-                              initialTime: Timestamp.fromDate(
-                                DateTime(
-                                  selectedDateDateTimeFormatted.year,
-                                  selectedDateDateTimeFormatted.month,
-                                  selectedDateDateTimeFormatted.day,
-                                  selectedDateDateTimeFormatted.hour != 0
-                                      ? selectedDateDateTimeFormatted.hour
-                                      : DateTime.now().hour,
-                                  selectedDateDateTimeFormatted.minute != 0
-                                      ? selectedDateDateTimeFormatted.minute
-                                      : DateTime.now().minute,
-                                  selectedDateDateTimeFormatted.second != 0
-                                      ? selectedDateDateTimeFormatted.second
-                                      : DateTime.now().second,
-                                ),
-                              ),
-                              repeatDuration:
-                                  enterScreenProvider.repeatDuration!,
-                              repeatDurationType:
-                                  enterScreenProvider.repeatDurationTyp!,
-                            ),
-                          );
-                        }
-                        Navigator.of(context).pop();
-                      }
-                    },
-                    child: Text(
-                      AppLocalizations.of(context)!
-                          .translate('enter_screen/button-save-entry'),
+                              return;
+                            }
+
+                            if (enterScreenProvider.editMode) {
+                              if (enterScreenProvider.repeatId == null) {
+                                balanceDataProvider.updateSingleBalance(
+                                  id: enterScreenProvider.formerId ?? "",
+                                  amount: _amountChooser(enterScreenProvider),
+                                  category: enterScreenProvider.category,
+                                  currency: "EUR",
+                                  name: enterScreenProvider.name,
+                                  time: Timestamp.fromDate(
+                                    selectedDateDateTimeFormatted,
+                                  ),
+                                );
+                                Navigator.of(context).pop();
+                              } else {
+                                // open popup
+                                final UserAlert userAlert =
+                                    UserAlert(context: context);
+                                userAlert
+                                    .showMyActionDialog(
+                                      "enter_screen/change-entry/dialog-label-change",
+                                      <DialogAction>[
+                                        DialogAction(
+                                          actionTitle:
+                                              "enter_screen/delete-entry/dialog-button-onlyonce",
+                                          // ignore: avoid_redundant_argument_values
+                                          dialogPurpose: DialogPurpose.primary,
+                                          function: () {
+                                            balanceDataProvider
+                                                .updateRepeatedBalance(
+                                              id: enterScreenProvider.repeatId!,
+                                              changeType: RepeatableChangeType
+                                                  .onlyThisOne,
+                                              amount: _amountChooser(
+                                                  enterScreenProvider),
+                                              category:
+                                                  enterScreenProvider.category,
+                                              currency: "EUR",
+                                              name: enterScreenProvider.name,
+                                              time: enterScreenProvider
+                                                  .formerTime,
+                                              newTime: Timestamp.fromDate(
+                                                selectedDateDateTimeFormatted,
+                                              ),
+                                            );
+                                            Navigator.of(context).pop(true);
+                                          },
+                                        ),
+                                        DialogAction(
+                                          actionTitle:
+                                              "enter_screen/delete-entry/dialog-button-untilnow",
+                                          dialogPurpose: DialogPurpose.danger,
+                                          function: () {
+                                            dev.log("");
+                                            balanceDataProvider
+                                                .updateRepeatedBalance(
+                                              id: enterScreenProvider.repeatId!,
+                                              changeType: RepeatableChangeType
+                                                  .thisAndAllBefore,
+                                              amount: _amountChooser(
+                                                  enterScreenProvider),
+                                              category:
+                                                  enterScreenProvider.category,
+                                              currency: "EUR",
+                                              name: enterScreenProvider.name,
+                                              time: enterScreenProvider
+                                                  .formerTime,
+                                              newTime: Timestamp.fromDate(
+                                                selectedDateDateTimeFormatted,
+                                              ),
+                                            );
+                                            Navigator.of(context).pop(true);
+                                          },
+                                        ),
+                                        DialogAction(
+                                          actionTitle:
+                                              "enter_screen/delete-entry/dialog-button-fromnow",
+                                          dialogPurpose: DialogPurpose.danger,
+                                          function: () {
+                                            balanceDataProvider
+                                                .updateRepeatedBalance(
+                                              id: enterScreenProvider.repeatId!,
+                                              changeType: RepeatableChangeType
+                                                  .thisAndAllAfter,
+                                              amount: _amountChooser(
+                                                  enterScreenProvider),
+                                              category:
+                                                  enterScreenProvider.category,
+                                              currency: "EUR",
+                                              name: enterScreenProvider.name,
+                                              time: enterScreenProvider
+                                                  .formerTime,
+                                              newTime: Timestamp.fromDate(
+                                                selectedDateDateTimeFormatted,
+                                              ),
+                                            );
+                                            Navigator.of(context).pop(true);
+                                          },
+                                        ),
+                                        DialogAction(
+                                          actionTitle:
+                                              "enter_screen/delete-entry/dialog-button-allentries",
+                                          dialogPurpose: DialogPurpose.danger,
+                                          function: () {
+                                            balanceDataProvider
+                                                .updateRepeatedBalance(
+                                              id: enterScreenProvider.repeatId!,
+                                              changeType:
+                                                  RepeatableChangeType.all,
+                                              amount: _amountChooser(
+                                                  enterScreenProvider),
+                                              category:
+                                                  enterScreenProvider.category,
+                                              currency: "EUR",
+                                              name: enterScreenProvider.name,
+                                              time: enterScreenProvider
+                                                  .formerTime,
+                                              newTime: Timestamp.fromDate(
+                                                selectedDateDateTimeFormatted,
+                                              ),
+                                            );
+                                            Navigator.of(context).pop(true);
+                                          },
+                                        ),
+                                        DialogAction(
+                                          actionTitle:
+                                              "enter_screen/delete-entry/dialog-button-cancel",
+                                          dialogPurpose:
+                                              DialogPurpose.secondary,
+                                          function: () {
+                                            Navigator.of(context).pop(false);
+                                          },
+                                        ),
+                                      ],
+                                      title:
+                                          "enter_screen/delete-entry/dialog-label-title",
+                                    )
+                                    .then(
+                                      (value) => Navigator.of(context).pop(),
+                                    );
+                              }
+                            } else {
+                              if (enterScreenProvider.repeatDuration == null ||
+                                  enterScreenProvider.repeatDurationTyp ==
+                                      null) {
+                                balanceDataProvider.addSingleBalance(
+                                  SingleBalanceData(
+                                    amount: _amountChooser(enterScreenProvider),
+                                    category: enterScreenProvider.category,
+                                    currency: "EUR",
+                                    name: enterScreenProvider.name,
+                                    time: Timestamp.fromDate(
+                                      selectedDateDateTimeFormatted,
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                balanceDataProvider.addRepeatedBalance(
+                                  RepeatedBalanceData(
+                                    amount: _amountChooser(enterScreenProvider),
+                                    category: enterScreenProvider.category,
+                                    currency: "EUR",
+                                    name: enterScreenProvider.name,
+                                    initialTime: Timestamp.fromDate(
+                                      DateTime(
+                                        selectedDateDateTimeFormatted.year,
+                                        selectedDateDateTimeFormatted.month,
+                                        selectedDateDateTimeFormatted.day,
+                                        selectedDateDateTimeFormatted.hour != 0
+                                            ? selectedDateDateTimeFormatted.hour
+                                            : DateTime.now().hour,
+                                        selectedDateDateTimeFormatted.minute !=
+                                                0
+                                            ? selectedDateDateTimeFormatted
+                                                .minute
+                                            : DateTime.now().minute,
+                                        selectedDateDateTimeFormatted.second !=
+                                                0
+                                            ? selectedDateDateTimeFormatted
+                                                .second
+                                            : DateTime.now().second,
+                                      ),
+                                    ),
+                                    repeatDuration:
+                                        enterScreenProvider.repeatDuration!,
+                                    repeatDurationType:
+                                        enterScreenProvider.repeatDurationTyp!,
+                                  ),
+                                );
+                              }
+                              Navigator.of(context).pop();
+                            }
+                          },
+                          child: Text(
+                            AppLocalizations.of(context)!
+                                .translate('enter_screen/button-save-entry'),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
+
               const SizedBox(
                 height: 30,
               ),
