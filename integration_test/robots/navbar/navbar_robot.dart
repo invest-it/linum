@@ -1,3 +1,9 @@
+//  Navbar Robot - A Robot specifically designed to perform tasks on the Global Navigation Bar.
+//
+//  Author: NightmindOfficial
+//  Co-Author: n/a
+//
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
