@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/constants/settings_enums.dart';
-import 'package:linum/models/repeat_duration_type_enum.dart';
+import 'package:linum/constants/repeat_duration_type_enum.dart';
 
 class EnterScreenProvider with ChangeNotifier {
   late bool _isExpenses;

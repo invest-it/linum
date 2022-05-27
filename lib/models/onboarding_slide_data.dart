@@ -1,3 +1,9 @@
+//  OnboardingSlideData - Model for defining contents of a single Onboarding Slide
+//
+//  Author: NightmindOfficial
+//  Co-Author: damattl
+//  (Refactored)
+
 class OnboardingSlideData {
   String imageURL;
   String heading;

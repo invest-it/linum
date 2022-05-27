@@ -1,3 +1,9 @@
+//  Main Text Theme - Constants File containing the entire textTheme used in main.dart
+//
+//  Author: NightmindOfficial
+//  Co-Author: damattl
+//  (Refactored)
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
