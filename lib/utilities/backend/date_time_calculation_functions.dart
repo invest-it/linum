@@ -1,3 +1,9 @@
+//  Date Time Calculations - Used for moving forwards and backwards in time, mainly for the AlgorighmProvider which calculates filters for Transaction Lists
+//
+//  Author: SoTBurst
+//  Co-Author: n/a
+//
+
 /// calculate next time step and decide for that if you need monthly steps or seconds as stepsize
 DateTime calculateOneTimeStep(
   int stepsize,

@@ -1,3 +1,9 @@
+//  URL Handler - Launches URLs in the integrated Browser
+//
+//  Author: NightmindOfficial
+//  Co-Author: n/a
+//
+
 import 'package:url_launcher/url_launcher.dart';
 
 // Launches URLS in the standard browser. Helpful for Buttons etc.
