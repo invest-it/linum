@@ -1,3 +1,9 @@
+//  Balance Data StreamBuilder-Manager - Prepares and returns Datastreams for all kinds of lists, mostly for ListViews concerning Transactions
+//
+//  Author: SoTBurst
+//  Co-Author: n/a
+//  (partly refactored by damattl)
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 import 'package:linum/providers/algorithm_provider.dart';

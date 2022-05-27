@@ -1,3 +1,9 @@
+//  Repeated Balance Data Updater - augments the StreamBuilder Manager with repeatable-specific Elements
+//
+//  Author: SoTBurst
+//  Co-Author: n/a
+//  (refactored)
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:linum/constants/repeat_duration_type_enum.dart';

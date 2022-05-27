@@ -1,3 +1,9 @@
+//  Repeated Balance Data Manager - augments the StreamBuilder Manager with repeatable-specific Elements
+//
+//  Author: SoTBurst
+//  Co-Author: n/a
+//  (refactored)
+
 import 'dart:developer' as dev;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
