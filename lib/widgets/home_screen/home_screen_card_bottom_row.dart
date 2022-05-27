@@ -1,3 +1,9 @@
+//  Home Screen Card Bottom Row - Bottom Part of the Home Screen displaying additional Metrics
+//
+//  Author: NightmindOfficial
+//  Co-Author: n/a
+//  (Refactored by damattl)
+
 import 'package:flutter/material.dart';
 import 'package:linum/models/home_screen_card_data.dart';
 import 'package:linum/providers/algorithm_provider.dart';

@@ -1,3 +1,9 @@
+//  Onboarding Screen - Screen that is displayed the FirebaseAuth has no User Credentials (when there is no user logged in)
+//
+//  Author: NightmindOfficial
+//  Co-Author: damattl
+//  (Refactored)
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';

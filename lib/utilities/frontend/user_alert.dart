@@ -1,3 +1,9 @@
+//  User Alert - generates customized Popup Messages (User Alerts) with the option of providing customized callbacks. Oftentimes used for catching errors.
+//
+//  Author: NightmindOfficial
+//  Co-Author: SoTBurst
+//
+
 import 'package:flutter/material.dart';
 import 'package:linum/models/dialog_action.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';

@@ -1,3 +1,9 @@
+//  App Bar Action - a standardized action that can be added to an AppBar.
+//  Note: You need to use the static functions below if you want customized AppBarActions.
+//  Author: NightmindOfficial
+//  Co-Author: SoTBurst
+//
+
 import 'dart:developer';
 
 import 'package:flutter/material.dart';

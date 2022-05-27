@@ -1,8 +1,18 @@
+//  Page Indicator - Typically a row of grey-ish circles on the bottom of a PageView which tells you 1) How many pages there are 2) which page is currently shown.
+//
+//  Author: NightmindOfficial
+//  Co-Author: n/a
+//  (Refactored by damattl)
+
 import 'package:flutter/cupertino.dart';
 import 'package:linum/widgets/onboarding/page_indicator_item.dart';
 
 class PageIndicator extends StatefulWidget {
-  const PageIndicator({Key? key, required this.slideCount, required this.currentSlide}) : super(key: key);
+  const PageIndicator({
+    Key? key,
+    required this.slideCount,
+    required this.currentSlide,
+  }) : super(key: key);
 
   final int slideCount;
   final int currentSlide;
@@ -12,12 +22,12 @@ class PageIndicator extends StatefulWidget {
 }
 
 class _PageIndicatorState extends State<PageIndicator> {
-
   List<Widget> _buildChildrenList() {
     final List<Widget> childrenList = <Widget>[];
 
     for (int i = 0; i < widget.slideCount; i++) {
-      childrenList.add(PageIndicatorItem(isCurrentIndicator: i == widget.currentSlide));
+      childrenList
+          .add(PageIndicatorItem(isCurrentIndicator: i == widget.currentSlide));
       if (i != widget.slideCount - 1) {
         childrenList.add(
           const SizedBox(

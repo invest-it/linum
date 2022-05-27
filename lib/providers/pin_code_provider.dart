@@ -1,3 +1,9 @@
+//  Pin Code Provider - Complex Provider handling all States and Authentication around the PIN Lock
+//
+//  Author: NightmindOfficial
+//  Co-Author: SoTBurst
+//  (Partly refactored by damattl)
+
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -312,8 +318,7 @@ class PinCodeProvider extends ChangeNotifier {
 
   void toastFromTranslationKey(String key) {
     Fluttertoast.showToast(
-      msg: AppLocalizations.of(_context)!
-          .translate(key),
+      msg: AppLocalizations.of(_context)!.translate(key),
     );
   }
 

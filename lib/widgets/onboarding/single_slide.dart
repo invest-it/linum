@@ -1,3 +1,9 @@
+//  Single Slide - One Slide of the Onboarding Screen (used in the PageView) - consisting of an SVG, a title and a description.
+//
+//  Author: NightmindOfficial
+//  Co-Author: n/a
+//  (Refactored by damattl)
+
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';

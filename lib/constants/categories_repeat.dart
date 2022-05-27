@@ -1,7 +1,13 @@
+//  Categories Repeat - Constants File that inhabitates all Repeat Durations used in the Enter Screen.
+//
+//  Author: NightmindOfficial
+//  Co-Author: damattl
+//  (Refactored)
+
 import 'package:flutter/material.dart';
+import 'package:linum/constants/repeat_duration_type_enum.dart';
 import 'package:linum/constants/settings_enums.dart';
 import 'package:linum/models/entry_category.dart';
-import 'package:linum/models/repeat_duration_type_enum.dart';
 
 final Map<RepeatDuration, Map<String, dynamic>> categoriesRepeat = {
   RepeatDuration.none: {

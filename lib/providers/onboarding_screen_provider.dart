@@ -1,3 +1,9 @@
+//  Onboarding Screen Provider - Handles Operation and information exchange on the Onboarding Screen
+//
+//  Author: NightmindOfficial
+//  Co-Author: damattl
+//  (Refactored)
+
 import 'package:flutter/material.dart';
 
 class OnboardingScreenProvider extends ChangeNotifier {

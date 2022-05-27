@@ -1,3 +1,9 @@
+//  Repeated Balance Helper Functions - Utility Functions that facilitate the editing and deletion process of repeated Transactions
+//
+//  Author: SoTBurst
+//  Co-Author: n/a
+//
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 bool isMonthly(Map<String, dynamic> singleRepeatedBalance) {

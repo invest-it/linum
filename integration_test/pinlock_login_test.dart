@@ -1,3 +1,9 @@
+//  Pin Lock Login Test - An Integration Test designed to extensively test the functionality of the PIN lock within the application.
+//
+//  Author: NightmindOfficial
+//  Co-Author: SoTBurst
+//
+
 // ignore_for_file: unused_local_variable
 
 import 'dart:io';
@@ -15,8 +21,7 @@ import 'robots/pinlock/pinlock_robot.dart';
 import 'robots/settings_screen/settings_auth_robot.dart';
 
 void main() {
-  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized()
-      as IntegrationTestWidgetsFlutterBinding;
+  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   OnboardingRobot onboardingRobot;
   OnboardingOpenSignInRobot onboardingOpenSignInRobot;

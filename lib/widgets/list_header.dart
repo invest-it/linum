@@ -1,3 +1,9 @@
+//  List Header - can be used as a title for a list. Used on the Settings Screen to differentiate between settings categories. Comes with its own tooltip if needed.
+//
+//  Author: NightmindOfficial
+//  Co-Author: n/a
+//
+
 import 'package:flutter/material.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
 

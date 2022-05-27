@@ -1,3 +1,9 @@
+//  Local App Localizations - Defines which Language File to use for String Resolve
+//
+//  Author: NightmindOfficial
+//  Co-Author: SoTBurst
+//
+
 import 'dart:async';
 import 'dart:convert';
 

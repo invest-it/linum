@@ -1,7 +1,16 @@
+//  Page Indicator Item - One "Dot" on a PageIndicator.
+//
+//  Author: NightmindOfficial
+//  Co-Author: n/a
+//  (Refactored by damattl)
+
 import 'package:flutter/material.dart';
 
 class PageIndicatorItem extends StatefulWidget {
-  const PageIndicatorItem({Key? key, required this.isCurrentIndicator}) : super(key: key);
+  const PageIndicatorItem({
+    Key? key,
+    required this.isCurrentIndicator,
+  }) : super(key: key);
 
   final bool isCurrentIndicator;
 
@@ -10,7 +19,6 @@ class PageIndicatorItem extends StatefulWidget {
 }
 
 class _PageIndicatorItemState extends State<PageIndicatorItem> {
-
   @override
   Widget build(BuildContext context) {
     return Container(

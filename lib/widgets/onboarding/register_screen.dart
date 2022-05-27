@@ -1,3 +1,9 @@
+//  Register Screen - A specialized ActionLip specifically designed to accommodate the RegisterForm on the OnboardingScreen.
+//
+//  Author: NightmindOfficial
+//  Co-Author: n/a
+//  (Refactored by damattl)
+
 import 'package:flutter/material.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';

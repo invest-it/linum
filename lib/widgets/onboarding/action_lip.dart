@@ -1,3 +1,9 @@
+//  Action Lip - A Lip that replaced the ModalBottomSheet Functionality. An ActionLip can be triggered on any screen, supposed that the providerKey is unique.
+//
+//  Author: NightmindOfficial
+//  Co-Author: SoTBurst
+//  (Refactored)
+
 import 'package:flutter/material.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';

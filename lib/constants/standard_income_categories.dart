@@ -1,3 +1,9 @@
+//  Standard Income Categories - Contains Styles of EntryCategories for all Enums specified in settings_enums.dart
+//
+//  Author: NightmindOfficial, thebluebaronx
+//  Co-Author: damattl
+//  (Refactored)
+
 import 'package:flutter/material.dart';
 import 'package:linum/constants/settings_enums.dart';
 import 'package:linum/models/entry_category.dart';

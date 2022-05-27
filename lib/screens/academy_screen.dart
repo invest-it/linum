@@ -1,3 +1,9 @@
+//  Academy Screen - Mostly "aesthetic-focused" depiction of the linkage to the Invest it! YT Channel
+//
+//  Author: NightmindOfficial
+//  Co-Author: n/a
+/// PAGE INDEX 4
+
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';

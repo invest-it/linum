@@ -1,3 +1,9 @@
+//  Onboarding Open Message Robot - A Robot specifically designed to perform tasks on alertDialogs and other messages in the BuildContext of the Onboarding Screen.
+//
+//  Author: SoTBurst
+//  Co-Author: n/a
+//
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';

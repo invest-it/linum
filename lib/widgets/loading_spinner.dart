@@ -1,3 +1,9 @@
+//  Loading Spinner - Custom Loading Indicator
+//
+//  Author: thebluebaronx
+//  Co-Author: n/a
+//
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
