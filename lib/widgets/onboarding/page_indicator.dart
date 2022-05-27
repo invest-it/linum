@@ -8,9 +8,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:linum/widgets/onboarding/page_indicator_item.dart';
 
 class PageIndicator extends StatefulWidget {
-  const PageIndicator(
-      {Key? key, required this.slideCount, required this.currentSlide})
-      : super(key: key);
+  const PageIndicator({
+    Key? key,
+    required this.slideCount,
+    required this.currentSlide,
+  }) : super(key: key);
 
   final int slideCount;
   final int currentSlide;

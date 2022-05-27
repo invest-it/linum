@@ -23,7 +23,9 @@ class LockScreen extends StatefulWidget {
 
 class _LockScreenState extends State<LockScreen> {
   List<NumericField> _generateNumericFields(
-      List<int> numbers, PinCodeProvider pinCodeProvider) {
+    List<int> numbers,
+    PinCodeProvider pinCodeProvider,
+  ) {
     final fields = <NumericField>[];
     for (final number in numbers) {
       final field = NumericField(number, pinCodeProvider.addDigit);
@@ -41,6 +43,8 @@ class _LockScreenState extends State<LockScreen> {
     //final ScreenIndexProvider sip = Provider.of<ScreenIndexProvider>(context);
     final LockScreenAction screenIntent = pinCodeProvider.recallPINLockIntent();
 
+    //TODO check if we need this or not
+    // ignore: unused_local_variable
     final void Function(int) addDigit = pinCodeProvider.addDigit;
 
     return ScreenSkeleton(
