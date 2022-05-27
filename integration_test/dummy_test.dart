@@ -1,3 +1,9 @@
+//  Dummy Test - An Empty Integration Test Skeleton used to kickstart the creation of new Integration Tests.
+//
+//  Author: SoTBurst
+//  Co-Author: NightmindOfficial
+//
+
 // ignore_for_file: unused_local_variable
 
 import 'dart:io';
@@ -8,8 +14,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:linum/main.dart' as app;
 
 void main() {
-  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized()
-      as IntegrationTestWidgetsFlutterBinding;
+  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('dummy test', () {
     testWidgets('this test cant fail and only resets your session',
