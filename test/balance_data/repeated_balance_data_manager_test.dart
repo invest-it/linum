@@ -1,3 +1,9 @@
+//  Repeated Balance Data Manager Test
+//
+//  Author: SoTBurst
+//  Co-Author: n/a
+//
+
 import 'dart:developer' as dev;
 import 'dart:math' as math;
 
