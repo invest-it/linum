@@ -1,3 +1,9 @@
+//  Lip Section - the upper part of the ScreenSkeleton
+//
+//  Author: NightmindOfficial
+//  Co-Author: n/a
+//
+
 import 'package:flutter/material.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 

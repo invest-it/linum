@@ -1,3 +1,9 @@
+//  Home Screen Functions - Handles "Flipping" of the card
+//
+//  Author: NightmindOfficial
+//  Co-Author: damattl
+//  (Refactored)
+
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';

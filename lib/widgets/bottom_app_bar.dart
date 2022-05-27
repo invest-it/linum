@@ -1,3 +1,9 @@
+//  Bottom App Bar - the Navigation Bar on the bottom of almost every screen.
+//
+//  Author: thebluebaronx
+//  Co-Author: n/a
+//
+
 import 'package:flutter/material.dart';
 import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';

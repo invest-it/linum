@@ -1,3 +1,9 @@
+//  Body Section - the lower part of the Screen Skeleton.
+//
+//  Author: NightmindOfficial
+//  Co-Author: n/a
+//
+
 import 'package:flutter/material.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 

@@ -1,3 +1,9 @@
+//  HomeScreenCard - Main Widget for the Home Screen Card
+//
+//  Author: NightmindOfficial
+//  Co-Author: n/a
+//  (Refactored by damattl)
+
 // ignore: unused_import
 import 'dart:developer' as dev;
 import 'package:flip_card/flip_card.dart';

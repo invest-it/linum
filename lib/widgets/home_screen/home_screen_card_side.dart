@@ -1,3 +1,9 @@
+//  Home Screen Card Side - General Class for Layouting of one side of the HomeSceenCard
+//
+//  Author: NightmindOfficial
+//  Co-Author: damattl
+//  (Refactored)
+
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/models/home_screen_card_data.dart';

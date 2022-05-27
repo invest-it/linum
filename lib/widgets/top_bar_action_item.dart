@@ -1,3 +1,9 @@
+//  Top Bar Action Item - Extends AppBarAction
+//
+//  Author: NightmindOfficial
+//  Co-Author: SoTBurst
+//
+
 import 'package:flutter/material.dart';
 
 class TopBarActionItem extends StatelessWidget {

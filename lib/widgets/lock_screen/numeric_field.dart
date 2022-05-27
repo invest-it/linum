@@ -1,5 +1,10 @@
-import 'package:flutter/material.dart';
+//  Numeric Field - Button with a Number Value that is part of a numpad
+//
+//  Author: NightmindOfficial
+//  Co-Author: n/a
+//
 
+import 'package:flutter/material.dart';
 
 class NumericField extends StatelessWidget {
   final int digit;
