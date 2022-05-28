@@ -78,8 +78,9 @@ class AcademyScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                onPressed: () =>
-                    launchURL('https://youtube.investit-academy.de'),
+                onPressed: () => launchURL(
+                  'https://www.youtube.com/channel/UCuOMXn1kbzCOssokM-K9XjA',
+                ), //Currently, youtube.investit-academy.de and yt.investit-academy.de are not resolving.
               ),
             ),
             // SizedBox(
