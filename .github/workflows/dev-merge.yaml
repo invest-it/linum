@@ -32,11 +32,11 @@ jobs:
       with:
         channel: 'stable'
 
-    - name: Set up Dart Pub
-      run: dart pub get
-    
     - name: Get Flutter Pub
       run: flutter pub get
+    
+    - name: Set up Dart Pub
+      run: dart pub get
     
     - name: Analyze Flutter Code
       run: flutter analyze
