@@ -41,8 +41,7 @@ class _SingleSlideState extends State<SingleSlide> {
                 style: Theme.of(context).textTheme.caption,
               ),
               onPressed: () => {
-                launchURL(widget.slide.freepikURL)
-                    .then((value) => log(value.toString())),
+                launchURL(widget.slide.freepikURL),
               },
             ),
           ),

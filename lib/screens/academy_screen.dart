@@ -95,8 +95,7 @@ class AcademyScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.caption,
                 ),
                 onPressed: () => {
-                  launchURL('https://storyset.com/technology')
-                      .then((value) => log(value.toString())),
+                  launchURL('https://storyset.com/technology'),
                 },
               ),
             ),
