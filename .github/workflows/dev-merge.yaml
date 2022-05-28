@@ -20,15 +20,15 @@ jobs:
     timeout-minutes: 30
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
-    - name: Set up Dart SDK
-      uses: dart-lang/setup-dart@v1.3
-      with:
-        sdk: 'stable'
+    # - name: Set up Dart SDK
+    #   uses: dart-lang/setup-dart@v1.3
+    #   with:
+    #     sdk: 'stable'
 
     - name: Set up Flutter SDK
-      uses: subosito/flutter-action@v1.4.0
+      uses: subosito/flutter-action@v2
       with:
         channel: 'stable'
 
