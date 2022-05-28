@@ -28,6 +28,7 @@ jobs:
         channel: 'stable'
     
     - name: Get pub dependencies
+      run: dart pub get
       run: flutter pub get
     
     - name: Analyze Flutter Code
