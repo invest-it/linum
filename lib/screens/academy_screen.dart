@@ -3,9 +3,6 @@
 //  Author: NightmindOfficial
 //  Co-Author: n/a
 /// PAGE INDEX 4
-
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -78,8 +75,9 @@ class AcademyScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                onPressed: () =>
-                    launchURL('https://youtube.investit-academy.de'),
+                onPressed: () => launchURL(
+                  'https://www.youtube.com/channel/UCuOMXn1kbzCOssokM-K9XjA',
+                ), //Currently, youtube.investit-academy.de and yt.investit-academy.de are not resolving.
               ),
             ),
             // SizedBox(
@@ -94,8 +92,7 @@ class AcademyScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.caption,
                 ),
                 onPressed: () => {
-                  launchURL('https://storyset.com/technology')
-                      .then((value) => log(value.toString())),
+                  launchURL('https://storyset.com/technology'),
                 },
               ),
             ),
