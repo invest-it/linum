@@ -171,6 +171,7 @@
     "lock_screen/toast-pin-deactivated": "Die PIN-Sperre wurde deaktiviert.",
     "lock_screen/toast-pin-set": "Du hast die PIN-Sperre erfolgreich aktiviert!",
     "lock_screen/toast-pin-changed": "Die PIN wurde erfolgreich geändert.",
+    "lock_screen/errors/last-mail-missing": "Die PIN konnte keinem Account zugewiesen werden",
 
 
     "action_lip/forgot-password/logged-out/label-title": "Passwort zurücksetzen",

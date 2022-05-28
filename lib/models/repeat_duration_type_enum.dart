@@ -1,4 +1,0 @@
-enum RepeatDurationType {
-  seconds,
-  months,
-}

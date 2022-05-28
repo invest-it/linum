@@ -1,3 +1,9 @@
+//  Enter Screen Top Input Field - This is the currency input field in the Enter Screen (obviously, lol)
+//
+//  Author: thebluebaronx
+//  Co-Author: SoTBurst, NightmindOfficial
+//
+
 import 'package:flutter/material.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';

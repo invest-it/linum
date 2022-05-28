@@ -1,3 +1,9 @@
+//  Balance Data List View (Abstract) - Class that comes with a built-in function to retrieve the BalanceData
+//
+//  Author: SoTBurst
+//  Co-Author: n/a
+//
+
 import 'package:flutter/material.dart';
 
 /// Classes that are BalanceDataListView have to create a ListView using the addBalanceData function

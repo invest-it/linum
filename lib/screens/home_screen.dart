@@ -1,3 +1,9 @@
+//  Home Screen - The Home Screen of the App containing Statistical Info in the HomeScreenCard as well as a list of transactions in a specified month.
+//
+//  Author: SoTBurst, thebluebaronx, NightmindOfficial
+//  Co-Author: damattl
+/// PAGE INDEX 0
+
 import 'package:flutter/material.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';

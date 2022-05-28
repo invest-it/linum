@@ -1,3 +1,9 @@
+//  LockScreenAction - Basic Model for Actions on the Lock Screen Popup Dialogs
+//
+//  Author: NightmindOfficial
+//  Co-Author: n/a
+//
+
 class LockScreenAction {
   final Function function;
   final String screenTitle;

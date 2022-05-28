@@ -1,3 +1,9 @@
+//  Single Balance Data Manager - augments the StreamBuilder Manager with single-transactions-specific Elements
+//
+//  Author: SoTBurst
+//  Co-Author: n/a
+//  (refactored)
+
 import 'dart:developer' as dev;
 
 import 'package:cloud_firestore/cloud_firestore.dart';

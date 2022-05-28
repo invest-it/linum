@@ -1,3 +1,9 @@
+//  Action Lip Status Provider - Provider that handles behaviour of all current and future ActionLips GLOBALLY
+//
+//  Author: NightmindOfficial
+//  Co-Author: SoTBurst
+//
+
 import 'package:flutter/material.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 

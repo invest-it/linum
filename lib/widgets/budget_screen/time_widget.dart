@@ -1,3 +1,9 @@
+//  Time Widget - Formats Timestamps to a human-readable format
+//
+//  Author: NightmindOfficial
+//  Co-Author: n/a
+//
+
 import 'package:flutter/material.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';

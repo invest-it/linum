@@ -1,3 +1,9 @@
+//  Country Flag Generator Test
+//
+//  Author: SoTBurst
+//  Co-Author: n/a
+//
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/utilities/frontend/country_flag_generator.dart';
 

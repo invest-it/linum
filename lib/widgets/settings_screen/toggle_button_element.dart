@@ -1,3 +1,9 @@
+//  Toggle Button Element - used in grouped button rows (e.g. for the Language Switcher on the Settings Screen).
+//
+//  Author: NightmindOfficial
+//  Co-Author: SoTBurst
+//
+
 import 'package:flutter/material.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 

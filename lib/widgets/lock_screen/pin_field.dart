@@ -1,3 +1,9 @@
+//  PIN Field - Collection of Numeric Field (Numpad) used for the PIN lock
+//
+//  Author: NightmindOfficial
+//  Co-Author: n/a
+//
+
 import 'package:flutter/material.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 
@@ -5,7 +11,8 @@ class PinField extends StatelessWidget {
   final int index;
   final int selectedIndex;
   final Color ringColor;
-  const PinField(this.index, this.selectedIndex, this.ringColor);
+  const PinField(this.index, this.selectedIndex, this.ringColor, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +37,7 @@ class PinField extends StatelessWidget {
           BoxShadow(
             color: selectedIndex == index - 1
                 ? ringColor
-                : Colors.black.withAlpha(0),
+                : Colors.black.withAlpha(0), // no color
             spreadRadius: 2,
           ),
         ],

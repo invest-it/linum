@@ -1,3 +1,9 @@
+//  Single Balance Data Manager Test
+//
+//  Author: SoTBurst
+//  Co-Author: n/a
+//
+
 import 'dart:math' as math;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
