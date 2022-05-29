@@ -15,14 +15,14 @@ import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
-import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/screens/enter_screen.dart';
+import 'package:linum/utilities/frontend/multi_provider_builder.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/bottom_app_bar.dart';
 import 'package:provider/provider.dart';
 
 class LayoutScreen extends StatefulWidget {
-  const LayoutScreen(Key? key) : super(key: key);
+  const LayoutScreen({Key? key}) : super(key: key);
 
   @override
   State<LayoutScreen> createState() => _LayoutScreenState();
@@ -64,9 +64,6 @@ class _LayoutScreenState extends State<LayoutScreen>
   Widget build(BuildContext context) {
     final AccountSettingsProvider _accountSettingsProvider =
         Provider.of<AccountSettingsProvider>(context);
-
-    final ScreenIndexProvider screenIndexProvider =
-        Provider.of<ScreenIndexProvider>(context);
 
     final PinCodeProvider pinCodeProvider =
         Provider.of<PinCodeProvider>(context);

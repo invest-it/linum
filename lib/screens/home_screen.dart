@@ -7,7 +7,6 @@
 import 'package:flutter/material.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
-import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/silent_scroll.dart';
 import 'package:linum/widgets/home_screen/home_screen_listview.dart';
@@ -26,9 +25,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    final ScreenIndexProvider screenIndexProvider =
-        Provider.of<ScreenIndexProvider>(context);
-
     final BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
 
@@ -80,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     TextButton(
                       onPressed: () {
-                        screenIndexProvider.setPageIndex(1);
+                        //TODO: PAGE = 1
                       },
                       child: Text(
                         AppLocalizations.of(context)!

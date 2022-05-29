@@ -9,13 +9,11 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/backend/url_handler.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/screen_skeleton/app_bar_action.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
-import 'package:provider/provider.dart';
 
 /// Page Index: 4
 class AcademyScreen extends StatelessWidget {
@@ -23,14 +21,12 @@ class AcademyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ScreenIndexProvider screenIndexProvider =
-        Provider.of<ScreenIndexProvider>(context);
 
     return ScreenSkeleton(
       head: 'Academy',
       leadingAction: (BuildContext context) => AppBarAction.fromParameters(
         icon: Icons.arrow_back_rounded,
-        ontap: () => screenIndexProvider.setPageIndex(0),
+        ontap: () => {} //TODO: PAGE = 0
       ),
       isInverted: true,
       body: Center(

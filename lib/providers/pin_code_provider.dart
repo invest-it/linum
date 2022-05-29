@@ -13,7 +13,6 @@ import 'package:linum/constants/ring_colors.dart';
 import 'package:linum/models/dialog_action.dart';
 import 'package:linum/models/lock_screen_action.dart';
 import 'package:linum/providers/authentication_service.dart';
-import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +25,6 @@ class PinCodeProvider extends ChangeNotifier {
   Color _ringColor = RingColors.green;
   bool _sessionIsSafe = false;
   late BuildContext _context;
-  late ScreenIndexProvider _screenIndexProvider;
   late AuthenticationService _auth;
   late UserAlert confirmKillswitch;
   late bool _pinActive;
@@ -37,10 +35,6 @@ class PinCodeProvider extends ChangeNotifier {
   PinCodeProvider(BuildContext context) {
     _initialLastEmail();
     initialIsPINActive();
-    _screenIndexProvider = Provider.of<ScreenIndexProvider>(
-      context,
-      listen: false,
-    );
     _auth = Provider.of<AuthenticationService>(
       context,
       listen: false,
@@ -77,10 +71,7 @@ class PinCodeProvider extends ChangeNotifier {
     _lastEmailStillLoading = true;
     _initialLastEmail();
     initialIsPINActive();
-    _screenIndexProvider = Provider.of<ScreenIndexProvider>(
-      context,
-      listen: false,
-    );
+
 
     _auth = Provider.of<AuthenticationService>(context);
 
@@ -100,7 +91,7 @@ class PinCodeProvider extends ChangeNotifier {
       _pinActive = true;
       //Force the user to initialize their PIN number every time the PIN is (re-)activated.
       _setPINLockIntent(intent: PINLockIntent.initialize);
-      _screenIndexProvider.setPageIndex(5);
+      //TODO: PAGE = 5
     } else {
       _pinActive = false;
       _removePIN();
@@ -132,12 +123,12 @@ class PinCodeProvider extends ChangeNotifier {
   /// Toggles a PIN change request
   void triggerPINChange() {
     _setPINLockIntent(intent: PINLockIntent.change);
-    _screenIndexProvider.setPageIndex(5);
+    //TODO: PAGE = 5
   }
 
   /// Triggers a PIN recall
   void triggerPINRecall() {
-    _screenIndexProvider.setPageIndexSilently(5);
+    // _screenIndexProvider.setPageIndexSilently(5);
     _setPINLockIntent(intent: PINLockIntent.recall);
   }
 
@@ -187,7 +178,7 @@ class PinCodeProvider extends ChangeNotifier {
                     _emptyCode();
                     _removePIN();
                     _pinActive = false;
-                    _screenIndexProvider.setPageIndex(3);
+                    //TODO: PAGE = 3
                     Navigator.of(_context).pop();
                   },
                 ),
@@ -217,7 +208,7 @@ class PinCodeProvider extends ChangeNotifier {
                   actionTitle: "alertdialog/killswitch-change/action",
                   function: () {
                     _emptyCode();
-                    _screenIndexProvider.setPageIndex(3);
+                    //TODO: PAGE = 3
                     Navigator.of(_context).pop();
                   },
                 ),
@@ -248,8 +239,7 @@ class PinCodeProvider extends ChangeNotifier {
                   function: () {
                     togglePINLock();
                     _auth.signOut().then((_) {
-                      Provider.of<ScreenIndexProvider>(_context, listen: false)
-                          .setPageIndex(0);
+                      //TODO: PAGE = 0
                       Navigator.of(_context).pop();
                     });
                   },
@@ -293,7 +283,7 @@ class PinCodeProvider extends ChangeNotifier {
               toastFromTranslationKey("lock_screen/errors/last-mail-missing");
             }
 
-            _screenIndexProvider.setPageIndex(3);
+            //TODO: PAGE = 3
             _emptyCode();
             break;
           case PINLockIntent.change:
@@ -304,7 +294,7 @@ class PinCodeProvider extends ChangeNotifier {
               toastFromTranslationKey("lock_screen/errors/last-mail-missing");
             }
 
-            _screenIndexProvider.setPageIndex(3);
+            //TODO: PAGE = 3
             _emptyCode();
             break;
           case PINLockIntent.recall:
@@ -350,7 +340,7 @@ class PinCodeProvider extends ChangeNotifier {
   /// Set the page index to 0 - "welcome to the app"
   void _correctCode() {
     _sessionIsSafe = true;
-    _screenIndexProvider.setPageIndex(0);
+    //TODO: PAGE = 0
   }
 
   /// Reset [_code] and give visual and haptic feedback that the code did not match the locally stored PIN.
