@@ -72,6 +72,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final PinCodeProvider pinCodeProvider =
         Provider.of<PinCodeProvider>(context);
 
+    /*final PinCodeProvider pinCodeProvider =
+        Provider.of<PinCodeProvider>(context);*/
+
     return ScreenSkeleton(
       head: 'Account',
       providerKey: ProviderKey.settings,
