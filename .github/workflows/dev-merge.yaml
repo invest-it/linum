@@ -31,6 +31,9 @@ jobs:
       uses: subosito/flutter-action@v2
       with:
         channel: 'stable'
+        
+    - name: Delete previous Builds
+      run: flutter clean
 
     - name: Get Flutter Pub
       run: flutter pub get
