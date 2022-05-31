@@ -3,6 +3,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:linum/constants/categories_repeat.dart';
 import 'package:linum/constants/settings_enums.dart';
@@ -190,7 +191,8 @@ class _EnterScreenListViewBuilderState
                 controller: descriptionController,
                 showCursor: true,
                 minLines: 1,
-                maxLines: 2,
+                maxLines: 3,
+                maxLengthEnforcement: MaxLengthEnforcement.enforced,
                 decoration: const InputDecoration(
                   hintText: "Description",
                 ),
