@@ -1,4 +1,4 @@
-//  Single Balance Data Manager - augments the StreamBuilder Manager with single-transactions-specific Elements
+//  Single Balance Data Manager - manages all possible interactions with repeated Balances
 //
 //  Author: SoTBurst
 //  Co-Author: n/a
