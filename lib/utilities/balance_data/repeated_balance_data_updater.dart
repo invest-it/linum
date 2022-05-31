@@ -18,6 +18,7 @@ class RepeatedBalanceDataUpdater {
     num? amount,
     String? category,
     String? currency,
+    bool? deleteNote,
     Timestamp? endTime,
     Timestamp? initialTime,
     String? name,
@@ -26,7 +27,6 @@ class RepeatedBalanceDataUpdater {
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
     bool? resetEndTime,
-    bool? deleteNote,
     Timestamp? time,
   }) {
     bool isEdited = false;
@@ -124,9 +124,13 @@ class RepeatedBalanceDataUpdater {
               if (name != null) {
                 (value as Map<String, dynamic>).remove("name");
               }
+              if (note != null || (deleteNote != null && deleteNote)) {
+                (value as Map<String, dynamic>).remove("note");
+              }
               if (newTime != null) {
                 (value as Map<String, dynamic>).remove("time");
               }
+
               // dont need initialTime
               // dont need repeatDuration
               // dont need repeatDurationType
@@ -148,6 +152,7 @@ class RepeatedBalanceDataUpdater {
     num? amount,
     String? category,
     String? currency,
+    bool? deleteNote,
     Timestamp? endTime,
     Timestamp? initialTime,
     String? name,
@@ -205,6 +210,11 @@ class RepeatedBalanceDataUpdater {
           "endTime": Timestamp.fromDate(time.toDate().subtract(timeDifference)),
         };
         changes.removeWhere((_, value) => value == null);
+
+        if (deleteNote ?? false) {
+          changes.addAll({"note": null});
+        }
+
         newRepeatedBalance.addAll(changes);
 
         removeUnusedChangedAttributes(newRepeatedBalance);
@@ -225,6 +235,7 @@ class RepeatedBalanceDataUpdater {
     num? amount,
     String? category,
     String? currency,
+    bool? deleteNote,
     Timestamp? endTime,
     Timestamp? initialTime,
     String? name,
@@ -282,6 +293,9 @@ class RepeatedBalanceDataUpdater {
           ),
         };
         changes.removeWhere((_, value) => value == null);
+        if (deleteNote ?? false) {
+          changes.addAll({"note": null});
+        }
         newRepeatedBalance.addAll(changes);
 
         removeUnusedChangedAttributes(newRepeatedBalance);
@@ -302,6 +316,7 @@ class RepeatedBalanceDataUpdater {
     num? amount,
     String? category,
     String? currency,
+    bool? deleteNote,
     String? name,
     Timestamp? newTime,
     String? note,
@@ -332,7 +347,7 @@ class RepeatedBalanceDataUpdater {
             "category": category,
             "currency": currency,
             "name": name,
-            "note": note,
+            "note": (deleteNote != null && deleteNote) ? null : note,
             "time": newTime,
           }
         });

@@ -46,6 +46,7 @@ class RepeatedBalanceDataManager {
       "category": repeatBalanceData.category,
       "currency": repeatBalanceData.currency,
       "name": repeatBalanceData.name,
+      "note": repeatBalanceData.note,
       "initialTime": repeatBalanceData.initialTime,
       "repeatDuration": repeatBalanceData.repeatDuration,
       "repeatDurationType":
@@ -65,6 +66,8 @@ class RepeatedBalanceDataManager {
     String? category,
     String? currency,
     String? name,
+    String? note,
+    bool? deleteNote,
     Timestamp? initialTime,
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
@@ -123,6 +126,7 @@ class RepeatedBalanceDataManager {
     String? checkedCategory;
     String? checkedCurrency;
     String? checkedName;
+    String? checkedNote;
     Timestamp? checkedInitialTime;
     int? checkedRepeatDuration;
     RepeatDurationType? checkedRepeatDurationType;
@@ -144,6 +148,9 @@ class RepeatedBalanceDataManager {
         }
         if (name != singleRepeatedBalance["name"]) {
           checkedName = name;
+        }
+        if (note != singleRepeatedBalance["note"]) {
+          checkedNote = note;
         }
         if (initialTime != singleRepeatedBalance["initialTime"]) {
           checkedInitialTime = initialTime;
@@ -176,10 +183,12 @@ class RepeatedBalanceDataManager {
           category: checkedCategory,
           currency: checkedCurrency,
           data: data,
+          deleteNote: deleteNote,
           endTime: checkedEndTime,
           id: id,
           initialTime: checkedInitialTime,
           name: checkedName,
+          note: checkedNote,
           newTime: checkedNewTime,
           repeatDuration: checkedRepeatDuration,
           repeatDurationType: checkedRepeatDurationType,
@@ -192,10 +201,12 @@ class RepeatedBalanceDataManager {
           category: checkedCategory,
           currency: checkedCurrency,
           data: data,
+          deleteNote: deleteNote,
           endTime: checkedEndTime,
           id: id,
           initialTime: checkedInitialTime,
           name: checkedName,
+          note: checkedNote,
           newTime: checkedNewTime,
           repeatDuration: checkedRepeatDuration,
           repeatDurationType: checkedRepeatDurationType,
@@ -208,6 +219,7 @@ class RepeatedBalanceDataManager {
           category: checkedCategory,
           currency: checkedCurrency,
           data: data,
+          deleteNote: deleteNote,
           endTime: checkedEndTime,
           id: id,
           initialTime: checkedInitialTime,
