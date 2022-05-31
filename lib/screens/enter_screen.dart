@@ -123,7 +123,8 @@ class _EnterScreenState extends State<EnterScreen> {
                                 },
                                 child: Text(
                                   AppLocalizations.of(context)!.translate(
-                                      "enter_screen/button-delete-entry"),
+                                    "enter_screen/button-delete-entry",
+                                  ),
                                   style: Theme.of(context)
                                       .textTheme
                                       .button
@@ -184,9 +185,6 @@ class _EnterScreenState extends State<EnterScreen> {
                                             DialogAction(
                                               actionTitle:
                                                   "enter_screen/delete-entry/dialog-button-onlyonce",
-                                              // ignore: avoid_redundant_argument_values
-                                              dialogPurpose:
-                                                  DialogPurpose.primary,
                                               function: () {
                                                 balanceDataProvider
                                                     .updateRepeatedBalance(
@@ -196,7 +194,8 @@ class _EnterScreenState extends State<EnterScreen> {
                                                       RepeatableChangeType
                                                           .onlyThisOne,
                                                   amount: _amountChooser(
-                                                      enterScreenProvider),
+                                                    enterScreenProvider,
+                                                  ),
                                                   category: enterScreenProvider
                                                       .category,
                                                   currency: "EUR",
@@ -226,7 +225,8 @@ class _EnterScreenState extends State<EnterScreen> {
                                                       RepeatableChangeType
                                                           .thisAndAllBefore,
                                                   amount: _amountChooser(
-                                                      enterScreenProvider),
+                                                    enterScreenProvider,
+                                                  ),
                                                   category: enterScreenProvider
                                                       .category,
                                                   currency: "EUR",
@@ -255,7 +255,8 @@ class _EnterScreenState extends State<EnterScreen> {
                                                       RepeatableChangeType
                                                           .thisAndAllAfter,
                                                   amount: _amountChooser(
-                                                      enterScreenProvider),
+                                                    enterScreenProvider,
+                                                  ),
                                                   category: enterScreenProvider
                                                       .category,
                                                   currency: "EUR",
@@ -283,7 +284,8 @@ class _EnterScreenState extends State<EnterScreen> {
                                                   changeType:
                                                       RepeatableChangeType.all,
                                                   amount: _amountChooser(
-                                                      enterScreenProvider),
+                                                    enterScreenProvider,
+                                                  ),
                                                   category: enterScreenProvider
                                                       .category,
                                                   currency: "EUR",
@@ -379,7 +381,8 @@ class _EnterScreenState extends State<EnterScreen> {
                               },
                               child: Text(
                                 AppLocalizations.of(context)!.translate(
-                                    'enter_screen/button-save-entry'),
+                                  'enter_screen/button-save-entry',
+                                ),
                               ),
                             ),
                           ],

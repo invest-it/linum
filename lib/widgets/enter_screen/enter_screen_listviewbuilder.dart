@@ -3,7 +3,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:linum/constants/categories_repeat.dart';
 import 'package:linum/constants/settings_enums.dart';
@@ -62,8 +61,6 @@ class _EnterScreenListViewBuilderState
 
   @override
   Widget build(BuildContext context) {
-    double bottomInsets = MediaQuery.of(context).viewInsets.bottom;
-
     final AccountSettingsProvider accountSettingsProvider =
         Provider.of<AccountSettingsProvider>(context);
 

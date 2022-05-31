@@ -4,7 +4,6 @@ import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
-import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/country_flag_generator.dart';
 import 'package:linum/utilities/frontend/silent_scroll.dart';
@@ -63,8 +62,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final ActionLipStatusProvider actionLipStatusProvider =
         Provider.of<ActionLipStatusProvider>(context);
 
-    final PinCodeProvider pinCodeProvider =
-        Provider.of<PinCodeProvider>(context);
+    /*final PinCodeProvider pinCodeProvider =
+        Provider.of<PinCodeProvider>(context);*/
 
     return ScreenSkeleton(
       head: 'Account',
