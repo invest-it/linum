@@ -15,6 +15,7 @@ class RepeatedBalanceData {
   final String _currency;
   final String _id;
   final String _name;
+  final String? _note;
 
   final Timestamp _initialTime;
   final Timestamp? _endTime;
@@ -27,6 +28,7 @@ class RepeatedBalanceData {
     required String currency,
     String? id,
     required String name,
+    String? note,
     required Timestamp initialTime,
     Timestamp? endTime,
     required int repeatDuration,
@@ -36,6 +38,7 @@ class RepeatedBalanceData {
         _currency = currency,
         _id = id ?? const Uuid().v4(),
         _name = name,
+        _note = note,
         _initialTime = initialTime,
         _endTime = endTime,
         _repeatDuration = repeatDuration,
@@ -47,6 +50,7 @@ class RepeatedBalanceData {
     String? currency,
     String? id,
     String? name,
+    String? note,
     String? repeatId,
     Timestamp? initialTime,
     Timestamp? endTime,
@@ -59,6 +63,7 @@ class RepeatedBalanceData {
       currency: currency ?? _currency,
       id: id ?? _id,
       name: name ?? _name,
+      note: note ?? _note,
       initialTime: initialTime ?? _initialTime,
       endTime: endTime ?? _endTime,
       repeatDuration: repeatDuration ?? _repeatDuration,
@@ -68,15 +73,16 @@ class RepeatedBalanceData {
 
   Map<String, dynamic> toMap() {
     return {
-      '_amount': _amount,
-      '_category': _category,
-      '_currency': _currency,
-      '_id': _id,
-      '_name': _name,
-      '_initialTime': _initialTime,
-      '_endTime': _endTime,
-      '_repeatDuration': _repeatDuration,
-      '_repeatDurationType': _repeatDurationType,
+      'amount': _amount,
+      'category': _category,
+      'currency': _currency,
+      'id': _id,
+      'name': _name,
+      'note': _note,
+      'initialTime': _initialTime,
+      'endTime': _endTime,
+      'repeatDuration': _repeatDuration,
+      'repeatDurationType': _repeatDurationType,
     };
   }
 
@@ -87,6 +93,7 @@ class RepeatedBalanceData {
       currency: map['currency'] as String,
       id: map['id'] as String,
       name: map['name'] as String,
+      note: map['note'] as String?,
       initialTime: map['initialTime'] as Timestamp,
       endTime: map['endTime'] as Timestamp?,
       repeatDuration: map['repeatDuration'] as int,
@@ -97,7 +104,7 @@ class RepeatedBalanceData {
 
   @override
   String toString() {
-    return 'RepeatBalanceData(_amount: $_amount, _category: $_category, _currency: $_currency, _id: $_id, _name: $_name, _initialTime: $_initialTime, _endTime: $_endTime, _repeatDuration: $_repeatDuration, _repeatDurationType: $_repeatDurationType)';
+    return 'RepeatBalanceData(_amount: $_amount, _category: $_category, _currency: $_currency, _id: $_id, _name: $_name, _note: $_note, _initialTime: $_initialTime, _endTime: $_endTime, _repeatDuration: $_repeatDuration, _repeatDurationType: $_repeatDurationType)';
   }
 
   @override
@@ -110,6 +117,7 @@ class RepeatedBalanceData {
         other._currency == _currency &&
         other._id == _id &&
         other._name == _name &&
+        other._note == _note &&
         other._initialTime == _initialTime &&
         other._endTime == _endTime &&
         other._repeatDuration == _repeatDuration &&
@@ -123,6 +131,7 @@ class RepeatedBalanceData {
         _currency.hashCode ^
         _id.hashCode ^
         _name.hashCode ^
+        _note.hashCode ^
         _initialTime.hashCode ^
         _endTime.hashCode ^
         _repeatDuration.hashCode ^
@@ -134,6 +143,7 @@ class RepeatedBalanceData {
   String get currency => _currency;
   String get id => _id;
   String get name => _name;
+  String? get note => _note;
   Timestamp get initialTime => _initialTime;
   Timestamp? get endTime => _endTime;
   int get repeatDuration => _repeatDuration;
