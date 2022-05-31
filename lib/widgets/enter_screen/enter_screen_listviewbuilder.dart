@@ -192,7 +192,6 @@ class _EnterScreenListViewBuilderState
                 showCursor: true,
                 minLines: 1,
                 maxLines: 3,
-                maxLengthEnforcement: MaxLengthEnforcement.enforced,
                 decoration: const InputDecoration(
                   hintText: "Description",
                 ),
