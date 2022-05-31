@@ -73,7 +73,7 @@ class _EnterScreenListViewBuilderState
     final EnterScreenProvider enterScreenProvider =
         Provider.of<EnterScreenProvider>(context);
     nameController ??= TextEditingController(text: enterScreenProvider.name);
-    nameController ??=
+    descriptionController ??=
         TextEditingController(text: enterScreenProvider.description);
     return Expanded(
       child: SingleChildScrollView(
