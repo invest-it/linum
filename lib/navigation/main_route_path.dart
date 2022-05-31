@@ -1,13 +1,26 @@
-abstract class MainRoutePath {}
+class MainRoutePath {
+  final Uri uri;
+  final int? id;
 
-class HomeScreenPath extends MainRoutePath {}
-class BudgetScreenPath extends MainRoutePath {}
-class StatisticsScreenPath extends MainRoutePath {}
-class SettingsScreenPath extends MainRoutePath {}
+  MainRoutePath.home() : uri = Uri(path: "/"), id = null;
+  MainRoutePath.budget() : uri = Uri(path: "/budget"), id = null;
+  MainRoutePath.statistics() : uri = Uri(path: "/statistics"), id = null;
+  MainRoutePath.settings(): uri = Uri(path: "/settings"), id = null;
+  MainRoutePath.unknown(): uri = Uri(path: "/unknown"), id = null;
 
+  bool get isHome => uri == MainRoutePath.home().uri;
+  bool get isBudget => uri == MainRoutePath.budget().uri;
+  bool get isStatistics => uri == MainRoutePath.statistics().uri;
+  bool get isSettings => uri == MainRoutePath.settings().uri;
+  bool get isUnknown => uri == MainRoutePath.unknown().uri;
 
-abstract class MainRoutePaths {
-  static const String budget = "budget";
-  static const String statistics = "statistics";
-  static const String settings = "settings";
+  static bool compareFirst(Uri uri, Uri comparedUri) {
+    if (uri.pathSegments.isEmpty) {
+      return false;
+    }
+    if (uri.pathSegments[0] == comparedUri.pathSegments[0]) {
+      return true;
+    }
+    return false;
+  }
 }

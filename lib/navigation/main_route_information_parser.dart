@@ -7,18 +7,20 @@ class MainRouteInformationParser extends RouteInformationParser<MainRoutePath> {
     final uri = Uri.parse(routeInformation.location ?? "");
 
     if (uri.pathSegments.isEmpty) {
-      return HomeScreenPath();
+      return MainRoutePath.home();
     }
-    switch (uri.pathSegments[0]) {
-      case MainRoutePaths.budget:
-        return BudgetScreenPath();
-      case MainRoutePaths.settings:
-        return SettingsScreenPath();
-      case MainRoutePaths.statistics:
-        return StatisticsScreenPath();
-      default:
-        return HomeScreenPath();
+    if (MainRoutePath.compareFirst(uri, MainRoutePath.budget().uri)) {
+      return MainRoutePath.budget();
     }
+    if (MainRoutePath.compareFirst(uri, MainRoutePath.statistics().uri)) {
+      return MainRoutePath.statistics();
+    }
+    if (MainRoutePath.compareFirst(uri, MainRoutePath.settings().uri)) {
+      return MainRoutePath.settings();
+    }
+    return MainRoutePath.unknown();
+
   }
+
 
 }

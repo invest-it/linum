@@ -6,7 +6,6 @@
 
 import 'dart:developer' as dev;
 import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/constants/screens.dart';
@@ -108,14 +107,14 @@ class _LayoutScreenState extends State<LayoutScreen>
               stream: balance.snapshots(),
               builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
                 //returns the page at the current index, or at the lock screen index if a) the PIN lock is active AND b) there is a code for the email used for login stored in sharedPreferences AND c) the pin code has not been recalled before
-                return screens.elementAt(screenIndexProvider.pageIndex);
+                return screens.elementAt(0); // TODO:  screens.elementAt(screenIndexProvider.pageIndex);
               },
             ),
           ),
           //floatingactionbutton with bottomnavbar
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
-          floatingActionButton: (screenIndexProvider.pageIndex == 5 ||
+          floatingActionButton: (/* TODO: screenIndexProvider.pageIndex*/ 0 == 5 ||
                   (pinCodeProvider.pinActive &&
                       !pinCodeProvider
                           .sessionIsSafe)) //Check if the PIN lock is active
@@ -157,7 +156,7 @@ class _LayoutScreenState extends State<LayoutScreen>
                   backgroundColor: Theme.of(context).colorScheme.secondary,
                   child: const Icon(Icons.add),
                 ),
-          bottomNavigationBar: (screenIndexProvider.pageIndex == 5 ||
+          bottomNavigationBar: (/* TODO: screenIndexProvider.pageIndex*/ 0 == 5 ||
                   (pinCodeProvider.pinActive &&
                       !pinCodeProvider
                           .sessionIsSafe)) //Check if the PIN lock is active
@@ -183,7 +182,7 @@ class _LayoutScreenState extends State<LayoutScreen>
                   //gives the pageIndex the value (the current selected index in the
                   //bottom navigation bar)
                   onTabSelected: (int value) {
-                    screenIndexProvider.setPageIndex(value);
+                    // TODO: screenIndexProvider.setPageIndex(value);
                   },
                 ),
         );

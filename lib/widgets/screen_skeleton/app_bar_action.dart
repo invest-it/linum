@@ -7,8 +7,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:linum/providers/screen_index_provider.dart';
-import 'package:provider/provider.dart';
 
 abstract class AppBarAction {
   static final Map<DefaultAction, Widget Function(BuildContext)>
@@ -26,22 +24,18 @@ abstract class AppBarAction {
       );
     },
     DefaultAction.academy: (BuildContext context) {
-      final ScreenIndexProvider screenIndexProvider =
-          Provider.of<ScreenIndexProvider>(context);
       return AppBarAction.fromParameters(
         icon: Icons.video_library_rounded,
         ontap: () {
-          screenIndexProvider.setPageIndex(4);
+          // TODO: screenIndexProvider.setPageIndex(4);
         },
       );
     },
     DefaultAction.settings: (BuildContext context) {
-      final ScreenIndexProvider screenIndexProvider =
-          Provider.of<ScreenIndexProvider>(context);
       return AppBarAction.fromParameters(
         icon: Icons.settings_rounded,
         ontap: () {
-          screenIndexProvider.setPageIndex(3);
+          // TODO: screenIndexProvider.setPageIndex(3);
         },
       );
     },

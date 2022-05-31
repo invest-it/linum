@@ -5,9 +5,7 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
-import 'package:provider/provider.dart';
 
 class BottomAppBarItem {
   BottomAppBarItem({required this.iconData, required this.text});
@@ -43,15 +41,12 @@ class FABBottomAppBar extends StatefulWidget {
 class FABBottomAppBarState extends State<FABBottomAppBar> {
   @override
   Widget build(BuildContext context) {
-    final ScreenIndexProvider screenIndexProvider =
-        Provider.of<ScreenIndexProvider>(context);
 
     final List<Widget> items = List.generate(widget.items.length, (int index) {
       return _buildTabItem(
         item: widget.items[index],
         index: index,
-        onPressed: (innerdex) => screenIndexProvider.setPageIndex(innerdex),
-        screenIndexProvider: screenIndexProvider,
+        onPressed: (innerdex) => {}, // TODO: screenIndexProvider.setPageIndex(innerdex),
       );
     });
     items.insert(items.length >> 1, _buildMiddleTabItem());
@@ -89,9 +84,9 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
     required BottomAppBarItem item,
     required int index,
     required ValueChanged<int> onPressed,
-    required ScreenIndexProvider screenIndexProvider,
   }) {
-    final Color color = screenIndexProvider.pageIndex == index
+    final Color color = // TODO: screenIndexProvider.pageIndex == index
+        1 == index // TODO: REMOVE
         ? widget.selectedColor
         : widget.color;
     return Expanded(

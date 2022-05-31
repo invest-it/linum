@@ -384,11 +384,11 @@ class PinCodeProvider extends ChangeNotifier {
 
 
   static SingleChildWidget provider(BuildContext context, {bool testing = false}) {
-    return ChangeNotifierProxyProvider2<ScreenIndexProvider,
+    return ChangeNotifierProxyProvider<
         AuthenticationService, PinCodeProvider>(
       create: (context) => PinCodeProvider(context),
       update:
-          (context, screenIndexProvider, auth, oldPinCodeProvider) {
+          (context, auth, oldPinCodeProvider) {
         if (oldPinCodeProvider == null) {
           return PinCodeProvider(context);
         } else {
