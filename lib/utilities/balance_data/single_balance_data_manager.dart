@@ -1,4 +1,4 @@
-//  Single Balance Data Manager - augments the StreamBuilder Manager with single-transactions-specific Elements
+//  Single Balance Data Manager - manages all possible interactions with repeated Balances
 //
 //  Author: SoTBurst
 //  Co-Author: n/a
@@ -30,6 +30,7 @@ class SingleBalanceDataManager {
       "category": singleBalance.category,
       "currency": singleBalance.currency,
       "name": singleBalance.name,
+      "note": singleBalance.note,
       "time": singleBalance.time,
       "id": const Uuid().v4(),
     };
@@ -62,7 +63,9 @@ class SingleBalanceDataManager {
     num? amount,
     String? category,
     String? currency,
+    bool? deleteNote,
     String? name,
+    String? note,
     Timestamp? time,
   }) {
     // conditions
@@ -85,6 +88,8 @@ class SingleBalanceDataManager {
         value["category"] = category ?? value["category"];
         value["currency"] = currency ?? value["currency"];
         value["name"] = name ?? value["name"];
+        value["note"] =
+            (deleteNote != null && deleteNote) ? null : note ?? value["note"];
         value["time"] = time ?? value["time"];
 
         // ids are unique

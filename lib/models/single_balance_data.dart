@@ -13,6 +13,7 @@ class SingleBalanceData {
   final String _currency;
   final String _id;
   final String _name;
+  final String? _note;
   final String? _repeatId;
   final Timestamp _time;
 
@@ -22,6 +23,7 @@ class SingleBalanceData {
     required String currency,
     String? id,
     required String name,
+    String? note,
     String? repeatId,
     required Timestamp time,
   })  : _amount = amount,
@@ -29,6 +31,7 @@ class SingleBalanceData {
         _currency = currency,
         _id = id ?? const Uuid().v4(),
         _name = name,
+        _note = note,
         _repeatId = repeatId,
         _time = time;
 
@@ -38,6 +41,7 @@ class SingleBalanceData {
     String? currency,
     String? id,
     String? name,
+    String? note,
     String? repeatId,
     Timestamp? time,
   }) {
@@ -47,6 +51,7 @@ class SingleBalanceData {
       currency: currency ?? _currency,
       id: id ?? _id,
       name: name ?? _name,
+      note: note ?? _note,
       repeatId: repeatId ?? _repeatId,
       time: time ?? _time,
     );
@@ -59,6 +64,7 @@ class SingleBalanceData {
       'currency': _currency,
       'id': _id,
       'name': _name,
+      'note': _note,
       'repeatId': _repeatId,
       'time': _time,
     };
@@ -71,6 +77,7 @@ class SingleBalanceData {
       currency: map['currency'] as String,
       id: map['id'] as String,
       name: map['name'] as String,
+      note: map['note'] as String?,
       repeatId: map['repeatId'] as String?,
       time: map['time'] as Timestamp,
     );
@@ -78,7 +85,7 @@ class SingleBalanceData {
 
   @override
   String toString() {
-    return 'SingleBalanceData(_amount: $_amount, _category: $_category, _currency: $_currency, _id: $_id, _name: $_name, _repeatId: $_repeatId, _time: $_time)';
+    return 'SingleBalanceData(_amount: $_amount, _category: $_category, _currency: $_currency, _id: $_id, _name: $_name, _note: $_note, _repeatId: $_repeatId, _time: $_time)';
   }
 
   @override
@@ -91,6 +98,7 @@ class SingleBalanceData {
         other._currency == _currency &&
         other._id == _id &&
         other._name == _name &&
+        other._note == _note &&
         other._repeatId == _repeatId &&
         other._time == _time;
   }
@@ -102,6 +110,7 @@ class SingleBalanceData {
         _currency.hashCode ^
         _id.hashCode ^
         _name.hashCode ^
+        _note.hashCode ^
         _repeatId.hashCode ^
         _time.hashCode;
   }
@@ -111,6 +120,7 @@ class SingleBalanceData {
   String get currency => _currency;
   String get id => _id;
   String get name => _name;
+  String? get note => _note;
   String? get repeatId => _repeatId;
   Timestamp get time => _time;
 }
