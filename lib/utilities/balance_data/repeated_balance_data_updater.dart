@@ -21,10 +21,12 @@ class RepeatedBalanceDataUpdater {
     Timestamp? endTime,
     Timestamp? initialTime,
     String? name,
+    String? note,
     Timestamp? newTime,
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
     bool? resetEndTime,
+    bool? deleteNote,
     Timestamp? time,
   }) {
     bool isEdited = false;
@@ -46,6 +48,11 @@ class RepeatedBalanceDataUpdater {
         }
         if (name != null && name != singleRepeatedBalance["name"]) {
           singleRepeatedBalance["name"] = name;
+          isEdited = true;
+        }
+        if ((note != null && note != singleRepeatedBalance["note"]) ||
+            (deleteNote != null && deleteNote)) {
+          singleRepeatedBalance["note"] = note;
           isEdited = true;
         }
         if (initialTime != null &&
@@ -144,6 +151,7 @@ class RepeatedBalanceDataUpdater {
     Timestamp? endTime,
     Timestamp? initialTime,
     String? name,
+    String? note,
     Timestamp? newTime,
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
@@ -185,6 +193,7 @@ class RepeatedBalanceDataUpdater {
           "category": category,
           "currency": currency,
           "name": name,
+          "note": note,
           "initialTime": initialTime ??
               Timestamp.fromDate(
                 (newRepeatedBalance["initialTime"] as Timestamp)
@@ -220,6 +229,7 @@ class RepeatedBalanceDataUpdater {
     Timestamp? initialTime,
     String? name,
     Timestamp? newTime,
+    String? note,
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
     bool? resetEndTime,
@@ -260,6 +270,7 @@ class RepeatedBalanceDataUpdater {
           "category": category,
           "currency": currency,
           "name": name,
+          "note": note,
           "initialTime":
               Timestamp.fromDate(time.toDate().subtract(timeDifference)),
           "repeatDuration": repeatDuration,
@@ -293,6 +304,7 @@ class RepeatedBalanceDataUpdater {
     String? currency,
     String? name,
     Timestamp? newTime,
+    String? note,
   }) {
     for (final singleRepeatedBalance
         in data["repeatedBalance"] as List<dynamic>) {
@@ -320,6 +332,7 @@ class RepeatedBalanceDataUpdater {
             "category": category,
             "currency": currency,
             "name": name,
+            "note": note,
             "time": newTime,
           }
         });
