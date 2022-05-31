@@ -1,3 +1,9 @@
+//  SizeGuide - @NightmindOfficial's renowned system to design responsive applications.
+//
+//  Author: NightmindOfficial
+//  Co-Author: n/a
+//
+
 import 'package:flutter/material.dart';
 
 class SizeGuide {
@@ -10,7 +16,7 @@ class SizeGuide {
   static const double referenceScreenWidth = 375.0;
   static const double referenceScreenHeight = 812.0;
 
-  void init(BuildContext context) {
+  static void init(BuildContext context) {
     _mediaQueryData = MediaQuery.of(context);
     screenWidth = _mediaQueryData.size.width;
     screenHeight = _mediaQueryData.size.height;

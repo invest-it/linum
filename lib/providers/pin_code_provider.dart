@@ -1,6 +1,15 @@
+//  Pin Code Provider - Complex Provider handling all States and Authentication around the PIN Lock
+//
+//  Author: NightmindOfficial
+//  Co-Author: SoTBurst
+//  (Partly refactored by damattl)
+
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:linum/constants/ring_colors.dart';
 import 'package:linum/models/dialog_action.dart';
 import 'package:linum/models/lock_screen_action.dart';
 import 'package:linum/providers/authentication_service.dart';
@@ -13,7 +22,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class PinCodeProvider extends ChangeNotifier {
   String _code = '';
   int _pinSlot = 0;
-  Color _ringColor = const Color(0XFF279E44);
+  Color _ringColor = RingColors.green;
   bool _sessionIsSafe = false;
   late BuildContext _context;
   late ScreenIndexProvider _screenIndexProvider;
@@ -136,6 +145,8 @@ class PinCodeProvider extends ChangeNotifier {
   /// Stores a new value for the PIN on the device
   Future<void> _storePIN(String code) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    log(_lastEmail ?? "No mail found"); // TODO: Remove
+    log(code);
     prefs.setString('${_lastEmail!}.code', code);
     // dev.log(
     //   prefs.getString('${_lastEmail!}.code') ??
@@ -267,8 +278,7 @@ class PinCodeProvider extends ChangeNotifier {
       _code = _code + digit.toString();
       // log(_code);
       _pinSlot++;
-      _ringColor = const Color(0XFF279E44);
-
+      _ringColor = RingColors.green;
       //if code # is complete, check if it is correct
       // is not an invariant boolean
       // ignore: invariant_booleans
@@ -277,22 +287,22 @@ class PinCodeProvider extends ChangeNotifier {
           case PINLockIntent.initialize:
             if (_lastEmail != 'Error!') {
               _storePIN(_code);
+              toastFromTranslationKey("lock_screen/toast-pin-set");
+            } else {
+              toastFromTranslationKey("lock_screen/errors/last-mail-missing");
             }
-            Fluttertoast.showToast(
-              msg: AppLocalizations.of(_context)!
-                  .translate("lock_screen/toast-pin-set"),
-            );
+
             _screenIndexProvider.setPageIndex(3);
             _emptyCode();
             break;
           case PINLockIntent.change:
             if (_lastEmail != 'Error!') {
               _storePIN(_code);
+              toastFromTranslationKey("lock_screen/toast-pin-changed");
+            } else {
+              toastFromTranslationKey("lock_screen/errors/last-mail-missing");
             }
-            Fluttertoast.showToast(
-              msg: AppLocalizations.of(_context)!
-                  .translate("lock_screen/toast-pin-changed"),
-            );
+
             _screenIndexProvider.setPageIndex(3);
             _emptyCode();
             break;
@@ -304,6 +314,12 @@ class PinCodeProvider extends ChangeNotifier {
       }
       notifyListeners();
     }
+  }
+
+  void toastFromTranslationKey(String key) {
+    Fluttertoast.showToast(
+      msg: AppLocalizations.of(_context)!.translate(key),
+    );
   }
 
   /// If there is at least one digit in the [_code] input variable, remove the last character.
@@ -339,7 +355,7 @@ class PinCodeProvider extends ChangeNotifier {
   /// Reset [_code] and give visual and haptic feedback that the code did not match the locally stored PIN.
   void _wrongCode() {
     HapticFeedback.vibrate();
-    _ringColor = const Color(0XFFEB5757);
+    _ringColor = RingColors.red;
     Fluttertoast.showToast(
       msg: AppLocalizations.of(_context)!
           .translate("lock_screen/toast-wrong-code"),

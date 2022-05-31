@@ -1,3 +1,9 @@
+//  Home Screen Card Arrow - Aesthetics-only widget acting as Icon on the side of metrics
+//
+//  Author: NightmindOfficial
+//  Co-Author: n/a
+//  (Refactored by damattl)
+
 import 'package:flutter/material.dart';
 
 class HomeScreenCardArrow extends StatelessWidget {

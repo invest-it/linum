@@ -1,3 +1,9 @@
+//  Home Screen Card Back - Back Side of the Home Screen Card with All-Time Metrics
+//
+//  Author: NightmindOfficial
+//  Co-Author: n/a
+//  (Refactored by damattl)
+
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/models/home_screen_card_data.dart';

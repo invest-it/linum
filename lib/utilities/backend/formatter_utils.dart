@@ -1,3 +1,9 @@
+//  Formatter Utilities - Messes with User Input
+//
+//  Author: NightmindOfficial
+//  Co-Author: SoTBurst
+//
+
 import 'dart:math';
 
 import 'package:flutter/services.dart';

@@ -1,3 +1,9 @@
+//  Register Form - Form for signing the user up
+//
+//  Author: NightmindOfficial
+//  Co-Author: damattl, SoTBurst
+//
+
 import 'dart:io';
 
 import 'package:flutter/gestures.dart';
@@ -12,7 +18,6 @@ import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:linum/widgets/auth/sign_in_with_google_button.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-
 
 class RegisterForm extends StatefulWidget {
   @override
@@ -237,7 +242,8 @@ class _RegisterFormState extends State<RegisterForm> {
               SizedBox(
                 height: proportionateScreenHeight(6),
               ),
-              if (Platform.isIOS)...[ // Works only on iOS at the moment (according to Google)
+              if (Platform.isIOS) ...[
+                // Works only on iOS at the moment (according to Google)
                 SignInWithAppleButton(
                   onPressed: auth.signInWithApple,
                   text: AppLocalizations.of(context)!.translate(
@@ -256,9 +262,9 @@ class _RegisterFormState extends State<RegisterForm> {
                         'onboarding_screen/register-privacy/label-leading',
                       ),
                       style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: Theme.of(context).colorScheme.onSurface,
-                      ),
+                            fontWeight: FontWeight.w600,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
                     ),
                     TextSpan(
                       text: AppLocalizations.of(context)!.translate(
@@ -269,19 +275,19 @@ class _RegisterFormState extends State<RegisterForm> {
                           launchURL('https://investit-academy.de/privacy');
                         },
                       style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: Theme.of(context).colorScheme.primary,
-                        decoration: TextDecoration.underline,
-                      ),
+                            fontWeight: FontWeight.w600,
+                            color: Theme.of(context).colorScheme.primary,
+                            decoration: TextDecoration.underline,
+                          ),
                     ),
                     TextSpan(
                       text: AppLocalizations.of(context)!.translate(
                         'onboarding_screen/register-privacy/label-trailing',
                       ),
                       style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: Theme.of(context).colorScheme.onSurface,
-                      ),
+                            fontWeight: FontWeight.w600,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
                     ),
                   ],
                 ),

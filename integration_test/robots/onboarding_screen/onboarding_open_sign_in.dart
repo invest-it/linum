@@ -1,3 +1,9 @@
+//  Onboarding Open Sign In Robot - A Robot specifically designed to perform tasks on the Sign in section of the Onboarding Screen.
+//
+//  Author: SoTBurst
+//  Co-Author: NightmindOfficial
+//
+
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';

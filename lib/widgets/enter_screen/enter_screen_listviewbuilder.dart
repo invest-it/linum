@@ -1,3 +1,9 @@
+//  Enter Screen ListView Builder - Builds a Transaction List View
+//
+//  Author: thebluebaronx
+//  Co-Author: SoTBurst
+//
+
 // ignore_for_file: avoid_dynamic_calls
 
 import 'dart:developer';
@@ -5,11 +11,11 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:linum/constants/categories_repeat.dart';
+import 'package:linum/constants/repeat_duration_type_enum.dart';
 import 'package:linum/constants/settings_enums.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/models/entry_category.dart';
-import 'package:linum/models/repeat_duration_type_enum.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';

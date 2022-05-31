@@ -1,3 +1,9 @@
+//  Home Screen Listview - Specific ListView settings for the Home Screen
+//
+//  Author: SoTBurst
+//  Co-Author: thebluebaronx, NightmindOfficial
+//
+
 // ignore_for_file: avoid_dynamic_calls
 
 import 'package:badges/badges.dart';
@@ -384,10 +390,10 @@ class HomeScreenListView implements BalanceDataListView {
       // log("HomeScreenListView: " + balanceData[0]["Error"].toString());
     }
     _listview = ListView(
-        padding: const EdgeInsets.only(
-          bottom: 32.0,
-        ),
-        children: list,
+      padding: const EdgeInsets.only(
+        bottom: 32.0,
+      ),
+      children: list,
     );
   }
 

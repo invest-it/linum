@@ -1,3 +1,9 @@
+//  ScreenSkeleton - the absolute root of every screen used in the app. See extensive documentation below.
+//
+//  Author: NightmindOfficial
+//  Co-Author: SoTBurst
+//  (No Refactoring pls)
+
 import 'package:flutter/material.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';

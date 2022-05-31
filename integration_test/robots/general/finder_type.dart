@@ -1,3 +1,9 @@
+//  Finder Type - A Robot File that can return certain element attributes by key.
+//
+//  Author: SoTBurst
+//  Co-Author: n/a
+//
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

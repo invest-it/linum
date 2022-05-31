@@ -1,3 +1,9 @@
+//  Time Widget Test
+//
+//  Author: SoTBurst
+//  Co-Author: n/a
+//
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
@@ -11,7 +17,7 @@ void main() {
         MaterialApp(
           home: Builder(
             builder: (context) {
-              SizeGuide().init(context);
+              SizeGuide.init(context);
               return const TimeWidget(
                 displayValue: "Test text",
                 isTranslated: true,

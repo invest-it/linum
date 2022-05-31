@@ -1,3 +1,9 @@
+//  Logout Form - Widget that displays the current FirebaseAuth UserCredentials and provides Logout-Functionality
+//
+//  Author: NightmindOfficial
+//  Co-Author: n/a
+//
+
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:linum/providers/authentication_service.dart';

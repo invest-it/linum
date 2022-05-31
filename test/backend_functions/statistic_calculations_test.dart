@@ -1,3 +1,9 @@
+//  Statistic Calculation Tests
+//
+//  Author: SoTBurst
+//  Co-Author: n/a
+//
+
 import 'dart:math' as math;
 
 import 'package:flutter_test/flutter_test.dart';

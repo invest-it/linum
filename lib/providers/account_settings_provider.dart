@@ -1,3 +1,9 @@
+//  Account Settings Provider - Provider that handles all information about the current settings of the user
+//
+//  Author: SoTBurst
+//  Co-Author: NightmindOfficial
+//  (Refactored by damattl)
+
 import 'dart:async';
 import 'dart:developer' as dev;
 

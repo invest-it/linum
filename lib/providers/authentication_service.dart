@@ -1,10 +1,16 @@
+//  Authentication Service - Provider that handles all FirebaseAuth Functions and User State Persistence
+//
+//  Author: SoTBurst
+//  Co-Author: NightmindOfficial, damattl
+//  (Refactored)
+
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:linum/backend_functions/cryptography.dart';
+import 'package:linum/utilities/backend/cryptography.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -44,8 +50,7 @@ class AuthenticationService extends ChangeNotifier {
       );
 
       if (isEmailVerified) {
-        final SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('lastMail', email);
+        await setLastMail(email);
         notifyListeners();
         onComplete("Successfully signed in to Firebase");
       } else {
@@ -78,6 +83,7 @@ class AuthenticationService extends ChangeNotifier {
       );
 
       if (isEmailVerified) {
+        await setLastMail(email);
         notifyListeners();
         onComplete("Successfully signed up to Firebase");
       } else {
@@ -106,6 +112,7 @@ class AuthenticationService extends ChangeNotifier {
 
     try {
       await _firebaseAuth.signInWithCredential(credential);
+      await setLastMail(_firebaseAuth.currentUser!.email);
       notifyListeners();
       onComplete("Successfully signed in to Firebase");
     } on FirebaseAuthException catch (e) {
@@ -135,6 +142,7 @@ class AuthenticationService extends ChangeNotifier {
       );
 
       await _firebaseAuth.signInWithCredential(oauthCredential);
+      await setLastMail(_firebaseAuth.currentUser!.email);
       notifyListeners();
       onComplete("Successfully signed in to Firebase");
     } on FirebaseAuthException catch (e) {
@@ -266,6 +274,14 @@ class AuthenticationService extends ChangeNotifier {
     } on FirebaseAuthException catch (e) {
       onError("auth/${e.code}");
     }
+  }
+
+  Future<void> setLastMail(String? email) async {
+    if (email == null) {
+      return;
+    }
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('lastMail', email);
   }
 
   void updateLanguageCode(BuildContext context) {

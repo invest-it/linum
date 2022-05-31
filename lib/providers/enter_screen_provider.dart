@@ -1,7 +1,13 @@
+//  Enter Screen Provider - Handles information "grabbing" as well as operations regarding input in the Enter Screen
+//
+//  Author: SoTBurst
+//  Co-Author: thebluebaronx
+//
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/constants/repeat_duration_type_enum.dart';
 import 'package:linum/constants/settings_enums.dart';
-import 'package:linum/models/repeat_duration_type_enum.dart';
 
 class EnterScreenProvider with ChangeNotifier {
   late bool _isExpenses;

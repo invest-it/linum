@@ -1,3 +1,9 @@
+//  Home Screen Card (Abstract) - Comes with built-in functions to retrieve statistical data
+//
+//  Author: SoTBurst
+//  Co-Author: n/a
+//
+
 import 'package:flutter/material.dart';
 import 'package:linum/utilities/backend/statistic_calculations.dart';
 
