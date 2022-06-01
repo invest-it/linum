@@ -30,7 +30,7 @@ jobs:
     runs-on: macOS-latest
     steps:
     - name: "List all simulators"
-      run: "xcrun xtrace list devices"
+      run: "xcrun xctrace list devices"
     - name: "Start Simulator"
       run: |
         UDID=$(
