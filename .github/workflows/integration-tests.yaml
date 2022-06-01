@@ -36,7 +36,7 @@ jobs:
         UDID=$(
           xcrun xctrace list devices |
           awk \
-            -F ' *[][]' \
+            -F ' *()()' \
             -v 'device=${{ matrix.device }}' \
             '$1 == device { print $2 }'
         )
