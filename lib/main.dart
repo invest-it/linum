@@ -7,11 +7,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:linum/app.dart';
-import 'package:linum/providers/authentication_service.dart';
-import 'package:linum/providers/onboarding_screen_provider.dart';
-import 'package:linum/screens/layout_screen.dart';
-import 'package:linum/screens/onboarding_screen.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main({bool? testing}) async {
@@ -52,7 +47,7 @@ Widget _wrapWithBanner(Widget child) {
   );
 }
 
-class OnBoardingOrLayoutScreen extends StatelessWidget {
+/* class OnBoardingOrLayoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AuthenticationService auth =
@@ -70,4 +65,4 @@ class OnBoardingOrLayoutScreen extends StatelessWidget {
       );
     }
   }
-}
+} */

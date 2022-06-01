@@ -10,6 +10,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/constants/screens.dart';
 import 'package:linum/models/single_balance_data.dart';
+import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
@@ -21,7 +22,8 @@ import 'package:linum/widgets/bottom_app_bar.dart';
 import 'package:provider/provider.dart';
 
 class LayoutScreen extends StatefulWidget {
-  const LayoutScreen({Key? key}) : super(key: key);
+  final MainRoute currentRoute;
+  const LayoutScreen({Key? key, required this.currentRoute}) : super(key: key);
 
   @override
   State<LayoutScreen> createState() => _LayoutScreenState();
@@ -107,14 +109,15 @@ class _LayoutScreenState extends State<LayoutScreen>
               stream: balance.snapshots(),
               builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
                 //returns the page at the current index, or at the lock screen index if a) the PIN lock is active AND b) there is a code for the email used for login stored in sharedPreferences AND c) the pin code has not been recalled before
-                return screens.elementAt(0); // TODO:  screens.elementAt(screenIndexProvider.pageIndex);
+                return screens[widget.currentRoute]!;
               },
             ),
           ),
           //floatingactionbutton with bottomnavbar
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
-          floatingActionButton: (/* TODO: screenIndexProvider.pageIndex*/ 0 == 5 ||
+          floatingActionButton: (/* TODO: screenIndexProvider.pageIndex*/
+              widget.currentRoute == MainRoute.lock ||
                   (pinCodeProvider.pinActive &&
                       !pinCodeProvider
                           .sessionIsSafe)) //Check if the PIN lock is active
@@ -156,7 +159,9 @@ class _LayoutScreenState extends State<LayoutScreen>
                   backgroundColor: Theme.of(context).colorScheme.secondary,
                   child: const Icon(Icons.add),
                 ),
-          bottomNavigationBar: (/* TODO: screenIndexProvider.pageIndex*/ 0 == 5 ||
+          bottomNavigationBar: (/* TODO: screenIndexProvider.pageIndex*/
+              // TODO: Handle Lockscreen another way
+              widget.currentRoute == MainRoute.lock ||
                   (pinCodeProvider.pinActive &&
                       !pinCodeProvider
                           .sessionIsSafe)) //Check if the PIN lock is active
@@ -182,6 +187,7 @@ class _LayoutScreenState extends State<LayoutScreen>
                   //gives the pageIndex the value (the current selected index in the
                   //bottom navigation bar)
                   onTabSelected: (int value) {
+                    // TODO: Update pages
                     // TODO: screenIndexProvider.setPageIndex(value);
                   },
                 ),

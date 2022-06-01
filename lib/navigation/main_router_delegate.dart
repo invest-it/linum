@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:linum/navigation/main_route_path.dart';
+import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
-import 'package:linum/screens/layout_screen.dart';
 import 'package:linum/screens/onboarding_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -10,15 +9,31 @@ import 'package:provider/provider.dart';
 
 
 
-class MainRouterDelegate extends RouterDelegate<MainRoutePath>
-    with ChangeNotifier, PopNavigatorRouterDelegateMixin<MainRoutePath> {
+class MainRouterDelegate extends RouterDelegate<MainRoute>
+    with ChangeNotifier, PopNavigatorRouterDelegateMixin<MainRoute> {
 
   @override
   final GlobalKey<NavigatorState> navigatorKey;
   MainRouterDelegate() : navigatorKey = GlobalKey<NavigatorState>();
 
   bool show404 = false;
+  MainRoute currentRoute = MainRoute.home;
 
+  final _pageStack = <Page> [];
+
+  bool _onPopPage(Route route, dynamic result) {
+    if (!route.didPop(result)) return false;
+    popRoute();
+    return true;
+  }
+
+  /* MaterialPage _createPage(RouteSettings routeSettings) {
+    Widget child;
+
+    switch(routeSettings.name) {
+
+    }
+  } */
 
   List<Page> buildPageStackUnauthorized() {
     return <Page> [
@@ -36,9 +51,11 @@ class MainRouterDelegate extends RouterDelegate<MainRoutePath>
   }
 
   List<Page> buildPageStackAuthorized() {
-    return <Page> [
-      const MaterialPage(child: LayoutScreen())
-    ];
+    final pageStack = <Page> [];
+
+    pageStack.add(mainRoutes[currentRoute]!.builder());
+
+    return pageStack;
   }
 
   List<Page> buildPageStack(BuildContext context) {
@@ -67,16 +84,22 @@ class MainRouterDelegate extends RouterDelegate<MainRoutePath>
     );
   }
 
+  @override
+  Future<bool> popRoute() {
+    if (_pageStack.length > 1) {
+      _pageStack.removeLast();
+      notifyListeners();
+
+      return Future.value(true);
+    }
+    return Future.value(true); // TODO: Check if this makes sense
+  }
 
 
   @override
-  Future<void> setNewRoutePath(MainRoutePath path) async {
-    if (path.isUnknown) {
-      show404 = true;
-      return;
-    }
+  Future<void> setNewRoutePath(MainRoute route) async {
+    currentRoute = route;
 
-    show404 = false;
   }
 
 }
