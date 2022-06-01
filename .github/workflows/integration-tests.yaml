@@ -30,11 +30,11 @@ jobs:
     runs-on: macOS-latest
     steps:
     - name: "List all simulators"
-      run: "xcrun instruments -s"
+      run: "xcrun xtrace list devices"
     - name: "Start Simulator"
       run: |
         UDID=$(
-          xcrun instruments -s |
+          xcrun xtrace list devices |
           awk \
             -F ' *[][]' \
             -v 'device=${{ matrix.device }}' \
