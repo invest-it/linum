@@ -38,6 +38,7 @@ class LinumApp extends StatelessWidget {
         router: Router(
           routerDelegate: _routerDelegate,
           routeInformationParser: _routeInformationParser,
+          backButtonDispatcher: RootBackButtonDispatcher(),
         ),
       ),
       debugShowCheckedModeBanner: false,

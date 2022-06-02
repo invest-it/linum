@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:linum/navigation/main_router_delegate.dart';
 import 'package:linum/navigation/main_routes.dart';
+import 'dart:developer' as dev;
 
 abstract class AppBarAction {
   static final Map<DefaultAction, Widget Function(BuildContext)>
@@ -40,6 +41,7 @@ abstract class AppBarAction {
             .replaceLastRoute(MainRoute.settings),
       );
     },
+    // TODO: Are these guys even used?
     DefaultAction.back: (BuildContext context) => const BackButton(),
     DefaultAction.close: (BuildContext context) => const CloseButton(),
   };

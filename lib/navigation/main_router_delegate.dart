@@ -10,6 +10,7 @@ import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
 import 'package:linum/screens/onboarding_screen.dart';
 import 'package:provider/provider.dart';
+import 'dart:developer' as dev;
 
 
 class MainRouterDelegate extends RouterDelegate<MainRoute>
@@ -69,13 +70,15 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
   }
 
   bool _onPopPage(Route route, dynamic result) {
+    dev.log("Route: $route");
     if (!route.didPop(result)) return false;
     popRoute();
     return true;
   }
 
   @override
-  Future<bool> popRoute() {
+  Future<bool> popRoute() async {
+    dev.log("Stack: ${_pageStack.toString()}");
     if (_pageStack.length > 1) {
       _pageStack.removeLast();
       notifyListeners();

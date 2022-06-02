@@ -9,6 +9,8 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:linum/navigation/main_router_delegate.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/backend/url_handler.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
@@ -26,7 +28,8 @@ class AcademyScreen extends StatelessWidget {
       head: 'Academy',
       leadingAction: (BuildContext context) => AppBarAction.fromParameters(
         icon: Icons.arrow_back_rounded,
-        ontap: () => {} //TODO: PAGE = 0
+        ontap: () => Get.find<MainRouterDelegate>().popRoute()
+        // TODO: Maybe use another method, animation does not look good.
       ),
       isInverted: true,
       body: Center(
