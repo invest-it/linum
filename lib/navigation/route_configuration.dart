@@ -1,3 +1,8 @@
+//  RouteConfiguration - possible configurations for routes
+//
+//  Author: damattl
+//
+
 import 'package:linum/types/page_builder.dart';
 
 class RouteConfiguration {

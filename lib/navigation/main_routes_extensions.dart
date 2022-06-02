@@ -1,3 +1,8 @@
+//  MainRouteExtensions - makes handling the mainRoutes-map easier
+//
+//  Author: damattl
+//
+
 import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/navigation/route_configuration.dart';
 import 'package:linum/types/page_builder.dart';

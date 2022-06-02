@@ -20,8 +20,8 @@ Future<void> main({bool? testing}) async {
   /// Force Portrait Mode
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   SharedPreferences.getInstance().then((pref) {
-    MyApp.currentLocalLanguageCode = pref.getString("languageCode");
-    runApp(MyApp(testing: testing));
+    LinumApp.currentLocalLanguageCode = pref.getString("languageCode");
+    runApp(LinumApp(testing: testing));
   });
 }
 

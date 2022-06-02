@@ -1,3 +1,10 @@
+//  FirebaseWrapper - wraps firebase and provider instances around the Router
+//
+//  Author: damattl
+//  Co-Author: n/a
+//
+
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/providers/account_settings_provider.dart';

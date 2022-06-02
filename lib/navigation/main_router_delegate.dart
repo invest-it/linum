@@ -1,3 +1,8 @@
+//  MainRouterDelegate - Handles routing and exchanges Pages based on current route
+//
+//  Author: damattl
+//
+
 import 'package:flutter/material.dart';
 import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/navigation/main_routes_extensions.dart';

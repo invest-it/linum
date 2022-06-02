@@ -1,7 +1,7 @@
 //  Layout Screen - Basic Screen Switcher
 //  NOTE: THIS SCREEN IS GOING TO BE REPLACED BY A NEW NAVIGATION SYSTEM SOON. //TODO @NightmindOfficial change this description once this has been performed.
 //  Author: thebluebaronx
-//  Co-Author: SoTBurst, NightmindOfficial
+//  Co-Author: SoTBurst, NightmindOfficial, damattl
 /// NO PAGE INDEX (This Screen is always invoked)
 
 import 'dart:developer' as dev;

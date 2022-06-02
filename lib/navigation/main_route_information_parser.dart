@@ -1,3 +1,8 @@
+//  MainRouteInformationParser - parses incoming urls and deep-links
+//
+//  Author: damattl
+//
+
 import 'package:flutter/material.dart';
 import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/navigation/main_routes_extensions.dart';

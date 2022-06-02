@@ -1,5 +1,9 @@
-import 'dart:core';
+//  MainRoutes - configuration for all the app's routes
+//
+//  Author: damattl
+//
 
+import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:linum/navigation/route_configuration.dart';
 import 'package:linum/screens/layout_screen.dart';

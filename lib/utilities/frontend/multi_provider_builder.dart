@@ -1,3 +1,8 @@
+//  MultiProviderBuilder - used to easily provide multiple providers
+//
+//  Author: damattl
+//
+
 import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:linum/types/change_notifier_provider_builder.dart';
