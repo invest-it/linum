@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:linum/navigation/route_configuration.dart';
 import 'package:linum/screens/layout_screen.dart';
 
-
 enum MainRoute {
   home,
   budget,
@@ -15,43 +14,45 @@ enum MainRoute {
 }
 
 
-
-
-// TODO: Perhaps as a custom map?
 final mainRoutes = Map<MainRoute, RouteConfiguration>.of({
   MainRoute.home: RouteConfiguration(
     path: "/",
     builder: () {
-      return const MaterialPage(
-        child: LayoutScreen(currentRoute: MainRoute.home),
+      return MaterialPage(
+        child: const LayoutScreen(currentRoute: MainRoute.home),
+        name: MainRoute.home.toString(),
       );
     },
-    // TODO: Page might never be rebuild - use a builder-function perhaps?
   ),
   MainRoute.budget: RouteConfiguration(
     path: "/budget", // TODO: Implement as URI?
     builder: () {
-      return const MaterialPage(
-        child: LayoutScreen(currentRoute: MainRoute.budget),
+      return MaterialPage(
+        child: const LayoutScreen(currentRoute: MainRoute.budget),
+        name: MainRoute.budget.toString(),
       );
     },
   ),
   MainRoute.statistics: RouteConfiguration(
     path: "/statistics",
     builder: () {
-      return const MaterialPage(
-        child: LayoutScreen(currentRoute: MainRoute.statistics),
+
+      return MaterialPage(
+        child: const LayoutScreen(currentRoute: MainRoute.statistics),
+        name: MainRoute.statistics.toString(),
       );
     },
   ),
   MainRoute.settings: RouteConfiguration(
     path: "/settings",
     builder: () {
-      return const MaterialPage(
-        child: LayoutScreen(currentRoute: MainRoute.settings),
+      return MaterialPage(
+        child: const LayoutScreen(currentRoute: MainRoute.settings),
+        name: MainRoute.settings.toString(),
       );
     },
   ),
 });
+
 
 

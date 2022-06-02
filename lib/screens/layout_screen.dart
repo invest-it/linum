@@ -10,6 +10,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/constants/screens.dart';
 import 'package:linum/models/single_balance_data.dart';
+import 'package:linum/navigation/main_router_delegate.dart';
 import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
@@ -82,6 +83,8 @@ class _LayoutScreenState extends State<LayoutScreen>
       ),
     );
 
+    final router = Router.of(context).routerDelegate as MainRouterDelegate;
+
     return FutureBuilder(
       future: pinCodeProvider.initialIsPINActive(),
       builder: (context, snapshot) {
@@ -109,7 +112,7 @@ class _LayoutScreenState extends State<LayoutScreen>
               stream: balance.snapshots(),
               builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
                 //returns the page at the current index, or at the lock screen index if a) the PIN lock is active AND b) there is a code for the email used for login stored in sharedPreferences AND c) the pin code has not been recalled before
-                return screens[widget.currentRoute]!;
+                return screens[widget.currentRoute]!; // TODO: Check if this can be kept
               },
             ),
           ),
@@ -168,16 +171,30 @@ class _LayoutScreenState extends State<LayoutScreen>
               ? null
               : FABBottomAppBar(
                   items: [
-                    BottomAppBarItem(iconData: Icons.home, text: 'Home'),
+                    BottomAppBarItem(
+                      iconData: Icons.home,
+                      text: 'Home',
+                      selected: widget.currentRoute == MainRoute.home,
+                      onTap: () => router.replaceLastRoute(MainRoute.home),
+                    ),
                     BottomAppBarItem(
                       iconData: Icons.savings_rounded,
                       text: 'Budget',
+                      selected: widget.currentRoute == MainRoute.budget,
+                      onTap: () => router.replaceLastRoute(MainRoute.budget),
                     ),
                     BottomAppBarItem(
                       iconData: Icons.bar_chart_rounded,
                       text: 'Stats',
+                      selected: widget.currentRoute == MainRoute.statistics,
+                      onTap: () => router.replaceLastRoute(MainRoute.statistics),
                     ),
-                    BottomAppBarItem(iconData: Icons.person, text: 'Account'),
+                    BottomAppBarItem(
+                      iconData: Icons.person,
+                      text: 'Account',
+                      selected: widget.currentRoute == MainRoute.settings,
+                      onTap: () => router.replaceLastRoute(MainRoute.settings),
+                    ),
                   ],
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   centerItemText: '',
@@ -186,15 +203,12 @@ class _LayoutScreenState extends State<LayoutScreen>
                   notchedShape: const CircularNotchedRectangle(),
                   //gives the pageIndex the value (the current selected index in the
                   //bottom navigation bar)
-                  onTabSelected: (int value) {
-                    // TODO: Update pages
-                    // TODO: screenIndexProvider.setPageIndex(value);
-                  },
                 ),
         );
       },
     );
   }
+
 
   Future<void> createRandomData(BuildContext context) async {
     final BalanceDataProvider balanceDataProvider =

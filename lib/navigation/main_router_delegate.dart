@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:linum/navigation/main_routes.dart';
+import 'package:linum/navigation/main_routes_extensions.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
 import 'package:linum/screens/onboarding_screen.dart';
 import 'package:provider/provider.dart';
-
-
-
 
 
 class MainRouterDelegate extends RouterDelegate<MainRoute>
@@ -16,17 +14,7 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
   final GlobalKey<NavigatorState> navigatorKey;
   MainRouterDelegate() : navigatorKey = GlobalKey<NavigatorState>();
 
-  bool show404 = false;
-  MainRoute currentRoute = MainRoute.home;
-
   final _pageStack = <Page> [];
-
-  bool _onPopPage(Route route, dynamic result) {
-    if (!route.didPop(result)) return false;
-    popRoute();
-    return true;
-  }
-
   /* MaterialPage _createPage(RouteSettings routeSettings) {
     Widget child;
 
@@ -36,7 +24,7 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
   } */
 
   List<Page> buildPageStackUnauthorized() {
-    return <Page> [
+    return <Page> [ // TODO: Might not work (List.of)
       MaterialPage(
         child: MultiProvider(
           providers: [
@@ -50,18 +38,14 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
     ];
   }
 
-  List<Page> buildPageStackAuthorized() {
-    final pageStack = <Page> [];
-
-    pageStack.add(mainRoutes[currentRoute]!.builder());
-
-    return pageStack;
-  }
 
   List<Page> buildPageStack(BuildContext context) {
     final AuthenticationService auth = Provider.of<AuthenticationService>(context);
     if (auth.isLoggedIn) {
-      return buildPageStackAuthorized();
+      if (_pageStack.isEmpty) {
+        _pageStack.add(mainRoutes.builderFromRoute(MainRoute.home)());
+      }
+      return List.of(_pageStack);
     } else {
       return buildPageStackUnauthorized();
     }
@@ -70,18 +54,19 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
 
   @override
   Widget build(BuildContext context) {
+
     return Navigator(
       key: navigatorKey,
       // Add TransitionDelegate here
       pages: buildPageStack(context),
-      onPopPage: (route, result) {
-        if (!route.didPop(result)) {
-          return false;
-        }
-        notifyListeners();
-        return true;
-      },
+      onPopPage: _onPopPage,
     );
+  }
+
+  bool _onPopPage(Route route, dynamic result) {
+    if (!route.didPop(result)) return false;
+    popRoute();
+    return true;
   }
 
   @override
@@ -95,11 +80,22 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
     return Future.value(true); // TODO: Check if this makes sense
   }
 
+  void pushRoute(MainRoute route) {
+    _pageStack.add(mainRoutes.builderFromRoute(route)()); // TODO: Replace with pageFromRoute ???
+    notifyListeners();
+  }
+
+  void replaceLastRoute(MainRoute route) {
+    _pageStack.removeLast();
+    _pageStack.add(mainRoutes.builderFromRoute(route)());
+
+    notifyListeners();
+  }
 
   @override
   Future<void> setNewRoutePath(MainRoute route) async {
-    currentRoute = route;
 
   }
+
 
 }

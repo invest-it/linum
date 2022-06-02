@@ -8,9 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 
 class BottomAppBarItem {
-  BottomAppBarItem({required this.iconData, required this.text});
-  IconData iconData;
-  String text;
+  final IconData iconData;
+  final String text;
+  final bool selected;
+  final Function() onTap;
+  BottomAppBarItem({required this.iconData, required this.text, required this.selected, required this.onTap});
+
 }
 
 class FABBottomAppBar extends StatefulWidget {
@@ -21,7 +24,6 @@ class FABBottomAppBar extends StatefulWidget {
     required this.color,
     required this.selectedColor,
     required this.notchedShape,
-    required this.onTabSelected,
   });
   final List<BottomAppBarItem> items;
   final String centerItemText;
@@ -32,7 +34,6 @@ class FABBottomAppBar extends StatefulWidget {
   final Color color;
   final Color selectedColor;
   final NotchedShape notchedShape;
-  final ValueChanged<int> onTabSelected;
 
   @override
   State<StatefulWidget> createState() => FABBottomAppBarState();
@@ -46,7 +47,6 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
       return _buildTabItem(
         item: widget.items[index],
         index: index,
-        onPressed: (innerdex) => {}, // TODO: screenIndexProvider.setPageIndex(innerdex),
       );
     });
     items.insert(items.length >> 1, _buildMiddleTabItem());
@@ -83,12 +83,8 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
   Widget _buildTabItem({
     required BottomAppBarItem item,
     required int index,
-    required ValueChanged<int> onPressed,
   }) {
-    final Color color = // TODO: screenIndexProvider.pageIndex == index
-        1 == index // TODO: REMOVE
-        ? widget.selectedColor
-        : widget.color;
+    final Color color = item.selected ? widget.selectedColor : widget.color;
     return Expanded(
       child: Container(
         height: widget.height,
@@ -96,7 +92,7 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
         child: Material(
           type: MaterialType.transparency,
           child: InkWell(
-            onTap: () => onPressed(index),
+            onTap: item.onTap,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
