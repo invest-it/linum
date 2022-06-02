@@ -7,6 +7,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:linum/navigation/main_router_delegate.dart';
+import 'package:linum/navigation/main_routes.dart';
 
 abstract class AppBarAction {
   static final Map<DefaultAction, Widget Function(BuildContext)>
@@ -26,17 +29,15 @@ abstract class AppBarAction {
     DefaultAction.academy: (BuildContext context) {
       return AppBarAction.fromParameters(
         icon: Icons.video_library_rounded,
-        ontap: () {
-          // TODO: screenIndexProvider.setPageIndex(4);
-        },
+        ontap: () => Get.find<MainRouterDelegate>()
+            .pushRoute(MainRoute.academy), // TODO: Find out why app closes on back-navigation
       );
     },
     DefaultAction.settings: (BuildContext context) {
       return AppBarAction.fromParameters(
         icon: Icons.settings_rounded,
-        ontap: () {
-          // TODO: screenIndexProvider.setPageIndex(3);
-        },
+        ontap: () => Get.find<MainRouterDelegate>()
+            .replaceLastRoute(MainRoute.settings),
       );
     },
     DefaultAction.back: (BuildContext context) => const BackButton(),

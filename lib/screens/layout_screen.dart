@@ -8,6 +8,7 @@ import 'dart:developer' as dev;
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:linum/constants/screens.dart';
 import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/navigation/main_router_delegate.dart';
@@ -83,7 +84,7 @@ class _LayoutScreenState extends State<LayoutScreen>
       ),
     );
 
-    final router = Router.of(context).routerDelegate as MainRouterDelegate;
+    final router = Get.find<MainRouterDelegate>();
 
     return FutureBuilder(
       future: pinCodeProvider.initialIsPINActive(),
@@ -119,7 +120,7 @@ class _LayoutScreenState extends State<LayoutScreen>
           //floatingactionbutton with bottomnavbar
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
-          floatingActionButton: (/* TODO: screenIndexProvider.pageIndex*/
+          floatingActionButton: (
               widget.currentRoute == MainRoute.lock ||
                   (pinCodeProvider.pinActive &&
                       !pinCodeProvider
@@ -162,7 +163,7 @@ class _LayoutScreenState extends State<LayoutScreen>
                   backgroundColor: Theme.of(context).colorScheme.secondary,
                   child: const Icon(Icons.add),
                 ),
-          bottomNavigationBar: (/* TODO: screenIndexProvider.pageIndex*/
+          bottomNavigationBar: (
               // TODO: Handle Lockscreen another way
               widget.currentRoute == MainRoute.lock ||
                   (pinCodeProvider.pinActive &&

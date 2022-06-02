@@ -6,6 +6,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get/get.dart';
 import 'package:linum/constants/main_theme_data.dart';
 import 'package:linum/constants/supported_locals.dart';
 import 'package:linum/firebase_wrapper.dart';
@@ -27,9 +28,8 @@ class LinumApp extends StatelessWidget {
     } else {
       return app;
     } */
-    final MainRouterDelegate _routerDelegate = MainRouterDelegate();
-    final MainRouteInformationParser _routeInformationParser =
-    MainRouteInformationParser();
+    final MainRouterDelegate _routerDelegate = Get.put(MainRouterDelegate());
+    final MainRouteInformationParser _routeInformationParser = MainRouteInformationParser();
 
     return MaterialApp(
       title: 'Linum',

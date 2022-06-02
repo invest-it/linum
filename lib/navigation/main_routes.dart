@@ -56,6 +56,24 @@ final mainRoutes = Map<MainRoute, RouteConfiguration>.of({
       );
     },
   ),
+  MainRoute.academy: RouteConfiguration(
+    path: "/academy",
+    builder: () {
+      return MaterialPage(
+        child: const LayoutScreen(currentRoute: MainRoute.academy),
+        name: MainRoute.academy.toString(), // TODO: Not sure if this is needed anywhere
+      );
+    },
+  ),
+  MainRoute.lock: RouteConfiguration( // TODO: Lock-Screen should be in another layer
+    path: "/lock",
+    builder: () {
+      return MaterialPage(
+        child: const LayoutScreen(currentRoute: MainRoute.lock),
+        name: MainRoute.lock.toString(),
+      );
+    },
+  ),
 });
 
 
