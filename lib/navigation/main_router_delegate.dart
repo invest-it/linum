@@ -4,10 +4,12 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:linum/loading_scaffold.dart';
 import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/navigation/main_routes_extensions.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
+import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/screens/onboarding_screen.dart';
 import 'package:provider/provider.dart';
 import 'dart:developer' as dev;
@@ -44,23 +46,37 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
     ];
   }
 
+  List<Page> buildPinCodeStack(PinCodeProvider pinCodeProvider) {
+    final pinCodeStack = <Page> [
+      mainRoutes.pageFromRoute(MainRoute.lock),
+    ];
+    pinCodeProvider.triggerPINRecall();
+    return List.of(pinCodeStack);
+  }
+
+  List<Page> buildPageStackAuthorized(BuildContext context) {
+    final PinCodeProvider pinCodeProvider = Provider.of<PinCodeProvider>(context);
+    if (_pageStack.isEmpty) {
+      _pageStack.add(mainRoutes.pageFromRoute(MainRoute.home));
+    }
+    if (pinCodeProvider.pinSet && !pinCodeProvider.sessionIsSafe) {
+      return buildPinCodeStack(pinCodeProvider);
+    }
+
+    return List.of(_pageStack);
+  }
+
 
   List<Page> buildPageStack(BuildContext context) {
     final AuthenticationService auth = Provider.of<AuthenticationService>(context);
     if (auth.isLoggedIn) {
-      if (_pageStack.isEmpty) {
-        _pageStack.add(mainRoutes.builderFromRoute(MainRoute.home)());
-      }
-      return List.of(_pageStack);
+      return buildPageStackAuthorized(context);
     } else {
       return buildPageStackUnauthorized();
     }
   }
 
-
-  @override
-  Widget build(BuildContext context) {
-
+  Navigator buildNavigator(BuildContext context) {
     return Navigator(
       key: navigatorKey,
       // Add TransitionDelegate here
@@ -68,6 +84,26 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
       onPopPage: _onPopPage,
     );
   }
+
+
+  @override
+  Widget build(BuildContext context) {
+    final pinCodeProvider = Provider.of<PinCodeProvider>(context, listen: false);
+    if (pinCodeProvider.pinSetStillLoading) {
+      return FutureBuilder(
+        future: pinCodeProvider.initializeIsPINSet(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return buildNavigator(context);
+          }
+          return const LoadingScaffold();
+        },
+      );
+    } else {
+      return buildNavigator(context);
+    }
+  }
+
 
   bool _onPopPage(Route route, dynamic result) {
     dev.log("Route: $route");
@@ -89,14 +125,18 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
   }
 
   void pushRoute(MainRoute route) {
-    _pageStack.add(mainRoutes.builderFromRoute(route)()); // TODO: Replace with pageFromRoute ???
+    _pageStack.add(mainRoutes.pageFromRoute(route)); // TODO: Replace with pageFromRoute ???
     notifyListeners();
   }
 
   void replaceLastRoute(MainRoute route) {
     _pageStack.removeLast();
-    _pageStack.add(mainRoutes.builderFromRoute(route)());
+    _pageStack.add(mainRoutes.pageFromRoute(route));
 
+    notifyListeners();
+  }
+
+  void rebuild() {
     notifyListeners();
   }
 

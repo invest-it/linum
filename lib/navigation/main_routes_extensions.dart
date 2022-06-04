@@ -3,6 +3,7 @@
 //  Author: damattl
 //
 
+import 'package:flutter/material.dart';
 import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/navigation/route_configuration.dart';
 import 'package:linum/types/page_builder.dart';
@@ -23,5 +24,9 @@ extension MainRoutesExtensions on Map<MainRoute, RouteConfiguration> {
       return this[MainRoute.home]!.builder; // TODO: Replace with unknown;
     }
     return builder;
+  }
+
+  Page pageFromRoute(MainRoute route) {
+    return builderFromRoute(route)();
   }
 }

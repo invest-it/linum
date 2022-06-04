@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
       hasHomeScreenCard: true,
       leadingAction: AppBarAction.fromPreset(DefaultAction.academy),
       actions: [
-        if (pinCodeProvider.pinActive)
+        if (pinCodeProvider.pinSet)
           (BuildContext context) => AppBarAction.fromParameters(
                 icon: Icons.lock_rounded,
                 ontap: () {

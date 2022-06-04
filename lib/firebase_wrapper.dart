@@ -7,6 +7,7 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/loading_scaffold.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/algorithm_provider.dart';
@@ -33,30 +34,11 @@ class FirebaseWrapper extends StatelessWidget {
     );
   }
 
-  Scaffold buildLoadingScaffold(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 32.0),
-              child: CircularProgressIndicator(),
-            ),
-            Text(
-              AppLocalizations.of(context)!.translate('main/label-loading'),
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline5,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
     SizeGuide.init(context);
+    
     return FutureBuilder(
       future: _initializedApp,
       builder: (innerContext, snapshot) {
@@ -74,7 +56,7 @@ class FirebaseWrapper extends StatelessWidget {
               .useProvider(PinCodeProvider.provider)
               .build();
         }
-        return buildLoadingScaffold(context);
+        return const LoadingScaffold();
       },
     );
   }

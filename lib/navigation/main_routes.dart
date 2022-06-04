@@ -7,6 +7,7 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:linum/navigation/route_configuration.dart';
 import 'package:linum/screens/layout_screen.dart';
+import 'package:linum/screens/lock_screen.dart';
 
 enum MainRoute {
   home,
@@ -69,7 +70,7 @@ final mainRoutes = Map<MainRoute, RouteConfiguration>.of({
     path: "/lock",
     builder: () {
       return MaterialPage(
-        child: const LayoutScreen(currentRoute: MainRoute.lock),
+        child: LockScreen(),
         name: MainRoute.lock.toString(),
       );
     },

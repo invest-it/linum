@@ -5,9 +5,12 @@
 /// PAGE INDEX 3
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:linum/constants/settings_enums.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
+import 'package:linum/navigation/main_router_delegate.dart';
+import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
@@ -273,15 +276,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         .translate("settings_screen/pin-lock/switch-label"),
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
-                  value: pinCodeProvider.pinActive,
+                  value: pinCodeProvider.pinSet,
                   activeColor: Theme.of(context).colorScheme.primaryContainer,
-                  onChanged: pinCodeProvider.pinActiveStillLoading
+                  onChanged: pinCodeProvider.pinSetStillLoading
                       ? null
                       : (_) {
                           pinCodeProvider.togglePINLock();
+
                         },
                 ),
-                if (pinCodeProvider.pinActive)
+                if (pinCodeProvider.pinSet)
                   ListTile(
                     key: const Key("pinChangeSwitch"),
                     dense: true,
