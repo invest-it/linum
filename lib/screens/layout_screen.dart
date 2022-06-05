@@ -11,14 +11,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:linum/constants/screens.dart';
 import 'package:linum/models/single_balance_data.dart';
+import 'package:linum/navigation/enter_screen_page.dart';
 import 'package:linum/navigation/main_router_delegate.dart';
 import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
-import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
-import 'package:linum/screens/enter_screen.dart';
-import 'package:linum/utilities/frontend/multi_provider_builder.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/bottom_app_bar.dart';
 import 'package:provider/provider.dart';
@@ -95,11 +93,20 @@ class _LayoutScreenState extends State<LayoutScreen>
         ),
       ),
       //floatingactionbutton with bottomnavbar
-      floatingActionButtonLocation:
-      FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
+          final enterScreenSettings = EnterScreenPageSettings.withCategories(
+            category: _accountSettingsProvider.settings['StandardCategoryExpense'] as String?,
+            secondaryCategory: _accountSettingsProvider.settings['StandardCategoryIncome'] as String?,
+          );
+
+          Get.find<MainRouterDelegate>().pushRoute(
+              MainRoute.enterScreen,
+              settings: enterScreenSettings,
+          );
+
+          /*Navigator.push(
             context,
             MaterialPageRoute(
               builder: (innerContext) {
@@ -129,6 +136,7 @@ class _LayoutScreenState extends State<LayoutScreen>
               //=> EnterScreen()),
             ),
           );
+          */
         },
         elevation: 2.0,
         backgroundColor: Theme.of(context).colorScheme.secondary,

@@ -26,7 +26,7 @@ extension MainRoutesExtensions on Map<MainRoute, RouteConfiguration> {
     return builder;
   }
 
-  Page pageFromRoute(MainRoute route) {
-    return builderFromRoute(route)();
+  Page pageFromRoute<T>(MainRoute route, {T? settings}) {
+    return builderFromRoute(route)(settings);
   }
 }

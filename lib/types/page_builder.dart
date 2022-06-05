@@ -5,4 +5,4 @@
 
 import 'package:flutter/material.dart';
 
-typedef PageBuilder = Page Function();
+typedef PageBuilder = Page Function<T>(T settings);

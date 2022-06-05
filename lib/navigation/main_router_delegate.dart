@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/loading_scaffold.dart';
 import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/navigation/main_routes_extensions.dart';
+import 'package:linum/navigation/route_configuration.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
@@ -124,8 +125,8 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
     return Future.value(true); // TODO: Check if this makes sense
   }
 
-  void pushRoute(MainRoute route) {
-    _pageStack.add(mainRoutes.pageFromRoute(route));
+  void pushRoute<T>(MainRoute route, {T? settings}) {
+    _pageStack.add(mainRoutes.pageFromRoute(route, settings: settings));
     notifyListeners();
   }
 

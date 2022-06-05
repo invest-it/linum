@@ -9,10 +9,14 @@
 import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
+import 'package:linum/navigation/enter_screen_page.dart';
+import 'package:linum/navigation/main_router_delegate.dart';
+import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
@@ -181,7 +185,11 @@ class HomeScreenListView implements BalanceDataListView {
 
     return GestureDetector(
       onTap: () {
-        Navigator.push(
+        Get.find<MainRouterDelegate>().pushRoute(
+            MainRoute.enterScreen,
+            settings: EnterScreenPageSettings.withBalanceData(balanceData),
+        );
+        /* Navigator.push(
           context,
           MaterialPageRoute(
             builder: (innerContext) {
@@ -197,7 +205,7 @@ class HomeScreenListView implements BalanceDataListView {
                   .build();
             },
           ),
-        );
+        );*/
       },
       //print(arrayElement["amount"].toString()),
       child: Dismissible(
