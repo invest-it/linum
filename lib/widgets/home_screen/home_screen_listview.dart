@@ -295,7 +295,7 @@ class HomeScreenListView implements BalanceDataListView {
                   .secondary, // PRESENT EXPENSE BACKGROUND
               child: balanceData['amount'] as num > 0
                   ? Icon(
-                standardCategoryIncomes[
+                standardIncomeCategories[
                 balanceData['category'] as String]
                     ?.icon ??
                     Icons.error,
@@ -308,7 +308,7 @@ class HomeScreenListView implements BalanceDataListView {
                     .tertiary, // PRESENT INCOME ICON
               )
                   : Icon(
-                standardCategoryExpenses[
+                standardExpenseCategories[
                 balanceData['category'] as String]
                     ?.icon ??
                     Icons.error,
@@ -383,11 +383,11 @@ class HomeScreenListView implements BalanceDataListView {
   }) {
     if (isExpense) {
       return AppLocalizations.of(context)!.translate(
-        standardCategoryExpenses[category]?.label ?? "",
+        standardExpenseCategories[category]?.label ?? "",
       ); // TODO @Nightmind you could add a String here that will show something like "error translating your category"
     } else if (!isExpense) {
       return AppLocalizations.of(context)!.translate(
-        standardCategoryIncomes[category]?.label ?? "",
+        standardIncomeCategories[category]?.label ?? "",
       ); // TODO @Nightmind you could add a String here that will show something like "error translating your category"
     }
     return "Error"; // This should never happen.

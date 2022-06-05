@@ -88,7 +88,7 @@ class PinCodeProvider extends ChangeNotifier {
   // ACTIVATION & SETTINGS - Toggles the PIN Lock in the settingsScreen
 
   ///Activates - Deactivates the PIN Lock
-  //TODO - change the switch condition of _pinActive into one that relies on whether _lastEmail + '.code' has a value in sharedPreferences
+  //TODO - change the switch condition of _pinSet into one that relies on whether _lastEmail + '.code' has a value in sharedPreferences
   void togglePINLock() {
     if (pinSet == false) {
       _sessionIsSafe = true;
@@ -127,13 +127,18 @@ class PinCodeProvider extends ChangeNotifier {
   /// Toggles a PIN change request
   void triggerPINChange() {
     _setPINLockIntent(intent: PINLockIntent.change);
-    //TODO: PAGE = 5
+    Get.find<MainRouterDelegate>().pushRoute(MainRoute.lock);
   }
 
-
+  /*
   /// Triggers a PIN recall
   void triggerPINRecall() {
     // TODO: _screenIndexProvider.setPageIndexSilently(5);
+    _setPINLockIntent(intent: PINLockIntent.recall);
+  } */ // TOOD: Probably not needed anymore
+
+
+  void setRecallIntent() {
     _setPINLockIntent(intent: PINLockIntent.recall);
   }
 
@@ -183,9 +188,7 @@ class PinCodeProvider extends ChangeNotifier {
                     _emptyCode();
                     _removePIN();
                     _pinSet = false;
-                    //TODO: PAGE = 3
                     Get.find<MainRouterDelegate>().popRoute();
-                    // Navigator.of(_context).pop();
                   },
                 ),
                 DialogAction(
@@ -193,7 +196,6 @@ class PinCodeProvider extends ChangeNotifier {
                   //If this is empty, UserAlert will use its own context to pop the dialog
                   function: () {
                     Get.find<MainRouterDelegate>().popRoute();
-                    // Navigator.of(_context).pop();
                   },
                   dialogPurpose: DialogPurpose.secondary,
                   popDialog: true,
@@ -247,8 +249,7 @@ class PinCodeProvider extends ChangeNotifier {
                   function: () {
                     togglePINLock();
                     _auth.signOut().then((_) {
-                      //TODO: PAGE = 0
-                      Navigator.of(_context).pop();
+                      Get.find<MainRouterDelegate>().rebuild();
                     });
                   },
                 ),
@@ -257,7 +258,6 @@ class PinCodeProvider extends ChangeNotifier {
                   //If this is empty, UserAlert will use its own context to pop the dialog
                   function: () {
                     Get.find<MainRouterDelegate>().rebuild();
-                    // Navigator.of(_context).pop();
                   },
                   dialogPurpose: DialogPurpose.secondary,
                   popDialog: true,
@@ -291,8 +291,6 @@ class PinCodeProvider extends ChangeNotifier {
             } else {
               toastFromTranslationKey("lock_screen/errors/last-mail-missing");
             }
-
-            //TODO: PAGE = 3
             Get.find<MainRouterDelegate>().popRoute();
             _emptyCode();
             break;
@@ -350,7 +348,7 @@ class PinCodeProvider extends ChangeNotifier {
   /// Set the page index to 0 - "welcome to the app"
   void _correctCode() {
     _sessionIsSafe = true;
-    //TODO: PAGE = 0
+    //TODO: PAGE = 0 (Why again?)
   }
 
   /// Reset [_code] and give visual and haptic feedback that the code did not match the locally stored PIN.

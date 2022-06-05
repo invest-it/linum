@@ -429,8 +429,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ForgotPasswordButton(ProviderKey.settings),
               ],
             ),
-            //TODO Add Version Display here
-
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: Text(
@@ -464,7 +462,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           //leading: Icon(widget.categories[index].icon),
           title: Text(
             AppLocalizations.of(context)!.translate(
-              standardCategoryIncomes[
+              standardIncomeCategories[
                           StandardCategoryIncome.values[indexBuilder]]
                       ?.label ??
                   "Category",
@@ -500,7 +498,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           //leading: Icon(widget.categories[index].icon),
           title: Text(
             AppLocalizations.of(context)!.translate(
-              standardCategoryExpenses[
+              standardExpenseCategories[
                           StandardCategoryExpense.values[indexBuilder]]
                       ?.label ??
                   "Category",

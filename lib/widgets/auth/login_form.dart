@@ -15,6 +15,7 @@ import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:linum/widgets/auth/forgot_password.dart';
+import 'package:linum/widgets/auth/sign_in_sign_up_button.dart';
 import 'package:linum/widgets/auth/sign_in_with_google_button.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -183,8 +184,9 @@ class _LoginFormState extends State<LoginForm> {
               //   ),
               // ),
 
-              GradientButton(
-                increaseHeightBy: proportionateScreenHeight(16),
+              SignInSignUpButton(
+                text: AppLocalizations.of(context)!
+                    .translate('onboarding_screen/login-lip-login-button'),
                 callback: () {
                   setState(() {
                     _mailController!.text.isEmpty
@@ -199,22 +201,6 @@ class _LoginFormState extends State<LoginForm> {
                     logIn(_mailController!.text, _passController.text);
                   }
                 },
-                gradient: LinearGradient(
-                  colors: [
-                    Theme.of(context).colorScheme.primary,
-                    const Color(0xFFC1E695),
-                  ],
-                ),
-                elevation: 0,
-                increaseWidthBy: double.infinity,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  AppLocalizations.of(context)!
-                      .translate('onboarding_screen/login-lip-login-button'),
-                  style: Theme.of(context).textTheme.button,
-                ),
               ),
               SizedBox(
                 height: proportionateScreenHeight(8),

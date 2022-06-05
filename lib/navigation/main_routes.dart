@@ -30,7 +30,7 @@ final mainRoutes = Map<MainRoute, RouteConfiguration>.of({
     },
   ),
   MainRoute.budget: RouteConfiguration(
-    path: "/budget", // TODO: Implement as URI?
+    path: "/budget",
     builder: () {
       return MaterialPage(
         child: const LayoutScreen(currentRoute: MainRoute.budget),
@@ -66,7 +66,7 @@ final mainRoutes = Map<MainRoute, RouteConfiguration>.of({
       );
     },
   ),
-  MainRoute.lock: RouteConfiguration( // TODO: Lock-Screen should be in another layer
+  MainRoute.lock: RouteConfiguration(
     path: "/lock",
     builder: () {
       return MaterialPage(

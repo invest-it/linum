@@ -5,6 +5,9 @@
 /// PAGE INDEX 0
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:linum/navigation/main_router_delegate.dart';
+import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
@@ -76,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     TextButton(
                       onPressed: () {
-                        //TODO: PAGE = 1
+                        Get.find<MainRouterDelegate>().replaceLastRoute(MainRoute.budget);
                       },
                       child: Text(
                         AppLocalizations.of(context)!

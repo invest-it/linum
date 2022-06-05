@@ -37,13 +37,13 @@ class AccountSettingsProvider extends ChangeNotifier {
       StandardCategoryIncome.values,
       categoryId ?? defaultId,
     ); */
-    return standardCategoryIncomes[categoryId];
+    return standardIncomeCategories[categoryId];
   }
 
   EntryCategory? getExpenseEntryCategory() {
     final String categoryId =
         settings["StandardCategoryExpense"] as String? ?? "None";
-    final EntryCategory? catExp = standardCategoryExpenses[categoryId];
+    final EntryCategory? catExp = standardExpenseCategories[categoryId];
     return catExp;
   }
 

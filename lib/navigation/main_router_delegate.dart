@@ -32,7 +32,7 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
   } */
 
   List<Page> buildPageStackUnauthorized() {
-    return <Page> [ // TODO: Might not work (List.of)
+    return <Page> [
       MaterialPage(
         child: MultiProvider(
           providers: [
@@ -50,7 +50,7 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
     final pinCodeStack = <Page> [
       mainRoutes.pageFromRoute(MainRoute.lock),
     ];
-    pinCodeProvider.triggerPINRecall();
+    pinCodeProvider.setRecallIntent();
     return List.of(pinCodeStack);
   }
 
@@ -125,7 +125,7 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
   }
 
   void pushRoute(MainRoute route) {
-    _pageStack.add(mainRoutes.pageFromRoute(route)); // TODO: Replace with pageFromRoute ???
+    _pageStack.add(mainRoutes.pageFromRoute(route));
     notifyListeners();
   }
 

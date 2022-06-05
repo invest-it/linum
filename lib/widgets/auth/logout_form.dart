@@ -5,7 +5,9 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
+import 'package:linum/navigation/main_router_delegate.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
@@ -41,7 +43,7 @@ class _LogoutFormState extends State<LogoutForm> {
           key: const Key("logoutButton"),
           increaseHeightBy: proportionateScreenHeight(16),
           callback: () => auth.signOut().then((_) {
-            // TODO: Provider.of<ScreenIndexProvider>(context, listen: false).setPageIndex(0);
+            Get.find<MainRouterDelegate>().rebuild();
             Provider.of<PinCodeProvider>(context, listen: false).resetSession();
           }),
           gradient: LinearGradient(
