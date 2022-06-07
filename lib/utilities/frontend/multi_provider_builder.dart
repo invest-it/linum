@@ -14,7 +14,7 @@ class MultiProviderBuilder {
   final BuildContext _context;
   bool _testing = false;
   Key? _key;
-  Widget? _child;
+  final Widget? _child;
 
   MultiProviderBuilder({
     required BuildContext context,

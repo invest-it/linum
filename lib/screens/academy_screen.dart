@@ -28,7 +28,7 @@ class AcademyScreen extends StatelessWidget {
       head: 'Academy',
       leadingAction: (BuildContext context) => AppBarAction.fromParameters(
         icon: Icons.arrow_back_rounded,
-        ontap: () => Get.find<MainRouterDelegate>().popRoute()
+        ontap: () => Get.find<MainRouterDelegate>().popRoute(),
         // TODO: Maybe use another method, animation does not look good.
       ),
       isInverted: true,

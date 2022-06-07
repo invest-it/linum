@@ -5,12 +5,9 @@
 /// PAGE INDEX 3
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:linum/constants/settings_enums.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
-import 'package:linum/navigation/main_router_delegate.dart';
-import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';

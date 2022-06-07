@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:linum/navigation/route_configuration.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/screens/enter_screen.dart';
 import 'package:provider/provider.dart';

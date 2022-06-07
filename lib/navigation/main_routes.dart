@@ -9,7 +9,6 @@ import 'package:linum/navigation/enter_screen_page.dart';
 import 'package:linum/navigation/route_configuration.dart';
 import 'package:linum/screens/layout_screen.dart';
 import 'package:linum/screens/lock_screen.dart';
-import 'package:linum/types/page_builder.dart';
 
 enum MainRoute {
   home,

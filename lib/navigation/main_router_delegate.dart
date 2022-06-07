@@ -3,17 +3,17 @@
 //  Author: damattl
 //
 
+import 'dart:developer' as dev;
+
 import 'package:flutter/material.dart';
 import 'package:linum/loading_scaffold.dart';
 import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/navigation/main_routes_extensions.dart';
-import 'package:linum/navigation/route_configuration.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/screens/onboarding_screen.dart';
 import 'package:provider/provider.dart';
-import 'dart:developer' as dev;
 
 
 class MainRouterDelegate extends RouterDelegate<MainRoute>
