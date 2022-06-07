@@ -9,7 +9,7 @@ import 'dart:math' as math;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/utilities/backend/statistic_calculations.dart';
-import 'package:linum/utilities/frontend/filter_functions.dart';
+import 'package:linum/utilities/frontend/filters.dart';
 
 void main() {
   group("basic_statistic_calculation", () {
@@ -63,7 +63,7 @@ void main() {
             [],
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 0;
@@ -82,7 +82,7 @@ void main() {
             exampleData1,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 81;
@@ -101,7 +101,7 @@ void main() {
             exampleData2,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedSum = -5.5;
@@ -120,7 +120,7 @@ void main() {
             exampleData3,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 44;
@@ -139,7 +139,7 @@ void main() {
             exampleData4,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 0;
@@ -158,7 +158,7 @@ void main() {
             exampleData5,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 0;
@@ -181,7 +181,7 @@ void main() {
               randomData,
               AlgorithmProvider()
                 ..setCurrentFilterAlgorithmSilently(
-                  noFilter,
+                  Filters.noFilter,
                 ),
             );
             num expectedSum = 0;
@@ -206,7 +206,7 @@ void main() {
             [],
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 0;
@@ -225,7 +225,7 @@ void main() {
             exampleData1,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 20.25;
@@ -244,7 +244,7 @@ void main() {
             exampleData2,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = -1.375;
@@ -263,7 +263,7 @@ void main() {
             exampleData3,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 5.5;
@@ -282,7 +282,7 @@ void main() {
             exampleData4,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 0;
@@ -301,7 +301,7 @@ void main() {
             exampleData5,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 0;
@@ -324,7 +324,7 @@ void main() {
               randomData,
               AlgorithmProvider()
                 ..setCurrentFilterAlgorithmSilently(
-                  noFilter,
+                  Filters.noFilter,
                 ),
             );
             num expectedAverage = 0;
@@ -352,7 +352,7 @@ void main() {
             [],
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 0;
@@ -371,7 +371,7 @@ void main() {
             exampleData1,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 81;
@@ -390,7 +390,7 @@ void main() {
             exampleData2,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 0;
@@ -409,7 +409,7 @@ void main() {
             exampleData3,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 49.5;
@@ -428,7 +428,7 @@ void main() {
             exampleData4,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 49.5;
@@ -447,7 +447,7 @@ void main() {
             exampleData5,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 0;
@@ -470,7 +470,7 @@ void main() {
               randomData,
               AlgorithmProvider()
                 ..setCurrentFilterAlgorithmSilently(
-                  noFilter,
+                  Filters.noFilter,
                 ),
             );
             num expectedSum = 0;
@@ -496,7 +496,7 @@ void main() {
             [],
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 0;
@@ -515,7 +515,7 @@ void main() {
             exampleData1,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 20.25;
@@ -534,7 +534,7 @@ void main() {
             exampleData2,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 0;
@@ -553,7 +553,7 @@ void main() {
             exampleData3,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 12.375;
@@ -572,7 +572,7 @@ void main() {
             exampleData4,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 12.375;
@@ -591,7 +591,7 @@ void main() {
             exampleData5,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 0;
@@ -614,7 +614,7 @@ void main() {
               randomData,
               AlgorithmProvider()
                 ..setCurrentFilterAlgorithmSilently(
-                  noFilter,
+                  Filters.noFilter,
                 ),
             );
             num expectedAverage = 0;
@@ -648,7 +648,7 @@ void main() {
             [],
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 0;
@@ -667,7 +667,7 @@ void main() {
             exampleData1,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 0;
@@ -686,7 +686,7 @@ void main() {
             exampleData2,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedSum = -5.5;
@@ -705,7 +705,7 @@ void main() {
             exampleData3,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedSum = -5.5;
@@ -724,7 +724,7 @@ void main() {
             exampleData4,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedSum = -49.5;
@@ -743,7 +743,7 @@ void main() {
             exampleData5,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 0;
@@ -766,7 +766,7 @@ void main() {
               randomData,
               AlgorithmProvider()
                 ..setCurrentFilterAlgorithmSilently(
-                  noFilter,
+                  Filters.noFilter,
                 ),
             );
             num expectedSum = 0;
@@ -793,7 +793,7 @@ void main() {
             [],
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 0;
@@ -812,7 +812,7 @@ void main() {
             exampleData1,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 0;
@@ -831,7 +831,7 @@ void main() {
             exampleData2,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = -1.375;
@@ -850,7 +850,7 @@ void main() {
             exampleData3,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = -1.375;
@@ -869,7 +869,7 @@ void main() {
             exampleData4,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = -8.25;
@@ -888,7 +888,7 @@ void main() {
             exampleData5,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 0;
@@ -911,7 +911,7 @@ void main() {
               randomData,
               AlgorithmProvider()
                 ..setCurrentFilterAlgorithmSilently(
-                  noFilter,
+                  Filters.noFilter,
                 ),
             );
             num expectedAverage = 0;

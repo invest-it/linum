@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
-import 'package:linum/utilities/frontend/filter_functions.dart';
+import 'package:linum/utilities/frontend/filters.dart';
 import 'package:linum/utilities/frontend/silent_scroll.dart';
 import 'package:linum/widgets/home_screen/home_screen_listview.dart';
 import 'package:linum/widgets/screen_skeleton/app_bar_action.dart';
@@ -27,8 +27,8 @@ class BudgetScreen extends StatelessWidget {
     final AlgorithmProvider algorithmProvider =
         Provider.of<AlgorithmProvider>(context);
 
-    if (algorithmProvider.currentFilter != noFilter) {
-      algorithmProvider.setCurrentFilterAlgorithmSilently(noFilter);
+    if (algorithmProvider.currentFilter != Filters.noFilter) {
+      algorithmProvider.setCurrentFilterAlgorithmSilently(Filters.noFilter);
     }
     return ScreenSkeleton(
       head: 'Budget',

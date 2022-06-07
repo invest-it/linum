@@ -7,6 +7,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:linum/models/single_month_statistic.dart';
 import 'package:linum/providers/algorithm_provider.dart';
+import 'package:linum/utilities/frontend/filters.dart';
 
 class StatisticsCalculations {
   /// the data that should be processed
@@ -17,7 +18,7 @@ class StatisticsCalculations {
       getDataUsingFilter(_algorithmProvider.currentFilter);
 
   List<Map<String, dynamic>> get _allTimeData =>
-      getDataUsingFilter(AlgorithmProvider.newerThan(Timestamp.now()));
+      getDataUsingFilter(Filters.newerThan(Timestamp.now()));
 
   late AlgorithmProvider _algorithmProvider;
 
@@ -35,19 +36,19 @@ class StatisticsCalculations {
 
   /// filter the data further down to only include the data with income information (excluding 0 cost products)
   List<Map<String, dynamic>> get _currentIncomeData =>
-      getDataUsingFilter(AlgorithmProvider.amountAtMost(0), data: _currentData);
+      getDataUsingFilter(Filters.amountAtMost(0), data: _currentData);
 
   List<Map<String, dynamic>> get _allTimeIncomeData =>
-      getDataUsingFilter(AlgorithmProvider.amountAtMost(0), data: _allTimeData);
+      getDataUsingFilter(Filters.amountAtMost(0), data: _allTimeData);
 
   /// filter the data further down to only include the data with cost information (including 0 cost products)
   List<Map<String, dynamic>> get _currentCostData => getDataUsingFilter(
-        AlgorithmProvider.amountMoreThan(0),
+        Filters.amountMoreThan(0),
         data: _currentData,
       );
 
   List<Map<String, dynamic>> get _allTimeCostData => getDataUsingFilter(
-        AlgorithmProvider.amountMoreThan(0),
+        Filters.amountMoreThan(0),
         data: _allTimeData,
       );
 
@@ -61,22 +62,22 @@ class StatisticsCalculations {
       final DateTime endDate = DateTime(now.year, now.month - i + 1, now.day);
 
       final List<bool Function(dynamic)> filterList = [
-        AlgorithmProvider.inBetween(
+        Filters.inBetween(
           Timestamp.fromDate(startDate),
           Timestamp.fromDate(endDate),
         )
       ];
 
       final List<Map<String, dynamic>> allThisMonthData =
-          getDataUsingFilter(AlgorithmProvider.combineFilterStrict(filterList));
+          getDataUsingFilter(Filters.combineFilterStrict(filterList));
 
       final List<Map<String, dynamic>> costsThisMonthData = getDataUsingFilter(
-        AlgorithmProvider.amountMoreThan(0),
+        Filters.amountMoreThan(0),
         data: allThisMonthData,
       );
       final List<Map<String, dynamic>> incomesThisMonthData =
           getDataUsingFilter(
-        AlgorithmProvider.amountAtMost(0),
+        Filters.amountAtMost(0),
         data: allThisMonthData,
       );
 
