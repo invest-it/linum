@@ -62,7 +62,7 @@ void main() {
               StatisticsCalculations(
             [],
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -81,7 +81,7 @@ void main() {
               StatisticsCalculations(
             exampleData1,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -100,7 +100,7 @@ void main() {
               StatisticsCalculations(
             exampleData2,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -119,7 +119,7 @@ void main() {
               StatisticsCalculations(
             exampleData3,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -138,7 +138,7 @@ void main() {
               StatisticsCalculations(
             exampleData4,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -157,7 +157,7 @@ void main() {
               StatisticsCalculations(
             exampleData5,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -180,7 +180,7 @@ void main() {
                 StatisticsCalculations(
               randomData,
               AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
+                ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
                 ),
             );
@@ -205,7 +205,7 @@ void main() {
               StatisticsCalculations(
             [],
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -224,7 +224,7 @@ void main() {
               StatisticsCalculations(
             exampleData1,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -243,7 +243,7 @@ void main() {
               StatisticsCalculations(
             exampleData2,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -262,7 +262,7 @@ void main() {
               StatisticsCalculations(
             exampleData3,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -281,7 +281,7 @@ void main() {
               StatisticsCalculations(
             exampleData4,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -300,7 +300,7 @@ void main() {
               StatisticsCalculations(
             exampleData5,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -323,7 +323,7 @@ void main() {
                 StatisticsCalculations(
               randomData,
               AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
+                ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
                 ),
             );
@@ -351,7 +351,7 @@ void main() {
               StatisticsCalculations(
             [],
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -370,7 +370,7 @@ void main() {
               StatisticsCalculations(
             exampleData1,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -389,7 +389,7 @@ void main() {
               StatisticsCalculations(
             exampleData2,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -408,7 +408,7 @@ void main() {
               StatisticsCalculations(
             exampleData3,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -427,7 +427,7 @@ void main() {
               StatisticsCalculations(
             exampleData4,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -446,7 +446,7 @@ void main() {
               StatisticsCalculations(
             exampleData5,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -469,7 +469,7 @@ void main() {
                 StatisticsCalculations(
               randomData,
               AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
+                ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
                 ),
             );
@@ -495,7 +495,7 @@ void main() {
               StatisticsCalculations(
             [],
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -514,7 +514,7 @@ void main() {
               StatisticsCalculations(
             exampleData1,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -533,7 +533,7 @@ void main() {
               StatisticsCalculations(
             exampleData2,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -552,7 +552,7 @@ void main() {
               StatisticsCalculations(
             exampleData3,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -571,7 +571,7 @@ void main() {
               StatisticsCalculations(
             exampleData4,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -590,7 +590,7 @@ void main() {
               StatisticsCalculations(
             exampleData5,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -613,7 +613,7 @@ void main() {
                 StatisticsCalculations(
               randomData,
               AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
+                ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
                 ),
             );
@@ -647,7 +647,7 @@ void main() {
               StatisticsCalculations(
             [],
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -666,7 +666,7 @@ void main() {
               StatisticsCalculations(
             exampleData1,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -685,7 +685,7 @@ void main() {
               StatisticsCalculations(
             exampleData2,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -704,7 +704,7 @@ void main() {
               StatisticsCalculations(
             exampleData3,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -723,7 +723,7 @@ void main() {
               StatisticsCalculations(
             exampleData4,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -742,7 +742,7 @@ void main() {
               StatisticsCalculations(
             exampleData5,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -765,7 +765,7 @@ void main() {
                 StatisticsCalculations(
               randomData,
               AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
+                ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
                 ),
             );
@@ -792,7 +792,7 @@ void main() {
               StatisticsCalculations(
             [],
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -811,7 +811,7 @@ void main() {
               StatisticsCalculations(
             exampleData1,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -830,7 +830,7 @@ void main() {
               StatisticsCalculations(
             exampleData2,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -849,7 +849,7 @@ void main() {
               StatisticsCalculations(
             exampleData3,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -868,7 +868,7 @@ void main() {
               StatisticsCalculations(
             exampleData4,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -887,7 +887,7 @@ void main() {
               StatisticsCalculations(
             exampleData5,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
+              ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
           );
@@ -910,7 +910,7 @@ void main() {
                 StatisticsCalculations(
               randomData,
               AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
+                ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
                 ),
             );

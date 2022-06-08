@@ -142,9 +142,7 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
   }
 
   @override
-  Future<void> setNewRoutePath(MainRoute route) async {
-
-  }
+  Future<void> setNewRoutePath(MainRoute route) async {}
 
 
 }

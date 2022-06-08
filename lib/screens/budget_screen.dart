@@ -28,7 +28,7 @@ class BudgetScreen extends StatelessWidget {
         Provider.of<AlgorithmProvider>(context);
 
     if (algorithmProvider.currentFilter != Filters.noFilter) {
-      algorithmProvider.setCurrentFilterAlgorithmSilently(Filters.noFilter);
+      algorithmProvider.setCurrentFilterAlgorithm(Filters.noFilter);
     }
     return ScreenSkeleton(
       head: 'Budget',

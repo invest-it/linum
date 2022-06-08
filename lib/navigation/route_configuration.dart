@@ -13,4 +13,3 @@ class RouteConfiguration {
 
   String get path => uri.path;
 }
-

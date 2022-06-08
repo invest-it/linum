@@ -4,11 +4,12 @@
 //
 
 import 'dart:core';
+
 import 'package:flutter/material.dart';
 import 'package:linum/navigation/enter_screen_page.dart';
 import 'package:linum/navigation/route_configuration.dart';
-import 'package:linum/screens/layout_screen.dart';
 import 'package:linum/screens/lock_screen.dart';
+import 'package:linum/screens/screen_layout.dart';
 
 enum MainRoute {
   home,
@@ -24,53 +25,52 @@ enum MainRoute {
 final mainRoutes = Map<MainRoute, RouteConfiguration>.of({
   MainRoute.home: RouteConfiguration(
     path: "/",
-    builder: <Void>(_) {
-      return MaterialPage(
-        child: const LayoutScreen(currentRoute: MainRoute.home),
-        name: MainRoute.home.toString(),
+    builder: <T>(_) {
+      return const MaterialPage(
+        child: ScreenLayout(currentRoute: MainRoute.home),
       );
     },
   ),
   MainRoute.budget: RouteConfiguration(
     path: "/budget",
-    builder: <Void>(_) {
+    builder: <T>(_) {
       return MaterialPage(
-        child: const LayoutScreen(currentRoute: MainRoute.budget),
+        child: const ScreenLayout(currentRoute: MainRoute.budget),
         name: MainRoute.budget.toString(),
       );
     },
   ),
   MainRoute.statistics: RouteConfiguration(
     path: "/statistics",
-    builder: <Void>(_) {
+    builder: <T>(_) {
 
       return MaterialPage(
-        child: const LayoutScreen(currentRoute: MainRoute.statistics),
+        child: const ScreenLayout(currentRoute: MainRoute.statistics),
         name: MainRoute.statistics.toString(),
       );
     },
   ),
   MainRoute.settings: RouteConfiguration(
     path: "/settings",
-    builder: <Void>(_) {
+    builder: <T>(_) {
       return MaterialPage(
-        child: const LayoutScreen(currentRoute: MainRoute.settings),
+        child: const ScreenLayout(currentRoute: MainRoute.settings),
         name: MainRoute.settings.toString(),
       );
     },
   ),
   MainRoute.academy: RouteConfiguration(
     path: "/academy",
-    builder: <Void>(_) {
+    builder: <T>(_) {
       return MaterialPage(
-        child: const LayoutScreen(currentRoute: MainRoute.academy),
+        child: const ScreenLayout(currentRoute: MainRoute.academy),
         name: MainRoute.academy.toString(), // TODO: Not sure if this is needed anywhere
       );
     },
   ),
   MainRoute.lock: RouteConfiguration(
     path: "/lock",
-    builder: <Void>(_) {
+    builder: <T>(_) {
       return MaterialPage(
         child: LockScreen(),
         name: MainRoute.lock.toString(),
@@ -79,10 +79,10 @@ final mainRoutes = Map<MainRoute, RouteConfiguration>.of({
   ),
   MainRoute.enterScreen: RouteConfiguration(
     path: "/enterScreen",
-    builder: <EnterScreenSettings>(settings) {
+    builder: <T>(settings) {
       // TODO THROW ERROR IF NO SETTINGS PROVIDED
       return EnterScreenPage(settings as EnterScreenPageSettings);
-    }
+    },
   ),
 
 });

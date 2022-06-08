@@ -37,27 +37,27 @@ class AlgorithmProvider extends ChangeNotifier {
     _balanceDataUnnoticedChanges++;
   }
 
-  void setCurrentShownMonth(DateTime inputMonth) {
+  void setCurrentShownMonth(DateTime inputMonth, {bool notify = false}) {
     _currentShownMonth = DateTime(inputMonth.year, inputMonth.month);
-    _updateToCurrentShownMonthSilently();
+    _updateToCurrentShownMonth(notify: notify);
   }
 
-  void resetCurrentShownMonth() {
+  void resetCurrentShownMonth({bool notify = false}) {
     _currentShownMonth = DateTime(DateTime.now().year, DateTime.now().month);
-    _updateToCurrentShownMonthSilently();
+    _updateToCurrentShownMonth(notify: notify);
   }
 
-  void nextMonth() {
+  void nextMonth({bool notify = false}) {
     _currentShownMonth =
         DateTime(_currentShownMonth.year, _currentShownMonth.month + 1);
-    _updateToCurrentShownMonthSilently();
+    _updateToCurrentShownMonth(notify: notify);
   }
 
-  void previousMonth() {
+  void previousMonth({bool notify = false}) {
     _currentShownMonth =
         DateTime(_currentShownMonth.year, _currentShownMonth.month - 1);
 
-    _updateToCurrentShownMonthSilently();
+    _updateToCurrentShownMonth(notify: notify);
   }
 
   AlgorithmProvider() {
@@ -79,18 +79,18 @@ class AlgorithmProvider extends ChangeNotifier {
     );
   }
 
-  void setCurrentSortAlgorithm(int Function(dynamic, dynamic) sorter) {
+  void setCurrentSortAlgorithm(int Function(dynamic, dynamic) sorter, {bool notify = false}) {
     _currentSorter = sorter;
-    notifyListeners();
+    if (notify) {
+      notifyListeners();
+    }
   }
 
-  void setCurrentFilterAlgorithm(bool Function(dynamic) filter) {
+  void setCurrentFilterAlgorithm(bool Function(dynamic) filter, {bool notify = false}) {
     _currentFilter = filter;
-    notifyListeners();
-  }
-
-  void setCurrentFilterAlgorithmSilently(bool Function(dynamic) filter) {
-    _currentFilter = filter;
+    if (notify) {
+      notifyListeners();
+    }
   }
 
   int get balanceDataUnnoticedChanges => _balanceDataUnnoticedChanges;
@@ -106,7 +106,7 @@ class AlgorithmProvider extends ChangeNotifier {
 
   // TODO: Refactor the rest of the file
 
-  void _updateToCurrentShownMonthSilently() {
+  void _updateToCurrentShownMonth({bool notify = false}) {
     if (currentShownMonth.month == DateTime.now().month &&
         currentShownMonth.year == DateTime.now().year) {
       setCurrentFilterAlgorithm(
@@ -124,6 +124,7 @@ class AlgorithmProvider extends ChangeNotifier {
             ),
           ),
         ),
+        notify: notify,
       );
     } else {
       setCurrentFilterAlgorithm(
@@ -138,6 +139,7 @@ class AlgorithmProvider extends ChangeNotifier {
             ),
           ),
         ),
+        notify: notify,
       );
     }
   }

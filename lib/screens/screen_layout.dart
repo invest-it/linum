@@ -3,17 +3,17 @@
 //  Author: thebluebaronx
 //  Co-Author: SoTBurst, NightmindOfficial, damattl
 /// NO PAGE INDEX (This Screen is always invoked)
-
 import 'dart:developer' as dev;
 import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:linum/constants/screens.dart';
 import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/navigation/enter_screen_page.dart';
 import 'package:linum/navigation/main_router_delegate.dart';
 import 'package:linum/navigation/main_routes.dart';
+import 'package:linum/navigation/screen_builders.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
@@ -21,15 +21,16 @@ import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/bottom_app_bar.dart';
 import 'package:provider/provider.dart';
 
-class LayoutScreen extends StatefulWidget {
+class ScreenLayout extends StatefulWidget {
   final MainRoute currentRoute;
-  const LayoutScreen({Key? key, required this.currentRoute}) : super(key: key);
+  final dynamic settings;
+  const ScreenLayout({Key? key, required this.currentRoute, this.settings}) : super(key: key);
 
   @override
-  State<LayoutScreen> createState() => _LayoutScreenState();
+  State<ScreenLayout> createState() => _ScreenLayoutState();
 }
 
-class _LayoutScreenState extends State<LayoutScreen>
+class _ScreenLayoutState extends State<ScreenLayout>
     with WidgetsBindingObserver {
   @override
   void initState() {

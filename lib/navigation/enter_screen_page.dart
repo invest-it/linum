@@ -42,7 +42,6 @@ class EnterScreenPage extends Page {
       },
       child: const EnterScreen(),
     );
-    // TODO: implement createRoute
     return PageRouteBuilder(
       settings: this,
       pageBuilder: (context, animation, animation2) {
