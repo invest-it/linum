@@ -40,7 +40,7 @@ jobs:
         UDID=$(
           xcrun xctrace list devices |
           awk \
-            -F ' *()()' \
+            -F ' ' \
             -v 'device=${{ matrix.device }}' \
             'NR > 4 {uid=$NF;$NF=""; NF--;} $0 == device {print substr(uid, 2,36)}'
         )
@@ -55,4 +55,4 @@ jobs:
       with:
         channel: 'stable' # or: 'dev' or 'beta'
     - name: "Run Flutter Driver tests"
-      run: "flutter drive --target=test_driver/integration_test.dart"
+      run: "flutter drive --target=test_driver/app.dart"
