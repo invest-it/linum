@@ -12,6 +12,7 @@ import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
 class StandardCategory extends StatelessWidget {
@@ -21,7 +22,6 @@ class StandardCategory extends StatelessWidget {
   Widget build(BuildContext context) {
     final AccountSettingsProvider accountSettingsProvider =
         Provider.of<AccountSettingsProvider>(context);
-
     final ActionLipStatusProvider actionLipStatusProvider =
         Provider.of<ActionLipStatusProvider>(context);
     return Column(
@@ -29,43 +29,37 @@ class StandardCategory extends StatelessWidget {
         GestureDetector(
           onTap: () {
             //Request from SoTBurst - this fix is related to issue #46
-            actionLipStatusProvider.setActionLipStatus(
+            actionLipStatusProvider.setActionLip(
               providerKey: ProviderKey.settings,
-            );
-
-            showModalBottomSheet(
-              context: context,
-              builder: (context) {
-                return Container(
-                  height: proportionateScreenHeightFraction(
-                    ScreenFraction.half,
-                  ),
-                  color: Theme.of(context).colorScheme.onSecondary,
-                  child: Column(
-                    children: [
-                      ListTile(
-                        title: Text(
-                          AppLocalizations.of(context)!.translate(
-                            'settings_screen/standard-income-selector/label-title',
+              actionLipStatus: ActionLipStatus.onviewport,
+              actionLipTitle: AppLocalizations.of(context)!.translate(
+                'action_lip/forgot-password/logged-out/label-title',
+              ),
+              actionLipBody: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 12.0,
+                      horizontal: 24.0,
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: proportionateScreenHeightFraction(
+                            ScreenFraction.twofifths,
+                          ),
+                          child: _incomeListViewBuilder(
+                            accountSettingsProvider,
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: proportionateScreenHeightFraction(
-                          ScreenFraction.twofifths,
-                        ),
-                        child: _incomeListViewBuilder(
-                          accountSettingsProvider,
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                );
-              },
+                ],
+              ),
             );
           },
           child: ListTile(
-            // onTap: ontap(),
             title: Text(
               AppLocalizations.of(context)!.translate(
                     'settings_screen/standard-income-selector/label-title',
@@ -94,35 +88,35 @@ class StandardCategory extends StatelessWidget {
               providerKey: ProviderKey.settings,
             );
 
-            showModalBottomSheet(
-              context: context,
-              builder: (context) {
-                return Container(
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  color: const Color(0xFFFAFAFA),
-                  child: Column(
-                    children: [
-                      ListTile(
-                        title: Text(
-                          AppLocalizations.of(context)!.translate(
-                            'settings_screen/standard-expense-selector/label-title',
+            actionLipStatusProvider.setActionLip(
+              providerKey: ProviderKey.settings,
+              actionLipStatus: ActionLipStatus.onviewport,
+              actionLipTitle: AppLocalizations.of(context)!.translate(
+                'action_lip/forgot-password/logged-out/label-title',
+              ),
+              actionLipBody: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 12.0,
+                      horizontal: 24.0,
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.4,
+                          child: _expensesListViewBuilder(
+                            accountSettingsProvider,
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.4,
-                        child: _expensesListViewBuilder(
-                          accountSettingsProvider,
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                );
-              },
+                ],
+              ),
             );
           },
           child: ListTile(
-            // onTap: ontap(),
             title: Text(
               AppLocalizations.of(context)!.translate(
                     'settings_screen/standard-expense-selector/label-title',
@@ -178,7 +172,6 @@ class StandardCategory extends StatelessWidget {
             });
             Navigator.pop(context);
           },
-          // trailing: ,
         );
       },
     );
@@ -219,3 +212,64 @@ class StandardCategory extends StatelessWidget {
     );
   }
 }
+
+
+//income ModalBottomSheet
+            /*showModalBottomSheet(
+              context: context,
+              builder: (context) {
+                return Container(
+                  height: proportionateScreenHeightFraction(
+                    ScreenFraction.half,
+                  ),
+                  color: Theme.of(context).colorScheme.onSecondary,
+                  child: Column(
+                    children: [
+                      ListTile(
+                        title: Text(
+                          AppLocalizations.of(context)!.translate(
+                            'settings_screen/standard-income-selector/label-title',
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: proportionateScreenHeightFraction(
+                          ScreenFraction.twofifths,
+                        ),
+                        child: _incomeListViewBuilder(
+                          accountSettingsProvider,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );*/
+
+//expense ModalBottomSheet
+ /*showModalBottomSheet(
+              context: context,
+              builder: (context) {
+                return Container(
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  color: const Color(0xFFFAFAFA),
+                  child: Column(
+                    children: [
+                      ListTile(
+                        title: Text(
+                          AppLocalizations.of(context)!.translate(
+                            'settings_screen/standard-expense-selector/label-title',
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.4,
+                        child: _expensesListViewBuilder(
+                          accountSettingsProvider,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );*/
