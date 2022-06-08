@@ -56,4 +56,4 @@ jobs:
       with:
         channel: 'stable' # or: 'dev' or 'beta'
     - name: "Run Flutter Driver tests"
-      run: "flutter drive --target=test_driver/integration_test.dart"
+      run: "flutter drive --target=test_driver/integration.dart"
