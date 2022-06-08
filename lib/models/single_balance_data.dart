@@ -132,5 +132,5 @@ class SingleBalanceData {
   String? get note => _note;
   String? get repeatId => _repeatId;
   Timestamp get time => _time;
-  Timestamp get formerTime => _formerTime;
+  Timestamp? get formerTime => _formerTime;
 }
