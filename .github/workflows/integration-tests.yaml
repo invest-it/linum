@@ -23,12 +23,11 @@ jobs:
       matrix:
         device:
         - "iPhone 11 Simulator (15.2)"
-        - "iPhone 11 Simulator (15.2)"
-        - "iPhone 13 Pro Simulator (15.2)"
-        - "iPhone 13 Pro Max Simulator (15.2)"
-        - "iPhone 8 Simulator (15.2)"
-        - "iPhone 8 Plus Simulator (15.2)"
-        - "iPhone SE (2nd generation) Simulator (15.2)"
+        #- "iPhone 13 Pro Simulator (15.2)"
+        #- "iPhone 13 Pro Max Simulator (15.2)"
+        #- "iPhone 8 Simulator (15.2)"
+        #- "iPhone 8 Plus Simulator (15.2)"
+        #- "iPhone SE (2nd generation) Simulator (15.2)"
       # When set to true, GitHub cancels all in-progress jobs if any        
       # matrix job fails.
       fail-fast: false
