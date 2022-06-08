@@ -16,6 +16,7 @@ class SingleBalanceData {
   final String? _note;
   final String? _repeatId;
   final Timestamp _time;
+  final Timestamp? _formerTime; // strictly for changed repeatables
 
   SingleBalanceData({
     required num amount,
@@ -26,6 +27,7 @@ class SingleBalanceData {
     String? note,
     String? repeatId,
     required Timestamp time,
+    Timestamp? formerTime,
   })  : _amount = amount,
         _category = category,
         _currency = currency,
@@ -33,7 +35,8 @@ class SingleBalanceData {
         _name = name,
         _note = note,
         _repeatId = repeatId,
-        _time = time;
+        _time = time,
+        _formerTime = formerTime;
 
   SingleBalanceData copyWith({
     num? amount,
@@ -44,6 +47,7 @@ class SingleBalanceData {
     String? note,
     String? repeatId,
     Timestamp? time,
+    Timestamp? formerTime,
   }) {
     return SingleBalanceData(
       amount: amount ?? _amount,
@@ -54,6 +58,7 @@ class SingleBalanceData {
       note: note ?? _note,
       repeatId: repeatId ?? _repeatId,
       time: time ?? _time,
+      formerTime: formerTime ?? _formerTime,
     );
   }
 
@@ -67,6 +72,7 @@ class SingleBalanceData {
       'note': _note,
       'repeatId': _repeatId,
       'time': _time,
+      'formerTime': _formerTime,
     };
   }
 
@@ -80,12 +86,13 @@ class SingleBalanceData {
       note: map['note'] as String?,
       repeatId: map['repeatId'] as String?,
       time: map['time'] as Timestamp,
+      formerTime: map['formerTime'] as Timestamp?,
     );
   }
 
   @override
   String toString() {
-    return 'SingleBalanceData(_amount: $_amount, _category: $_category, _currency: $_currency, _id: $_id, _name: $_name, _note: $_note, _repeatId: $_repeatId, _time: $_time)';
+    return 'SingleBalanceData(_amount: $_amount, _category: $_category, _currency: $_currency, _id: $_id, _name: $_name, _note: $_note, _repeatId: $_repeatId, _time: $_time, _formerTime: $_formerTime)';
   }
 
   @override
@@ -100,7 +107,8 @@ class SingleBalanceData {
         other._name == _name &&
         other._note == _note &&
         other._repeatId == _repeatId &&
-        other._time == _time;
+        other._time == _time &&
+        other._formerTime == _formerTime;
   }
 
   @override
@@ -112,7 +120,8 @@ class SingleBalanceData {
         _name.hashCode ^
         _note.hashCode ^
         _repeatId.hashCode ^
-        _time.hashCode;
+        _time.hashCode ^
+        _formerTime.hashCode;
   }
 
   num get amount => _amount;
@@ -123,4 +132,5 @@ class SingleBalanceData {
   String? get note => _note;
   String? get repeatId => _repeatId;
   Timestamp get time => _time;
+  Timestamp get formerTime => _formerTime;
 }
