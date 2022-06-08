@@ -22,7 +22,7 @@ class EnterScreenProvider with ChangeNotifier {
   String _expenseCategory = "";
   String _incomeCategory = "";
   String _currency = "";
-  String _description = "";
+  String? _note;
   String? _formerId;
   String? _repeatId;
   int? _repeatDuration;
@@ -37,7 +37,7 @@ class EnterScreenProvider with ChangeNotifier {
     String secondaryCategory = "None",
     DateTime? selectedDate,
     bool editMode = false,
-    String description = "",
+    String? note,
     String? id,
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
@@ -51,7 +51,7 @@ class EnterScreenProvider with ChangeNotifier {
     _name = name;
     _currency = currency;
     _editMode = editMode;
-    _description = description;
+    _note = note;
     _isExpenses = amount <= 0;
     _repeatDuration = repeatDuration;
     _isIncome = !_isExpenses;
@@ -65,6 +65,7 @@ class EnterScreenProvider with ChangeNotifier {
     if (selectedDate != null) {
       _selectedDate = selectedDate;
     }
+    _note = note;
   }
 
   bool get isExpenses {
@@ -87,8 +88,8 @@ class EnterScreenProvider with ChangeNotifier {
     return _amount;
   }
 
-  String get description {
-    return _description;
+  String? get note {
+    return _note;
   }
 
   String get category {
@@ -153,8 +154,8 @@ class EnterScreenProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void setDescription(String description) {
-    _description = description;
+  void setNote(String note) {
+    _note = note;
     notifyListeners();
   }
 
