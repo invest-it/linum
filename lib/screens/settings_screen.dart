@@ -1,7 +1,7 @@
 //  Settings Screen - Screen that allows changing user Settings as well as logging out, changing languages and performing "Danger Zone" tasks
 //
 //  Author: aronzimmermann
-//  Co-Author: SoTBurst, NightmindOfficial, Partly refactored by damattl
+//  Co-Author: SoTBurst, NightmindOfficial, Partly refactored by damattl and TheBlueBaron
 /// PAGE INDEX 3
 
 import 'package:flutter/material.dart';
@@ -302,39 +302,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ],
             ),
             const ListDivider(),
-
-            /// SPECIAL SETTINGS
-            /// This setting will be hidden until implememted.
-            // ListHeader('settings_screen/special-settings/label-title'),
-            // Column(
-            //   crossAxisAlignment: CrossAxisAlignment.start,
-            //   children: [
-            //     SwitchListTile(
-            //       /// TODO implement schwabenmodus functionality
-            //       title: Text(
-            //         AppLocalizations.of(context)!.translate(
-            //             'settings_screen/special-settings/label-schwabenmodus'),
-            //         style: Theme.of(context).textTheme.bodyText1,
-            //       ),
-            //       value: _schwabenmodus,
-            //       activeColor: Colors.green,
-            //       onChanged: (bool value) {
-            //         setState(() {
-            //           _schwabenmodus = value;
-            //         });
-            //       },
-            //     ),
-            //   ],
-            // ),
-            // ListDivider(),
-
-            /// STANDARD ACCOUNT (to be implemented)
-            // ListHeader(
-            //   'settings_screen/standard-account/label-title',
-            //   tooltipMessage: 'settings_screen/standard-account/label-tooltip',
-            // ),
-            // // Einnahmen Selector (Accounts)
-            // ListDivider(),
 
             /// LANGUAGE SWITCH
             const ListHeader(
