@@ -161,7 +161,7 @@ class BalanceDataProvider extends ChangeNotifier {
   }
 
   /// update a single Balance and upload it (identified using the name and time)
-  Future<bool> updateSingleBalance({
+  Future<bool> updateSingleBalanceDirectly({
     required String id,
     num? amount,
     String? category,
@@ -191,6 +191,19 @@ class BalanceDataProvider extends ChangeNotifier {
 
     await _balance!.update(data);
     return true;
+  }
+
+  Future<bool> updateSingleBalance(
+    SingleBalanceData updatedSingleBalanceData,
+  ) async {
+    return updateSingleBalanceDirectly(
+      id: updatedSingleBalanceData.id,
+      amount: updatedSingleBalanceData.amount,
+      category: updatedSingleBalanceData.category,
+      currency: updatedSingleBalanceData.currency,
+      name: updatedSingleBalanceData.name,
+      time: updatedSingleBalanceData.time,
+    );
   }
 
   /// remove a single Balance and upload it (identified using id)
