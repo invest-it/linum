@@ -168,14 +168,16 @@ class _EnterScreenState extends State<EnterScreen> {
                                 if (enterScreenProvider.editMode) {
                                   if (enterScreenProvider.repeatId == null) {
                                     balanceDataProvider.updateSingleBalance(
-                                      id: enterScreenProvider.formerId ?? "",
-                                      amount:
-                                          _amountChooser(enterScreenProvider),
-                                      category: enterScreenProvider.category,
-                                      currency: "EUR",
-                                      name: enterScreenProvider.name,
-                                      time: Timestamp.fromDate(
-                                        selectedDateDateTimeFormatted,
+                                      SingleBalanceData(
+                                        id: enterScreenProvider.formerId ?? "",
+                                        amount:
+                                            _amountChooser(enterScreenProvider),
+                                        category: enterScreenProvider.category,
+                                        currency: "EUR",
+                                        name: enterScreenProvider.name,
+                                        time: Timestamp.fromDate(
+                                          selectedDateDateTimeFormatted,
+                                        ),
                                       ),
                                     );
                                     Navigator.of(context).pop();
