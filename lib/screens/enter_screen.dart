@@ -175,6 +175,7 @@ class _EnterScreenState extends State<EnterScreen> {
                                         category: enterScreenProvider.category,
                                         currency: "EUR",
                                         name: enterScreenProvider.name,
+                                        note: enterScreenProvider.note,
                                         time: Timestamp.fromDate(
                                           selectedDateDateTimeFormatted,
                                         ),
@@ -338,6 +339,7 @@ class _EnterScreenState extends State<EnterScreen> {
                                         category: enterScreenProvider.category,
                                         currency: "EUR",
                                         name: enterScreenProvider.name,
+                                        note: enterScreenProvider.note,
                                         time: Timestamp.fromDate(
                                           selectedDateDateTimeFormatted,
                                         ),
