@@ -1,3 +1,9 @@
+//  Settings Screen Pin Switch - The toggle to open and activate the Pin Code
+//
+//  Author: NightmindOfficial
+//  Co-Author: SoTBurst
+//  Partly Refactored: TheBlueBaron
+
 import 'package:flutter/material.dart';
 import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';

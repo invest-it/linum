@@ -1,3 +1,9 @@
+//  Settings Screen Language Selector - The toggle to decide whether to use system language and the selector to decide between languages
+//
+//  Author: NightmindOfficial
+//  Co-Author: SoTBurst
+//  Partly refactored: damattl and TheBlueBaron
+
 import 'package:flutter/material.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';

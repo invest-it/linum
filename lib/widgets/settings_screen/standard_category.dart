@@ -1,3 +1,9 @@
+//  Settings Screen Standard Category - The selector for the standard categories
+//
+//  Author: aronzimmermann
+//  Co-Author: SoTBurst, NightmindOfficial
+//  Refactored: none
+
 import 'package:flutter/material.dart';
 import 'package:linum/constants/settings_enums.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
