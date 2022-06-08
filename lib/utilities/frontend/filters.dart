@@ -5,6 +5,8 @@
 //  (Refactored)
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:tuple/tuple.dart';
 
 class Filters {
   /// Returns a filter that will remove an element if one filter doesnt let it pass
@@ -61,15 +63,12 @@ class Filters {
         0;
   }
 
-  static bool Function(dynamic) inBetween(
-      Timestamp timestamp1,
-      Timestamp timestamp2,
-      ) {
+  static bool Function(dynamic) inBetween(Tuple2<Timestamp, Timestamp> timestamps) {
     return (dynamic a) =>
     ((a as Map<String, dynamic>)["time"] as Timestamp)
-        .compareTo(timestamp1) <=
+        .compareTo(timestamps.item1) <=
         0 ||
-        (a["time"] as Timestamp).compareTo(timestamp2) >= 0;
+        (a["time"] as Timestamp).compareTo(timestamps.item2) >= 0;
   }
 
   static bool Function(dynamic) amountMoreThan(num amount) {

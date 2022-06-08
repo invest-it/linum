@@ -14,13 +14,6 @@ import 'package:linum/screens/lock_screen.dart';
 import 'package:linum/screens/settings_screen.dart';
 import 'package:linum/screens/statistics_screen.dart';
 
-typedef ScreenBuilderFunction = Widget Function(dynamic settings);
-
-class ScreenBuilder {
-  final ScreenBuilderFunction build;
-  ScreenBuilder(this.build);
-}
-
 
 final _screens = Map<MainRoute, Widget>.of({
   MainRoute.home: const HomeScreen(), //0

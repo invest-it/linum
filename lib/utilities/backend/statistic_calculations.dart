@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:linum/models/single_month_statistic.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/utilities/frontend/filters.dart';
+import 'package:tuple/tuple.dart';
 
 class StatisticsCalculations {
   /// the data that should be processed
@@ -63,8 +64,10 @@ class StatisticsCalculations {
 
       final List<bool Function(dynamic)> filterList = [
         Filters.inBetween(
-          Timestamp.fromDate(startDate),
-          Timestamp.fromDate(endDate),
+          Tuple2(
+            Timestamp.fromDate(startDate),
+            Timestamp.fromDate(endDate),
+          ),
         )
       ];
 

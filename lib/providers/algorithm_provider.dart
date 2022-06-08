@@ -6,8 +6,8 @@
 
 // ignore_for_file: avoid_dynamic_calls
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/utilities/backend/in_between_timestamps.dart';
 import 'package:linum/utilities/frontend/filters.dart';
 import 'package:linum/utilities/frontend/sorters.dart';
 import 'package:provider/provider.dart';
@@ -63,20 +63,7 @@ class AlgorithmProvider extends ChangeNotifier {
   AlgorithmProvider() {
     resetCurrentShownMonth();
     _currentSorter = Sorters.timeNewToOld;
-    _currentFilter = Filters.inBetween(
-      Timestamp.fromDate(
-        DateTime(
-          DateTime.now().year,
-          DateTime.now().month,
-        ).subtract(const Duration(microseconds: 1)),
-      ),
-      Timestamp.fromDate(
-        DateTime(
-          DateTime.now().year,
-          DateTime.now().month + 1,
-        ),
-      ),
-    );
+    _currentFilter = Filters.inBetween(timestampsFromNow());
   }
 
   void setCurrentSortAlgorithm(int Function(dynamic, dynamic) sorter, {bool notify = false}) {
@@ -110,35 +97,12 @@ class AlgorithmProvider extends ChangeNotifier {
     if (currentShownMonth.month == DateTime.now().month &&
         currentShownMonth.year == DateTime.now().year) {
       setCurrentFilterAlgorithm(
-        Filters.inBetween(
-          Timestamp.fromDate(
-            DateTime(
-              DateTime.now().year,
-              DateTime.now().month,
-            ).subtract(const Duration(microseconds: 1)),
-          ),
-          Timestamp.fromDate(
-            DateTime(
-              DateTime.now().year,
-              DateTime.now().month + 1,
-            ),
-          ),
-        ),
+        Filters.inBetween(timestampsFromNow()),
         notify: notify,
       );
     } else {
       setCurrentFilterAlgorithm(
-        Filters.inBetween(
-          Timestamp.fromDate(
-            currentShownMonth.subtract(const Duration(microseconds: 1)),
-          ),
-          Timestamp.fromDate(
-            DateTime(
-              currentShownMonth.year,
-              currentShownMonth.month + 1,
-            ),
-          ),
-        ),
+        Filters.inBetween(timestampsFromCurrentShownDate(currentShownMonth)),
         notify: notify,
       );
     }

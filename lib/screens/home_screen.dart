@@ -12,6 +12,7 @@ import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
+import 'package:linum/utilities/backend/in_between_timestamps.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/filters.dart';
 import 'package:linum/utilities/frontend/silent_scroll.dart';
@@ -36,20 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (algorithmProvider.currentFilter == Filters.noFilter) {
       algorithmProvider.resetCurrentShownMonth();
       algorithmProvider.setCurrentFilterAlgorithm(
-        Filters.inBetween(
-          Timestamp.fromDate(
-            DateTime(
-              DateTime.now().year,
-              DateTime.now().month,
-            ).subtract(const Duration(microseconds: 1)),
-          ),
-          Timestamp.fromDate(
-            DateTime(
-              DateTime.now().year,
-              DateTime.now().month + 1,
-            ),
-          ),
-        ),
+        Filters.inBetween(timestampsFromNow()),
       );
     }
   }
