@@ -59,7 +59,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             const StandardCategory(),
             const ListDivider(),
 
-            /// Pin Switch
+            /// PIN SWITCH
             const ListHeader(
               'settings_screen/pin-lock/label-title',
               tooltipMessage: 'settings_screen/pin-lock/label-tooltip',
@@ -85,7 +85,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ],
             ),
 
-            /// Version Number
+            /// VERSION NUMBER
             VersionNumber(),
             const SizedBox(height: 40),
           ],
