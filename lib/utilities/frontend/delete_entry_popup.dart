@@ -9,24 +9,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/constants/repeatable_change_type_enum.dart';
 import 'package:linum/models/dialog_action.dart';
+import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 
-Future<bool?> generateDeletePopupFromArrayElement(
+Future<bool?> generateDeletePopupFromSingleBalanceData(
   BuildContext context,
   BalanceDataProvider balanceDataProvider,
-  Map<String, dynamic> arrayElement,
+  SingleBalanceData singleBalanceData,
 ) async {
-  final bool isRepeatable = arrayElement["repeatId"] != null;
+  final bool isRepeatable = singleBalanceData.repeatId != null;
   return generateDeletePopup(
     context,
     balanceDataProvider,
-    isRepeatable
-        ? arrayElement["repeatId"] as String
-        : arrayElement["id"] as String,
+    isRepeatable ? singleBalanceData.repeatId! : singleBalanceData.id,
     isRepeatable: isRepeatable,
-    formerTime: arrayElement["formerTime"] as Timestamp? ??
-        arrayElement["time"] as Timestamp,
+    formerTime: singleBalanceData.formerTime ?? singleBalanceData.time,
   );
 }
 
