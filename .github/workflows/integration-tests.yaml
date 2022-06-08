@@ -43,7 +43,7 @@ jobs:
           awk \
             -F ' *()()' \
             -v 'device=${{ matrix.device }}' \
-            'NR > 4 {uid=$NF;$NF=""; NF--;} $0 == device {print substr(uid, 2,37)}'
+            'NR > 4 {uid=$NF;$NF=""; NF--;} $0 == device {print substr(uid, 2,36)}'
         )
         xcrun simctl boot "${UDID:?No Simulator with this name found}"
     # The branch or tag ref that triggered the workflow will be 
