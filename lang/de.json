@@ -182,7 +182,10 @@
     "action_lip/forgot-password/logged-in/label-description": "Bitte trage ein neues Passwort ein. Passwörter, die du bereits verwendet hast, sind nicht zulässig. Ebenso darf deine E-Mail-Adresse nicht darin vorkommen und es muss länger als 6 Zeichen sein.",
     "action_lip/forgot-password/logged-in/button-submit": "Passwort jetzt ändern",
 
+    "action_lip/standard-category/income/label-title": "Einnahmen",
+    "action_lip/standard-category/expenses/label-title": "Ausgaben",
 
+    
     "logout_form/label-current-email": "Angemeldet als:\n",
 
 

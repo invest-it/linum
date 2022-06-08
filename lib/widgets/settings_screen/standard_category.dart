@@ -15,9 +15,14 @@ import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
-class StandardCategory extends StatelessWidget {
+class StandardCategory extends StatefulWidget {
   const StandardCategory({Key? key}) : super(key: key);
 
+  @override
+  State<StandardCategory> createState() => _StandardCategoryState();
+}
+
+class _StandardCategoryState extends State<StandardCategory> {
   @override
   Widget build(BuildContext context) {
     final AccountSettingsProvider accountSettingsProvider =
@@ -33,7 +38,7 @@ class StandardCategory extends StatelessWidget {
               providerKey: ProviderKey.settings,
               actionLipStatus: ActionLipStatus.onviewport,
               actionLipTitle: AppLocalizations.of(context)!.translate(
-                'action_lip/forgot-password/logged-out/label-title',
+                'action_lip/standard-category/income/label-title',
               ),
               actionLipBody: Column(
                 children: [
@@ -92,7 +97,7 @@ class StandardCategory extends StatelessWidget {
               providerKey: ProviderKey.settings,
               actionLipStatus: ActionLipStatus.onviewport,
               actionLipTitle: AppLocalizations.of(context)!.translate(
-                'action_lip/forgot-password/logged-out/label-title',
+                'action_lip/standard-category/expenses/label-title',
               ),
               actionLipBody: Column(
                 children: [
@@ -104,7 +109,8 @@ class StandardCategory extends StatelessWidget {
                     child: Column(
                       children: [
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.4,
+                          height: proportionateScreenHeightFraction(ScreenFraction.twofifths),
+                        
                           child: _expensesListViewBuilder(
                             accountSettingsProvider,
                           ),
@@ -140,8 +146,8 @@ class StandardCategory extends StatelessWidget {
       ],
     );
   }
-  //ListView.builder für Standard Kategorien
 
+  //ListView.builder für Standard Kategorien
   ListView _incomeListViewBuilder(
     AccountSettingsProvider accountSettingsProvider,
   ) {
