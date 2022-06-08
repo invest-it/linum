@@ -46,7 +46,7 @@ class _EnterScreenListViewBuilderState
   final lastDate = DateTime(DateTime.now().year + 5, 12);
 
   TextEditingController? nameController;
-  TextEditingController? descriptionController;
+  TextEditingController? noteController;
 
   @override
   void initState() {
@@ -58,9 +58,8 @@ class _EnterScreenListViewBuilderState
     if (nameController != null) {
       nameController!.dispose();
     }
-    super.dispose();
-    if (descriptionController != null) {
-      descriptionController!.dispose();
+    if (noteController != null) {
+      noteController!.dispose();
     }
     super.dispose();
   }
@@ -73,8 +72,7 @@ class _EnterScreenListViewBuilderState
     final EnterScreenProvider enterScreenProvider =
         Provider.of<EnterScreenProvider>(context);
     nameController ??= TextEditingController(text: enterScreenProvider.name);
-    descriptionController ??=
-        TextEditingController(text: enterScreenProvider.description);
+    noteController ??= TextEditingController(text: enterScreenProvider.note);
     return Expanded(
       child: SingleChildScrollView(
         child: Column(
@@ -191,7 +189,7 @@ class _EnterScreenListViewBuilderState
               child: TextField(
                 //scrollPadding: EdgeInsets.only(bottom: bottomInsets + 40),
                 textInputAction: TextInputAction.newline,
-                controller: descriptionController,
+                controller: noteController,
                 showCursor: true,
                 minLines: 1,
                 maxLines: 3,
@@ -200,8 +198,7 @@ class _EnterScreenListViewBuilderState
                 ),
                 style: Theme.of(context).textTheme.bodyText1,
                 onChanged: (_) {
-                  enterScreenProvider
-                      .setDescription(descriptionController!.text);
+                  enterScreenProvider.setNote(noteController!.text);
                 },
               ),
             ),
