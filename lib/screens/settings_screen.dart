@@ -21,7 +21,6 @@ import 'package:linum/widgets/settings_screen/standard_category.dart';
 import 'package:linum/widgets/settings_screen/version_number.dart';
 import 'package:provider/provider.dart';
 
-/// Page Index: 3
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({
     Key? key,
@@ -88,9 +87,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
             /// Version Number
             VersionNumber(),
-            const SizedBox(
-              height: 40,
-            ),
+            const SizedBox(height: 40),
           ],
         ),
       ),
