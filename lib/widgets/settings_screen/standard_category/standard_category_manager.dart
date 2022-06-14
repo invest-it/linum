@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:linum/widgets/settings_screen/standard_category/expenses_list_view.dart';
 import 'package:linum/widgets/settings_screen/standard_category/income_list_view.dart';
@@ -40,25 +39,9 @@ class _StandardCategoryState extends State<StandardCategory> {
               actionLipTitle: AppLocalizations.of(context)!.translate(
                 'action_lip/standard-category/income/label-title',
               ),
-              actionLipBody: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 12.0,
-                      horizontal: 24.0,
-                    ),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                            height: proportionateScreenHeightFraction(
-                              ScreenFraction.twofifths,
-                            ),
-                            child: IncomeListView(accountSettingsProvider,
-                                actionLipStatusProvider)),
-                      ],
-                    ),
-                  ),
-                ],
+              actionLipBody: IncomeListView(
+                accountSettingsProvider,
+                actionLipStatusProvider,
               ),
             );
           },
@@ -74,25 +57,9 @@ class _StandardCategoryState extends State<StandardCategory> {
               actionLipTitle: AppLocalizations.of(context)!.translate(
                 'action_lip/standard-category/expenses/label-title',
               ),
-              actionLipBody: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 12.0,
-                      horizontal: 24.0,
-                    ),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: proportionateScreenHeightFraction(
-                              ScreenFraction.twofifths),
-                          child: ExpensesListView(
-                              accountSettingsProvider, actionLipStatusProvider),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+              actionLipBody: ExpensesListView(
+                accountSettingsProvider,
+                actionLipStatusProvider,
               ),
             );
           },
