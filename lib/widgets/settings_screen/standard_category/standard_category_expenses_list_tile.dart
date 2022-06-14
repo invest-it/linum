@@ -2,7 +2,7 @@
 //
 //  Author: aronzimmermann
 //  Co-Author: SoTBurst, NightmindOfficial
-//  Refactored: TheBlueBaron
+//  Refactored: none
 
 import 'package:flutter/material.dart';
 import 'package:linum/providers/account_settings_provider.dart';

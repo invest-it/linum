@@ -1,3 +1,9 @@
+//  Settings Screen Income List View - the list view shown inside of the action lip
+//
+//  Author: aronzimmermann
+//  Co-Author: SoTBurst, NightmindOfficial
+//  Refactored: none
+
 import 'package:flutter/material.dart';
 
 import 'package:linum/constants/settings_enums.dart';
