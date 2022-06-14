@@ -2,7 +2,7 @@
 //
 //  Author: aronzimmermann
 //  Co-Author: SoTBurst, NightmindOfficial
-//  Refactored: none
+//  Refactored: TheBlueBaron (small)
 
 import 'package:flutter/material.dart';
 import 'package:linum/constants/settings_enums.dart';
