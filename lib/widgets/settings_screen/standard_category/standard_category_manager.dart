@@ -13,6 +13,8 @@ import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
+import 'package:linum/widgets/settings_screen/standard_category/expenses_list_view.dart';
+import 'package:linum/widgets/settings_screen/standard_category/income_list_view.dart';
 import 'package:linum/widgets/settings_screen/standard_category/standard_category_expenses_list_tile.dart';
 import 'package:linum/widgets/settings_screen/standard_category/standard_category_income_list_tile.dart';
 import 'package:provider/provider.dart';
@@ -51,14 +53,11 @@ class _StandardCategoryState extends State<StandardCategory> {
                     child: Column(
                       children: [
                         SizedBox(
-                          height: proportionateScreenHeightFraction(
-                            ScreenFraction.twofifths,
-                          ),
-                          child: _incomeListViewBuilder(
-                            accountSettingsProvider,
-                            actionLipStatusProvider,
-                          ),
-                        ),
+                            height: proportionateScreenHeightFraction(
+                              ScreenFraction.twofifths,
+                            ),
+                            child: IncomeListView(accountSettingsProvider,
+                                actionLipStatusProvider)),
                       ],
                     ),
                   ),
@@ -90,10 +89,8 @@ class _StandardCategoryState extends State<StandardCategory> {
                         SizedBox(
                           height: proportionateScreenHeightFraction(
                               ScreenFraction.twofifths),
-                          child: _expensesListViewBuilder(
-                            accountSettingsProvider,
-                            actionLipStatusProvider,
-                          ),
+                          child: ExpensesListView(
+                              accountSettingsProvider, actionLipStatusProvider),
                         ),
                       ],
                     ),
@@ -107,91 +104,6 @@ class _StandardCategoryState extends State<StandardCategory> {
           ),
         ),
       ],
-    );
-  }
-
-  //ListView.builder für Standard Kategorien
-  ListView _incomeListViewBuilder(
-    AccountSettingsProvider accountSettingsProvider,
-    ActionLipStatusProvider actionLipStatusProvider,
-  ) {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: StandardCategoryIncome.values.length,
-      itemBuilder: (BuildContext context, int indexBuilder) {
-        return ListTile(
-          leading: Icon(
-            standardCategoryIncomes[StandardCategoryIncome.values[indexBuilder]]
-                ?.icon,
-          ),
-          title: Text(
-            AppLocalizations.of(context)!.translate(
-              standardCategoryIncomes[
-                          StandardCategoryIncome.values[indexBuilder]]
-                      ?.label ??
-                  "Category",
-            ),
-          ),
-          selected:
-              "StandardCategoryIncome.${accountSettingsProvider.settings["StandardCategoryIncome"] as String? ?? "None"}" ==
-                  StandardCategoryIncome.values[indexBuilder].toString(),
-          onTap: () {
-            final List<String> stringArr = StandardCategoryIncome
-                .values[indexBuilder]
-                .toString()
-                .split(".");
-            accountSettingsProvider.updateSettings({
-              stringArr[0]: stringArr[1],
-            });
-            actionLipStatusProvider.setActionLipStatus(
-              providerKey: ProviderKey.settings,
-            );
-          },
-        );
-      },
-    );
-  }
-
-  ListView _expensesListViewBuilder(
-    AccountSettingsProvider accountSettingsProvider,
-    ActionLipStatusProvider actionLipStatusProvider,
-  ) {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: StandardCategoryExpense.values.length,
-      itemBuilder: (BuildContext context, int indexBuilder) {
-        return ListTile(
-          //leading: Icon(widget.categories[index].icon),
-          leading: Icon(
-            standardCategoryExpenses[
-                    StandardCategoryExpense.values[indexBuilder]]
-                ?.icon,
-          ),
-          title: Text(
-            AppLocalizations.of(context)!.translate(
-              standardCategoryExpenses[
-                          StandardCategoryExpense.values[indexBuilder]]
-                      ?.label ??
-                  "Category",
-            ),
-          ),
-          selected:
-              "StandardCategoryExpense.${accountSettingsProvider.settings["StandardCategoryExpense"] as String? ?? "None"}" ==
-                  StandardCategoryExpense.values[indexBuilder].toString(),
-          onTap: () {
-            final List<String> stringArr = StandardCategoryExpense
-                .values[indexBuilder]
-                .toString()
-                .split(".");
-            accountSettingsProvider.updateSettings({
-              stringArr[0]: stringArr[1],
-            });
-            actionLipStatusProvider.setActionLipStatus(
-              providerKey: ProviderKey.settings,
-            );
-          },
-        );
-      },
     );
   }
 }
