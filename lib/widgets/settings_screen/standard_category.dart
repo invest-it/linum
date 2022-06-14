@@ -33,7 +33,6 @@ class _StandardCategoryState extends State<StandardCategory> {
       children: [
         GestureDetector(
           onTap: () {
-            //Request from SoTBurst - this fix is related to issue #46
             actionLipStatusProvider.setActionLip(
               providerKey: ProviderKey.settings,
               actionLipStatus: ActionLipStatus.onviewport,
@@ -55,6 +54,7 @@ class _StandardCategoryState extends State<StandardCategory> {
                           ),
                           child: _incomeListViewBuilder(
                             accountSettingsProvider,
+                            actionLipStatusProvider,
                           ),
                         ),
                       ],
@@ -85,14 +85,8 @@ class _StandardCategoryState extends State<StandardCategory> {
             ),
           ),
         ),
-        //Ende Einnahmen ListTile
         GestureDetector(
           onTap: () {
-            //Request from SoTBurst - this fix is related to issue #46
-            actionLipStatusProvider.setActionLipStatus(
-              providerKey: ProviderKey.settings,
-            );
-
             actionLipStatusProvider.setActionLip(
               providerKey: ProviderKey.settings,
               actionLipStatus: ActionLipStatus.onviewport,
@@ -109,10 +103,11 @@ class _StandardCategoryState extends State<StandardCategory> {
                     child: Column(
                       children: [
                         SizedBox(
-                          height: proportionateScreenHeightFraction(ScreenFraction.twofifths),
-                        
+                          height: proportionateScreenHeightFraction(
+                              ScreenFraction.twofifths),
                           child: _expensesListViewBuilder(
                             accountSettingsProvider,
+                            actionLipStatusProvider,
                           ),
                         ),
                       ],
@@ -150,13 +145,17 @@ class _StandardCategoryState extends State<StandardCategory> {
   //ListView.builder für Standard Kategorien
   ListView _incomeListViewBuilder(
     AccountSettingsProvider accountSettingsProvider,
+    ActionLipStatusProvider actionLipStatusProvider,
   ) {
     return ListView.builder(
       shrinkWrap: true,
       itemCount: StandardCategoryIncome.values.length,
       itemBuilder: (BuildContext context, int indexBuilder) {
         return ListTile(
-          //leading: Icon(widget.categories[index].icon),
+          leading: Icon(
+            standardCategoryIncomes[StandardCategoryIncome.values[indexBuilder]]
+                ?.icon,
+          ),
           title: Text(
             AppLocalizations.of(context)!.translate(
               standardCategoryIncomes[
@@ -176,7 +175,9 @@ class _StandardCategoryState extends State<StandardCategory> {
             accountSettingsProvider.updateSettings({
               stringArr[0]: stringArr[1],
             });
-            Navigator.pop(context);
+            actionLipStatusProvider.setActionLipStatus(
+              providerKey: ProviderKey.settings,
+            );
           },
         );
       },
@@ -185,6 +186,7 @@ class _StandardCategoryState extends State<StandardCategory> {
 
   ListView _expensesListViewBuilder(
     AccountSettingsProvider accountSettingsProvider,
+    ActionLipStatusProvider actionLipStatusProvider,
   ) {
     return ListView.builder(
       shrinkWrap: true,
@@ -192,6 +194,11 @@ class _StandardCategoryState extends State<StandardCategory> {
       itemBuilder: (BuildContext context, int indexBuilder) {
         return ListTile(
           //leading: Icon(widget.categories[index].icon),
+          leading: Icon(
+            standardCategoryExpenses[
+                    StandardCategoryExpense.values[indexBuilder]]
+                ?.icon,
+          ),
           title: Text(
             AppLocalizations.of(context)!.translate(
               standardCategoryExpenses[
@@ -211,71 +218,12 @@ class _StandardCategoryState extends State<StandardCategory> {
             accountSettingsProvider.updateSettings({
               stringArr[0]: stringArr[1],
             });
-            Navigator.pop(context);
+            actionLipStatusProvider.setActionLipStatus(
+              providerKey: ProviderKey.settings,
+            );
           },
         );
       },
     );
   }
 }
-
-
-//income ModalBottomSheet
-            /*showModalBottomSheet(
-              context: context,
-              builder: (context) {
-                return Container(
-                  height: proportionateScreenHeightFraction(
-                    ScreenFraction.half,
-                  ),
-                  color: Theme.of(context).colorScheme.onSecondary,
-                  child: Column(
-                    children: [
-                      ListTile(
-                        title: Text(
-                          AppLocalizations.of(context)!.translate(
-                            'settings_screen/standard-income-selector/label-title',
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: proportionateScreenHeightFraction(
-                          ScreenFraction.twofifths,
-                        ),
-                        child: _incomeListViewBuilder(
-                          accountSettingsProvider,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            );*/
-
-//expense ModalBottomSheet
- /*showModalBottomSheet(
-              context: context,
-              builder: (context) {
-                return Container(
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  color: const Color(0xFFFAFAFA),
-                  child: Column(
-                    children: [
-                      ListTile(
-                        title: Text(
-                          AppLocalizations.of(context)!.translate(
-                            'settings_screen/standard-expense-selector/label-title',
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.4,
-                        child: _expensesListViewBuilder(
-                          accountSettingsProvider,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            );*/
