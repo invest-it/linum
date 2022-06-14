@@ -2,7 +2,7 @@
 //
 //  Author: aronzimmermann
 //  Co-Author: SoTBurst, NightmindOfficial
-//  Refactored: none
+//  Refactored: TheBlueBaron
 
 import 'package:flutter/material.dart';
 import 'package:linum/constants/settings_enums.dart';
@@ -13,6 +13,8 @@ import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
+import 'package:linum/widgets/settings_screen/standard_category/standard_category_expenses_list_tile.dart';
+import 'package:linum/widgets/settings_screen/standard_category/standard_category_income_list_tile.dart';
 import 'package:provider/provider.dart';
 
 class StandardCategory extends StatefulWidget {
@@ -64,25 +66,8 @@ class _StandardCategoryState extends State<StandardCategory> {
               ),
             );
           },
-          child: ListTile(
-            title: Text(
-              AppLocalizations.of(context)!.translate(
-                    'settings_screen/standard-income-selector/label-title',
-                  ) +
-                  AppLocalizations.of(context)!.translate(
-                    accountSettingsProvider.getIncomeEntryCategory()?.label ??
-                        "ChosenStandardIncome", // TODO: Does this make sense?
-                  ), // yeah im sorry that is really complicated code. :( It translates the value from firebase
-              style: Theme.of(context).textTheme.bodyText1,
-            ),
-            trailing: const Icon(
-              Icons.north_east,
-              color: Color(0xFF97BC4E),
-            ),
-            leading: Icon(
-              accountSettingsProvider.getIncomeEntryCategory()?.icon ??
-                  Icons.error,
-            ),
+          child: StandardCategoryIncomeListTile(
+            accountSettingsProvider: accountSettingsProvider,
           ),
         ),
         GestureDetector(
@@ -117,25 +102,8 @@ class _StandardCategoryState extends State<StandardCategory> {
               ),
             );
           },
-          child: ListTile(
-            title: Text(
-              AppLocalizations.of(context)!.translate(
-                    'settings_screen/standard-expense-selector/label-title',
-                  ) +
-                  AppLocalizations.of(context)!.translate(
-                    accountSettingsProvider.getExpenseEntryCategory()?.label ??
-                        "ChosenStandardExpense",
-                  ), // yeah im sorry that is really complicated code. :( It translates the value from firebase
-              style: Theme.of(context).textTheme.bodyText1,
-            ),
-            trailing: const Icon(
-              Icons.south_east,
-              color: Colors.red,
-            ),
-            leading: Icon(
-              accountSettingsProvider.getExpenseEntryCategory()?.icon ??
-                  Icons.error,
-            ),
+          child: StandardCategoryExpensesListTile(
+            accountSettingsProvider: accountSettingsProvider,
           ),
         ),
       ],

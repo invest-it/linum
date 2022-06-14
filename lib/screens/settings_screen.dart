@@ -17,7 +17,7 @@ import 'package:linum/widgets/list_header.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:linum/widgets/settings_screen/language_selector.dart';
 import 'package:linum/widgets/settings_screen/pin_switch.dart';
-import 'package:linum/widgets/settings_screen/standard_category.dart';
+import 'package:linum/widgets/settings_screen/standard_category/standard_category_manager.dart';
 import 'package:linum/widgets/settings_screen/version_number.dart';
 import 'package:provider/provider.dart';
 
