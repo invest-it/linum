@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/loading_scaffold.dart';
 import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/navigation/main_routes_extensions.dart';
+import 'package:linum/navigation/main_transition_delegate.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
@@ -78,10 +79,12 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
   }
 
   Navigator buildNavigator(BuildContext context) {
+    final transitionDelegate = MainTransitionDelegate();
     return Navigator(
       key: navigatorKey,
       // Add TransitionDelegate here
       pages: buildPageStack(context),
+      transitionDelegate: transitionDelegate,
       onPopPage: _onPopPage,
     );
   }
