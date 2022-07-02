@@ -8,15 +8,17 @@
 
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
+import 'package:linum/navigation/enter_screen_page.dart';
+import 'package:linum/navigation/main_router_delegate.dart';
+import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
-import 'package:linum/providers/enter_screen_provider.dart';
-import 'package:linum/screens/enter_screen.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/delete_entry_popup.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
@@ -76,25 +78,27 @@ class HomeScreenListView implements BalanceDataListView {
     required BuildContext context,
     bool error = false,
   }) {
+
+    _listview = ListView(
+        padding: const EdgeInsets.only(
+          bottom: 32.0,
+        ),
+        children: buildList(context, balanceDataList),
+    );
+  }
+
+  List<Widget> buildList(BuildContext context, List<dynamic> balanceDataList) {
     initializeDateFormatting();
 
     final String langCode = AppLocalizations.of(context)!.locale.languageCode;
-
-    final DateFormat formatter = DateFormat('EEEE, dd. MMMM yyyy', langCode);
-
     final DateFormat monthFormatter = DateFormat('MMMM', langCode);
     final DateFormat monthAndYearFormatter = DateFormat('MMMM yyyy', langCode);
-    final BalanceDataProvider balanceDataProvider =
-        Provider.of<BalanceDataProvider>(context);
 
-    final AccountSettingsProvider accountSettingsProvider =
-        Provider.of<AccountSettingsProvider>(context);
 
     // remember last used index in the list
     int currentIndex = 0;
     DateTime? currentTime;
 
-    //log(balanceData.toString());
     final List<Widget> list = [];
     if (error) {
       // TODO: tell user there was an error loading @damattl
@@ -114,27 +118,18 @@ class HomeScreenListView implements BalanceDataListView {
         currentTime ??= DateTime(date.year, date.month + 2);
         if (isFutureItem) {
           if (date.isBefore(currentTime)) {
-            if (list.isEmpty &&
-                DateTime(date.year, date.month) ==
-                    DateTime(
-                      DateTime.now().year,
-                      DateTime.now().month,
-                    )) {
-              list.add(
-                const TimeWidget(
-                  displayValue: "listview/label-future",
-                ),
-              );
-            } else {
-              list.add(
-                TimeWidget(
-                  displayValue: date.year == DateTime.now().year
-                      ? monthFormatter.format(date)
-                      : monthAndYearFormatter.format(date),
-                  isTranslated: true,
-                ),
+            var timeWidget = const TimeWidget(
+              displayValue: "listview/label-future",
+            );
+            if (!(list.isEmpty && isCurrentMonth(date))) {
+              timeWidget = TimeWidget(
+                displayValue: date.year == DateTime.now().year
+                    ? monthFormatter.format(date)
+                    : monthAndYearFormatter.format(date),
+                isTranslated: true,
               );
             }
+            list.add(timeWidget);
             currentTime = DateTime(date.year, date.month);
           }
         } else if (currentIndex < _timeWidgets.length &&
@@ -157,91 +152,84 @@ class HomeScreenListView implements BalanceDataListView {
         if (date.isBefore(DateTime.now()) &&
             (list.isEmpty || list.last.runtimeType != TimeWidget) &&
             date.isBefore(currentTime)) {
-          list.add(
-            TimeWidget(
-              displayValue: date.year == DateTime.now().year
-                  ? monthFormatter.format(date)
-                  : monthAndYearFormatter.format(date),
-              isTranslated: true,
-            ),
+
+          final timeWidget = TimeWidget(
+            displayValue: date.year == DateTime.now().year
+                ? monthFormatter.format(date)
+                : monthAndYearFormatter.format(date),
+            isTranslated: true,
           );
+
+          list.add(timeWidget);
           currentTime = DateTime(date.year, date.month - 1);
 
           currentIndex = 4; // idk why exactly but now we are save
         }
 
-        list.add(
-          GestureDetector(
-            onTap: () {
-              final BalanceDataProvider balanceDataProvider =
-                  Provider.of<BalanceDataProvider>(context, listen: false);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (innerContext) {
-                    return MultiProvider(
-                      providers: [
-                        ChangeNotifierProvider<EnterScreenProvider>(
-                          create: (_) {
-                            return EnterScreenProvider(
-                              id: singleBalanceData.id,
-                              amount: singleBalanceData.amount,
-                              category: singleBalanceData.category,
-                              name: singleBalanceData.name,
-                              selectedDate: (singleBalanceData.time).toDate(),
-                              editMode: true,
-                              repeatId: singleBalanceData.repeatId,
-                              formerTime: singleBalanceData.formerTime ??
-                                  singleBalanceData.time,
-                            );
-                          },
-                        ),
-                        ChangeNotifierProvider<BalanceDataProvider>(
-                          create: (_) {
-                            return balanceDataProvider..dontDisposeOneTime();
-                          },
-                        ),
-                        ChangeNotifierProvider<AccountSettingsProvider>(
-                          create: (_) {
-                            return accountSettingsProvider
-                              ..dontDisposeOneTime();
-                          },
-                        ),
-                      ],
-                      child: const EnterScreen(),
-                    );
-                  },
-                ),
+        list.add(buildGestureDetector(context, balanceData, isFutureItem: isFutureItem));
+      }
+    }
+    return list;
+  }
+
+  GestureDetector buildGestureDetector(
+      BuildContext context,
+      dynamic balanceData,
+      {bool isFutureItem = false, }
+      ) {
+    final BalanceDataProvider balanceDataProvider = Provider.of<BalanceDataProvider>(context);
+    final String langCode = AppLocalizations.of(context)!.locale.languageCode;
+    final DateFormat formatter = DateFormat('EEEE, dd. MMMM yyyy', langCode);
+
+    return GestureDetector(
+      onTap: () {
+        Get.find<MainRouterDelegate>().pushRoute(
+            MainRoute.enterScreen,
+            settings: EnterScreenPageSettings.withBalanceData(balanceData),
+        );
+        /* Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (innerContext) {
+              final enterScreenProvider = ChangeNotifierProvider<EnterScreenProvider>(
+                create: (_) {
+                  return EnterScreenProvider.fromBalanceData(balanceData);
+                },
               );
+              return MultiProviderBuilder(context: context, child: const EnterScreen())
+                  .addProvider(enterScreenProvider)
+                  .useExistingProvider<AccountSettingsProvider>()
+                  .useExistingProvider<BalanceDataProvider>()
+                  .build();
             },
-            //print(arrayElement["amount"].toString()),
-            child: Dismissible(
-              background: Container(
-                color: Colors.red,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.center,
+          ),
+        );*/
+      },
+      //print(arrayElement["amount"].toString()),
+      child: Dismissible(
+        background: Container(
+          color: Colors.red,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 30),
+                child: Wrap(
+                  alignment: WrapAlignment.center,
+                  spacing: 16.0,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 30),
-                      child: Wrap(
-                        alignment: WrapAlignment.center,
-                        spacing: 16.0,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.translate(
-                              "listview/dismissible/label-delete",
-                            ),
-                            style: Theme.of(context).textTheme.button,
-                          ),
-                          Icon(
-                            Icons.delete,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .secondaryContainer,
-                          ),
-                        ],
+                    Text(
+                      AppLocalizations.of(context)!.translate(
+                        "listview/dismissible/label-delete",
                       ),
+                      style: Theme.of(context).textTheme.button,
+                    ),
+                    Icon(
+                      Icons.delete,
+                      color: Theme.of(context)
+                          .colorScheme
+                          .secondaryContainer,
                     ),
                   ],
                 ),
@@ -389,8 +377,11 @@ class HomeScreenListView implements BalanceDataListView {
       padding: const EdgeInsets.only(
         bottom: 32.0,
       ),
-      children: list,
     );
+  }
+
+  bool isCurrentMonth(DateTime date) {
+    return DateTime(date.year, date.month) == DateTime(DateTime.now().year, DateTime.now().month);
   }
 
   String translateCategory(
@@ -400,11 +391,11 @@ class HomeScreenListView implements BalanceDataListView {
   }) {
     if (isExpense) {
       return AppLocalizations.of(context)!.translate(
-        standardCategoryExpenses[category]?.label ?? "",
+        standardExpenseCategories[category]?.label ?? "",
       ); // TODO @Nightmind you could add a String here that will show something like "error translating your category"
     } else if (!isExpense) {
       return AppLocalizations.of(context)!.translate(
-        standardCategoryIncomes[category]?.label ?? "",
+        standardIncomeCategories[category]?.label ?? "",
       ); // TODO @Nightmind you could add a String here that will show something like "error translating your category"
     }
     return "Error"; // This should never happen.

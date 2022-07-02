@@ -9,7 +9,7 @@ import 'dart:math' as math;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/utilities/backend/statistic_calculations.dart';
-import 'package:linum/utilities/frontend/filter_functions.dart';
+import 'package:linum/utilities/frontend/filters.dart';
 
 void main() {
   group("basic_statistic_calculation", () {
@@ -62,8 +62,8 @@ void main() {
               StatisticsCalculations(
             [],
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 0;
@@ -81,8 +81,8 @@ void main() {
               StatisticsCalculations(
             exampleData1,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 81;
@@ -100,8 +100,8 @@ void main() {
               StatisticsCalculations(
             exampleData2,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedSum = -5.5;
@@ -119,8 +119,8 @@ void main() {
               StatisticsCalculations(
             exampleData3,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 44;
@@ -138,8 +138,8 @@ void main() {
               StatisticsCalculations(
             exampleData4,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 0;
@@ -157,8 +157,8 @@ void main() {
               StatisticsCalculations(
             exampleData5,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 0;
@@ -180,8 +180,8 @@ void main() {
                 StatisticsCalculations(
               randomData,
               AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  noFilter,
+                ..setCurrentFilterAlgorithm(
+                  Filters.noFilter,
                 ),
             );
             num expectedSum = 0;
@@ -205,8 +205,8 @@ void main() {
               StatisticsCalculations(
             [],
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 0;
@@ -224,8 +224,8 @@ void main() {
               StatisticsCalculations(
             exampleData1,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 20.25;
@@ -243,8 +243,8 @@ void main() {
               StatisticsCalculations(
             exampleData2,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = -1.375;
@@ -262,8 +262,8 @@ void main() {
               StatisticsCalculations(
             exampleData3,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 5.5;
@@ -281,8 +281,8 @@ void main() {
               StatisticsCalculations(
             exampleData4,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 0;
@@ -300,8 +300,8 @@ void main() {
               StatisticsCalculations(
             exampleData5,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 0;
@@ -323,8 +323,8 @@ void main() {
                 StatisticsCalculations(
               randomData,
               AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  noFilter,
+                ..setCurrentFilterAlgorithm(
+                  Filters.noFilter,
                 ),
             );
             num expectedAverage = 0;
@@ -351,8 +351,8 @@ void main() {
               StatisticsCalculations(
             [],
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 0;
@@ -370,8 +370,8 @@ void main() {
               StatisticsCalculations(
             exampleData1,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 81;
@@ -389,8 +389,8 @@ void main() {
               StatisticsCalculations(
             exampleData2,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 0;
@@ -408,8 +408,8 @@ void main() {
               StatisticsCalculations(
             exampleData3,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 49.5;
@@ -427,8 +427,8 @@ void main() {
               StatisticsCalculations(
             exampleData4,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 49.5;
@@ -446,8 +446,8 @@ void main() {
               StatisticsCalculations(
             exampleData5,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 0;
@@ -469,8 +469,8 @@ void main() {
                 StatisticsCalculations(
               randomData,
               AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  noFilter,
+                ..setCurrentFilterAlgorithm(
+                  Filters.noFilter,
                 ),
             );
             num expectedSum = 0;
@@ -495,8 +495,8 @@ void main() {
               StatisticsCalculations(
             [],
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 0;
@@ -514,8 +514,8 @@ void main() {
               StatisticsCalculations(
             exampleData1,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 20.25;
@@ -533,8 +533,8 @@ void main() {
               StatisticsCalculations(
             exampleData2,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 0;
@@ -552,8 +552,8 @@ void main() {
               StatisticsCalculations(
             exampleData3,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 12.375;
@@ -571,8 +571,8 @@ void main() {
               StatisticsCalculations(
             exampleData4,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 12.375;
@@ -590,8 +590,8 @@ void main() {
               StatisticsCalculations(
             exampleData5,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 0;
@@ -613,8 +613,8 @@ void main() {
                 StatisticsCalculations(
               randomData,
               AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  noFilter,
+                ..setCurrentFilterAlgorithm(
+                  Filters.noFilter,
                 ),
             );
             num expectedAverage = 0;
@@ -647,8 +647,8 @@ void main() {
               StatisticsCalculations(
             [],
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 0;
@@ -666,8 +666,8 @@ void main() {
               StatisticsCalculations(
             exampleData1,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 0;
@@ -685,8 +685,8 @@ void main() {
               StatisticsCalculations(
             exampleData2,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedSum = -5.5;
@@ -704,8 +704,8 @@ void main() {
               StatisticsCalculations(
             exampleData3,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedSum = -5.5;
@@ -723,8 +723,8 @@ void main() {
               StatisticsCalculations(
             exampleData4,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedSum = -49.5;
@@ -742,8 +742,8 @@ void main() {
               StatisticsCalculations(
             exampleData5,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedSum = 0;
@@ -765,8 +765,8 @@ void main() {
                 StatisticsCalculations(
               randomData,
               AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  noFilter,
+                ..setCurrentFilterAlgorithm(
+                  Filters.noFilter,
                 ),
             );
             num expectedSum = 0;
@@ -792,8 +792,8 @@ void main() {
               StatisticsCalculations(
             [],
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 0;
@@ -811,8 +811,8 @@ void main() {
               StatisticsCalculations(
             exampleData1,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 0;
@@ -830,8 +830,8 @@ void main() {
               StatisticsCalculations(
             exampleData2,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = -1.375;
@@ -849,8 +849,8 @@ void main() {
               StatisticsCalculations(
             exampleData3,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = -1.375;
@@ -868,8 +868,8 @@ void main() {
               StatisticsCalculations(
             exampleData4,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = -8.25;
@@ -887,8 +887,8 @@ void main() {
               StatisticsCalculations(
             exampleData5,
             AlgorithmProvider()
-              ..setCurrentFilterAlgorithmSilently(
-                noFilter,
+              ..setCurrentFilterAlgorithm(
+                Filters.noFilter,
               ),
           );
           const num expectedAverage = 0;
@@ -910,8 +910,8 @@ void main() {
                 StatisticsCalculations(
               randomData,
               AlgorithmProvider()
-                ..setCurrentFilterAlgorithmSilently(
-                  noFilter,
+                ..setCurrentFilterAlgorithm(
+                  Filters.noFilter,
                 ),
             );
             num expectedAverage = 0;

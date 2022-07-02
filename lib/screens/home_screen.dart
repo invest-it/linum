@@ -4,11 +4,17 @@
 //  Co-Author: damattl
 /// PAGE INDEX 0
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:linum/navigation/main_router_delegate.dart';
+import 'package:linum/navigation/main_routes.dart';
+import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
-import 'package:linum/providers/screen_index_provider.dart';
+import 'package:linum/utilities/backend/in_between_timestamps.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
+import 'package:linum/utilities/frontend/filters.dart';
 import 'package:linum/utilities/frontend/silent_scroll.dart';
 import 'package:linum/widgets/home_screen/home_screen_listview.dart';
 import 'package:linum/widgets/screen_skeleton/app_bar_action.dart';
@@ -24,17 +30,29 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  void resetAlgorithmProvider() {
+    final AlgorithmProvider algorithmProvider =
+    Provider.of<AlgorithmProvider>(context);
+
+    if (algorithmProvider.currentFilter == Filters.noFilter) {
+      algorithmProvider.resetCurrentShownMonth();
+      algorithmProvider.setCurrentFilterAlgorithm(
+        Filters.inBetween(timestampsFromNow()),
+      );
+    }
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
-    final ScreenIndexProvider screenIndexProvider =
-        Provider.of<ScreenIndexProvider>(context);
-
     final BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
 
     final PinCodeProvider pinCodeProvider =
         Provider.of<PinCodeProvider>(context);
 
+    resetAlgorithmProvider();
     // AlgorithmProvider algorithmProvider =
     //     Provider.of<AlgorithmProvider>(context, listen: false);
 
@@ -50,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
       hasHomeScreenCard: true,
       leadingAction: AppBarAction.fromPreset(DefaultAction.academy),
       actions: [
-        if (pinCodeProvider.pinActive)
+        if (pinCodeProvider.pinSet)
           (BuildContext context) => AppBarAction.fromParameters(
                 icon: Icons.lock_rounded,
                 ontap: () {
@@ -80,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     TextButton(
                       onPressed: () {
-                        screenIndexProvider.setPageIndex(1);
+                        Get.find<MainRouterDelegate>().replaceLastRoute(MainRoute.budget);
                       },
                       child: Text(
                         AppLocalizations.of(context)!

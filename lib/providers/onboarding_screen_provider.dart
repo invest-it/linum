@@ -39,6 +39,7 @@ class OnboardingScreenProvider extends ChangeNotifier {
     _mailInput = "";
     return _tempMail;
   }
+
 }
 
 enum OnboardingPageState {

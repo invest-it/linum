@@ -7,8 +7,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:linum/providers/screen_index_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
+import 'package:linum/navigation/main_router_delegate.dart';
+import 'package:linum/navigation/main_routes.dart';
 
 abstract class AppBarAction {
   static final Map<DefaultAction, Widget Function(BuildContext)>
@@ -26,25 +27,20 @@ abstract class AppBarAction {
       );
     },
     DefaultAction.academy: (BuildContext context) {
-      final ScreenIndexProvider screenIndexProvider =
-          Provider.of<ScreenIndexProvider>(context);
       return AppBarAction.fromParameters(
         icon: Icons.video_library_rounded,
-        ontap: () {
-          screenIndexProvider.setPageIndex(4);
-        },
+        ontap: () => Get.find<MainRouterDelegate>()
+            .pushRoute(MainRoute.academy), // TODO: Find out why app closes on back-navigation
       );
     },
     DefaultAction.settings: (BuildContext context) {
-      final ScreenIndexProvider screenIndexProvider =
-          Provider.of<ScreenIndexProvider>(context);
       return AppBarAction.fromParameters(
         icon: Icons.settings_rounded,
-        ontap: () {
-          screenIndexProvider.setPageIndex(3);
-        },
+        ontap: () => Get.find<MainRouterDelegate>()
+            .replaceLastRoute(MainRoute.settings),
       );
     },
+    // TODO: Are these guys even used?
     DefaultAction.back: (BuildContext context) => const BackButton(),
     DefaultAction.close: (BuildContext context) => const CloseButton(),
   };
