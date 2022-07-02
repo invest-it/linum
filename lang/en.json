@@ -8,6 +8,8 @@
     "action_lip/forgot-password/logged-out/button-submit": "Request code",
     "action_lip/forgot-password/logged-out/label-description": "Please enter your email address connected to your Linum account. We will send you a verification code along with instructions on how to reset your password.",
     "action_lip/forgot-password/logged-out/label-title": "Reset Password",
+    "action_lip/standard-category/income/label-title": "Income",
+    "action_lip/standard-category/expenses/label-title": "Expenses",
     "alertdialog/error/action-standard": "Okay",
     "alertdialog/error/message-standard": "An unknown error occurred.",
     "alertdialog/error/title-standard": "Error",

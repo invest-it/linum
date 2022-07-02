@@ -8,6 +8,8 @@
     "action_lip/forgot-password/logged-out/button-submit": "Envoyer la demande",
     "action_lip/forgot-password/logged-out/label-description": "Veuillez saisir votre adresse e-mail connectée à votre compte Linum. Nous vous enverrons un code de vérification ainsi que des instructions sur la façon de réinitialiser votre mot de passe.",
     "action_lip/forgot-password/logged-out/label-title": "Réinitialiser le mot de passe",
+    "action_lip/standard-category/income/label-title": "Recettes",
+    "action_lip/standard-category/expenses/label-title": "Dépenses",
     "alertdialog/error/action-standard": "Okay",
     "alertdialog/error/message-standard": "Une erreur inconnue est survenue.",
     "alertdialog/error/title-standard": "Erreur",

@@ -8,6 +8,8 @@
     "action_lip/forgot-password/logged-out/button-submit": "Aanvraag code",
     "action_lip/forgot-password/logged-out/label-description": "Voer uw e-mailadres in dat aan uw Linum-account is gekoppeld. Wij zullen u een verificatiecode sturen, samen met instructies over hoe u uw wachtwoord kunt resetten.",
     "action_lip/forgot-password/logged-out/label-title": "Reset Wachtwoord",
+    "action_lip/standard-category/income/label-title": "Inkomsten",
+    "action_lip/standard-category/expenses/label-title": "Uitgaven",
     "alertdialog/error/action-standard": "Okay",
     "alertdialog/error/message-standard": "Er is een onbekende fout opgetreden.",
     "alertdialog/error/title-standard": "Fout",
