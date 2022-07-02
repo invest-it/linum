@@ -27,15 +27,15 @@ class PinSwitch extends StatelessWidget {
                 .translate("settings_screen/pin-lock/switch-label"),
             style: Theme.of(context).textTheme.bodyText1,
           ),
-          value: pinCodeProvider.pinActive,
+          value: pinCodeProvider.pinSet,
           activeColor: Theme.of(context).colorScheme.primaryContainer,
-          onChanged: pinCodeProvider.pinActiveStillLoading
+          onChanged: pinCodeProvider.pinSetStillLoading
               ? null
               : (_) {
                   pinCodeProvider.togglePINLock();
                 },
         ),
-        if (pinCodeProvider.pinActive)
+        if (pinCodeProvider.pinSet)
           ListTile(
             key: const Key("pinChangeSwitch"),
             dense: true,

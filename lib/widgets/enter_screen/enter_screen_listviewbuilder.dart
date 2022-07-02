@@ -68,9 +68,9 @@ class _EnterScreenListViewBuilderState
   Widget build(BuildContext context) {
     final AccountSettingsProvider accountSettingsProvider =
         Provider.of<AccountSettingsProvider>(context);
-
     final EnterScreenProvider enterScreenProvider =
         Provider.of<EnterScreenProvider>(context);
+
     nameController ??= TextEditingController(text: enterScreenProvider.name);
     noteController ??= TextEditingController(text: enterScreenProvider.note);
     return Expanded(

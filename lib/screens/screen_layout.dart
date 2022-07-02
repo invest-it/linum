@@ -103,7 +103,7 @@ class _ScreenLayoutState extends State<ScreenLayout>
           );
 
           Get.find<MainRouterDelegate>().pushRoute(
-              MainRoute.enterScreen,
+              MainRoute.enter,
               settings: enterScreenSettings,
           );
 

@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/screens/enter_screen.dart';
 import 'package:provider/provider.dart';
 
 class EnterScreenPageSettings {
   final bool isFromBalanceData;
-  final dynamic balanceData;
+  final SingleBalanceData? singleBalanceData;
   final String? category;
   final String? secondaryCategory;
 
   EnterScreenPageSettings._(
-      {this.balanceData, this.category, this.secondaryCategory, this.isFromBalanceData = false,});
+      {this.singleBalanceData, this.category, this.secondaryCategory, this.isFromBalanceData = false,});
 
-  factory EnterScreenPageSettings.withBalanceData(dynamic balanceData) {
-    return EnterScreenPageSettings._(balanceData: balanceData, isFromBalanceData: true);
+  factory EnterScreenPageSettings.withBalanceData(SingleBalanceData singleBalanceData) {
+    return EnterScreenPageSettings._(singleBalanceData: singleBalanceData, isFromBalanceData: true);
   }
   factory EnterScreenPageSettings.withCategories(
       {String? category, String? secondaryCategory,}) {
@@ -30,7 +31,7 @@ class EnterScreenPage extends Page {
     final enterScreenProvider = ChangeNotifierProvider<EnterScreenProvider>(
       create: (_) {
         if (settings.isFromBalanceData) {
-          return EnterScreenProvider.fromBalanceData(settings.balanceData);
+          return EnterScreenProvider.fromBalanceData(settings.singleBalanceData!);
         } else {
           return EnterScreenProvider(
             category: settings.category ??

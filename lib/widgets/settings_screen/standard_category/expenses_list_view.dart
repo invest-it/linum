@@ -7,6 +7,7 @@
 import 'package:flutter/material.dart';
 import 'package:linum/constants/settings_enums.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
+import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
@@ -41,13 +42,13 @@ class ExpensesListView extends StatelessWidget {
                     return ListTile(
                       //leading: Icon(widget.categories[index].icon),
                       leading: Icon(
-                        standardCategoryExpenses[
+                        standardExpenseCategories[
                                 StandardCategoryExpense.values[indexBuilder]]
                             ?.icon,
                       ),
                       title: Text(
                         AppLocalizations.of(context)!.translate(
-                          standardCategoryExpenses[StandardCategoryExpense
+                          standardExpenseCategories[StandardCategoryExpense
                                       .values[indexBuilder]]
                                   ?.label ??
                               "Category",

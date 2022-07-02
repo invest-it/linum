@@ -18,7 +18,7 @@ enum MainRoute {
   settings,
   academy,
   lock,
-  enterScreen,
+  enter
 }
 
 
@@ -77,7 +77,7 @@ final mainRoutes = Map<MainRoute, RouteConfiguration>.of({
       );
     },
   ),
-  MainRoute.enterScreen: RouteConfiguration(
+  MainRoute.enter: RouteConfiguration(
     path: "/enterScreen",
     builder: <T>(settings) {
       // TODO THROW ERROR IF NO SETTINGS PROVIDED
