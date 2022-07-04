@@ -75,6 +75,7 @@ class HomeScreenCardFront extends StatelessWidget {
           children: [
             IconButton(
               onPressed: () {
+
                 goBackInTime(algorithmProvider);
               },
               icon: const Icon(Icons.arrow_back_ios_new_rounded),

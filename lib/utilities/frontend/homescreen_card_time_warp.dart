@@ -8,15 +8,15 @@ import 'package:linum/providers/algorithm_provider.dart';
 
 void goBackInTime(AlgorithmProvider algorithmProvider) {
   // Right Swipe, going back in time
-  algorithmProvider.previousMonth();
+  algorithmProvider.previousMonth(notify: true);
 }
 
 void goForwardInTime(AlgorithmProvider algorithmProvider) {
   //Left Swipe, going forward in time
-  algorithmProvider.nextMonth();
+  algorithmProvider.nextMonth(notify: true);
 }
 
 void goToCurrentTime(AlgorithmProvider algorithmProvider) {
   // Reset to current month
-  algorithmProvider.resetCurrentShownMonth();
+  algorithmProvider.resetCurrentShownMonth(notify: true);
 }

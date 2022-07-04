@@ -8,6 +8,8 @@
     "action_lip/forgot-password/logged-out/button-submit": "Solicitar código",
     "action_lip/forgot-password/logged-out/label-description": "Por favor, introduzca su dirección de correo electrónico conectada a su cuenta de Linum. Le enviaremos un código de verificación junto con las instrucciones para restablecer su contraseña.",
     "action_lip/forgot-password/logged-out/label-title": "Restablecer contraseña",
+    "action_lip/standard-category/income/label-title": "Ingresos",
+    "action_lip/standard-category/expenses/label-title": "Gastos",
     "alertdialog/error/action-standard": "Okay",
     "alertdialog/error/message-standard": "Se ha producido un error desconocido.",
     "alertdialog/error/title-standard": "Error",

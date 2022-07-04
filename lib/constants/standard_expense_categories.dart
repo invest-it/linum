@@ -12,8 +12,7 @@ import 'package:linum/types/category_map.dart';
 /// List of Categories the User can declare as a Standard when tracking an EXPENSE.
 /// e.g. Söncke usually incurs expenses for WATER, therefore he can choose FOOD
 /// as his Standard Category for Expenses so he does not have to choose FOOD as a category when adding as an expense.
-// TODO: RENAME? => StandardExpenseCategories
-final CategoryMap<StandardCategoryExpense> standardCategoryExpenses =
+final CategoryMap<StandardCategoryExpense> standardExpenseCategories =
     CategoryMap.fromMap({
   StandardCategoryExpense.none: const EntryCategory(
     label: 'settings_screen/standards-selector-none',

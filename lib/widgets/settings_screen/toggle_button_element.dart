@@ -2,7 +2,7 @@
 //
 //  Author: NightmindOfficial
 //  Co-Author: SoTBurst
-//
+//  Refactored: none
 
 import 'package:flutter/material.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';

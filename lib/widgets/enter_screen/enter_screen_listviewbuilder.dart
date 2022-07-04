@@ -68,9 +68,9 @@ class _EnterScreenListViewBuilderState
   Widget build(BuildContext context) {
     final AccountSettingsProvider accountSettingsProvider =
         Provider.of<AccountSettingsProvider>(context);
-
     final EnterScreenProvider enterScreenProvider =
         Provider.of<EnterScreenProvider>(context);
+
     nameController ??= TextEditingController(text: enterScreenProvider.name);
     noteController ??= TextEditingController(text: enterScreenProvider.note);
     return Expanded(
@@ -355,17 +355,17 @@ class _EnterScreenListViewBuilderState
     if (index == 0) {
       if (enterScreenProvider.isExpenses) {
         return ListView.builder(
-          itemCount: standardCategoryExpenses.length,
+          itemCount: standardExpenseCategories.length,
           itemBuilder: (BuildContext context, int indexBuilder) {
             return ListTile(
               leading: Icon(
-                standardCategoryExpenses[
+                standardExpenseCategories[
                         StandardCategoryExpense.values[indexBuilder]]!
                     .icon,
               ),
               title: Text(
                 AppLocalizations.of(context)!.translate(
-                  standardCategoryExpenses[
+                  standardExpenseCategories[
                           StandardCategoryExpense.values[indexBuilder]]!
                       .label,
                 ),
@@ -376,7 +376,7 @@ class _EnterScreenListViewBuilderState
                     .toString()
                     .split(".")[1],
                 enterScreenProvider,
-                standardCategoryExpenses[
+                standardExpenseCategories[
                         StandardCategoryExpense.values[indexBuilder]]!
                     .icon,
               ),
@@ -385,17 +385,17 @@ class _EnterScreenListViewBuilderState
         );
       } else {
         return ListView.builder(
-          itemCount: standardCategoryExpenses.length,
+          itemCount: standardExpenseCategories.length,
           itemBuilder: (BuildContext context, int indexBuilder) {
             return ListTile(
               leading: Icon(
-                standardCategoryIncomes[
+                standardIncomeCategories[
                         StandardCategoryIncome.values[indexBuilder]]!
                     .icon,
               ),
               title: Text(
                 AppLocalizations.of(context)!.translate(
-                  standardCategoryIncomes[
+                  standardIncomeCategories[
                           StandardCategoryIncome.values[indexBuilder]]!
                       .label,
                 ),
@@ -406,7 +406,7 @@ class _EnterScreenListViewBuilderState
                     .toString()
                     .split(".")[1],
                 enterScreenProvider,
-                standardCategoryIncomes[
+                standardIncomeCategories[
                         StandardCategoryExpense.values[indexBuilder]]!
                     .icon,
               ),
@@ -467,17 +467,17 @@ class _EnterScreenListViewBuilderState
   ) {
     if (index == 0) {
       return ListView.builder(
-        itemCount: standardCategoryIncomes.length,
+        itemCount: standardIncomeCategories.length,
         itemBuilder: (BuildContext context, int indexBuilder) {
           return ListTile(
             leading: Icon(
-              standardCategoryIncomes[
+              standardIncomeCategories[
                       StandardCategoryIncome.values[indexBuilder]]!
                   .icon,
             ),
             title: Text(
               AppLocalizations.of(context)!.translate(
-                standardCategoryIncomes[
+                standardIncomeCategories[
                         StandardCategoryIncome.values[indexBuilder]]!
                     .label,
               ),
@@ -487,7 +487,7 @@ class _EnterScreenListViewBuilderState
                   .toString()
                   .split(".")[1],
               enterScreenProvider,
-              standardCategoryIncomes[
+              standardIncomeCategories[
                       StandardCategoryIncome.values[indexBuilder]]!
                   .icon,
             ),
@@ -581,13 +581,13 @@ class _EnterScreenListViewBuilderState
         if (enterScreenProvider.category == "") {
           return Text(
             AppLocalizations.of(context)!.translate(
-              standardCategoryExpenses[StandardCategoryExpense.none]!.label,
+              standardExpenseCategories[StandardCategoryExpense.none]!.label,
             ),
           );
         }
         return Text(
           AppLocalizations.of(context)!.translate(
-            standardCategoryExpenses[enterScreenProvider.category]?.label ??
+            standardExpenseCategories[enterScreenProvider.category]?.label ??
                 'chosen expense',
           ),
         );
@@ -595,13 +595,13 @@ class _EnterScreenListViewBuilderState
         if (enterScreenProvider.category == "") {
           return Text(
             AppLocalizations.of(context)!.translate(
-              standardCategoryIncomes[StandardCategoryIncome.none]!.label,
+              standardIncomeCategories[StandardCategoryIncome.none]!.label,
             ),
           );
         }
         return Text(
           AppLocalizations.of(context)!.translate(
-            standardCategoryIncomes[enterScreenProvider.category]?.label ??
+            standardIncomeCategories[enterScreenProvider.category]?.label ??
                 'chosen income',
           ),
         );
@@ -637,7 +637,7 @@ class _EnterScreenListViewBuilderState
         return const Icon(Icons.error);
       } */
       return Icon(
-        standardCategoryExpenses[enterScreenProvider.category]!.icon,
+        standardExpenseCategories[enterScreenProvider.category]!.icon,
       );
     } else if (enterScreenProvider.isIncome) {
       /* if (index.runtimeType != StandardCategoryIncome) {
@@ -648,7 +648,7 @@ class _EnterScreenListViewBuilderState
 
         return const Icon(Icons.error);
       } */
-      return Icon(standardCategoryIncomes[enterScreenProvider.category]!.icon);
+      return Icon(standardIncomeCategories[enterScreenProvider.category]!.icon);
     }
     return const Icon(Icons.error);
   }
