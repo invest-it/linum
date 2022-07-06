@@ -10,6 +10,7 @@ import 'package:linum/constants/repeatable_change_type_enum.dart';
 import 'package:linum/models/dialog_action.dart';
 import 'package:linum/models/repeat_balance_data.dart';
 import 'package:linum/models/single_balance_data.dart';
+import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
@@ -18,6 +19,8 @@ import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:linum/widgets/enter_screen/enter_screen_listviewbuilder.dart';
 import 'package:linum/widgets/enter_screen/enter_screen_top_input_field.dart';
+import 'package:linum/widgets/screen_skeleton/app_bar_action.dart';
+import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:linum/widgets/top_bar_action_item.dart';
 import 'package:provider/provider.dart';
 
@@ -37,6 +40,8 @@ class _EnterScreenState extends State<EnterScreen> {
         Provider.of<EnterScreenProvider>(context);
     final BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
+    final ActionLipStatusProvider actionLipStatusProvider =
+        Provider.of<ActionLipStatusProvider>(context);
 
     //  AccountSettingsProvider accountSettingsProvider =
     //       Provider.of<AccountSettingsProvider>(context);
@@ -50,9 +55,12 @@ class _EnterScreenState extends State<EnterScreen> {
 
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Scaffold(
-        resizeToAvoidBottomInset: true,
+      child: ScreenSkeleton(
+        providerKey: ProviderKey.enter,
+        initialActionLipBody: Container(),
 
+        contentOverride: true,
+        head: "Enter",
         // extendBodyBehindAppBar: true,
         body: GestureDetector(
           onHorizontalDragEnd: (DragEndDetails details) {
@@ -94,11 +102,11 @@ class _EnterScreenState extends State<EnterScreen> {
                     )
                   : EnterScreenListViewBuilder(),
               /*SizedBox(
-                height: MediaQuery.of(context).viewInsets.bottom,
-              ),*/
+                  height: MediaQuery.of(context).viewInsets.bottom,
+                ),*/
               /*Expanded(
-                child: Container(color: Colors.red),
-              ),*/
+                  child: Container(color: Colors.red),
+                ),*/
 
               MediaQuery.of(context).viewInsets.bottom > 1
                   ? Container()

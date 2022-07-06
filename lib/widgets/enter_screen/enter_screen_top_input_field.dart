@@ -5,9 +5,13 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:linum/navigation/get_delegate.dart';
+import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/widgets/screen_skeleton/app_bar_action.dart';
+import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:linum/widgets/text_container.dart';
 import 'package:provider/provider.dart';
 
@@ -44,6 +48,8 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
   Widget build(BuildContext context) {
     final EnterScreenProvider enterScreenProvider =
         Provider.of<EnterScreenProvider>(context);
+    final ActionLipStatusProvider actionLipStatusProvider =
+        Provider.of<ActionLipStatusProvider>(context);
     if (myController == null) {
       if (enterScreenProvider.amount != 0) {
         myController = TextEditingController(
@@ -127,6 +133,9 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                             color: _colorPicker(enterScreenProvider, context),
                           ),
                       onTap: () => {
+                        actionLipStatusProvider.setActionLipStatus(
+                          providerKey: ProviderKey.enter,
+                        ),
                         myController!.selection = TextSelection.fromPosition(
                           TextPosition(
                             offset: myController!.text.length - 2,
@@ -318,6 +327,16 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                 style: Theme.of(context).textTheme.button,
               ),
               centerTitle: true,
+              automaticallyImplyLeading: false,
+              leading: AppBarAction.fromParameters(
+                icon: Icons.arrow_back,
+                ontap: () {
+                  actionLipStatusProvider.setActionLipStatus(
+                    providerKey: ProviderKey.enter,
+                  );
+                  getRouterDelegate().popRoute();
+                },
+              ),
             ),
           ),
         ),
