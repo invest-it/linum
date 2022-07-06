@@ -4,6 +4,8 @@
 //  Co-Author: damattl
 //  (Refactored)
 
+import 'package:linum/widgets/settings_screen/standard_category/standard_category_manager.dart';
+
 enum StandardCategoryIncome {
   none,
   income,
@@ -12,7 +14,11 @@ enum StandardCategoryIncome {
   investments,
   childSupport,
   interest,
-  miscellaneous,
+  miscellaneous;
+
+  bool equals(String? valueStr) {
+    return "StandardCategoryIncome.${valueStr ?? "None"}" == toString();
+  }
 }
 
 enum StandardCategoryExpense {
@@ -22,7 +28,11 @@ enum StandardCategoryExpense {
   house,
   lifestyle,
   car,
-  miscellaneous,
+  miscellaneous;
+
+  bool equals(String? valueStr) {
+    return "StandardCategoryExpense.${valueStr ?? "None"}" == toString();
+  }
 }
 
 enum StandardAccount {
@@ -41,3 +51,6 @@ enum RepeatDuration {
   // TODO implement custom repeat
   // custom,
 }
+
+
+
