@@ -4,7 +4,7 @@
 #   Author: NightmindOfficial
 #   Co-Author: n/a
 
-name: Flutter CI + CD
+name: Continuous Integration & Deployment
 
 on:
   # push:

@@ -9,14 +9,17 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:linum/constants/ring_colors.dart';
 import 'package:linum/models/dialog_action.dart';
 import 'package:linum/models/lock_screen_action.dart';
+import 'package:linum/navigation/main_router_delegate.dart';
+import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/providers/authentication_service.dart';
-import 'package:linum/providers/screen_index_provider.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PinCodeProvider extends ChangeNotifier {
@@ -25,21 +28,16 @@ class PinCodeProvider extends ChangeNotifier {
   Color _ringColor = RingColors.green;
   bool _sessionIsSafe = false;
   late BuildContext _context;
-  late ScreenIndexProvider _screenIndexProvider;
   late AuthenticationService _auth;
   late UserAlert confirmKillswitch;
-  late bool _pinActive;
+  late bool _pinSet;
   String? _lastEmail;
-  bool _pinActiveStillLoading = true;
+  bool _pinSetStillLoading = true;
   bool _lastEmailStillLoading = true;
 
   PinCodeProvider(BuildContext context) {
-    _initialLastEmail();
-    initialIsPINActive();
-    _screenIndexProvider = Provider.of<ScreenIndexProvider>(
-      context,
-      listen: false,
-    );
+    _initializeLastEmail();
+    initializeIsPINSet();
     _auth = Provider.of<AuthenticationService>(
       context,
       listen: false,
@@ -48,17 +46,18 @@ class PinCodeProvider extends ChangeNotifier {
     confirmKillswitch = UserAlert(context: _context);
   }
 
-  Future<void> initialIsPINActive() async {
-    _pinActive = await _isPinActive();
+
+  Future<void> initializeIsPINSet() async {
+    _pinSet = await _isPinSet();
     // dev.log(
     //   _pinActive
     //       ? "PIN lock is active for $_lastEmail"
     //       : "PIN lock is NOT ACTIVE for $_lastEmail",
     // );
-    _pinActiveStillLoading = false;
+    _pinSetStillLoading = false;
 
     //Set Session to Safe if there is no PIN lock
-    if (!_pinActive) {
+    if (!_pinSet) {
       _sessionIsSafe = true;
     }
     if (_auth.uid == "") {
@@ -66,7 +65,7 @@ class PinCodeProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> _initialLastEmail() async {
+  Future<void> _initializeLastEmail() async {
     _lastEmail = await _getLastEmail();
     _lastEmailStillLoading = false;
   }
@@ -74,12 +73,9 @@ class PinCodeProvider extends ChangeNotifier {
   void updateSipAndAuth(BuildContext context) {
     _lastEmail = null;
     _lastEmailStillLoading = true;
-    _initialLastEmail();
-    initialIsPINActive();
-    _screenIndexProvider = Provider.of<ScreenIndexProvider>(
-      context,
-      listen: false,
-    );
+    _initializeLastEmail();
+    initializeIsPINSet();
+
 
     _auth = Provider.of<AuthenticationService>(context);
 
@@ -92,16 +88,16 @@ class PinCodeProvider extends ChangeNotifier {
   // ACTIVATION & SETTINGS - Toggles the PIN Lock in the settingsScreen
 
   ///Activates - Deactivates the PIN Lock
-  //TODO - change the switch condition of _pinActive into one that relies on whether _lastEmail + '.code' has a value in sharedPreferences
+  //TODO - change the switch condition of _pinSet into one that relies on whether _lastEmail + '.code' has a value in sharedPreferences
   void togglePINLock() {
-    if (pinActive == false) {
+    if (pinSet == false) {
       _sessionIsSafe = true;
-      _pinActive = true;
+      _pinSet = true;
       //Force the user to initialize their PIN number every time the PIN is (re-)activated.
       _setPINLockIntent(intent: PINLockIntent.initialize);
-      _screenIndexProvider.setPageIndex(5);
+      Get.find<MainRouterDelegate>().pushRoute(MainRoute.lock);
     } else {
-      _pinActive = false;
+      _pinSet = false; // TODO: Re-Enter pin?
       _removePIN();
       Fluttertoast.showToast(
         msg: AppLocalizations.of(_context)!
@@ -112,7 +108,7 @@ class PinCodeProvider extends ChangeNotifier {
   }
 
   ///Returns the PIN status based on whether a PIN code is currently being stored in sharedPreferences
-  Future<bool> _isPinActive() async {
+  Future<bool> _isPinSet() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     while (_lastEmailStillLoading) {
       await Future.delayed(
@@ -131,12 +127,18 @@ class PinCodeProvider extends ChangeNotifier {
   /// Toggles a PIN change request
   void triggerPINChange() {
     _setPINLockIntent(intent: PINLockIntent.change);
-    _screenIndexProvider.setPageIndex(5);
+    Get.find<MainRouterDelegate>().pushRoute(MainRoute.lock);
   }
 
+  /*
   /// Triggers a PIN recall
   void triggerPINRecall() {
-    _screenIndexProvider.setPageIndexSilently(5);
+    // TODO: _screenIndexProvider.setPageIndexSilently(5);
+    _setPINLockIntent(intent: PINLockIntent.recall);
+  } */ // TOOD: Probably not needed anymore
+
+
+  void setRecallIntent() {
     _setPINLockIntent(intent: PINLockIntent.recall);
   }
 
@@ -185,16 +187,15 @@ class PinCodeProvider extends ChangeNotifier {
                   function: () {
                     _emptyCode();
                     _removePIN();
-                    _pinActive = false;
-                    _screenIndexProvider.setPageIndex(3);
-                    Navigator.of(_context).pop();
+                    _pinSet = false;
+                    Get.find<MainRouterDelegate>().popRoute();
                   },
                 ),
                 DialogAction(
                   actionTitle: "alertdialog/killswitch-initialize/cancel",
                   //If this is empty, UserAlert will use its own context to pop the dialog
                   function: () {
-                    Navigator.of(_context).pop();
+                    Get.find<MainRouterDelegate>().popRoute();
                   },
                   dialogPurpose: DialogPurpose.secondary,
                   popDialog: true,
@@ -216,15 +217,16 @@ class PinCodeProvider extends ChangeNotifier {
                   actionTitle: "alertdialog/killswitch-change/action",
                   function: () {
                     _emptyCode();
-                    _screenIndexProvider.setPageIndex(3);
-                    Navigator.of(_context).pop();
+                    Get.find<MainRouterDelegate>().popRoute();
+                    // Navigator.of(_context).pop();
                   },
                 ),
                 DialogAction(
                   actionTitle: "alertdialog/killswitch-change/cancel",
                   //If this is empty, UserAlert will use its own context to pop the dialog
                   function: () {
-                    Navigator.of(_context).pop();
+                    Get.find<MainRouterDelegate>().popRoute();
+                    // Navigator.of(_context).pop();
                   },
                   dialogPurpose: DialogPurpose.secondary,
                   popDialog: true,
@@ -247,9 +249,7 @@ class PinCodeProvider extends ChangeNotifier {
                   function: () {
                     togglePINLock();
                     _auth.signOut().then((_) {
-                      Provider.of<ScreenIndexProvider>(_context, listen: false)
-                          .setPageIndex(0);
-                      Navigator.of(_context).pop();
+                      Get.find<MainRouterDelegate>().rebuild();
                     });
                   },
                 ),
@@ -257,7 +257,7 @@ class PinCodeProvider extends ChangeNotifier {
                   actionTitle: "alertdialog/killswitch-recall/cancel",
                   //If this is empty, UserAlert will use its own context to pop the dialog
                   function: () {
-                    Navigator.of(_context).pop();
+                    Get.find<MainRouterDelegate>().rebuild();
                   },
                   dialogPurpose: DialogPurpose.secondary,
                   popDialog: true,
@@ -291,8 +291,7 @@ class PinCodeProvider extends ChangeNotifier {
             } else {
               toastFromTranslationKey("lock_screen/errors/last-mail-missing");
             }
-
-            _screenIndexProvider.setPageIndex(3);
+            Get.find<MainRouterDelegate>().popRoute();
             _emptyCode();
             break;
           case PINLockIntent.change:
@@ -303,7 +302,7 @@ class PinCodeProvider extends ChangeNotifier {
               toastFromTranslationKey("lock_screen/errors/last-mail-missing");
             }
 
-            _screenIndexProvider.setPageIndex(3);
+            Get.find<MainRouterDelegate>().popRoute();
             _emptyCode();
             break;
           case PINLockIntent.recall:
@@ -349,7 +348,7 @@ class PinCodeProvider extends ChangeNotifier {
   /// Set the page index to 0 - "welcome to the app"
   void _correctCode() {
     _sessionIsSafe = true;
-    _screenIndexProvider.setPageIndex(0);
+    //TODO: PAGE = 0 (Why again?)
   }
 
   /// Reset [_code] and give visual and haptic feedback that the code did not match the locally stored PIN.
@@ -372,7 +371,7 @@ class PinCodeProvider extends ChangeNotifier {
 
   /// Resets session
   void resetSession() {
-    if (_pinActive) {
+    if (_pinSet) {
       _sessionIsSafe = false;
       notifyListeners();
     } else {
@@ -385,11 +384,27 @@ class PinCodeProvider extends ChangeNotifier {
   bool get sessionIsSafe => _sessionIsSafe;
   int get pinSlot => _pinSlot;
   Color get ringColor => _ringColor;
-  bool get pinActive => !_pinActiveStillLoading && _pinActive;
+  bool get pinSet => !_pinSetStillLoading && _pinSet;
   //TODO decide whether we should leave "Loading..." blank in shipping
   String get lastEmail => !_lastEmailStillLoading ? _lastEmail! : 'Loading...';
-  bool get pinActiveStillLoading => _pinActiveStillLoading;
+  bool get pinSetStillLoading => _pinSetStillLoading;
   bool get lastEmailStillLoading => _lastEmailStillLoading;
+
+
+  static SingleChildWidget provider(BuildContext context, {bool testing = false}) {
+    return ChangeNotifierProxyProvider<
+        AuthenticationService, PinCodeProvider>(
+      create: (context) => PinCodeProvider(context),
+      update:
+          (context, auth, oldPinCodeProvider) {
+        if (oldPinCodeProvider == null) {
+          return PinCodeProvider(context);
+        } else {
+          return oldPinCodeProvider..updateSipAndAuth(context);
+        }
+      },
+    );
+  }
 }
 
 enum PINLockIntent {

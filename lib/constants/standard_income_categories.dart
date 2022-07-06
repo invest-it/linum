@@ -12,8 +12,7 @@ import 'package:linum/types/category_map.dart';
 /// List of Categories the User can declare as a Standard when tracking INCOME.
 /// e.g. Otis works as a freelancer, so the income he tracks is mostly in the category SIDE JOB, therefore he can choose SIDE JOB
 /// as his Standard Category for Income so he does not have to choose SIDE JOB as a category when adding an income.
-// TODO: RENAME? => StandardIncomeCategories
-final CategoryMap<StandardCategoryIncome> standardCategoryIncomes =
+final CategoryMap<StandardCategoryIncome> standardIncomeCategories =
     CategoryMap.fromMap({
   StandardCategoryIncome.none: const EntryCategory(
     label: "settings_screen/standards-selector-none",

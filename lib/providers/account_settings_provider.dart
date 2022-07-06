@@ -15,6 +15,7 @@ import 'package:linum/models/entry_category.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 
 class AccountSettingsProvider extends ChangeNotifier {
   /// _balance is the documentReference to get the balance data from the database. It will be null if the constructor isnt ready yet
@@ -24,7 +25,6 @@ class AccountSettingsProvider extends ChangeNotifier {
 
   /// The uid of the user
   late String _uid;
-  int _dontDispose = 0;
 
   Map<String, dynamic> lastGrabbedData = {};
 
@@ -37,13 +37,13 @@ class AccountSettingsProvider extends ChangeNotifier {
       StandardCategoryIncome.values,
       categoryId ?? defaultId,
     ); */
-    return standardCategoryIncomes[categoryId];
+    return standardIncomeCategories[categoryId];
   }
 
   EntryCategory? getExpenseEntryCategory() {
     final String categoryId =
         settings["StandardCategoryExpense"] as String? ?? "None";
-    final EntryCategory? catExp = standardCategoryExpenses[categoryId];
+    final EntryCategory? catExp = standardExpenseCategories[categoryId];
     return catExp;
   }
 
@@ -113,17 +113,6 @@ class AccountSettingsProvider extends ChangeNotifier {
     );
   }
 
-  void dontDisposeOneTime() {
-    _dontDispose++;
-  }
-
-  @override
-  void dispose() {
-    if (_dontDispose-- == 0) {
-      super.dispose();
-      settingsListener?.cancel();
-    }
-  }
 
   Map<String, dynamic> get settings {
     return lastGrabbedData;
@@ -140,5 +129,23 @@ class AccountSettingsProvider extends ChangeNotifier {
     _settings!.update(settings);
 
     return true;
+  }
+
+
+  static SingleChildWidget provider(BuildContext context, {bool testing = false}) {
+    return ChangeNotifierProxyProvider<AuthenticationService,
+        AccountSettingsProvider>(
+      create: (ctx) {
+        return AccountSettingsProvider(ctx);
+      },
+      update: (ctx, auth, oldAccountSettings) {
+        if (oldAccountSettings != null) {
+          return oldAccountSettings..updateAuth(auth, ctx);
+        } else {
+          return AccountSettingsProvider(ctx);
+        }
+      },
+      lazy: false,
+    );
   }
 }

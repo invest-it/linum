@@ -42,6 +42,7 @@ dependencies:
   flutter_spinkit: ^5.1.0
   flutter_svg: ^1.0.0
   fluttertoast: ^8.0.8
+  get: ^4.6.5
   google_fonts: ^2.0.0
   google_sign_in: ^5.2.4
   gradient_widgets: ^0.6.0
@@ -50,6 +51,7 @@ dependencies:
   provider: ^6.0.2
   shared_preferences: ^2.0.13
   sign_in_with_apple: ^3.0.0
+  tuple: ^2.0.0
   url_launcher: ^6.1.2
   url_launcher_ios: ^6.0.15
   uuid: ^3.0.5

@@ -9,7 +9,9 @@
 | 1.0.1   | :x:                |
 | 1.0.2   | :x:                |
 | 1.0.3   | :x:                | !! It is highly important to update to the latest version from this point to avoid data loss!
-| 1.0.4   | :white_check_mark: |
+| 1.0.4   | :x:                |
+| 1.1.0   | :heavy_check_mark: |
+| 1.1.1   | :white_check_mark: |
 
 ## Reporting a Vulnerability
 

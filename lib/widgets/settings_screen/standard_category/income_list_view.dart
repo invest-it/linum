@@ -42,13 +42,13 @@ class IncomeListView extends StatelessWidget {
                   itemBuilder: (BuildContext context, int indexBuilder) {
                     return ListTile(
                       leading: Icon(
-                        standardCategoryIncomes[
+                        standardIncomeCategories[
                                 StandardCategoryIncome.values[indexBuilder]]
                             ?.icon,
                       ),
                       title: Text(
                         AppLocalizations.of(context)!.translate(
-                          standardCategoryIncomes[StandardCategoryIncome
+                          standardIncomeCategories[StandardCategoryIncome
                                       .values[indexBuilder]]
                                   ?.label ??
                               "Category",

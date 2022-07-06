@@ -23,12 +23,11 @@ jobs:
       matrix:
         device:
         - "iPhone 11 Simulator (15.2)"
-        - "iPhone 11 Simulator (15.2)"
-        - "iPhone 13 Pro Simulator (15.2)"
-        - "iPhone 13 Pro Max Simulator (15.2)"
-        - "iPhone 8 Simulator (15.2)"
-        - "iPhone 8 Plus Simulator (15.2)"
-        - "iPhone SE (2nd generation) Simulator (15.2)"
+        #- "iPhone 13 Pro Simulator (15.2)"
+        #- "iPhone 13 Pro Max Simulator (15.2)"
+        #- "iPhone 8 Simulator (15.2)"
+        #- "iPhone 8 Plus Simulator (15.2)"
+        #- "iPhone SE (2nd generation) Simulator (15.2)"
       # When set to true, GitHub cancels all in-progress jobs if any        
       # matrix job fails.
       fail-fast: false
@@ -41,7 +40,7 @@ jobs:
         UDID=$(
           xcrun xctrace list devices |
           awk \
-            -F ' *()()' \
+            -F ' ' \
             -v 'device=${{ matrix.device }}' \
             'NR > 4 {uid=$NF;$NF=""; NF--;} $0 == device {print substr(uid, 2,36)}'
         )
@@ -56,4 +55,4 @@ jobs:
       with:
         channel: 'stable' # or: 'dev' or 'beta'
     - name: "Run Flutter Driver tests"
-      run: "flutter drive --target=test_driver/integration_test.dart"
+      run: "flutter drive --target=test_driver/app.dart"

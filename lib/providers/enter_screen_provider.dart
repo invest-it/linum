@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/constants/repeat_duration_type_enum.dart';
 import 'package:linum/constants/settings_enums.dart';
+import 'package:linum/models/single_balance_data.dart';
 
 class EnterScreenProvider with ChangeNotifier {
   late bool _isExpenses;
@@ -22,7 +23,7 @@ class EnterScreenProvider with ChangeNotifier {
   String _expenseCategory = "";
   String _incomeCategory = "";
   String _currency = "";
-  String _description = "";
+  String? _note;
   String? _formerId;
   String? _repeatId;
   int? _repeatDuration;
@@ -37,7 +38,7 @@ class EnterScreenProvider with ChangeNotifier {
     String secondaryCategory = "None",
     DateTime? selectedDate,
     bool editMode = false,
-    String description = "",
+    String? note,
     String? id,
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
@@ -45,13 +46,13 @@ class EnterScreenProvider with ChangeNotifier {
     String? repeatId,
     Timestamp? formerTime,
   }) {
-    _amount = amount <= 0 ? -1 * amount : amount;
+    _amount = amount.abs();
     _expenseCategory = amount <= 0 ? category : secondaryCategory;
     _incomeCategory = amount > 0 ? category : secondaryCategory;
     _name = name;
     _currency = currency;
     _editMode = editMode;
-    _description = description;
+    _note = note;
     _isExpenses = amount <= 0;
     _repeatDuration = repeatDuration;
     _isIncome = !_isExpenses;
@@ -65,6 +66,23 @@ class EnterScreenProvider with ChangeNotifier {
     if (selectedDate != null) {
       _selectedDate = selectedDate;
     }
+    _note = note;
+  }
+
+  factory EnterScreenProvider.fromBalanceData(SingleBalanceData singleBalanceData, {bool editMode = true}) {
+    return EnterScreenProvider(
+      id: singleBalanceData.id,
+      amount: singleBalanceData.amount,
+      category: singleBalanceData.category,
+      name: singleBalanceData.name,
+      selectedDate:
+      singleBalanceData.time.toDate(),
+      editMode: editMode,
+      repeatId: singleBalanceData.repeatId,
+      formerTime:
+      singleBalanceData.formerTime ??
+          singleBalanceData.time,
+    );
   }
 
   bool get isExpenses {
@@ -87,8 +105,8 @@ class EnterScreenProvider with ChangeNotifier {
     return _amount;
   }
 
-  String get description {
-    return _description;
+  String? get note {
+    return _note;
   }
 
   String get category {
@@ -153,8 +171,8 @@ class EnterScreenProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void setDescription(String description) {
-    _description = description;
+  void setNote(String note) {
+    _note = note;
     notifyListeners();
   }
 

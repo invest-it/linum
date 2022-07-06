@@ -9,7 +9,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:linum/main.dart';
+import 'package:linum/app.dart';
+
 
 class AppLocalizations {
   late final Locale _locale;
@@ -60,10 +61,10 @@ class AppLocalizations {
   /// use actively set language if that is null choose languageCode read from preferences and if that is null use system language
   String _chooseLanguageCode(Locale? locale) {
     if (locale == null) {
-      if (MyApp.currentLocalLanguageCode == null) {
+      if (LinumApp.currentLocalLanguageCode == null) {
         return _locale.languageCode;
       } else {
-        return MyApp.currentLocalLanguageCode!;
+        return LinumApp.currentLocalLanguageCode!;
       }
     } else {
       return locale.languageCode;
