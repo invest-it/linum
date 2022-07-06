@@ -11,8 +11,6 @@ import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:linum/widgets/settings_screen/standard_category/category_list_view.dart';
-import 'package:linum/widgets/settings_screen/standard_category/expenses_list_view.dart';
-import 'package:linum/widgets/settings_screen/standard_category/income_list_view.dart';
 import 'package:linum/widgets/settings_screen/standard_category/standard_category_expenses_list_tile.dart';
 import 'package:linum/widgets/settings_screen/standard_category/standard_category_income_list_tile.dart';
 import 'package:provider/provider.dart';
