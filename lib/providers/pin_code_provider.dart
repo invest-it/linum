@@ -6,6 +6,7 @@
 
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -16,7 +17,6 @@ import 'package:linum/models/lock_screen_action.dart';
 import 'package:linum/navigation/main_router_delegate.dart';
 import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/providers/authentication_service.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -100,8 +100,7 @@ class PinCodeProvider extends ChangeNotifier {
       _pinSet = false; // TODO: Re-Enter pin?
       _removePIN();
       Fluttertoast.showToast(
-        msg: AppLocalizations.of(_context)!
-            .translate("lock_screen/toast-pin-deactivated"),
+        msg: tr("lock_screen.toast-pin-deactivated"),
       );
     }
     notifyListeners();
@@ -317,7 +316,7 @@ class PinCodeProvider extends ChangeNotifier {
 
   void toastFromTranslationKey(String key) {
     Fluttertoast.showToast(
-      msg: AppLocalizations.of(_context)!.translate(key),
+      msg: tr(key),
     );
   }
 
@@ -356,8 +355,7 @@ class PinCodeProvider extends ChangeNotifier {
     HapticFeedback.vibrate();
     _ringColor = RingColors.red;
     Fluttertoast.showToast(
-      msg: AppLocalizations.of(_context)!
-          .translate("lock_screen/toast-wrong-code"),
+      msg: tr("lock_screen.toast-wrong-code"),
     );
     _emptyCode();
   }

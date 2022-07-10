@@ -4,10 +4,10 @@
 //  Co-Author: SoTBurst, NightmindOfficial
 //  Refactored: TheBlueBaron
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:linum/widgets/settings_screen/standard_category/expenses_list_view.dart';
 import 'package:linum/widgets/settings_screen/standard_category/income_list_view.dart';
@@ -36,9 +36,7 @@ class _StandardCategoryState extends State<StandardCategory> {
             actionLipStatusProvider.setActionLip(
               providerKey: ProviderKey.settings,
               actionLipStatus: ActionLipStatus.onviewport,
-              actionLipTitle: AppLocalizations.of(context)!.translate(
-                'action_lip/standard-category/income/label-title',
-              ),
+              actionLipTitle: tr('action_lip.standard-category.income.label-title'),
               actionLipBody: IncomeListView(
                 accountSettingsProvider,
                 actionLipStatusProvider,
@@ -54,9 +52,7 @@ class _StandardCategoryState extends State<StandardCategory> {
             actionLipStatusProvider.setActionLip(
               providerKey: ProviderKey.settings,
               actionLipStatus: ActionLipStatus.onviewport,
-              actionLipTitle: AppLocalizations.of(context)!.translate(
-                'action_lip/standard-category/expenses/label-title',
-              ),
+              actionLipTitle: tr('action_lip.standard-category.expenses.label-title'),
               actionLipBody: ExpensesListView(
                 accountSettingsProvider,
                 actionLipStatusProvider,

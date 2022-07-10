@@ -5,6 +5,7 @@
 /// NO PAGE INDEX (This screen is not part of the default route and needs to be pushed onto the Navigator)
 import 'dart:developer' as dev;
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/constants/repeatable_change_type_enum.dart';
 import 'package:linum/models/dialog_action.dart';
@@ -12,7 +13,6 @@ import 'package:linum/models/repeat_balance_data.dart';
 import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/delete_entry_popup.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
@@ -85,10 +85,7 @@ class _EnterScreenState extends State<EnterScreen> {
                             buttonIcon: Icons.build,
                             onPressedAction: () => {},
                           ),
-                          Text(
-                            AppLocalizations.of(context)!
-                                .translate('main/label-wip'),
-                          ),
+                          Text(tr('main.label-wip')),
                         ],
                       ),
                     )
@@ -127,9 +124,7 @@ class _EnterScreenState extends State<EnterScreen> {
                                   );
                                 },
                                 child: Text(
-                                  AppLocalizations.of(context)!.translate(
-                                    "enter_screen/button-delete-entry",
-                                  ),
+                                  tr("enter_screen.button-delete-entry"),
                                   style: Theme.of(context)
                                       .textTheme
                                       .button
@@ -188,11 +183,11 @@ class _EnterScreenState extends State<EnterScreen> {
                                         UserAlert(context: context);
                                     userAlert
                                         .showMyActionDialog(
-                                          "enter_screen/change-entry/dialog-label-change",
+                                          "enter_screen.change-entry.dialog-label-change",
                                           <DialogAction>[
                                             DialogAction(
                                               actionTitle:
-                                                  "enter_screen/delete-entry/dialog-button-onlyonce",
+                                                  "enter_screen.delete-entry.dialog-button-onlyonce",
                                               function: () {
                                                 balanceDataProvider
                                                     .updateRepeatedBalance(
@@ -220,7 +215,7 @@ class _EnterScreenState extends State<EnterScreen> {
                                             ),
                                             DialogAction(
                                               actionTitle:
-                                                  "enter_screen/delete-entry/dialog-button-untilnow",
+                                                  "enter_screen.delete-entry.dialog-button-untilnow",
                                               dialogPurpose:
                                                   DialogPurpose.danger,
                                               function: () {
@@ -251,7 +246,7 @@ class _EnterScreenState extends State<EnterScreen> {
                                             ),
                                             DialogAction(
                                               actionTitle:
-                                                  "enter_screen/delete-entry/dialog-button-fromnow",
+                                                  "enter_screen.delete-entry.dialog-button-fromnow",
                                               dialogPurpose:
                                                   DialogPurpose.danger,
                                               function: () {
@@ -281,7 +276,7 @@ class _EnterScreenState extends State<EnterScreen> {
                                             ),
                                             DialogAction(
                                               actionTitle:
-                                                  "enter_screen/delete-entry/dialog-button-allentries",
+                                                  "enter_screen.delete-entry.dialog-button-allentries",
                                               dialogPurpose:
                                                   DialogPurpose.danger,
                                               function: () {
@@ -310,7 +305,7 @@ class _EnterScreenState extends State<EnterScreen> {
                                             ),
                                             DialogAction(
                                               actionTitle:
-                                                  "enter_screen/delete-entry/dialog-button-cancel",
+                                                  "enter_screen.delete-entry.dialog-button-cancel",
                                               dialogPurpose:
                                                   DialogPurpose.secondary,
                                               function: () {
@@ -320,7 +315,7 @@ class _EnterScreenState extends State<EnterScreen> {
                                             ),
                                           ],
                                           title:
-                                              "enter_screen/delete-entry/dialog-label-title",
+                                              "enter_screen.delete-entry.dialog-label-title",
                                         )
                                         .then(
                                           (value) =>
@@ -388,11 +383,7 @@ class _EnterScreenState extends State<EnterScreen> {
                                   Navigator.of(context).pop();
                                 }
                               },
-                              child: Text(
-                                AppLocalizations.of(context)!.translate(
-                                  'enter_screen/button-save-entry',
-                                ),
-                              ),
+                              child: Text(tr('enter_screen.button-save-entry')),
                             ),
                           ],
                         ),
@@ -431,16 +422,13 @@ class _EnterScreenState extends State<EnterScreen> {
       builder: (context) {
         return AlertDialog(
           title: Text(
-            AppLocalizations.of(context)!.translate(
-              'enter_screen/add-amount/dialog-label-title-expenses',
-            ),
+            tr('enter_screen.add-amount.dialog-label-title-expenses'),
             style: Theme.of(context).textTheme.headline5,
           ),
           actions: <Widget>[
             TextButton(
               child: Text(
-                AppLocalizations.of(context)!
-                    .translate('enter_screen/add-amount/dialog-label-title'),
+                tr('enter_screen.add-amount.dialog-label-title'),
                 style: Theme.of(context)
                     .textTheme
                     .bodyText1!

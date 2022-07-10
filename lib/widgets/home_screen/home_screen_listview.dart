@@ -7,9 +7,9 @@
 // ignore_for_file: avoid_dynamic_calls
 
 import 'package:badges/badges.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/models/single_balance_data.dart';
@@ -17,7 +17,6 @@ import 'package:linum/navigation/enter_screen_page.dart';
 import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/providers/balance_data_provider.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/delete_entry_popup.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
 import 'package:linum/widgets/budget_screen/time_widget.dart';
@@ -88,7 +87,7 @@ class HomeScreenListView implements BalanceDataListView {
   List<Widget> buildList(BuildContext context, List<SingleBalanceData> balanceDataList, {bool error=false}) {
     initializeDateFormatting();
 
-    final String langCode = AppLocalizations.of(context)!.locale.languageCode;
+    final String langCode = context.locale.languageCode;
     final DateFormat monthFormatter = DateFormat('MMMM', langCode);
     final DateFormat monthAndYearFormatter = DateFormat('MMMM yyyy', langCode);
 
@@ -177,7 +176,7 @@ class HomeScreenListView implements BalanceDataListView {
       {bool isFutureItem = false, }
       ) {
     final BalanceDataProvider balanceDataProvider = Provider.of<BalanceDataProvider>(context);
-    final String langCode = AppLocalizations.of(context)!.locale.languageCode;
+    final String langCode = context.locale.languageCode;
     final DateFormat formatter = DateFormat('EEEE, dd. MMMM yyyy', langCode);
 
     return GestureDetector(
@@ -219,9 +218,7 @@ class HomeScreenListView implements BalanceDataListView {
                   spacing: 16.0,
                   children: [
                     Text(
-                      AppLocalizations.of(context)!.translate(
-                        "listview/dismissible/label-delete",
-                      ),
+                      tr("listview.dismissible.label-delete"),
                       style: Theme.of(context).textTheme.button,
                     ),
                     Icon(
@@ -353,8 +350,7 @@ class HomeScreenListView implements BalanceDataListView {
           ),
           trailing: singleBalanceData.amount == 0
               ? Text(
-                  AppLocalizations.of(context)!
-                      .translate('home_screen/free-text'),
+                  tr('home_screen.free-text'),
                   style: Theme.of(context).textTheme.bodyLarge,
                 )
               : Text(
@@ -384,13 +380,11 @@ class HomeScreenListView implements BalanceDataListView {
     required bool isExpense,
   }) {
     if (isExpense) {
-      return AppLocalizations.of(context)!.translate(
-        standardExpenseCategories[category]?.label ?? "",
-      ); // TODO @Nightmind you could add a String here that will show something like "error translating your category"
+      return tr(standardExpenseCategories[category]?.label ?? "");
+      // TODO @Nightmind you could add a String here that will show something like "error translating your category"
     } else if (!isExpense) {
-      return AppLocalizations.of(context)!.translate(
-        standardIncomeCategories[category]?.label ?? "",
-      ); // TODO @Nightmind you could add a String here that will show something like "error translating your category"
+      return tr(standardIncomeCategories[category]?.label ?? "");
+      // TODO @Nightmind you could add a String here that will show something like "error translating your category"
     }
     return "Error"; // This should never happen.
   }

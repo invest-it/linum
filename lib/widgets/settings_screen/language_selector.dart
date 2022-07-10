@@ -4,9 +4,9 @@
 //  Co-Author: SoTBurst
 //  Partly refactored: damattl and TheBlueBaron
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/providers/account_settings_provider.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/country_flag_generator.dart';
 import 'package:linum/widgets/settings_screen/toggle_button_element.dart';
 
@@ -24,11 +24,9 @@ class LanguageSelector extends StatelessWidget {
       children: [
         SwitchListTile(
           title: Text(
-            AppLocalizations.of(context)!.translate(
-              'settings_screen/language-settings/label-systemlang',
-            ),
+            'settings_screen.language-settings.label-systemlang',
             style: Theme.of(context).textTheme.bodyText1,
-          ),
+          ).tr(),
           value: accountSettingsProvider.settings['systemLanguage'] as bool? ??
               true,
           activeColor: Theme.of(context).colorScheme.primary,

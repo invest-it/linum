@@ -5,6 +5,7 @@
 //
 
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/loading_scaffold.dart';
@@ -14,7 +15,6 @@ import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/multi_provider_builder.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 
@@ -27,9 +27,7 @@ class FirebaseWrapper extends StatelessWidget {
   Scaffold buildErrorScaffold(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text(
-          AppLocalizations.of(context)!.translate("main/label-error"),
-        ),
+        child: Text(tr("main.label-error")),
       ),
     );
   }

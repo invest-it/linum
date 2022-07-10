@@ -4,9 +4,9 @@
 //  Co-Author: SoTBurst, NightmindOfficial
 //
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/text_container.dart';
 import 'package:provider/provider.dart';
@@ -217,16 +217,11 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                             child: enterScreenProvider.isExpenses
                                 ? TextContainer(
                                     //context: context,
-                                    transactionClass:
-                                        AppLocalizations.of(context)!.translate(
-                                      'enter_screen/button-expenses-label',
-                                    ),
+                                    transactionClass: tr('enter_screen.button-expenses-label'),
                                   )
                                 : Center(
                                     child: Text(
-                                      AppLocalizations.of(context)!.translate(
-                                        'enter_screen/button-expenses-label',
-                                      ),
+                                      tr('enter_screen.button-expenses-label'),
                                       style: TextStyle(
                                         color: Theme.of(context)
                                             .colorScheme
@@ -245,16 +240,11 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                             child: enterScreenProvider.isIncome
                                 ? TextContainer(
                                     //context: context,
-                                    transactionClass:
-                                        AppLocalizations.of(context)!.translate(
-                                      'enter_screen/button-income-label',
-                                    ),
+                                    transactionClass: tr('enter_screen.button-income-label'),
                                   )
                                 : Center(
                                     child: Text(
-                                      AppLocalizations.of(context)!.translate(
-                                        'enter_screen/button-income-label',
-                                      ),
+                                      tr('enter_screen.button-income-label'),
                                       style: TextStyle(
                                         color: Theme.of(context)
                                             .colorScheme
@@ -273,16 +263,11 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                             child: enterScreenProvider.isTransaction
                                 ? TextContainer(
                                     //context: context,
-                                    transactionClass:
-                                        AppLocalizations.of(context)!.translate(
-                                      'enter_screen/button-transaction-label',
-                                    ),
+                                    transactionClass: tr('enter_screen.button-transaction-label'),
                                   )
                                 : Center(
                                     child: Text(
-                                      AppLocalizations.of(context)!.translate(
-                                        'enter_screen/button-transaction-label',
-                                      ),
+                                      tr('enter_screen.button-transaction-label'),
                                       style: TextStyle(
                                         color: Theme.of(context)
                                             .colorScheme
@@ -313,8 +298,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
               elevation: 0,
               //actions: [AppBarAction.fromPreset(DefaultAction.CLOSE)],
               title: Text(
-                AppLocalizations.of(context)!
-                    .translate('enter_screen/label-title'),
+                tr('enter_screen/label-title'),
                 style: Theme.of(context).textTheme.button,
               ),
               centerTitle: true,

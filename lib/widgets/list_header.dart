@@ -4,8 +4,8 @@
 //  Co-Author: n/a
 //
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 
 class ListHeader extends StatelessWidget {
   final String title;
@@ -17,7 +17,7 @@ class ListHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     if (tooltipMessage == null) {
       return Text(
-        AppLocalizations.of(context)!.translate(title),
+        tr(title),
         style: Theme.of(context).textTheme.overline,
       );
     } else {
@@ -26,11 +26,11 @@ class ListHeader extends StatelessWidget {
         spacing: 8,
         children: [
           Text(
-            AppLocalizations.of(context)!.translate(title),
+            tr(title),
             style: Theme.of(context).textTheme.overline,
           ),
           Tooltip(
-            message: AppLocalizations.of(context)!.translate(tooltipMessage!),
+            message: tooltipMessage?.tr(),
             triggerMode: TooltipTriggerMode.tap,
             padding: const EdgeInsets.all(8.0),
             enableFeedback: false,

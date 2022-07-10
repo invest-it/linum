@@ -4,13 +4,12 @@
 //  Co-Author: n/a
 //
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
-import 'package:linum/navigation/main_router_delegate.dart';
+import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/pin_code_provider.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:provider/provider.dart';
 
@@ -32,9 +31,7 @@ class _LogoutFormState extends State<LogoutForm> {
             vertical: proportionateScreenHeight(16),
           ),
           child: Text(
-            AppLocalizations.of(context)!
-                    .translate('logout_form/label-current-email') +
-                auth.userEmail,
+            tr('logout_form.label-current-email') + auth.userEmail,
             style: Theme.of(context).textTheme.bodyText1,
             textAlign: TextAlign.center,
           ),
@@ -43,7 +40,7 @@ class _LogoutFormState extends State<LogoutForm> {
           key: const Key("logoutButton"),
           increaseHeightBy: proportionateScreenHeight(16),
           callback: () => auth.signOut().then((_) {
-            Get.find<MainRouterDelegate>().rebuild();
+            getRouterDelegate().rebuild();
             Provider.of<PinCodeProvider>(context, listen: false).resetSession();
           }),
           gradient: LinearGradient(
@@ -56,8 +53,7 @@ class _LogoutFormState extends State<LogoutForm> {
           increaseWidthBy: double.infinity,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           child: Text(
-            AppLocalizations.of(context)!
-                .translate('settings_screen/system-settings/button-signout'),
+            tr('settings_screen.system-settings.button-signout'),
             style: Theme.of(context).textTheme.button,
           ),
         ),
