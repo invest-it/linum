@@ -31,7 +31,7 @@ class HomeScreenListView implements BalanceDataListView {
 
   final List<Map<String, dynamic>> _timeWidgets = <Map<String, dynamic>>[
     {
-      "widget": const TimeWidget(displayValue: 'listview/label-today'),
+      "widget": const TimeWidget(displayValue: 'listview.label-today'),
       "time": DateTime(
         DateTime.now().year,
         DateTime.now().month,
@@ -39,7 +39,7 @@ class HomeScreenListView implements BalanceDataListView {
       ).add(const Duration(days: 1, microseconds: -1))
     },
     {
-      "widget": const TimeWidget(displayValue: 'listview/label-yesterday'),
+      "widget": const TimeWidget(displayValue: 'listview.label-yesterday'),
       "time": DateTime(
         DateTime.now().year,
         DateTime.now().month,
@@ -47,7 +47,7 @@ class HomeScreenListView implements BalanceDataListView {
       ).subtract(const Duration(microseconds: 1))
     },
     {
-      "widget": const TimeWidget(displayValue: 'listview/label-lastweek'),
+      "widget": const TimeWidget(displayValue: 'listview.label-lastweek'),
       "time": DateTime(
         DateTime.now().year,
         DateTime.now().month,
@@ -55,7 +55,7 @@ class HomeScreenListView implements BalanceDataListView {
       ).subtract(const Duration(days: 1, microseconds: 1))
     },
     {
-      "widget": const TimeWidget(displayValue: 'listview/label-thismonth'),
+      "widget": const TimeWidget(displayValue: 'listview.label-thismonth'),
       "time": DateTime(
         DateTime.now().year,
         DateTime.now().month,
@@ -100,7 +100,7 @@ class HomeScreenListView implements BalanceDataListView {
     if (error) {
       // TODO: tell user there was an error loading @damattl
     } else if (balanceDataList.isEmpty) {
-      list.add(const TimeWidget(displayValue: "listview/label-no-entries"));
+      list.add(const TimeWidget(displayValue: "listview.label-no-entries"));
     } else {
       for (final SingleBalanceData singleBalanceData in balanceDataList) {
         final DateTime date = singleBalanceData.time.toDate();
@@ -116,7 +116,7 @@ class HomeScreenListView implements BalanceDataListView {
         if (isFutureItem) {
           if (date.isBefore(currentTime)) {
             var timeWidget = const TimeWidget(
-              displayValue: "listview/label-future",
+              displayValue: "listview.label-future",
             );
             if (!(list.isEmpty && isCurrentMonth(date))) {
               timeWidget = TimeWidget(

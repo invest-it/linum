@@ -6,42 +6,72 @@
     },
     "action_lip": {
         "forgot-password": {
+            "logged-in": {
+                "button-submit": "Cambiar la contraseña ahora",
+                "label-description": "Por favor, introduzca una nueva contraseña. No puede utilizar contraseñas que ya haya usado antes. La nueva contraseña no debe contener su dirección de correo electrónico y debe tener al menos 6 caracteres.",
+                "label-title": "Elija una nueva contraseña"
+            },
             "logged-out": {
+                "button-submit": "Solicitar código",
+                "label-description": "Por favor, introduzca su dirección de correo electrónico conectada a su cuenta de Linum. Le enviaremos un código de verificación junto con las instrucciones para restablecer su contraseña.",
                 "label-title": "Restablecer contraseña"
             }
         },
         "standard-category": {
             "expenses": {
                 "label-title": "Gastos"
+            },
+            "income": {
+                "label-title": "Ingresos"
             }
         }
     },
     "alertdialog": {
         "error": {
+            "action-standard": "Okay",
+            "message-standard": "Se ha producido un error desconocido.",
             "title-standard": "Error"
         },
         "killswitch-change": {
+            "action": "Cancelar",
+            "cancel": "Volver a la edición",
+            "message": "Si cancela el proceso ahora, el antiguo PIN seguirá activo.",
             "title": "¿Está seguro?"
         },
         "killswitch-initialize": {
+            "action": "Cancelar",
+            "cancel": "Volver a la edición",
+            "message": "Si cancela el proceso ahora, el bloqueo del PIN se desactivará de nuevo.",
             "title": "¿Está seguro?"
         },
         "killswitch-recall": {
+            "action": "Cerrar la sesión y restablecer el PIN",
+            "cancel": "Cancelar",
+            "message": "Al cerrar la sesión, el bloqueo del PIN se desactiva. Esto le permite iniciar la sesión normalmente con su correo electrónico y contraseña si olvida su código PIN.",
             "title": "¿Está seguro?"
         },
         "login": {
+            "action-standard": "Okay",
             "title-standard": "Inicio de sesión fallido"
         },
         "login-verification": {
+            "action": "Okay",
+            "message": "Todavía no ha confirmado su dirección de correo electrónico. Le hemos enviado un nuevo correo electrónico para confirmar su inscripción. Haga clic en el enlace del correo electrónico para activar su cuenta. Por favor, compruebe también su carpeta de spam.",
             "title": "Correo electrónico no confirmado"
         },
         "reset-password": {
+            "action": "Okay",
+            "message": "Te hemos enviado un enlace para restablecer tu contraseña. Haga clic en el enlace del correo electrónico para establecer una nueva contraseña. Por favor, compruebe también su carpeta de spam.",
             "title": "Solicitud enviada"
         },
         "signup-verification": {
+            "action": "Okay",
+            "message": "Le hemos enviado un enlace para confirmar su inscripción. Haga clic en el enlace del correo electrónico para activar su cuenta. Por favor, compruebe también su carpeta de spam.",
             "title": "Confirmar el registro"
         },
         "update-password": {
+            "action": "Okay",
+            "message": "Su contraseña ha sido actualizada.",
             "title": "¡Listo!"
         }
     },
@@ -99,6 +129,8 @@
     },
     "enter_screen": {
         "add-amount": {
+            "dialog-label-title": "Ok!",
+            "dialog-label-title-expenses": "¡Por favor, añada una cantidad a su gasto!",
             "dialog-label-title-income": "Por favor, añada una cantidad a sus ingresos."
         },
         "button-delete-entry": "Borrar entrada",
@@ -107,6 +139,13 @@
         "button-save-entry": "Guardar entrada",
         "button-transaction-label": "Transacción",
         "delete-entry": {
+            "dialog-button-allentries": "Todas las entradas",
+            "dialog-button-cancel": "Cancelar",
+            "dialog-button-delete": "Borrar",
+            "dialog-button-fromnow": "Esta entrada y todas las posteriores",
+            "dialog-button-onlyonce": "Esta entrada",
+            "dialog-label-delete": "¿Realmente quieres borrar esta entrada?",
+            "dialog-label-deleterep": "¿Qué entrada quieres eliminar?",
             "dialog-label-title": "Confirmar"
         },
         "expenses-textfield-title": "¿Qué has comprado?",
@@ -152,15 +191,18 @@
     },
     "lock_screen": {
         "change": {
+            "label-button": "Cancelar",
             "label-title": "Elija un nuevo PIN"
         },
         "errors": {
             "last-mail-missing": "No se ha podido asignar el PIN a una cuenta"
         },
         "initialize": {
+            "label-button": "Cancelar",
             "label-title": "Elija su PIN"
         },
         "recall": {
+            "label-button": "Cerrar sesión",
             "label-title": "Introduzca el PIN"
         },
         "toast-pin-changed": "El PIN ha sido cambiado con éxito.",
@@ -206,40 +248,75 @@
         "register-password-errorlabel": "Por favor, introduzca una contraseña con al menos 6 caracteres.",
         "register-password-hintlabel": "Contraseña",
         "register-privacy": {
+            "label-leading": "Al registrarse, acepta nuestra ",
+            "label-link": "política de privacidad",
             "label-trailing": "."
         },
         "svg-credit-label": "Ilustraciones de Freepik"
     },
     "settings_screen": {
         "language-settings": {
+            "label-de": "Inglés",
+            "label-en": "Alemán",
+            "label-nl": "Holandés",
+            "label-systemlang": "Lenguaje del sistema",
+            "label-title": "AJUSTES DE IDIOMA",
             "label-tooltip": "Actualmente, sólo se admite el idioma del sistema. Idiomas admitidos: Alemán, inglés."
         },
         "pin-lock": {
+            "label-change-pin": "Cambiar el código PIN",
+            "label-title": "BLOQUEO DEL PIN",
+            "label-tooltip": "Si el bloqueo del PIN está activo, tendrás que introducir tu código PIN personal al iniciar la aplicación para proteger tus datos.",
             "switch-label": "Bloqueo del PIN activo"
         },
         "special-settings": {
+            "label-schwabenmodus": "Moda de Rico McPato",
             "label-title": "AJUSTES ESPECIALES"
         },
         "standard-account": {
+            "label-title": "CUENTAS ESTÁNDAR",
             "label-tooltip": "Estas cuentas se utilizan por defecto para cada nuevo ingreso/gasto. También puede cambiarlas individualmente."
         },
         "standard-account-selector": {
+            "cash": "Efectivo",
+            "credit-card": "Tarjeta de crédito",
+            "debit-card": "Tarjeta de débito",
+            "deposit": "Depósito",
+            "label-title": "Transacciones: ",
             "modal-label-title": "Cuentas"
         },
         "standard-category": {
+            "label-title": "CATEGORÍAS ESTÁNDAR",
             "label-tooltip": "Estas categorías se utilizan por defecto para cada nuevo ingreso/gastos/transacción. También puede cambiarlas individualmente."
         },
         "standard-currency": {
+            "label-title": "MONEDA ESTÁNDAR",
             "label-tooltip": "Esta moneda se utiliza por defecto para cada nueva transacción. También puede cambiarla individualmente."
         },
         "standard-expense-selector": {
+            "car": "Transporte",
+            "food": "Comida y bebida",
+            "freetime": "Ocio",
+            "house": "Hogar y vida",
+            "label-title": "Gastos: ",
+            "lifestyle": "Estilo de vida",
             "misc": "Varios"
         },
         "standard-income-selector": {
+            "allowance": "Asignación",
+            "childsupport": "Manutención de los hijos",
+            "interest": "Interés",
+            "investments": "Inversiones",
+            "label-title": "Ingresos: ",
+            "misc": "Varios",
+            "salary": "Salario",
             "sidejob": "Trabajo secundario"
         },
         "standards-selector-none": "Sin categoría",
         "system-settings": {
+            "button-forgot-password": "Cambiar contraseña",
+            "button-forgot-password-tooltip": "Puede solicitar un restablecimiento de la contraseña aquí si ha olvidado su antigua contraseña.",
+            "button-signout": "Firmar la salida",
             "label-title": "SU CUENTA"
         }
     }

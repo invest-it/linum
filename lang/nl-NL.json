@@ -6,42 +6,72 @@
     },
     "action_lip": {
         "forgot-password": {
+            "logged-in": {
+                "button-submit": "Wijzig Wachtwoord nu",
+                "label-description": "Voer een nieuw wachtwoord in. U kunt geen wachtwoorden gebruiken die u al eerder hebt gebruikt. Het nieuwe wachtwoord mag niet uw e-mailadres bevatten en moet uit ten minste 6 tekens bestaan.",
+                "label-title": "Kies een nieuw wachtwoord"
+            },
             "logged-out": {
+                "button-submit": "Aanvraag code",
+                "label-description": "Voer uw e-mailadres in dat aan uw Linum-account is gekoppeld. Wij zullen u een verificatiecode sturen, samen met instructies over hoe u uw wachtwoord kunt resetten.",
                 "label-title": "Reset Wachtwoord"
             }
         },
         "standard-category": {
             "expenses": {
                 "label-title": "Uitgaven"
+            },
+            "income": {
+                "label-title": "Inkomsten"
             }
         }
     },
     "alertdialog": {
         "error": {
+            "action-standard": "Okay",
+            "message-standard": "Er is een onbekende fout opgetreden.",
             "title-standard": "Fout"
         },
         "killswitch-change": {
+            "action": "Annuleren toch",
+            "cancel": "Terug naar bewerken",
+            "message": "Als je het proces nu annuleert, zal de oude PIN actief blijven.",
             "title": "Ben je zeker?"
         },
         "killswitch-initialize": {
+            "action": "Annuleren toch",
+            "cancel": "Terug naar bewerken",
+            "message": "Als je het proces nu annuleert, wordt het PIN-slot weer gedeactiveerd.",
             "title": "Ben je zeker?"
         },
         "killswitch-recall": {
+            "action": "Log uit en reset PIN",
+            "cancel": "Annuleren",
+            "message": "Als je uitlogt, wordt het PIN slot gedeactiveerd. Hierdoor kun je normaal inloggen met je e-mail en wachtwoord als je je PIN code vergeten bent.",
             "title": "Ben je zeker?"
         },
         "login": {
+            "action-standard": "Okay",
             "title-standard": "Inloggen niet gelukt"
         },
         "login-verification": {
+            "action": "Okay",
+            "message": "U hebt uw e-mailadres nog niet bevestigd. Wij hebben u een nieuwe e-mail gestuurd om uw inschrijving te bevestigen. Klik op de link in de e-mail om uw account te activeren. Controleer ook uw spam-map.",
             "title": "E-mail niet bevestigd"
         },
         "reset-password": {
+            "action": "Okay",
+            "message": "Wij hebben u een link gestuurd om uw wachtwoord te resetten. Klik op de link in de e-mail om een nieuw wachtwoord in te stellen. Controleer ook uw spam-map.",
             "title": "Verzoek verzonden"
         },
         "signup-verification": {
+            "action": "Okay",
+            "message": "Wij hebben u een link gestuurd om uw inschrijving te bevestigen. Klik op de link in de e-mail om uw account te activeren. Controleer ook uw spam-map.",
             "title": "Registratie bevestigen"
         },
         "update-password": {
+            "action": "Okay",
+            "message": "Uw wachtwoord is bijgewerkt.",
             "title": "Klaar!"
         }
     },
@@ -99,6 +129,8 @@
     },
     "enter_screen": {
         "add-amount": {
+            "dialog-label-title": "OK",
+            "dialog-label-title-expenses": "Voeg een bedrag toe aan uw uitgave!",
             "dialog-label-title-income": "Voeg een bedrag toe aan uw inkomen!"
         },
         "button-delete-entry": "Item verwijderen",
@@ -110,6 +142,14 @@
             "dialog-label-change": "Welk item wilt u veranderen?"
         },
         "delete-entry": {
+            "dialog-button-allentries": "Alle inzendingen",
+            "dialog-button-cancel": "Annuleren",
+            "dialog-button-delete": "Verwijderen",
+            "dialog-button-fromnow": "Dit bericht en alle volgende",
+            "dialog-button-onlyonce": "Dit bericht",
+            "dialog-button-untilnow": "Dit bericht en alle vorige",
+            "dialog-label-delete": "Wil je dit bericht echt verwijderen?",
+            "dialog-label-deleterep": "Welk item wilt u verwijderen?",
             "dialog-label-title": "Bevestig"
         },
         "expenses-textfield-title": "Wat heb je gekocht?",
@@ -155,15 +195,18 @@
     },
     "lock_screen": {
         "change": {
+            "label-button": "Annuleren",
             "label-title": "Kies een nieuwe PIN"
         },
         "errors": {
             "last-mail-missing": "De PIN-code kon niet aan een rekening worden toegewezen"
         },
         "initialize": {
+            "label-button": "Annuleren",
             "label-title": "Kies uw PIN"
         },
         "recall": {
+            "label-button": "Log uit",
             "label-title": "Voer PIN in"
         },
         "toast-pin-changed": "De PIN is succesvol gewijzigd.",
@@ -209,40 +252,75 @@
         "register-password-errorlabel": "Voer een wachtwoord in van ten minste 6 tekens.",
         "register-password-hintlabel": "Wachtwoord",
         "register-privacy": {
+            "label-leading": "Door u te registreren gaat u akkoord met ons ",
+            "label-link": "privacyverklaaring",
             "label-trailing": "."
         },
         "svg-credit-label": "Illustraties door Freepik"
     },
     "settings_screen": {
         "language-settings": {
+            "label-de": "English",
+            "label-en": "Deutsch",
+            "label-nl": "Nederlands",
+            "label-systemlang": "Systeemtaal gebruiken",
+            "label-title": "TAALINSTELLINGEN",
             "label-tooltip": "Currently, only the system language is supported. Supported languages: German, English."
         },
         "pin-lock": {
+            "label-change-pin": "Wijzig PIN code",
+            "label-title": "PIN SLOT",
+            "label-tooltip": "Als de PIN slot actief is, moet u bij het starten van de app uw persoonlijke PIN-code invoeren om uw gegevens te beschermen.",
             "switch-label": "PIN slot actief"
         },
         "special-settings": {
+            "label-schwabenmodus": "Dagobert Duck Mode",
             "label-title": "SPECIALE INSTELLINGEN"
         },
         "standard-account": {
+            "label-title": "STANDAARDREKENINGEN",
             "label-tooltip": "Deze rekeningen worden standaard gebruikt voor elke nieuwe inkomsten/uitgaven. U kunt ze ook afzonderlijk wijzigen."
         },
         "standard-account-selector": {
+            "cash": "Cash",
+            "credit-card": "Credit Card",
+            "debit-card": "Debit Card",
+            "deposit": "Deposit",
+            "label-title": "Transacties:",
             "modal-label-title": "Accounts"
         },
         "standard-category": {
+            "label-title": "STANDAARDCATEGORIEËN",
             "label-tooltip": "Deze categorieën worden standaard gebruikt voor elke nieuwe inkomsten/uitgaven/transactie. U kunt ze ook afzonderlijk wijzigen."
         },
         "standard-currency": {
+            "label-title": "STANDAARDVALUTA",
             "label-tooltip": "Deze valuta wordt standaard gebruikt voor elke nieuwe transactie. U kunt deze ook individueel wijzigen."
         },
         "standard-expense-selector": {
+            "car": "Vervoer",
+            "food": "Eten & Drinkens",
+            "freetime": "Vrije tijd",
+            "house": "Huis & Wonen",
+            "label-title": "Uitgaven: ",
+            "lifestyle": "Lifestyle",
             "misc": "Diversen"
         },
         "standard-income-selector": {
+            "allowance": "Uitkering",
+            "childsupport": "Kinderbijslag",
+            "interest": "Rente",
+            "investments": "Investeringen",
+            "label-title": "Inkomen: ",
+            "misc": "Diversen",
+            "salary": "Salaris",
             "sidejob": "Bijbaan"
         },
         "standards-selector-none": "Uncategorized",
         "system-settings": {
+            "button-forgot-password": "Wijzig Wachtwoord",
+            "button-forgot-password-tooltip": "U kunt hier een nieuw wachtwoord aanvragen als u uw oude wachtwoord bent vergeten.",
+            "button-signout": "Uitschrijven",
             "label-title": "UW ACCOUNT"
         }
     }

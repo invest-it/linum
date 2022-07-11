@@ -6,42 +6,72 @@
     },
     "action_lip": {
         "forgot-password": {
+            "logged-in": {
+                "button-submit": "Changer le mot de passe maintenant",
+                "label-description": "Veuillez saisir un nouveau mot de passe. Vous ne pouvez pas utiliser des mots de passe que vous avez déjà utilisés auparavant. Le nouveau mot de passe ne doit pas contenir votre adresse électronique et doit comporter au moins 6 caractères.",
+                "label-title": "Choisissez un nouveau mot de passe"
+            },
             "logged-out": {
+                "button-submit": "Envoyer la demande",
+                "label-description": "Veuillez saisir votre adresse e-mail connectée à votre compte Linum. Nous vous enverrons un code de vérification ainsi que des instructions sur la façon de réinitialiser votre mot de passe.",
                 "label-title": "Réinitialiser le mot de passe"
             }
         },
         "standard-category": {
             "expenses": {
                 "label-title": "Dépenses"
+            },
+            "income": {
+                "label-title": "Recettes"
             }
         }
     },
     "alertdialog": {
         "error": {
+            "action-standard": "Okay",
+            "message-standard": "Une erreur inconnue est survenue.",
             "title-standard": "Erreur"
         },
         "killswitch-change": {
+            "action": "Annuler de toute façon",
+            "cancel": "Retour à l'édition",
+            "message": "Si vous annulez le processus maintenant, l'ancien code PIN restera actif.",
             "title": "Êtes-vous sûr?"
         },
         "killswitch-initialize": {
+            "action": "Annuler de toute façon",
+            "cancel": "Retour à l'édition",
+            "message": "Si vous annulez le processus maintenant, le verrouillage du code PIN sera à nouveau désactivé.",
             "title": "Êtes-vous sûr?"
         },
         "killswitch-recall": {
+            "action": "Déconnexion et réinitialisation du code PIN",
+            "cancel": "Annuler",
+            "message": "Lorsque vous vous déconnectez, le verrouillage du code PIN est désactivé. Cela vous permet de vous connecter normalement avec votre e-mail et votre mot de passe si vous oubliez votre code PIN.",
             "title": "Êtes-vous sûr?"
         },
         "login": {
+            "action-standard": "Okay",
             "title-standard": "Échec de l'inscription"
         },
         "login-verification": {
+            "action": "Okay",
+            "message": "Tu n'as pas encore confirmé ton adresse e-mail. Nous t'avons envoyé un nouvel e-mail pour confirmer ton inscription. Veuillez cliquer sur le lien dans l'e-mail pour activer votre compte. Veuillez également vérifier votre dossier de spam.",
             "title": "E-mail non confirmé"
         },
         "reset-password": {
+            "action": "Okay",
+            "message": "Nous t'avons envoyé un lien pour réinitialiser ton mot de passe. Veuillez cliquer sur le lien dans l'e-mail pour définir un nouveau mot de passe. Veuillez également vérifier votre dossier de courrier indésirable.",
             "title": "Demande envoyée"
         },
         "signup-verification": {
+            "action": "Okay",
+            "message": "Nous t'avons envoyé un lien pour confirmer ton inscription. Veuillez cliquer sur le lien dans l'e-mail pour activer votre compte. Veuillez également vérifier votre dossier de courrier indésirable.",
             "title": "Confirmer l'inscription"
         },
         "update-password": {
+            "action": "Okay",
+            "message": "Ton mot de passe a été mis à jour.",
             "title": "Prêt!"
         }
     },
@@ -99,6 +129,8 @@
     },
     "enter_screen": {
         "add-amount": {
+            "dialog-label-title": "Ok!",
+            "dialog-label-title-expenses": "Veuillez ajouter un montant à votre dépense!",
             "dialog-label-title-income": "Veuillez ajouter un montant à votre revenu!"
         },
         "button-delete-entry": "Supprimer l'entrée",
@@ -110,6 +142,14 @@
             "dialog-label-change": "Quelle entrée souhaites-tu modifier?"
         },
         "delete-entry": {
+            "dialog-button-allentries": "Toutes les entrées",
+            "dialog-button-cancel": "Annuler",
+            "dialog-button-delete": "Supprimer",
+            "dialog-button-fromnow": "Cette entrée et toutes les suivantes",
+            "dialog-button-onlyonce": "Cette entrée",
+            "dialog-button-untilnow": "Cette entrée et toutes les précédentes",
+            "dialog-label-delete": "Tu veux vraiment supprimer cette entrée?",
+            "dialog-label-deleterep": "Quelle entrée souhaites-tu supprimer?",
             "dialog-label-title": "Confirmer"
         },
         "expenses-textfield-title": "Qu'avez-vous acheté?",
@@ -155,15 +195,18 @@
     },
     "lock_screen": {
         "change": {
+            "label-button": "Annuler",
             "label-title": "Choisissez votre code PIN"
         },
         "errors": {
             "last-mail-missing": "Le code PIN n'a pas pu être attribué à un compte"
         },
         "initialize": {
+            "label-button": "Annuler",
             "label-title": "Choisissez votre code PIN"
         },
         "recall": {
+            "label-button": "Déconnexion",
             "label-title": "Veuillez entrer le PIN"
         },
         "toast-pin-changed": "Le code PIN a été modifié avec succès.",
@@ -209,40 +252,75 @@
         "register-password-errorlabel": "Veuillez saisir un mot de passe d'au moins 6 caractères.",
         "register-password-hintlabel": "Mot de passe",
         "register-privacy": {
+            "label-leading": "En t'inscrivant, tu acceptes notre ",
+            "label-link": "déclaration de confidentalité",
             "label-trailing": "."
         },
         "svg-credit-label": "Illustrations par Freepik"
     },
     "settings_screen": {
         "language-settings": {
+            "label-de": "English",
+            "label-en": "Deutsch",
+            "label-nl": "Nederlands",
+            "label-systemlang": "Langue du système",
+            "label-title": "PARAMÈTRES LINGUISTIQUES",
             "label-tooltip": "Actuellement, seule la langue du système est prise en charge. Langues prises en charge : Allemand, Anglais."
         },
         "pin-lock": {
+            "label-change-pin": "Modifier le code PIN",
+            "label-title": "VERROUILLAGE DU PIN",
+            "label-tooltip": "Si le verrouillage du code PIN est activé, vous devrez saisir votre code PIN personnel au démarrage de l'application pour protéger vos données.",
             "switch-label": "Verrouillage du PIN actif"
         },
         "special-settings": {
+            "label-schwabenmodus": "Mode Picsou",
             "label-title": "PARAMÈTRES SPÉCIAUX"
         },
         "standard-account": {
+            "label-title": "COMPTES STANDARD",
             "label-tooltip": "Ces comptes sont utilisés par défaut pour chaque nouveau revenu/dépense. Vous pouvez également les modifier individuellement."
         },
         "standard-account-selector": {
+            "cash": "Espèces",
+            "credit-card": "Carte de crédit",
+            "debit-card": "Carte de débit",
+            "deposit": "Dépôt",
+            "label-title": "Transactions: ",
             "modal-label-title": "Comptes"
         },
         "standard-category": {
+            "label-title": "CATÉGORIES STANDARD",
             "label-tooltip": "Ces catégories sont utilisées par défaut pour chaque nouveau revenu/dépense/transaction. Vous pouvez également les modifier individuellement."
         },
         "standard-currency": {
+            "label-title": "DEVISE STANDARD",
             "label-tooltip": "Cette devise est utilisée par défaut pour chaque nouvelle transaction. Vous pouvez également la modifier individuellement."
         },
         "standard-expense-selector": {
+            "car": "Transport",
+            "food": "Nourriture",
+            "freetime": "Loisirs",
+            "house": "Maison et habitat",
+            "label-title": "Dépenses: ",
+            "lifestyle": "Mode de vie",
             "misc": "Divers"
         },
         "standard-income-selector": {
+            "allowance": "Allocation",
+            "childsupport": "Pension alimentaire pour enfants",
+            "interest": "Intérêt",
+            "investments": "Investissements",
+            "label-title": "Revenu: ",
+            "misc": "Divers",
+            "salary": "Salaire",
             "sidejob": "Travail parallèle"
         },
         "standards-selector-none": "Non classé",
         "system-settings": {
+            "button-forgot-password": "Modifier le mot de passe",
+            "button-forgot-password-tooltip": "Vous pouvez demander une réinitialisation du mot de passe ici si vous avez oublié votre ancien mot de passe.",
+            "button-signout": "Se déconnecter",
             "label-title": "VOTRE COMPTE"
         }
     }

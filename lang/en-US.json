@@ -6,42 +6,72 @@
     },
     "action_lip": {
         "forgot-password": {
+            "logged-in": {
+                "button-submit": "Change Password now",
+                "label-description": "Please enter a new password. You cannot use passwords that you have already used before. The new passwort must not contain your e-mail address and needs to have at least 6 characters.",
+                "label-title": "Choose New Password"
+            },
             "logged-out": {
+                "button-submit": "Request code",
+                "label-description": "Please enter your email address connected to your Linum account. We will send you a verification code along with instructions on how to reset your password.",
                 "label-title": "Reset Password"
             }
         },
         "standard-category": {
             "expenses": {
                 "label-title": "Expenses"
+            },
+            "income": {
+                "label-title": "Income"
             }
         }
     },
     "alertdialog": {
         "error": {
+            "action-standard": "Okay",
+            "message-standard": "An unknown error occurred.",
             "title-standard": "Error"
         },
         "killswitch-change": {
+            "action": "Cancel anyway",
+            "cancel": "Back to editing",
+            "message": "If you cancel the process now, the old PIN will remain active.",
             "title": "Are you sure?"
         },
         "killswitch-initialize": {
+            "action": "Cancel anyway",
+            "cancel": "Back to editing",
+            "message": "If you cancel the process now, the PIN lock will be deactivated again.",
             "title": "Are you sure?"
         },
         "killswitch-recall": {
+            "action": "Log out and reset PIN",
+            "cancel": "Cancel",
+            "message": "When you log out, the PIN lock is deactivated. This allows you to log in normally with your email and password if you forget your PIN code.",
             "title": "Are you sure?"
         },
         "login": {
+            "action-standard": "Okay",
             "title-standard": "Login not successful"
         },
         "login-verification": {
+            "action": "Okay",
+            "message": "You have not yet confirmed your email address. We have sent you a new email to confirm your registration. Please click on the link in the email to activate your account. Please also check your spam folder.",
             "title": "E-Mail not confirmed"
         },
         "reset-password": {
+            "action": "Okay",
+            "message": "We have sent you a link to reset your password. Please click on the link in the email to set a new password. Please also check your spam folder.",
             "title": "Request sent."
         },
         "signup-verification": {
+            "action": "Okay",
+            "message": "We have sent you a link to confirm your registration. Please click on the link in the email to activate your account. Please also check your spam folder.",
             "title": "Confirm registration"
         },
         "update-password": {
+            "action": "Okay",
+            "message": "Your password has been updated.",
             "title": "Done!"
         }
     },
@@ -99,6 +129,8 @@
     },
     "enter_screen": {
         "add-amount": {
+            "dialog-label-title": "Okay!",
+            "dialog-label-title-expenses": "Please add an amount to your expense!",
             "dialog-label-title-income": "Please add an amount to your income!"
         },
         "button-delete-entry": "Delete entry",
@@ -110,6 +142,14 @@
             "dialog-label-change": "Which entry do you want to change?"
         },
         "delete-entry": {
+            "dialog-button-allentries": "All entries",
+            "dialog-button-cancel": "Cancel",
+            "dialog-button-delete": "Delete",
+            "dialog-button-fromnow": "This entry and all subsequent",
+            "dialog-button-onlyonce": "This entry",
+            "dialog-button-untilnow": "This entry and all previous",
+            "dialog-label-delete": "Do you really want to delete this entry?",
+            "dialog-label-deleterep": "Which entry do you want to delete?",
             "dialog-label-title": "Confirm"
         },
         "expenses-textfield-title": "What did you purchase?",
@@ -155,15 +195,18 @@
     },
     "lock_screen": {
         "change": {
+            "label-button": "Cancel",
             "label-title": "Choose a new PIN"
         },
         "errors": {
             "last-mail-missing": "The PIN could not be assigned to an account"
         },
         "initialize": {
+            "label-button": "Cancel",
             "label-title": "Choose your PIN"
         },
         "recall": {
+            "label-button": "Log out",
             "label-title": "Please enter PIN"
         },
         "toast-pin-changed": "The PIN has been changed successfully.",
@@ -209,40 +252,75 @@
         "register-password-errorlabel": "Please enter a password with at least 6 characters.",
         "register-password-hintlabel": "Password",
         "register-privacy": {
+            "label-leading": "By registering you agree to our ",
+            "label-link": "privacy policy",
             "label-trailing": "."
         },
         "svg-credit-label": "Illustrations by Freepik"
     },
     "settings_screen": {
         "language-settings": {
+            "label-de": "English",
+            "label-en": "Deutsch",
+            "label-nl": "Nederlands",
+            "label-systemlang": "Use System Language",
+            "label-title": "LANGUAGE SETTINGS",
             "label-tooltip": "Currently, only the system language is supported. Supported languages: German, English."
         },
         "pin-lock": {
+            "label-change-pin": "Change PIN code",
+            "label-title": "PIN LOCK",
+            "label-tooltip": "If the PIN lock is active, you will need to enter your personal PIN code upon starting the app to protect your data.",
             "switch-label": "PIN lock active"
         },
         "special-settings": {
+            "label-schwabenmodus": "Dagobert Duck Mode",
             "label-title": "SPECIAL SETTINGS"
         },
         "standard-account": {
+            "label-title": "STANDARD ACCOUNTS",
             "label-tooltip": "These accounts are used by default for each new income/expense. You can also change them individually."
         },
         "standard-account-selector": {
+            "cash": "Cash",
+            "credit-card": "Credit Card",
+            "debit-card": "Debit Card",
+            "deposit": "Deposit",
+            "label-title": "Transactions: ",
             "modal-label-title": "Accounts"
         },
         "standard-category": {
+            "label-title": "STANDARD CATEGORIES",
             "label-tooltip": "These categories are used by default for each new income/expense/transaction. You can also change them individually."
         },
         "standard-currency": {
+            "label-title": "STANDARD CURRENCY",
             "label-tooltip": "This currency is used by default for every new transaction. You can also change it individually."
         },
         "standard-expense-selector": {
+            "car": "Transport",
+            "food": "Food & Drinks",
+            "freetime": "Leisure",
+            "house": "Home & Living",
+            "label-title": "Expenses: ",
+            "lifestyle": "Lifestyle",
             "misc": "Miscellaneous"
         },
         "standard-income-selector": {
+            "allowance": "Allowance",
+            "childsupport": "Child Support",
+            "interest": "Interest",
+            "investments": "Investments",
+            "label-title": "Income: ",
+            "misc": "Miscellaneous",
+            "salary": "Salary",
             "sidejob": "Side Job"
         },
         "standards-selector-none": "Uncategorized",
         "system-settings": {
+            "button-forgot-password": "Change Password",
+            "button-forgot-password-tooltip": "You can request a password reset here if you forgot your old password.",
+            "button-signout": "Sign out",
             "label-title": "YOUR ACCOUNT"
         }
     }

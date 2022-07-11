@@ -12,7 +12,7 @@ import 'package:linum/models/entry_category.dart';
 final Map<RepeatDuration, Map<String, dynamic>> categoriesRepeat = {
   RepeatDuration.none: {
     "entryCategory": const EntryCategory(
-      label: 'enter_screen/label-repeat-none',
+      label: 'enter_screen.label-repeat-none',
       icon: Icons.sync_disabled_rounded,
     ),
     "duration": null,
@@ -20,7 +20,7 @@ final Map<RepeatDuration, Map<String, dynamic>> categoriesRepeat = {
   },
   RepeatDuration.daily: {
     "entryCategory": const EntryCategory(
-      label: 'enter_screen/label-repeat-daily',
+      label: 'enter_screen.label-repeat-daily',
       icon: Icons.calendar_today_rounded,
     ),
     "duration": const Duration(days: 1).inSeconds,
@@ -28,7 +28,7 @@ final Map<RepeatDuration, Map<String, dynamic>> categoriesRepeat = {
   },
   RepeatDuration.weekly: {
     "entryCategory": const EntryCategory(
-      label: 'enter_screen/label-repeat-weekly',
+      label: 'enter_screen.label-repeat-weekly',
       icon: Icons.calendar_view_week_rounded,
     ),
     "duration": const Duration(days: 7).inSeconds,
@@ -36,7 +36,7 @@ final Map<RepeatDuration, Map<String, dynamic>> categoriesRepeat = {
   },
   RepeatDuration.monthly: {
     "entryCategory": const EntryCategory(
-      label: 'enter_screen/label-repeat-30days',
+      label: 'enter_screen.label-repeat-30days',
       icon: Icons.calendar_view_month_rounded,
     ),
     "duration": 1,

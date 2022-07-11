@@ -15,35 +15,35 @@ import 'package:linum/types/category_map.dart';
 final CategoryMap<StandardCategoryIncome> standardIncomeCategories =
     CategoryMap.fromMap({
   StandardCategoryIncome.none: const EntryCategory(
-    label: "settings_screen/standards-selector-none",
+    label: "settings_screen.standards-selector-none",
     icon: Icons.check_box_outline_blank_rounded,
   ),
   StandardCategoryIncome.income: const EntryCategory(
-    label: "settings_screen/standard-income-selector/salary",
+    label: "settings_screen.standard-income-selector.salary",
     icon: Icons.work_rounded,
   ),
   StandardCategoryIncome.allowance: const EntryCategory(
-    label: "settings_screen/standard-income-selector/allowance",
+    label: "settings_screen.standard-income-selector.allowance",
     icon: Icons.savings_rounded,
   ),
   StandardCategoryIncome.sideJob: const EntryCategory(
-    label: "settings_screen/standard-income-selector/sidejob",
+    label: "settings_screen.standard-income-selector.sidejob",
     icon: Icons.add_business_rounded,
   ),
   StandardCategoryIncome.investments: const EntryCategory(
-    label: "settings_screen/standard-income-selector/investments",
+    label: "settings_screen.standard-income-selector.investments",
     icon: Icons.auto_graph_rounded,
   ),
   StandardCategoryIncome.childSupport: const EntryCategory(
-    label: "settings_screen/standard-income-selector/childsupport",
+    label: "settings_screen.standard-income-selector.childsupport",
     icon: Icons.family_restroom_rounded,
   ),
   StandardCategoryIncome.interest: const EntryCategory(
-    label: "settings_screen/standard-income-selector/interest",
+    label: "settings_screen.standard-income-selector.interest",
     icon: Icons.attach_money_rounded,
   ),
   StandardCategoryIncome.miscellaneous: const EntryCategory(
-    label: "settings_screen/standard-income-selector/misc",
+    label: "settings_screen.standard-income-selector.misc",
     icon: Icons.inventory_2,
   ),
 });

@@ -53,29 +53,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
           children: [
             /// STANDARD CATEGORY
             const ListHeader(
-              'settings_screen/standard-category/label-title',
-              tooltipMessage: 'settings_screen/standard-category/label-tooltip',
+              'settings_screen.standard-category.label-title',
+              tooltipMessage: 'settings_screen.standard-category.label-tooltip',
             ),
             const StandardCategory(),
             const ListDivider(),
 
             /// PIN SWITCH
             const ListHeader(
-              'settings_screen/pin-lock/label-title',
-              tooltipMessage: 'settings_screen/pin-lock/label-tooltip',
+              'settings_screen.pin-lock.label-title',
+              tooltipMessage: 'settings_screen.pin-lock.label-tooltip',
             ),
             PinSwitch(pinCodeProvider: pinCodeProvider),
             const ListDivider(),
 
             /// LANGUAGE SWITCH
             const ListHeader(
-              'settings_screen/language-settings/label-title',
+              'settings_screen.language-settings.label-title',
             ),
             LanguageSelector(accountSettingsProvider: accountSettingsProvider),
             const ListDivider(),
 
             /// YOUR ACCOUNT
-            const ListHeader('settings_screen/system-settings/label-title'),
+            const ListHeader('settings_screen.system-settings.label-title'),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
