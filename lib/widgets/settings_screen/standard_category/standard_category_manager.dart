@@ -44,9 +44,7 @@ class _StandardCategoryState extends State<StandardCategory> {
           },
           child: CategoryListTile(
             defaultLabel: "ChosenStandardIncome",
-            labelTitle: AppLocalizations.of(context)!.translate(
-              'settings_screen/standard-income-selector/label-title',
-            ),
+            labelTitle: tr('settings_screen.standard-income-selector.label-title'),
             category: accountSettingsProvider.getIncomeEntryCategory(),
           ),
         ),
@@ -55,8 +53,8 @@ class _StandardCategoryState extends State<StandardCategory> {
             actionLipStatusProvider.setActionLip(
               providerKey: ProviderKey.settings,
               actionLipStatus: ActionLipStatus.onviewport,
-              actionLipBody: CategoryListView<StandardCategoryExpense>(
               actionLipTitle: tr('action_lip.standard-category.expenses.label-title'),
+              actionLipBody: CategoryListView<StandardCategoryExpense>(
                 accountSettingsProvider,
                 actionLipStatusProvider,
               ),
@@ -64,9 +62,7 @@ class _StandardCategoryState extends State<StandardCategory> {
           },
           child: CategoryListTile(
             defaultLabel: "ChosenStandardExpense",
-            labelTitle: AppLocalizations.of(context)!.translate(
-              'settings_screen/standard-expense-selector/label-title',
-            ),
+            labelTitle: tr('settings_screen.standard-expense-selector.label-title'),
             category: accountSettingsProvider.getExpenseEntryCategory(),
           ),
         ),

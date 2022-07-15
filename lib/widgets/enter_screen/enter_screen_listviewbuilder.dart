@@ -254,14 +254,12 @@ class _EnterScreenListViewBuilderState
     AccountSettingsProvider accountSettingsProvider,
     int index,
   ) {
-    return Text(
-      "${[
-          "enter_screen_attribute_category",
-          timeEntryCategory.label,
-          repeatDurationEntryCategory.label,
-        ][index].tr()
-      }: ",
-    );
+    return "${[
+      "enter_screen_attribute_category",
+      timeEntryCategory.label,
+      repeatDurationEntryCategory.label,
+    ][index].tr()
+    }: ";
   }
 
   //which lists view is built depending on expense etc.
