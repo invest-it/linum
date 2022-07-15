@@ -6,13 +6,12 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/constants/settings_enums.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
-import 'package:linum/widgets/settings_screen/standard_category/expenses_list_view.dart';
-import 'package:linum/widgets/settings_screen/standard_category/income_list_view.dart';
-import 'package:linum/widgets/settings_screen/standard_category/standard_category_expenses_list_tile.dart';
-import 'package:linum/widgets/settings_screen/standard_category/standard_category_income_list_tile.dart';
+import 'package:linum/widgets/settings_screen/standard_category/category_list_tile.dart';
+import 'package:linum/widgets/settings_screen/standard_category/category_list_view.dart';
 import 'package:provider/provider.dart';
 
 class StandardCategory extends StatefulWidget {
@@ -37,14 +36,18 @@ class _StandardCategoryState extends State<StandardCategory> {
               providerKey: ProviderKey.settings,
               actionLipStatus: ActionLipStatus.onviewport,
               actionLipTitle: tr('action_lip.standard-category.income.label-title'),
-              actionLipBody: IncomeListView(
+              actionLipBody: CategoryListView<StandardCategoryIncome>(
                 accountSettingsProvider,
                 actionLipStatusProvider,
               ),
             );
           },
-          child: StandardCategoryIncomeListTile(
-            accountSettingsProvider: accountSettingsProvider,
+          child: CategoryListTile(
+            defaultLabel: "ChosenStandardIncome",
+            labelTitle: AppLocalizations.of(context)!.translate(
+              'settings_screen/standard-income-selector/label-title',
+            ),
+            category: accountSettingsProvider.getIncomeEntryCategory(),
           ),
         ),
         GestureDetector(
@@ -52,15 +55,19 @@ class _StandardCategoryState extends State<StandardCategory> {
             actionLipStatusProvider.setActionLip(
               providerKey: ProviderKey.settings,
               actionLipStatus: ActionLipStatus.onviewport,
+              actionLipBody: CategoryListView<StandardCategoryExpense>(
               actionLipTitle: tr('action_lip.standard-category.expenses.label-title'),
-              actionLipBody: ExpensesListView(
                 accountSettingsProvider,
                 actionLipStatusProvider,
               ),
             );
           },
-          child: StandardCategoryExpensesListTile(
-            accountSettingsProvider: accountSettingsProvider,
+          child: CategoryListTile(
+            defaultLabel: "ChosenStandardExpense",
+            labelTitle: AppLocalizations.of(context)!.translate(
+              'settings_screen/standard-expense-selector/label-title',
+            ),
+            category: accountSettingsProvider.getExpenseEntryCategory(),
           ),
         ),
       ],

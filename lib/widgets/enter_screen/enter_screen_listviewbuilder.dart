@@ -17,8 +17,11 @@ import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/models/entry_category.dart';
 import 'package:linum/providers/account_settings_provider.dart';
+import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
+
+import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
 class EnterScreenListViewBuilder extends StatefulWidget {
@@ -44,9 +47,7 @@ class _EnterScreenListViewBuilderState
   final firstDate = DateTime(2000);
   final lastDate = DateTime(DateTime.now().year + 5, 12);
 
-  TextEditingController? nameController;
-  TextEditingController? noteController;
-
+  TextEditingController? myController;
   @override
   void initState() {
     super.initState();
@@ -54,11 +55,8 @@ class _EnterScreenListViewBuilderState
 
   @override
   void dispose() {
-    if (nameController != null) {
-      nameController!.dispose();
-    }
-    if (noteController != null) {
-      noteController!.dispose();
+    if (myController != null) {
+      myController!.dispose();
     }
     super.dispose();
   }
@@ -67,24 +65,24 @@ class _EnterScreenListViewBuilderState
   Widget build(BuildContext context) {
     final AccountSettingsProvider accountSettingsProvider =
         Provider.of<AccountSettingsProvider>(context);
+    final ActionLipStatusProvider actionLipStatusProvider =
+        Provider.of<ActionLipStatusProvider>(context);
     final EnterScreenProvider enterScreenProvider =
         Provider.of<EnterScreenProvider>(context);
 
-    nameController ??= TextEditingController(text: enterScreenProvider.name);
-    noteController ??= TextEditingController(text: enterScreenProvider.note);
+    myController ??= TextEditingController(text: enterScreenProvider.name);
     return Expanded(
-      child: SingleChildScrollView(
+      child: Center(
         child: Column(
           children: [
             SizedBox(
               height: proportionateScreenHeight(50),
             ),
-            //the text field where the user describes e.g. what he bought
             SizedBox(
               width: proportionateScreenWidth(281),
               child: TextField(
                 maxLength: 32,
-                controller: nameController,
+                controller: myController,
                 showCursor: true,
                 decoration: InputDecoration(
                   hintText: _hintTextChooser(enterScreenProvider),
@@ -94,29 +92,27 @@ class _EnterScreenListViewBuilderState
                   focusedBorder: InputBorder.none,
                 ),
                 style: Theme.of(context).textTheme.headline5,
+                onTap: () => actionLipStatusProvider.setActionLipStatus(
+                  providerKey: ProviderKey.enter,
+                ),
                 onChanged: (_) {
-                  enterScreenProvider.setName(nameController!.text);
+                  enterScreenProvider.setName(myController!.text);
                 },
               ),
             ),
             SizedBox(
               width: proportionateScreenWidth(300),
-              //the list view that contains the different categories
               child: ListView.separated(
                 shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                //primary: true,
                 padding: const EdgeInsets.all(8),
-                //as repeat is the last item and we dont want to implement it
-                //in the MVP the itemCount has to be cut by one
                 itemCount: calculateItemCount(enterScreenProvider),
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () => _onCategoryPressed(
                       index,
-                      // widget.categoriesTransaction,
                       enterScreenProvider,
                       accountSettingsProvider,
+                      actionLipStatusProvider,
                     ),
                     child: SizedBox(
                       height: 50,
@@ -182,24 +178,6 @@ class _EnterScreenListViewBuilderState
                     const Divider(),
               ),
             ),
-            SizedBox(
-              width: proportionateScreenWidth(281),
-              child: TextField(
-                //scrollPadding: EdgeInsets.only(bottom: bottomInsets + 40),
-                textInputAction: TextInputAction.newline,
-                controller: noteController,
-                showCursor: true,
-                minLines: 1,
-                maxLines: 3,
-                decoration: const InputDecoration(
-                  hintText: "Description",
-                ),
-                style: Theme.of(context).textTheme.bodyText1,
-                onChanged: (_) {
-                  enterScreenProvider.setNote(noteController!.text);
-                },
-              ),
-            ),
           ],
         ),
       ),
@@ -216,61 +194,34 @@ class _EnterScreenListViewBuilderState
 
   //function executed when one of the categories (category, account, date etc.) is tapped
   void _onCategoryPressed(
-    int index,
-    EnterScreenProvider enterScreenProvider,
-    AccountSettingsProvider accountSettingsProvider,
-  ) {
+      int index,
+      EnterScreenProvider enterScreenProvider,
+      AccountSettingsProvider accountSettingsProvider,
+      ActionLipStatusProvider actionLipStatusProvider) {
     if (index == 1) {
       //opens the date picker
       _openDatePicker(enterScreenProvider);
     } else {
-      //opens a modal bottom sheet
-      showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return SizedBox(
-            height: proportionateScreenHeight(400),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-                      child: Icon(
-                        <IconData>[
-                          _selectIcon(enterScreenProvider).icon ?? Icons.error,
-                          timeEntryCategory.icon,
-                          repeatDurationEntryCategory.icon,
-                        ][index],
-                      ),
-                    ),
-                    Column(
-                      children: [
-                        //text depending on the category
-                        _typeChooser(
-                          enterScreenProvider,
-                          accountSettingsProvider,
-                          index,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                SingleChildScrollView(
-                  child: SizedBox(
-                    height: proportionateScreenHeight(300),
-                    //which list view is displayed depending on which category is tapped
-                    child: _chooseListViewBuilder(
-                      enterScreenProvider,
-                      index,
-                      accountSettingsProvider,
-                    ),
-                  ),
-                ),
-              ],
+      FocusManager.instance.primaryFocus?.unfocus();
+      actionLipStatusProvider.setActionLip(
+        providerKey: ProviderKey.enter,
+        actionLipStatus: ActionLipStatus.onviewport,
+        actionLipTitle: _typeChooser(
+          enterScreenProvider,
+          accountSettingsProvider,
+          index,
+        ),
+        actionLipBody: SingleChildScrollView(
+          child: SizedBox(
+            height: proportionateScreenHeightFraction(ScreenFraction.twofifths),
+            child: _chooseListViewBuilder(
+              enterScreenProvider,
+              index,
+              accountSettingsProvider,
+              actionLipStatusProvider,
             ),
-          );
-        },
+          ),
+        ),
       );
     }
   }
@@ -298,7 +249,7 @@ class _EnterScreenListViewBuilderState
   // }
 
   //which text will displayed depending on expense etc.
-  Text _typeChooser(
+  String _typeChooser(
     EnterScreenProvider enterScreenProvider,
     AccountSettingsProvider accountSettingsProvider,
     int index,
@@ -318,24 +269,28 @@ class _EnterScreenListViewBuilderState
     EnterScreenProvider enterScreenProvider,
     int index,
     AccountSettingsProvider accountSettingsProvider,
+    ActionLipStatusProvider actionLipStatusProvider,
   ) {
     if (enterScreenProvider.isExpenses) {
       return _listViewBuilderExpenses(
         index,
         enterScreenProvider,
         accountSettingsProvider,
+        actionLipStatusProvider,
       );
     } else if (enterScreenProvider.isIncome) {
       return _listViewBuilderIncome(
         index,
         enterScreenProvider,
         accountSettingsProvider,
+        actionLipStatusProvider,
       );
     } else {
       return _listViewBuilderTransaction(
         index,
         enterScreenProvider,
         accountSettingsProvider,
+        actionLipStatusProvider,
       );
     }
   }
@@ -345,6 +300,7 @@ class _EnterScreenListViewBuilderState
     int index,
     EnterScreenProvider enterScreenProvider,
     AccountSettingsProvider accountSettingsProvider,
+    ActionLipStatusProvider actionLipStatusProvider,
   ) {
     if (index == 0) {
       if (enterScreenProvider.isExpenses) {
@@ -369,6 +325,7 @@ class _EnterScreenListViewBuilderState
                 standardExpenseCategories[
                         StandardCategoryExpense.values[indexBuilder]]!
                     .icon,
+                actionLipStatusProvider,
               ),
             );
           },
@@ -388,14 +345,14 @@ class _EnterScreenListViewBuilderState
               ),
               //selects the item as the categories value
               onTap: () => _selectCategoryItemIncome(
-                StandardCategoryIncome.values[indexBuilder]
-                    .toString()
-                    .split(".")[1],
-                enterScreenProvider,
-                standardIncomeCategories[
-                        StandardCategoryExpense.values[indexBuilder]]!
-                    .icon,
-              ),
+                  StandardCategoryIncome.values[indexBuilder]
+                      .toString()
+                      .split(".")[1],
+                  enterScreenProvider,
+                  standardIncomeCategories[
+                          StandardCategoryExpense.values[indexBuilder]]!
+                      .icon,
+                  actionLipStatusProvider),
             );
           },
         );
@@ -430,11 +387,8 @@ class _EnterScreenListViewBuilderState
               tr(categoriesRepeat[RepeatDuration.values[indexBuilder]]?["entryCategory"].label as String),
             ),
             //selects the item as the repeat value
-            onTap: () => _selectRepeatItem(
-              enterScreenProvider,
-              indexBuilder,
-              accountSettingsProvider,
-            ),
+            onTap: () => _selectRepeatItem(enterScreenProvider, indexBuilder,
+                accountSettingsProvider, actionLipStatusProvider),
           );
         },
       );
@@ -446,6 +400,7 @@ class _EnterScreenListViewBuilderState
     int index,
     EnterScreenProvider enterScreenProvider,
     AccountSettingsProvider accountSettingsProvider,
+    ActionLipStatusProvider actionLipStatusProvider,
   ) {
     if (index == 0) {
       return ListView.builder(
@@ -461,14 +416,14 @@ class _EnterScreenListViewBuilderState
               tr(standardIncomeCategories[StandardCategoryIncome.values[indexBuilder]]!.label),
             ),
             onTap: () => _selectCategoryItemIncome(
-              StandardCategoryIncome.values[indexBuilder]
-                  .toString()
-                  .split(".")[1],
-              enterScreenProvider,
-              standardIncomeCategories[
-                      StandardCategoryIncome.values[indexBuilder]]!
-                  .icon,
-            ),
+                StandardCategoryIncome.values[indexBuilder]
+                    .toString()
+                    .split(".")[1],
+                enterScreenProvider,
+                standardIncomeCategories[
+                        StandardCategoryIncome.values[indexBuilder]]!
+                    .icon,
+                actionLipStatusProvider),
           );
         },
       );
@@ -500,11 +455,8 @@ class _EnterScreenListViewBuilderState
             title: Text(
               tr(categoriesRepeat[RepeatDuration.values[indexBuilder]]?["entryCategory"].label as String),
             ),
-            onTap: () => _selectRepeatItem(
-              enterScreenProvider,
-              indexBuilder,
-              accountSettingsProvider,
-            ),
+            onTap: () => _selectRepeatItem(enterScreenProvider, indexBuilder,
+                accountSettingsProvider, actionLipStatusProvider),
           );
         },
       );
@@ -516,6 +468,7 @@ class _EnterScreenListViewBuilderState
     int index,
     EnterScreenProvider enterScreenProvider,
     AccountSettingsProvider accountSettingsProvider,
+    ActionLipStatusProvider actionLipStatusProvider,
   ) {
     return ListView.builder(
       itemCount: categoriesRepeat.length,
@@ -530,11 +483,8 @@ class _EnterScreenListViewBuilderState
           title: Text(
             tr(categoriesRepeat[RepeatDuration.values[indexBuilder]]?["entryCategory"].label as String),
           ),
-          onTap: () => _selectRepeatItem(
-            enterScreenProvider,
-            indexBuilder,
-            accountSettingsProvider,
-          ),
+          onTap: () => _selectRepeatItem(enterScreenProvider, indexBuilder,
+              accountSettingsProvider, actionLipStatusProvider),
         );
       },
     );
@@ -612,10 +562,13 @@ class _EnterScreenListViewBuilderState
 //functions that set the category, account item etc when tapped
   void _selectCategoryItemExpenses(
     String name,
-    enterScreenProvider,
+    EnterScreenProvider enterScreenProvider,
     IconData icon,
+    ActionLipStatusProvider actionLipStatusProvider,
   ) {
-    Navigator.pop(context);
+    actionLipStatusProvider.setActionLipStatus(
+      providerKey: ProviderKey.enter,
+    );
     enterScreenProvider.setCategory(name);
   }
 
@@ -623,8 +576,11 @@ class _EnterScreenListViewBuilderState
     String name,
     enterScreenProvider,
     IconData icon,
+    ActionLipStatusProvider actionLipStatusProvider,
   ) {
-    Navigator.pop(context);
+    actionLipStatusProvider.setActionLipStatus(
+      providerKey: ProviderKey.enter,
+    );
     enterScreenProvider.setCategory(name);
   }
 
@@ -632,9 +588,11 @@ class _EnterScreenListViewBuilderState
   void _selectCategoryItemTransactions(
     String name,
     EnterScreenProvider enterScreenProvider,
+    ActionLipStatusProvider actionLipStatusProvider,
   ) {
-    Navigator.pop(context);
-
+    actionLipStatusProvider.setActionLipStatus(
+      providerKey: ProviderKey.enter,
+    );
     enterScreenProvider.setCategory(name);
   }
 
@@ -642,8 +600,11 @@ class _EnterScreenListViewBuilderState
     EnterScreenProvider enterScreenProvider,
     int index,
     AccountSettingsProvider accountSettingsProvider,
+    ActionLipStatusProvider actionLipStatusProvider,
   ) {
-    Navigator.pop(context);
+    actionLipStatusProvider.setActionLipStatus(
+      providerKey: ProviderKey.enter,
+    );
     enterScreenProvider
         .setRepeatDurationEnumSilently(RepeatDuration.values[index]);
     enterScreenProvider.setRepeatDuration(

@@ -97,7 +97,10 @@ class ActionLipStatusProvider extends ChangeNotifier {
     return _actionTitleMap[providerKey] != null;
   }
 
-  static SingleChildWidget provider(BuildContext context, {bool testing = false}) {
+  static SingleChildWidget provider(
+    BuildContext context, {
+    bool testing = false,
+  }) {
     return ChangeNotifierProvider<ActionLipStatusProvider>(
       create: (_) => ActionLipStatusProvider(),
     );
@@ -111,4 +114,6 @@ enum ProviderKey {
   settings,
   onboarding,
   academy,
+  enter,
+  survey,
 }
