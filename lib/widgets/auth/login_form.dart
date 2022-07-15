@@ -6,11 +6,11 @@
 
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:linum/widgets/auth/forgot_password.dart';
@@ -58,9 +58,9 @@ class _LoginFormState extends State<LoginForm> {
         _pass,
         onError: userAlert.showMyDialog,
         onNotVerified: () => userAlert.showMyDialog(
-          "alertdialog/login-verification/message",
-          title: "alertdialog/login-verification/title",
-          actionTitle: "alertdialog/login-verification/action",
+          "alertdialog.login-verification.message",
+          title: "alertdialog.login-verification.title",
+          actionTitle: "alertdialog.login-verification.action",
         ),
       );
     }
@@ -70,8 +70,7 @@ class _LoginFormState extends State<LoginForm> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 12.0),
           child: Text(
-            AppLocalizations.of(context)!
-                .translate('onboarding_screen/login-lip-title'),
+            tr('onboarding_screen.login-lip-title'),
             style: Theme.of(context).textTheme.headline5,
           ),
         ),
@@ -108,9 +107,7 @@ class _LoginFormState extends State<LoginForm> {
                         autocorrect: false,
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: AppLocalizations.of(context)!.translate(
-                            'onboarding_screen/login-email-hintlabel',
-                          ),
+                          hintText: tr('onboarding_screen.login-email-hintlabel'),
                           hintStyle: Theme.of(context)
                               .textTheme
                               .bodyText1
@@ -118,9 +115,7 @@ class _LoginFormState extends State<LoginForm> {
                                 color: Theme.of(context).colorScheme.secondary,
                               ),
                           errorText: _mailValidate
-                              ? AppLocalizations.of(context)!.translate(
-                                  'onboarding_screen/login-email-errorlabel',
-                                )
+                              ? tr('onboarding_screen.login-email-errorlabel')
                               : null,
                         ),
                       ),
@@ -141,13 +136,9 @@ class _LoginFormState extends State<LoginForm> {
                         //    logIn(_mailController!.text, _passController.text),
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: AppLocalizations.of(context)!.translate(
-                            'onboarding_screen/login-password-hintlabel',
-                          ),
+                          hintText: tr('onboarding_screen.login-password-hintlabel'),
                           errorText: _passValidate
-                              ? AppLocalizations.of(context)!.translate(
-                                  'onboarding_screen/login-password-errorlabel',
-                                )
+                              ? tr('onboarding_screen.login-password-errorlabel')
                               : null,
                           hintStyle: Theme.of(context)
                               .textTheme
@@ -184,8 +175,7 @@ class _LoginFormState extends State<LoginForm> {
               // ),
 
               SignInSignUpButton(
-                text: AppLocalizations.of(context)!
-                    .translate('onboarding_screen/login-lip-login-button'),
+                text: tr('onboarding_screen.login-lip-login-button'),
                 callback: () {
                   setState(() {
                     _mailController!.text.isEmpty
@@ -218,9 +208,7 @@ class _LoginFormState extends State<LoginForm> {
                 // Works only on iOS at the moment (according to Google)
                 SignInWithAppleButton(
                   onPressed: auth.signInWithApple,
-                  text: AppLocalizations.of(context)!.translate(
-                    'onboarding_screen/apple-button',
-                  ),
+                  text: tr('onboarding_screen.apple-button'),
                   height: proportionateScreenHeight(40),
                 ),
               ],

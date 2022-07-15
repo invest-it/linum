@@ -8,8 +8,8 @@
 
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:linum/constants/categories_repeat.dart';
 import 'package:linum/constants/repeat_duration_type_enum.dart';
 import 'package:linum/constants/settings_enums.dart';
@@ -18,7 +18,6 @@ import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/models/entry_category.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:provider/provider.dart';
 
@@ -157,13 +156,12 @@ class _EnterScreenListViewBuilderState
                             width: 20,
                           ),
                           Text(
-                            "${AppLocalizations.of(context)!.translate(
-                              [
-                                "enter_screen_attribute_category",
-                                timeEntryCategory.label,
-                                repeatDurationEntryCategory.label,
-                              ][index],
-                            )}: ",
+                            "${[
+                              "enter_screen_attribute_category",
+                              timeEntryCategory.label,
+                              repeatDurationEntryCategory.label,
+                              ][index].tr()
+                            }: ",
                           ),
                           const SizedBox(
                             width: 5,
@@ -280,14 +278,11 @@ class _EnterScreenListViewBuilderState
   //which hint text at the upper text field is shown
   String _hintTextChooser(EnterScreenProvider enterScreenProvider) {
     if (enterScreenProvider.isExpenses) {
-      return AppLocalizations.of(context)!
-          .translate('enter_screen/expenses-textfield-title');
+      return tr('enter_screen.expenses-textfield-title');
     } else if (enterScreenProvider.isIncome) {
-      return AppLocalizations.of(context)!
-          .translate('enter_screen/income-textfield-title');
+      return tr('enter_screen.income-textfield-title');
     } else {
-      return AppLocalizations.of(context)!
-          .translate('enter_screen/transaction-textfield-title');
+      return tr('enter_screen.transaction-textfield-title');
     }
   }
 
@@ -309,13 +304,12 @@ class _EnterScreenListViewBuilderState
     int index,
   ) {
     return Text(
-      "${AppLocalizations.of(context)!.translate(
-        [
+      "${[
           "enter_screen_attribute_category",
           timeEntryCategory.label,
           repeatDurationEntryCategory.label,
-        ][index],
-      )}: ",
+        ][index].tr()
+      }: ",
     );
   }
 
@@ -364,11 +358,7 @@ class _EnterScreenListViewBuilderState
                     .icon,
               ),
               title: Text(
-                AppLocalizations.of(context)!.translate(
-                  standardExpenseCategories[
-                          StandardCategoryExpense.values[indexBuilder]]!
-                      .label,
-                ),
+                tr(standardExpenseCategories[StandardCategoryExpense.values[indexBuilder]]!.label),
               ),
               //selects the item as the categories value
               onTap: () => _selectCategoryItemExpenses(
@@ -394,11 +384,7 @@ class _EnterScreenListViewBuilderState
                     .icon,
               ),
               title: Text(
-                AppLocalizations.of(context)!.translate(
-                  standardIncomeCategories[
-                          StandardCategoryIncome.values[indexBuilder]]!
-                      .label,
-                ),
+                tr(standardIncomeCategories[StandardCategoryIncome.values[indexBuilder]]!.label),
               ),
               //selects the item as the categories value
               onTap: () => _selectCategoryItemIncome(
@@ -441,11 +427,7 @@ class _EnterScreenListViewBuilderState
                   Icons.error,
             ),
             title: Text(
-              AppLocalizations.of(context)!.translate(
-                categoriesRepeat[RepeatDuration.values[indexBuilder]]
-                        ?["entryCategory"]
-                    .label as String,
-              ),
+              tr(categoriesRepeat[RepeatDuration.values[indexBuilder]]?["entryCategory"].label as String),
             ),
             //selects the item as the repeat value
             onTap: () => _selectRepeatItem(
@@ -476,11 +458,7 @@ class _EnterScreenListViewBuilderState
                   .icon,
             ),
             title: Text(
-              AppLocalizations.of(context)!.translate(
-                standardIncomeCategories[
-                        StandardCategoryIncome.values[indexBuilder]]!
-                    .label,
-              ),
+              tr(standardIncomeCategories[StandardCategoryIncome.values[indexBuilder]]!.label),
             ),
             onTap: () => _selectCategoryItemIncome(
               StandardCategoryIncome.values[indexBuilder]
@@ -520,11 +498,7 @@ class _EnterScreenListViewBuilderState
                   Icons.error,
             ),
             title: Text(
-              AppLocalizations.of(context)!.translate(
-                categoriesRepeat[RepeatDuration.values[indexBuilder]]
-                        ?["entryCategory"]
-                    .label as String,
-              ),
+              tr(categoriesRepeat[RepeatDuration.values[indexBuilder]]?["entryCategory"].label as String),
             ),
             onTap: () => _selectRepeatItem(
               enterScreenProvider,
@@ -554,11 +528,7 @@ class _EnterScreenListViewBuilderState
                 Icons.error,
           ),
           title: Text(
-            AppLocalizations.of(context)!.translate(
-              categoriesRepeat[RepeatDuration.values[indexBuilder]]
-                      ?["entryCategory"]
-                  .label as String,
-            ),
+            tr(categoriesRepeat[RepeatDuration.values[indexBuilder]]?["entryCategory"].label as String),
           ),
           onTap: () => _selectRepeatItem(
             enterScreenProvider,
@@ -580,48 +550,34 @@ class _EnterScreenListViewBuilderState
       if (enterScreenProvider.isExpenses) {
         if (enterScreenProvider.category == "") {
           return Text(
-            AppLocalizations.of(context)!.translate(
-              standardExpenseCategories[StandardCategoryExpense.none]!.label,
-            ),
+            tr(standardExpenseCategories[StandardCategoryExpense.none]!.label),
           );
         }
         return Text(
-          AppLocalizations.of(context)!.translate(
-            standardExpenseCategories[enterScreenProvider.category]?.label ??
-                'chosen expense',
-          ),
+          tr(standardExpenseCategories[enterScreenProvider.category]?.label ?? 'chosen expense'),
         );
       } else {
         if (enterScreenProvider.category == "") {
           return Text(
-            AppLocalizations.of(context)!.translate(
-              standardIncomeCategories[StandardCategoryIncome.none]!.label,
-            ),
+            tr(standardIncomeCategories[StandardCategoryIncome.none]!.label),
           );
         }
         return Text(
-          AppLocalizations.of(context)!.translate(
-            standardIncomeCategories[enterScreenProvider.category]?.label ??
-                'chosen income',
-          ),
+          tr(standardIncomeCategories[enterScreenProvider.category]?.label ?? 'chosen income'),
         );
       }
     } else if (index == 1) {
-      final String langCode = AppLocalizations.of(context)!.locale.languageCode;
+      final String langCode = context.locale.languageCode;
 
       final DateFormat formatter = DateFormat('dd. MMMM yyyy', langCode);
       return Text(formatter.format(enterScreenProvider.selectedDate));
     } else if (index == 2) {
       return Text(
-        AppLocalizations.of(context)!.translate(
-          categoriesRepeat[enterScreenProvider.repeatDurationEnum]
-                  ?["entryCategory"]
-              .label as String,
-        ),
+        tr(categoriesRepeat[enterScreenProvider.repeatDurationEnum]?["entryCategory"].label as String),
       );
     } else {
       log("Something has gone wrong with the index in enter_screen_listviewbuilder.dart");
-      return Text(AppLocalizations.of(context)!.translate("main/label-error"));
+      return Text(tr("main.label-error"));
     }
   }
 

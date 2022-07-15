@@ -3,12 +3,11 @@
 //  Author: NightmindOfficial
 //  Co-Author: n/a
 /// PAGE INDEX 4
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
-import 'package:linum/navigation/main_router_delegate.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
+import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/utilities/backend/url_handler.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/screen_skeleton/app_bar_action.dart';
@@ -25,7 +24,7 @@ class AcademyScreen extends StatelessWidget {
       head: 'Academy',
       leadingAction: (BuildContext context) => AppBarAction.fromParameters(
         icon: Icons.arrow_back_rounded,
-        ontap: () => Get.find<MainRouterDelegate>().popRoute(),
+        ontap: () => getRouterDelegate().popRoute(),
         // TODO: Maybe use another method, animation does not look good.
       ),
       isInverted: true,
@@ -41,8 +40,7 @@ class AcademyScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Text(
-                AppLocalizations.of(context)!
-                    .translate('academy_screen/label-title'),
+                tr('academy_screen.label-title'),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headline3,
               ),
@@ -50,8 +48,7 @@ class AcademyScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               child: Text(
-                AppLocalizations.of(context)!
-                    .translate('academy_screen/label-description'),
+                tr('academy_screen.label-description'),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyText1,
               ),
@@ -67,10 +64,7 @@ class AcademyScreen extends StatelessWidget {
                     spacing: 12,
                     children: [
                       const Icon(Icons.open_in_new_rounded),
-                      Text(
-                        AppLocalizations.of(context)!
-                            .translate("academy_screen/label-button"),
-                      ),
+                      Text(tr("academy_screen.label-button")),
                     ],
                   ),
                 ),
@@ -86,8 +80,7 @@ class AcademyScreen extends StatelessWidget {
               width: double.infinity,
               child: CupertinoButton(
                 child: Text(
-                  AppLocalizations.of(context)!
-                      .translate('onboarding_screen/svg-credit-label'),
+                  tr('onboarding_screen.svg-credit-label'),
                   style: Theme.of(context).textTheme.caption,
                 ),
                 onPressed: () => {

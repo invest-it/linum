@@ -8,12 +8,12 @@ import 'dart:async';
 import 'dart:developer' as dev;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/models/entry_category.dart';
 import 'package:linum/providers/authentication_service.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
@@ -102,7 +102,11 @@ class AccountSettingsProvider extends ChangeNotifier {
           final List<String> langArray = langString.split("-");
           lang = Locale(langArray[0], langArray[1]);
         }
-        AppLocalizations.of(context)!.load(locale: lang);
+        // AppLocalizations.of(context)!.load(locale: lang);
+        if (lang != null) {
+          context.setLocale(lang);
+        }
+
         Provider.of<AuthenticationService>(context, listen: false)
             .updateLanguageCode(context);
         notifyListeners();

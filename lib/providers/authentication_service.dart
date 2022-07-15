@@ -8,12 +8,12 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:linum/types/buildable_provider.dart';
 import 'package:linum/utilities/backend/cryptography.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -290,7 +290,7 @@ class AuthenticationService extends ChangeNotifier implements BuildableProvider 
 
   void updateLanguageCode(BuildContext context) {
     _firebaseAuth.setLanguageCode(
-      AppLocalizations.of(context)?.locale.languageCode ?? "en",
+      context.locale.languageCode,
     );
   }
 

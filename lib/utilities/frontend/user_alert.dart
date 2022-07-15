@@ -4,9 +4,9 @@
 //  Co-Author: SoTBurst
 //
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/models/dialog_action.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 
 class UserAlert {
   final BuildContext _context;
@@ -39,20 +39,20 @@ class UserAlert {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
-            AppLocalizations.of(context)!.translate(title),
+            title.tr(),
             style: Theme.of(context).textTheme.headline5,
           ),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text(AppLocalizations.of(context)!.translate(message)),
+                Text(message.tr()),
               ],
             ),
           ),
           actions: <Widget>[
             TextButton(
               child: Text(
-                AppLocalizations.of(context)!.translate(actionTitle),
+                actionTitle.tr(),
                 style: Theme.of(context)
                     .textTheme
                     .bodyText1
@@ -81,13 +81,13 @@ class UserAlert {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
-            AppLocalizations.of(context)!.translate(title),
+            title.tr(),
             style: Theme.of(context).textTheme.headline5,
           ),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text(AppLocalizations.of(context)!.translate(message)),
+                Text(message.tr()),
               ],
             ),
           ),
@@ -108,7 +108,7 @@ class UserAlert {
                 }
                 return TextButton(
                   child: Text(
-                    AppLocalizations.of(context)!.translate(item.actionTitle),
+                    item.actionTitle.tr(),
                     style: Theme.of(context).textTheme.bodyText1?.copyWith(
                           // color: item.primaryButton
                           //     ? Theme.of(context).colorScheme.primary

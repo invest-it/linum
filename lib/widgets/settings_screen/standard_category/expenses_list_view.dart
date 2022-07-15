@@ -4,13 +4,12 @@
 //  Co-Author: SoTBurst, NightmindOfficial
 //  Refactored: TheBlueBaron (small)
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/constants/settings_enums.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
-import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 
 class ExpensesListView extends StatelessWidget {
@@ -47,12 +46,7 @@ class ExpensesListView extends StatelessWidget {
                             ?.icon,
                       ),
                       title: Text(
-                        AppLocalizations.of(context)!.translate(
-                          standardExpenseCategories[StandardCategoryExpense
-                                      .values[indexBuilder]]
-                                  ?.label ??
-                              "Category",
-                        ),
+                        tr(standardExpenseCategories[StandardCategoryExpense.values[indexBuilder]]?.label ?? "Category"),
                       ),
                       selected:
                           "StandardCategoryExpense.${accountSettingsProvider.settings["StandardCategoryExpense"] as String? ?? "None"}" ==

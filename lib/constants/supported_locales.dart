@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const supportedLocals = <Locale> [
+const supportedLocales = <Locale> [
   Locale('en', 'US'),
   Locale('de', 'DE'),
   Locale('nl', 'NL'),

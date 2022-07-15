@@ -4,10 +4,10 @@
 //  Co-Author: SoTBurst
 /// PAGE INDEX 1
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/filters.dart';
 import 'package:linum/utilities/frontend/silent_scroll.dart';
 import 'package:linum/widgets/home_screen/home_screen_listview.dart';
@@ -41,8 +41,7 @@ class BudgetScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 15.0),
                 child: Text(
-                  AppLocalizations.of(context)!
-                      .translate('budget_screen/label-all-transactions'),
+                  tr('budget_screen.label-all-transactions'),
                   style: Theme.of(context).textTheme.headline5,
                 ),
               ),
@@ -51,8 +50,7 @@ class BudgetScreen extends StatelessWidget {
                 child: TextButton(
                   onPressed: () {},
                   child: Text(
-                    AppLocalizations.of(context)!
-                        .translate('budget_screen/button-filter'),
+                    tr('budget_screen.button-filter'),
                     style: Theme.of(context).textTheme.overline?.copyWith(
                           color: Theme.of(context).colorScheme.primary,
                           fontSize: 14,

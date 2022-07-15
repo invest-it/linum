@@ -4,8 +4,8 @@
 //  Co-Author: n/a
 //
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 
 class TimeWidget extends StatelessWidget {
@@ -28,9 +28,7 @@ class TimeWidget extends StatelessWidget {
         child: Text(
           isTranslated
               ? displayValue.toUpperCase()
-              : AppLocalizations.of(context)!
-                  .translate(displayValue)
-                  .toUpperCase(),
+              : tr(displayValue).toUpperCase(),
           style: Theme.of(context).textTheme.overline?.copyWith(
                 fontWeight: FontWeight.w700,
               ),

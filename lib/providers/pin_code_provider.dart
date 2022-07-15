@@ -6,6 +6,7 @@
 
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -16,7 +17,6 @@ import 'package:linum/models/lock_screen_action.dart';
 import 'package:linum/navigation/main_router_delegate.dart';
 import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/providers/authentication_service.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -100,8 +100,7 @@ class PinCodeProvider extends ChangeNotifier {
       _pinSet = false; // TODO: Re-Enter pin?
       _removePIN();
       Fluttertoast.showToast(
-        msg: AppLocalizations.of(_context)!
-            .translate("lock_screen/toast-pin-deactivated"),
+        msg: tr("lock_screen.toast-pin-deactivated"),
       );
     }
     notifyListeners();
@@ -176,14 +175,14 @@ class PinCodeProvider extends ChangeNotifier {
     switch (_intent) {
       case PINLockIntent.initialize:
         return LockScreenAction(
-          screenTitle: "lock_screen/initialize/label-title",
-          actionTitle: "lock_screen/initialize/label-button",
+          screenTitle: "lock_screen.initialize.label-title",
+          actionTitle: "lock_screen.initialize.label-button",
           function: () {
             confirmKillswitch.showMyActionDialog(
-              "alertdialog/killswitch-initialize/message",
+              "alertdialog.killswitch-initialize.message",
               [
                 DialogAction(
-                  actionTitle: "alertdialog/killswitch-initialize/action",
+                  actionTitle: "alertdialog.killswitch-initialize.action",
                   function: () {
                     _emptyCode();
                     _removePIN();
@@ -192,7 +191,7 @@ class PinCodeProvider extends ChangeNotifier {
                   },
                 ),
                 DialogAction(
-                  actionTitle: "alertdialog/killswitch-initialize/cancel",
+                  actionTitle: "alertdialog.killswitch-initialize.cancel",
                   //If this is empty, UserAlert will use its own context to pop the dialog
                   function: () {
                     Get.find<MainRouterDelegate>().popRoute();
@@ -201,20 +200,20 @@ class PinCodeProvider extends ChangeNotifier {
                   popDialog: true,
                 ),
               ],
-              title: "alertdialog/killswitch-initialize/title",
+              title: "alertdialog.killswitch-initialize.title",
             );
           },
         );
       case PINLockIntent.change:
         return LockScreenAction(
-          screenTitle: "lock_screen/change/label-title",
-          actionTitle: "lock_screen/change/label-button",
+          screenTitle: "lock_screen.change.label-title",
+          actionTitle: "lock_screen.change.label-button",
           function: () {
             confirmKillswitch.showMyActionDialog(
-              "alertdialog/killswitch-change/message",
+              "alertdialog.killswitch-change.message",
               [
                 DialogAction(
-                  actionTitle: "alertdialog/killswitch-change/action",
+                  actionTitle: "alertdialog.killswitch-change.action",
                   function: () {
                     _emptyCode();
                     Get.find<MainRouterDelegate>().popRoute();
@@ -222,7 +221,7 @@ class PinCodeProvider extends ChangeNotifier {
                   },
                 ),
                 DialogAction(
-                  actionTitle: "alertdialog/killswitch-change/cancel",
+                  actionTitle: "alertdialog.killswitch-change.cancel",
                   //If this is empty, UserAlert will use its own context to pop the dialog
                   function: () {
                     Get.find<MainRouterDelegate>().popRoute();
@@ -232,20 +231,20 @@ class PinCodeProvider extends ChangeNotifier {
                   popDialog: true,
                 ),
               ],
-              title: "alertdialog/killswitch-change/title",
+              title: "alertdialog.killswitch-change.title",
             );
           },
         );
       case PINLockIntent.recall:
         return LockScreenAction(
-          screenTitle: "lock_screen/recall/label-title",
-          actionTitle: "lock_screen/recall/label-button",
+          screenTitle: "lock_screen.recall.label-title",
+          actionTitle: "lock_screen.recall.label-button",
           function: () {
             confirmKillswitch.showMyActionDialog(
-              "alertdialog/killswitch-recall/message",
+              "alertdialog.killswitch-recall.message",
               [
                 DialogAction(
-                  actionTitle: "alertdialog/killswitch-recall/action",
+                  actionTitle: "alertdialog.killswitch-recall.action",
                   function: () {
                     togglePINLock();
                     _auth.signOut().then((_) {
@@ -254,7 +253,7 @@ class PinCodeProvider extends ChangeNotifier {
                   },
                 ),
                 DialogAction(
-                  actionTitle: "alertdialog/killswitch-recall/cancel",
+                  actionTitle: "alertdialog.killswitch-recall.cancel",
                   //If this is empty, UserAlert will use its own context to pop the dialog
                   function: () {
                     Get.find<MainRouterDelegate>().rebuild();
@@ -263,7 +262,7 @@ class PinCodeProvider extends ChangeNotifier {
                   popDialog: true,
                 ),
               ],
-              title: "alertdialog/killswitch-recall/title",
+              title: "alertdialog.killswitch-recall.title",
             );
           },
         );
@@ -287,9 +286,9 @@ class PinCodeProvider extends ChangeNotifier {
           case PINLockIntent.initialize:
             if (_lastEmail != 'Error!') {
               _storePIN(_code);
-              toastFromTranslationKey("lock_screen/toast-pin-set");
+              toastFromTranslationKey("lock_screen.toast-pin-set");
             } else {
-              toastFromTranslationKey("lock_screen/errors/last-mail-missing");
+              toastFromTranslationKey("lock_screen.errors.last-mail-missing");
             }
             Get.find<MainRouterDelegate>().popRoute();
             _emptyCode();
@@ -297,9 +296,9 @@ class PinCodeProvider extends ChangeNotifier {
           case PINLockIntent.change:
             if (_lastEmail != 'Error!') {
               _storePIN(_code);
-              toastFromTranslationKey("lock_screen/toast-pin-changed");
+              toastFromTranslationKey("lock_screen.toast-pin-changed");
             } else {
-              toastFromTranslationKey("lock_screen/errors/last-mail-missing");
+              toastFromTranslationKey("lock_screen.errors.last-mail-missing");
             }
 
             Get.find<MainRouterDelegate>().popRoute();
@@ -317,7 +316,7 @@ class PinCodeProvider extends ChangeNotifier {
 
   void toastFromTranslationKey(String key) {
     Fluttertoast.showToast(
-      msg: AppLocalizations.of(_context)!.translate(key),
+      msg: tr(key),
     );
   }
 
@@ -356,8 +355,7 @@ class PinCodeProvider extends ChangeNotifier {
     HapticFeedback.vibrate();
     _ringColor = RingColors.red;
     Fluttertoast.showToast(
-      msg: AppLocalizations.of(_context)!
-          .translate("lock_screen/toast-wrong-code"),
+      msg: tr("lock_screen.toast-wrong-code"),
     );
     _emptyCode();
   }

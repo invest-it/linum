@@ -15,31 +15,31 @@ import 'package:linum/types/category_map.dart';
 final CategoryMap<StandardCategoryExpense> standardExpenseCategories =
     CategoryMap.fromMap({
   StandardCategoryExpense.none: const EntryCategory(
-    label: 'settings_screen/standards-selector-none',
+    label: 'settings_screen.standards-selector-none',
     icon: Icons.check_box_outline_blank_rounded,
   ),
   StandardCategoryExpense.food: const EntryCategory(
-    label: "settings_screen/standard-expense-selector/food",
+    label: "settings_screen.standard-expense-selector.food",
     icon: Icons.local_dining_rounded,
   ),
   StandardCategoryExpense.freeTime: const EntryCategory(
-    label: "settings_screen/standard-expense-selector/freetime",
+    label: "settings_screen.standard-expense-selector.freetime",
     icon: Icons.beach_access_rounded,
   ),
   StandardCategoryExpense.house: const EntryCategory(
-    label: "settings_screen/standard-expense-selector/house",
+    label: "settings_screen.standard-expense-selector.house",
     icon: Icons.home_rounded,
   ),
   StandardCategoryExpense.lifestyle: const EntryCategory(
-    label: "settings_screen/standard-expense-selector/lifestyle",
+    label: "settings_screen.standard-expense-selector.lifestyle",
     icon: Icons.local_fire_department_outlined,
   ),
   StandardCategoryExpense.car: const EntryCategory(
-    label: "settings_screen/standard-expense-selector/car",
+    label: "settings_screen.standard-expense-selector.car",
     icon: Icons.directions_car_rounded,
   ),
   StandardCategoryExpense.miscellaneous: const EntryCategory(
-    label: "settings_screen/standard-expense-selector/misc",
+    label: "settings_screen.standard-expense-selector.misc",
     icon: Icons.inventory_2,
   ),
 });

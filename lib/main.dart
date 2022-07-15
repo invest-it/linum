@@ -4,13 +4,16 @@
 //
 //
 
+import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:linum/app.dart';
+import 'package:linum/constants/supported_locales.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main({bool? testing}) async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
 
   if (testing != null && testing) {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -20,8 +23,15 @@ Future<void> main({bool? testing}) async {
   /// Force Portrait Mode
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   SharedPreferences.getInstance().then((pref) {
-    LinumApp.currentLocalLanguageCode = pref.getString("languageCode");
-    runApp(LinumApp(testing: testing));
+    // LinumApp.currentLocalLanguageCode = pref.getString("languageCode");
+    runApp(
+      EasyLocalization(
+          supportedLocales: supportedLocales,
+          path: 'lang',
+          fallbackLocale: const Locale('de', 'DE'),
+          child: LinumApp(testing: testing),
+      ),
+    );
   });
 }
 

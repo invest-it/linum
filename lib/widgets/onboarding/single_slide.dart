@@ -3,11 +3,11 @@
 //  Author: NightmindOfficial
 //  Co-Author: n/a
 //  (Refactored by damattl)
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linum/models/onboarding_slide_data.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/backend/url_handler.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 
@@ -33,8 +33,7 @@ class _SingleSlideState extends State<SingleSlide> {
             ),
             child: CupertinoButton(
               child: Text(
-                AppLocalizations.of(context)!
-                    .translate('onboarding_screen/svg-credit-label'),
+                tr('onboarding_screen.svg-credit-label'),
                 style: Theme.of(context).textTheme.caption,
               ),
               onPressed: () => {
@@ -55,7 +54,7 @@ class _SingleSlideState extends State<SingleSlide> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 36),
           child: Text(
-            AppLocalizations.of(context)!.translate(widget.slide.heading),
+            tr(widget.slide.heading),
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headline3,
           ),
@@ -65,8 +64,7 @@ class _SingleSlideState extends State<SingleSlide> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 36, vertical: 16),
                 child: Text(
-                  AppLocalizations.of(context)!
-                      .translate(widget.slide.description!),
+                  tr(widget.slide.description!),
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headline5,
                 ),

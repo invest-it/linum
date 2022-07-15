@@ -4,9 +4,9 @@
 //  Co-Author: SoTBurst, NightmindOfficial
 //  Refactored: none
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/providers/account_settings_provider.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 
 class StandardCategoryIncomeListTile extends StatelessWidget {
   const StandardCategoryIncomeListTile({
@@ -20,14 +20,9 @@ class StandardCategoryIncomeListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
-        AppLocalizations.of(context)!.translate(
-              'settings_screen/standard-income-selector/label-title',
-            ) +
-            // Translates the value from firebase
-            AppLocalizations.of(context)!.translate(
-              accountSettingsProvider.getIncomeEntryCategory()?.label ??
-                  "ChosenStandardIncome",
-            ),
+        tr("settings_screen.standard-income-selector.label-title") +
+        // Translates the value from firebase
+        tr(accountSettingsProvider.getIncomeEntryCategory()?.label ?? "ChosenStandardIncome"),
         style: Theme.of(context).textTheme.bodyText1,
       ),
       trailing: const Icon(

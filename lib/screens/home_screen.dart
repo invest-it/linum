@@ -4,16 +4,14 @@
 //  Co-Author: damattl
 /// PAGE INDEX 0
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:linum/navigation/main_router_delegate.dart';
+import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/utilities/backend/in_between_timestamps.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/filters.dart';
 import 'package:linum/utilities/frontend/silent_scroll.dart';
 import 'package:linum/widgets/home_screen/home_screen_listview.dart';
@@ -90,19 +88,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0),
                       child: Text(
-                        AppLocalizations.of(context)!.translate(
-                          'home_screen/label-recent-transactions',
-                        ),
+                        tr('home_screen.label-recent-transactions'),
                         style: Theme.of(context).textTheme.headline5,
                       ),
                     ),
                     TextButton(
                       onPressed: () {
-                        Get.find<MainRouterDelegate>().replaceLastRoute(MainRoute.budget);
+                        getRouterDelegate().replaceLastRoute(MainRoute.budget);
                       },
                       child: Text(
-                        AppLocalizations.of(context)!
-                            .translate('home_screen/button-show-more'),
+                        tr('home_screen.button-show-more'),
                         style: Theme.of(context).textTheme.overline?.copyWith(
                               color: Theme.of(context).colorScheme.primary,
                               fontSize: 14,
