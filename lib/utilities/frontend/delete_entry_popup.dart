@@ -39,12 +39,12 @@ Future<bool?> generateDeletePopup(
 
   return isRepeatable // REPEATABLE DELETE POPUP
       ? userAlert.showMyActionDialog(
-          "enter_screen/delete-entry/dialog-label-deleterep",
+          "enter_screen.delete-entry.dialog-label-deleterep",
           [
             DialogAction(
               // ignore: avoid_redundant_argument_values
               dialogPurpose: DialogPurpose.primary,
-              actionTitle: "enter_screen/delete-entry/dialog-button-onlyonce",
+              actionTitle: "enter_screen.delete-entry.dialog-button-onlyonce",
               function: () {
                 balanceDataProvider.removeRepeatedBalanceUsingId(
                   id: id,
@@ -56,7 +56,7 @@ Future<bool?> generateDeletePopup(
             ),
             DialogAction(
               dialogPurpose: DialogPurpose.danger,
-              actionTitle: "enter_screen/delete-entry/dialog-button-untilnow",
+              actionTitle: "enter_screen.delete-entry.dialog-button-untilnow",
               function: () {
                 balanceDataProvider.removeRepeatedBalanceUsingId(
                   id: id,
@@ -68,7 +68,7 @@ Future<bool?> generateDeletePopup(
             ),
             DialogAction(
               dialogPurpose: DialogPurpose.danger,
-              actionTitle: "enter_screen/delete-entry/dialog-button-fromnow",
+              actionTitle: "enter_screen.delete-entry.dialog-button-fromnow",
               function: () {
                 balanceDataProvider.removeRepeatedBalanceUsingId(
                   id: id,
@@ -80,7 +80,7 @@ Future<bool?> generateDeletePopup(
             ),
             DialogAction(
               dialogPurpose: DialogPurpose.danger,
-              actionTitle: "enter_screen/delete-entry/dialog-button-allentries",
+              actionTitle: "enter_screen.delete-entry.dialog-button-allentries",
               function: () {
                 balanceDataProvider.removeRepeatedBalanceUsingId(
                   id: id,
@@ -91,24 +91,24 @@ Future<bool?> generateDeletePopup(
             ),
             DialogAction(
               dialogPurpose: DialogPurpose.secondary,
-              actionTitle: "enter_screen/delete-entry/dialog-button-cancel",
+              actionTitle: "enter_screen.delete-entry.dialog-button-cancel",
               function: () => Navigator.of(context).pop(false),
             )
           ],
-          title: "enter_screen/delete-entry/dialog-label-title",
+          title: "enter_screen.delete-entry.dialog-label-title",
         )
       : // SINGLE-BALANCE DELETE POPUP
       userAlert.showMyActionDialog(
-          "enter_screen/delete-entry/dialog-label-delete",
+          "enter_screen.delete-entry.dialog-label-delete",
           [
             DialogAction(
               dialogPurpose: DialogPurpose.secondary,
-              actionTitle: "enter_screen/delete-entry/dialog-button-cancel",
+              actionTitle: "enter_screen.delete-entry.dialog-button-cancel",
               function: () => Navigator.of(context).pop(false),
             ),
             DialogAction(
               dialogPurpose: DialogPurpose.danger,
-              actionTitle: "enter_screen/delete-entry/dialog-button-delete",
+              actionTitle: "enter_screen.delete-entry.dialog-button-delete",
               function: () {
                 balanceDataProvider.removeSingleBalanceUsingId(
                   id,
@@ -117,6 +117,6 @@ Future<bool?> generateDeletePopup(
               },
             ),
           ],
-          title: "enter_screen/delete-entry/dialog-label-title",
+          title: "enter_screen.delete-entry.dialog-label-title",
         );
 }

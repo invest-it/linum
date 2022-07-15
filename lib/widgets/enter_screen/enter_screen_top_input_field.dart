@@ -307,7 +307,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
               elevation: 0,
               //actions: [AppBarAction.fromPreset(DefaultAction.CLOSE)],
               title: Text(
-                tr('enter_screen/label-title'),
+                tr('enter_screen.label-title'),
                 style: Theme.of(context).textTheme.button,
               ),
               centerTitle: true,
