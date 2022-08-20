@@ -42,26 +42,26 @@ class _OnboardingScreenState extends State<OnboardingPage> {
     _slides = [
       OnboardingSlideData(
         imageURL: 'assets/svg/mobile-login.svg',
-        heading: 'onboarding_screen/card1-title',
+        heading: 'onboarding_screen.card1-title',
         freepikURL: 'https://storyset.com/phone',
-        description: 'onboarding_screen/card1-description',
+        description: 'onboarding_screen.card1-description',
       ),
       OnboardingSlideData(
         imageURL: 'assets/svg/refund.svg',
-        heading: 'onboarding_screen/card2-title',
+        heading: 'onboarding_screen.card2-title',
         freepikURL: 'https://storyset.com/device',
-        description: 'onboarding_screen/card2-description',
+        description: 'onboarding_screen.card2-description',
       ),
       OnboardingSlideData(
         imageURL: 'assets/svg/video-files.svg',
-        heading: 'onboarding_screen/card3-title',
-        description: 'onboarding_screen/card3-description',
+        heading: 'onboarding_screen.card3-title',
+        description: 'onboarding_screen.card3-description',
         freepikURL: 'https://storyset.com/technology',
       ),
       OnboardingSlideData(
         imageURL: 'assets/svg/financial-data.svg',
-        heading: 'onboarding_screen/card4-title',
-        description: 'onboarding_screen/card4-description',
+        heading: 'onboarding_screen.card4-title',
+        description: 'onboarding_screen.card4-description',
         freepikURL: 'https://storyset.com/data',
       ),
     ];
