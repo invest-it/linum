@@ -178,7 +178,7 @@ class PinCodeProvider extends ChangeNotifier {
           screenTitle: "lock_screen.initialize.label-title",
           actionTitle: "lock_screen.initialize.label-button",
           function: () {
-            confirmKillswitch.showMyActionDialog(
+            confirmKillswitch.showActionDialog(
               "alertdialog.killswitch-initialize.message",
               [
                 DialogAction(
@@ -209,7 +209,7 @@ class PinCodeProvider extends ChangeNotifier {
           screenTitle: "lock_screen.change.label-title",
           actionTitle: "lock_screen.change.label-button",
           function: () {
-            confirmKillswitch.showMyActionDialog(
+            confirmKillswitch.showActionDialog(
               "alertdialog.killswitch-change.message",
               [
                 DialogAction(
@@ -240,7 +240,7 @@ class PinCodeProvider extends ChangeNotifier {
           screenTitle: "lock_screen.recall.label-title",
           actionTitle: "lock_screen.recall.label-button",
           function: () {
-            confirmKillswitch.showMyActionDialog(
+            confirmKillswitch.showActionDialog(
               "alertdialog.killswitch-recall.message",
               [
                 DialogAction(
