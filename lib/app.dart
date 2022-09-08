@@ -17,8 +17,6 @@ class LinumApp extends StatelessWidget {
 
   const LinumApp({this.testing});
 
-  static String? currentLocalLanguageCode;
-
   @override
   Widget build(BuildContext context) {
     /*if (testing != null && testing!) {

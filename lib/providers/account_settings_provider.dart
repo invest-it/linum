@@ -10,6 +10,7 @@ import 'dart:developer' as dev;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbols.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/models/entry_category.dart';
@@ -18,7 +19,6 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
 class AccountSettingsProvider extends ChangeNotifier {
-  /// _balance is the documentReference to get the balance data from the database. It will be null if the constructor isnt ready yet
   DocumentReference<Map<String, dynamic>>? _settings;
 
   StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>? settingsListener;
@@ -51,8 +51,7 @@ class AccountSettingsProvider extends ChangeNotifier {
     _uid = Provider.of<AuthenticationService>(context, listen: false).uid;
 
     if (_uid != "") {
-      _settings =
-          FirebaseFirestore.instance.collection('account_settings').doc(_uid);
+      _settings = FirebaseFirestore.instance.collection('account_settings').doc(_uid);
     }
     _createAutoUpdate(context);
   }
@@ -74,8 +73,7 @@ class AccountSettingsProvider extends ChangeNotifier {
 
   void updateAuthHelper(BuildContext context) {
     if (_uid != "") {
-      _settings =
-          FirebaseFirestore.instance.collection('account_settings').doc(_uid);
+      _settings = FirebaseFirestore.instance.collection('account_settings').doc(_uid);
     }
     _createAutoUpdate(context);
     notifyListeners();
@@ -97,18 +95,17 @@ class AccountSettingsProvider extends ChangeNotifier {
         lastGrabbedData = innerSnapshot.data() ?? {};
 
         final String? langString = lastGrabbedData["languageCode"] as String?;
-        Locale? lang;
+        Locale? locale;
         if (lastGrabbedData["systemLanguage"] == false && langString != null) {
           final List<String> langArray = langString.split("-");
-          lang = Locale(langArray[0], langArray[1]);
-        }
-        // AppLocalizations.of(context)!.load(locale: lang);
-        if (lang != null) {
-          context.setLocale(lang);
+          locale = Locale(langArray[0], langArray[1]);
+          setLocale(context, locale);
+
+        } else {
+          setToDeviceLocale(context);
         }
 
-        Provider.of<AuthenticationService>(context, listen: false)
-            .updateLanguageCode(context);
+        Provider.of<AuthenticationService>(context, listen: false).updateLanguageCode(context);
         notifyListeners();
       },
       onError: (error, stackTrace) {
@@ -117,6 +114,23 @@ class AccountSettingsProvider extends ChangeNotifier {
     );
   }
 
+  void setLocale(BuildContext context, Locale locale) {
+    if (context.supportedLocales.contains(locale)) {
+      context.setLocale(locale);
+    } else {
+      setToDeviceLocale(context);
+    }
+  }
+
+  void setToDeviceLocale(BuildContext context) {
+    if (context.supportedLocales.contains(context.deviceLocale)) {
+      context.resetLocale();
+    } else if (context.deviceLocale.languageCode == "en") {
+      context.setLocale(const Locale("en", "US"));
+    } else if (context.fallbackLocale != null) {
+      context.setLocale(context.fallbackLocale!);
+    }
+  }
 
   Map<String, dynamic> get settings {
     return lastGrabbedData;
