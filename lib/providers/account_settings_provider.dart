@@ -81,6 +81,8 @@ class AccountSettingsProvider extends ChangeNotifier {
 
   Future<void> _createAutoUpdate(BuildContext context) async {
     if (_uid == "") {
+      setToDeviceLocale(context);
+      _settings = null;
       return;
     }
     if (_settings == null) {
