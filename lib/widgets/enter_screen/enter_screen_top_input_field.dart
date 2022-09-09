@@ -6,12 +6,13 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
+import 'package:linum/utilities/frontend/currency_formatter.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/screen_skeleton/app_bar_action.dart';
-import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:linum/widgets/text_container.dart';
 import 'package:provider/provider.dart';
 
@@ -26,9 +27,7 @@ class EnterScreenTopInputField extends StatefulWidget {
 }
 
 class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
-  TextEditingController? myController;
-
-  String lastState = "0,00";
+  TextEditingController? textController;
 
   @override
   void initState() {
@@ -37,8 +36,8 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
 
   @override
   void dispose() {
-    if (myController != null) {
-      myController!.dispose();
+    if (textController != null) {
+      textController!.dispose();
     }
 
     super.dispose();
@@ -50,14 +49,17 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
         Provider.of<EnterScreenProvider>(context);
     final ActionLipStatusProvider actionLipStatusProvider =
         Provider.of<ActionLipStatusProvider>(context);
-    if (myController == null) {
+    
+    final formatter = CurrencyFormatter(context.locale);
+    // TODO: Write a better formatter for every currency symbol
+    
+    if (textController == null) {
       if (enterScreenProvider.amount != 0) {
-        myController = TextEditingController(
-          text:
-              "${enterScreenProvider.amount.toStringAsFixed(2).replaceAll(".", ",")} €",
+        textController = TextEditingController(
+          text: formatter.format(enterScreenProvider.amount),
         );
       } else {
-        myController = TextEditingController(text: "$lastState €");
+        textController = TextEditingController(text: formatter.format(0));
       }
     }
     //calculation of the size (width and height) of a text - here it
@@ -110,10 +112,11 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                       maxLength: 15,
                       textAlign: TextAlign.center,
                       textAlignVertical: TextAlignVertical.center,
-                      controller: myController,
+                      controller: textController,
                       showCursor: true,
                       cursorColor: Colors.white,
-                      keyboardType: TextInputType.number,
+                      keyboardType:  const TextInputType.numberWithOptions(signed: true, decimal: true),
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       decoration: InputDecoration(
                         counter: const SizedBox.shrink(),
                         isCollapsed: true,
@@ -136,19 +139,27 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                         actionLipStatusProvider.setActionLipStatus(
                           providerKey: ProviderKey.enter,
                         ),
-                        myController!.selection = TextSelection.fromPosition(
+                        textController!.selection = TextSelection.fromPosition(
                           TextPosition(
-                            offset: myController!.text.length - 2,
+                            offset: textController!.text.length - 2,
                           ),
                         )
                       },
                       onChanged: (String str) {
-                        str = str.trim();
+                        final value = parseInput(str);
+                        setState(() {
+                          textController!.text = formatter.format(value);
+                          textController!.selection = TextSelection.fromPosition(
+                            TextPosition(
+                              offset: textController!.text.length - 2,
+                            ),
+                          );
+                        });
 
-                        if (str.substring(str.length - 1) != "€" &&
-                            !str
-                                .substring(str.length - 1)
-                                .contains(RegExp("[0-9]"))) {
+                        enterScreenProvider.setAmount(value);
+
+                        /* if (str.substring(str.length - 1) != "€" &&
+                            !str.substring(str.length - 1).contains(RegExp("[0-9]"))) {
                           str = str.substring(0, str.length - 1);
                         }
                         if (str.substring(str.length - 1) != "€") {
@@ -206,6 +217,8 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                               ) ??
                               0.0,
                         );
+
+                         */
                         //print(enterScreenProvider.amount);
                       },
                     ),
@@ -326,6 +339,13 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
         ),
       ],
     );
+  }
+
+  double parseInput(String str) {
+    final trimmedStr = str.trim().replaceAll(RegExp("^[\$,£,€]\s?0+"), "");
+    final paddedStr = trimmedStr.padLeft(3, "0");
+    final decimalStr = "${paddedStr.substring(0, paddedStr.length - 2)}.${paddedStr.substring(paddedStr.length - 2)}";
+    return double.parse(decimalStr);
   }
 
   //which color to show depending on expense or not
