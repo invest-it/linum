@@ -50,7 +50,7 @@ Future<bool?> showRepeatableDeletePopup(
             removeType: RepeatableChangeType.onlyThisOne,
             time: formerTime,
           );
-          Navigator.of(context).pop(true);
+          Navigator.of(context, rootNavigator: true).pop(true);
         },
       ),
       DialogAction(
@@ -62,7 +62,7 @@ Future<bool?> showRepeatableDeletePopup(
             removeType: RepeatableChangeType.thisAndAllBefore,
             time: formerTime,
           );
-          Navigator.of(context).pop(true);
+          Navigator.of(context, rootNavigator: true).pop(true);
         },
       ),
       DialogAction(
@@ -74,7 +74,7 @@ Future<bool?> showRepeatableDeletePopup(
             removeType: RepeatableChangeType.thisAndAllAfter,
             time: formerTime,
           );
-          Navigator.of(context).pop(true);
+          Navigator.of(context, rootNavigator: true).pop(true);
         },
       ),
       DialogAction(
@@ -85,13 +85,13 @@ Future<bool?> showRepeatableDeletePopup(
             id: balanceDataId,
             removeType: RepeatableChangeType.all,
           );
-          Navigator.of(context).pop(true);
+          Navigator.of(context, rootNavigator: true).pop(true);
         },
       ),
       DialogAction(
         dialogPurpose: DialogPurpose.secondary,
         actionTitle: "enter_screen.delete-entry.dialog-button-cancel",
-        function: () => Navigator.of(context).pop(false),
+        function: () => Navigator.of(context, rootNavigator: true).pop(false),
       )
     ],
     title: "enter_screen.delete-entry.dialog-label-title",
