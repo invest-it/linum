@@ -8,6 +8,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/models/single_balance_data.dart';
 
 /// gives sort algorithm (later it will probably also have filter algorithm) and
 /// all algorithm will have an active version instead of being static
@@ -163,34 +164,61 @@ class AlgorithmProvider extends ChangeNotifier {
   }
 
   static int amountLeastToMost(dynamic a, dynamic b) {
+    // maybe filter is used on maps
+    // if can be deleted later
+    if (a is SingleBalanceData && b is SingleBalanceData) {
+      return (a.amount).compareTo(b.amount);
+    }
+
     return (a["amount"] as num).compareTo(b["amount"] as num);
   }
 
   static int amountMostToLeast(dynamic b, dynamic a) {
+    if (a is SingleBalanceData && b is SingleBalanceData) {
+      return (a.amount).compareTo(b.amount);
+    }
     return (a["amount"] as num).compareTo(b["amount"] as num);
   }
 
   static int categoryAlphabetically(dynamic a, dynamic b) {
+    if (a is SingleBalanceData && b is SingleBalanceData) {
+      return (a.category).compareTo(b.category);
+    }
     return (a["category"] as String).compareTo(b["category"] as String);
   }
 
   static int categoryAlphabeticallyReversed(dynamic b, dynamic a) {
+    if (a is SingleBalanceData && b is SingleBalanceData) {
+      return (a.category).compareTo(b.category);
+    }
     return (a["category"] as String).compareTo(b["category"] as String);
   }
 
   static int nameAlphabetically(dynamic a, dynamic b) {
+    if (a is SingleBalanceData && b is SingleBalanceData) {
+      return (a.name).compareTo(b.name);
+    }
     return (a["name"] as String).compareTo(b["name"] as String);
   }
 
   static int nameAlphabeticallyReversed(dynamic b, dynamic a) {
+    if (a is SingleBalanceData && b is SingleBalanceData) {
+      return (a.name).compareTo(b.name);
+    }
     return (a["name"] as String).compareTo(b["name"] as String);
   }
 
   static int timeNewToOld(dynamic a, dynamic b) {
+    if (a is SingleBalanceData && b is SingleBalanceData) {
+      return (a.time).compareTo(b.time);
+    }
     return (b["time"] as Timestamp).compareTo(a["time"] as Timestamp);
   }
 
   static int timeOldToNew(dynamic b, dynamic a) {
+    if (a is SingleBalanceData && b is SingleBalanceData) {
+      return (a.time).compareTo(b.time);
+    }
     return (a["time"] as Timestamp).compareTo(b["time"] as Timestamp);
   }
 
@@ -199,11 +227,13 @@ class AlgorithmProvider extends ChangeNotifier {
   }
 
   static bool Function(dynamic) newerThan(Timestamp timestamp) {
-    return (dynamic a) => (a["time"] as Timestamp).compareTo(timestamp) >= 0;
+    return (dynamic a) =>
+        (_mapToSinglebalance(a).time).compareTo(timestamp) >= 0;
   }
 
   static bool Function(dynamic) olderThan(Timestamp timestamp) {
-    return (dynamic a) => (a["time"] as Timestamp).compareTo(timestamp) <= 0;
+    return (dynamic a) =>
+        (_mapToSinglebalance(a).time).compareTo(timestamp) <= 0;
   }
 
   static bool Function(dynamic) inBetween(
@@ -211,24 +241,26 @@ class AlgorithmProvider extends ChangeNotifier {
     Timestamp timestamp2,
   ) {
     return (dynamic a) =>
-        (a["time"] as Timestamp).compareTo(timestamp1) <= 0 ||
-        (a["time"] as Timestamp).compareTo(timestamp2) >= 0;
+        (_mapToSinglebalance(a).time).compareTo(timestamp1) <= 0 ||
+        (_mapToSinglebalance(a).time).compareTo(timestamp2) >= 0;
   }
 
   static bool Function(dynamic) amountMoreThan(num amount) {
-    return (dynamic a) => (a["amount"] as num).compareTo(amount) > 0;
+    return (dynamic a) => (_mapToSinglebalance(a).amount).compareTo(amount) > 0;
   }
 
   static bool Function(dynamic) amountAtLeast(num amount) {
-    return (dynamic a) => (a["amount"] as num).compareTo(amount) >= 0;
+    return (dynamic a) =>
+        (_mapToSinglebalance(a).amount).compareTo(amount) >= 0;
   }
 
   static bool Function(dynamic) amountLessThan(num amount) {
-    return (dynamic a) => (a["amount"] as num).compareTo(amount) < 0;
+    return (dynamic a) => (_mapToSinglebalance(a).amount).compareTo(amount) < 0;
   }
 
   static bool Function(dynamic) amountAtMost(num amount) {
-    return (dynamic a) => (a["amount"] as num).compareTo(amount) <= 0;
+    return (dynamic a) =>
+        (_mapToSinglebalance(a).amount).compareTo(amount) <= 0;
   }
 
   void _updateToCurrentShownMonthSilently() {
@@ -265,5 +297,12 @@ class AlgorithmProvider extends ChangeNotifier {
         ),
       );
     }
+  }
+
+  static SingleBalanceData _mapToSinglebalance(dynamic a) {
+    if (a is Map<String, dynamic>) {
+      return SingleBalanceData.fromMap(a);
+    }
+    return a as SingleBalanceData;
   }
 }
