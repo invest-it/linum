@@ -48,10 +48,10 @@ class _RegisterFormState extends State<RegisterForm> {
         Provider.of<AuthenticationService>(context);
     final UserAlert userAlert = UserAlert(context: context);
 
-    void signUp(String _mail, String _pass) {
+    void signUp(String mail, String pass) {
       auth.signUp(
-        _mail.trim(),
-        _pass,
+        mail.trim(),
+        pass,
         onError: (String message) {
           setState(() {
             userAlert.showMyDialog(message);
@@ -66,7 +66,7 @@ class _RegisterFormState extends State<RegisterForm> {
             title: 'alertdialog/signup-verification/title',
             actionTitle: 'alertdialog/signup-verification/action',
           );
-          onboardingScreenProvider.setEmailLoginInputSilently(_mail);
+          onboardingScreenProvider.setEmailLoginInputSilently(mail);
           _mailController.clear();
           _passController.clear();
           _mailValidate = false;

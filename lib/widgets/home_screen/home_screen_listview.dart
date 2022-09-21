@@ -216,6 +216,8 @@ class HomeScreenListView implements BalanceDataListView {
             },
             //print(arrayElement["amount"].toString()),
             child: Dismissible(
+              // TODO look at this
+              // ignore: use_colored_box
               background: Container(
                 color: Colors.red,
                 child: Column(
