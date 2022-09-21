@@ -46,7 +46,6 @@ class PinCodeProvider extends ChangeNotifier {
     confirmKillswitch = UserAlert(context: _context);
   }
 
-
   Future<void> initializeIsPINSet() async {
     _pinSet = await _isPinSet();
     // dev.log(
@@ -76,8 +75,7 @@ class PinCodeProvider extends ChangeNotifier {
     _initializeLastEmail();
     initializeIsPINSet();
 
-
-    _auth = Provider.of<AuthenticationService>(context);
+    _auth = Provider.of<AuthenticationService>(context, listen: false);
 
     _context = context;
   }
@@ -135,7 +133,6 @@ class PinCodeProvider extends ChangeNotifier {
     // TODO: _screenIndexProvider.setPageIndexSilently(5);
     _setPINLockIntent(intent: PINLockIntent.recall);
   } */ // TOOD: Probably not needed anymore
-
 
   void setRecallIntent() {
     _setPINLockIntent(intent: PINLockIntent.recall);
@@ -388,13 +385,11 @@ class PinCodeProvider extends ChangeNotifier {
   bool get pinSetStillLoading => _pinSetStillLoading;
   bool get lastEmailStillLoading => _lastEmailStillLoading;
 
-
-  static SingleChildWidget provider(BuildContext context, {bool testing = false}) {
-    return ChangeNotifierProxyProvider<
-        AuthenticationService, PinCodeProvider>(
+  static SingleChildWidget provider(BuildContext context,
+      {bool testing = false}) {
+    return ChangeNotifierProxyProvider<AuthenticationService, PinCodeProvider>(
       create: (context) => PinCodeProvider(context),
-      update:
-          (context, auth, oldPinCodeProvider) {
+      update: (context, auth, oldPinCodeProvider) {
         if (oldPinCodeProvider == null) {
           return PinCodeProvider(context);
         } else {
