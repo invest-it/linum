@@ -13,11 +13,11 @@ class BodySection extends StatelessWidget {
   final bool hasHomeScreenCard;
 
   const BodySection({
-    Key? key,
+    super.key,
     required this.body,
     required this.isInverted,
     this.hasHomeScreenCard = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

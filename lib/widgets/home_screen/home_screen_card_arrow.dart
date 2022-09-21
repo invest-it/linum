@@ -12,11 +12,11 @@ class HomeScreenCardArrow extends StatelessWidget {
   final bool isUpward;
 
   const HomeScreenCardArrow({
-    Key? key,
+    super.key,
     required this.arrowBoxColor,
     required this.arrowColor,
     this.isUpward = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

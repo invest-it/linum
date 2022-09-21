@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../general/general_robot.dart';
 
 class PinlockRobot extends GeneralRobot {
-  const PinlockRobot(WidgetTester tester) : super(tester);
+  const PinlockRobot(super.tester);
 
   // Activate the PIN lock
   Future<void> togglePINLock() async {

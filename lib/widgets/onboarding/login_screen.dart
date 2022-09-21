@@ -4,15 +4,15 @@
 //  Co-Author: n/a
 //
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/auth/login_form.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -125,9 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Padding(
                             padding: const EdgeInsets.only(top: 6.0),
                             child: Text(
-                              AppLocalizations.of(context)!.translate(
-                                'onboarding_screen/cta-login',
-                              ),
+                              tr('onboarding_screen.cta-login'),
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1
@@ -176,9 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),
                           child: Text(
-                            AppLocalizations.of(context)!.translate(
-                              'onboarding_screen/cta-register',
-                            ),
+                            tr('onboarding_screen.cta-register'),
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText1

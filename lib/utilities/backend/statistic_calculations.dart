@@ -8,6 +8,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/models/single_month_statistic.dart';
 import 'package:linum/providers/algorithm_provider.dart';
+import 'package:linum/utilities/frontend/filters.dart';
+import 'package:tuple/tuple.dart';
 
 class StatisticsCalculations {
   /// the data that should be processed
@@ -18,7 +20,7 @@ class StatisticsCalculations {
       getDataUsingFilter(_algorithmProvider.currentFilter);
 
   List<SingleBalanceData> get _allTimeData =>
-      getDataUsingFilter(AlgorithmProvider.newerThan(Timestamp.now()));
+      getDataUsingFilter(Filters.newerThan(Timestamp.now()));
 
   late AlgorithmProvider _algorithmProvider;
 
@@ -37,23 +39,23 @@ class StatisticsCalculations {
 
   /// filter the data further down to only include the data with income information (excluding 0 cost products)
   List<SingleBalanceData> get _currentIncomeData => getDataUsingFilter(
-        AlgorithmProvider.amountAtMost(0),
+        Filters.amountAtMost(0),
         baseData: _currentData,
       );
 
   List<SingleBalanceData> get _allTimeIncomeData => getDataUsingFilter(
-        AlgorithmProvider.amountAtMost(0),
+        Filters.amountAtMost(0),
         baseData: _allTimeData,
       );
 
   /// filter the data further down to only include the data with cost information (including 0 cost products)
   List<SingleBalanceData> get _currentCostData => getDataUsingFilter(
-        AlgorithmProvider.amountMoreThan(0),
+        Filters.amountMoreThan(0),
         baseData: _currentData,
       );
 
   List<SingleBalanceData> get _allTimeCostData => getDataUsingFilter(
-        AlgorithmProvider.amountMoreThan(0),
+        Filters.amountMoreThan(0),
         baseData: _allTimeData,
       );
 
@@ -67,21 +69,23 @@ class StatisticsCalculations {
       final DateTime endDate = DateTime(now.year, now.month - i + 1, now.day);
 
       final List<bool Function(dynamic)> filterList = [
-        AlgorithmProvider.inBetween(
-          Timestamp.fromDate(startDate),
-          Timestamp.fromDate(endDate),
+        Filters.inBetween(
+          Tuple2(
+            Timestamp.fromDate(startDate),
+            Timestamp.fromDate(endDate),
+          ),
         )
       ];
 
       final List<SingleBalanceData> allThisMonthData =
-          getDataUsingFilter(AlgorithmProvider.combineFilterStrict(filterList));
+          getDataUsingFilter(Filters.combineFilterStrict(filterList));
 
       final List<SingleBalanceData> costsThisMonthData = getDataUsingFilter(
-        AlgorithmProvider.amountMoreThan(0),
+        Filters.amountMoreThan(0),
         baseData: allThisMonthData,
       );
       final List<SingleBalanceData> incomesThisMonthData = getDataUsingFilter(
-        AlgorithmProvider.amountAtMost(0),
+        Filters.amountAtMost(0),
         baseData: allThisMonthData,
       );
 

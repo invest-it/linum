@@ -12,6 +12,7 @@ import 'package:linum/models/dialog_action.dart';
 import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
+import 'package:provider/provider.dart';
 
 Future<bool?> generateDeletePopupFromSingleBalanceData(
   BuildContext context,
@@ -28,95 +29,114 @@ Future<bool?> generateDeletePopupFromSingleBalanceData(
   );
 }
 
+Future<bool?> showRepeatableDeletePopup(
+    BuildContext context,
+    String balanceDataId, {
+    Timestamp? formerTime,
+}) async {
+  final UserAlert userAlert = UserAlert(context: context);
+  final BalanceDataProvider balanceDataProvider = Provider.of<BalanceDataProvider>(context, listen: false);
+  return userAlert.showActionDialog(
+    "enter_screen.delete-entry.dialog-label-deleterep",
+    [
+      DialogAction(
+        // ignore: avoid_redundant_argument_values
+        dialogPurpose: DialogPurpose.primary,
+        actionTitle: "enter_screen.delete-entry.dialog-button-onlyonce",
+        function: () {
+          balanceDataProvider.removeRepeatedBalanceUsingId(
+            id: balanceDataId,
+            removeType: RepeatableChangeType.onlyThisOne,
+            time: formerTime,
+          );
+          Navigator.of(context, rootNavigator: true).pop(true);
+        },
+      ),
+      DialogAction(
+        dialogPurpose: DialogPurpose.danger,
+        actionTitle: "enter_screen.delete-entry.dialog-button-untilnow",
+        function: () {
+          balanceDataProvider.removeRepeatedBalanceUsingId(
+            id: balanceDataId,
+            removeType: RepeatableChangeType.thisAndAllBefore,
+            time: formerTime,
+          );
+          Navigator.of(context, rootNavigator: true).pop(true);
+        },
+      ),
+      DialogAction(
+        dialogPurpose: DialogPurpose.danger,
+        actionTitle: "enter_screen.delete-entry.dialog-button-fromnow",
+        function: () {
+          balanceDataProvider.removeRepeatedBalanceUsingId(
+            id: balanceDataId,
+            removeType: RepeatableChangeType.thisAndAllAfter,
+            time: formerTime,
+          );
+          Navigator.of(context, rootNavigator: true).pop(true);
+        },
+      ),
+      DialogAction(
+        dialogPurpose: DialogPurpose.danger,
+        actionTitle: "enter_screen.delete-entry.dialog-button-allentries",
+        function: () {
+          balanceDataProvider.removeRepeatedBalanceUsingId(
+            id: balanceDataId,
+            removeType: RepeatableChangeType.all,
+          );
+          Navigator.of(context, rootNavigator: true).pop(true);
+        },
+      ),
+      DialogAction(
+        dialogPurpose: DialogPurpose.secondary,
+        actionTitle: "enter_screen.delete-entry.dialog-button-cancel",
+        function: () => Navigator.of(context, rootNavigator: true).pop(false),
+      )
+    ],
+    title: "enter_screen.delete-entry.dialog-label-title",
+  );
+}
+
+Future<bool?> showDefaultDeletePopup(
+    BuildContext context,
+    String balanceDataId, {
+    Timestamp? formerTime,
+}) async {
+  final UserAlert userAlert = UserAlert(context: context);
+  final BalanceDataProvider balanceDataProvider = Provider.of<BalanceDataProvider>(context, listen: false);
+  return userAlert.showActionDialog(
+    "enter_screen.delete-entry.dialog-label-delete",
+    [
+      DialogAction(
+        dialogPurpose: DialogPurpose.secondary,
+        actionTitle: "enter_screen.delete-entry.dialog-button-cancel",
+        function: () => Navigator.of(context, rootNavigator: true).pop(false),
+      ),
+      DialogAction(
+        dialogPurpose: DialogPurpose.danger,
+        actionTitle: "enter_screen.delete-entry.dialog-button-delete",
+        function: () {
+          balanceDataProvider.removeSingleBalanceUsingId(
+            balanceDataId,
+          );
+          Navigator.of(context, rootNavigator: true).pop(true);
+        },
+      ),
+    ],
+    title: "enter_screen.delete-entry.dialog-label-title",
+  );
+}
+
 Future<bool?> generateDeletePopup(
   BuildContext context,
   BalanceDataProvider balanceDataProvider,
-  String id, {
+  String balanceDataId, {
   required bool isRepeatable,
   Timestamp? formerTime,
 }) async {
-  final UserAlert userAlert = UserAlert(context: context);
 
-  return isRepeatable // REPEATABLE DELETE POPUP
-      ? userAlert.showMyActionDialog(
-          "enter_screen/delete-entry/dialog-label-deleterep",
-          [
-            DialogAction(
-              // ignore: avoid_redundant_argument_values
-              dialogPurpose: DialogPurpose.primary,
-              actionTitle: "enter_screen/delete-entry/dialog-button-onlyonce",
-              function: () {
-                balanceDataProvider.removeRepeatedBalanceUsingId(
-                  id: id,
-                  removeType: RepeatableChangeType.onlyThisOne,
-                  time: formerTime,
-                );
-                Navigator.of(context).pop(true);
-              },
-            ),
-            DialogAction(
-              dialogPurpose: DialogPurpose.danger,
-              actionTitle: "enter_screen/delete-entry/dialog-button-untilnow",
-              function: () {
-                balanceDataProvider.removeRepeatedBalanceUsingId(
-                  id: id,
-                  removeType: RepeatableChangeType.thisAndAllBefore,
-                  time: formerTime,
-                );
-                Navigator.of(context).pop(true);
-              },
-            ),
-            DialogAction(
-              dialogPurpose: DialogPurpose.danger,
-              actionTitle: "enter_screen/delete-entry/dialog-button-fromnow",
-              function: () {
-                balanceDataProvider.removeRepeatedBalanceUsingId(
-                  id: id,
-                  removeType: RepeatableChangeType.thisAndAllAfter,
-                  time: formerTime,
-                );
-                Navigator.of(context).pop(true);
-              },
-            ),
-            DialogAction(
-              dialogPurpose: DialogPurpose.danger,
-              actionTitle: "enter_screen/delete-entry/dialog-button-allentries",
-              function: () {
-                balanceDataProvider.removeRepeatedBalanceUsingId(
-                  id: id,
-                  removeType: RepeatableChangeType.all,
-                );
-                Navigator.of(context).pop(true);
-              },
-            ),
-            DialogAction(
-              dialogPurpose: DialogPurpose.secondary,
-              actionTitle: "enter_screen/delete-entry/dialog-button-cancel",
-              function: () => Navigator.of(context).pop(false),
-            )
-          ],
-          title: "enter_screen/delete-entry/dialog-label-title",
-        )
-      : // SINGLE-BALANCE DELETE POPUP
-      userAlert.showMyActionDialog(
-          "enter_screen/delete-entry/dialog-label-delete",
-          [
-            DialogAction(
-              dialogPurpose: DialogPurpose.secondary,
-              actionTitle: "enter_screen/delete-entry/dialog-button-cancel",
-              function: () => Navigator.of(context).pop(false),
-            ),
-            DialogAction(
-              dialogPurpose: DialogPurpose.danger,
-              actionTitle: "enter_screen/delete-entry/dialog-button-delete",
-              function: () {
-                balanceDataProvider.removeSingleBalanceUsingId(
-                  id,
-                );
-                Navigator.of(context).pop(true);
-              },
-            ),
-          ],
-          title: "enter_screen/delete-entry/dialog-label-title",
-        );
+
+  return isRepeatable
+      ? showRepeatableDeletePopup(context, balanceDataId, formerTime: formerTime)
+      : showDefaultDeletePopup(context, balanceDataId, formerTime: formerTime);
 }

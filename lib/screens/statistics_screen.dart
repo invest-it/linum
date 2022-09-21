@@ -6,14 +6,14 @@
 
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:linum/widgets/top_bar_action_item.dart';
 
 /// Page Index: 2
 class StatisticsScreen extends StatelessWidget {
-  const StatisticsScreen({Key? key}) : super(key: key);
+  const StatisticsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class StatisticsScreen extends StatelessWidget {
               buttonIcon: Icons.build,
               onPressedAction: () => log('message'),
             ),
-            Text(AppLocalizations.of(context)!.translate('main/label-wip')),
+            Text(tr('main.label-wip')),
           ],
         ),
       ),

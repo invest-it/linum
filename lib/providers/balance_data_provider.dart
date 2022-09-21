@@ -20,6 +20,7 @@ import 'package:linum/utilities/balance_data/single_balance_data_manager.dart';
 import 'package:linum/widgets/abstract/abstract_home_screen_card.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 
 /// Provides the balance data from the database using the uid.
 class BalanceDataProvider extends ChangeNotifier {
@@ -30,8 +31,6 @@ class BalanceDataProvider extends ChangeNotifier {
   late String _uid;
 
   late AlgorithmProvider _algorithmProvider;
-
-  num _dontDispose = 0;
 
   // Manager
   late final SingleBalanceDataManager singleBalanceDataManager;
@@ -133,7 +132,8 @@ class BalanceDataProvider extends ChangeNotifier {
             _algorithmProvider.balanceNeedsNotice)) {
       _algorithmProvider = algorithm;
       _algorithmProvider.balanceDataNotice();
-      notifyListeners();
+      // notifyListeners(); // Called during update,
+      // which already notifies its listeners
     }
   }
 
@@ -390,21 +390,6 @@ class BalanceDataProvider extends ChangeNotifier {
     );
   }
 
-  // Dispose
-
-  /// balance data povider gets disposed after closing the enter screen. we want to skip disposing one time.
-  void dontDisposeOneTime() {
-    _dontDispose++;
-  }
-
-  /// balance data povider gets disposed after closing the enter screen. we want to skip disposing one time.
-  @override
-  void dispose() {
-    if (_dontDispose-- == 0) {
-      super.dispose();
-    }
-  }
-
   // Settings
 
   /// upload one setting as map
@@ -428,6 +413,24 @@ class BalanceDataProvider extends ChangeNotifier {
         await _balance!.get();
     final Map<String, dynamic>? data = snapshot.data();
     return data!["settings"] as Map<String, dynamic>;
+  }
+
+  static SingleChildWidget provider(BuildContext context, {bool testing = false}) {
+    return ChangeNotifierProxyProvider2<AuthenticationService,
+        AlgorithmProvider, BalanceDataProvider>(
+      create: (ctx) {
+        return BalanceDataProvider(ctx);
+      },
+      update: (ctx, auth, algo, oldBalance) {
+        if (oldBalance != null) {
+          oldBalance.updateAuth(auth);
+          return oldBalance..updateAlgorithmProvider(algo);
+        } else {
+          return BalanceDataProvider(ctx);
+        }
+      },
+      lazy: false,
+    );
   }
 }
 // TODO: Refactor

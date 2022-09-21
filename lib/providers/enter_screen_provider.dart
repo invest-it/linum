@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/constants/repeat_duration_type_enum.dart';
 import 'package:linum/constants/settings_enums.dart';
+import 'package:linum/models/single_balance_data.dart';
 
 class EnterScreenProvider with ChangeNotifier {
   late bool _isExpenses;
@@ -45,7 +46,7 @@ class EnterScreenProvider with ChangeNotifier {
     String? repeatId,
     Timestamp? formerTime,
   }) {
-    _amount = amount <= 0 ? -1 * amount : amount;
+    _amount = amount.abs();
     _expenseCategory = amount <= 0 ? category : secondaryCategory;
     _incomeCategory = amount > 0 ? category : secondaryCategory;
     _name = name;
@@ -66,6 +67,22 @@ class EnterScreenProvider with ChangeNotifier {
       _selectedDate = selectedDate;
     }
     _note = note;
+  }
+
+  factory EnterScreenProvider.fromBalanceData(SingleBalanceData singleBalanceData, {bool editMode = true}) {
+    return EnterScreenProvider(
+      id: singleBalanceData.id,
+      amount: singleBalanceData.amount,
+      category: singleBalanceData.category,
+      name: singleBalanceData.name,
+      selectedDate:
+      singleBalanceData.time.toDate(),
+      editMode: editMode,
+      repeatId: singleBalanceData.repeatId,
+      formerTime:
+      singleBalanceData.formerTime ??
+          singleBalanceData.time,
+    );
   }
 
   bool get isExpenses {

@@ -6,15 +6,15 @@
 
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/backend/url_handler.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
+import 'package:linum/widgets/auth/sign_in_sign_up_button.dart';
 import 'package:linum/widgets/auth/sign_in_with_google_button.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -81,8 +81,7 @@ class _RegisterFormState extends State<RegisterForm> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 12.0),
           child: Text(
-            AppLocalizations.of(context)!
-                .translate('onboarding_screen/register-lip-title'),
+            tr('onboarding_screen.register-lip-title'),
             style: Theme.of(context).textTheme.headline5,
           ),
         ),
@@ -119,9 +118,7 @@ class _RegisterFormState extends State<RegisterForm> {
                         autocorrect: false,
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: AppLocalizations.of(context)!.translate(
-                            'onboarding_screen/register-email-hintlabel',
-                          ),
+                          hintText: tr('onboarding_screen.register-email-hintlabel'),
                           hintStyle: Theme.of(context)
                               .textTheme
                               .bodyText1
@@ -129,9 +126,7 @@ class _RegisterFormState extends State<RegisterForm> {
                                 color: Theme.of(context).colorScheme.secondary,
                               ),
                           errorText: _mailValidate
-                              ? AppLocalizations.of(context)!.translate(
-                                  'onboarding_screen/register-email-errorlabel',
-                                )
+                              ? tr('onboarding_screen.register-email-errorlabel')
                               : null,
                         ),
                       ),
@@ -158,9 +153,7 @@ class _RegisterFormState extends State<RegisterForm> {
                         // },
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: AppLocalizations.of(context)!.translate(
-                            'onboarding_screen/register-password-hintlabel',
-                          ),
+                          hintText: tr('onboarding_screen.register-password-hintlabel'),
                           hintStyle: Theme.of(context)
                               .textTheme
                               .bodyText1
@@ -168,9 +161,7 @@ class _RegisterFormState extends State<RegisterForm> {
                                 color: Theme.of(context).colorScheme.secondary,
                               ),
                           errorText: _passValidate
-                              ? AppLocalizations.of(context)!.translate(
-                                  'onboarding_screen/register-password-errorlabel',
-                                )
+                              ? tr('onboarding_screen.register-password-errorlabel')
                               : null,
                         ),
                       ),
@@ -199,8 +190,8 @@ class _RegisterFormState extends State<RegisterForm> {
               //     ),
               //   ),
               // ),
-              GradientButton(
-                increaseHeightBy: proportionateScreenHeight(16),
+              SignInSignUpButton(
+                text: tr('onboarding_screen.register-lip-signup-button'),
                 callback: () {
                   setState(() {
                     _mailController.text.isEmpty
@@ -215,23 +206,6 @@ class _RegisterFormState extends State<RegisterForm> {
                     signUp(_mailController.text, _passController.text);
                   }
                 },
-                gradient: LinearGradient(
-                  colors: [
-                    Theme.of(context).colorScheme.primary,
-                    const Color(0xFFC1E695),
-                  ],
-                ),
-                elevation: 0,
-                increaseWidthBy: double.infinity,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  AppLocalizations.of(context)!.translate(
-                    'onboarding_screen/register-lip-signup-button',
-                  ),
-                  style: Theme.of(context).textTheme.button,
-                ),
               ),
               SizedBox(
                 height: proportionateScreenHeight(12),
@@ -246,9 +220,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 // Works only on iOS at the moment (according to Google)
                 SignInWithAppleButton(
                   onPressed: auth.signInWithApple,
-                  text: AppLocalizations.of(context)!.translate(
-                    'onboarding_screen/apple-button',
-                  ),
+                  text: tr('onboarding_screen.apple-button'),
                 )
               ],
               SizedBox(
@@ -258,18 +230,14 @@ class _RegisterFormState extends State<RegisterForm> {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: AppLocalizations.of(context)!.translate(
-                        'onboarding_screen/register-privacy/label-leading',
-                      ),
+                      text: tr('onboarding_screen.register-privacy.label-leading'),
                       style: Theme.of(context).textTheme.bodyText2?.copyWith(
                             fontWeight: FontWeight.w600,
                             color: Theme.of(context).colorScheme.onSurface,
                           ),
                     ),
                     TextSpan(
-                      text: AppLocalizations.of(context)!.translate(
-                        'onboarding_screen/register-privacy/label-link',
-                      ),
+                      text: tr('onboarding_screen.register-privacy.label-link'),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () async {
                           launchURL('https://investit-academy.de/privacy');
@@ -281,9 +249,7 @@ class _RegisterFormState extends State<RegisterForm> {
                           ),
                     ),
                     TextSpan(
-                      text: AppLocalizations.of(context)!.translate(
-                        'onboarding_screen/register-privacy/label-trailing',
-                      ),
+                      text: tr('onboarding_screen.register-privacy.label-trailing'),
                       style: Theme.of(context).textTheme.bodyText2?.copyWith(
                             fontWeight: FontWeight.w600,
                             color: Theme.of(context).colorScheme.onSurface,

@@ -12,7 +12,7 @@ import 'package:gradient_widgets/gradient_widgets.dart';
 import '../general/general_robot.dart';
 
 class OnboardingOpenSignInRobot extends GeneralRobot {
-  const OnboardingOpenSignInRobot(WidgetTester tester) : super(tester);
+  const OnboardingOpenSignInRobot(super.tester);
 
   Future<void> fillInEmail(String email) async {
     await fillInText("loginEmailField", email);

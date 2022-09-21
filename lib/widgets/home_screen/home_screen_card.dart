@@ -18,10 +18,10 @@ class HomeScreenCard extends StatefulWidget {
   final HomeScreenCardData backData;
 
   const HomeScreenCard({
-    Key? key,
+    super.key,
     required this.frontData,
     required this.backData,
-  }) : super(key: key);
+  });
 
   @override
   State<HomeScreenCard> createState() => _HomeScreenCardState();
