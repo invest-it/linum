@@ -21,7 +21,7 @@ import 'package:provider/provider.dart';
 
 /// Page Index: 0
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();

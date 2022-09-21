@@ -15,7 +15,7 @@ import 'package:linum/widgets/settings_screen/standard_category/category_list_vi
 import 'package:provider/provider.dart';
 
 class StandardCategory extends StatefulWidget {
-  const StandardCategory({Key? key}) : super(key: key);
+  const StandardCategory({super.key});
 
   @override
   State<StandardCategory> createState() => _StandardCategoryState();

@@ -12,7 +12,7 @@ import 'package:linum/utilities/backend/url_handler.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 
 class SingleSlide extends StatefulWidget {
-  const SingleSlide({Key? key, required this.slide}) : super(key: key);
+  const SingleSlide({super.key, required this.slide});
 
   final OnboardingSlideData slide;
 

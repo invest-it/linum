@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 
 class PageIndicatorItem extends StatefulWidget {
   const PageIndicatorItem({
-    Key? key,
+    super.key,
     required this.isCurrentIndicator,
-  }) : super(key: key);
+  });
 
   final bool isCurrentIndicator;
 

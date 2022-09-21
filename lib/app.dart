@@ -24,8 +24,8 @@ class LinumApp extends StatelessWidget {
     } else {
       return app;
     } */
-    final MainRouterDelegate _routerDelegate = Get.put(MainRouterDelegate());
-    final MainRouteInformationParser _routeInformationParser = MainRouteInformationParser();
+    final MainRouterDelegate routerDelegate = Get.put(MainRouterDelegate());
+    final MainRouteInformationParser routeInformationParser = MainRouteInformationParser();
 
     return MaterialApp(
       title: 'Linum',
@@ -37,8 +37,8 @@ class LinumApp extends StatelessWidget {
 
       home: FirebaseWrapper(
         router: Router(
-          routerDelegate: _routerDelegate,
-          routeInformationParser: _routeInformationParser,
+          routerDelegate: routerDelegate,
+          routeInformationParser: routeInformationParser,
           backButtonDispatcher: RootBackButtonDispatcher(),
         ),
       ),

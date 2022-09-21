@@ -17,7 +17,7 @@ import 'package:provider/provider.dart';
 
 /// Page Index: 1
 class BudgetScreen extends StatelessWidget {
-  const BudgetScreen({Key? key}) : super(key: key);
+  const BudgetScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

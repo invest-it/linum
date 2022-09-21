@@ -10,9 +10,9 @@ import 'package:linum/providers/pin_code_provider.dart';
 
 class PinSwitch extends StatelessWidget {
   const PinSwitch({
-    Key? key,
+    super.key,
     required this.pinCodeProvider,
-  }) : super(key: key);
+  });
 
   final PinCodeProvider pinCodeProvider;
 

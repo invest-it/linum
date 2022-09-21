@@ -24,7 +24,7 @@ import 'package:provider/provider.dart';
 class ScreenLayout extends StatefulWidget {
   final MainRoute currentRoute;
   final dynamic settings;
-  const ScreenLayout({Key? key, required this.currentRoute, this.settings}) : super(key: key);
+  const ScreenLayout({super.key, required this.currentRoute, this.settings});
 
   @override
   State<ScreenLayout> createState() => _ScreenLayoutState();
@@ -64,7 +64,7 @@ class _ScreenLayoutState extends State<ScreenLayout>
 
   @override
   Widget build(BuildContext context) {
-    final AccountSettingsProvider _accountSettingsProvider =
+    final AccountSettingsProvider accountSettingsProvider =
         Provider.of<AccountSettingsProvider>(context);
 
     final CollectionReference balance =
@@ -98,8 +98,8 @@ class _ScreenLayoutState extends State<ScreenLayout>
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           final enterScreenSettings = EnterScreenPageSettings.withCategories(
-            category: _accountSettingsProvider.settings['StandardCategoryExpense'] as String?,
-            secondaryCategory: _accountSettingsProvider.settings['StandardCategoryIncome'] as String?,
+            category: accountSettingsProvider.settings['StandardCategoryExpense'] as String?,
+            secondaryCategory: accountSettingsProvider.settings['StandardCategoryIncome'] as String?,
           );
 
           Get.find<MainRouterDelegate>().pushRoute(

@@ -12,8 +12,8 @@ class TimeWidget extends StatelessWidget {
   const TimeWidget({
     required this.displayValue,
     this.isTranslated = false,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String displayValue;
   final bool isTranslated;

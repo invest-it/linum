@@ -92,10 +92,5 @@ class Sorters {
     return (a["time"] as Timestamp).compareTo(b["time"] as Timestamp);
   }
 
-  static SingleBalanceData _mapToSinglebalance(dynamic a) {
-    if (a is Map<String, dynamic>) {
-      return SingleBalanceData.fromMap(a);
-    }
-    return a as SingleBalanceData;
-  }
+
 }

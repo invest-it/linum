@@ -17,10 +17,10 @@ class HomeScreenCardBack extends StatelessWidget {
   final FlipCardController flipCardController;
 
   const HomeScreenCardBack({
-    Key? key,
+    super.key,
     required this.data,
     required this.flipCardController,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

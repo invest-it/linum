@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:linum/constants/repeatable_change_type_enum.dart';
 import 'package:linum/models/dialog_action.dart';
 import 'package:linum/models/single_balance_data.dart';
-import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:provider/provider.dart';
@@ -111,7 +110,7 @@ Future<bool?> showDefaultDeletePopup(
       DialogAction(
         dialogPurpose: DialogPurpose.secondary,
         actionTitle: "enter_screen.delete-entry.dialog-button-cancel",
-        function: () => Navigator.of(context, rootNavigator: true).pop(false)
+        function: () => Navigator.of(context, rootNavigator: true).pop(false),
       ),
       DialogAction(
         dialogPurpose: DialogPurpose.danger,

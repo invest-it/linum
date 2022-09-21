@@ -4,7 +4,6 @@
 //  Co-Author: damattl
 //  (Refactored)
 
-import 'package:linum/widgets/settings_screen/standard_category/standard_category_manager.dart';
 
 enum StandardCategoryIncome {
   none,
@@ -51,6 +50,3 @@ enum RepeatDuration {
   // TODO implement custom repeat
   // custom,
 }
-
-
-

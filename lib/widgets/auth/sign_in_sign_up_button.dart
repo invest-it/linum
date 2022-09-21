@@ -5,7 +5,7 @@ import 'package:linum/utilities/frontend/size_guide.dart';
 class SignInSignUpButton extends StatelessWidget {
   final Function() callback;
   final String text;
-  const SignInSignUpButton({Key? key, required this.text, required this.callback}) : super(key: key);
+  const SignInSignUpButton({super.key, required this.text, required this.callback});
 
   @override
   Widget build(BuildContext context) {

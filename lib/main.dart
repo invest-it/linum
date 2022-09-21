@@ -38,7 +38,7 @@ Future<void> main({bool? testing}) async {
 // Defines the State of the App (in our MVP test phase, this will be "ALPHA" according
 // to the principles of versioning)
 
-Widget _wrapWithBanner(Widget child) {
+Widget wrapWithBanner(Widget child) {
   return Directionality(
     textDirection: TextDirection.ltr,
     child: Banner(

@@ -20,7 +20,7 @@ import 'package:linum/utilities/frontend/size_guide.dart';
 
 class FirebaseWrapper extends StatelessWidget {
   final Router router;
-  FirebaseWrapper({Key? key, required this.router}) : super(key: key);
+  FirebaseWrapper({super.key, required this.router});
 
   final Future<FirebaseApp> _initializedApp = Firebase.initializeApp();
 

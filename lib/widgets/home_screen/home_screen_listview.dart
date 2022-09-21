@@ -188,7 +188,7 @@ class HomeScreenListView implements BalanceDataListView {
         );
       },
       child: Dismissible(
-        background: Container(
+        background: ColoredBox(
           color: Colors.red,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,

@@ -18,8 +18,8 @@ import 'package:provider/provider.dart';
 
 class EnterScreenTopInputField extends StatefulWidget {
   const EnterScreenTopInputField({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   _EnterScreenTopInputFieldState createState() =>
@@ -342,7 +342,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
   }
 
   double parseInput(String str) {
-    final trimmedStr = str.trim().replaceAll(RegExp("^[\$,£,€]\s?0+"), "");
+    final trimmedStr = str.trim().replaceAll(RegExp(r"^[\$,£,€]\s?0+"), "");
     final paddedStr = trimmedStr.padLeft(3, "0");
     final decimalStr = "${paddedStr.substring(0, paddedStr.length - 2)}.${paddedStr.substring(paddedStr.length - 2)}";
     return double.parse(decimalStr);

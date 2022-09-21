@@ -13,7 +13,7 @@ import 'package:linum/widgets/top_bar_action_item.dart';
 
 /// Page Index: 2
 class StatisticsScreen extends StatelessWidget {
-  const StatisticsScreen({Key? key}) : super(key: key);
+  const StatisticsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

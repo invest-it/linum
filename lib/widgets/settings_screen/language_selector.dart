@@ -12,9 +12,9 @@ import 'package:linum/widgets/settings_screen/toggle_button_element.dart';
 
 class LanguageSelector extends StatelessWidget {
   const LanguageSelector({
-    Key? key,
+    super.key,
     required this.accountSettingsProvider,
-  }) : super(key: key);
+  });
 
   final AccountSettingsProvider accountSettingsProvider;
 

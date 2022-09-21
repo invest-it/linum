@@ -19,10 +19,10 @@ class HomeScreenCardFront extends StatelessWidget {
   final HomeScreenCardData data;
   final FlipCardController flipCardController;
   const HomeScreenCardFront({
-    Key? key,
+    super.key,
     required this.data,
     required this.flipCardController,
-  }) : super(key: key);
+  });
 
   void _onHorizontalDragEnd(DragEndDetails details, BuildContext context) {
     // Note: Sensitivity is integer used when you don't want to mess up vertical drag

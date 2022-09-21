@@ -12,7 +12,6 @@ import 'package:linum/utilities/frontend/filters.dart';
 import 'package:linum/utilities/frontend/sorters.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
-import 'package:tuple/tuple.dart';
 
 /// gives sort algorithm (later it will probably also have filter algorithm) and
 /// all algorithm will have an active version instead of being static
@@ -68,15 +67,14 @@ class AlgorithmProvider extends ChangeNotifier {
   }
 
   void setCurrentSortAlgorithm(int Function(dynamic, dynamic) sorter,
-      {bool notify = false}) {
+      {bool notify = false,}) {
     _currentSorter = sorter;
     if (notify) {
       notifyListeners();
     }
   }
 
-  void setCurrentFilterAlgorithm(bool Function(dynamic) filter,
-      {bool notify = false}) {
+  void setCurrentFilterAlgorithm(bool Function(dynamic) filter, {bool notify = false}) {
     _currentFilter = filter;
     if (notify) {
       notifyListeners();
@@ -111,8 +109,7 @@ class AlgorithmProvider extends ChangeNotifier {
     }
   }
 
-  static SingleChildWidget provider(BuildContext context,
-      {bool testing = false}) {
+  static SingleChildWidget provider(BuildContext context, {bool testing = false}) {
     return ChangeNotifierProvider<AlgorithmProvider>(
       create: (_) => AlgorithmProvider(),
       lazy: false,

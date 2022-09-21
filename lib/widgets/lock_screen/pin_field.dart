@@ -11,8 +11,7 @@ class PinField extends StatelessWidget {
   final int index;
   final int selectedIndex;
   final Color ringColor;
-  const PinField(this.index, this.selectedIndex, this.ringColor, {Key? key})
-      : super(key: key);
+  const PinField(this.index, this.selectedIndex, this.ringColor, {super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -15,7 +15,7 @@ import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 
 /// Page Index: 4
 class AcademyScreen extends StatelessWidget {
-  const AcademyScreen({Key? key}) : super(key: key);
+  const AcademyScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

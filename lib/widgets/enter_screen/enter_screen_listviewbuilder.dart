@@ -197,7 +197,7 @@ class _EnterScreenListViewBuilderState
       int index,
       EnterScreenProvider enterScreenProvider,
       AccountSettingsProvider accountSettingsProvider,
-      ActionLipStatusProvider actionLipStatusProvider) {
+      ActionLipStatusProvider actionLipStatusProvider,) {
     if (index == 1) {
       //opens the date picker
       _openDatePicker(enterScreenProvider);
@@ -350,7 +350,7 @@ class _EnterScreenListViewBuilderState
                   standardIncomeCategories[
                           StandardCategoryExpense.values[indexBuilder]]!
                       .icon,
-                  actionLipStatusProvider),
+                  actionLipStatusProvider,),
             );
           },
         );
@@ -386,7 +386,7 @@ class _EnterScreenListViewBuilderState
             ),
             //selects the item as the repeat value
             onTap: () => _selectRepeatItem(enterScreenProvider, indexBuilder,
-                accountSettingsProvider, actionLipStatusProvider),
+                accountSettingsProvider, actionLipStatusProvider,),
           );
         },
       );
@@ -421,7 +421,7 @@ class _EnterScreenListViewBuilderState
                 standardIncomeCategories[
                         StandardCategoryIncome.values[indexBuilder]]!
                     .icon,
-                actionLipStatusProvider),
+                actionLipStatusProvider,),
           );
         },
       );
@@ -454,7 +454,7 @@ class _EnterScreenListViewBuilderState
               tr(categoriesRepeat[RepeatDuration.values[indexBuilder]]?["entryCategory"].label as String),
             ),
             onTap: () => _selectRepeatItem(enterScreenProvider, indexBuilder,
-                accountSettingsProvider, actionLipStatusProvider),
+                accountSettingsProvider, actionLipStatusProvider,),
           );
         },
       );
@@ -482,7 +482,7 @@ class _EnterScreenListViewBuilderState
             tr(categoriesRepeat[RepeatDuration.values[indexBuilder]]?["entryCategory"].label as String),
           ),
           onTap: () => _selectRepeatItem(enterScreenProvider, indexBuilder,
-              accountSettingsProvider, actionLipStatusProvider),
+              accountSettingsProvider, actionLipStatusProvider,),
         );
       },
     );

@@ -4,11 +4,11 @@ import 'package:linum/models/entry_category.dart';
 
 class CategoryListTile extends StatelessWidget {
   const CategoryListTile({
-    Key? key,
+    super.key,
     required this.category,
     required this.labelTitle,
     required this.defaultLabel,
-  }) : super(key: key);
+  });
   final String labelTitle;
   final String defaultLabel;
   final EntryCategory? category;

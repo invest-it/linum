@@ -386,7 +386,7 @@ class PinCodeProvider extends ChangeNotifier {
   bool get lastEmailStillLoading => _lastEmailStillLoading;
 
   static SingleChildWidget provider(BuildContext context,
-      {bool testing = false}) {
+      {bool testing = false,}) {
     return ChangeNotifierProxyProvider<AuthenticationService, PinCodeProvider>(
       create: (context) => PinCodeProvider(context),
       update: (context, auth, oldPinCodeProvider) {

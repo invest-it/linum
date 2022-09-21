@@ -10,7 +10,6 @@ import 'dart:developer' as dev;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbols.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/models/entry_category.dart';
@@ -157,8 +156,14 @@ class AccountSettingsProvider extends ChangeNotifier {
     return true;
   }
 
-  static SingleChildWidget provider(BuildContext context,
-      {bool testing = false}) {
+  @override
+  void dispose() {
+    settingsListener?.cancel();
+    super.dispose();
+  }
+
+
+  static SingleChildWidget provider(BuildContext context, {bool testing = false}) {
     return ChangeNotifierProxyProvider<AuthenticationService,
         AccountSettingsProvider>(
       create: (ctx) {

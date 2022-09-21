@@ -15,10 +15,10 @@ class TextContainer extends StatelessWidget {
   //var context;
 
   const TextContainer({
-    Key? key,
+    super.key,
     // required this.context,
     required this.transactionClass,
-  }) : super(key: key);
+  });
   @override
   Widget build(BuildContext context) {
     final EnterScreenProvider enterScreenProvider =

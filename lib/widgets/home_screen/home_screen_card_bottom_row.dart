@@ -19,12 +19,12 @@ class HomeScreenCardBottomRow extends StatelessWidget {
   final bool isBack;
 
   const HomeScreenCardBottomRow({
-    Key? key,
+    super.key,
     required this.data,
     required this.upwardArrow,
     required this.downwardArrow,
     this.isBack = false,
-  }) : super(key: key);
+  });
 
   IconButton _buildGoToCurrentDateIcon(BuildContext context) {
     final AlgorithmProvider algorithmProvider =

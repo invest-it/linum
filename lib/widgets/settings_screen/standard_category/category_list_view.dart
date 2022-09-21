@@ -63,7 +63,7 @@ class CategoryListView<T extends Enum> extends StatelessWidget {
                       //leading: Icon(widget.categories[index].icon),
                       leading: Icon(standardCategory(indexBuilder)?.icon,),
                       title: Text(
-                        tr(standardCategory(indexBuilder)?.label ?? "Category")
+                        tr(standardCategory(indexBuilder)?.label ?? "Category"),
                       ),
                       selected: itemIsSelected(indexBuilder),
                       onTap: () {
