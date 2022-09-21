@@ -40,14 +40,14 @@ TextEditingValue textManipulation(
   // count # of original input characters in new string
   int inputCount = 0;
 
-  bool _isUserInput(String s) {
+  bool isUserInput(String s) {
     if (textInputFormatter == null) return originalUserInput.contains(s);
     return newValue.text.contains(s);
   }
 
   for (int i = 0; i < newText.length && inputCount < selectionIndex; i++) {
     final character = newText[i];
-    if (_isUserInput(character)) {
+    if (isUserInput(character)) {
       inputCount++;
     } else {
       insertCount++;
@@ -60,7 +60,7 @@ TextEditingValue textManipulation(
 
   if (selectionIndex - 1 >= 0 &&
       selectionIndex - 1 < newText.length &&
-      !_isUserInput(newText[selectionIndex - 1])) {
+      !isUserInput(newText[selectionIndex - 1])) {
     selectionIndex--;
   }
 

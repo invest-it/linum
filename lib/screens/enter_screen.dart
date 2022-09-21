@@ -146,9 +146,13 @@ class _EnterScreenState extends State<EnterScreen> {
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 textStyle: Theme.of(context).textTheme.button,
+                                // TODO REMOVE IGNORES
+                                // ignore: deprecated_member_use
                                 primary: Theme.of(context).colorScheme.primary,
+                                // ignore: deprecated_member_use
                                 onPrimary:
                                     Theme.of(context).colorScheme.background,
+                                // ignore: deprecated_member_use
                                 onSurface: Colors.white,
                                 fixedSize: Size(
                                   proportionateScreenWidth(300),

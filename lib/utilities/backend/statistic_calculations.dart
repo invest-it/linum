@@ -5,50 +5,56 @@
 //
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/models/single_month_statistic.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 
 class StatisticsCalculations {
   /// the data that should be processed
-  late List<Map<String, dynamic>> _allData;
+  late List<SingleBalanceData> _allData;
 
   /// the data that should be processed for monthly calculations
-  List<Map<String, dynamic>> get _currentData =>
+  List<SingleBalanceData> get _currentData =>
       getDataUsingFilter(_algorithmProvider.currentFilter);
 
-  List<Map<String, dynamic>> get _allTimeData =>
+  List<SingleBalanceData> get _allTimeData =>
       getDataUsingFilter(AlgorithmProvider.newerThan(Timestamp.now()));
 
   late AlgorithmProvider _algorithmProvider;
 
   /// create a new instance and set the data
   StatisticsCalculations(
-    List<dynamic> data,
+    List<SingleBalanceData> data,
     AlgorithmProvider algorithmProvider,
   ) {
     _allData = [];
     for (int i = 0; i < data.length; i++) {
-      _allData.add(Map<String, dynamic>.from(data[i] as Map<String, dynamic>));
+      _allData
+          .add(data[i].copyWith()); // copy data so there is no change in data
     }
     _algorithmProvider = algorithmProvider;
   }
 
   /// filter the data further down to only include the data with income information (excluding 0 cost products)
-  List<Map<String, dynamic>> get _currentIncomeData =>
-      getDataUsingFilter(AlgorithmProvider.amountAtMost(0), data: _currentData);
-
-  List<Map<String, dynamic>> get _allTimeIncomeData =>
-      getDataUsingFilter(AlgorithmProvider.amountAtMost(0), data: _allTimeData);
-
-  /// filter the data further down to only include the data with cost information (including 0 cost products)
-  List<Map<String, dynamic>> get _currentCostData => getDataUsingFilter(
-        AlgorithmProvider.amountMoreThan(0),
-        data: _currentData,
+  List<SingleBalanceData> get _currentIncomeData => getDataUsingFilter(
+        AlgorithmProvider.amountAtMost(0),
+        baseData: _currentData,
       );
 
-  List<Map<String, dynamic>> get _allTimeCostData => getDataUsingFilter(
+  List<SingleBalanceData> get _allTimeIncomeData => getDataUsingFilter(
+        AlgorithmProvider.amountAtMost(0),
+        baseData: _allTimeData,
+      );
+
+  /// filter the data further down to only include the data with cost information (including 0 cost products)
+  List<SingleBalanceData> get _currentCostData => getDataUsingFilter(
         AlgorithmProvider.amountMoreThan(0),
-        data: _allTimeData,
+        baseData: _currentData,
+      );
+
+  List<SingleBalanceData> get _allTimeCostData => getDataUsingFilter(
+        AlgorithmProvider.amountMoreThan(0),
+        baseData: _allTimeData,
       );
 
   List<SingleMonthStatistic> getBundledDataPerMonth({
@@ -67,17 +73,16 @@ class StatisticsCalculations {
         )
       ];
 
-      final List<Map<String, dynamic>> allThisMonthData =
+      final List<SingleBalanceData> allThisMonthData =
           getDataUsingFilter(AlgorithmProvider.combineFilterStrict(filterList));
 
-      final List<Map<String, dynamic>> costsThisMonthData = getDataUsingFilter(
+      final List<SingleBalanceData> costsThisMonthData = getDataUsingFilter(
         AlgorithmProvider.amountMoreThan(0),
-        data: allThisMonthData,
+        baseData: allThisMonthData,
       );
-      final List<Map<String, dynamic>> incomesThisMonthData =
-          getDataUsingFilter(
+      final List<SingleBalanceData> incomesThisMonthData = getDataUsingFilter(
         AlgorithmProvider.amountAtMost(0),
-        data: allThisMonthData,
+        baseData: allThisMonthData,
       );
 
       result.add(
@@ -147,37 +152,37 @@ class StatisticsCalculations {
       ? allTimeSumIncomes / _allTimeIncomeData.length
       : 0;
 
-  num _getSumFrom(List<Map<String, dynamic>> data) {
+  num _getSumFrom(List<SingleBalanceData> data) {
     num sum = 0;
     for (final value in data) {
-      sum += value["amount"] as num;
+      sum += value.amount;
     }
     return sum;
   }
 
-  num _getAverageFrom(List<Map<String, dynamic>> data) {
+  num _getAverageFrom(List<SingleBalanceData> data) {
     return data.isNotEmpty ? _getSumFrom(data) / data.length : 0;
   }
 
-  List<Map<String, dynamic>> getDataUsingFilter(
+  /// baseData is the data used as base. return will always be a subset of baseData
+  /// baseData == null => baseData = _allData
+  List<SingleBalanceData> getDataUsingFilter(
     bool Function(dynamic) filter, {
-    List<Map<String, dynamic>>? data,
+    List<SingleBalanceData>? baseData,
   }) {
-    if (data != null) {
-      return List<Map<String, dynamic>>.from(data)..removeWhere(filter);
+    if (baseData != null) {
+      return List<SingleBalanceData>.from(baseData)..removeWhere(filter);
     }
-    return List<Map<String, dynamic>>.from(_allData)..removeWhere(filter);
+    return List<SingleBalanceData>.from(_allData)..removeWhere(filter);
   }
 
   List<String> _getSubcategoriesFrom(
-    List<Map<String, dynamic>> data,
+    List<SingleBalanceData> data,
   ) {
     final Set<String> result = {};
 
     for (final singleBalance in data) {
-      if (singleBalance["category"] != null) {
-        result.add(singleBalance["category"] as String);
-      }
+      result.add(singleBalance.category);
     }
 
     return result.toList();

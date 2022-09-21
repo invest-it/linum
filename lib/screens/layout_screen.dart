@@ -62,7 +62,7 @@ class _LayoutScreenState extends State<LayoutScreen>
 
   @override
   Widget build(BuildContext context) {
-    final AccountSettingsProvider _accountSettingsProvider =
+    final AccountSettingsProvider accountSettingsProvider =
         Provider.of<AccountSettingsProvider>(context);
 
     final ScreenIndexProvider screenIndexProvider =
@@ -139,12 +139,12 @@ class _LayoutScreenState extends State<LayoutScreen>
                               ChangeNotifierProvider<EnterScreenProvider>(
                                 create: (_) {
                                   return EnterScreenProvider(
-                                    category: _accountSettingsProvider.settings[
+                                    category: accountSettingsProvider.settings[
                                                 'StandardCategoryExpense']
                                             as String? ??
                                         "None",
                                     secondaryCategory:
-                                        _accountSettingsProvider.settings[
+                                        accountSettingsProvider.settings[
                                                     'StandardCategoryIncome']
                                                 as String? ??
                                             "None",
@@ -159,7 +159,7 @@ class _LayoutScreenState extends State<LayoutScreen>
                               ),
                               ChangeNotifierProvider<AccountSettingsProvider>(
                                 create: (_) {
-                                  return _accountSettingsProvider
+                                  return accountSettingsProvider
                                     ..dontDisposeOneTime();
                                 },
                               ),
