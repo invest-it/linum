@@ -68,7 +68,7 @@ class AuthenticationService extends ChangeNotifier implements BuildableProvider 
       }
     } on FirebaseAuthException catch (e) {
       log(e.message.toString());
-      onError("auth/${e.code}");
+      onError("auth.${e.code}");
     }
   }
 
@@ -97,7 +97,7 @@ class AuthenticationService extends ChangeNotifier implements BuildableProvider 
       }
     } on FirebaseAuthException catch (e) {
       log(e.message.toString());
-      onError("auth/${e.code}");
+      onError("auth.${e.code}");
     }
   }
 
@@ -121,7 +121,7 @@ class AuthenticationService extends ChangeNotifier implements BuildableProvider 
       onComplete("Successfully signed in to Firebase");
     } on FirebaseAuthException catch (e) {
       log(e.message.toString());
-      onError("auth/${e.code}");
+      onError("auth.${e.code}");
     }
   }
 
@@ -151,7 +151,7 @@ class AuthenticationService extends ChangeNotifier implements BuildableProvider 
       onComplete("Successfully signed in to Firebase");
     } on FirebaseAuthException catch (e) {
       log(e.message.toString());
-      onError("auth/${e.code}");
+      onError("auth.${e.code}");
     } on SignInWithAppleAuthorizationException catch (e) {
       if (e.code == AuthorizationErrorCode.canceled) {
         log("Sign in with Apple was aborted");
@@ -219,15 +219,15 @@ class AuthenticationService extends ChangeNotifier implements BuildableProvider 
       if (_firebaseAuth.currentUser != null) {
         await _firebaseAuth.currentUser!.updatePassword(newPassword);
 
-        onComplete("alertdialog/update-password/message");
+        onComplete("alertdialog.update-password.message");
 
         notifyListeners();
       } else {
-        onError("auth/not-logged-in-to-update-password");
+        onError("auth.not-logged-in-to-update-password");
         return;
       }
     } on FirebaseAuthException catch (e) {
-      onError("auth/${e.code}");
+      onError("auth.${e.code}");
     }
   }
 
@@ -240,12 +240,12 @@ class AuthenticationService extends ChangeNotifier implements BuildableProvider 
       if (_firebaseAuth.currentUser != null) {
         await _firebaseAuth.currentUser!.sendEmailVerification();
       } else {
-        onError("auth/not-logged-in-to-verify");
+        onError("auth.not-logged-in-to-verify");
         return;
       }
       log("Successfully send Verification Mail request to Firebase");
     } on FirebaseAuthException catch (e) {
-      onError("auth/${e.code}");
+      onError("auth.${e.code}");
     }
   }
 
@@ -257,9 +257,9 @@ class AuthenticationService extends ChangeNotifier implements BuildableProvider 
   }) async {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
-      onComplete("alertdialog/reset-password/message");
+      onComplete("alertdialog.reset-password.message");
     } on FirebaseAuthException catch (e) {
-      onError("auth/${e.code}");
+      onError("auth.${e.code}");
     }
   }
 
@@ -276,7 +276,7 @@ class AuthenticationService extends ChangeNotifier implements BuildableProvider 
       notifyListeners();
       onComplete("Successfully signed out from Firebase");
     } on FirebaseAuthException catch (e) {
-      onError("auth/${e.code}");
+      onError("auth.${e.code}");
     }
   }
 
