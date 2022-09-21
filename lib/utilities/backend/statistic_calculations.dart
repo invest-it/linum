@@ -39,23 +39,23 @@ class StatisticsCalculations {
 
   /// filter the data further down to only include the data with income information (excluding 0 cost products)
   List<SingleBalanceData> get _currentIncomeData => getDataUsingFilter(
-        AlgorithmProvider.amountAtMost(0),
+        Filters.amountAtMost(0),
         baseData: _currentData,
       );
 
   List<SingleBalanceData> get _allTimeIncomeData => getDataUsingFilter(
-        AlgorithmProvider.amountAtMost(0),
+        Filters.amountAtMost(0),
         baseData: _allTimeData,
       );
 
   /// filter the data further down to only include the data with cost information (including 0 cost products)
   List<SingleBalanceData> get _currentCostData => getDataUsingFilter(
-        AlgorithmProvider.amountMoreThan(0),
+        Filters.amountMoreThan(0),
         baseData: _currentData,
       );
 
   List<SingleBalanceData> get _allTimeCostData => getDataUsingFilter(
-        AlgorithmProvider.amountMoreThan(0),
+        Filters.amountMoreThan(0),
         baseData: _allTimeData,
       );
 
@@ -78,14 +78,14 @@ class StatisticsCalculations {
       ];
 
       final List<SingleBalanceData> allThisMonthData =
-          getDataUsingFilter(AlgorithmProvider.combineFilterStrict(filterList));
+          getDataUsingFilter(Filters.combineFilterStrict(filterList));
 
       final List<SingleBalanceData> costsThisMonthData = getDataUsingFilter(
-        AlgorithmProvider.amountMoreThan(0),
+        Filters.amountMoreThan(0),
         baseData: allThisMonthData,
       );
       final List<SingleBalanceData> incomesThisMonthData = getDataUsingFilter(
-        AlgorithmProvider.amountAtMost(0),
+        Filters.amountAtMost(0),
         baseData: allThisMonthData,
       );
 

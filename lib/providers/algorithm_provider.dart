@@ -12,7 +12,7 @@ import 'package:linum/utilities/frontend/filters.dart';
 import 'package:linum/utilities/frontend/sorters.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
-import 'package:linum/models/single_balance_data.dart';
+import 'package:tuple/tuple.dart';
 
 /// gives sort algorithm (later it will probably also have filter algorithm) and
 /// all algorithm will have an active version instead of being static
@@ -67,14 +67,16 @@ class AlgorithmProvider extends ChangeNotifier {
     _currentFilter = Filters.inBetween(timestampsFromNow());
   }
 
-  void setCurrentSortAlgorithm(int Function(dynamic, dynamic) sorter, {bool notify = false}) {
+  void setCurrentSortAlgorithm(int Function(dynamic, dynamic) sorter,
+      {bool notify = false}) {
     _currentSorter = sorter;
     if (notify) {
       notifyListeners();
     }
   }
 
-  void setCurrentFilterAlgorithm(bool Function(dynamic) filter, {bool notify = false}) {
+  void setCurrentFilterAlgorithm(bool Function(dynamic) filter,
+      {bool notify = false}) {
     _currentFilter = filter;
     if (notify) {
       notifyListeners();
@@ -109,15 +111,8 @@ class AlgorithmProvider extends ChangeNotifier {
     }
   }
 
-  static SingleBalanceData _mapToSinglebalance(dynamic a) {
-    if (a is Map<String, dynamic>) {
-      return SingleBalanceData.fromMap(a);
-    }
-    return a as SingleBalanceData;
-  }
-
-
-  static SingleChildWidget provider(BuildContext context, {bool testing = false}) {
+  static SingleChildWidget provider(BuildContext context,
+      {bool testing = false}) {
     return ChangeNotifierProvider<AlgorithmProvider>(
       create: (_) => AlgorithmProvider(),
       lazy: false,

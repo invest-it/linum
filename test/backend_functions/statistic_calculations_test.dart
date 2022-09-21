@@ -12,6 +12,7 @@ import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/utilities/backend/statistic_calculations.dart';
 import 'package:linum/utilities/frontend/filters.dart';
+import 'package:uuid/uuid.dart';
 
 final SingleBalanceData baseSingleBalanceData = SingleBalanceData(
   amount: 0,

@@ -4,7 +4,11 @@
 //  Co-Author: damattl
 //  (Refactored)
 
+// will be removed when sorters will only be used on SingleBalanceData
+// ignore_for_file: avoid_dynamic_calls
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:linum/models/single_balance_data.dart';
 
 class Sorters {
   /// returns a new sort algorithm. It sorts using the first
@@ -12,8 +16,8 @@ class Sorters {
   /// sort algorithm will be used and so one. If every
   /// sort algorithm says 0, it will return 0.
   static int Function(dynamic, dynamic) combineSorter(
-      List<int Function(dynamic, dynamic)> sorterList,
-      ) {
+    List<int Function(dynamic, dynamic)> sorterList,
+  ) {
     if (sorterList.isEmpty) {
       return (a, b) => 0;
     }
@@ -30,43 +34,68 @@ class Sorters {
   }
 
   static int amountLeastToMost(dynamic a, dynamic b) {
-    return ((a as Map<String, dynamic>)["amount"] as num)
-        .compareTo((b as Map<String, dynamic>)["amount"] as num);
+    // maybe filter is used on maps
+    // if can be deleted later
+    if (a is SingleBalanceData && b is SingleBalanceData) {
+      return (a.amount).compareTo(b.amount);
+    }
+
+    return (a["amount"] as num).compareTo(b["amount"] as num);
   }
 
   static int amountMostToLeast(dynamic b, dynamic a) {
-    return ((a as Map<String, dynamic>)["amount"] as num)
-        .compareTo((b as Map<String, dynamic>)["amount"] as num);
+    if (a is SingleBalanceData && b is SingleBalanceData) {
+      return (a.amount).compareTo(b.amount);
+    }
+    return (a["amount"] as num).compareTo(b["amount"] as num);
   }
 
   static int categoryAlphabetically(dynamic a, dynamic b) {
-    return ((a as Map<String, dynamic>)["category"] as String)
-        .compareTo((b as Map<String, dynamic>)["category"] as String);
+    if (a is SingleBalanceData && b is SingleBalanceData) {
+      return (a.category).compareTo(b.category);
+    }
+    return (a["category"] as String).compareTo(b["category"] as String);
   }
 
   static int categoryAlphabeticallyReversed(dynamic b, dynamic a) {
-    return ((a as Map<String, dynamic>)["category"] as String)
-        .compareTo((b as Map<String, dynamic>)["category"] as String);
+    if (a is SingleBalanceData && b is SingleBalanceData) {
+      return (a.category).compareTo(b.category);
+    }
+    return (a["category"] as String).compareTo(b["category"] as String);
   }
 
   static int nameAlphabetically(dynamic a, dynamic b) {
-    return ((a as Map<String, dynamic>)["name"] as String)
-        .compareTo((b as Map<String, dynamic>)["name"] as String);
+    if (a is SingleBalanceData && b is SingleBalanceData) {
+      return (a.name).compareTo(b.name);
+    }
+    return (a["name"] as String).compareTo(b["name"] as String);
   }
 
   static int nameAlphabeticallyReversed(dynamic b, dynamic a) {
-    return ((a as Map<String, dynamic>)["name"] as String)
-        .compareTo((b as Map<String, dynamic>)["name"] as String);
+    if (a is SingleBalanceData && b is SingleBalanceData) {
+      return (a.name).compareTo(b.name);
+    }
+    return (a["name"] as String).compareTo(b["name"] as String);
   }
 
   static int timeNewToOld(dynamic a, dynamic b) {
-    return ((b as Map<String, dynamic>)["time"] as Timestamp)
-        .compareTo((a as Map<String, dynamic>)["time"] as Timestamp);
+    if (a is SingleBalanceData && b is SingleBalanceData) {
+      return (a.time).compareTo(b.time);
+    }
+    return (b["time"] as Timestamp).compareTo(a["time"] as Timestamp);
   }
 
   static int timeOldToNew(dynamic b, dynamic a) {
-    return ((a as Map<String, dynamic>)["time"] as Timestamp)
-        .compareTo((b as Map<String, dynamic>)["time"] as Timestamp);
+    if (a is SingleBalanceData && b is SingleBalanceData) {
+      return (a.time).compareTo(b.time);
+    }
+    return (a["time"] as Timestamp).compareTo(b["time"] as Timestamp);
   }
 
+  static SingleBalanceData _mapToSinglebalance(dynamic a) {
+    if (a is Map<String, dynamic>) {
+      return SingleBalanceData.fromMap(a);
+    }
+    return a as SingleBalanceData;
+  }
 }
