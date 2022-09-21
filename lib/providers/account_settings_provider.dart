@@ -51,7 +51,8 @@ class AccountSettingsProvider extends ChangeNotifier {
     _uid = Provider.of<AuthenticationService>(context, listen: false).uid;
 
     if (_uid != "") {
-      _settings = FirebaseFirestore.instance.collection('account_settings').doc(_uid);
+      _settings =
+          FirebaseFirestore.instance.collection('account_settings').doc(_uid);
     }
     _createAutoUpdate(context);
   }
@@ -73,7 +74,8 @@ class AccountSettingsProvider extends ChangeNotifier {
 
   void updateAuthHelper(BuildContext context) {
     if (_uid != "") {
-      _settings = FirebaseFirestore.instance.collection('account_settings').doc(_uid);
+      _settings =
+          FirebaseFirestore.instance.collection('account_settings').doc(_uid);
     }
     _createAutoUpdate(context);
     notifyListeners();
@@ -102,12 +104,12 @@ class AccountSettingsProvider extends ChangeNotifier {
           final List<String> langArray = langString.split("-");
           locale = Locale(langArray[0], langArray[1]);
           setLocale(context, locale);
-
         } else {
           setToDeviceLocale(context);
         }
 
-        Provider.of<AuthenticationService>(context, listen: false).updateLanguageCode(context);
+        Provider.of<AuthenticationService>(context, listen: false)
+            .updateLanguageCode(context);
         notifyListeners();
       },
       onError: (error, stackTrace) {
@@ -125,12 +127,16 @@ class AccountSettingsProvider extends ChangeNotifier {
   }
 
   void setToDeviceLocale(BuildContext context) {
-    if (context.supportedLocales.contains(context.deviceLocale)) {
-      context.resetLocale();
-    } else if (context.deviceLocale.languageCode == "en") {
-      context.setLocale(const Locale("en", "US"));
-    } else if (context.fallbackLocale != null) {
-      context.setLocale(context.fallbackLocale!);
+    try {
+      if (context.supportedLocales.contains(context.deviceLocale)) {
+        context.resetLocale();
+      } else if (context.deviceLocale.languageCode == "en") {
+        context.setLocale(const Locale("en", "US"));
+      } else if (context.fallbackLocale != null) {
+        context.setLocale(context.fallbackLocale!);
+      }
+    } catch (e) {
+      dev.log("known life cycle error ");
     }
   }
 
@@ -151,8 +157,8 @@ class AccountSettingsProvider extends ChangeNotifier {
     return true;
   }
 
-
-  static SingleChildWidget provider(BuildContext context, {bool testing = false}) {
+  static SingleChildWidget provider(BuildContext context,
+      {bool testing = false}) {
     return ChangeNotifierProxyProvider<AuthenticationService,
         AccountSettingsProvider>(
       create: (ctx) {
