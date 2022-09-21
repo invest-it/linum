@@ -955,7 +955,8 @@ void main() {
 }
 
 List<SingleBalanceData> _createRandomStatisticDataWithFixedTime(
-    math.Random rand) {
+  math.Random rand,
+) {
   final List<SingleBalanceData> returnList = <SingleBalanceData>[];
   final int max = rand.nextInt(256) + 1;
   for (int i = 0; i < max; i++) {
