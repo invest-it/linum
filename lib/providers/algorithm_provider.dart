@@ -12,6 +12,7 @@ import 'package:linum/utilities/frontend/filters.dart';
 import 'package:linum/utilities/frontend/sorters.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+import 'package:linum/models/single_balance_data.dart';
 
 /// gives sort algorithm (later it will probably also have filter algorithm) and
 /// all algorithm will have an active version instead of being static
@@ -106,6 +107,13 @@ class AlgorithmProvider extends ChangeNotifier {
         notify: notify,
       );
     }
+  }
+
+  static SingleBalanceData _mapToSinglebalance(dynamic a) {
+    if (a is Map<String, dynamic>) {
+      return SingleBalanceData.fromMap(a);
+    }
+    return a as SingleBalanceData;
   }
 
 

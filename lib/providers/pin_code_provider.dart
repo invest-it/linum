@@ -328,11 +328,11 @@ class PinCodeProvider extends ChangeNotifier {
   }
 
   /// Check if the current value of [_code] matches the locally stored PIN.
-  Future<void> _checkCode(String _inputCode) async {
+  Future<void> _checkCode(String inputCode) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String _pin = prefs.getString('${_lastEmail!}.code') ?? 'ERROR';
+    final String pin = prefs.getString('${_lastEmail!}.code') ?? 'ERROR';
     // dev.log("pin:$_pin");
-    if (_pin == _inputCode) {
+    if (pin == inputCode) {
       _correctCode();
     } else {
       _wrongCode();

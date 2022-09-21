@@ -6,52 +6,67 @@
 
 import 'dart:math' as math;
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/utilities/backend/statistic_calculations.dart';
 import 'package:linum/utilities/frontend/filters.dart';
 
+final SingleBalanceData baseSingleBalanceData = SingleBalanceData(
+  amount: 0,
+  category: "None",
+  currency: "EUR",
+  name: "Test Single Balance Data",
+  time: Timestamp.fromMillisecondsSinceEpoch(
+    Timestamp.now().millisecondsSinceEpoch - (3600 * 1000),
+  ),
+  id: const Uuid().v4(),
+);
+
 void main() {
   group("basic_statistic_calculation", () {
-    final List<Map<String, dynamic>> exampleData1 = [
-      {"amount": 15},
-      {"amount": 35.5},
-      {"amount": 5},
-      {"amount": 25.5},
+    final List<SingleBalanceData> emptyData = [];
+
+    final List<SingleBalanceData> exampleData1 = [
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 15),
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 35.5),
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 5),
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 25.5),
     ];
-    final List<Map<String, dynamic>> exampleData2 = [
-      {"amount": -0.5},
-      {"amount": -2.5},
-      {"amount": -2.5},
-      {"amount": -0},
+    final List<SingleBalanceData> exampleData2 = [
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0.5),
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -2.5),
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -2.5),
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0),
     ];
-    final List<Map<String, dynamic>> exampleData3 = [
-      {"amount": -0.5},
-      {"amount": -2.5},
-      {"amount": -2.5},
-      {"amount": -0},
-      {"amount": 15},
-      {"amount": 5},
-      {"amount": 25.5},
-      {"amount": 4},
+    final List<SingleBalanceData> exampleData3 = [
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0.5),
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -2.5),
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -2.5),
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0),
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 15),
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 5),
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 25.5),
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 4),
     ];
-    final List<Map<String, dynamic>> exampleData4 = [
-      {"amount": -0.5},
-      {"amount": -2.5},
-      {"amount": -2.5},
-      {"amount": -0},
-      {"amount": 15},
-      {"amount": 5},
-      {"amount": 25.5},
-      {"amount": 4},
-      {"amount": -20.5},
-      {"amount": -23.5},
+    final List<SingleBalanceData> exampleData4 = [
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0.5),
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -2.5),
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -2.5),
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0),
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 15),
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 5),
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 25.5),
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 4),
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -20.5),
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -23.5),
     ];
-    final List<Map<String, dynamic>> exampleData5 = [
-      {"amount": -0},
-      {"amount": -0},
-      {"amount": -0},
-      {"amount": -0},
+    final List<SingleBalanceData> exampleData5 = [
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0),
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0),
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0),
+      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0),
     ];
 
     group("balance", () {
@@ -60,7 +75,7 @@ void main() {
           // Arrange (Initialization)
           final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(
-            [],
+            emptyData,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -174,8 +189,8 @@ void main() {
           final math.Random rand = math.Random();
           for (int i = 0; i < 10000; i++) {
             // Arrange (Initialization)
-            final List<Map<String, dynamic>> randomData =
-                _createRandomStatisticData(rand);
+            final List<SingleBalanceData> randomData =
+                _createRandomStatisticDataWithFixedTime(rand);
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               randomData,
@@ -186,7 +201,7 @@ void main() {
             );
             num expectedSum = 0;
             for (int i = 0; i < randomData.length; i++) {
-              expectedSum += randomData[i]["amount"] as num;
+              expectedSum += randomData[i].amount;
             }
 
             // Act (Execution)
@@ -203,7 +218,7 @@ void main() {
           // Arrange (Initialization)
           final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(
-            [],
+            emptyData,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -317,8 +332,8 @@ void main() {
           final math.Random rand = math.Random();
           for (int i = 0; i < 10000; i++) {
             // Arrange (Initialization)
-            final List<Map<String, dynamic>> randomData =
-                _createRandomStatisticData(rand);
+            final List<SingleBalanceData> randomData =
+                _createRandomStatisticDataWithFixedTime(rand);
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               randomData,
@@ -329,7 +344,7 @@ void main() {
             );
             num expectedAverage = 0;
             for (int i = 0; i < randomData.length; i++) {
-              expectedAverage += randomData[i]["amount"] as num;
+              expectedAverage += randomData[i].amount;
             }
             expectedAverage /= randomData.length;
 
@@ -349,7 +364,7 @@ void main() {
           // Arrange (Initialization)
           final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(
-            [],
+            emptyData,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -463,8 +478,8 @@ void main() {
           final math.Random rand = math.Random();
           for (int i = 0; i < 10000; i++) {
             // Arrange (Initialization)
-            final List<Map<String, dynamic>> randomData =
-                _createRandomStatisticData(rand);
+            final List<SingleBalanceData> randomData =
+                _createRandomStatisticDataWithFixedTime(rand);
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               randomData,
@@ -475,8 +490,8 @@ void main() {
             );
             num expectedSum = 0;
             for (int i = 0; i < randomData.length; i++) {
-              if (randomData[i]["amount"] as num > 0) {
-                expectedSum += randomData[i]["amount"] as num;
+              if (randomData[i].amount > 0) {
+                expectedSum += randomData[i].amount;
               }
             }
 
@@ -493,7 +508,7 @@ void main() {
           // Arrange (Initialization)
           final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(
-            [],
+            emptyData,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -607,8 +622,8 @@ void main() {
           final math.Random rand = math.Random();
           for (int i = 0; i < 10000; i++) {
             // Arrange (Initialization)
-            final List<Map<String, dynamic>> randomData =
-                _createRandomStatisticData(rand);
+            final List<SingleBalanceData> randomData =
+                _createRandomStatisticDataWithFixedTime(rand);
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               randomData,
@@ -620,8 +635,8 @@ void main() {
             num expectedAverage = 0;
             int incomes = 0;
             for (int i = 0; i < randomData.length; i++) {
-              if (randomData[i]["amount"] as num > 0) {
-                expectedAverage += randomData[i]["amount"] as num;
+              if (randomData[i].amount > 0) {
+                expectedAverage += randomData[i].amount;
 
                 incomes++;
               }
@@ -645,7 +660,7 @@ void main() {
           // Arrange (Initialization)
           final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(
-            [],
+            emptyData,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -759,8 +774,8 @@ void main() {
           final math.Random rand = math.Random();
           for (int i = 0; i < 10000; i++) {
             // Arrange (Initialization)
-            final List<Map<String, dynamic>> randomData =
-                _createRandomStatisticData(rand);
+            final List<SingleBalanceData> randomData =
+                _createRandomStatisticDataWithFixedTime(rand);
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               randomData,
@@ -771,8 +786,8 @@ void main() {
             );
             num expectedSum = 0;
             for (int i = 0; i < randomData.length; i++) {
-              if (randomData[i]["amount"] as num <= 0) {
-                expectedSum += randomData[i]["amount"] as num;
+              if (randomData[i].amount <= 0) {
+                expectedSum += randomData[i].amount;
               }
             }
 
@@ -790,7 +805,7 @@ void main() {
           // Arrange (Initialization)
           final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(
-            [],
+            emptyData,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -904,8 +919,8 @@ void main() {
           final math.Random rand = math.Random();
           for (int i = 0; i < 10000; i++) {
             // Arrange (Initialization)
-            final List<Map<String, dynamic>> randomData =
-                _createRandomStatisticData(rand);
+            final List<SingleBalanceData> randomData =
+                _createRandomStatisticDataWithFixedTime(rand);
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
               randomData,
@@ -917,8 +932,8 @@ void main() {
             num expectedAverage = 0;
             int costs = 0;
             for (int i = 0; i < randomData.length; i++) {
-              if (randomData[i]["amount"] as num <= 0) {
-                expectedAverage += randomData[i]["amount"] as num;
+              if (randomData[i].amount <= 0) {
+                expectedAverage += randomData[i].amount;
 
                 costs++;
               }
@@ -938,15 +953,20 @@ void main() {
   });
 }
 
-List<Map<String, dynamic>> _createRandomStatisticData(math.Random rand) {
-  final List<Map<String, dynamic>> returnList = <Map<String, dynamic>>[];
+List<SingleBalanceData> _createRandomStatisticDataWithFixedTime(
+  math.Random rand,
+) {
+  final List<SingleBalanceData> returnList = <SingleBalanceData>[];
   final int max = rand.nextInt(256) + 1;
   for (int i = 0; i < max; i++) {
-    returnList.add({
-      "amount":
-          ((((0.5 - rand.nextDouble()) * 2 * 256) * 100).roundToDouble()) /
-              100.0
-    }); // create a random Number from -256 to 256
+    returnList.add(
+      baseSingleBalanceData.copyWith(
+        amount:
+            ((((0.5 - rand.nextDouble()) * 2 * 256) * 100).roundToDouble()) /
+                100.0,
+        id: const Uuid().v4(),
+      ),
+    ); // create a random Number from -256 to 256
   }
   return returnList;
 }

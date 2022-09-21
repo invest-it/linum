@@ -52,10 +52,10 @@ class _LoginFormState extends State<LoginForm> {
         Provider.of<AuthenticationService>(context);
     final UserAlert userAlert = UserAlert(context: context);
 
-    void logIn(String _mail, String _pass) {
+    void logIn(String mail, String pass) {
       auth.signIn(
-        _mail.trim(),
-        _pass,
+        mail.trim(),
+        pass,
         onError: userAlert.showMyDialog,
         onNotVerified: () => userAlert.showMyDialog(
           "alertdialog.login-verification.message",

@@ -21,9 +21,9 @@ class OnboardingScreenProvider extends ChangeNotifier {
   }
 
   bool get hasPageChanged {
-    final bool _pageChangeTemp = _hasPageChanged;
+    final bool pageChangeTemp = _hasPageChanged;
     _hasPageChanged = false;
-    return _pageChangeTemp;
+    return pageChangeTemp;
   }
 
   OnboardingPageState get pageState => _pageState;
@@ -35,9 +35,9 @@ class OnboardingScreenProvider extends ChangeNotifier {
 
   String get mailInput {
     // Getter only works for one time, after that the "cache" is cleared.
-    final String _tempMail = _mailInput;
+    final String tempMail = _mailInput;
     _mailInput = "";
-    return _tempMail;
+    return tempMail;
   }
 
 }

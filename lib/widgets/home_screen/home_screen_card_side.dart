@@ -36,6 +36,8 @@ class HomeScreenCardSide extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        // TODO look at this
+        // ignore: use_decorated_box
         Container(
           decoration: BoxDecoration(
             boxShadow: [

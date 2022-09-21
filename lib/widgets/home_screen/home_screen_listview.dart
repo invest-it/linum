@@ -200,22 +200,15 @@ class HomeScreenListView implements BalanceDataListView {
                   .useExistingProvider<BalanceDataProvider>()
                   .build();
             },
-          ),
-        );*/
-      },
-      //print(arrayElement["amount"].toString()),
-      child: Dismissible(
-        background: Container(
-          color: Colors.red,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 30),
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 16.0,
+            //print(arrayElement["amount"].toString()),
+            child: Dismissible(
+              // TODO look at this
+              // ignore: use_colored_box
+              background: Container(
+                color: Colors.red,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       tr("listview.dismissible.label-delete"),

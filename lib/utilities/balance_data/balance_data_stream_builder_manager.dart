@@ -32,6 +32,7 @@ class BalanceDataStreamBuilderManager {
           return const LoadingSpinner();
         }
         if (snapshot.data == null) {
+          // TODO tell the user that the connection is broken
           blistview.setBalanceData(
             [],
             context: context,
@@ -80,7 +81,10 @@ class BalanceDataStreamBuilderManager {
           );
           final List<Map<String, dynamic>> balanceData = arrayData[0];
           final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(balanceData, algorithmProvider);
+              StatisticsCalculations(
+            listOfMapsToListOfModels(balanceData),
+            algorithmProvider,
+          );
           statisticPanel.addStatisticData(statisticsCalculations);
           return statisticPanel.returnWidget;
         }
