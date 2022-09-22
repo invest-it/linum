@@ -12,8 +12,12 @@ class BottomAppBarItem {
   final String text;
   final bool selected;
   final Function() onTap;
-  BottomAppBarItem({required this.iconData, required this.text, required this.selected, required this.onTap});
-
+  BottomAppBarItem({
+    required this.iconData,
+    required this.text,
+    required this.selected,
+    required this.onTap,
+  });
 }
 
 class FABBottomAppBar extends StatefulWidget {
@@ -29,7 +33,7 @@ class FABBottomAppBar extends StatefulWidget {
   final String centerItemText;
   final double height = proportionateScreenHeight(64);
   final double minHeight = 64.0;
-  final double iconSize = proportionateScreenHeight(24);
+  final double iconSize = 26;
   final Color backgroundColor;
   final Color color;
   final Color selectedColor;
@@ -42,7 +46,6 @@ class FABBottomAppBar extends StatefulWidget {
 class FABBottomAppBarState extends State<FABBottomAppBar> {
   @override
   Widget build(BuildContext context) {
-
     final List<Widget> items = List.generate(widget.items.length, (int index) {
       return _buildTabItem(
         item: widget.items[index],
@@ -102,7 +105,8 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
                   item.text,
                   style: TextStyle(
                     color: color,
-                    fontSize: proportionateScreenHeight(12),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
                   ),
                 )
               ],
