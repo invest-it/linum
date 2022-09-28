@@ -73,6 +73,11 @@
             "action": "Okay",
             "message": "Dein Passwort wurde aktualisiert.",
             "title": "Fertig!"
+        },
+        "delete-account":{ 
+            "title":"Möchtest du den Account sicher löschen?",
+            "cancel": "Nein",
+            "action": "Ja"      
         }
     },
     "auth": {
@@ -319,6 +324,7 @@
         "standards-selector-none": "Unkategorisiert",
         "system-settings": {
             "button-forgot-password": "Passwort ändern",
+            "button-delete-user": "Nutzer löschen",
             "button-forgot-password-tooltip": "Falls du dein Passwort vergessen hast, kannst du hier ein neues einstellen.",
             "button-signout": "Ausloggen",
             "label-title": "DEIN ACCOUNT"

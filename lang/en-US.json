@@ -73,6 +73,11 @@
             "action": "Okay",
             "message": "Your password has been updated.",
             "title": "Done!"
+        },
+        "delete-account":{ 
+            "title":"Are you sure?",
+            "cancel": "No",
+            "action": "Yes"      
         }
     },
     "auth": {
@@ -319,6 +324,7 @@
         "standards-selector-none": "Uncategorized",
         "system-settings": {
             "button-forgot-password": "Change Password",
+            "button-delete-user": "Delete User",
             "button-forgot-password-tooltip": "You can request a password reset here if you forgot your old password.",
             "button-signout": "Sign out",
             "label-title": "YOUR ACCOUNT"

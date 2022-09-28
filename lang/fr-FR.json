@@ -73,6 +73,11 @@
             "action": "Okay",
             "message": "Ton mot de passe a été mis à jour.",
             "title": "Prêt!"
+        },
+        "delete-account":{ 
+            "title":"Tu souhaites supprimer ton compte en toute sécurité ?",
+            "cancel": "Non",
+            "action": "Oui"      
         }
     },
     "auth": {
@@ -319,6 +324,7 @@
         "standards-selector-none": "Non classé",
         "system-settings": {
             "button-forgot-password": "Modifier le mot de passe",
+            "button-delete-user": "Supprimer l'utilisateur",
             "button-forgot-password-tooltip": "Vous pouvez demander une réinitialisation du mot de passe ici si vous avez oublié votre ancien mot de passe.",
             "button-signout": "Se déconnecter",
             "label-title": "VOTRE COMPTE"

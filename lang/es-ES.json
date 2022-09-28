@@ -73,6 +73,11 @@
             "action": "Okay",
             "message": "Su contraseña ha sido actualizada.",
             "title": "¡Listo!"
+        },
+        "delete-account":{ 
+            "title":"¿Quieres eliminar la cuenta de forma segura?",
+            "cancel": "No",
+            "action": "Sí"      
         }
     },
     "auth": {
@@ -315,6 +320,7 @@
         "standards-selector-none": "Sin categoría",
         "system-settings": {
             "button-forgot-password": "Cambiar contraseña",
+            "button-delete-user": "Eliminar usuario",
             "button-forgot-password-tooltip": "Puede solicitar un restablecimiento de la contraseña aquí si ha olvidado su antigua contraseña.",
             "button-signout": "Firmar la salida",
             "label-title": "SU CUENTA"
