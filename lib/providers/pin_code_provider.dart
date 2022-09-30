@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 import 'package:linum/constants/ring_colors.dart';
 import 'package:linum/models/dialog_action.dart';
 import 'package:linum/models/lock_screen_action.dart';
+import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/navigation/main_router_delegate.dart';
 import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/providers/authentication_service.dart';
@@ -93,7 +94,7 @@ class PinCodeProvider extends ChangeNotifier {
       _pinSet = true;
       //Force the user to initialize their PIN number every time the PIN is (re-)activated.
       _setPINLockIntent(intent: PINLockIntent.initialize);
-      Get.find<MainRouterDelegate>().pushRoute(MainRoute.lock);
+      getRouterDelegate().pushRoute(MainRoute.lock);
     } else {
       _pinSet = false; // TODO: Re-Enter pin?
       _removePIN();
@@ -184,14 +185,16 @@ class PinCodeProvider extends ChangeNotifier {
                     _emptyCode();
                     _removePIN();
                     _pinSet = false;
-                    Get.find<MainRouterDelegate>().popRoute();
+                    Navigator.of(_context, rootNavigator: true).pop();
+                    getRouterDelegate().popRoute();
                   },
+                  popDialog: true // TODO: What does this thing do even?
                 ),
                 DialogAction(
                   actionTitle: "alertdialog.killswitch-initialize.cancel",
                   //If this is empty, UserAlert will use its own context to pop the dialog
                   function: () {
-                    Get.find<MainRouterDelegate>().popRoute();
+                    Navigator.of(_context, rootNavigator: true).pop();
                   },
                   dialogPurpose: DialogPurpose.secondary,
                   popDialog: true,
@@ -213,7 +216,8 @@ class PinCodeProvider extends ChangeNotifier {
                   actionTitle: "alertdialog.killswitch-change.action",
                   function: () {
                     _emptyCode();
-                    Get.find<MainRouterDelegate>().popRoute();
+                    Navigator.of(_context, rootNavigator: true).pop();
+                    getRouterDelegate().popRoute();
                     // Navigator.of(_context).pop();
                   },
                 ),
@@ -221,7 +225,7 @@ class PinCodeProvider extends ChangeNotifier {
                   actionTitle: "alertdialog.killswitch-change.cancel",
                   //If this is empty, UserAlert will use its own context to pop the dialog
                   function: () {
-                    Get.find<MainRouterDelegate>().popRoute();
+                    Navigator.of(_context, rootNavigator: true).pop();
                     // Navigator.of(_context).pop();
                   },
                   dialogPurpose: DialogPurpose.secondary,
@@ -243,9 +247,10 @@ class PinCodeProvider extends ChangeNotifier {
                 DialogAction(
                   actionTitle: "alertdialog.killswitch-recall.action",
                   function: () {
-                    togglePINLock();
+                    Navigator.of(_context, rootNavigator: true).pop();
+                    // togglePINLock();
                     _auth.signOut().then((_) {
-                      Get.find<MainRouterDelegate>().rebuild();
+                      getRouterDelegate().rebuild();
                     });
                   },
                 ),
@@ -253,7 +258,7 @@ class PinCodeProvider extends ChangeNotifier {
                   actionTitle: "alertdialog.killswitch-recall.cancel",
                   //If this is empty, UserAlert will use its own context to pop the dialog
                   function: () {
-                    Get.find<MainRouterDelegate>().rebuild();
+                    Navigator.of(_context, rootNavigator: true).pop();
                   },
                   dialogPurpose: DialogPurpose.secondary,
                   popDialog: true,
@@ -287,7 +292,7 @@ class PinCodeProvider extends ChangeNotifier {
             } else {
               toastFromTranslationKey("lock_screen.errors.last-mail-missing");
             }
-            Get.find<MainRouterDelegate>().popRoute();
+            getRouterDelegate().popRoute();
             _emptyCode();
             break;
           case PINLockIntent.change:
@@ -298,7 +303,7 @@ class PinCodeProvider extends ChangeNotifier {
               toastFromTranslationKey("lock_screen.errors.last-mail-missing");
             }
 
-            Get.find<MainRouterDelegate>().popRoute();
+            getRouterDelegate().popRoute();
             _emptyCode();
             break;
           case PINLockIntent.recall:
