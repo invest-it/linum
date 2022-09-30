@@ -62,9 +62,9 @@ class _RegisterFormState extends State<RegisterForm> {
         },
         onNotVerified: () {
           userAlert.showMyDialog(
-            'alertdialog/signup-verification/message',
-            title: 'alertdialog/signup-verification/title',
-            actionTitle: 'alertdialog/signup-verification/action',
+            tr("alertdialog.signup-verification.message"),
+            title: tr("alertdialog.signup-verification.title"),
+            actionTitle: tr("alertdialog.signup-verification.action"),
           );
           onboardingScreenProvider.setEmailLoginInputSilently(mail);
           _mailController.clear();
@@ -118,7 +118,8 @@ class _RegisterFormState extends State<RegisterForm> {
                         autocorrect: false,
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: tr('onboarding_screen.register-email-hintlabel'),
+                          hintText:
+                              tr('onboarding_screen.register-email-hintlabel'),
                           hintStyle: Theme.of(context)
                               .textTheme
                               .bodyText1
@@ -126,7 +127,9 @@ class _RegisterFormState extends State<RegisterForm> {
                                 color: Theme.of(context).colorScheme.secondary,
                               ),
                           errorText: _mailValidate
-                              ? tr('onboarding_screen.register-email-errorlabel')
+                              ? tr(
+                                  'onboarding_screen.register-email-errorlabel',
+                                )
                               : null,
                         ),
                       ),
@@ -153,7 +156,9 @@ class _RegisterFormState extends State<RegisterForm> {
                         // },
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: tr('onboarding_screen.register-password-hintlabel'),
+                          hintText: tr(
+                            'onboarding_screen.register-password-hintlabel',
+                          ),
                           hintStyle: Theme.of(context)
                               .textTheme
                               .bodyText1
@@ -161,7 +166,9 @@ class _RegisterFormState extends State<RegisterForm> {
                                 color: Theme.of(context).colorScheme.secondary,
                               ),
                           errorText: _passValidate
-                              ? tr('onboarding_screen.register-password-errorlabel')
+                              ? tr(
+                                  'onboarding_screen.register-password-errorlabel',
+                                )
                               : null,
                         ),
                       ),
@@ -230,7 +237,9 @@ class _RegisterFormState extends State<RegisterForm> {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: tr('onboarding_screen.register-privacy.label-leading'),
+                      text: tr(
+                        'onboarding_screen.register-privacy.label-leading',
+                      ),
                       style: Theme.of(context).textTheme.bodyText2?.copyWith(
                             fontWeight: FontWeight.w600,
                             color: Theme.of(context).colorScheme.onSurface,
@@ -240,7 +249,9 @@ class _RegisterFormState extends State<RegisterForm> {
                       text: tr('onboarding_screen.register-privacy.label-link'),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () async {
-                          launchURL('https://investit-academy.de/privacy');
+                          launchURL(
+                            'https://investit.notion.site/Datenschutzerkl-rung-Linum-Budgeting-App-b3da92953a224afba4336450a92b5d90',
+                          );
                         },
                       style: Theme.of(context).textTheme.bodyText2?.copyWith(
                             fontWeight: FontWeight.w600,
@@ -249,7 +260,9 @@ class _RegisterFormState extends State<RegisterForm> {
                           ),
                     ),
                     TextSpan(
-                      text: tr('onboarding_screen.register-privacy.label-trailing'),
+                      text: tr(
+                        'onboarding_screen.register-privacy.label-trailing',
+                      ),
                       style: Theme.of(context).textTheme.bodyText2?.copyWith(
                             fontWeight: FontWeight.w600,
                             color: Theme.of(context).colorScheme.onSurface,
