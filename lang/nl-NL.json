@@ -73,6 +73,11 @@
             "action": "Okay",
             "message": "Uw wachtwoord is bijgewerkt.",
             "title": "Klaar!"
+        },
+        "delete-account":{ 
+            "title":"Wilt u de rekening veilig verwijderen?",
+            "cancel": "Geen",
+            "action": "Ja"      
         }
     },
     "auth": {
@@ -319,6 +324,7 @@
         "standards-selector-none": "Uncategorized",
         "system-settings": {
             "button-forgot-password": "Wijzig Wachtwoord",
+            "button-delete-user": "Gebruiker verwijderen",
             "button-forgot-password-tooltip": "U kunt hier een nieuw wachtwoord aanvragen als u uw oude wachtwoord bent vergeten.",
             "button-signout": "Uitschrijven",
             "label-title": "UW ACCOUNT"

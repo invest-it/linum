@@ -10,6 +10,7 @@ import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/utilities/frontend/silent_scroll.dart';
+import 'package:linum/widgets/auth/delete_user_button.dart';
 import 'package:linum/widgets/auth/forgot_password.dart';
 import 'package:linum/widgets/auth/logout_form.dart';
 import 'package:linum/widgets/list_divider.dart';
@@ -37,7 +38,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
         Provider.of<AccountSettingsProvider>(context);
     final PinCodeProvider pinCodeProvider =
         Provider.of<PinCodeProvider>(context);
-
     return ScreenSkeleton(
       head: 'Account',
       providerKey: ProviderKey.settings,
@@ -82,6 +82,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 // All Authentication Actions (including logOut will be handled via widgets/auth from now on.)
                 LogoutForm(),
                 ForgotPasswordButton(ProviderKey.settings),
+                const DeleteUserButton(),
               ],
             ),
 
