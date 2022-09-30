@@ -21,7 +21,8 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 /// The AuthenticationService authenticates the user
 /// and provides the information needed for other classes
-class AuthenticationService extends ChangeNotifier implements BuildableProvider {
+class AuthenticationService extends ChangeNotifier
+    implements BuildableProvider {
   /// The FirebaseAuth Object of the Project
   final FirebaseAuth _firebaseAuth;
 
@@ -280,6 +281,23 @@ class AuthenticationService extends ChangeNotifier implements BuildableProvider 
     }
   }
 
+  Future<void> deleteUserAccount({
+    void Function(String) onComplete = log,
+    void Function(String) onError = log,
+  }) async {
+    try {
+      await _firebaseAuth.currentUser?.delete();
+      notifyListeners();
+      onComplete("Successfully deleted Account");
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "requires-recent-login") {
+        onError("auth.${e.code}");
+        return signOut(onComplete: onComplete, onError: onError);
+      }
+      onError("auth.${e.code}");
+    }
+  }
+
   Future<void> setLastMail(String? email) async {
     if (email == null) {
       return;
@@ -294,18 +312,20 @@ class AuthenticationService extends ChangeNotifier implements BuildableProvider 
     );
   }
 
-
-  static SingleChildWidget provider(BuildContext context, {bool testing = false}) {
+  static SingleChildWidget provider(
+    BuildContext context, {
+    bool testing = false,
+  }) {
     return ChangeNotifierProvider<AuthenticationService>(
       key: const Key("AuthenticationChangeNotifierProvider"),
       create: (_) {
         final AuthenticationService auth =
-          AuthenticationService(FirebaseAuth.instance, context);
+            AuthenticationService(FirebaseAuth.instance, context);
         if (testing) {
           auth.signOut();
           while (auth.isLoggedIn) {
             sleep(const Duration(milliseconds: 50));
-          // this should only be called when we are testing.
+            // this should only be called when we are testing.
           }
         }
 
