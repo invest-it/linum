@@ -128,7 +128,8 @@ class _RegisterFormState extends State<RegisterForm> {
                               ),
                           errorText: _mailValidate
                               ? tr(
-                                  'onboarding_screen.register-email-errorlabel')
+                                  'onboarding_screen.register-email-errorlabel',
+                                )
                               : null,
                         ),
                       ),
@@ -156,7 +157,8 @@ class _RegisterFormState extends State<RegisterForm> {
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: tr(
-                              'onboarding_screen.register-password-hintlabel'),
+                            'onboarding_screen.register-password-hintlabel',
+                          ),
                           hintStyle: Theme.of(context)
                               .textTheme
                               .bodyText1
@@ -165,7 +167,8 @@ class _RegisterFormState extends State<RegisterForm> {
                               ),
                           errorText: _passValidate
                               ? tr(
-                                  'onboarding_screen.register-password-errorlabel')
+                                  'onboarding_screen.register-password-errorlabel',
+                                )
                               : null,
                         ),
                       ),
@@ -235,7 +238,8 @@ class _RegisterFormState extends State<RegisterForm> {
                   children: [
                     TextSpan(
                       text: tr(
-                          'onboarding_screen.register-privacy.label-leading'),
+                        'onboarding_screen.register-privacy.label-leading',
+                      ),
                       style: Theme.of(context).textTheme.bodyText2?.copyWith(
                             fontWeight: FontWeight.w600,
                             color: Theme.of(context).colorScheme.onSurface,
@@ -246,7 +250,8 @@ class _RegisterFormState extends State<RegisterForm> {
                       recognizer: TapGestureRecognizer()
                         ..onTap = () async {
                           launchURL(
-                              'https://investit.notion.site/Datenschutzerkl-rung-Linum-Budgeting-App-b3da92953a224afba4336450a92b5d90');
+                            'https://investit.notion.site/Datenschutzerkl-rung-Linum-Budgeting-App-b3da92953a224afba4336450a92b5d90',
+                          );
                         },
                       style: Theme.of(context).textTheme.bodyText2?.copyWith(
                             fontWeight: FontWeight.w600,
@@ -256,7 +261,8 @@ class _RegisterFormState extends State<RegisterForm> {
                     ),
                     TextSpan(
                       text: tr(
-                          'onboarding_screen.register-privacy.label-trailing'),
+                        'onboarding_screen.register-privacy.label-trailing',
+                      ),
                       style: Theme.of(context).textTheme.bodyText2?.copyWith(
                             fontWeight: FontWeight.w600,
                             color: Theme.of(context).colorScheme.onSurface,
