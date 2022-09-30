@@ -9,7 +9,7 @@ part of 'exchange_rate.dart';
 ExchangeRate _$ExchangeRateFromJson(Map<String, dynamic> json) => ExchangeRate(
       json['currency'] as String,
       (json['rate'] as num).toDouble(),
-      json['date'] as int,
+      json['date'] as String,
     );
 
 Map<String, dynamic> _$ExchangeRateToJson(ExchangeRate instance) =>

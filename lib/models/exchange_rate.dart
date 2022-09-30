@@ -9,7 +9,7 @@ class ExchangeRate {
 
   String currency;
   double rate;
-  int date;
+  String date;
 
   factory ExchangeRate.fromJson(Map<String, dynamic> json)
     => _$ExchangeRateFromJson(json);
