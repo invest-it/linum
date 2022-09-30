@@ -65,3 +65,4 @@ class CurrencyInputFormatter extends TextInputFormatter {
     );
   }
 }
+// TODO: Check if this Class is still used

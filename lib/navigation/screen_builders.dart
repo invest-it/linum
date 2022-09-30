@@ -2,7 +2,7 @@
 //
 //  Author: NightmindOfficial
 //  Co-Author: thebluebaronx
-//  (Refactored by NightmindOfficial)
+//  (Refactored by NightmindOfficial, damattl)
 
 //list with all the "screens"
 import 'package:flutter/material.dart';

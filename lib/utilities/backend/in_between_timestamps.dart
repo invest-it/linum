@@ -1,3 +1,9 @@
+//  Extension-Functions for handling timestamps
+//
+//  Author: damattl
+//
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tuple/tuple.dart';
 

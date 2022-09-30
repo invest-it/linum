@@ -1,3 +1,9 @@
+//  MainTransitionDelegate - customizes the way transitions
+//  between routes are handled.
+//
+//  Author: damattl
+//
+
 import 'package:flutter/material.dart';
 
 class MainTransitionDelegate extends TransitionDelegate<void> {

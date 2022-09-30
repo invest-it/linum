@@ -33,7 +33,7 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
     }
   } */
 
-  List<Page> buildPageStackUnauthorized() {
+  List<Page> _buildPageStackUnauthorized() {
     return <Page> [
       MaterialPage(
         child: MultiProvider(
@@ -48,7 +48,7 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
     ];
   }
 
-  List<Page> buildPinCodeStack(PinCodeProvider pinCodeProvider) {
+  List<Page> _buildPinCodeStack(PinCodeProvider pinCodeProvider) {
     final pinCodeStack = <Page> [
       mainRoutes.pageFromRoute(MainRoute.lock),
     ];
@@ -56,34 +56,34 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
     return List.of(pinCodeStack);
   }
 
-  List<Page> buildPageStackAuthorized(BuildContext context) {
+  List<Page> _buildPageStackAuthorized(BuildContext context) {
     final PinCodeProvider pinCodeProvider = Provider.of<PinCodeProvider>(context);
     if (_pageStack.isEmpty) {
       _pageStack.add(mainRoutes.pageFromRoute(MainRoute.home));
     }
     if (pinCodeProvider.pinSet && !pinCodeProvider.sessionIsSafe) {
-      return buildPinCodeStack(pinCodeProvider);
+      return _buildPinCodeStack(pinCodeProvider);
     }
 
     return List.of(_pageStack);
   }
 
 
-  List<Page> buildPageStack(BuildContext context) {
+  List<Page> _buildPageStack(BuildContext context) {
     final AuthenticationService auth = Provider.of<AuthenticationService>(context);
     if (auth.isLoggedIn) {
-      return buildPageStackAuthorized(context);
+      return _buildPageStackAuthorized(context);
     } else {
-      return buildPageStackUnauthorized();
+      return _buildPageStackUnauthorized();
     }
   }
 
-  Navigator buildNavigator(BuildContext context) {
+  Navigator _buildNavigator(BuildContext context) {
     final transitionDelegate = MainTransitionDelegate();
     return Navigator(
       key: navigatorKey,
       // Add TransitionDelegate here
-      pages: buildPageStack(context),
+      pages: _buildPageStack(context),
       transitionDelegate: transitionDelegate,
       onPopPage: _onPopPage,
     );
@@ -98,13 +98,13 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
         future: pinCodeProvider.initializeIsPINSet(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return buildNavigator(context);
+            return _buildNavigator(context);
           }
           return const LoadingScaffold();
         },
       );
     } else {
-      return buildNavigator(context);
+      return _buildNavigator(context);
     }
   }
 
@@ -116,6 +116,9 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
     return true;
   }
 
+  /// Pop the current route from the MainRouter's Stack.
+  /// If there is only one route left, the app will close.
+  /// TODO: Discuss if this is the wanted behaviour
   @override
   Future<bool> popRoute() async {
     dev.log("Stack: ${_pageStack.toString()}");
@@ -128,11 +131,15 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
     return Future.value(true); // TODO: Check if this makes sense
   }
 
+  /// Push a route to the MainRouter's Stack.
+  /// Notifies all listening widgets.
   void pushRoute<T>(MainRoute route, {T? settings}) {
     _pageStack.add(mainRoutes.pageFromRoute(route, settings: settings));
     notifyListeners();
   }
 
+  /// Replace the last route on the MainRouter's Stack with a new one.
+  /// Notifies all listening widgets.
   void replaceLastRoute(MainRoute route) {
     _pageStack.removeLast();
     _pageStack.add(mainRoutes.pageFromRoute(route));
@@ -140,6 +147,9 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
     notifyListeners();
   }
 
+  /// Rebuild the current stack.
+  /// Use this function to update the UI after a change in the apps state.
+  /// (For example after the user signed out)
   void rebuild() {
     notifyListeners();
   }

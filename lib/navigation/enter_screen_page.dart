@@ -1,3 +1,10 @@
+//  EnterScreenPageSettings and EnterScreenPage
+//  A customized page for the EnterScreen
+//
+//  Author: damattl
+//
+//
+
 import 'package:flutter/material.dart';
 import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/providers/enter_screen_provider.dart';

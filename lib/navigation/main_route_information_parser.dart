@@ -16,8 +16,5 @@ class MainRouteInformationParser extends RouteInformationParser<MainRoute> {
       return MainRoute.home;
     }
     return mainRoutes.getRouteFromUri(uri);
-
   }
-
-
 }
