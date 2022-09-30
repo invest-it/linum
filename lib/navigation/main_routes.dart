@@ -1,4 +1,6 @@
 //  MainRoutes - configuration for all the app's routes
+//  A new route has to be declared in the MainRoute enumeration
+//  and then be configured in the mainRoutes map.
 //
 //  Author: damattl
 //

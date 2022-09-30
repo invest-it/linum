@@ -116,6 +116,9 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
     return true;
   }
 
+  /// Pop the current route from the MainRouter's Stack.
+  /// If there is only one route left, the app will close.
+  /// TODO: Discuss if this is the wanted behaviour
   @override
   Future<bool> popRoute() async {
     dev.log("Stack: ${_pageStack.toString()}");
@@ -128,11 +131,15 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
     return Future.value(true); // TODO: Check if this makes sense
   }
 
+  /// Push a route to the MainRouter's Stack.
+  /// Notifies all listening widgets.
   void pushRoute<T>(MainRoute route, {T? settings}) {
     _pageStack.add(mainRoutes.pageFromRoute(route, settings: settings));
     notifyListeners();
   }
 
+  /// Replace the last route on the MainRouter's Stack with a new one.
+  /// Notifies all listening widgets.
   void replaceLastRoute(MainRoute route) {
     _pageStack.removeLast();
     _pageStack.add(mainRoutes.pageFromRoute(route));
@@ -140,6 +147,9 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
     notifyListeners();
   }
 
+  /// Rebuild the current stack.
+  /// Use this function to update the UI after a change in the apps state.
+  /// (For example after the user signed out)
   void rebuild() {
     notifyListeners();
   }
