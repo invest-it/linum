@@ -248,7 +248,8 @@ class PinCodeProvider extends ChangeNotifier {
                   actionTitle: "alertdialog.killswitch-recall.action",
                   function: () {
                     Navigator.of(_context, rootNavigator: true).pop();
-                    // togglePINLock();
+                    _pinSet = false;
+                    _removePIN();
                     _auth.signOut().then((_) {
                       getRouterDelegate().rebuild();
                     });
