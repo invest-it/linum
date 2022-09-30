@@ -188,7 +188,7 @@ class PinCodeProvider extends ChangeNotifier {
                     Navigator.of(_context, rootNavigator: true).pop();
                     getRouterDelegate().popRoute();
                   },
-                  popDialog: true // TODO: What does this thing do even?
+                  popDialog: true, // TODO: What does this thing do even?
                 ),
                 DialogAction(
                   actionTitle: "alertdialog.killswitch-initialize.cancel",
