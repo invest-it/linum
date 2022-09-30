@@ -312,8 +312,10 @@ class AuthenticationService extends ChangeNotifier
     );
   }
 
-  static SingleChildWidget provider(BuildContext context,
-      {bool testing = false}) {
+  static SingleChildWidget provider(
+    BuildContext context, {
+    bool testing = false,
+  }) {
     return ChangeNotifierProvider<AuthenticationService>(
       key: const Key("AuthenticationChangeNotifierProvider"),
       create: (_) {
