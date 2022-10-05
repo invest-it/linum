@@ -218,4 +218,19 @@ class EnterScreenProvider with ChangeNotifier {
   void setRepeatDurationEnumSilently(RepeatDuration repeatDuration) {
     _repeatDurationEnum = repeatDuration;
   }
+
+  //if the amount is entered in expenses, it's set to the negative equivalent if
+  //the user did not accidentally press the minus
+  num amountToDisplay() {
+    if (isExpenses) {
+      if (amount < 0) {
+        return amount;
+      } else {
+        return -amount;
+      }
+    } else {
+      return amount;
+    }
+  }
+
 }

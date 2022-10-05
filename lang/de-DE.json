@@ -165,7 +165,10 @@
         "label-repeat-monthly": "Zum Monatsanfang",
         "label-repeat-none": "Nicht wiederholen",
         "label-repeat-weekly": "Wöchentlich",
-        "label-title": "Neuer Eintrag",
+        "title": {
+            "add": "Neuer Eintrag",
+            "edit": "Eintrag bearbeiten"
+        },
         "transaction-textfield-title": "Wie heißt diese Transaktion?"
     },
     "enter_screen_attribute_account": "Account",

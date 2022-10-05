@@ -17,9 +17,9 @@ import 'package:linum/navigation/enter_screen_page.dart';
 import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/providers/balance_data_provider.dart';
-import 'package:linum/utilities/frontend/delete_entry_popup.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
 import 'package:linum/widgets/budget_screen/time_widget.dart';
+import 'package:linum/widgets/enter_screen/delete_entry_dialog.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreenListView implements BalanceDataListView {
@@ -222,7 +222,7 @@ class HomeScreenListView implements BalanceDataListView {
           DismissDirection.endToStart: 0.5,
         },
         confirmDismiss: (DismissDirection direction) async {
-          return generateDeletePopupFromSingleBalanceData(
+          return generateDeleteDialogFromSingleBalanceData(
             context,
             balanceDataProvider,
             singleBalanceData,
