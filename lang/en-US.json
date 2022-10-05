@@ -165,7 +165,10 @@
         "label-repeat-monthly": "Beginning of the month",
         "label-repeat-none": "Don't repeat",
         "label-repeat-weekly": "Weekly",
-        "label-title": "New Entry",
+        "title": {
+            "add": "New Entry",
+            "edit": "Edit Entry"
+        },
         "transaction-textfield-title": "How is this transaction called?"
     },
     "enter_screen_attribute_account": "Account",

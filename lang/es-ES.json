@@ -161,7 +161,10 @@
         "label-repeat-monthly": "A principios de mes",
         "label-repeat-none": "No repitas",
         "label-repeat-weekly": "Semanal",
-        "label-title": "Nueva entrada",
+        "title": {
+            "add": "Nueva entrada",
+            "edit": "Editar entrada"
+        },
         "transaction-textfield-title": "¿Cómo se llama esta transacción?"
     },
     "enter_screen_attribute_account": "Cuenta",
