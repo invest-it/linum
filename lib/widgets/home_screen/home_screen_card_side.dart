@@ -21,7 +21,7 @@ class HomeScreenCardSide extends StatelessWidget {
   final HomeScreenCardArrow downwardArrow;
   final bool isBack;
   const HomeScreenCardSide({
-    Key? key,
+    super.key,
     required this.flipCardController,
     required this.data,
     required this.headline,
@@ -30,12 +30,14 @@ class HomeScreenCardSide extends StatelessWidget {
     required this.upwardArrow,
     required this.downwardArrow,
     required this.isBack,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
+        // TODO look at this
+        // ignore: use_decorated_box
         Container(
           decoration: BoxDecoration(
             boxShadow: [

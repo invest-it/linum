@@ -1,0 +1,48 @@
+#   GitHub Automated Tests - GitHub Action that is triggered when someone tries to merge to development, which runs all tests and analyzes the code
+#
+#   Author: NightmindOfficial
+#   Co-Author: n/a
+#
+
+name: Automatic Core Checks
+
+# Triggered when PR request with development base is opened
+
+on:
+  pull_request:
+    branches: [ development ]
+  workflow_dispatch: # To manually run the workflow
+
+jobs:
+  code-analysis-and-testing:
+    name: Code Analysis and Testing
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    # - name: Set up Dart SDK
+    #   uses: dart-lang/setup-dart@v1.3
+    #   with:
+    #     sdk: 'stable'
+
+    - name: Set up Flutter SDK
+      uses: subosito/flutter-action@v2
+      with:
+        channel: 'stable'
+        
+    - name: Delete previous Builds
+      run: flutter clean
+
+    - name: Get Flutter Pub
+      run: flutter pub get
+    
+    - name: Set up Dart Pub
+      run: dart pub get
+    
+    - name: Analyze Flutter Code
+      run: flutter analyze
+    
+    - name: Flutter Test
+      run: flutter test

@@ -4,11 +4,11 @@
 //  Co-Author: SoTBurst, damattl
 /// PAGE INDEX 5
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/models/lock_screen_action.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/pin_code_provider.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/lock_screen/numeric_field.dart';
 import 'package:linum/widgets/lock_screen/pin_field.dart';
@@ -58,8 +58,7 @@ class _LockScreenState extends State<LockScreen> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
-                  AppLocalizations.of(context)!
-                      .translate(screenIntent.screenTitle),
+                  tr(screenIntent.screenTitle),
                   style: Theme.of(context).textTheme.headline3,
                 ),
                 Padding(
@@ -172,10 +171,7 @@ class _LockScreenState extends State<LockScreen> {
               ),
               child: TextButton(
                 key: const Key("pinActionSwitch"),
-                child: Text(
-                  AppLocalizations.of(context)!
-                      .translate(screenIntent.actionTitle),
-                ),
+                child: Text(tr(screenIntent.actionTitle)),
                 onPressed: () {
                   // ignore: avoid_dynamic_calls
                   screenIntent.function();

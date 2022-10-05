@@ -6,6 +6,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 
 class ActionLipStatusProvider extends ChangeNotifier {
   final Map<ProviderKey, ActionLipStatus> _actionLipMap = {};
@@ -94,6 +96,15 @@ class ActionLipStatusProvider extends ChangeNotifier {
   bool isTitleInitialized(ProviderKey providerKey) {
     return _actionTitleMap[providerKey] != null;
   }
+
+  static SingleChildWidget provider(
+    BuildContext context, {
+    bool testing = false,
+  }) {
+    return ChangeNotifierProvider<ActionLipStatusProvider>(
+      create: (_) => ActionLipStatusProvider(),
+    );
+  }
 }
 
 enum ProviderKey {
@@ -103,4 +114,6 @@ enum ProviderKey {
   settings,
   onboarding,
   academy,
+  enter,
+  survey,
 }

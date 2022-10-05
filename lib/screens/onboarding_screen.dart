@@ -4,6 +4,7 @@
 //  Co-Author: damattl
 //  (Refactored)
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
@@ -12,7 +13,6 @@ import 'package:linum/models/onboarding_slide_data.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/country_flag_generator.dart';
 import 'package:linum/utilities/frontend/silent_scroll.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
@@ -25,7 +25,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingPage extends StatefulWidget {
-  const OnboardingPage({Key? key}) : super(key: key);
+  const OnboardingPage({super.key});
 
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
@@ -42,26 +42,26 @@ class _OnboardingScreenState extends State<OnboardingPage> {
     _slides = [
       OnboardingSlideData(
         imageURL: 'assets/svg/mobile-login.svg',
-        heading: 'onboarding_screen/card1-title',
+        heading: 'onboarding_screen.card1-title',
         freepikURL: 'https://storyset.com/phone',
-        description: 'onboarding_screen/card1-description',
+        description: 'onboarding_screen.card1-description',
       ),
       OnboardingSlideData(
         imageURL: 'assets/svg/refund.svg',
-        heading: 'onboarding_screen/card2-title',
+        heading: 'onboarding_screen.card2-title',
         freepikURL: 'https://storyset.com/device',
-        description: 'onboarding_screen/card2-description',
+        description: 'onboarding_screen.card2-description',
       ),
       OnboardingSlideData(
         imageURL: 'assets/svg/video-files.svg',
-        heading: 'onboarding_screen/card3-title',
-        description: 'onboarding_screen/card3-description',
+        heading: 'onboarding_screen.card3-title',
+        description: 'onboarding_screen.card3-description',
         freepikURL: 'https://storyset.com/technology',
       ),
       OnboardingSlideData(
         imageURL: 'assets/svg/financial-data.svg',
-        heading: 'onboarding_screen/card4-title',
-        description: 'onboarding_screen/card4-description',
+        heading: 'onboarding_screen.card4-title',
+        description: 'onboarding_screen.card4-description',
         freepikURL: 'https://storyset.com/data',
       ),
     ];
@@ -90,12 +90,10 @@ class _OnboardingScreenState extends State<OnboardingPage> {
           );
         });
         final String langString = countryFlagsToCountryCode[value] ?? "en";
-        AppLocalizations.of(context)!.load(
-          locale: Locale(
-            langString,
-            langString != "en" ? langString.toUpperCase() : "US",
-          ),
-        );
+        context.setLocale(Locale(
+          langString,
+          langString != "en" ? langString.toUpperCase() : "US",
+        ),);
 
         Provider.of<AuthenticationService>(
           context,
@@ -149,7 +147,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                       );
                     }).toList(),
                     value: countryFlagWithSpecialCases(
-                      AppLocalizations.of(context)!.locale.languageCode,
+                      context.locale.languageCode,
                     ),
                     onChanged: _handleOnDropdownChanged,
                   ),
@@ -191,8 +189,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
-                          AppLocalizations.of(context)!
-                              .translate('onboarding_screen/register-button'),
+                          tr('onboarding_screen.register-button'),
                           style: Theme.of(context).textTheme.button,
                         ),
                       ),
@@ -203,8 +200,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                   ),
                   CupertinoButton(
                     child: Text(
-                      AppLocalizations.of(context)!
-                          .translate('onboarding_screen/login-button'),
+                      tr('onboarding_screen.login-button'),
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(
                             color: Theme.of(context).colorScheme.onSurface,
                           ),

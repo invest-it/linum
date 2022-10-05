@@ -5,19 +5,24 @@
 //  (Refactored)
 
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:linum/types/buildable_provider.dart';
 import 'package:linum/utilities/backend/cryptography.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 /// The AuthenticationService authenticates the user
 /// and provides the information needed for other classes
-class AuthenticationService extends ChangeNotifier {
+class AuthenticationService extends ChangeNotifier
+    implements BuildableProvider {
   /// The FirebaseAuth Object of the Project
   final FirebaseAuth _firebaseAuth;
 
@@ -64,7 +69,7 @@ class AuthenticationService extends ChangeNotifier {
       }
     } on FirebaseAuthException catch (e) {
       log(e.message.toString());
-      onError("auth/${e.code}");
+      onError("auth.${e.code}");
     }
   }
 
@@ -93,7 +98,7 @@ class AuthenticationService extends ChangeNotifier {
       }
     } on FirebaseAuthException catch (e) {
       log(e.message.toString());
-      onError("auth/${e.code}");
+      onError("auth.${e.code}");
     }
   }
 
@@ -117,7 +122,7 @@ class AuthenticationService extends ChangeNotifier {
       onComplete("Successfully signed in to Firebase");
     } on FirebaseAuthException catch (e) {
       log(e.message.toString());
-      onError("auth/${e.code}");
+      onError("auth.${e.code}");
     }
   }
 
@@ -147,7 +152,7 @@ class AuthenticationService extends ChangeNotifier {
       onComplete("Successfully signed in to Firebase");
     } on FirebaseAuthException catch (e) {
       log(e.message.toString());
-      onError("auth/${e.code}");
+      onError("auth.${e.code}");
     } on SignInWithAppleAuthorizationException catch (e) {
       if (e.code == AuthorizationErrorCode.canceled) {
         log("Sign in with Apple was aborted");
@@ -215,15 +220,15 @@ class AuthenticationService extends ChangeNotifier {
       if (_firebaseAuth.currentUser != null) {
         await _firebaseAuth.currentUser!.updatePassword(newPassword);
 
-        onComplete("alertdialog/update-password/message");
+        onComplete("alertdialog.update-password.message");
 
         notifyListeners();
       } else {
-        onError("auth/not-logged-in-to-update-password");
+        onError("auth.not-logged-in-to-update-password");
         return;
       }
     } on FirebaseAuthException catch (e) {
-      onError("auth/${e.code}");
+      onError("auth.${e.code}");
     }
   }
 
@@ -236,12 +241,12 @@ class AuthenticationService extends ChangeNotifier {
       if (_firebaseAuth.currentUser != null) {
         await _firebaseAuth.currentUser!.sendEmailVerification();
       } else {
-        onError("auth/not-logged-in-to-verify");
+        onError("auth.not-logged-in-to-verify");
         return;
       }
       log("Successfully send Verification Mail request to Firebase");
     } on FirebaseAuthException catch (e) {
-      onError("auth/${e.code}");
+      onError("auth.${e.code}");
     }
   }
 
@@ -253,9 +258,9 @@ class AuthenticationService extends ChangeNotifier {
   }) async {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
-      onComplete("alertdialog/reset-password/message");
+      onComplete("alertdialog.reset-password.message");
     } on FirebaseAuthException catch (e) {
-      onError("auth/${e.code}");
+      onError("auth.${e.code}");
     }
   }
 
@@ -272,7 +277,24 @@ class AuthenticationService extends ChangeNotifier {
       notifyListeners();
       onComplete("Successfully signed out from Firebase");
     } on FirebaseAuthException catch (e) {
-      onError("auth/${e.code}");
+      onError("auth.${e.code}");
+    }
+  }
+
+  Future<void> deleteUserAccount({
+    void Function(String) onComplete = log,
+    void Function(String) onError = log,
+  }) async {
+    try {
+      await _firebaseAuth.currentUser?.delete();
+      notifyListeners();
+      onComplete("Successfully deleted Account");
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "requires-recent-login") {
+        onError("auth.${e.code}");
+        return signOut(onComplete: onComplete, onError: onError);
+      }
+      onError("auth.${e.code}");
     }
   }
 
@@ -286,7 +308,30 @@ class AuthenticationService extends ChangeNotifier {
 
   void updateLanguageCode(BuildContext context) {
     _firebaseAuth.setLanguageCode(
-      AppLocalizations.of(context)?.locale.languageCode ?? "en",
+      context.locale.languageCode,
+    );
+  }
+
+  static SingleChildWidget provider(
+    BuildContext context, {
+    bool testing = false,
+  }) {
+    return ChangeNotifierProvider<AuthenticationService>(
+      key: const Key("AuthenticationChangeNotifierProvider"),
+      create: (_) {
+        final AuthenticationService auth =
+            AuthenticationService(FirebaseAuth.instance, context);
+        if (testing) {
+          auth.signOut();
+          while (auth.isLoggedIn) {
+            sleep(const Duration(milliseconds: 50));
+            // this should only be called when we are testing.
+          }
+        }
+
+        return auth;
+      },
+      lazy: false,
     );
   }
 }

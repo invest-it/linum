@@ -5,6 +5,7 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:linum/models/single_balance_data.dart';
 
 /// Classes that are BalanceDataListView have to create a ListView using the addBalanceData function
 abstract class BalanceDataListView {
@@ -23,8 +24,9 @@ abstract class BalanceDataListView {
   ///   time: <Timestamp>
   /// }
   void setBalanceData(
-    List<dynamic> balanceData, {
+    List<SingleBalanceData> balanceData, {
     required BuildContext context,
+    bool error = false,
   });
 
   /// Return the styled ListView that contains all the balanceData

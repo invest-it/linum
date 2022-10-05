@@ -4,17 +4,22 @@
 //  Co-Author: SoTBurst, NightmindOfficial
 //
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:linum/navigation/get_delegate.dart';
+import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
+import 'package:linum/utilities/frontend/currency_formatter.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/widgets/screen_skeleton/app_bar_action.dart';
 import 'package:linum/widgets/text_container.dart';
 import 'package:provider/provider.dart';
 
 class EnterScreenTopInputField extends StatefulWidget {
   const EnterScreenTopInputField({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   _EnterScreenTopInputFieldState createState() =>
@@ -22,9 +27,7 @@ class EnterScreenTopInputField extends StatefulWidget {
 }
 
 class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
-  TextEditingController? myController;
-
-  String lastState = "0,00";
+  TextEditingController? textController;
 
   @override
   void initState() {
@@ -33,8 +36,8 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
 
   @override
   void dispose() {
-    if (myController != null) {
-      myController!.dispose();
+    if (textController != null) {
+      textController!.dispose();
     }
 
     super.dispose();
@@ -44,14 +47,19 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
   Widget build(BuildContext context) {
     final EnterScreenProvider enterScreenProvider =
         Provider.of<EnterScreenProvider>(context);
-    if (myController == null) {
+    final ActionLipStatusProvider actionLipStatusProvider =
+        Provider.of<ActionLipStatusProvider>(context);
+    
+    final formatter = CurrencyFormatter(context.locale);
+    // TODO: Write a better formatter for every currency symbol
+    
+    if (textController == null) {
       if (enterScreenProvider.amount != 0) {
-        myController = TextEditingController(
-          text:
-              "${enterScreenProvider.amount.toStringAsFixed(2).replaceAll(".", ",")} €",
+        textController = TextEditingController(
+          text: formatter.format(enterScreenProvider.amount),
         );
       } else {
-        myController = TextEditingController(text: "$lastState €");
+        textController = TextEditingController(text: formatter.format(0));
       }
     }
     //calculation of the size (width and height) of a text - here it
@@ -104,10 +112,11 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                       maxLength: 15,
                       textAlign: TextAlign.center,
                       textAlignVertical: TextAlignVertical.center,
-                      controller: myController,
+                      controller: textController,
                       showCursor: true,
                       cursorColor: Colors.white,
-                      keyboardType: TextInputType.number,
+                      keyboardType:  const TextInputType.numberWithOptions(signed: true, decimal: true),
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       decoration: InputDecoration(
                         counter: const SizedBox.shrink(),
                         isCollapsed: true,
@@ -118,86 +127,36 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                         // as soon as multiple currencies are implemented, the provider for this will insert the corresponding symbol here.
                         // suffixIcon: Text("€"),
                         hintStyle: TextStyle(
-                          color: _colorPicker(enterScreenProvider, context),
+                          color: _pickColor(enterScreenProvider, context),
                         ),
                         border: InputBorder.none,
                         focusedBorder: InputBorder.none,
                       ),
                       style: Theme.of(context).textTheme.headline1!.copyWith(
-                            color: _colorPicker(enterScreenProvider, context),
+                            color: _pickColor(enterScreenProvider, context),
                           ),
                       onTap: () => {
-                        myController!.selection = TextSelection.fromPosition(
+                        actionLipStatusProvider.setActionLipStatus(
+                          providerKey: ProviderKey.enter,
+                        ),
+                        textController!.selection = TextSelection.fromPosition(
                           TextPosition(
-                            offset: myController!.text.length - 2,
+                            offset: textController!.text.length - 2,
                           ),
                         )
                       },
                       onChanged: (String str) {
-                        str = str.trim();
-
-                        if (str.substring(str.length - 1) != "€" &&
-                            !str
-                                .substring(str.length - 1)
-                                .contains(RegExp("[0-9]"))) {
-                          str = str.substring(0, str.length - 1);
-                        }
-                        if (str.substring(str.length - 1) != "€") {
-                          str = str.substring(0, str.length - 3) +
-                              str.substring(str.length - 1);
-                        } else {
-                          str = str.substring(0, str.length - 2);
-                        }
-
-                        // if (lastState.length < str.length) {
-                        //   String newChar =
-                        //       str.substring(str.length - 1).trim();
-                        //   int valueToAdd = int.parse(newChar);
-                        //   int current =
-                        //       int.parse(lastState.replaceAll(r",", ""));
-                        //   newVal = (current * 10 + valueToAdd).toString();
-                        // } else if (lastState.length > str.length) {
-                        //   int currentValue =
-                        //       int.parse(lastState.replaceAll(r",", ""));
-                        //   newVal = (currentValue ~/ 10).toString();
-                        // }
-
-                        String newVal = int.parse(
-                          str.replaceAll(",", "").replaceAll(".", ""),
-                        ).toString();
-
-                        if (newVal.length < 3) {
-                          final int x = 3 - newVal.length;
-                          for (int i = 0; i < x; i++) {
-                            newVal = "0$newVal";
-                          }
-                        }
-                        lastState = newVal.replaceRange(
-                          newVal.length - 2,
-                          newVal.length,
-                          ",${newVal.substring(newVal.length - 2)}",
-                        );
+                        final value = _parseInput(str);
                         setState(() {
-                          myController!.text = "$lastState €";
-                          myController!.selection = TextSelection.fromPosition(
+                          textController!.text = formatter.format(value);
+                          textController!.selection = TextSelection.fromPosition(
                             TextPosition(
-                              offset: myController!.text.length - 2,
+                              offset: textController!.text.length - 2,
                             ),
                           );
                         });
-                        enterScreenProvider.setAmount(
-                          double.tryParse(
-                                myController!.text
-                                    .substring(
-                                      0,
-                                      myController!.text.length - 2,
-                                    )
-                                    .replaceAll(".", "")
-                                    .replaceAll(",", "."),
-                              ) ??
-                              0.0,
-                        );
-                        //print(enterScreenProvider.amount);
+
+                        enterScreenProvider.setAmount(value);
                       },
                     ),
                   ),
@@ -217,16 +176,11 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                             child: enterScreenProvider.isExpenses
                                 ? TextContainer(
                                     //context: context,
-                                    transactionClass:
-                                        AppLocalizations.of(context)!.translate(
-                                      'enter_screen/button-expenses-label',
-                                    ),
+                                    transactionClass: tr('enter_screen.button-expenses-label'),
                                   )
                                 : Center(
                                     child: Text(
-                                      AppLocalizations.of(context)!.translate(
-                                        'enter_screen/button-expenses-label',
-                                      ),
+                                      tr('enter_screen.button-expenses-label'),
                                       style: TextStyle(
                                         color: Theme.of(context)
                                             .colorScheme
@@ -245,16 +199,11 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                             child: enterScreenProvider.isIncome
                                 ? TextContainer(
                                     //context: context,
-                                    transactionClass:
-                                        AppLocalizations.of(context)!.translate(
-                                      'enter_screen/button-income-label',
-                                    ),
+                                    transactionClass: tr('enter_screen.button-income-label'),
                                   )
                                 : Center(
                                     child: Text(
-                                      AppLocalizations.of(context)!.translate(
-                                        'enter_screen/button-income-label',
-                                      ),
+                                      tr('enter_screen.button-income-label'),
                                       style: TextStyle(
                                         color: Theme.of(context)
                                             .colorScheme
@@ -273,16 +222,11 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                             child: enterScreenProvider.isTransaction
                                 ? TextContainer(
                                     //context: context,
-                                    transactionClass:
-                                        AppLocalizations.of(context)!.translate(
-                                      'enter_screen/button-transaction-label',
-                                    ),
+                                    transactionClass: tr('enter_screen.button-transaction-label'),
                                   )
                                 : Center(
                                     child: Text(
-                                      AppLocalizations.of(context)!.translate(
-                                        'enter_screen/button-transaction-label',
-                                      ),
+                                      tr('enter_screen.button-transaction-label'),
                                       style: TextStyle(
                                         color: Theme.of(context)
                                             .colorScheme
@@ -313,11 +257,20 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
               elevation: 0,
               //actions: [AppBarAction.fromPreset(DefaultAction.CLOSE)],
               title: Text(
-                AppLocalizations.of(context)!
-                    .translate('enter_screen/label-title'),
+                tr('enter_screen.title.${enterScreenProvider.editMode ? 'edit' : 'add'}'),
                 style: Theme.of(context).textTheme.button,
               ),
               centerTitle: true,
+              automaticallyImplyLeading: false,
+              leading: AppBarAction.fromParameters(
+                icon: Icons.arrow_back,
+                ontap: () {
+                  actionLipStatusProvider.setActionLipStatus(
+                    providerKey: ProviderKey.enter,
+                  );
+                  getRouterDelegate().popRoute();
+                },
+              ),
             ),
           ),
         ),
@@ -325,8 +278,15 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
     );
   }
 
+  double _parseInput(String str) {
+    final trimmedStr = str.trim().replaceAll(RegExp(r"^[\$,£,€]\s?0+"), "");
+    final paddedStr = trimmedStr.padLeft(3, "0");
+    final decimalStr = "${paddedStr.substring(0, paddedStr.length - 2)}.${paddedStr.substring(paddedStr.length - 2)}";
+    return double.parse(decimalStr);
+  }
+
   //which color to show depending on expense or not
-  Color _colorPicker(
+  Color _pickColor(
     EnterScreenProvider enterScreenProvider,
     BuildContext context,
   ) {

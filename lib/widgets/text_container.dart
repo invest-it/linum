@@ -4,20 +4,21 @@
 //  Co-Author: n/a
 //
 
+import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:provider/provider.dart';
+
 
 class TextContainer extends StatelessWidget {
   final String transactionClass;
   //var context;
 
   const TextContainer({
-    Key? key,
+    super.key,
     // required this.context,
     required this.transactionClass,
-  }) : super(key: key);
+  });
   @override
   Widget build(BuildContext context) {
     final EnterScreenProvider enterScreenProvider =
@@ -27,8 +28,7 @@ class TextContainer extends StatelessWidget {
     //use like this: variable.width or variable.height
     final Size sizeExpenses = (TextPainter(
       text: TextSpan(
-        text: AppLocalizations.of(context)!
-            .translate('enter_screen/button-expenses-label'),
+        text: tr("enter_screen.button-expenses-label"),
       ),
       maxLines: 1,
       textScaleFactor: MediaQuery.of(context).textScaleFactor,

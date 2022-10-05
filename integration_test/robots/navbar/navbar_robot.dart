@@ -10,7 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../general/general_robot.dart';
 
 class NavbarRobot extends GeneralRobot {
-  const NavbarRobot(WidgetTester tester) : super(tester);
+  const NavbarRobot(super.tester);
 
   Future<void> pressHomeButton() async {
     return pressVisibleButtonByString("Home", buttonType: InkWell);

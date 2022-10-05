@@ -4,10 +4,10 @@
 //  Co-Author: n/a
 //  (Refactored by damattl)
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/models/home_screen_card_data.dart';
 import 'package:linum/providers/algorithm_provider.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
 import 'package:linum/widgets/home_screen/home_screen_card_arrow.dart';
 import 'package:provider/provider.dart';
@@ -19,12 +19,12 @@ class HomeScreenCardBottomRow extends StatelessWidget {
   final bool isBack;
 
   const HomeScreenCardBottomRow({
-    Key? key,
+    super.key,
     required this.data,
     required this.upwardArrow,
     required this.downwardArrow,
     this.isBack = false,
-  }) : super(key: key);
+  });
 
   IconButton _buildGoToCurrentDateIcon(BuildContext context) {
     final AlgorithmProvider algorithmProvider =
@@ -66,11 +66,7 @@ class HomeScreenCardBottomRow extends StatelessWidget {
                 isIncome ? CrossAxisAlignment.start : CrossAxisAlignment.end,
             children: [
               Text(
-                AppLocalizations.of(context)!.translate(
-                  isIncome
-                      ? 'home_screen_card/label-income'
-                      : 'home_screen_card/label-expenses',
-                ),
+                tr(isIncome? 'home_screen_card.label-income' : 'home_screen_card.label-expenses'),
                 style: Theme.of(context)
                     .textTheme
                     .overline!

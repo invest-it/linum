@@ -4,12 +4,11 @@
 //  Co-Author: SoTBurst
 //  (Refactored by damattl)
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:linum/models/home_screen_card_data.dart';
 import 'package:linum/providers/algorithm_provider.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
 import 'package:linum/widgets/home_screen/home_screen_card_arrow.dart';
 import 'package:linum/widgets/home_screen/home_screen_card_side.dart';
@@ -20,10 +19,10 @@ class HomeScreenCardFront extends StatelessWidget {
   final HomeScreenCardData data;
   final FlipCardController flipCardController;
   const HomeScreenCardFront({
-    Key? key,
+    super.key,
     required this.data,
     required this.flipCardController,
-  }) : super(key: key);
+  });
 
   void _onHorizontalDragEnd(DragEndDetails details, BuildContext context) {
     // Note: Sensitivity is integer used when you don't want to mess up vertical drag
@@ -42,7 +41,7 @@ class HomeScreenCardFront extends StatelessWidget {
   Widget build(BuildContext context) {
     final AlgorithmProvider algorithmProvider =
         Provider.of<AlgorithmProvider>(context);
-    final String langCode = AppLocalizations.of(context)!.locale.languageCode;
+    final String langCode = context.locale.languageCode;
     final DateFormat dateFormat = DateFormat('MMMM yyyy', langCode);
 
     return GestureDetector(
@@ -65,8 +64,7 @@ class HomeScreenCardFront extends StatelessWidget {
               : Theme.of(context).textTheme.headline3,
         ),
         subHeadline: Text(
-          AppLocalizations.of(context)!
-              .translate('home_screen_card/label-current-balance'),
+          tr('home_screen_card.label-current-balance'),
           style: Theme.of(context).textTheme.headline5,
         ),
         middleRow: Row(
@@ -75,6 +73,7 @@ class HomeScreenCardFront extends StatelessWidget {
           children: [
             IconButton(
               onPressed: () {
+
                 goBackInTime(algorithmProvider);
               },
               icon: const Icon(Icons.arrow_back_ios_new_rounded),

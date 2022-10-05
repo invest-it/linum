@@ -8,25 +8,27 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/constants/repeat_duration_type_enum.dart';
 import 'package:linum/constants/settings_enums.dart';
+import 'package:linum/models/single_balance_data.dart';
 
 class EnterScreenProvider with ChangeNotifier {
   late bool _isExpenses;
   late bool _isIncome;
   late bool _isTransaction;
-  String _name = "";
   late num _amount;
+  late DateTime _selectedDate;
+  late RepeatDuration _repeatDurationEnum;
+  late bool _editMode;
+
+  String _name = "";
   String _expenseCategory = "";
   String _incomeCategory = "";
   String _currency = "";
-  late DateTime _selectedDate;
-  int? _repeatDuration;
-  RepeatDurationType? _repeatDurationType;
-  late RepeatDuration _repeatDurationEnum;
-
-  late bool _editMode;
+  String? _note;
   String? _formerId;
   String? _repeatId;
+  int? _repeatDuration;
   Timestamp? _formerTime;
+  RepeatDurationType? _repeatDurationType;
 
   EnterScreenProvider({
     num amount = 0.0,
@@ -36,6 +38,7 @@ class EnterScreenProvider with ChangeNotifier {
     String secondaryCategory = "None",
     DateTime? selectedDate,
     bool editMode = false,
+    String? note,
     String? id,
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
@@ -43,12 +46,13 @@ class EnterScreenProvider with ChangeNotifier {
     String? repeatId,
     Timestamp? formerTime,
   }) {
-    _amount = amount <= 0 ? -1 * amount : amount;
+    _amount = amount.abs();
     _expenseCategory = amount <= 0 ? category : secondaryCategory;
     _incomeCategory = amount > 0 ? category : secondaryCategory;
     _name = name;
     _currency = currency;
     _editMode = editMode;
+    _note = note;
     _isExpenses = amount <= 0;
     _repeatDuration = repeatDuration;
     _isIncome = !_isExpenses;
@@ -62,6 +66,23 @@ class EnterScreenProvider with ChangeNotifier {
     if (selectedDate != null) {
       _selectedDate = selectedDate;
     }
+    _note = note;
+  }
+
+  factory EnterScreenProvider.fromBalanceData(SingleBalanceData singleBalanceData, {bool editMode = true}) {
+    return EnterScreenProvider(
+      id: singleBalanceData.id,
+      amount: singleBalanceData.amount,
+      category: singleBalanceData.category,
+      name: singleBalanceData.name,
+      selectedDate:
+      singleBalanceData.time.toDate(),
+      editMode: editMode,
+      repeatId: singleBalanceData.repeatId,
+      formerTime:
+      singleBalanceData.formerTime ??
+          singleBalanceData.time,
+    );
   }
 
   bool get isExpenses {
@@ -82,6 +103,10 @@ class EnterScreenProvider with ChangeNotifier {
 
   num get amount {
     return _amount;
+  }
+
+  String? get note {
+    return _note;
   }
 
   String get category {
@@ -146,6 +171,11 @@ class EnterScreenProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void setNote(String note) {
+    _note = note;
+    notifyListeners();
+  }
+
   void setAmount(double amount) {
     _amount = amount;
     notifyListeners();
@@ -188,4 +218,19 @@ class EnterScreenProvider with ChangeNotifier {
   void setRepeatDurationEnumSilently(RepeatDuration repeatDuration) {
     _repeatDurationEnum = repeatDuration;
   }
+
+  //if the amount is entered in expenses, it's set to the negative equivalent if
+  //the user did not accidentally press the minus
+  num amountToDisplay() {
+    if (isExpenses) {
+      if (amount < 0) {
+        return amount;
+      } else {
+        return -amount;
+      }
+    } else {
+      return amount;
+    }
+  }
+
 }

@@ -4,9 +4,9 @@
 //  Co-Author: SoTBurst
 //
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/models/dialog_action.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 
 class UserAlert {
   final BuildContext _context;
@@ -14,8 +14,8 @@ class UserAlert {
   UserAlert({required BuildContext context}) : _context = context;
 
   Future<void> Function(String) showMyDialogCreator({
-    String title = 'alertdialog/error/title-standard',
-    String actionTitle = 'alertdialog/error/action-standard',
+    String title = 'alertdialog.error.title-standard',
+    String actionTitle = 'alertdialog.error.action-standard',
     bool userMustDismissWithButton = true,
   }) {
     return (message) => showMyDialog(
@@ -28,8 +28,8 @@ class UserAlert {
 
   Future<void> showMyDialog(
     String message, {
-    String title = 'alertdialog/login/title-standard',
-    String actionTitle = 'alertdialog/login/action-standard',
+    String title = 'alertdialog.login.title-standard',
+    String actionTitle = 'alertdialog.login.action-standard',
     bool userMustDismissWithButton = false,
   }) async {
     return showDialog<void>(
@@ -39,27 +39,27 @@ class UserAlert {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
-            AppLocalizations.of(context)!.translate(title),
+            title.tr(),
             style: Theme.of(context).textTheme.headline5,
           ),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text(AppLocalizations.of(context)!.translate(message)),
+                Text(message.tr()),
               ],
             ),
           ),
           actions: <Widget>[
             TextButton(
               child: Text(
-                AppLocalizations.of(context)!.translate(actionTitle),
+                actionTitle.tr(),
                 style: Theme.of(context)
                     .textTheme
                     .bodyText1
                     ?.copyWith(color: Theme.of(context).colorScheme.primary),
               ),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.of(context, rootNavigator: true).pop();
               },
             ),
           ],
@@ -68,10 +68,10 @@ class UserAlert {
     );
   }
 
-  Future<bool?> showMyActionDialog(
+  Future<bool?> showActionDialog(
     String message,
     List<DialogAction> actions, {
-    String title = 'alertdialog/error/title-standard',
+    String title = 'alertdialog.error.title-standard',
     bool userMustDismissWithButton = true,
   }) async {
     return showDialog<bool?>(
@@ -81,13 +81,13 @@ class UserAlert {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
-            AppLocalizations.of(context)!.translate(title),
+            title.tr(),
             style: Theme.of(context).textTheme.headline5,
           ),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text(AppLocalizations.of(context)!.translate(message)),
+                Text(message.tr()),
               ],
             ),
           ),
@@ -108,7 +108,7 @@ class UserAlert {
                 }
                 return TextButton(
                   child: Text(
-                    AppLocalizations.of(context)!.translate(item.actionTitle),
+                    item.actionTitle.tr(),
                     style: Theme.of(context).textTheme.bodyText1?.copyWith(
                           // color: item.primaryButton
                           //     ? Theme.of(context).colorScheme.primary

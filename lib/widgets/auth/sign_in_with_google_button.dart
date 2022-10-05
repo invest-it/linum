@@ -4,15 +4,15 @@
 //  Co-Author: n/a
 //
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 
 class SignInWithGoogleButton extends StatelessWidget {
   const SignInWithGoogleButton({
-    Key? key,
+    super.key,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   final VoidCallback onPressed;
 
@@ -46,8 +46,7 @@ class SignInWithGoogleButton extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 14),
               child: Text(
-                AppLocalizations.of(context)!
-                    .translate('onboarding_screen/google-button'),
+                tr('onboarding_screen.google-button'),
                 style: Theme.of(context).textTheme.button?.copyWith(
                       fontWeight: FontWeight.w500,
                       color: Theme.of(context).colorScheme.secondary,

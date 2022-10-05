@@ -11,7 +11,7 @@ import 'package:gradient_widgets/gradient_widgets.dart';
 import '../general/general_robot.dart';
 
 class OnboardingRobot extends GeneralRobot {
-  const OnboardingRobot(WidgetTester tester) : super(tester);
+  const OnboardingRobot(super.tester);
 
   Future<void> pressSignUpNow() async {
     await pressVisibleButtonByString(

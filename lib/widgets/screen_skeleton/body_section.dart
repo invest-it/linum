@@ -13,22 +13,26 @@ class BodySection extends StatelessWidget {
   final bool hasHomeScreenCard;
 
   const BodySection({
-    Key? key,
+    super.key,
     required this.body,
     required this.isInverted,
     this.hasHomeScreenCard = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return isInverted
         ? Expanded(
+            // TODO look at this
+            // ignore: use_colored_box
             child: Container(
               color: Theme.of(context).colorScheme.primary,
               child: ClipRRect(
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(64),
                 ),
+                // TODO look at this
+                // ignore: use_colored_box
                 child: Container(
                   color: Theme.of(context).colorScheme.background,
                   child: Padding(

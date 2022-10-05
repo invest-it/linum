@@ -15,9 +15,8 @@ import 'package:linum/models/entry_category.dart';
 class CategoryMap<T> extends DelegatingMap<T, EntryCategory> {
   final Map<T, EntryCategory> _map;
   CategoryMap() : this._(<T, EntryCategory>{});
-  CategoryMap._(Map<T, EntryCategory> map)
-      : _map = map,
-        super(map);
+  CategoryMap._(super.map)
+      : _map = map;
 
   factory CategoryMap.fromMap(Map<T, EntryCategory> map) {
     return CategoryMap._(map);

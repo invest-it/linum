@@ -4,8 +4,11 @@
 //  Co-Author: n/a
 //  (partly refactored by damattl)
 
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
+import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/utilities/backend/statistic_calculations.dart';
 import 'package:linum/utilities/balance_data/repeated_balance_data_manager.dart';
@@ -29,12 +32,12 @@ class BalanceDataStreamBuilderManager {
           return const LoadingSpinner();
         }
         if (snapshot.data == null) {
+          // TODO tell the user that the connection is broken
           blistview.setBalanceData(
-            [
-              {"Error": "snapshot.data == null"}
-            ],
+            [],
             context: context,
           );
+          log("ERROR LOADING");
           return blistview.listview;
         } else {
           final List<List<Map<String, dynamic>>> arrayData = prepareData(
@@ -47,7 +50,11 @@ class BalanceDataStreamBuilderManager {
           // (and possibly also a filter algorithm provided)
           balanceData.removeWhere(algorithmProvider.currentFilter);
           balanceData.sort(algorithmProvider.currentSorter);
-          blistview.setBalanceData(balanceData, context: context);
+
+          blistview.setBalanceData(
+            listOfMapsToListOfModels(balanceData),
+            context: context,
+          );
           return blistview.listview;
         }
       },
@@ -74,7 +81,10 @@ class BalanceDataStreamBuilderManager {
           );
           final List<Map<String, dynamic>> balanceData = arrayData[0];
           final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(balanceData, algorithmProvider);
+              StatisticsCalculations(
+            listOfMapsToListOfModels(balanceData),
+            algorithmProvider,
+          );
           statisticPanel.addStatisticData(statisticsCalculations);
           return statisticPanel.returnWidget;
         }
@@ -117,4 +127,15 @@ class BalanceDataStreamBuilderManager {
 
     return [balanceData, repeatedBalance];
   }
+}
+
+List<SingleBalanceData> listOfMapsToListOfModels(
+  List<Map<String, dynamic>> balanceData,
+) {
+  final List<SingleBalanceData> listOfModels = [];
+  for (final mapEntry in balanceData) {
+    listOfModels.add(SingleBalanceData.fromMap(mapEntry));
+  }
+
+  return listOfModels;
 }

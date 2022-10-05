@@ -4,10 +4,10 @@
 //  Co-Author: damattl
 //  (Refactored)
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 
 TextStyle? getBalanceTextStyle(BuildContext context, num balance) {
   return MediaQuery.of(context).size.height < 650
@@ -36,8 +36,7 @@ void onFlipCardTap(BuildContext context, FlipCardController controller) {
   );
 
   Fluttertoast.showToast(
-    msg: AppLocalizations.of(context)!
-        .translate('home_screen_card/home-screen-card-toast'),
+    msg: tr('home_screen_card.home-screen-card-toast'),
     toastLength: Toast.LENGTH_SHORT,
   );
 }

@@ -8,23 +8,22 @@ import 'dart:async';
 import 'dart:developer' as dev;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/models/entry_category.dart';
 import 'package:linum/providers/authentication_service.dart';
-import 'package:linum/utilities/backend/local_app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 
 class AccountSettingsProvider extends ChangeNotifier {
-  /// _balance is the documentReference to get the balance data from the database. It will be null if the constructor isnt ready yet
   DocumentReference<Map<String, dynamic>>? _settings;
 
   StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>? settingsListener;
 
   /// The uid of the user
   late String _uid;
-  int _dontDispose = 0;
 
   Map<String, dynamic> lastGrabbedData = {};
 
@@ -37,13 +36,13 @@ class AccountSettingsProvider extends ChangeNotifier {
       StandardCategoryIncome.values,
       categoryId ?? defaultId,
     ); */
-    return standardCategoryIncomes[categoryId];
+    return standardIncomeCategories[categoryId];
   }
 
   EntryCategory? getExpenseEntryCategory() {
     final String categoryId =
         settings["StandardCategoryExpense"] as String? ?? "None";
-    final EntryCategory? catExp = standardCategoryExpenses[categoryId];
+    final EntryCategory? catExp = standardExpenseCategories[categoryId];
     return catExp;
   }
 
@@ -83,6 +82,8 @@ class AccountSettingsProvider extends ChangeNotifier {
 
   Future<void> _createAutoUpdate(BuildContext context) async {
     if (_uid == "") {
+      setToDeviceLocale(context);
+      _settings = null;
       return;
     }
     if (_settings == null) {
@@ -97,12 +98,15 @@ class AccountSettingsProvider extends ChangeNotifier {
         lastGrabbedData = innerSnapshot.data() ?? {};
 
         final String? langString = lastGrabbedData["languageCode"] as String?;
-        Locale? lang;
+        Locale? locale;
         if (lastGrabbedData["systemLanguage"] == false && langString != null) {
           final List<String> langArray = langString.split("-");
-          lang = Locale(langArray[0], langArray[1]);
+          locale = Locale(langArray[0], langArray[1]);
+          setLocale(context, locale);
+        } else {
+          setToDeviceLocale(context);
         }
-        AppLocalizations.of(context)!.load(locale: lang);
+
         Provider.of<AuthenticationService>(context, listen: false)
             .updateLanguageCode(context);
         notifyListeners();
@@ -113,15 +117,25 @@ class AccountSettingsProvider extends ChangeNotifier {
     );
   }
 
-  void dontDisposeOneTime() {
-    _dontDispose++;
+  void setLocale(BuildContext context, Locale locale) {
+    if (context.supportedLocales.contains(locale)) {
+      context.setLocale(locale);
+    } else {
+      setToDeviceLocale(context);
+    }
   }
 
-  @override
-  void dispose() {
-    if (_dontDispose-- == 0) {
-      super.dispose();
-      settingsListener?.cancel();
+  void setToDeviceLocale(BuildContext context) {
+    try {
+      if (context.supportedLocales.contains(context.deviceLocale)) {
+        context.resetLocale();
+      } else if (context.deviceLocale.languageCode == "en") {
+        context.setLocale(const Locale("en", "US"));
+      } else if (context.fallbackLocale != null) {
+        context.setLocale(context.fallbackLocale!);
+      }
+    } catch (e) {
+      dev.log("known life cycle error ");
     }
   }
 
@@ -140,5 +154,29 @@ class AccountSettingsProvider extends ChangeNotifier {
     _settings!.update(settings);
 
     return true;
+  }
+
+  @override
+  void dispose() {
+    settingsListener?.cancel();
+    super.dispose();
+  }
+
+
+  static SingleChildWidget provider(BuildContext context, {bool testing = false}) {
+    return ChangeNotifierProxyProvider<AuthenticationService,
+        AccountSettingsProvider>(
+      create: (ctx) {
+        return AccountSettingsProvider(ctx);
+      },
+      update: (ctx, auth, oldAccountSettings) {
+        if (oldAccountSettings != null) {
+          return oldAccountSettings..updateAuth(auth, ctx);
+        } else {
+          return AccountSettingsProvider(ctx);
+        }
+      },
+      lazy: false,
+    );
   }
 }
