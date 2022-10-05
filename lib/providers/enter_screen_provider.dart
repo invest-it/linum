@@ -232,4 +232,5 @@ class EnterScreenProvider with ChangeNotifier {
       return amount;
     }
   }
+
 }

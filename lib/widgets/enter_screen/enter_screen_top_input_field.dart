@@ -127,13 +127,13 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                         // as soon as multiple currencies are implemented, the provider for this will insert the corresponding symbol here.
                         // suffixIcon: Text("€"),
                         hintStyle: TextStyle(
-                          color: _colorPicker(enterScreenProvider, context),
+                          color: _pickColor(enterScreenProvider, context),
                         ),
                         border: InputBorder.none,
                         focusedBorder: InputBorder.none,
                       ),
                       style: Theme.of(context).textTheme.headline1!.copyWith(
-                            color: _colorPicker(enterScreenProvider, context),
+                            color: _pickColor(enterScreenProvider, context),
                           ),
                       onTap: () => {
                         actionLipStatusProvider.setActionLipStatus(
@@ -146,7 +146,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                         )
                       },
                       onChanged: (String str) {
-                        final value = parseInput(str);
+                        final value = _parseInput(str);
                         setState(() {
                           textController!.text = formatter.format(value);
                           textController!.selection = TextSelection.fromPosition(
@@ -157,69 +157,6 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                         });
 
                         enterScreenProvider.setAmount(value);
-
-                        /* if (str.substring(str.length - 1) != "€" &&
-                            !str.substring(str.length - 1).contains(RegExp("[0-9]"))) {
-                          str = str.substring(0, str.length - 1);
-                        }
-                        if (str.substring(str.length - 1) != "€") {
-                          str = str.substring(0, str.length - 3) +
-                              str.substring(str.length - 1);
-                        } else {
-                          str = str.substring(0, str.length - 2);
-                        }
-
-                        // if (lastState.length < str.length) {
-                        //   String newChar =
-                        //       str.substring(str.length - 1).trim();
-                        //   int valueToAdd = int.parse(newChar);
-                        //   int current =
-                        //       int.parse(lastState.replaceAll(r",", ""));
-                        //   newVal = (current * 10 + valueToAdd).toString();
-                        // } else if (lastState.length > str.length) {
-                        //   int currentValue =
-                        //       int.parse(lastState.replaceAll(r",", ""));
-                        //   newVal = (currentValue ~/ 10).toString();
-                        // }
-
-                        String newVal = int.parse(
-                          str.replaceAll(",", "").replaceAll(".", ""),
-                        ).toString();
-
-                        if (newVal.length < 3) {
-                          final int x = 3 - newVal.length;
-                          for (int i = 0; i < x; i++) {
-                            newVal = "0$newVal";
-                          }
-                        }
-                        lastState = newVal.replaceRange(
-                          newVal.length - 2,
-                          newVal.length,
-                          ",${newVal.substring(newVal.length - 2)}",
-                        );
-                        setState(() {
-                          myController!.text = "$lastState €";
-                          myController!.selection = TextSelection.fromPosition(
-                            TextPosition(
-                              offset: myController!.text.length - 2,
-                            ),
-                          );
-                        });
-                        enterScreenProvider.setAmount(
-                          double.tryParse(
-                                myController!.text
-                                    .substring(
-                                      0,
-                                      myController!.text.length - 2,
-                                    )
-                                    .replaceAll(".", "")
-                                    .replaceAll(",", "."),
-                              ) ??
-                              0.0,
-                        );
-
-                         */
-                        //print(enterScreenProvider.amount);
                       },
                     ),
                   ),
@@ -341,7 +278,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
     );
   }
 
-  double parseInput(String str) {
+  double _parseInput(String str) {
     final trimmedStr = str.trim().replaceAll(RegExp(r"^[\$,£,€]\s?0+"), "");
     final paddedStr = trimmedStr.padLeft(3, "0");
     final decimalStr = "${paddedStr.substring(0, paddedStr.length - 2)}.${paddedStr.substring(paddedStr.length - 2)}";
@@ -349,7 +286,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
   }
 
   //which color to show depending on expense or not
-  Color _colorPicker(
+  Color _pickColor(
     EnterScreenProvider enterScreenProvider,
     BuildContext context,
   ) {
