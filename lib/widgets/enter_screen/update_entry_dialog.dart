@@ -135,5 +135,3 @@ void showChangeEntryDialog(BuildContext context, DateTime selectedDate) {
         Navigator.of(context).pop(),
   );
 }
-
-
