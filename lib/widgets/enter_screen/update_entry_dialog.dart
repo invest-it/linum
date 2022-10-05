@@ -7,11 +7,11 @@ import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:provider/provider.dart';
 
-void showChangeEntryDialog(BuildContext context, DateTime selectedDate) {
+Future<bool?> showChangeEntryDialog(BuildContext context, DateTime selectedDate) {
   final UserAlert userAlert = UserAlert(context: context);
   final BalanceDataProvider balanceDataProvider = Provider.of<BalanceDataProvider>(context, listen: false);
   final EnterScreenProvider enterScreenProvider = Provider.of<EnterScreenProvider>(context, listen: false);
-  userAlert.showActionDialog(
+  return userAlert.showActionDialog(
     "enter_screen.change-entry.dialog-label-change",
     <DialogAction>[
       DialogAction(
@@ -30,7 +30,7 @@ void showChangeEntryDialog(BuildContext context, DateTime selectedDate) {
               selectedDate,
             ),
           );
-          Navigator.of(context).pop(true);
+          Navigator.of(context, rootNavigator: true).pop(true);
         },
       ),
       DialogAction(
@@ -58,7 +58,7 @@ void showChangeEntryDialog(BuildContext context, DateTime selectedDate) {
               selectedDate,
             ),
           );
-          Navigator.of(context).pop(true);
+          Navigator.of(context, rootNavigator: true).pop(true);
         },
       ),
       DialogAction(
@@ -86,7 +86,7 @@ void showChangeEntryDialog(BuildContext context, DateTime selectedDate) {
               selectedDate,
             ),
           );
-          Navigator.of(context).pop(true);
+          Navigator.of(context, rootNavigator: true).pop(true);
         },
       ),
       DialogAction(
@@ -113,7 +113,7 @@ void showChangeEntryDialog(BuildContext context, DateTime selectedDate) {
               selectedDate,
             ),
           );
-          Navigator.of(context).pop(true);
+          Navigator.of(context, rootNavigator: true).pop(true);
         },
       ),
       DialogAction(
@@ -122,16 +122,12 @@ void showChangeEntryDialog(BuildContext context, DateTime selectedDate) {
         dialogPurpose:
         DialogPurpose.secondary,
         function: () {
-          Navigator.of(context)
+          Navigator.of(context, rootNavigator: true)
               .pop(false);
         },
       ),
     ],
     title:
     "enter_screen.delete-entry.dialog-label-title",
-  )
-      .then(
-        (value) =>
-        Navigator.of(context).pop(),
   );
 }

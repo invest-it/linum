@@ -125,7 +125,7 @@ class _EnterScreenState extends State<EnterScreen> {
                                         enterScreenProvider.repeatId != null,
                                     formerTime: enterScreenProvider.formerTime,
                                   ).then(
-                                    (deleted) => deleted != null && deleted ? getRouterDelegate().popRoute() : {},
+                                    (pop) => pop != null && pop ? getRouterDelegate().popRoute() : {},
                                   );
                                 },
                                 child: Text(
@@ -260,7 +260,9 @@ class _EnterScreenState extends State<EnterScreen> {
       getRouterDelegate().popRoute();
     } else {
       // open popup
-      showChangeEntryDialog(context, selectedDate);
+      showChangeEntryDialog(context, selectedDate).then(
+            (pop) => pop != null && pop ? getRouterDelegate().popRoute() : {},
+      );
     }
   }
 }
