@@ -15,11 +15,15 @@ class ExchangeRateRepository {
   }
 
   Future<void> _addExchangeRatesForDate() async {
-    return;
+    throw UnimplementedError();
   }
 
   Future<void> _addMultipleExchangeRatesForDate() async {
-    return;
+    throw UnimplementedError();
+  }
+
+  Future<void> sync() async {
+    _synchronizer.sync();
   }
 
   Future<ExchangeRatesForDate?> getExchangeRatesForDate(DateTime date) async {

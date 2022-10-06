@@ -15,28 +15,28 @@ class ExchangeRateSynchronizer {
 
     final rates = _box.getAll();
     if (rates.isEmpty) {
-      await handleEmptyDatabase(today);
+      await _handleEmptyDatabase(today);
       return;
     }
 
     if (lastEntryDate == null) {
-      final lastEntry = findLastEntry(rates);
-      await syncToLatest(lastEntry.dateTime, today);
+      final lastEntry = _findLastEntry(rates);
+      await _syncToLatest(lastEntry.dateTime, today);
     } else {
       var lastEntry = _box.get(lastEntryDate);
 
-      lastEntry ??= findLastEntry(rates);
+      lastEntry ??= _findLastEntry(rates);
 
-      await syncToLatest(lastEntry.dateTime, today);
+      await _syncToLatest(lastEntry.dateTime, today);
     }
   }
 
-  ExchangeRatesForDate findLastEntry(List<ExchangeRatesForDate> rates) {
+  ExchangeRatesForDate _findLastEntry(List<ExchangeRatesForDate> rates) {
     rates.sort((a, b) => a.date.compareTo(b.date)); // TODO: Direction Ascending or Descending?
     return rates.last;
   }
 
-  Future<void> syncToLatest(DateTime last, DateTime today) async {
+  Future<void> _syncToLatest(DateTime last, DateTime today) async {
     try {
       final rates = await fetchExchangeRatesForTimeSpan(last, today);
       _box.putMany(rates);
@@ -46,7 +46,7 @@ class ExchangeRateSynchronizer {
     }
   }
 
-  Future<void> handleEmptyDatabase(DateTime today) async {
+  Future<void> _handleEmptyDatabase(DateTime today) async {
     try {
       final rates = await fetchExchangeRatesUntil(today);
       _box.putMany(rates);
