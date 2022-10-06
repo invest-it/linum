@@ -49,10 +49,15 @@ dependencies:
   http: ^0.13.5
   intl: ^0.17.0
   json_annotation: ^4.7.0
+  objectbox: ^1.6.2
+  objectbox_flutter_libs: ^1.6.2
+  objectbox_generator: ^1.6.2
   package_info_plus: ^1.4.0
+  path: ^1.8.2
   provider: ^6.0.2
   shared_preferences: ^2.0.13
   sign_in_with_apple: ^3.0.0
+  sqflite: ^2.1.0
   tuple: ^2.0.0
   url_launcher: ^6.1.2
   url_launcher_ios: ^6.0.15

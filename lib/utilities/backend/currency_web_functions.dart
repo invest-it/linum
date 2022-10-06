@@ -7,7 +7,7 @@ import 'package:linum/models/exchange_rates_for_date.dart';
 
 const webAPIUrl = "https://exchange-rates.linum.martins-lightart.de/";
 
-Future<ExchangeRate> fetchExchangeRateForDate(DateTime date, String currency) async {
+Future<ExchangeRate> fetchExchangeRate(DateTime date, String currency) async {
   final dateStr = DateFormat("yyyy-MM-dd").format(date);
   final uri = Uri.parse("$webAPIUrl/rate/$dateStr/$currency");
   final response = await http.get(uri);
@@ -36,6 +36,18 @@ Future<List<String>> fetchSupportedCurrencies() async {
   }
 }
 
+Future<ExchangeRatesForDate> fetchExchangeRatesForDate(DateTime date) async {
+  final dateStr = DateFormat("yyyy-MM-dd").format(date);
+  final uri = Uri.parse("$webAPIUrl/rates/$dateStr");
+  final response = await http.get(uri);
+
+  if (response.statusCode == 200) {
+    final jsonMap = jsonDecode(response.body) as Map<String, dynamic>;
+    return ExchangeRatesForDate.fromJson(jsonMap);
+  } else {
+    throw Exception("Failed to get exchange rates until specified date");
+  }
+}
 
 Future<List<ExchangeRatesForDate>> fetchExchangeRatesUntil(DateTime date) async {
   final dateStr = DateFormat("yyyy-MM-dd").format(date);
@@ -47,6 +59,20 @@ Future<List<ExchangeRatesForDate>> fetchExchangeRatesUntil(DateTime date) async 
     return jsonList.map((e) => ExchangeRatesForDate.fromJson(e)).toList();
   } else {
     throw Exception("Failed to get exchange rates until specified date");
+  }
+}
+
+Future<List<ExchangeRatesForDate>> fetchExchangeRatesForTimeSpan(DateTime earliest, DateTime latest) async {
+  final earliestStr = DateFormat("yyyy-MM-dd").format(earliest);
+  final latestStr = DateFormat("yyyy-MM-dd").format(latest);
+  final uri = Uri.parse("$webAPIUrl/rates-between/$earliestStr/$latestStr");
+  final response = await http.get(uri);
+
+  if (response.statusCode == 200) {
+    final jsonList = jsonDecode(response.body) as List<Map<String, dynamic>>;
+    return jsonList.map((e) => ExchangeRatesForDate.fromJson(e)).toList();
+  } else {
+    throw Exception("Failed to get exchange rates for time-span");
   }
 }
 
@@ -62,3 +88,4 @@ Future<List<ExchangeRate>> fetchExchangeRatesForCurrencyUntil(DateTime date, Str
     throw Exception("Failed to get exchange rates for currency until specified date");
   }
 }
+
