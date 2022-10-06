@@ -14,13 +14,13 @@ import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:provider/provider.dart';
 
-Future<bool?> generateDeletePopupFromSingleBalanceData(
+Future<bool?> generateDeleteDialogFromSingleBalanceData(
   BuildContext context,
   BalanceDataProvider balanceDataProvider,
   SingleBalanceData singleBalanceData,
 ) async {
   final bool isRepeatable = singleBalanceData.repeatId != null;
-  return generateDeletePopup(
+  return generateDeleteDialog(
     context,
     balanceDataProvider,
     isRepeatable ? singleBalanceData.repeatId! : singleBalanceData.id,
@@ -29,7 +29,7 @@ Future<bool?> generateDeletePopupFromSingleBalanceData(
   );
 }
 
-Future<bool?> showRepeatableDeletePopup(
+Future<bool?> showRepeatableDeleteDialog(
     BuildContext context,
     String balanceDataId, {
     Timestamp? formerTime,
@@ -97,7 +97,7 @@ Future<bool?> showRepeatableDeletePopup(
   );
 }
 
-Future<bool?> showDefaultDeletePopup(
+Future<bool?> showDefaultDeleteDialog(
     BuildContext context,
     String balanceDataId, {
     Timestamp? formerTime,
@@ -127,7 +127,7 @@ Future<bool?> showDefaultDeletePopup(
   );
 }
 
-Future<bool?> generateDeletePopup(
+Future<bool?> generateDeleteDialog(
   BuildContext context,
   BalanceDataProvider balanceDataProvider,
   String balanceDataId, {
@@ -137,6 +137,6 @@ Future<bool?> generateDeletePopup(
 
 
   return isRepeatable
-      ? showRepeatableDeletePopup(context, balanceDataId, formerTime: formerTime)
-      : showDefaultDeletePopup(context, balanceDataId, formerTime: formerTime);
+      ? showRepeatableDeleteDialog(context, balanceDataId, formerTime: formerTime)
+      : showDefaultDeleteDialog(context, balanceDataId, formerTime: formerTime);
 }

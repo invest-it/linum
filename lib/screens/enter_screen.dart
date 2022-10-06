@@ -7,19 +7,18 @@ import 'dart:developer' as dev;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/constants/repeatable_change_type_enum.dart';
-import 'package:linum/models/dialog_action.dart';
 import 'package:linum/models/repeat_balance_data.dart';
 import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
-import 'package:linum/utilities/frontend/delete_entry_popup.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
-import 'package:linum/utilities/frontend/user_alert.dart';
+import 'package:linum/widgets/enter_screen/add_amount_dialog.dart';
+import 'package:linum/widgets/enter_screen/delete_entry_dialog.dart';
 import 'package:linum/widgets/enter_screen/enter_screen_listviewbuilder.dart';
 import 'package:linum/widgets/enter_screen/enter_screen_top_input_field.dart';
+import 'package:linum/widgets/enter_screen/update_entry_dialog.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:linum/widgets/top_bar_action_item.dart';
 import 'package:provider/provider.dart';
@@ -117,7 +116,7 @@ class _EnterScreenState extends State<EnterScreen> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  generateDeletePopup(
+                                  generateDeleteDialog(
                                     context,
                                     balanceDataProvider,
                                     enterScreenProvider.repeatId ??
@@ -126,7 +125,7 @@ class _EnterScreenState extends State<EnterScreen> {
                                         enterScreenProvider.repeatId != null,
                                     formerTime: enterScreenProvider.formerTime,
                                   ).then(
-                                    (deleted) => deleted != null && deleted ? getRouterDelegate().popRoute() : {},
+                                    (pop) => pop != null && pop ? getRouterDelegate().popRoute() : {},
                                   );
                                 },
                                 child: Text(
@@ -162,10 +161,10 @@ class _EnterScreenState extends State<EnterScreen> {
                               ),
                               onPressed: () {
                                 if (enterScreenProvider.isIncome &&
-                                    _amountChooser(enterScreenProvider) <= 0) {
-                                  showAlertDialog(context, enterScreenProvider);
+                                    enterScreenProvider.amountToDisplay() <= 0) {
+                                  showAddAmountAlertDialog(context, enterScreenProvider);
                                   dev.log(
-                                    "amount was to low: ${_amountChooser(enterScreenProvider)}",
+                                    "amount was to low: ${enterScreenProvider.amountToDisplay()}",
                                   );
                                   return;
                                 }
@@ -193,19 +192,6 @@ class _EnterScreenState extends State<EnterScreen> {
     );
   }
 
-  //if the amount is entered in expenses, it's set to the negative equivalent if
-  //the user did not accidentally press the minus
-  num _amountChooser(EnterScreenProvider enterScreenProvider) {
-    if (enterScreenProvider.isExpenses) {
-      if (enterScreenProvider.amount < 0) {
-        return enterScreenProvider.amount;
-      } else {
-        return -enterScreenProvider.amount;
-      }
-    } else {
-      return enterScreenProvider.amount;
-    }
-  }
 
   void addBalance(DateTime selectedDate) {
     final EnterScreenProvider enterScreenProvider = Provider.of<EnterScreenProvider>(context, listen: false);
@@ -214,7 +200,7 @@ class _EnterScreenState extends State<EnterScreen> {
         enterScreenProvider.repeatDurationTyp == null) {
       balanceDataProvider.addSingleBalance(
         SingleBalanceData(
-          amount: _amountChooser(enterScreenProvider),
+          amount: enterScreenProvider.amountToDisplay(),
           category: enterScreenProvider.category,
           currency: "EUR",
           name: enterScreenProvider.name,
@@ -227,8 +213,7 @@ class _EnterScreenState extends State<EnterScreen> {
     } else {
       balanceDataProvider.addRepeatedBalance(
         RepeatedBalanceData(
-          amount:
-          _amountChooser(enterScreenProvider),
+          amount: enterScreenProvider.amountToDisplay(),
           category: enterScreenProvider.category,
           currency: "EUR",
           name: enterScreenProvider.name,
@@ -262,8 +247,7 @@ class _EnterScreenState extends State<EnterScreen> {
       balanceDataProvider.updateSingleBalance(
         SingleBalanceData(
           id: enterScreenProvider.formerId ?? "",
-          amount:
-          _amountChooser(enterScreenProvider),
+          amount: enterScreenProvider.amountToDisplay(),
           category: enterScreenProvider.category,
           currency: "EUR",
           name: enterScreenProvider.name,
@@ -276,177 +260,10 @@ class _EnterScreenState extends State<EnterScreen> {
       getRouterDelegate().popRoute();
     } else {
       // open popup
-      showChangeEntryDialog(selectedDate);
+      showChangeEntryDialog(context, selectedDate).then(
+            (pop) => pop != null && pop ? getRouterDelegate().popRoute() : {},
+      );
     }
-  }
-
-  void showChangeEntryDialog(DateTime selectedDate) {
-    final UserAlert userAlert = UserAlert(context: context);
-    final BalanceDataProvider balanceDataProvider = Provider.of<BalanceDataProvider>(context, listen: false);
-    final EnterScreenProvider enterScreenProvider = Provider.of<EnterScreenProvider>(context, listen: false);
-    userAlert.showActionDialog(
-      "enter_screen.change-entry.dialog-label-change",
-      <DialogAction>[
-        DialogAction(
-          actionTitle: "enter_screen.delete-entry.dialog-button-onlyonce",
-          function: () {
-            balanceDataProvider.updateRepeatedBalance(
-              id: enterScreenProvider
-                  .repeatId!,
-              changeType: RepeatableChangeType.onlyThisOne,
-              amount: _amountChooser(
-                enterScreenProvider,
-              ),
-              category: enterScreenProvider.category,
-              currency: "EUR",
-              name: enterScreenProvider.name,
-              time: enterScreenProvider.formerTime,
-              newTime: Timestamp.fromDate(
-                selectedDate,
-              ),
-            );
-            Navigator.of(context).pop(true);
-          },
-        ),
-        DialogAction(
-          actionTitle:
-          "enter_screen.delete-entry.dialog-button-untilnow",
-          dialogPurpose:
-          DialogPurpose.danger,
-          function: () {
-            dev.log("");
-            balanceDataProvider
-                .updateRepeatedBalance(
-              id: enterScreenProvider
-                  .repeatId!,
-              changeType:
-              RepeatableChangeType
-                  .thisAndAllBefore,
-              amount: _amountChooser(
-                enterScreenProvider,
-              ),
-              category: enterScreenProvider
-                  .category,
-              currency: "EUR",
-              name:
-              enterScreenProvider.name,
-              time: enterScreenProvider
-                  .formerTime,
-              newTime: Timestamp.fromDate(
-                selectedDate,
-              ),
-            );
-            Navigator.of(context).pop(true);
-          },
-        ),
-        DialogAction(
-          actionTitle:
-          "enter_screen.delete-entry.dialog-button-fromnow",
-          dialogPurpose:
-          DialogPurpose.danger,
-          function: () {
-            balanceDataProvider
-                .updateRepeatedBalance(
-              id: enterScreenProvider
-                  .repeatId!,
-              changeType:
-              RepeatableChangeType
-                  .thisAndAllAfter,
-              amount: _amountChooser(
-                enterScreenProvider,
-              ),
-              category: enterScreenProvider
-                  .category,
-              currency: "EUR",
-              name:
-              enterScreenProvider.name,
-              time: enterScreenProvider
-                  .formerTime,
-              newTime: Timestamp.fromDate(
-                selectedDate,
-              ),
-            );
-            Navigator.of(context).pop(true);
-          },
-        ),
-        DialogAction(
-          actionTitle:
-          "enter_screen.delete-entry.dialog-button-allentries",
-          dialogPurpose:
-          DialogPurpose.danger,
-          function: () {
-            balanceDataProvider
-                .updateRepeatedBalance(
-              id: enterScreenProvider
-                  .repeatId!,
-              changeType:
-              RepeatableChangeType.all,
-              amount: _amountChooser(
-                enterScreenProvider,
-              ),
-              category: enterScreenProvider
-                  .category,
-              currency: "EUR",
-              name:
-              enterScreenProvider.name,
-              time: enterScreenProvider
-                  .formerTime,
-              newTime: Timestamp.fromDate(
-                selectedDate,
-              ),
-            );
-            Navigator.of(context).pop(true);
-          },
-        ),
-        DialogAction(
-          actionTitle:
-          "enter_screen.delete-entry.dialog-button-cancel",
-          dialogPurpose:
-          DialogPurpose.secondary,
-          function: () {
-            Navigator.of(context)
-                .pop(false);
-          },
-        ),
-      ],
-      title:
-      "enter_screen.delete-entry.dialog-label-title",
-    )
-        .then(
-          (value) =>
-          Navigator.of(context).pop(),
-    );
-  }
-
-  void showAlertDialog(
-    BuildContext context,
-    EnterScreenProvider enterScreenProvider,
-  ) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(
-            tr('enter_screen.add-amount.dialog-label-title-expenses'),
-            style: Theme.of(context).textTheme.headline5,
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text(
-                tr('enter_screen.add-amount.dialog-label-title'),
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1!
-                    .copyWith(color: Theme.of(context).colorScheme.primary),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 }
 // TODO: Refactor
