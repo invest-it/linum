@@ -24,6 +24,7 @@ class BalanceDataStreamBuilderManager {
     required BuildContext context,
     required Stream<DocumentSnapshot<Map<String, dynamic>>>? dataStream,
     required RepeatedBalanceDataManager repeatedBalanceDataManager,
+    bool repeatables = false,
   }) {
     return StreamBuilder(
       stream: dataStream,

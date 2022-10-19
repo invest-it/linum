@@ -378,6 +378,20 @@ class BalanceDataProvider extends ChangeNotifier {
     );
   }
 
+  StreamBuilder fillListViewWithRepeatables(
+    BalanceDataListView blistview, {
+    required BuildContext context,
+  }) {
+    return balanceDataStreamBuilderManager.fillListViewWithData(
+      algorithmProvider: _algorithmProvider,
+      blistview: blistview,
+      context: context,
+      dataStream: _dataStream,
+      repeatedBalanceDataManager: repeatedBalanceDataManager,
+      repeatables: true,
+    );
+  }
+
   /// Returns a StreamBuilder that builds the ListView from the document-datastream
   StreamBuilder fillStatisticPanelWithData(
     AbstractHomeScreenCard statisticPanel,
@@ -415,7 +429,8 @@ class BalanceDataProvider extends ChangeNotifier {
     return data!["settings"] as Map<String, dynamic>;
   }
 
-  static SingleChildWidget provider(BuildContext context, {bool testing = false}) {
+  static SingleChildWidget provider(BuildContext context,
+      {bool testing = false}) {
     return ChangeNotifierProxyProvider2<AuthenticationService,
         AlgorithmProvider, BalanceDataProvider>(
       create: (ctx) {

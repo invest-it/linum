@@ -30,7 +30,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   void resetAlgorithmProvider() {
     final AlgorithmProvider algorithmProvider =
-    Provider.of<AlgorithmProvider>(context);
+        Provider.of<AlgorithmProvider>(context);
 
     if (algorithmProvider.currentFilter == Filters.noFilter) {
       algorithmProvider.resetCurrentShownMonth();
@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-
+  bool showRepeatables = false;
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +94,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     TextButton(
                       onPressed: () {
-                        getRouterDelegate().replaceLastRoute(MainRoute.budget);
+                        // TODO: change to correct path to get there @NightmindOfficial
+                        // getRouterDelegate().replaceLastRoute(MainRoute.budget);
+                        setState(() {
+                          showRepeatables = !showRepeatables;
+                        });
                       },
                       child: Text(
                         tr('home_screen.button-show-more'),
@@ -112,10 +116,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                   child: ScrollConfiguration(
                     behavior: SilentScroll(),
-                    child: balanceDataProvider.fillListViewWithData(
-                      HomeScreenListView(),
-                      context: context,
-                    ),
+                    child: showRepeatables
+                        ? balanceDataProvider.fillListViewWithRepeatables(
+                            HomeScreenListView(),
+                            context: context,
+                          )
+                        : balanceDataProvider.fillListViewWithData(
+                            HomeScreenListView(),
+                            context: context,
+                          ),
                   ),
                 ),
               ),
