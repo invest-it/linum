@@ -5,12 +5,10 @@ import 'package:linum/utilities/backend/exchange_rate_synchronizer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ExchangeRateRepository {
-  final Store _store;
   final Box<ExchangeRatesForDate> _box;
-  final Future<SharedPreferences> _prefs =  SharedPreferences.getInstance();
   late final ExchangeRateSynchronizer _synchronizer;
 
-  ExchangeRateRepository(this._store) : _box = _store.box() {
+  ExchangeRateRepository(Store store) : _box = store.box() {
     _synchronizer = ExchangeRateSynchronizer(_box);
   }
 

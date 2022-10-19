@@ -9,11 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:linum/app.dart';
 import 'package:linum/constants/supported_locales.dart';
+import 'package:linum/objectbox.g.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main({bool? testing}) async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+
+  final store = await openStore();
 
   if (testing != null && testing) {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -29,7 +32,7 @@ Future<void> main({bool? testing}) async {
           supportedLocales: supportedLocales,
           path: 'lang',
           fallbackLocale: const Locale('de', 'DE'),
-          child: LinumApp(testing: testing),
+          child: LinumApp(store, testing: testing),
       ),
     );
   });

@@ -7,15 +7,17 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:linum/application_services.dart';
 import 'package:linum/constants/main_theme_data.dart';
-import 'package:linum/firebase_wrapper.dart';
 import 'package:linum/navigation/main_route_information_parser.dart';
 import 'package:linum/navigation/main_router_delegate.dart';
+import 'package:linum/objectbox.g.dart';
 
 class LinumApp extends StatelessWidget {
   final bool? testing;
+  final Store store;
 
-  const LinumApp({this.testing});
+  const LinumApp(this.store, {this.testing});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,8 @@ class LinumApp extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
 
-      home: FirebaseWrapper(
+      home: ApplicationServices(
+        store: store,
         router: Router(
           routerDelegate: routerDelegate,
           routeInformationParser: routeInformationParser,
