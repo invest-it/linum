@@ -9,7 +9,7 @@ import 'dart:developer' as dev;
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RepeatedBalanceDataRemover {
-  bool removeAll(Map<String, dynamic> data, String id) {
+  static bool removeAll(Map<String, dynamic> data, String id) {
     final int length = (data["repeatedBalance"] as List<dynamic>).length;
     (data["repeatedBalance"] as List<dynamic>).removeWhere((element) {
       return (element as Map<String, dynamic>)["id"] == id;
@@ -21,7 +21,7 @@ class RepeatedBalanceDataRemover {
     return true;
   }
 
-  bool removeThisAndAllBefore(
+  static bool removeThisAndAllBefore(
     Map<String, dynamic> data,
     String id,
     Timestamp time,
@@ -57,7 +57,7 @@ class RepeatedBalanceDataRemover {
     return false;
   }
 
-  bool removeThisAndAllAfter(
+  static bool removeThisAndAllAfter(
     Map<String, dynamic> data,
     String id,
     Timestamp time,
@@ -92,7 +92,7 @@ class RepeatedBalanceDataRemover {
     return false;
   }
 
-  bool removeOnlyThisOne(
+  static bool removeOnlyThisOne(
     Map<String, dynamic> data,
     String id,
     Timestamp time,

@@ -24,12 +24,11 @@ void main() {
           time: Timestamp.fromDate(DateTime.now()),
         );
 
-        final SingleBalanceDataManager singleBalanceDataManager =
-            SingleBalanceDataManager();
+
         final Map<String, dynamic> data = {"balanceData": []};
 
         // Act (Execution)
-        final bool result = singleBalanceDataManager.addSingleBalanceToData(
+        final bool result = SingleBalanceDataManager.addSingleBalanceToData(
           singleBalance,
           data,
         );
@@ -49,12 +48,11 @@ void main() {
           time: Timestamp.fromDate(DateTime.now()),
         );
 
-        final SingleBalanceDataManager singleBalanceDataManager =
-            SingleBalanceDataManager();
+
         final Map<String, dynamic> data = {"balanceData": []};
 
         // Act (Execution)
-        final bool result = singleBalanceDataManager.addSingleBalanceToData(
+        final bool result = SingleBalanceDataManager.addSingleBalanceToData(
           singleBalance,
           data,
         );
@@ -67,8 +65,7 @@ void main() {
       test("random data test", () {
         final math.Random rand = math.Random();
 
-        final SingleBalanceDataManager singleBalanceDataManager =
-            SingleBalanceDataManager();
+
         final Map<String, dynamic> data = {"balanceData": []};
 
         final int max = rand.nextInt(2000) + 1;
@@ -92,7 +89,7 @@ void main() {
           );
 
           // Act (Execution)
-          final bool result = singleBalanceDataManager.addSingleBalanceToData(
+          final bool result = SingleBalanceDataManager.addSingleBalanceToData(
             singleBalance,
             data,
           );
@@ -127,13 +124,12 @@ void main() {
 
         const String id = "Impossible id";
 
-        final SingleBalanceDataManager singleBalanceDataManager =
-            SingleBalanceDataManager();
+
         final int expectedLength = data["balanceData"]!.length;
 
         // Act (Execution)
         final bool result =
-            singleBalanceDataManager.removeSingleBalanceFromData(id, data);
+            SingleBalanceDataManager.removeSingleBalanceFromData(id, data);
 
         // Assert (Observation)
         expect(result, false);
@@ -142,8 +138,7 @@ void main() {
 
       test("random data test", () {
         final math.Random rand = math.Random();
-        final SingleBalanceDataManager singleBalanceDataManager =
-            SingleBalanceDataManager();
+
 
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
@@ -157,7 +152,7 @@ void main() {
 
           // Act (Execution)
           final bool result =
-              singleBalanceDataManager.removeSingleBalanceFromData(id, data);
+              SingleBalanceDataManager.removeSingleBalanceFromData(id, data);
 
           // Assert (Observation)
           expect(result, true);
@@ -174,11 +169,10 @@ void main() {
             generateRandomData();
 
         const String id = "Impossible id";
-        final SingleBalanceDataManager singleBalanceDataManager =
-            SingleBalanceDataManager();
+
 
         // Act (Execution)
-        final bool result = singleBalanceDataManager
+        final bool result = SingleBalanceDataManager
             .updateSingleBalanceInData(id, data, amount: 5);
 
         // Assert (Observation)
@@ -190,11 +184,10 @@ void main() {
         final Map<String, List<Map<String, dynamic>>> data =
             generateRandomData();
 
-        final SingleBalanceDataManager singleBalanceDataManager =
-            SingleBalanceDataManager();
+
 
         // Act (Execution)
-        final bool result = singleBalanceDataManager
+        final bool result = SingleBalanceDataManager
             .updateSingleBalanceInData("", data, amount: 5);
 
         // Assert (Observation)
@@ -210,11 +203,10 @@ void main() {
         final int idIndex = rand.nextInt(data["balanceData"]!.length);
         final String id = data["balanceData"]![idIndex]["id"] as String;
 
-        final SingleBalanceDataManager singleBalanceDataManager =
-            SingleBalanceDataManager();
+
 
         // Act (Execution)
-        final bool result = singleBalanceDataManager
+        final bool result = SingleBalanceDataManager
             .updateSingleBalanceInData(id, data, category: "");
 
         // Assert (Observation)
@@ -230,11 +222,10 @@ void main() {
         final int idIndex = rand.nextInt(data["balanceData"]!.length);
         final String id = data["balanceData"]![idIndex]["id"] as String;
 
-        final SingleBalanceDataManager singleBalanceDataManager =
-            SingleBalanceDataManager();
+
 
         // Act (Execution)
-        final bool result = singleBalanceDataManager
+        final bool result = SingleBalanceDataManager
             .updateSingleBalanceInData(id, data, currency: "");
 
         // Assert (Observation)
@@ -243,8 +234,7 @@ void main() {
 
       test("random data test", () {
         final math.Random rand = math.Random();
-        final SingleBalanceDataManager singleBalanceDataManager =
-            SingleBalanceDataManager();
+
 
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
@@ -258,7 +248,7 @@ void main() {
 
           // Act (Execution)
           final bool result =
-              singleBalanceDataManager.updateSingleBalanceInData(
+              SingleBalanceDataManager.updateSingleBalanceInData(
             id,
             data,
             amount: 5,

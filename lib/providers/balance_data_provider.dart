@@ -33,15 +33,9 @@ class BalanceDataProvider extends ChangeNotifier {
   late AlgorithmProvider _algorithmProvider;
 
   // Manager
-  late final SingleBalanceDataManager singleBalanceDataManager;
-  late final RepeatedBalanceDataManager repeatedBalanceDataManager;
-  late final BalanceDataStreamBuilderManager balanceDataStreamBuilderManager;
 
   /// Creates the BalanceDataProvider. Inparticular it sets [_balance] correctly
   BalanceDataProvider(BuildContext context) {
-    singleBalanceDataManager = SingleBalanceDataManager();
-    repeatedBalanceDataManager = RepeatedBalanceDataManager();
-    balanceDataStreamBuilderManager = BalanceDataStreamBuilderManager();
 
     _uid = Provider.of<AuthenticationService>(context, listen: false).uid;
     _algorithmProvider = Provider.of<AlgorithmProvider>(context, listen: false);
@@ -151,7 +145,7 @@ class BalanceDataProvider extends ChangeNotifier {
     }
 
     // add and upload
-    if (singleBalanceDataManager.addSingleBalanceToData(singleBalance, data)) {
+    if (SingleBalanceDataManager.addSingleBalanceToData(singleBalance, data)) {
       await _balance!.set(data);
       return true;
     }
@@ -176,7 +170,7 @@ class BalanceDataProvider extends ChangeNotifier {
     }
 
     // update and upload
-    if (singleBalanceDataManager.updateSingleBalanceInData(
+    if (SingleBalanceDataManager.updateSingleBalanceInData(
       id,
       data,
       amount: amount,
@@ -215,7 +209,7 @@ class BalanceDataProvider extends ChangeNotifier {
     }
 
     // remove and upload
-    if (singleBalanceDataManager.removeSingleBalanceFromData(id, data)) {
+    if (SingleBalanceDataManager.removeSingleBalanceFromData(id, data)) {
       await _balance!.set(data);
       return true;
     }
@@ -261,7 +255,7 @@ class BalanceDataProvider extends ChangeNotifier {
     }
 
     // add and upload
-    if (repeatedBalanceDataManager.addRepeatedBalanceToData(
+    if (RepeatedBalanceDataManager.addRepeatedBalanceToData(
       repeatBalanceData,
       data,
     )) {
@@ -298,7 +292,7 @@ class BalanceDataProvider extends ChangeNotifier {
     }
 
     // update and upload
-    if (repeatedBalanceDataManager.updateRepeatedBalanceInData(
+    if (RepeatedBalanceDataManager.updateRepeatedBalanceInData(
       id: id,
       changeType: changeType,
       data: data,
@@ -336,7 +330,7 @@ class BalanceDataProvider extends ChangeNotifier {
     }
 
     // remove and upload
-    if (repeatedBalanceDataManager.removeRepeatedBalanceFromData(
+    if (RepeatedBalanceDataManager.removeRepeatedBalanceFromData(
       id: id,
       data: data,
       removeType: removeType,
@@ -366,15 +360,14 @@ class BalanceDataProvider extends ChangeNotifier {
 
   /// Returns a StreamBuilder that builds the ListView from the document-datastream
   StreamBuilder fillListViewWithData(
-    BalanceDataListView blistview, {
+    BalanceDataListView listView, {
     required BuildContext context,
   }) {
-    return balanceDataStreamBuilderManager.fillListViewWithData(
+    return BalanceDataStreamBuilderManager.fillListViewWithData(
       algorithmProvider: _algorithmProvider,
-      blistview: blistview,
+      listView: listView,
       context: context,
       dataStream: _dataStream,
-      repeatedBalanceDataManager: repeatedBalanceDataManager,
     );
   }
 
@@ -382,10 +375,9 @@ class BalanceDataProvider extends ChangeNotifier {
   StreamBuilder fillStatisticPanelWithData(
     AbstractHomeScreenCard statisticPanel,
   ) {
-    return balanceDataStreamBuilderManager.fillStatisticPanelWithData(
+    return BalanceDataStreamBuilderManager.fillStatisticPanelWithData(
       algorithmProvider: _algorithmProvider,
       dataStream: _dataStream,
-      repeatedBalanceDataManager: repeatedBalanceDataManager,
       statisticPanel: statisticPanel,
     );
   }

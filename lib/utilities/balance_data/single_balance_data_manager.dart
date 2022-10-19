@@ -11,7 +11,7 @@ import 'package:linum/models/single_balance_data.dart';
 import 'package:uuid/uuid.dart';
 
 class SingleBalanceDataManager {
-  bool addSingleBalanceToData(
+  static bool addSingleBalanceToData(
     SingleBalanceData singleBalance,
     Map<String, dynamic> data,
   ) {
@@ -39,7 +39,7 @@ class SingleBalanceDataManager {
   }
 
   /// remove a single Balance and upload it (identified using id)
-  bool removeSingleBalanceFromData(
+  static bool removeSingleBalanceFromData(
     String id,
     Map<String, dynamic> data,
   ) {
@@ -57,7 +57,7 @@ class SingleBalanceDataManager {
     return false;
   }
 
-  bool updateSingleBalanceInData(
+  static bool updateSingleBalanceInData(
     String id,
     Map<String, dynamic> data, {
     num? amount,

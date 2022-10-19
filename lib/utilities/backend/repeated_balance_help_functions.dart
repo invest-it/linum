@@ -5,10 +5,10 @@
 //
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:linum/models/repeat_balance_data.dart';
 
-bool isMonthly(Map<String, dynamic> singleRepeatedBalance) {
-  return singleRepeatedBalance["repeatDurationType"] != null &&
-      (singleRepeatedBalance["repeatDurationType"] as String).toUpperCase() ==
+bool isMonthly(RepeatedBalanceData singleRepeatedBalance) {
+  return singleRepeatedBalance.repeatDurationType.toString().toUpperCase() ==
           "MONTHS";
 }
 

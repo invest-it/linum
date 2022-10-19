@@ -8,35 +8,27 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
 
 class SingleBalanceData {
-  final num _amount;
-  final String _category;
-  final String _currency;
-  final String _id;
-  final String _name;
-  final String? _note;
-  final String? _repeatId;
-  final Timestamp _time;
-  final Timestamp? _formerTime; // strictly for changed repeatables
+  final num amount;
+  final String category;
+  final String currency;
+  final String id;
+  final String name;
+  final String? note;
+  final String? repeatId;
+  final Timestamp time;
+  final Timestamp? formerTime; // strictly for changed repeatables
 
   SingleBalanceData({
-    required num amount,
-    required String category,
-    required String currency,
+    required this.amount,
+    required this.category,
+    required this.currency,
     String? id,
-    required String name,
-    String? note,
-    String? repeatId,
-    required Timestamp time,
-    Timestamp? formerTime,
-  })  : _amount = amount,
-        _category = category,
-        _currency = currency,
-        _id = id ?? const Uuid().v4(),
-        _name = name,
-        _note = note,
-        _repeatId = repeatId,
-        _time = time,
-        _formerTime = formerTime;
+    required this.name,
+    this.note,
+    this.repeatId,
+    required this.time,
+    this.formerTime,
+  })  : id = id ?? const Uuid().v4();
 
   SingleBalanceData copyWith({
     num? amount,
@@ -50,29 +42,29 @@ class SingleBalanceData {
     Timestamp? formerTime,
   }) {
     return SingleBalanceData(
-      amount: amount ?? _amount,
-      category: category ?? _category,
-      currency: currency ?? _currency,
-      id: id ?? _id,
-      name: name ?? _name,
-      note: note ?? _note,
-      repeatId: repeatId ?? _repeatId,
-      time: time ?? _time,
-      formerTime: formerTime ?? _formerTime,
+      amount: amount ?? this.amount,
+      category: category ?? this.category,
+      currency: currency ?? this.currency,
+      id: id ?? this.id,
+      name: name ?? this.name,
+      note: note ?? this.note,
+      repeatId: repeatId ?? this.repeatId,
+      time: time ?? this.time,
+      formerTime: formerTime ?? this.formerTime,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'amount': _amount,
-      'category': _category,
-      'currency': _currency,
-      'id': _id,
-      'name': _name,
-      'note': _note,
-      'repeatId': _repeatId,
-      'time': _time,
-      'formerTime': _formerTime,
+      'amount': amount,
+      'category': category,
+      'currency': currency,
+      'id': id,
+      'name': name,
+      'note': note,
+      'repeatId': repeatId,
+      'time': time,
+      'formerTime': formerTime,
     };
   }
 
@@ -92,7 +84,7 @@ class SingleBalanceData {
 
   @override
   String toString() {
-    return 'SingleBalanceData(_amount: $_amount, _category: $_category, _currency: $_currency, _id: $_id, _name: $_name, _note: $_note, _repeatId: $_repeatId, _time: $_time, _formerTime: $_formerTime)';
+    return 'SingleBalanceData(amount: $amount, category: $category, currency: $currency, id: $id, name: $name, note: $note, repeatId: $repeatId, time: $time, formerTime: $formerTime)';
   }
 
   @override
@@ -100,37 +92,28 @@ class SingleBalanceData {
     if (identical(this, other)) return true;
 
     return other is SingleBalanceData &&
-        other._amount == _amount &&
-        other._category == _category &&
-        other._currency == _currency &&
-        other._id == _id &&
-        other._name == _name &&
-        other._note == _note &&
-        other._repeatId == _repeatId &&
-        other._time == _time &&
-        other._formerTime == _formerTime;
+        other.amount == amount &&
+        other.category == category &&
+        other.currency == currency &&
+        other.id == id &&
+        other.name == name &&
+        other.note == note &&
+        other.repeatId == repeatId &&
+        other.time == time &&
+        other.formerTime == formerTime;
   }
 
   @override
   int get hashCode {
-    return _amount.hashCode ^
-        _category.hashCode ^
-        _currency.hashCode ^
-        _id.hashCode ^
-        _name.hashCode ^
-        _note.hashCode ^
-        _repeatId.hashCode ^
-        _time.hashCode ^
-        _formerTime.hashCode;
+    return amount.hashCode ^
+        category.hashCode ^
+        currency.hashCode ^
+        id.hashCode ^
+        name.hashCode ^
+        note.hashCode ^
+        repeatId.hashCode ^
+        time.hashCode ^
+        formerTime.hashCode;
   }
 
-  num get amount => _amount;
-  String get category => _category;
-  String get currency => _currency;
-  String get id => _id;
-  String get name => _name;
-  String? get note => _note;
-  String? get repeatId => _repeatId;
-  Timestamp get time => _time;
-  Timestamp? get formerTime => _formerTime;
 }

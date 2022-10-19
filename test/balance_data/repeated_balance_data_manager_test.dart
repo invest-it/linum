@@ -31,12 +31,10 @@ void main() {
           repeatDuration: 60 * 60 * 24 * 3,
         );
 
-        final RepeatedBalanceDataManager repeatedBalanceDataManager =
-            RepeatedBalanceDataManager();
         final Map<String, dynamic> data = {"repeatedBalance": []};
 
         // Act (Execution)
-        final bool result = repeatedBalanceDataManager.addRepeatedBalanceToData(
+        final bool result = RepeatedBalanceDataManager.addRepeatedBalanceToData(
           repeatBalanceData,
           data,
         );
@@ -57,12 +55,10 @@ void main() {
           repeatDuration: 60 * 60 * 24 * 3,
         );
 
-        final RepeatedBalanceDataManager repeatedBalanceDataManager =
-            RepeatedBalanceDataManager();
         final Map<String, dynamic> data = {"repeatedBalance": []};
 
         // Act (Execution)
-        final bool result = repeatedBalanceDataManager.addRepeatedBalanceToData(
+        final bool result = RepeatedBalanceDataManager.addRepeatedBalanceToData(
           repeatBalanceData,
           data,
         );
@@ -75,8 +71,6 @@ void main() {
       test("random data test", () {
         final math.Random rand = math.Random();
 
-        final RepeatedBalanceDataManager repeatedBalanceDataManager =
-            RepeatedBalanceDataManager();
         final Map<String, dynamic> data = {"repeatedBalance": []};
 
         final int max = rand.nextInt(2000) + 1;
@@ -106,7 +100,7 @@ void main() {
 
           // Act (Execution)
           final bool result =
-              repeatedBalanceDataManager.addRepeatedBalanceToData(
+              RepeatedBalanceDataManager.addRepeatedBalanceToData(
             repeatBalanceData,
             data,
           );
@@ -161,14 +155,13 @@ void main() {
 
         const String id = "Impossible id";
 
-        final RepeatedBalanceDataManager repeatedBalanceDataManager =
-            RepeatedBalanceDataManager();
+
         final int expectedLength = data["repeatedBalance"]!.length;
 
         for (final removeType in RepeatableChangeType.values) {
           // Act (Execution)
           final bool result =
-              repeatedBalanceDataManager.removeRepeatedBalanceFromData(
+              RepeatedBalanceDataManager.removeRepeatedBalanceFromData(
             id: id,
             data: data,
             removeType: removeType,
@@ -189,8 +182,7 @@ void main() {
 
         const String id = "Impossible id";
 
-        final RepeatedBalanceDataManager repeatedBalanceDataManager =
-            RepeatedBalanceDataManager();
+
         final int expectedLength = data["repeatedBalance"]!.length;
 
         const RepeatableChangeType removeType =
@@ -198,7 +190,7 @@ void main() {
 
         // Act (Execution)
         final bool result =
-            repeatedBalanceDataManager.removeRepeatedBalanceFromData(
+            RepeatedBalanceDataManager.removeRepeatedBalanceFromData(
           id: id,
           data: data,
           removeType: removeType,
@@ -217,8 +209,7 @@ void main() {
 
         const String id = "Impossible id";
 
-        final RepeatedBalanceDataManager repeatedBalanceDataManager =
-            RepeatedBalanceDataManager();
+
         final int expectedLength = data["repeatedBalance"]!.length;
 
         const RepeatableChangeType removeType =
@@ -226,7 +217,7 @@ void main() {
 
         // Act (Execution)
         final bool result =
-            repeatedBalanceDataManager.removeRepeatedBalanceFromData(
+            RepeatedBalanceDataManager.removeRepeatedBalanceFromData(
           id: id,
           data: data,
           removeType: removeType,
@@ -245,8 +236,7 @@ void main() {
 
         const String id = "Impossible id";
 
-        final RepeatedBalanceDataManager repeatedBalanceDataManager =
-            RepeatedBalanceDataManager();
+
         final int expectedLength = data["repeatedBalance"]!.length;
 
         const RepeatableChangeType removeType =
@@ -254,7 +244,7 @@ void main() {
 
         // Act (Execution)
         final bool result =
-            repeatedBalanceDataManager.removeRepeatedBalanceFromData(
+            RepeatedBalanceDataManager.removeRepeatedBalanceFromData(
           id: id,
           data: data,
           removeType: removeType,
@@ -269,8 +259,7 @@ void main() {
       test("random data test removeType=all", () {
         final math.Random rand = math.Random();
 
-        final RepeatedBalanceDataManager repeatedBalanceDataManager =
-            RepeatedBalanceDataManager();
+
 
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
@@ -284,7 +273,7 @@ void main() {
 
           // Act (Execution)
           final bool result =
-              repeatedBalanceDataManager.removeRepeatedBalanceFromData(
+              RepeatedBalanceDataManager.removeRepeatedBalanceFromData(
             id: id,
             data: data,
             removeType: RepeatableChangeType.all,
@@ -299,8 +288,7 @@ void main() {
       test("random data test removeType=thisAndAllBefore", () {
         final math.Random rand = math.Random();
 
-        final RepeatedBalanceDataManager repeatedBalanceDataManager =
-            RepeatedBalanceDataManager();
+
 
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
@@ -321,14 +309,14 @@ void main() {
               data["repeatedBalance"]![idIndex]["repeatDuration"] as int,
               initialTime,
               monthly: isMonthly(
-                data["repeatedBalance"]![idIndex],
+                RepeatedBalanceData.fromMap(data["repeatedBalance"]![idIndex]),
               ),
             ),
           );
 
           // Act (Execution)
           final bool result =
-              repeatedBalanceDataManager.removeRepeatedBalanceFromData(
+              RepeatedBalanceDataManager.removeRepeatedBalanceFromData(
             id: id,
             data: data,
             removeType: RepeatableChangeType.thisAndAllBefore,
@@ -350,8 +338,7 @@ void main() {
       test("random data test removeType=thisAndAllAfter", () {
         final math.Random rand = math.Random();
 
-        final RepeatedBalanceDataManager repeatedBalanceDataManager =
-            RepeatedBalanceDataManager();
+
 
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
@@ -374,14 +361,14 @@ void main() {
               data["repeatedBalance"]![idIndex]["repeatDuration"] as int,
               initialTime,
               monthly: isMonthly(
-                data["repeatedBalance"]![idIndex],
+                RepeatedBalanceData.fromMap(data["repeatedBalance"]![idIndex]),
               ),
             ),
           );
 
           // Act (Execution)
           final bool result =
-              repeatedBalanceDataManager.removeRepeatedBalanceFromData(
+              RepeatedBalanceDataManager.removeRepeatedBalanceFromData(
             id: id,
             data: data,
             removeType: RepeatableChangeType.thisAndAllAfter,
@@ -410,8 +397,7 @@ void main() {
       test("random data test removeType=onlyThisOne", () {
         final math.Random rand = math.Random();
 
-        final RepeatedBalanceDataManager repeatedBalanceDataManager =
-            RepeatedBalanceDataManager();
+
 
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
@@ -432,14 +418,14 @@ void main() {
               data["repeatedBalance"]![idIndex]["repeatDuration"] as int,
               initialTime,
               monthly: isMonthly(
-                data["repeatedBalance"]![idIndex],
+                RepeatedBalanceData.fromMap(data["repeatedBalance"]![idIndex]),
               ),
             ),
           );
 
           // Act (Execution)
           final bool result =
-              repeatedBalanceDataManager.removeRepeatedBalanceFromData(
+              RepeatedBalanceDataManager.removeRepeatedBalanceFromData(
             id: id,
             data: data,
             removeType: RepeatableChangeType.onlyThisOne,
@@ -469,12 +455,11 @@ void main() {
             generateRandomData();
 
         const String id = "Impossible id";
-        final RepeatedBalanceDataManager repeatedBalanceDataManager =
-            RepeatedBalanceDataManager();
+
         for (final changeType in RepeatableChangeType.values) {
           // Act (Execution)
           final bool result =
-              repeatedBalanceDataManager.updateRepeatedBalanceInData(
+              RepeatedBalanceDataManager.updateRepeatedBalanceInData(
             id: id,
             data: data,
             changeType: changeType,
@@ -492,12 +477,11 @@ void main() {
             generateRandomData();
 
         const String id = "";
-        final RepeatedBalanceDataManager repeatedBalanceDataManager =
-            RepeatedBalanceDataManager();
+
         for (final changeType in RepeatableChangeType.values) {
           // Act (Execution)
           final bool result =
-              repeatedBalanceDataManager.updateRepeatedBalanceInData(
+              RepeatedBalanceDataManager.updateRepeatedBalanceInData(
             id: id,
             data: data,
             changeType: changeType,
@@ -518,12 +502,11 @@ void main() {
         final int idIndex = rand.nextInt(data["repeatedBalance"]!.length);
         final String id = data["repeatedBalance"]![idIndex]["id"] as String;
 
-        final RepeatedBalanceDataManager repeatedBalanceDataManager =
-            RepeatedBalanceDataManager();
+
         for (final changeType in RepeatableChangeType.values) {
           // Act (Execution)
           final bool result =
-              repeatedBalanceDataManager.updateRepeatedBalanceInData(
+              RepeatedBalanceDataManager.updateRepeatedBalanceInData(
             id: id,
             data: data,
             changeType: changeType,
@@ -544,12 +527,11 @@ void main() {
         final int idIndex = rand.nextInt(data["repeatedBalance"]!.length);
         final String id = data["repeatedBalance"]![idIndex]["id"] as String;
 
-        final RepeatedBalanceDataManager repeatedBalanceDataManager =
-            RepeatedBalanceDataManager();
+
         for (final changeType in RepeatableChangeType.values) {
           // Act (Execution)
           final bool result =
-              repeatedBalanceDataManager.updateRepeatedBalanceInData(
+              RepeatedBalanceDataManager.updateRepeatedBalanceInData(
             id: id,
             data: data,
             changeType: changeType,
@@ -571,14 +553,13 @@ void main() {
         final int idIndex = rand.nextInt(data["repeatedBalance"]!.length);
         final String id = data["repeatedBalance"]![idIndex]["id"] as String;
 
-        final RepeatedBalanceDataManager repeatedBalanceDataManager =
-            RepeatedBalanceDataManager();
+
 
         const RepeatableChangeType changeType =
             RepeatableChangeType.thisAndAllBefore;
         // Act (Execution)
         final bool result =
-            repeatedBalanceDataManager.updateRepeatedBalanceInData(
+            RepeatedBalanceDataManager.updateRepeatedBalanceInData(
           id: id,
           data: data,
           changeType: changeType,
@@ -599,14 +580,13 @@ void main() {
         final int idIndex = rand.nextInt(data["repeatedBalance"]!.length);
         final String id = data["repeatedBalance"]![idIndex]["id"] as String;
 
-        final RepeatedBalanceDataManager repeatedBalanceDataManager =
-            RepeatedBalanceDataManager();
+
 
         const RepeatableChangeType changeType =
             RepeatableChangeType.thisAndAllAfter;
         // Act (Execution)
         final bool result =
-            repeatedBalanceDataManager.updateRepeatedBalanceInData(
+            RepeatedBalanceDataManager.updateRepeatedBalanceInData(
           id: id,
           data: data,
           changeType: changeType,
@@ -627,14 +607,13 @@ void main() {
         final int idIndex = rand.nextInt(data["repeatedBalance"]!.length);
         final String id = data["repeatedBalance"]![idIndex]["id"] as String;
 
-        final RepeatedBalanceDataManager repeatedBalanceDataManager =
-            RepeatedBalanceDataManager();
+
 
         const RepeatableChangeType changeType =
             RepeatableChangeType.onlyThisOne;
         // Act (Execution)
         final bool result =
-            repeatedBalanceDataManager.updateRepeatedBalanceInData(
+            RepeatedBalanceDataManager.updateRepeatedBalanceInData(
           id: id,
           data: data,
           changeType: changeType,
@@ -648,8 +627,7 @@ void main() {
       test("random data test changeType=all (all except newTime)", () {
         final math.Random rand = math.Random();
 
-        final RepeatedBalanceDataManager repeatedBalanceDataManager =
-            RepeatedBalanceDataManager();
+
 
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
@@ -688,7 +666,7 @@ void main() {
 
           // Act (Execution)
           final bool result =
-              repeatedBalanceDataManager.updateRepeatedBalanceInData(
+              RepeatedBalanceDataManager.updateRepeatedBalanceInData(
             id: id,
             data: data,
             changeType: RepeatableChangeType.all,
@@ -721,8 +699,7 @@ void main() {
       test("random data test changeType=all (only newTime)", () {
         final math.Random rand = math.Random();
 
-        final RepeatedBalanceDataManager repeatedBalanceDataManager =
-            RepeatedBalanceDataManager();
+
 
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
@@ -752,7 +729,7 @@ void main() {
 
           // Act (Execution)
           final bool result =
-              repeatedBalanceDataManager.updateRepeatedBalanceInData(
+              RepeatedBalanceDataManager.updateRepeatedBalanceInData(
             id: id,
             data: data,
             changeType: RepeatableChangeType.all,
@@ -783,8 +760,7 @@ void main() {
           () {
         final math.Random rand = math.Random();
 
-        final RepeatedBalanceDataManager repeatedBalanceDataManager =
-            RepeatedBalanceDataManager();
+
 
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
@@ -835,14 +811,14 @@ void main() {
               data["repeatedBalance"]![idIndex]["repeatDuration"] as int,
               oldInitialTime.toDate(),
               monthly: isMonthly(
-                data["repeatedBalance"]![idIndex],
+                RepeatedBalanceData.fromMap(data["repeatedBalance"]![idIndex]),
               ),
             ),
           );
 
           // Act (Execution)
           final bool result =
-              repeatedBalanceDataManager.updateRepeatedBalanceInData(
+              RepeatedBalanceDataManager.updateRepeatedBalanceInData(
             id: oldId,
             data: data,
             changeType: RepeatableChangeType.thisAndAllBefore,
@@ -873,7 +849,7 @@ void main() {
                 data["repeatedBalance"]![idIndex]["repeatDuration"] as int,
                 time.toDate(),
                 monthly: isMonthly(
-                  data["repeatedBalance"]![idIndex],
+                  RepeatedBalanceData.fromMap(data["repeatedBalance"]![idIndex]),
                 ),
                 dayOfTheMonth: time.toDate().day,
               ),
@@ -902,8 +878,7 @@ void main() {
       test("random data test changeType=thisAndAllBefore (only newTime)", () {
         final math.Random rand = math.Random();
 
-        final RepeatedBalanceDataManager repeatedBalanceDataManager =
-            RepeatedBalanceDataManager();
+
 
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
@@ -943,7 +918,7 @@ void main() {
               data["repeatedBalance"]![idIndex]["repeatDuration"] as int,
               time.toDate(),
               monthly: isMonthly(
-                data["repeatedBalance"]![idIndex],
+                RepeatedBalanceData.fromMap(data["repeatedBalance"]![idIndex]),
               ),
               dayOfTheMonth: time.toDate().day,
             ),
@@ -953,7 +928,7 @@ void main() {
 
           // Act (Execution)
           final bool result =
-              repeatedBalanceDataManager.updateRepeatedBalanceInData(
+              RepeatedBalanceDataManager.updateRepeatedBalanceInData(
             id: oldId,
             data: data,
             changeType: RepeatableChangeType.thisAndAllBefore,
@@ -980,8 +955,7 @@ void main() {
           () {
         final math.Random rand = math.Random();
 
-        final RepeatedBalanceDataManager repeatedBalanceDataManager =
-            RepeatedBalanceDataManager();
+
 
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
@@ -1032,14 +1006,14 @@ void main() {
               data["repeatedBalance"]![idIndex]["repeatDuration"] as int,
               oldInitialTime.toDate(),
               monthly: isMonthly(
-                data["repeatedBalance"]![idIndex],
+                RepeatedBalanceData.fromMap(data["repeatedBalance"]![idIndex]),
               ),
             ),
           );
 
           // Act (Execution)
           final bool result =
-              repeatedBalanceDataManager.updateRepeatedBalanceInData(
+              RepeatedBalanceDataManager.updateRepeatedBalanceInData(
             id: oldId,
             data: data,
             changeType: RepeatableChangeType.thisAndAllAfter,
@@ -1078,7 +1052,7 @@ void main() {
                 data["repeatedBalance"]![idIndex]["repeatDuration"] as int,
                 time.toDate(),
                 monthly: isMonthly(
-                  data["repeatedBalance"]![idIndex],
+                  RepeatedBalanceData.fromMap(data["repeatedBalance"]![idIndex]),
                 ),
               ),
             ),
@@ -1100,8 +1074,7 @@ void main() {
       test("random data test changeType=thisAndAllAfter (only newTime)", () {
         final math.Random rand = math.Random();
 
-        final RepeatedBalanceDataManager repeatedBalanceDataManager =
-            RepeatedBalanceDataManager();
+
 
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
@@ -1145,7 +1118,7 @@ void main() {
               data["repeatedBalance"]![idIndex]["repeatDuration"] as int,
               time.toDate(),
               monthly: isMonthly(
-                data["repeatedBalance"]![idIndex],
+                RepeatedBalanceData.fromMap(data["repeatedBalance"]![idIndex]),
               ),
               dayOfTheMonth: time.toDate().day,
             ),
@@ -1153,7 +1126,7 @@ void main() {
 
           // Act (Execution)
           final bool result =
-              repeatedBalanceDataManager.updateRepeatedBalanceInData(
+              RepeatedBalanceDataManager.updateRepeatedBalanceInData(
             id: oldId,
             data: data,
             changeType: RepeatableChangeType.thisAndAllAfter,
@@ -1179,8 +1152,7 @@ void main() {
       test("random data test changeType=onlyThisOne", () {
         final math.Random rand = math.Random();
 
-        final RepeatedBalanceDataManager repeatedBalanceDataManager =
-            RepeatedBalanceDataManager();
+
 
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
@@ -1206,7 +1178,7 @@ void main() {
               data["repeatedBalance"]![idIndex]["repeatDuration"] as int,
               initialTime.toDate(),
               monthly: isMonthly(
-                data["repeatedBalance"]![idIndex],
+                RepeatedBalanceData.fromMap(data["repeatedBalance"]![idIndex]),
               ),
             ),
           );
@@ -1219,7 +1191,7 @@ void main() {
 
           // Act (Execution)
           final bool result =
-              repeatedBalanceDataManager.updateRepeatedBalanceInData(
+              RepeatedBalanceDataManager.updateRepeatedBalanceInData(
             id: id,
             data: data,
             changeType: RepeatableChangeType.onlyThisOne,
@@ -1250,8 +1222,7 @@ void main() {
       test("random data test changeType=all", () {
         final math.Random rand = math.Random();
 
-        final RepeatedBalanceDataManager repeatedBalanceDataManager =
-            RepeatedBalanceDataManager();
+
 
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
@@ -1272,14 +1243,14 @@ void main() {
               data["repeatedBalance"]![idIndex]["repeatDuration"] as int,
               initialTime,
               monthly: isMonthly(
-                data["repeatedBalance"]![idIndex],
+                RepeatedBalanceData.fromMap(data["repeatedBalance"]![idIndex]),
               ),
             ),
           );
 
           // Act (Execution)
           final bool result =
-              repeatedBalanceDataManager.updateRepeatedBalanceInData(
+              RepeatedBalanceDataManager.updateRepeatedBalanceInData(
             id: id,
             data: data,
             changeType: RepeatableChangeType.all,

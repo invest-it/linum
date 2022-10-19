@@ -12,7 +12,7 @@ import 'package:linum/utilities/backend/repeated_balance_help_functions.dart';
 import 'package:uuid/uuid.dart';
 
 class RepeatedBalanceDataUpdater {
-  bool updateAll({
+  static bool updateAll({
     required Map<String, dynamic> data,
     required String id,
     num? amount,
@@ -145,7 +145,7 @@ class RepeatedBalanceDataUpdater {
     return false;
   }
 
-  bool updateThisAndAllBefore({
+  static bool updateThisAndAllBefore({
     required Map<String, dynamic> data,
     required String id,
     required Timestamp time,
@@ -228,7 +228,7 @@ class RepeatedBalanceDataUpdater {
     return isEdited;
   }
 
-  bool updateThisAndAllAfter({
+  static bool updateThisAndAllAfter({
     required Map<String, dynamic> data,
     required String id,
     required Timestamp time,
@@ -309,7 +309,7 @@ class RepeatedBalanceDataUpdater {
     return isEdited;
   }
 
-  bool updateOnlyThisOne({
+  static bool updateOnlyThisOne({
     required Map<String, dynamic> data,
     required String id,
     required Timestamp time,
