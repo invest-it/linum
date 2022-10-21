@@ -15,6 +15,7 @@ import 'package:linum/models/repeat_balance_data.dart';
 import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
+import 'package:linum/providers/exchange_rate_provider.dart';
 import 'package:linum/utilities/balance_data/balance_data_stream_builder_manager.dart';
 import 'package:linum/utilities/balance_data/repeated_balance_data_manager.dart';
 import 'package:linum/utilities/balance_data/single_balance_data_manager.dart';
@@ -32,7 +33,7 @@ class BalanceDataProvider extends ChangeNotifier {
   late String _uid;
 
   late AlgorithmProvider _algorithmProvider;
-
+  late ExchangeRateProvider _exchangeRateProvicer;
   // Manager
 
   /// Creates the BalanceDataProvider. Inparticular it sets [_balance] correctly
@@ -40,6 +41,7 @@ class BalanceDataProvider extends ChangeNotifier {
 
     _uid = Provider.of<AuthenticationService>(context, listen: false).uid;
     _algorithmProvider = Provider.of<AlgorithmProvider>(context, listen: false);
+    _exchangeRateProvicer = Provider.of<ExchangeRateProvider>(context, listen: false);
     asynConstructor();
   }
 
@@ -370,6 +372,7 @@ class BalanceDataProvider extends ChangeNotifier {
   }) {
     return BalanceDataStreamBuilderManager.fillListViewWithData(
       algorithmProvider: _algorithmProvider,
+      exchangeRateProvider: _exchangeRateProvicer,
       listView: listView,
       context: context,
       dataStream: _dataStream,
@@ -411,12 +414,12 @@ class BalanceDataProvider extends ChangeNotifier {
   }
 
   static SingleChildWidget provider(BuildContext context, {bool testing = false}) {
-    return ChangeNotifierProxyProvider2<AuthenticationService,
-        AlgorithmProvider, BalanceDataProvider>(
+    return ChangeNotifierProxyProvider3<AuthenticationService,
+        AlgorithmProvider, ExchangeRateProvider, BalanceDataProvider>(
       create: (ctx) {
         return BalanceDataProvider(ctx);
       },
-      update: (ctx, auth, algo, oldBalance) {
+      update: (ctx, auth, algo, exchange, oldBalance) {
         if (oldBalance != null) {
           oldBalance.updateAuth(auth);
           return oldBalance..updateAlgorithmProvider(algo);

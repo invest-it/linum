@@ -7,10 +7,10 @@
 import 'dart:developer' as dev;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:enum_to_string/enum_to_string.dart';
 import 'package:linum/constants/repeat_duration_type_enum.dart';
 import 'package:linum/constants/repeatable_change_type_enum.dart';
 import 'package:linum/models/balance_document.dart';
+import 'package:linum/models/changed_repeated_balance.dart';
 import 'package:linum/models/repeat_balance_data.dart';
 import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/utilities/backend/date_time_calculation_functions.dart';

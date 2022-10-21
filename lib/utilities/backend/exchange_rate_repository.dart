@@ -54,6 +54,28 @@ class ExchangeRateRepository {
     return Future.value(rates);
   }
 
+  Future<Map<int, ExchangeRatesForDate>> getExchangeRatesForDates(List<DateTime> dates) async {
+    final sanitizedDates = dates.map((e) => DateTime(e.year, e.day).millisecondsSinceEpoch).toList();
+    final query = _box.query(
+      ExchangeRatesForDate_.date.oneOf(sanitizedDates),
+    ).build();
+    var rates = query.find();
+    if (rates.isEmpty && dates.isNotEmpty) {
+      dates.sort((a, b) => a.compareTo(b));
+      try {
+        rates = await fetchExchangeRatesForTimeSpan(dates.first, dates.last);
+        _box.putMany(rates);
+      } catch(e) {
+        // TODO: Handle error
+      }
+    }
+    final ratesMap = <int, ExchangeRatesForDate>{};
+    for (final rate in rates) {
+      ratesMap[rate.date] = rate;
+    }
+    return Future.value(ratesMap);
+  }
+
   Future<List<ExchangeRatesForDate>?> getExchangeRatesForTimeSpan(DateTime earliest, DateTime latest) async {
     final sanitizedEarliest = DateTime(earliest.year, earliest.day);
     final query = _box.query(
@@ -69,6 +91,7 @@ class ExchangeRateRepository {
         // TODO: Handle error
       }
     }
+
     return Future.value(rates);
   }
 }

@@ -5,9 +5,9 @@
 //
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:collection/collection.dart';
-
 import 'package:linum/constants/repeat_duration_type_enum.dart';
+import 'package:linum/models/changed_repeated_balance.dart';
+import 'package:linum/types/date_time_map.dart';
 import 'package:uuid/uuid.dart';
 
 class RepeatedBalanceData {
@@ -136,56 +136,6 @@ class RepeatedBalanceData {
 
 }
 
-class DateTimeMap<K, V> extends DelegatingMap<K, V> {
-  final Map<K, V> _map;
-  DateTimeMap() : this._(<K, V>{});
-  DateTimeMap._(super.map)
-      : _map = map;
 
-  factory DateTimeMap.fromMap(Map<K, V> map) {
-    return DateTimeMap._(map);
-  }
 
-  @override
-  V? operator [](Object? key) {
-    if (key is DateTime) {
-      return _map[Timestamp.fromDate(key).millisecondsSinceEpoch.toString()];
-    }
-    if (key is String) {
-      return _map[key];
-    }
-    return null;
-  }
-}
 
-class ChangedRepeatedBalanceData {
-  num? amount;
-  String? category;
-  String? currency;
-  String? name;
-  String? note;
-  Timestamp? time;
-  bool? deleted;
-
-  ChangedRepeatedBalanceData({
-      this.amount,
-      this.category,
-      this.currency,
-      this.name,
-      this.note,
-      this.time,
-      this.deleted,
-  });
-
-  factory ChangedRepeatedBalanceData.fromMap(Map<String, dynamic> map) {
-    return ChangedRepeatedBalanceData(
-      amount: map['amount'] as num?,
-      category: map['category'] as String?,
-      currency: map['currency'] as String?,
-      name: map['name'] as String?,
-      note: map['note'] as String?,
-      time: map['time'] as Timestamp?,
-      deleted: map['deleted'] as bool?,
-    );
-  }
-}

@@ -12,6 +12,7 @@ import 'package:linum/models/balance_document.dart';
 import 'package:linum/models/repeat_balance_data.dart';
 import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/providers/algorithm_provider.dart';
+import 'package:linum/providers/exchange_rate_provider.dart';
 import 'package:linum/utilities/backend/statistic_calculations.dart';
 import 'package:linum/utilities/balance_data/repeated_balance_data_manager.dart';
 import 'package:linum/widgets/abstract/abstract_home_screen_card.dart';
@@ -23,6 +24,7 @@ class BalanceDataStreamBuilderManager {
   /// Returns a StreamBuilder that builds the ListView from the document-datastream
   static StreamBuilder fillListViewWithData({
     required AlgorithmProvider algorithmProvider,
+    required ExchangeRateProvider exchangeRateProvider,
     required BalanceDataListView listView,
     required BuildContext context,
     required Stream<DocumentSnapshot<BalanceDocument>>? dataStream,
@@ -51,6 +53,7 @@ class BalanceDataStreamBuilderManager {
           // (and possibly also a filter algorithm provided)
           balanceData.removeWhere(algorithmProvider.currentFilter);
           balanceData.sort(algorithmProvider.currentSorter);
+          // exchangeRateProvider.addExchangeRatesToBalanceData(balanceData);
 
           listView.setBalanceData(
             balanceData,
@@ -81,9 +84,9 @@ class BalanceDataStreamBuilderManager {
           final List<SingleBalanceData> balanceData = preparedData.item1;
           final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(
-            balanceData,
-            algorithmProvider,
-          );
+                balanceData,
+                algorithmProvider,
+              );
           statisticPanel.addStatisticData(statisticsCalculations);
           return statisticPanel.returnWidget;
         }

@@ -5,6 +5,7 @@
 //
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:linum/models/exchange_rate_info.dart';
 import 'package:uuid/uuid.dart';
 
 class SingleBalanceData {
@@ -17,6 +18,7 @@ class SingleBalanceData {
   String? repeatId;
   Timestamp time;
   Timestamp? formerTime; // strictly for changed repeatables
+  ExchangeRateInfo? rateInfo;
 
   SingleBalanceData({
     required this.amount,

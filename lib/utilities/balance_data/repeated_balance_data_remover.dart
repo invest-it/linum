@@ -9,7 +9,8 @@ import 'dart:developer' as dev;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:linum/models/balance_document.dart';
-import 'package:linum/models/repeat_balance_data.dart';
+import 'package:linum/models/changed_repeated_balance.dart';
+import 'package:linum/types/date_time_map.dart';
 
 class RepeatedBalanceDataRemover {
   static bool removeAll(BalanceDocument data, String id) {
