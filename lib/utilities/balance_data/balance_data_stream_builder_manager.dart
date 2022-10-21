@@ -27,9 +27,9 @@ class BalanceDataStreamBuilderManager {
     required BuildContext context,
     required Stream<DocumentSnapshot<BalanceDocument>>? dataStream,
   }) {
-    return StreamBuilder(
+    return StreamBuilder<DocumentSnapshot<BalanceDocument>>(
       stream: dataStream,
-      builder: (ctx, AsyncSnapshot<dynamic> snapshot) {
+      builder: (ctx, snapshot) {
         if (snapshot.connectionState == ConnectionState.none) {
           return const LoadingSpinner();
         }
@@ -68,9 +68,9 @@ class BalanceDataStreamBuilderManager {
     required Stream<DocumentSnapshot<BalanceDocument>>? dataStream,
     required AbstractHomeScreenCard statisticPanel,
   }) {
-    return StreamBuilder(
+    return StreamBuilder<DocumentSnapshot<BalanceDocument>>(
       stream: dataStream,
-      builder: (ctx, AsyncSnapshot<dynamic> snapshot) {
+      builder: (ctx, snapshot) {
         if (snapshot.data == null) {
           statisticPanel.addStatisticData(null);
           return statisticPanel.returnWidget;
@@ -98,27 +98,26 @@ class BalanceDataStreamBuilderManager {
   /// (will still be used after filter on firebase, because of repeated balanced)
   /// may be moved into the data generation function
   static Tuple2<List<SingleBalanceData>, List<RepeatedBalanceData>> _prepareData(
-    AsyncSnapshot<dynamic> snapshot,
+    AsyncSnapshot<DocumentSnapshot<BalanceDocument>> snapshot,
   ) {
-    final Map<String, dynamic>? data = (snapshot.data as DocumentSnapshot<Map<String, dynamic>>).data(); // TODO: Model for Document
+    final data = snapshot.data?.data(); // TODO: Model for Document
 
-    final List<dynamic> balanceDataDynamic = data!["balanceData"] as List<dynamic>;
+    if (data == null) {
+      return const Tuple2(<SingleBalanceData>[], <RepeatedBalanceData>[]);
+    }
 
     final List<SingleBalanceData> balanceData = <SingleBalanceData>[];
 
-    for (final singleBalanceMap in balanceDataDynamic) {
-      final singleBalance = SingleBalanceData.fromMap(singleBalanceMap as Map<String, dynamic>);
+    for (final singleBalance in data.balanceData) {
       if (singleBalance.repeatId == null) {
         balanceData.add(singleBalance);
       }
     }
 
-    final List<dynamic> repeatedBalanceDynamic = data["repeatedBalance"] as List<dynamic>;
-
     final List<RepeatedBalanceData> repeatedBalance = <RepeatedBalanceData>[];
 
-    for (final singleRepeatable in repeatedBalanceDynamic) {
-      repeatedBalance.add(singleRepeatable as RepeatedBalanceData);
+    for (final singleRepeatable in data.repeatedBalance) {
+      repeatedBalance.add(singleRepeatable);
     }
 
     RepeatedBalanceDataManager.addAllRepeatablesToBalanceDataLocally(
