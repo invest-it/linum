@@ -8,6 +8,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
+import 'package:linum/models/balance_document.dart';
 import 'package:linum/models/repeat_balance_data.dart';
 import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/providers/algorithm_provider.dart';
@@ -24,7 +25,7 @@ class BalanceDataStreamBuilderManager {
     required AlgorithmProvider algorithmProvider,
     required BalanceDataListView listView,
     required BuildContext context,
-    required Stream<DocumentSnapshot<Map<String, dynamic>>>? dataStream,
+    required Stream<DocumentSnapshot<BalanceDocument>>? dataStream,
   }) {
     return StreamBuilder(
       stream: dataStream,
@@ -64,7 +65,7 @@ class BalanceDataStreamBuilderManager {
   /// Returns a StreamBuilder that builds the ListView from the document-datastream
   static StreamBuilder fillStatisticPanelWithData({
     required AlgorithmProvider algorithmProvider,
-    required Stream<DocumentSnapshot<Map<String, dynamic>>>? dataStream,
+    required Stream<DocumentSnapshot<BalanceDocument>>? dataStream,
     required AbstractHomeScreenCard statisticPanel,
   }) {
     return StreamBuilder(

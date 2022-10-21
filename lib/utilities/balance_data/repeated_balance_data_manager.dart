@@ -10,6 +10,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:linum/constants/repeat_duration_type_enum.dart';
 import 'package:linum/constants/repeatable_change_type_enum.dart';
+import 'package:linum/models/balance_document.dart';
 import 'package:linum/models/repeat_balance_data.dart';
 import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/utilities/backend/date_time_calculation_functions.dart';
@@ -22,7 +23,7 @@ class RepeatedBalanceDataManager {
   /// add a repeated Balance and upload it (the stream will automatically show it in the app again)
   static bool addRepeatedBalanceToData(
     RepeatedBalanceData repeatBalanceData,
-    Map<String, dynamic> data,
+    BalanceDocument data,
   ) {
     // conditions
     if (repeatBalanceData.category == "") {
@@ -34,27 +35,16 @@ class RepeatedBalanceDataManager {
       return false;
     }
 
-    final Map<String, dynamic> singleRepeatedBalance = {
-      "amount": repeatBalanceData.amount,
-      "category": repeatBalanceData.category,
-      "currency": repeatBalanceData.currency,
-      "name": repeatBalanceData.name,
-      "note": repeatBalanceData.note,
-      "initialTime": repeatBalanceData.initialTime,
-      "repeatDuration": repeatBalanceData.repeatDuration,
-      "repeatDurationType":
-          repeatBalanceData.repeatDurationType.toString().substring(19),
-      "endTime": repeatBalanceData.endTime,
-      "id": const Uuid().v4(),
-    };
-    (data["repeatedBalance"] as List<dynamic>).add(singleRepeatedBalance);
+    repeatBalanceData.id = const Uuid().v4();
+
+    data.repeatedBalance.add(repeatBalanceData);
     return true;
   }
 
   static bool updateRepeatedBalanceInData({
     required RepeatableChangeType changeType,
     required String id,
-    required Map<String, dynamic> data,
+    required BalanceDocument data,
     num? amount,
     String? category,
     String? currency,
@@ -127,38 +117,33 @@ class RepeatedBalanceDataManager {
     Timestamp? checkedNewTime;
 
     for (final singleRepeatedBalance
-        in data["repeatedBalance"] as List<dynamic>) {
-      singleRepeatedBalance as Map<String, dynamic>;
-      if (singleRepeatedBalance["id"] == id) {
-        if (amount != singleRepeatedBalance["amount"]) {
+        in data.repeatedBalance) {
+      if (singleRepeatedBalance.id == id) {
+        if (amount != singleRepeatedBalance.amount) {
           checkedAmount = amount;
         }
-        if (category != singleRepeatedBalance["category"]) {
+        if (category != singleRepeatedBalance.category) {
           checkedCategory = category;
         }
-        if (currency != singleRepeatedBalance["currency"]) {
+        if (currency != singleRepeatedBalance.currency) {
           checkedCurrency = currency;
         }
-        if (name != singleRepeatedBalance["name"]) {
+        if (name != singleRepeatedBalance.name) {
           checkedName = name;
         }
-        if (note != singleRepeatedBalance["note"]) {
+        if (note != singleRepeatedBalance.note) {
           checkedNote = note;
         }
-        if (initialTime != singleRepeatedBalance["initialTime"]) {
+        if (initialTime != singleRepeatedBalance.initialTime) {
           checkedInitialTime = initialTime;
         }
-        if (repeatDuration != singleRepeatedBalance["repeatDuration"]) {
+        if (repeatDuration != singleRepeatedBalance.repeatDuration) {
           checkedRepeatDuration = repeatDuration;
         }
-        if (repeatDurationType !=
-            EnumToString.fromString<RepeatDurationType>(
-              RepeatDurationType.values,
-              singleRepeatedBalance["repeatDurationType"] as String,
-            )) {
+        if (repeatDurationType != singleRepeatedBalance.repeatDurationType) {
           checkedRepeatDurationType = repeatDurationType;
         }
-        if (endTime != singleRepeatedBalance["endTime"]) {
+        if (endTime != singleRepeatedBalance.endTime) {
           checkedEndTime = endTime;
         }
         if (newTime != time) {
@@ -226,21 +211,24 @@ class RepeatedBalanceDataManager {
 
       case RepeatableChangeType.onlyThisOne:
         return RepeatedBalanceDataUpdater.updateOnlyThisOne(
-          amount: checkedAmount,
-          category: checkedCategory,
-          currency: checkedCurrency,
           data: data,
           id: id,
-          name: checkedName,
-          newTime: checkedNewTime,
           time: time!,
+          changed: ChangedRepeatedBalanceData(
+              amount: checkedAmount,
+              category: checkedCategory,
+              currency: checkedCurrency,
+              name: checkedName,
+              note: checkedNote,
+              time: checkedNewTime,
+          ),
         );
     }
   }
 
  static bool removeRepeatedBalanceFromData({
     required String id,
-    required Map<String, dynamic> data,
+    required BalanceDocument data,
     required RepeatableChangeType removeType,
     Timestamp? time,
   }) {
@@ -315,24 +303,24 @@ class RepeatedBalanceDataManager {
         : DateTime.now().add(futureDuration).isAfter(currentTime)) {
       // if "changed" -> "this timestamp" -> deleted exist AND it is true, dont add this balance
       if (singleRepeatedBalance.changed == null
-          || singleRepeatedBalance.changed?[currentTime] == null
-          || singleRepeatedBalance.changed?[currentTime]?["deleted"] == null
-          || !(singleRepeatedBalance.changed?[currentTime]?["deleted"] as bool)) {
+          || singleRepeatedBalance.changed![currentTime] == null
+          || singleRepeatedBalance.changed![currentTime]!.deleted == null
+          || !singleRepeatedBalance.changed![currentTime]!.deleted!) {
         balanceData.add(
             SingleBalanceData(
-              amount: singleRepeatedBalance.changed?[currentTime]?["amount"] as num?
+              amount: singleRepeatedBalance.changed?[currentTime]?.amount
                   ?? singleRepeatedBalance.amount,
-              category: singleRepeatedBalance.changed?[currentTime]?["category"] as String? ??
+              category: singleRepeatedBalance.changed?[currentTime]?.category ??
                   singleRepeatedBalance.category,
-              currency: singleRepeatedBalance.changed?[currentTime]?["currency"] as String? ??
+              currency: singleRepeatedBalance.changed?[currentTime]?.currency ??
                   singleRepeatedBalance.currency,
-              name: singleRepeatedBalance.changed?[currentTime]?["name"] as String? ??
+              name: singleRepeatedBalance.changed?[currentTime]?.name ??
                   singleRepeatedBalance.name,
-              time: singleRepeatedBalance.changed?[currentTime]?["time"] as Timestamp? ??
+              time: singleRepeatedBalance.changed?[currentTime]?.time ??
                   Timestamp.fromDate(currentTime),
               repeatId: singleRepeatedBalance.id,
               id: const Uuid().v4(),
-              formerTime: (singleRepeatedBalance.changed?[currentTime]?["time"] != null)
+              formerTime: (singleRepeatedBalance.changed?[currentTime]?.time != null)
                   ? Timestamp.fromDate(currentTime) : null,
             ),
         );

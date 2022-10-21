@@ -8,15 +8,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
 
 class SingleBalanceData {
-  final num amount;
-  final String category;
-  final String currency;
-  final String id;
-  final String name;
-  final String? note;
-  final String? repeatId;
-  final Timestamp time;
-  final Timestamp? formerTime; // strictly for changed repeatables
+  num amount;
+  String category;
+  String currency;
+  String id;
+  String name;
+  String? note;
+  String? repeatId;
+  Timestamp time;
+  Timestamp? formerTime; // strictly for changed repeatables
 
   SingleBalanceData({
     required this.amount,

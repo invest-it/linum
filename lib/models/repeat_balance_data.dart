@@ -11,17 +11,13 @@ import 'package:linum/constants/repeat_duration_type_enum.dart';
 import 'package:uuid/uuid.dart';
 
 class RepeatedBalanceData {
-  final num amount;
-  final String category;
-  final String currency;
-  final String id;
-  final String name;
-  final String? note;
-  final DateTimeMap<String, Map<String, dynamic>>? changed;
-  final Timestamp initialTime;
-  final Timestamp? endTime;
-  final int repeatDuration;
-  final RepeatDurationType repeatDurationType;
+  num amount;
+  String category;
+  String currency;
+  String id;
+  String name;
+  String? note;
+  DateTimeMap<String, ChangedRepeatedBalanceData>? changed;Timestamp initialTime;Timestamp? endTime;int repeatDuration;RepeatDurationType repeatDurationType;
 
   RepeatedBalanceData({
     required this.amount,
@@ -44,7 +40,7 @@ class RepeatedBalanceData {
     String? id,
     String? name,
     String? note,
-    DateTimeMap<String, Map<String, dynamic>>? changed,
+    DateTimeMap<String, ChangedRepeatedBalanceData>? changed,
     String? repeatId,
     Timestamp? initialTime,
     Timestamp? endTime,
@@ -90,7 +86,7 @@ class RepeatedBalanceData {
       id: map['id'] as String,
       name: map['name'] as String,
       note: map['note'] as String?,
-      changed: map['changed'] as DateTimeMap<String, Map<String, dynamic>>,
+      changed: map['changed'] as DateTimeMap<String, ChangedRepeatedBalanceData>, // TODO: Might not work
       initialTime: map['initialTime'] as Timestamp,
       endTime: map['endTime'] as Timestamp?,
       repeatDuration: map['repeatDuration'] as int,
@@ -159,5 +155,37 @@ class DateTimeMap<K, V> extends DelegatingMap<K, V> {
       return _map[key];
     }
     return null;
+  }
+}
+
+class ChangedRepeatedBalanceData {
+  num? amount;
+  String? category;
+  String? currency;
+  String? name;
+  String? note;
+  Timestamp? time;
+  bool? deleted;
+
+  ChangedRepeatedBalanceData({
+      this.amount,
+      this.category,
+      this.currency,
+      this.name,
+      this.note,
+      this.time,
+      this.deleted,
+  });
+
+  factory ChangedRepeatedBalanceData.fromMap(Map<String, dynamic> map) {
+    return ChangedRepeatedBalanceData(
+      amount: map['amount'] as num?,
+      category: map['category'] as String?,
+      currency: map['currency'] as String?,
+      name: map['name'] as String?,
+      note: map['note'] as String?,
+      time: map['time'] as Timestamp?,
+      deleted: map['deleted'] as bool?,
+    );
   }
 }
