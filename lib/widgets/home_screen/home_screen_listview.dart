@@ -400,6 +400,7 @@ class HomeScreenListView implements BalanceDataListView {
         },
         confirmDismiss: (DismissDirection direction) async {
           return generateDeleteDialogFromRepetableBalanceData(
+            //FIXME: @SoTBurst
             context,
             balanceDataProvider,
             repeatedBalanceData,
