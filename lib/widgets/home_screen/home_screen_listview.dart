@@ -188,10 +188,27 @@ class HomeScreenListView implements BalanceDataListView {
           currentIndex = 4; // idk why exactly but now we are save
         }
 
-        list.add(buildSingleBalanceGestureDetector(context, singleBalanceData,
-            isFutureItem: isFutureItem));
+        list.add(
+          buildSingleBalanceGestureDetector(
+            context,
+            singleBalanceData,
+            isFutureItem: isFutureItem,
+          ),
+        );
       }
     }
+    return list;
+  }
+
+  List<Widget> buildRepeatedBalanceList(
+    BuildContext context,
+    List<RepeatedBalanceData> balanceDataList, {
+    bool error = false,
+    bool repeatedData = false,
+  }) {
+    log(balanceDataList.toString());
+    final List<Widget> list = [const Text("W.I.P.")];
+
     return list;
   }
 
