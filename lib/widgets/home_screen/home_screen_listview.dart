@@ -6,12 +6,15 @@
 
 // ignore_for_file: avoid_dynamic_calls
 
+import 'dart:developer';
+
 import 'package:badges/badges.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
+import 'package:linum/models/abstract/balance_data.dart';
 import 'package:linum/models/repeat_balance_data.dart';
 import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/navigation/enter_screen_page.dart';
@@ -71,7 +74,7 @@ class HomeScreenListView implements BalanceDataListView {
   ];
 
   @override
-  void setBalanceData(
+  void setSingleBalanceData(
     List<SingleBalanceData> balanceDataList, {
     required BuildContext context,
     bool error = false,
@@ -80,13 +83,35 @@ class HomeScreenListView implements BalanceDataListView {
       padding: const EdgeInsets.only(
         bottom: 32.0,
       ),
-      children: buildList(context, balanceDataList, error: error),
+      children: buildSingleBalanceList(context, balanceDataList, error: error),
     );
   }
 
-  List<Widget> buildList(
-      BuildContext context, List<SingleBalanceData> balanceDataList,
-      {bool error = false}) {
+  @override
+  void setRepeatedBalanceData(
+    List<RepeatedBalanceData> balanceDataList, {
+    required BuildContext context,
+    bool error = false,
+  }) {
+    _listview = ListView(
+      padding: const EdgeInsets.only(
+        bottom: 32.0,
+      ),
+      children: buildRepeatedBalanceList(
+        context,
+        balanceDataList,
+        error: error,
+        repeatedData: true,
+      ),
+    );
+  }
+
+  List<Widget> buildSingleBalanceList(
+    BuildContext context,
+    List<SingleBalanceData> balanceDataList, {
+    bool error = false,
+    bool repeatedData = false,
+  }) {
     initializeDateFormatting();
 
     final String langCode = context.locale.languageCode;

@@ -5,9 +5,10 @@
 //
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:linum/models/abstract/balance_data.dart';
 import 'package:uuid/uuid.dart';
 
-class SingleBalanceData {
+class SingleBalanceData implements BalanceData {
   final num _amount;
   final String _category;
   final String _currency;

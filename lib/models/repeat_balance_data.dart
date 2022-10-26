@@ -7,9 +7,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:linum/constants/repeat_duration_type_enum.dart';
+import 'package:linum/models/abstract/balance_data.dart';
 import 'package:uuid/uuid.dart';
 
-class RepeatedBalanceData {
+class RepeatedBalanceData implements BalanceData {
   final num _amount;
   final String _category;
   final String _currency;
@@ -97,8 +98,9 @@ class RepeatedBalanceData {
       initialTime: map['initialTime'] as Timestamp,
       endTime: map['endTime'] as Timestamp?,
       repeatDuration: map['repeatDuration'] as int,
-      repeatDurationType: map['repeatDurationType'] as RepeatDurationType? ??
-          RepeatDurationType.seconds,
+      repeatDurationType:
+          repeatDurationTypeFromString(map['repeatDurationType'] as String?) ??
+              RepeatDurationType.seconds,
     );
   }
 
@@ -136,6 +138,11 @@ class RepeatedBalanceData {
         _endTime.hashCode ^
         _repeatDuration.hashCode ^
         _repeatDurationType.hashCode;
+  }
+
+  static RepeatDurationType? repeatDurationTypeFromString(String? str) {
+    // WIP TODO NOT IMPLEMENTED
+    return null;
   }
 
   num get amount => _amount;

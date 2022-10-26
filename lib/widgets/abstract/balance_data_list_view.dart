@@ -5,6 +5,7 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:linum/models/repeat_balance_data.dart';
 import 'package:linum/models/single_balance_data.dart';
 
 /// Classes that are BalanceDataListView have to create a ListView using the addBalanceData function
@@ -23,8 +24,14 @@ abstract class BalanceDataListView {
   ///   name: <String>
   ///   time: <Timestamp>
   /// }
-  void setBalanceData(
+  void setSingleBalanceData(
     List<SingleBalanceData> balanceData, {
+    required BuildContext context,
+    bool error = false,
+  });
+
+  void setRepeatedBalanceData(
+    List<RepeatedBalanceData> balanceData, {
     required BuildContext context,
     bool error = false,
   });
