@@ -2,7 +2,6 @@ import 'package:linum/models/exchange_rates_for_date.dart';
 import 'package:linum/objectbox.g.dart';
 import 'package:linum/utilities/backend/currency_web_functions.dart';
 import 'package:linum/utilities/backend/exchange_rate_synchronizer.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ExchangeRateRepository {
   final Box<ExchangeRatesForDate> _box;

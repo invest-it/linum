@@ -53,9 +53,6 @@ class ApplicationServices extends StatelessWidget {
               .useProvider(AuthenticationService.provider)
               .useProvider(AccountSettingsProvider.provider)
               .useProvider(AlgorithmProvider.provider)
-              .useProvider(BalanceDataProvider.provider)
-              .useProvider(ActionLipStatusProvider.provider)
-              .useProvider(PinCodeProvider.provider)
               .useProvider((context, {bool testing = false}) {
                 return ChangeNotifierProvider<ExchangeRateProvider>(
                   key: const Key("ExchangeRateChangeNotifierProvider"),
@@ -64,6 +61,9 @@ class ApplicationServices extends StatelessWidget {
                   },
                 );
               })
+              .useProvider(BalanceDataProvider.provider)
+              .useProvider(ActionLipStatusProvider.provider)
+              .useProvider(PinCodeProvider.provider)
               .build();
         }
         return const LoadingScaffold();

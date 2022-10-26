@@ -17,7 +17,11 @@ class RepeatedBalanceData {
   String id;
   String name;
   String? note;
-  DateTimeMap<String, ChangedRepeatedBalanceData>? changed;Timestamp initialTime;Timestamp? endTime;int repeatDuration;RepeatDurationType repeatDurationType;
+  DateTimeMap<String, ChangedRepeatedBalanceData>? changed;
+  Timestamp initialTime;
+  Timestamp? endTime;
+  int repeatDuration;
+  RepeatDurationType repeatDurationType;
 
   RepeatedBalanceData({
     required this.amount,
@@ -86,11 +90,11 @@ class RepeatedBalanceData {
       id: map['id'] as String,
       name: map['name'] as String,
       note: map['note'] as String?,
-      changed: map['changed'] as DateTimeMap<String, ChangedRepeatedBalanceData>, // TODO: Might not work
+      changed: map['changed'] as DateTimeMap<String, ChangedRepeatedBalanceData>?, // TODO: Might not work
       initialTime: map['initialTime'] as Timestamp,
       endTime: map['endTime'] as Timestamp?,
       repeatDuration: map['repeatDuration'] as int,
-      repeatDurationType: map['repeatDurationType'] as RepeatDurationType? ??
+      repeatDurationType:  repeatDurationTypeFromString(map['repeatDurationType'] as String) ??
           RepeatDurationType.seconds,
     );
   }

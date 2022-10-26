@@ -88,4 +88,3 @@ Future<List<ExchangeRate>> fetchExchangeRatesForCurrencyUntil(DateTime date, Str
     throw Exception("Failed to get exchange rates for currency until specified date");
   }
 }
-

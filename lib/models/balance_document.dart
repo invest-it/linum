@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:linum/models/repeat_balance_data.dart';
 import 'package:linum/models/single_balance_data.dart';
+
 
 class BalanceDocument {
   final List<SingleBalanceData> balanceData;
@@ -17,11 +20,14 @@ class BalanceDocument {
 
 
   factory BalanceDocument.fromMap(Map<String, dynamic> map) {
-    final balanceData = map['balanceData'] as List<Map<String, dynamic>>;
-    final repeatedBalance = map['repeatedBalance'] as List<Map<String, dynamic>>;
+    log("BalanceData: ${map['balanceData'].toString()}");
+    final rawBalanceData = map['balanceData'] as List<dynamic>;
+    final balanceData = rawBalanceData.map((data) => SingleBalanceData.fromMap(data as Map<String, dynamic>)).toList();
+    final rawRepeatedBalance = map['repeatedBalance'] as List<dynamic>;
+    final repeatedBalance = rawRepeatedBalance.map((data) => RepeatedBalanceData.fromMap(data as Map<String, dynamic>)).toList();
     return BalanceDocument(
-      balanceData: balanceData.map((Map<String, dynamic> data) => SingleBalanceData.fromMap(data)).toList(),
-      repeatedBalance: repeatedBalance.map((Map<String, dynamic> data) => RepeatedBalanceData.fromMap(data)).toList(),
+      balanceData: balanceData,
+      repeatedBalance: repeatedBalance,
       settings: map['settings'] as Map<String, dynamic>,
     );
   }
