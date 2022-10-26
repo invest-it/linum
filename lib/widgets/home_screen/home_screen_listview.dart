@@ -6,12 +6,16 @@
 
 // ignore_for_file: avoid_dynamic_calls
 
+import 'dart:developer';
+
 import 'package:badges/badges.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
+import 'package:linum/models/abstract/balance_data.dart';
+import 'package:linum/models/repeat_balance_data.dart';
 import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/navigation/enter_screen_page.dart';
 import 'package:linum/navigation/get_delegate.dart';
@@ -23,7 +27,6 @@ import 'package:linum/widgets/enter_screen/delete_entry_dialog.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreenListView implements BalanceDataListView {
-
   late ListView _listview;
 
   HomeScreenListView() {
@@ -71,27 +74,49 @@ class HomeScreenListView implements BalanceDataListView {
   ];
 
   @override
-  void setBalanceData(
+  void setSingleBalanceData(
     List<SingleBalanceData> balanceDataList, {
     required BuildContext context,
     bool error = false,
   }) {
-
     _listview = ListView(
-        padding: const EdgeInsets.only(
-          bottom: 32.0,
-        ),
-        children: buildList(context, balanceDataList, error: error),
+      padding: const EdgeInsets.only(
+        bottom: 32.0,
+      ),
+      children: buildSingleBalanceList(context, balanceDataList, error: error),
     );
   }
 
-  List<Widget> buildList(BuildContext context, List<SingleBalanceData> balanceDataList, {bool error=false}) {
+  @override
+  void setRepeatedBalanceData(
+    List<RepeatedBalanceData> balanceDataList, {
+    required BuildContext context,
+    bool error = false,
+  }) {
+    _listview = ListView(
+      padding: const EdgeInsets.only(
+        bottom: 32.0,
+      ),
+      children: buildRepeatedBalanceList(
+        context,
+        balanceDataList,
+        error: error,
+        repeatedData: true,
+      ),
+    );
+  }
+
+  List<Widget> buildSingleBalanceList(
+    BuildContext context,
+    List<SingleBalanceData> balanceDataList, {
+    bool error = false,
+    bool repeatedData = false,
+  }) {
     initializeDateFormatting();
 
     final String langCode = context.locale.languageCode;
     final DateFormat monthFormatter = DateFormat('MMMM', langCode);
     final DateFormat monthAndYearFormatter = DateFormat('MMMM yyyy', langCode);
-
 
     // remember last used index in the list
     int currentIndex = 0;
@@ -150,7 +175,6 @@ class HomeScreenListView implements BalanceDataListView {
         if (date.isBefore(DateTime.now()) &&
             (list.isEmpty || list.last.runtimeType != TimeWidget) &&
             date.isBefore(currentTime)) {
-
           final timeWidget = TimeWidget(
             displayValue: date.year == DateTime.now().year
                 ? monthFormatter.format(date)
@@ -164,19 +188,37 @@ class HomeScreenListView implements BalanceDataListView {
           currentIndex = 4; // idk why exactly but now we are save
         }
 
-        list.add(buildGestureDetector(context, singleBalanceData, isFutureItem: isFutureItem));
-
+        list.add(
+          buildGestureDetector(
+            context,
+            singleBalanceData,
+            isFutureItem: isFutureItem,
+          ),
+        );
       }
     }
     return list;
   }
 
+  List<Widget> buildRepeatedBalanceList(
+    BuildContext context,
+    List<RepeatedBalanceData> balanceDataList, {
+    bool error = false,
+    bool repeatedData = false,
+  }) {
+    log(balanceDataList.toString());
+    final List<Widget> list = [const Text("W.I.P.")];
+
+    return list;
+  }
+
   GestureDetector buildGestureDetector(
-      BuildContext context,
-      SingleBalanceData singleBalanceData,
-      {bool isFutureItem = false, }
-      ) {
-    final BalanceDataProvider balanceDataProvider = Provider.of<BalanceDataProvider>(context);
+    BuildContext context,
+    SingleBalanceData singleBalanceData, {
+    bool isFutureItem = false,
+  }) {
+    final BalanceDataProvider balanceDataProvider =
+        Provider.of<BalanceDataProvider>(context);
     final String langCode = context.locale.languageCode;
     final DateFormat formatter = DateFormat('EEEE, dd. MMMM yyyy', langCode);
 
@@ -206,9 +248,7 @@ class HomeScreenListView implements BalanceDataListView {
                     ),
                     Icon(
                       Icons.delete,
-                      color: Theme.of(context)
-                          .colorScheme
-                          .secondaryContainer,
+                      color: Theme.of(context).colorScheme.secondaryContainer,
                     ),
                   ],
                 ),
@@ -236,125 +276,122 @@ class HomeScreenListView implements BalanceDataListView {
             elevation: 1,
             badgeColor: isFutureItem && singleBalanceData.repeatId != null
                 ? Theme.of(context).colorScheme.tertiaryContainer
-            //badgeColor for current transactions
+                //badgeColor for current transactions
                 : singleBalanceData.amount > 0
-            //badgeColor for future transactions
-                ? singleBalanceData.repeatId != null
-                ? Theme.of(context).colorScheme.tertiary
-            // ignore: use_full_hex_values_for_flutter_colors
-                : const Color(0x000000)
-                : singleBalanceData.repeatId != null
-                ? Theme.of(context).colorScheme.errorContainer
-            // ignore: use_full_hex_values_for_flutter_colors
-                : const Color(0x000000),
+                    //badgeColor for future transactions
+                    ? singleBalanceData.repeatId != null
+                        ? Theme.of(context).colorScheme.tertiary
+                        // ignore: use_full_hex_values_for_flutter_colors
+                        : const Color(0x000000)
+                    : singleBalanceData.repeatId != null
+                        ? Theme.of(context).colorScheme.errorContainer
+                        // ignore: use_full_hex_values_for_flutter_colors
+                        : const Color(0x000000),
             //cannot use the suggestion as it produces an unwanted white point
             badgeContent: singleBalanceData.repeatId != null
                 ? Icon(
-              Icons.autorenew_rounded,
-              color: isFutureItem
-                  ? singleBalanceData.amount > 0
-                  ? Theme.of(context).colorScheme.tertiary
-                  : Theme.of(context).colorScheme.errorContainer
-                  : Theme.of(context)
-                  .colorScheme
-                  .secondaryContainer,
-              size: 18,
-            )
+                    Icons.autorenew_rounded,
+                    color: isFutureItem
+                        ? singleBalanceData.amount > 0
+                            ? Theme.of(context).colorScheme.tertiary
+                            : Theme.of(context).colorScheme.errorContainer
+                        : Theme.of(context).colorScheme.secondaryContainer,
+                    size: 18,
+                  )
                 : const SizedBox(),
             child: CircleAvatar(
               backgroundColor: isFutureItem
                   ? singleBalanceData.amount > 0
-                  ? Theme.of(context)
-                  .colorScheme
-                  .tertiary // FUTURE INCOME BACKGROUND
-                  : Theme.of(context).colorScheme.errorContainer
-              // FUTURE EXPENSE BACKGROUND
+                      ? Theme.of(context)
+                          .colorScheme
+                          .tertiary // FUTURE INCOME BACKGROUND
+                      : Theme.of(context).colorScheme.errorContainer
+                  // FUTURE EXPENSE BACKGROUND
                   : singleBalanceData.amount > 0
-                  ? Theme.of(context)
-                  .colorScheme
-                  .secondary // PRESENT INCOME BACKGROUND
-                  : Theme.of(context)
-                  .colorScheme
-                  .secondary, // PRESENT EXPENSE BACKGROUND
+                      ? Theme.of(context)
+                          .colorScheme
+                          .secondary // PRESENT INCOME BACKGROUND
+                      : Theme.of(context)
+                          .colorScheme
+                          .secondary, // PRESENT EXPENSE BACKGROUND
               child: singleBalanceData.amount > 0
                   ? Icon(
-                standardIncomeCategories[singleBalanceData.category]
-                    ?.icon ??
-                    Icons.error,
-                color: isFutureItem
-                    ? Theme.of(context)
-                    .colorScheme
-                    .onPrimary // FUTURE INCOME ICON
-                    : Theme.of(context)
-                    .colorScheme
-                    .tertiary, // PRESENT INCOME ICON
-              )
+                      standardIncomeCategories[singleBalanceData.category]
+                              ?.icon ??
+                          Icons.error,
+                      color: isFutureItem
+                          ? Theme.of(context)
+                              .colorScheme
+                              .onPrimary // FUTURE INCOME ICON
+                          : Theme.of(context)
+                              .colorScheme
+                              .tertiary, // PRESENT INCOME ICON
+                    )
                   : Icon(
-                standardExpenseCategories[singleBalanceData.category]
-                    ?.icon ??
-                    Icons.error,
-                color: isFutureItem
-                    ? Theme.of(context)
-                    .colorScheme
-                    .onPrimary // FUTURE EXPENSE ICON
-                    : Theme.of(context)
-                    .colorScheme
-                    .errorContainer, // PRESENT EXPENSE ICON
-              ),
+                      standardExpenseCategories[singleBalanceData.category]
+                              ?.icon ??
+                          Icons.error,
+                      color: isFutureItem
+                          ? Theme.of(context)
+                              .colorScheme
+                              .onPrimary // FUTURE EXPENSE ICON
+                          : Theme.of(context)
+                              .colorScheme
+                              .errorContainer, // PRESENT EXPENSE ICON
+                    ),
             ),
           ),
           title: Text(
             singleBalanceData.name != ""
                 ? singleBalanceData.name
                 : translateCategory(
-              singleBalanceData.category,
-              context,
-              isExpense: singleBalanceData.amount <= 0,
-            ),
+                    singleBalanceData.category,
+                    context,
+                    isExpense: singleBalanceData.amount <= 0,
+                  ),
             style: isFutureItem
                 ? Theme.of(context).textTheme.bodyText1!.copyWith(
-              fontStyle: FontStyle.italic,
-              color: Theme.of(context).colorScheme.onSurface,
-            )
+                      fontStyle: FontStyle.italic,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    )
                 : Theme.of(context).textTheme.bodyText1,
           ),
           subtitle: Text(
             formatter
                 .format(
-              singleBalanceData.time.toDate(),
-            )
+                  singleBalanceData.time.toDate(),
+                )
                 .toUpperCase(),
             style: isFutureItem
                 ? Theme.of(context).textTheme.overline!.copyWith(
-              fontStyle: FontStyle.italic,
-              color: Theme.of(context).colorScheme.onSurface,
-            )
+                      fontStyle: FontStyle.italic,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    )
                 : Theme.of(context).textTheme.overline,
           ),
           trailing: singleBalanceData.amount == 0
               ? Text(
-            tr('home_screen.free-text'),
-            style: Theme.of(context).textTheme.bodyLarge,
-          )
+                  tr('home_screen.free-text'),
+                  style: Theme.of(context).textTheme.bodyLarge,
+                )
               : Text(
-            "${singleBalanceData.amount.toStringAsFixed(2)}€",
-            style: singleBalanceData.amount <= 0
-                ? Theme.of(context).textTheme.bodyText1?.copyWith(
-              color: Theme.of(context).colorScheme.error,
-            )
-                : Theme.of(context).textTheme.bodyText1?.copyWith(
-              color:
-              Theme.of(context).colorScheme.onSurface,
-            ),
-          ),
+                  "${singleBalanceData.amount.toStringAsFixed(2)}€",
+                  style: singleBalanceData.amount <= 0
+                      ? Theme.of(context).textTheme.bodyText1?.copyWith(
+                            color: Theme.of(context).colorScheme.error,
+                          )
+                      : Theme.of(context).textTheme.bodyText1?.copyWith(
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                ),
         ),
       ),
     );
-
   }
 
   bool isCurrentMonth(DateTime date) {
-    return DateTime(date.year, date.month) == DateTime(DateTime.now().year, DateTime.now().month);
+    return DateTime(date.year, date.month) ==
+        DateTime(DateTime.now().year, DateTime.now().month);
   }
 
   String translateCategory(

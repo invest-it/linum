@@ -8,6 +8,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
+import 'package:linum/models/repeat_balance_data.dart';
 import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/utilities/backend/statistic_calculations.dart';
@@ -34,28 +35,60 @@ class BalanceDataStreamBuilderManager {
         }
         if (snapshot.data == null) {
           // TODO tell the user that the connection is broken
-          blistview.setBalanceData(
+          blistview.setSingleBalanceData(
             [],
             context: context,
           );
           log("ERROR LOADING");
           return blistview.listview;
         } else {
-          final List<List<Map<String, dynamic>>> arrayData = prepareData(
-            repeatedBalanceDataManager,
-            snapshot,
-          );
-          final List<Map<String, dynamic>> balanceData = arrayData[0];
+          if (!repeatables) {
+            final List<List<Map<String, dynamic>>> arrayData = prepareData(
+              repeatedBalanceDataManager,
+              snapshot,
+            );
+            final List<Map<String, dynamic>> balanceData = arrayData[0];
 
-          // Future there could be an sort algorithm provider
-          // (and possibly also a filter algorithm provided)
-          balanceData.removeWhere(algorithmProvider.currentFilter);
-          balanceData.sort(algorithmProvider.currentSorter);
+            // Future there could be an sort algorithm provider
+            // (and possibly also a filter algorithm provided)
+            balanceData.removeWhere(algorithmProvider.currentFilter);
+            balanceData.sort(algorithmProvider.currentSorter);
 
-          blistview.setBalanceData(
-            listOfMapsToListOfModels(balanceData),
-            context: context,
-          );
+            blistview.setSingleBalanceData(
+              listOfSingleMapsToListOfModels(balanceData),
+              context: context,
+            );
+          } else {
+            final List<List<Map<String, dynamic>>> arrayData = prepareData(
+              repeatedBalanceDataManager,
+              snapshot,
+            );
+            final List<Map<String, dynamic>> singleBalanceDataMap =
+                arrayData[0];
+            final List<Map<String, dynamic>> repeatedBalanceDataMap =
+                arrayData[1];
+            List<SingleBalanceData> singleBalanceData =
+                listOfSingleMapsToListOfModels(singleBalanceDataMap);
+
+            List<RepeatedBalanceData> repeatedBalanceData =
+                listOfRepeatedMapsToListOfModels(repeatedBalanceDataMap);
+
+            singleBalanceData.removeWhere(algorithmProvider.currentFilter);
+            singleBalanceData.removeWhere((sin) {
+              return sin.repeatId == null;
+            });
+
+            repeatedBalanceData.removeWhere((rep) {
+              return !singleBalanceData.any((sin) {
+                return sin.repeatId == rep.id;
+              });
+            });
+
+            blistview.setRepeatedBalanceData(
+              repeatedBalanceData,
+              context: context,
+            );
+          }
           return blistview.listview;
         }
       },
@@ -83,7 +116,7 @@ class BalanceDataStreamBuilderManager {
           final List<Map<String, dynamic>> balanceData = arrayData[0];
           final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(
-            listOfMapsToListOfModels(balanceData),
+            listOfSingleMapsToListOfModels(balanceData),
             algorithmProvider,
           );
           statisticPanel.addStatisticData(statisticsCalculations);
@@ -130,12 +163,23 @@ class BalanceDataStreamBuilderManager {
   }
 }
 
-List<SingleBalanceData> listOfMapsToListOfModels(
+List<SingleBalanceData> listOfSingleMapsToListOfModels(
   List<Map<String, dynamic>> balanceData,
 ) {
   final List<SingleBalanceData> listOfModels = [];
   for (final mapEntry in balanceData) {
     listOfModels.add(SingleBalanceData.fromMap(mapEntry));
+  }
+
+  return listOfModels;
+}
+
+List<RepeatedBalanceData> listOfRepeatedMapsToListOfModels(
+  List<Map<String, dynamic>> balanceData,
+) {
+  final List<RepeatedBalanceData> listOfModels = [];
+  for (final mapEntry in balanceData) {
+    listOfModels.add(RepeatedBalanceData.fromMap(mapEntry));
   }
 
   return listOfModels;
