@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/constants/repeatable_change_type_enum.dart';
 import 'package:linum/models/dialog_action.dart';
+import 'package:linum/models/repeat_balance_data.dart';
 import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
@@ -27,6 +28,11 @@ Future<bool?> generateDeleteDialogFromSingleBalanceData(
     isRepeatable: isRepeatable,
     formerTime: singleBalanceData.formerTime ?? singleBalanceData.time,
   );
+}
+
+
+Future<bool?> generateDeleteDialogFromRepetableBalanceData(BuildContext context, BalanceDataProvider balanceDataProvider, RepeatedBalanceData repeatedBalanceData) async{
+  return showDefaultDeleteDialog(context, repeatedBalanceData.id);
 }
 
 Future<bool?> showRepeatableDeleteDialog(
