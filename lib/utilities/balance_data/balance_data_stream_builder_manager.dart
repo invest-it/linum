@@ -32,7 +32,7 @@ class BalanceDataStreamBuilderManager {
     return StreamBuilder<DocumentSnapshot<BalanceDocument>>(
       stream: dataStream,
       builder: (ctx, snapshot) {
-        if (snapshot.connectionState == ConnectionState.none) {
+        if (snapshot.connectionState == ConnectionState.none || snapshot.connectionState == ConnectionState.waiting) {
           return const LoadingSpinner();
         }
         if (snapshot.data == null) {

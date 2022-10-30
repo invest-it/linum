@@ -8,7 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:linum/models/repeat_balance_data.dart';
 
 bool isMonthly(RepeatedBalanceData singleRepeatedBalance) {
-  return singleRepeatedBalance.repeatDurationType.toString().toUpperCase() ==
+  return singleRepeatedBalance.repeatDurationType.name.toUpperCase() ==
           "MONTHS";
 }
 
