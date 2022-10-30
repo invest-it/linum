@@ -53,7 +53,7 @@ class BalanceDataStreamBuilderManager {
           // (and possibly also a filter algorithm provided)
           balanceData.removeWhere(algorithmProvider.currentFilter);
           balanceData.sort(algorithmProvider.currentSorter);
-          // exchangeRateProvider.addExchangeRatesToBalanceData(balanceData);
+          exchangeRateProvider.addExchangeRatesToBalanceData(balanceData);
 
           listView.setBalanceData(
             balanceData,

@@ -24,6 +24,7 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
   final GlobalKey<NavigatorState> navigatorKey;
   MainRouterDelegate() : navigatorKey = GlobalKey<NavigatorState>();
 
+  Page? _replacedRoute;
   final _pageStack = <Page> [];
   /* MaterialPage _createPage(RouteSettings routeSettings) {
     Widget child;
@@ -122,6 +123,13 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
   @override
   Future<bool> popRoute() async {
     dev.log("Stack: ${_pageStack.toString()}");
+    if (_replacedRoute != null) {
+      _pageStack.removeLast();
+      _pageStack.add(_replacedRoute!);
+      _replacedRoute = null;
+      return Future.value(true);
+    }
+
     if (_pageStack.length > 1) {
       _pageStack.removeLast();
       notifyListeners();
@@ -140,8 +148,9 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
 
   /// Replace the last route on the MainRouter's Stack with a new one.
   /// Notifies all listening widgets.
-  void replaceLastRoute(MainRoute route) {
-    _pageStack.removeLast();
+  void replaceLastRoute(MainRoute route, {bool rememberReplacedRoute = false}) {
+    final replaced = _pageStack.removeLast();
+    _replacedRoute = rememberReplacedRoute ? replaced : null;
     _pageStack.add(mainRoutes.pageFromRoute(route));
 
     notifyListeners();

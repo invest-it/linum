@@ -22,6 +22,11 @@ class ExchangeRateProvider extends ChangeNotifier {
     ExchangeRatesForDate lastSuccessful = ratesMap.values.first;
 
     for (final balanceEntry in balanceData) {
+      if (balanceEntry.currency == "EUR") {
+        continue;
+        // TODO: Handle default Currency settings
+      }
+
       final dateTime = balanceEntry.time.toDate();
       final key = DateTime(dateTime.year, dateTime.day).millisecondsSinceEpoch;
       var exchangeRates = ratesMap[key];
