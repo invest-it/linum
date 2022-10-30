@@ -78,7 +78,7 @@ class RepeatedBalanceData {
       'initialTime': initialTime,
       'endTime': endTime,
       'repeatDuration': repeatDuration,
-      'repeatDurationType': repeatDurationType.toString(),
+      'repeatDurationType': repeatDurationType.name,
     };
   }
 
