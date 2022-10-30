@@ -30,4 +30,16 @@ class ChangedRepeatedBalanceData {
       deleted: map['deleted'] as bool?,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'amount': amount,
+      'category': category,
+      'currency': currency,
+      'name': name,
+      'note': note,
+      'time': time,
+      'deleted': deleted,
+    };
+  }
 }

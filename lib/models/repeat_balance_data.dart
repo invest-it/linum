@@ -74,11 +74,11 @@ class RepeatedBalanceData {
       'id': id,
       'name': name,
       'note': note,
-      'changed': changed, // TODO: Check if this should be removed when building a map
+      'changed': changed?.map((key, value) => MapEntry(key, value.toMap())), // TODO: Check if this should be removed when building a map
       'initialTime': initialTime,
       'endTime': endTime,
       'repeatDuration': repeatDuration,
-      'repeatDurationType': repeatDurationType,
+      'repeatDurationType': repeatDurationType.toString(),
     };
   }
 

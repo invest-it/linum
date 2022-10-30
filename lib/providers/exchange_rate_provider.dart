@@ -11,12 +11,6 @@ class ExchangeRateProvider extends ChangeNotifier {
   final Store _store;
   ExchangeRateProvider(this._store) : _repository = ExchangeRateRepository(_store);
 
-  @override
-  void dispose() {
-    _store.close();
-    super.dispose();
-  }
-
   Future addExchangeRatesToBalanceData(List<SingleBalanceData> balanceData) async {
     final dates = balanceData.map((e) => e.time.toDate()).toList();
     final ratesMap = await _repository.getExchangeRatesForDates(dates);

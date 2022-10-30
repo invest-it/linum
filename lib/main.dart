@@ -28,15 +28,40 @@ Future<void> main({bool? testing}) async {
   SharedPreferences.getInstance().then((pref) {
     // LinumApp.currentLocalLanguageCode = pref.getString("languageCode");
     runApp(
-      EasyLocalization(
-          supportedLocales: supportedLocales,
-          path: 'lang',
-          fallbackLocale: const Locale('de', 'DE'),
-          child: LinumApp(store, testing: testing),
-      ),
+      LifecycleWatcher(store: store, testing: testing),
     );
   });
+
 }
+
+//
+class LifecycleWatcher extends StatefulWidget {
+  final Store store;
+  final bool? testing;
+  const LifecycleWatcher({super.key, required this.store, this.testing});
+
+  @override
+  State<LifecycleWatcher> createState() => _LifecycleWatcherState();
+}
+
+class _LifecycleWatcherState extends State<LifecycleWatcher> {
+  @override
+  Widget build(BuildContext context) {
+    return EasyLocalization(
+      supportedLocales: supportedLocales,
+      path: 'lang',
+      fallbackLocale: const Locale('de', 'DE'),
+      child: LinumApp(widget.store, testing: widget.testing),
+    );
+  }
+
+  @override
+  void dispose() {
+    widget.store.close();
+    super.dispose();
+  }
+}
+
 
 // Defines the State of the App (in our MVP test phase, this will be "ALPHA" according
 // to the principles of versioning)
