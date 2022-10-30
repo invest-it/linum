@@ -8,6 +8,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/navigation/main_router_delegate.dart';
 import 'package:linum/navigation/main_routes.dart';
 
@@ -29,15 +30,18 @@ abstract class AppBarAction {
     DefaultAction.academy: (BuildContext context) {
       return AppBarAction.fromParameters(
         icon: Icons.video_library_rounded,
-        ontap: () => Get.find<MainRouterDelegate>()
-            .pushRoute(MainRoute.academy), // TODO: Find out why app closes on back-navigation
+        ontap: () => getRouterDelegate().pushRoute(
+          MainRoute.academy,
+        ), // TODO: Find out why app closes on back-navigation
       );
     },
     DefaultAction.settings: (BuildContext context) {
       return AppBarAction.fromParameters(
         icon: Icons.settings_rounded,
-        ontap: () => Get.find<MainRouterDelegate>()
-            .replaceLastRoute(MainRoute.settings),
+        ontap: () => getRouterDelegate().replaceLastRoute(
+          MainRoute.settings,
+          rememberReplacedRoute: true,
+        ),
       );
     },
     // TODO: Are these guys even used?
