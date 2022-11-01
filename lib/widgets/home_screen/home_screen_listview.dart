@@ -15,7 +15,6 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/models/serial_transaction.dart';
-import 'package:linum/models/serial_transaction.dart';
 import 'package:linum/models/transaction.dart';
 import 'package:linum/navigation/enter_screen_page.dart';
 import 'package:linum/navigation/get_delegate.dart';
@@ -74,8 +73,8 @@ class HomeScreenListView implements BalanceDataListView {
   ];
 
   @override
-  void setSingleBalanceData(
-    List<Transaction> balanceDataList, {
+  void setTransactions(
+    List<Transaction> transactions, {
     required BuildContext context,
     bool error = false,
   }) {
@@ -83,13 +82,13 @@ class HomeScreenListView implements BalanceDataListView {
       padding: const EdgeInsets.only(
         bottom: 32.0,
       ),
-      children: buildSingleBalanceList(context, balanceDataList, error: error),
+      children: buildTransactionList(context, transactions, error: error),
     );
   }
 
   @override
-  void setRepeatedBalanceData(
-    List<SerialTransaction> balanceDataList, {
+  void setSerialTransactions(
+    List<SerialTransaction> serialTransactions, {
     required BuildContext context,
     bool error = false,
   }) {
@@ -97,18 +96,18 @@ class HomeScreenListView implements BalanceDataListView {
       padding: const EdgeInsets.only(
         bottom: 32.0,
       ),
-      children: buildRepeatedBalanceList(
+      children: buildSerialTransactionList(
         context,
-        balanceDataList,
+        serialTransactions,
         error: error,
         repeatedData: true,
       ),
     );
   }
 
-  List<Widget> buildSingleBalanceList(
+  List<Widget> buildTransactionList(
     BuildContext context,
-    List<Transaction> balanceDataList, {
+    List<Transaction> transactions, {
     bool error = false,
     bool repeatedData = false,
   }) {
@@ -125,11 +124,11 @@ class HomeScreenListView implements BalanceDataListView {
     final List<Widget> list = [];
     if (error) {
       // TODO: tell user there was an error loading @damattl
-    } else if (balanceDataList.isEmpty) {
+    } else if (transactions.isEmpty) {
       list.add(const TimeWidget(displayValue: "listview.label-no-entries"));
     } else {
-      for (final Transaction singleBalanceData in balanceDataList) {
-        final DateTime date = singleBalanceData.time.toDate();
+      for (final Transaction transaction in transactions) {
+        final DateTime date = transaction.time.toDate();
         final bool isFutureItem = date.isAfter(
           DateTime(
             DateTime.now().year,
@@ -189,9 +188,9 @@ class HomeScreenListView implements BalanceDataListView {
         }
 
         list.add(
-          buildSingleBalanceGestureDetector(
+          buildTransactionGestureDetector(
             context,
-            singleBalanceData,
+            transaction,
             isFutureItem: isFutureItem,
           ),
         );
@@ -200,22 +199,22 @@ class HomeScreenListView implements BalanceDataListView {
     return list;
   }
 
-  List<Widget> buildRepeatedBalanceList(
+  List<Widget> buildSerialTransactionList(
     BuildContext context,
-    List<SerialTransaction> balanceDataList, {
+    List<SerialTransaction> serialTransactions, {
     bool error = false,
     bool repeatedData = false,
   }) {
-    log(balanceDataList.toString());
+    log(serialTransactions.toString());
     final List<Widget> list = [const Text("W.I.P.")];
 
     return list;
   }
 
   /// Builds a [GestureDetector] for displaying a single balance on the home screen. Below, there is another function for handling the active contracts display.
-  GestureDetector buildSingleBalanceGestureDetector(
+  GestureDetector buildTransactionGestureDetector(
     BuildContext context,
-    Transaction singleBalanceData, {
+    Transaction transaction, {
     bool isFutureItem = false,
   }) {
     final BalanceDataProvider balanceDataProvider =
@@ -227,7 +226,7 @@ class HomeScreenListView implements BalanceDataListView {
       onTap: () {
         getRouterDelegate().pushRoute(
           MainRoute.enter,
-          settings: EnterScreenPageSettings.withBalanceData(singleBalanceData),
+          settings: EnterScreenPageSettings.withTransaction(transaction),
         );
       },
       child: Dismissible(
@@ -257,16 +256,16 @@ class HomeScreenListView implements BalanceDataListView {
             ],
           ),
         ),
-        key: Key(singleBalanceData.id),
+        key: Key(transaction.id),
         direction: DismissDirection.endToStart,
         dismissThresholds: const {
           DismissDirection.endToStart: 0.5,
         },
         confirmDismiss: (DismissDirection direction) async {
-          return generateDeleteDialogFromSingleBalanceData(
+          return generateDeleteDialogFromTransaction(
             context,
             balanceDataProvider,
-            singleBalanceData,
+            transaction,
           );
         },
         child: ListTile(
@@ -275,25 +274,25 @@ class HomeScreenListView implements BalanceDataListView {
             toAnimate: false,
             position: const BadgePosition(bottom: 23, start: 23),
             elevation: 1,
-            badgeColor: isFutureItem && singleBalanceData.repeatId != null
+            badgeColor: isFutureItem && transaction.repeatId != null
                 ? Theme.of(context).colorScheme.tertiaryContainer
                 //badgeColor for current transactions
-                : singleBalanceData.amount > 0
+                : transaction.amount > 0
                     //badgeColor for future transactions
-                    ? singleBalanceData.repeatId != null
+                    ? transaction.repeatId != null
                         ? Theme.of(context).colorScheme.tertiary
                         // ignore: use_full_hex_values_for_flutter_colors
                         : const Color(0x000000)
-                    : singleBalanceData.repeatId != null
+                    : transaction.repeatId != null
                         ? Theme.of(context).colorScheme.errorContainer
                         // ignore: use_full_hex_values_for_flutter_colors
                         : const Color(0x000000),
             //cannot use the suggestion as it produces an unwanted white point
-            badgeContent: singleBalanceData.repeatId != null
+            badgeContent: transaction.repeatId != null
                 ? Icon(
                     Icons.autorenew_rounded,
                     color: isFutureItem
-                        ? singleBalanceData.amount > 0
+                        ? transaction.amount > 0
                             ? Theme.of(context).colorScheme.tertiary
                             : Theme.of(context).colorScheme.errorContainer
                         : Theme.of(context).colorScheme.secondaryContainer,
@@ -302,22 +301,22 @@ class HomeScreenListView implements BalanceDataListView {
                 : const SizedBox(),
             child: CircleAvatar(
               backgroundColor: isFutureItem
-                  ? singleBalanceData.amount > 0
+                  ? transaction.amount > 0
                       ? Theme.of(context)
                           .colorScheme
                           .tertiary // FUTURE INCOME BACKGROUND
                       : Theme.of(context).colorScheme.errorContainer
                   // FUTURE EXPENSE BACKGROUND
-                  : singleBalanceData.amount > 0
+                  : transaction.amount > 0
                       ? Theme.of(context)
                           .colorScheme
                           .secondary // PRESENT INCOME BACKGROUND
                       : Theme.of(context)
                           .colorScheme
                           .secondary, // PRESENT EXPENSE BACKGROUND
-              child: singleBalanceData.amount > 0
+              child: transaction.amount > 0
                   ? Icon(
-                      standardIncomeCategories[singleBalanceData.category]
+                      standardIncomeCategories[transaction.category]
                               ?.icon ??
                           Icons.error,
                       color: isFutureItem
@@ -329,7 +328,7 @@ class HomeScreenListView implements BalanceDataListView {
                               .tertiary, // PRESENT INCOME ICON
                     )
                   : Icon(
-                      standardExpenseCategories[singleBalanceData.category]
+                      standardExpenseCategories[transaction.category]
                               ?.icon ??
                           Icons.error,
                       color: isFutureItem
@@ -343,12 +342,12 @@ class HomeScreenListView implements BalanceDataListView {
             ),
           ),
           title: Text(
-            singleBalanceData.name != ""
-                ? singleBalanceData.name
+            transaction.name != ""
+                ? transaction.name
                 : translateCategory(
-                    singleBalanceData.category,
+                    transaction.category,
                     context,
-                    isExpense: singleBalanceData.amount <= 0,
+                    isExpense: transaction.amount <= 0,
                   ),
             style: isFutureItem
                 ? Theme.of(context).textTheme.bodyText1!.copyWith(
@@ -360,7 +359,7 @@ class HomeScreenListView implements BalanceDataListView {
           subtitle: Text(
             formatter
                 .format(
-                  singleBalanceData.time.toDate(),
+                  transaction.time.toDate(),
                 )
                 .toUpperCase(),
             style: isFutureItem
@@ -370,14 +369,14 @@ class HomeScreenListView implements BalanceDataListView {
                     )
                 : Theme.of(context).textTheme.overline,
           ),
-          trailing: singleBalanceData.amount == 0
+          trailing: transaction.amount == 0
               ? Text(
                   tr('home_screen.free-text'),
                   style: Theme.of(context).textTheme.bodyLarge,
                 )
               : Text(
-                  "${singleBalanceData.amount.toStringAsFixed(2)}€",
-                  style: singleBalanceData.amount <= 0
+                  "${transaction.amount.toStringAsFixed(2)}€",
+                  style: transaction.amount <= 0
                       ? Theme.of(context).textTheme.bodyText1?.copyWith(
                             color: Theme.of(context).colorScheme.error,
                           )
@@ -391,9 +390,9 @@ class HomeScreenListView implements BalanceDataListView {
   }
 
   /// As mentioned above, this function handles the active contracts display.
-  GestureDetector buildRepeatedBalanceGestureDetector(
+  GestureDetector buildSerialTransactionGestureDetector(
     BuildContext context,
-    SerialTransaction repeatedBalanceData,
+    SerialTransaction serialTransaction,
   ) {
     final BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
@@ -435,29 +434,29 @@ class HomeScreenListView implements BalanceDataListView {
             ],
           ),
         ),
-        key: Key(repeatedBalanceData.id),
+        key: Key(serialTransaction.id),
         direction: DismissDirection.endToStart,
         dismissThresholds: const {
           DismissDirection.endToStart: 0.5,
         },
         confirmDismiss: (DismissDirection direction) async {
-          return generateDeleteDialogFromRepetableBalanceData(
+          return generateDeleteDialogFromSerialTransaction(
             //FIXME: @SoTBurst
             context,
             balanceDataProvider,
-            repeatedBalanceData,
+            serialTransaction,
           );
         },
         child: ListTile(
           leading: CircleAvatar(
-            backgroundColor: repeatedBalanceData.amount > 0
+            backgroundColor: serialTransaction.amount > 0
                 ? Theme.of(context)
                     .colorScheme
                     .tertiary // FUTURE INCOME BACKGROUND
                 : Theme.of(context).colorScheme.errorContainer,
-            child: repeatedBalanceData.amount > 0
+            child: serialTransaction.amount > 0
                 ? Icon(
-                    standardIncomeCategories[repeatedBalanceData.category]
+                    standardIncomeCategories[serialTransaction.category]
                             ?.icon ??
                         Icons.error,
                     color: Theme.of(context)
@@ -465,19 +464,19 @@ class HomeScreenListView implements BalanceDataListView {
                         .onPrimary, // PRESENT INCOME ICON
                   )
                 : Icon(
-                    standardExpenseCategories[repeatedBalanceData.category]
+                    standardExpenseCategories[serialTransaction.category]
                             ?.icon ??
                         Icons.error,
                     color: Theme.of(context).colorScheme.onPrimary,
                   ),
           ),
           title: Text(
-            repeatedBalanceData.name != ""
-                ? repeatedBalanceData.name
+            serialTransaction.name != ""
+                ? serialTransaction.name
                 : translateCategory(
-                    repeatedBalanceData.category,
+                    serialTransaction.category,
                     context,
-                    isExpense: repeatedBalanceData.amount <= 0,
+                    isExpense: serialTransaction.amount <= 0,
                   ),
             style: Theme.of(context).textTheme.bodyText1,
           ),
@@ -485,7 +484,7 @@ class HomeScreenListView implements BalanceDataListView {
           // subtitle: Text(
           //   formatter
           //       .format(
-          //         // repeatedBalanceData.time.toDate(), singleBalanceData.amount == 0 TODO Implement the following format: "27,99€ alle 7 Tage" oder "3,50 täglich"
+          //         // serialTransaction.time.toDate(), singleBalanceData.amount == 0 TODO Implement the following format: "27,99€ alle 7 Tage" oder "3,50 täglich"
           //       )
           //       .toUpperCase(),
           //   style: Theme.of(context).textTheme.overline,

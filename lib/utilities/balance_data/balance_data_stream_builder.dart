@@ -14,13 +14,13 @@ import 'package:linum/models/transaction.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/exchange_rate_provider.dart';
 import 'package:linum/utilities/backend/statistic_calculations.dart';
-import 'package:linum/utilities/balance_data/repeated_balance_data_manager.dart';
+import 'package:linum/utilities/balance_data/serial_transaction_manager.dart';
 import 'package:linum/widgets/abstract/abstract_home_screen_card.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
 import 'package:linum/widgets/loading_spinner.dart';
 import 'package:tuple/tuple.dart';
 
-class BalanceDataStreamBuilderManager {
+class BalanceDataStreamBuilder {
   /// Returns a StreamBuilder that builds the ListView from the document-datastream
   static StreamBuilder fillListViewWithData({
     required AlgorithmProvider algorithmProvider,
@@ -38,7 +38,7 @@ class BalanceDataStreamBuilderManager {
         }
         if (snapshot.data == null) {
           // TODO tell the user that the connection is broken
-          listView.setSingleBalanceData(
+          listView.setTransactions(
             [],
             context: context,
           );
@@ -49,37 +49,37 @@ class BalanceDataStreamBuilderManager {
             final preparedData = _prepareData(
               snapshot,
             );
-            final balanceData = preparedData.item1;
+            final transactions = preparedData.item1;
 
             // Future there could be an sort algorithm provider
             // (and possibly also a filter algorithm provided)
-            balanceData.removeWhere(algorithmProvider.currentFilter);
-            balanceData.sort(algorithmProvider.currentSorter);
+            transactions.removeWhere(algorithmProvider.currentFilter);
+            transactions.sort(algorithmProvider.currentSorter);
 
-            listView.setSingleBalanceData(
-              balanceData,
+            listView.setTransactions(
+              transactions,
               context: context,
             );
           } else {
             final data = _prepareData(
               snapshot,
             );
-            final singleBalanceData = data.item1;
-            final repeatedBalanceData = data.item2;
+            final transactions = data.item1;
+            final serialTransactions = data.item2;
 
-            singleBalanceData.removeWhere(algorithmProvider.currentFilter);
-            singleBalanceData.removeWhere((transaction) {
+            transactions.removeWhere(algorithmProvider.currentFilter);
+            transactions.removeWhere((transaction) {
               return transaction.repeatId == null;
             });
 
-            repeatedBalanceData.removeWhere((serialTransaction) {
-              return !singleBalanceData.any((transaction) {
+            serialTransactions.removeWhere((serialTransaction) {
+              return !transactions.any((transaction) {
                 return transaction.repeatId == serialTransaction.id;
               });
             });
 
-            listView.setRepeatedBalanceData(
-              repeatedBalanceData,
+            listView.setSerialTransactions(
+              serialTransactions,
               context: context,
             );
           }
@@ -133,25 +133,25 @@ class BalanceDataStreamBuilderManager {
       return const Tuple2(<Transaction>[], <SerialTransaction>[]);
     }
 
-    final List<Transaction> balanceData = <Transaction>[];
+    final List<Transaction> transactions = <Transaction>[];
 
-    for (final singleBalance in data.transactions) {
-      if (singleBalance.repeatId == null) {
-        balanceData.add(singleBalance);
+    for (final transaction in data.transactions) {
+      if (transaction.repeatId == null) {
+        transactions.add(transaction);
       }
     }
 
-    final List<SerialTransaction> repeatedBalance = <SerialTransaction>[];
+    final List<SerialTransaction> serialTransactions = <SerialTransaction>[];
 
     for (final singleRepeatable in data.serialTransactions) {
-      repeatedBalance.add(singleRepeatable);
+      serialTransactions.add(singleRepeatable);
     }
 
-    RepeatedBalanceDataManager.addAllRepeatablesToBalanceDataLocally(
-      repeatedBalance,
-      balanceData,
+    SerialTransactionManager.addAllSerialTransactionsToTransactionsLocally(
+      serialTransactions,
+      transactions,
     );
 
-    return Tuple2(balanceData, repeatedBalance);
+    return Tuple2(transactions, serialTransactions);
   }
 }

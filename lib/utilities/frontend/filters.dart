@@ -56,41 +56,41 @@ class Filters {
 
   static bool Function(dynamic) newerThan(firestore.Timestamp timestamp) {
     return (dynamic a) =>
-        (_mapToSinglebalance(a).time).compareTo(timestamp) >= 0;
+        (_mapToTransaction(a).time).compareTo(timestamp) >= 0;
   }
 
   static bool Function(dynamic) olderThan(firestore.Timestamp timestamp) {
     return (dynamic a) =>
-        (_mapToSinglebalance(a).time).compareTo(timestamp) <= 0;
+        (_mapToTransaction(a).time).compareTo(timestamp) <= 0;
   }
 
   static bool Function(dynamic) inBetween(
     Tuple2<firestore.Timestamp, firestore.Timestamp> timestamps,
   ) {
     return (dynamic a) =>
-        (_mapToSinglebalance(a).time).compareTo(timestamps.item1) <= 0 ||
-        (_mapToSinglebalance(a).time).compareTo(timestamps.item2) >= 0;
+        (_mapToTransaction(a).time).compareTo(timestamps.item1) <= 0 ||
+        (_mapToTransaction(a).time).compareTo(timestamps.item2) >= 0;
   }
 
   static bool Function(dynamic) amountMoreThan(num amount) {
-    return (dynamic a) => (_mapToSinglebalance(a).amount).compareTo(amount) > 0;
+    return (dynamic a) => (_mapToTransaction(a).amount).compareTo(amount) > 0;
   }
 
   static bool Function(dynamic) amountAtLeast(num amount) {
     return (dynamic a) =>
-        (_mapToSinglebalance(a).amount).compareTo(amount) >= 0;
+        (_mapToTransaction(a).amount).compareTo(amount) >= 0;
   }
 
   static bool Function(dynamic) amountLessThan(num amount) {
-    return (dynamic a) => (_mapToSinglebalance(a).amount).compareTo(amount) < 0;
+    return (dynamic a) => (_mapToTransaction(a).amount).compareTo(amount) < 0;
   }
 
   static bool Function(dynamic) amountAtMost(num amount) {
     return (dynamic a) =>
-        (_mapToSinglebalance(a).amount).compareTo(amount) <= 0;
+        (_mapToTransaction(a).amount).compareTo(amount) <= 0;
   }
 
-  static Transaction _mapToSinglebalance(dynamic a) {
+  static Transaction _mapToTransaction(dynamic a) {
     if (a is Map<String, dynamic>) {
       return Transaction.fromMap(a);
     }

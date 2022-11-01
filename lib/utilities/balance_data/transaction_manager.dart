@@ -10,27 +10,27 @@ import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:linum/models/balance_document.dart';
 import 'package:linum/models/transaction.dart';
 
-class SingleBalanceDataManager {
-  static bool addSingleBalanceToData(
-    Transaction singleBalance,
+class TransactionManager {
+  static bool addTransactionToData(
+    Transaction transaction,
     BalanceDocument data,
   ) {
     // conditions
-    if (singleBalance.category == "") {
-      dev.log("singleBalance.category must be != '' ");
+    if (transaction.category == "") {
+      dev.log("transaction.category must be != '' ");
       return false;
     }
-    if (singleBalance.currency == "") {
-      dev.log("singleBalance.currency must be != '' ");
+    if (transaction.currency == "") {
+      dev.log("transaction.currency must be != '' ");
       return false;
     }
 
-    data.transactions.add(singleBalance);
+    data.transactions.add(transaction);
     return true;
   }
 
   /// remove a single Balance and upload it (identified using id)
-  static bool removeSingleBalanceFromData(
+  static bool removeTransactionFromData(
     String id,
     BalanceDocument data,
   ) {
@@ -48,7 +48,7 @@ class SingleBalanceDataManager {
     return false;
   }
 
-  static bool updateSingleBalanceInData(
+  static bool updateTransactionInData(
     String id,
     BalanceDocument data, {
     num? amount,

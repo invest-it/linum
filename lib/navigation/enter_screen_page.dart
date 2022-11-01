@@ -13,15 +13,15 @@ import 'package:provider/provider.dart';
 
 class EnterScreenPageSettings {
   final bool isFromBalanceData;
-  final Transaction? singleBalanceData;
+  final Transaction? transaction;
   final String? category;
   final String? secondaryCategory;
 
   EnterScreenPageSettings._(
-      {this.singleBalanceData, this.category, this.secondaryCategory, this.isFromBalanceData = false,});
+      {this.transaction, this.category, this.secondaryCategory, this.isFromBalanceData = false,});
 
-  factory EnterScreenPageSettings.withBalanceData(Transaction singleBalanceData) {
-    return EnterScreenPageSettings._(singleBalanceData: singleBalanceData, isFromBalanceData: true);
+  factory EnterScreenPageSettings.withTransaction(Transaction transaction) {
+    return EnterScreenPageSettings._(transaction: transaction, isFromBalanceData: true);
   }
   factory EnterScreenPageSettings.withCategories(
       {String? category, String? secondaryCategory,}) {
@@ -38,7 +38,7 @@ class EnterScreenPage extends Page {
     final enterScreenProvider = ChangeNotifierProvider<EnterScreenProvider>(
       create: (_) {
         if (settings.isFromBalanceData) {
-          return EnterScreenProvider.fromBalanceData(settings.singleBalanceData!);
+          return EnterScreenProvider.fromBalanceData(settings.transaction!);
         } else {
           return EnterScreenProvider(
             category: settings.category ??

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/constants/repeatable_change_type_enum.dart';
+import 'package:linum/constants/serial_transaction_change_type_enum.dart';
 import 'package:linum/models/dialog_action.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
@@ -17,10 +17,10 @@ Future<bool?> showChangeEntryDialog(BuildContext context, DateTime selectedDate)
       DialogAction(
         actionTitle: "enter_screen.delete-entry.dialog-button-onlyonce",
         function: () {
-          balanceDataProvider.updateRepeatedBalance(
+          balanceDataProvider.updateSerialTransaction(
             id: enterScreenProvider
                 .repeatId!,
-            changeType: RepeatableChangeType.onlyThisOne,
+            changeType: SerialTransactionChangeType.onlyThisOne,
             amount: enterScreenProvider.amountToDisplay(),
             category: enterScreenProvider.category,
             currency: "EUR",
@@ -40,11 +40,11 @@ Future<bool?> showChangeEntryDialog(BuildContext context, DateTime selectedDate)
         DialogPurpose.danger,
         function: () {
           balanceDataProvider
-              .updateRepeatedBalance(
+              .updateSerialTransaction(
             id: enterScreenProvider
                 .repeatId!,
             changeType:
-            RepeatableChangeType
+            SerialTransactionChangeType
                 .thisAndAllBefore,
             amount: enterScreenProvider.amountToDisplay(),
             category: enterScreenProvider
@@ -68,11 +68,11 @@ Future<bool?> showChangeEntryDialog(BuildContext context, DateTime selectedDate)
         DialogPurpose.danger,
         function: () {
           balanceDataProvider
-              .updateRepeatedBalance(
+              .updateSerialTransaction(
             id: enterScreenProvider
                 .repeatId!,
             changeType:
-            RepeatableChangeType
+            SerialTransactionChangeType
                 .thisAndAllAfter,
             amount: enterScreenProvider.amountToDisplay(),
             category: enterScreenProvider
@@ -96,11 +96,11 @@ Future<bool?> showChangeEntryDialog(BuildContext context, DateTime selectedDate)
         DialogPurpose.danger,
         function: () {
           balanceDataProvider
-              .updateRepeatedBalance(
+              .updateSerialTransaction(
             id: enterScreenProvider
                 .repeatId!,
             changeType:
-            RepeatableChangeType.all,
+            SerialTransactionChangeType.all,
             amount: enterScreenProvider.amountToDisplay(),
             category: enterScreenProvider
                 .category,

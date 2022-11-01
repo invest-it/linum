@@ -86,7 +86,7 @@ class Transaction {
 
   @override
   String toString() {
-    return 'SingleBalanceData(amount: $amount, category: $category, currency: $currency, id: $id, name: $name, note: $note, repeatId: $repeatId, time: $time, formerTime: $formerTime)';
+    return 'Transaction(amount: $amount, category: $category, currency: $currency, id: $id, name: $name, note: $note, repeatId: $repeatId, time: $time, formerTime: $formerTime)';
   }
 
   @override

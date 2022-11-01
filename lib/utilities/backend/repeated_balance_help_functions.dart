@@ -7,35 +7,35 @@
 import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:linum/models/serial_transaction.dart';
 
-bool isMonthly(SerialTransaction singleRepeatedBalance) {
-  return singleRepeatedBalance.repeatDurationType.name.toUpperCase() ==
+bool isMonthly(SerialTransaction serialTransaction) {
+  return serialTransaction.repeatDurationType.name.toUpperCase() ==
           "MONTHS";
 }
 
 /// after splitting a repeatable delete copied "changes" attributes that are out of the time limits of that repeatable
 void removeUnusedChangedAttributes(
-  SerialTransaction singleRepeatedBalance,
+  SerialTransaction serialTransaction,
 ) {
-  if (singleRepeatedBalance.changed == null || singleRepeatedBalance.endTime == null) {
+  if (serialTransaction.changed == null || serialTransaction.endTime == null) {
     return;
   }
   final List<String> keysToRemove = <String>[];
-  for (final timeStampString in singleRepeatedBalance.changed!.keys) {
+  for (final timeStampString in serialTransaction.changed!.keys) {
     if (!DateTime.fromMillisecondsSinceEpoch(
           (num.tryParse(timeStampString) as int?) ?? 0,
         ).isBefore(
-          singleRepeatedBalance.initialTime.toDate(),
+          serialTransaction.initialTime.toDate(),
         ) &&
         !DateTime.fromMillisecondsSinceEpoch(
           (num.tryParse(timeStampString) as int?) ?? 0,
         ).isAfter(
-          singleRepeatedBalance.endTime!.toDate(),
+          serialTransaction.endTime!.toDate(),
         )) {
       keysToRemove.add(timeStampString);
     }
   }
   for (final key in keysToRemove) {
-    singleRepeatedBalance.changed!.remove(key);
+    serialTransaction.changed!.remove(key);
   }
 }
 

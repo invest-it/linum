@@ -14,9 +14,9 @@ abstract class BalanceDataListView {
   /// It will fill the ListView using that data.
   /// @balanceData Mapped Data from the Balance
   /// It has the following structure:
-  /// [singleBalance1, singleBalance2, singleBalance3...]
-  /// with singleBalance1 having the structure:
-  /// singleBalance =
+  /// [transaction1, transaction2, transaction3...]
+  /// with transaction1 having the structure:
+  /// transaction =
   /// {
   ///   amount: <Number>
   ///   category: <String>
@@ -24,14 +24,14 @@ abstract class BalanceDataListView {
   ///   name: <String>
   ///   time: <Timestamp>
   /// }
-  void setSingleBalanceData(
-    List<Transaction> balanceData, {
+  void setTransactions(
+    List<Transaction> transactions, {
     required BuildContext context,
     bool error = false,
   });
 
-  void setRepeatedBalanceData(
-    List<SerialTransaction> balanceData, {
+  void setSerialTransactions(
+    List<SerialTransaction> transactions, {
     required BuildContext context,
     bool error = false,
   });

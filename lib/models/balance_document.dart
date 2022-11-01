@@ -20,13 +20,13 @@ class BalanceDocument {
 
 
   factory BalanceDocument.fromMap(Map<String, dynamic> map) {
-    final rawBalanceData = map['balanceData'] as List<dynamic>;
-    final balanceData = rawBalanceData.map((data) => Transaction.fromMap(data as Map<String, dynamic>)).toList();
-    final rawRepeatedBalance = map['repeatedBalance'] as List<dynamic>;
-    final repeatedBalance = rawRepeatedBalance.map((data) => SerialTransaction.fromMap(data as Map<String, dynamic>)).toList();
+    final rawTransactions = map['balanceData'] as List<dynamic>;
+    final transactions = rawTransactions.map((data) => Transaction.fromMap(data as Map<String, dynamic>)).toList();
+    final rawSerialTransactions = map['repeatedBalance'] as List<dynamic>;
+    final serialTransactions = rawSerialTransactions.map((data) => SerialTransaction.fromMap(data as Map<String, dynamic>)).toList();
     return BalanceDocument(
-      transactions: balanceData,
-      serialTransactions: repeatedBalance,
+      transactions: transactions,
+      serialTransactions: serialTransactions,
       settings: map['settings'] as Map<String, dynamic>,
     );
   }

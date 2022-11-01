@@ -198,7 +198,7 @@ class _EnterScreenState extends State<EnterScreen> {
     final BalanceDataProvider balanceDataProvider = Provider.of<BalanceDataProvider>(context, listen: false);
     if (enterScreenProvider.repeatDuration == null ||
         enterScreenProvider.repeatDurationTyp == null) {
-      balanceDataProvider.addSingleBalance(
+      balanceDataProvider.addTransaction(
         Transaction(
           amount: enterScreenProvider.amountToDisplay(),
           category: enterScreenProvider.category,
@@ -211,7 +211,7 @@ class _EnterScreenState extends State<EnterScreen> {
         ),
       );
     } else {
-      balanceDataProvider.addRepeatedBalance(
+      balanceDataProvider.addSerialTransaction(
         SerialTransaction(
           amount: enterScreenProvider.amountToDisplay(),
           category: enterScreenProvider.category,
@@ -244,7 +244,7 @@ class _EnterScreenState extends State<EnterScreen> {
     final EnterScreenProvider enterScreenProvider = Provider.of<EnterScreenProvider>(context, listen: false);
     final BalanceDataProvider balanceDataProvider = Provider.of<BalanceDataProvider>(context, listen: false);
     if (enterScreenProvider.repeatId == null) {
-      balanceDataProvider.updateSingleBalance(
+      balanceDataProvider.updateTransaction(
         Transaction(
           id: enterScreenProvider.formerId ?? "",
           amount: enterScreenProvider.amountToDisplay(),

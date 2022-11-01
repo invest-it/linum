@@ -8,39 +8,39 @@ import 'dart:developer' as dev;
 
 import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:linum/constants/repeat_duration_type_enum.dart';
-import 'package:linum/constants/repeatable_change_type_enum.dart';
+import 'package:linum/constants/serial_transaction_change_type_enum.dart';
 import 'package:linum/models/balance_document.dart';
 import 'package:linum/models/changed_transaction.dart';
 import 'package:linum/models/serial_transaction.dart';
 import 'package:linum/models/transaction.dart';
 import 'package:linum/utilities/backend/date_time_calculation_functions.dart';
 import 'package:linum/utilities/backend/repeated_balance_help_functions.dart';
-import 'package:linum/utilities/balance_data/repeated_balance_data_remover.dart';
-import 'package:linum/utilities/balance_data/repeated_balance_data_updater.dart';
+import 'package:linum/utilities/balance_data/serial_transaction_remover.dart';
+import 'package:linum/utilities/balance_data/serial_transaction_updater.dart';
 import 'package:uuid/uuid.dart';
 
-class RepeatedBalanceDataManager {
+class SerialTransactionManager {
   /// add a repeated Balance and upload it (the stream will automatically show it in the app again)
-  static bool addRepeatedBalanceToData(
-    SerialTransaction repeatBalanceData,
+  static bool addSerialTransactionToData(
+    SerialTransaction serialTransaction,
     BalanceDocument data,
   ) {
     // conditions
-    if (repeatBalanceData.category == "") {
+    if (serialTransaction.category == "") {
       dev.log("repeatBalanceData.category must be != '' ");
       return false;
     }
-    if (repeatBalanceData.currency == "") {
+    if (serialTransaction.currency == "") {
       dev.log("repeatBalanceData.currency must be != '' ");
       return false;
     }
 
-    data.serialTransactions.add(repeatBalanceData);
+    data.serialTransactions.add(serialTransaction);
     return true;
   }
 
-  static bool updateRepeatedBalanceInData({
-    required RepeatableChangeType changeType,
+  static bool updateSerialTransactionInData({
+    required SerialTransactionChangeType changeType,
     required String id,
     required BalanceDocument data,
     num? amount,
@@ -62,19 +62,19 @@ class RepeatedBalanceDataManager {
       dev.log("no id provided");
       return false;
     }
-    if (changeType == RepeatableChangeType.thisAndAllBefore) {
+    if (changeType == SerialTransactionChangeType.thisAndAllBefore) {
       if (time == null) {
         dev.log("RepeatableChangeType.thisAndAllBefore => time != null");
         return false;
       }
-      if (resetEndTime ?? false || endTime != null) {
+      if (resetEndTime) {
         dev.log(
           "resetEndTime, endTime are no available for RepeatableChangeType.thisAndAllBefore",
         );
         return false;
       }
     }
-    if (changeType == RepeatableChangeType.thisAndAllAfter) {
+    if (changeType == SerialTransactionChangeType.thisAndAllAfter) {
       if (time == null) {
         dev.log("RepeatableChangeType.thisAndAllAfter => time != null");
         return false;
@@ -86,7 +86,7 @@ class RepeatedBalanceDataManager {
         return false;
       }
     }
-    if (changeType == RepeatableChangeType.onlyThisOne) {
+    if (changeType == SerialTransactionChangeType.onlyThisOne) {
       if (time == null) {
         dev.log("RepeatableChangeType.onlyThisOne => time != null");
         return false;
@@ -114,34 +114,34 @@ class RepeatedBalanceDataManager {
     firestore.Timestamp? checkedEndTime;
     firestore.Timestamp? checkedNewTime;
 
-    for (final singleRepeatedBalance
+    for (final serialTransaction
         in data.serialTransactions) {
-      if (singleRepeatedBalance.id == id) {
-        if (amount != singleRepeatedBalance.amount) {
+      if (serialTransaction.id == id) {
+        if (amount != serialTransaction.amount) {
           checkedAmount = amount;
         }
-        if (category != singleRepeatedBalance.category) {
+        if (category != serialTransaction.category) {
           checkedCategory = category;
         }
-        if (currency != singleRepeatedBalance.currency) {
+        if (currency != serialTransaction.currency) {
           checkedCurrency = currency;
         }
-        if (name != singleRepeatedBalance.name) {
+        if (name != serialTransaction.name) {
           checkedName = name;
         }
-        if (note != singleRepeatedBalance.note) {
+        if (note != serialTransaction.note) {
           checkedNote = note;
         }
-        if (initialTime != singleRepeatedBalance.initialTime) {
+        if (initialTime != serialTransaction.initialTime) {
           checkedInitialTime = initialTime;
         }
-        if (repeatDuration != singleRepeatedBalance.repeatDuration) {
+        if (repeatDuration != serialTransaction.repeatDuration) {
           checkedRepeatDuration = repeatDuration;
         }
-        if (repeatDurationType != singleRepeatedBalance.repeatDurationType) {
+        if (repeatDurationType != serialTransaction.repeatDurationType) {
           checkedRepeatDurationType = repeatDurationType;
         }
-        if (endTime != singleRepeatedBalance.endTime) {
+        if (endTime != serialTransaction.endTime) {
           checkedEndTime = endTime;
         }
         if (newTime != time) {
@@ -153,8 +153,8 @@ class RepeatedBalanceDataManager {
     }
 
     switch (changeType) {
-      case RepeatableChangeType.all:
-        return RepeatedBalanceDataUpdater.updateAll(
+      case SerialTransactionChangeType.all:
+        return SerialTransactionUpdater.updateAll(
           amount: checkedAmount,
           category: checkedCategory,
           currency: checkedCurrency,
@@ -171,8 +171,8 @@ class RepeatedBalanceDataManager {
           resetEndTime: resetEndTime,
           time: time,
         );
-      case RepeatableChangeType.thisAndAllBefore:
-        return RepeatedBalanceDataUpdater.updateThisAndAllBefore(
+      case SerialTransactionChangeType.thisAndAllBefore:
+        return SerialTransactionUpdater.updateThisAndAllBefore(
           amount: checkedAmount,
           category: checkedCategory,
           currency: checkedCurrency,
@@ -189,8 +189,8 @@ class RepeatedBalanceDataManager {
           resetEndTime: resetEndTime,
           time: time!,
         );
-      case RepeatableChangeType.thisAndAllAfter:
-        return RepeatedBalanceDataUpdater.updateThisAndAllAfter(
+      case SerialTransactionChangeType.thisAndAllAfter:
+        return SerialTransactionUpdater.updateThisAndAllAfter(
           amount: checkedAmount,
           category: checkedCategory,
           currency: checkedCurrency,
@@ -207,8 +207,8 @@ class RepeatedBalanceDataManager {
           time: time!,
         );
 
-      case RepeatableChangeType.onlyThisOne:
-        return RepeatedBalanceDataUpdater.updateOnlyThisOne(
+      case SerialTransactionChangeType.onlyThisOne:
+        return SerialTransactionUpdater.updateOnlyThisOne(
           data: data,
           id: id,
           time: time!,
@@ -224,47 +224,47 @@ class RepeatedBalanceDataManager {
     }
   }
 
- static bool removeRepeatedBalanceFromData({
+ static bool removeSerialTransactionFromData({
     required String id,
     required BalanceDocument data,
-    required RepeatableChangeType removeType,
+    required SerialTransactionChangeType removeType,
     firestore.Timestamp? time,
   }) {
     // conditions
-    if (removeType == RepeatableChangeType.thisAndAllBefore && time == null) {
+    if (removeType == SerialTransactionChangeType.thisAndAllBefore && time == null) {
       dev.log(
         "removeType == RepeatableChangeType.thisAndAllBefore => time != null",
       );
       return false;
     }
-    if (removeType == RepeatableChangeType.thisAndAllAfter && time == null) {
+    if (removeType == SerialTransactionChangeType.thisAndAllAfter && time == null) {
       dev.log(
         "removeType == RepeatableChangeType.thisAndAllAfter => time != null",
       );
       return false;
     }
-    if (removeType == RepeatableChangeType.onlyThisOne && time == null) {
+    if (removeType == SerialTransactionChangeType.onlyThisOne && time == null) {
       dev.log("removeType == RepeatableChangeType.onlyThisOne => time != null");
       return false;
     }
 
     switch (removeType) {
-      case RepeatableChangeType.all:
-        return RepeatedBalanceDataRemover.removeAll(data, id);
-      case RepeatableChangeType.thisAndAllBefore:
-        return RepeatedBalanceDataRemover.removeThisAndAllBefore(
+      case SerialTransactionChangeType.all:
+        return SerialTransactionRemover.removeAll(data, id);
+      case SerialTransactionChangeType.thisAndAllBefore:
+        return SerialTransactionRemover.removeThisAndAllBefore(
           data,
           id,
           time!,
         );
-      case RepeatableChangeType.thisAndAllAfter:
-        return RepeatedBalanceDataRemover.removeThisAndAllAfter(
+      case SerialTransactionChangeType.thisAndAllAfter:
+        return SerialTransactionRemover.removeThisAndAllAfter(
           data,
           id,
           time!,
         );
-      case RepeatableChangeType.onlyThisOne:
-        return RepeatedBalanceDataRemover.removeOnlyThisOne(data, id, time!);
+      case SerialTransactionChangeType.onlyThisOne:
+        return SerialTransactionRemover.removeOnlyThisOne(data, id, time!);
     }
   }
 
@@ -272,63 +272,63 @@ class RepeatedBalanceDataManager {
 
   /// goes trough the repeatable list and uses addSingleRepeatableToBalanceDataLocally
   /// TODO: DOC: WHY DOES IT DO THAT?
-  static void addAllRepeatablesToBalanceDataLocally(
-    List<SerialTransaction> repeatedBalance,
-    List<Transaction> balanceData,
+  static void addAllSerialTransactionsToTransactionsLocally(
+    List<SerialTransaction> serialTransactions,
+    List<Transaction> transactions,
   ) {
-    for (final singleRepeatedBalance in repeatedBalance) {
-      addSingleRepeatableToBalanceDataLocally(
-        singleRepeatedBalance,
-        balanceData,
+    for (final serialTransaction in serialTransactions) {
+      addSerialTransactionsToTransactionsLocally(
+        serialTransaction,
+        transactions,
       );
     }
   }
 
   /// adds a repeatable for the whole needed duration up to one year with all needed "changes" into the balancedata
-  static void addSingleRepeatableToBalanceDataLocally(
-    SerialTransaction singleRepeatedBalance,
-    List<Transaction> balanceData,
+  static void addSerialTransactionsToTransactionsLocally(
+    SerialTransaction serialTransaction,
+    List<Transaction> transaction,
   ) {
     DateTime currentTime =
-        singleRepeatedBalance.initialTime.toDate();
+        serialTransaction.initialTime.toDate();
 
     const Duration futureDuration = Duration(days: 365);
 
     // while we are before 1 years after today / before endTime
-    while ((singleRepeatedBalance.endTime != null)
+    while ((serialTransaction.endTime != null)
         // !isbefore => currentime = endtime = true
-        ? !singleRepeatedBalance.endTime!.toDate().isBefore(currentTime)
+        ? !serialTransaction.endTime!.toDate().isBefore(currentTime)
         : DateTime.now().add(futureDuration).isAfter(currentTime)) {
       // if "changed" -> "this firestore.Timestamp" -> deleted exist AND it is true, dont add this balance
-      if (singleRepeatedBalance.changed == null
-          || singleRepeatedBalance.changed![currentTime] == null
-          || singleRepeatedBalance.changed![currentTime]!.deleted == null
-          || !singleRepeatedBalance.changed![currentTime]!.deleted!) {
-        balanceData.add(
+      if (serialTransaction.changed == null
+          || serialTransaction.changed![currentTime] == null
+          || serialTransaction.changed![currentTime]!.deleted == null
+          || !serialTransaction.changed![currentTime]!.deleted!) {
+        transaction.add(
             Transaction(
-              amount: singleRepeatedBalance.changed?[currentTime]?.amount
-                  ?? singleRepeatedBalance.amount,
-              category: singleRepeatedBalance.changed?[currentTime]?.category ??
-                  singleRepeatedBalance.category,
-              currency: singleRepeatedBalance.changed?[currentTime]?.currency ??
-                  singleRepeatedBalance.currency,
-              name: singleRepeatedBalance.changed?[currentTime]?.name ??
-                  singleRepeatedBalance.name,
-              time: singleRepeatedBalance.changed?[currentTime]?.time ??
+              amount: serialTransaction.changed?[currentTime]?.amount
+                  ?? serialTransaction.amount,
+              category: serialTransaction.changed?[currentTime]?.category ??
+                  serialTransaction.category,
+              currency: serialTransaction.changed?[currentTime]?.currency ??
+                  serialTransaction.currency,
+              name: serialTransaction.changed?[currentTime]?.name ??
+                  serialTransaction.name,
+              time: serialTransaction.changed?[currentTime]?.time ??
                   firestore.Timestamp.fromDate(currentTime),
-              repeatId: singleRepeatedBalance.id,
+              repeatId: serialTransaction.id,
               id: const Uuid().v4(),
-              formerTime: (singleRepeatedBalance.changed?[currentTime]?.time != null)
+              formerTime: (serialTransaction.changed?[currentTime]?.time != null)
                   ? firestore.Timestamp.fromDate(currentTime) : null,
             ),
         );
       }
       currentTime = calculateOneTimeStep(
-        singleRepeatedBalance.repeatDuration,
+        serialTransaction.repeatDuration,
         currentTime,
         // is it a month or second duration type
-        monthly: isMonthly(singleRepeatedBalance),
-        dayOfTheMonth: singleRepeatedBalance.initialTime.toDate().day,
+        monthly: isMonthly(serialTransaction),
+        dayOfTheMonth: serialTransaction.initialTime.toDate().day,
       );
     }
   }

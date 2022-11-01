@@ -9,16 +9,16 @@ import 'dart:developer' as dev;
 import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:flutter/material.dart';
 import 'package:linum/constants/repeat_duration_type_enum.dart';
-import 'package:linum/constants/repeatable_change_type_enum.dart';
+import 'package:linum/constants/serial_transaction_change_type_enum.dart';
 import 'package:linum/models/balance_document.dart';
 import 'package:linum/models/serial_transaction.dart';
 import 'package:linum/models/transaction.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/exchange_rate_provider.dart';
-import 'package:linum/utilities/balance_data/balance_data_stream_builder_manager.dart';
-import 'package:linum/utilities/balance_data/repeated_balance_data_manager.dart';
-import 'package:linum/utilities/balance_data/single_balance_data_manager.dart';
+import 'package:linum/utilities/balance_data/balance_data_stream_builder.dart';
+import 'package:linum/utilities/balance_data/serial_transaction_manager.dart';
+import 'package:linum/utilities/balance_data/transaction_manager.dart';
 import 'package:linum/widgets/abstract/abstract_home_screen_card.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
 import 'package:provider/provider.dart';
@@ -144,7 +144,7 @@ class BalanceDataProvider extends ChangeNotifier {
   }
 
   /// add a single Balance and upload it
-  Future<bool> addSingleBalance(Transaction transaction) async {
+  Future<bool> addTransaction(Transaction transaction) async {
     // get Data
     final data = await _getData();
     if (data == null) {
@@ -152,7 +152,7 @@ class BalanceDataProvider extends ChangeNotifier {
     }
 
     // add and upload
-    if (SingleBalanceDataManager.addSingleBalanceToData(transaction, data)) {
+    if (TransactionManager.addTransactionToData(transaction, data)) {
       await _balance!.set(data);
       return true;
     }
@@ -162,7 +162,7 @@ class BalanceDataProvider extends ChangeNotifier {
   }
 
   /// update a single Balance and upload it (identified using the name and time)
-  Future<bool> updateSingleBalanceDirectly({
+  Future<bool> updateTransactionDirectly({
     required String id,
     num? amount,
     String? category,
@@ -177,7 +177,7 @@ class BalanceDataProvider extends ChangeNotifier {
     }
 
     // update and upload
-    if (SingleBalanceDataManager.updateSingleBalanceInData(
+    if (TransactionManager.updateTransactionInData(
       id,
       data,
       amount: amount,
@@ -194,10 +194,10 @@ class BalanceDataProvider extends ChangeNotifier {
     return true;
   }
 
-  Future<bool> updateSingleBalance(
+  Future<bool> updateTransaction(
     Transaction transaction,
   ) async {
-    return updateSingleBalanceDirectly(
+    return updateTransactionDirectly(
       id: transaction.id,
       amount: transaction.amount,
       category: transaction.category,
@@ -208,7 +208,7 @@ class BalanceDataProvider extends ChangeNotifier {
   }
 
   /// remove a single Balance and upload it (identified using id)
-  Future<bool> removeSingleBalanceUsingId(String id) async {
+  Future<bool> removeTransactionUsingId(String id) async {
     // get Data
     final data = await _getData();
     if (data == null) {
@@ -216,7 +216,7 @@ class BalanceDataProvider extends ChangeNotifier {
     }
 
     // remove and upload
-    if (SingleBalanceDataManager.removeSingleBalanceFromData(id, data)) {
+    if (TransactionManager.removeTransactionFromData(id, data)) {
       await _balance!.set(data);
       return true;
     }
@@ -226,8 +226,8 @@ class BalanceDataProvider extends ChangeNotifier {
   }
 
   /// it is an alias for removeSingleBalanceUsingId(singleBalance.id);
-  Future<bool> removeSingleBalance(Transaction singleBalance) {
-    return removeSingleBalanceUsingId(singleBalance.id);
+  Future<bool> removeTransaction(Transaction transaction) {
+    return removeTransactionUsingId(transaction.id);
   }
 
   Future<BalanceDocument?> _getData() async {
@@ -252,7 +252,7 @@ class BalanceDataProvider extends ChangeNotifier {
   }
 
   /// add a repeated Balance and upload it (the stream will automatically show it in the app again)
-  Future<bool> addRepeatedBalance(
+  Future<bool> addSerialTransaction(
     SerialTransaction serialTransaction,
   ) async {
     // get Data
@@ -262,7 +262,7 @@ class BalanceDataProvider extends ChangeNotifier {
     }
 
     // add and upload
-    if (RepeatedBalanceDataManager.addRepeatedBalanceToData(
+    if (SerialTransactionManager.addSerialTransactionToData(
       serialTransaction,
       data,
     )) {
@@ -277,9 +277,9 @@ class BalanceDataProvider extends ChangeNotifier {
   /// specify time if changeType != RepeatableChangeType.all
   /// resetEndTime, endTime are no available for RepeatableChangeType.thisAndAllBefore
   /// RepeatableChangeType.thisAndAllBefore and RepeatableChangeType.thisAndAllAfter will split the repeated balance to 2
-  Future<bool> updateRepeatedBalance({
+  Future<bool> updateSerialTransaction({
     required String id,
-    required RepeatableChangeType changeType,
+    required SerialTransactionChangeType changeType,
     num? amount,
     String? category,
     String? currency,
@@ -299,7 +299,7 @@ class BalanceDataProvider extends ChangeNotifier {
     }
 
     // update and upload
-    if (RepeatedBalanceDataManager.updateRepeatedBalanceInData(
+    if (SerialTransactionManager.updateSerialTransactionInData(
       id: id,
       changeType: changeType,
       data: data,
@@ -325,9 +325,9 @@ class BalanceDataProvider extends ChangeNotifier {
   /// [id] is the id of the repeatedBalance
   /// [removeType] decides what data should be removed from the balanceData. RemoveType.none should only be used for repeatedData with endDate
   /// [time] is required if you want to use RemoveType.allBefore or RemoveType.allAfter
-  Future<bool> removeRepeatedBalanceUsingId({
+  Future<bool> removeSerialTransactionUsingId({
     required String id,
-    required RepeatableChangeType removeType,
+    required SerialTransactionChangeType removeType,
     firestore.Timestamp? time,
   }) async {
     // get Data
@@ -337,7 +337,7 @@ class BalanceDataProvider extends ChangeNotifier {
     }
 
     // remove and upload
-    if (RepeatedBalanceDataManager.removeRepeatedBalanceFromData(
+    if (SerialTransactionManager.removeSerialTransactionFromData(
       id: id,
       data: data,
       removeType: removeType,
@@ -351,12 +351,12 @@ class BalanceDataProvider extends ChangeNotifier {
   }
 
   /// it is an alias for removeRepeatedBalanceUsingId with that serialTransaction.id
-  Future<bool> removeRepeatedBalance({
+  Future<bool> removeSerialTransaction({
     required SerialTransaction serialTransaction,
-    required RepeatableChangeType removeType,
+    required SerialTransactionChangeType removeType,
     firestore.Timestamp? time,
   }) async {
-    return removeRepeatedBalanceUsingId(
+    return removeSerialTransactionUsingId(
       id: serialTransaction.id,
       removeType: removeType,
       time: time,
@@ -370,7 +370,7 @@ class BalanceDataProvider extends ChangeNotifier {
     BalanceDataListView listView, {
     required BuildContext context,
   }) {
-    return BalanceDataStreamBuilderManager.fillListViewWithData(
+    return BalanceDataStreamBuilder.fillListViewWithData(
       algorithmProvider: _algorithmProvider,
       exchangeRateProvider: _exchangeRateProvicer,
       listView: listView,
@@ -383,7 +383,7 @@ class BalanceDataProvider extends ChangeNotifier {
     BalanceDataListView blistview, {
     required BuildContext context,
   }) {
-    return BalanceDataStreamBuilderManager.fillListViewWithData(
+    return BalanceDataStreamBuilder.fillListViewWithData(
       algorithmProvider: _algorithmProvider,
       exchangeRateProvider: _exchangeRateProvicer,
       listView: blistview,
@@ -397,7 +397,7 @@ class BalanceDataProvider extends ChangeNotifier {
   StreamBuilder fillStatisticPanelWithData(
     AbstractHomeScreenCard statisticPanel,
   ) {
-    return BalanceDataStreamBuilderManager.fillStatisticPanelWithData(
+    return BalanceDataStreamBuilder.fillStatisticPanelWithData(
       algorithmProvider: _algorithmProvider,
       dataStream: _dataStream,
       statisticPanel: statisticPanel,

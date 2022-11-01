@@ -11,7 +11,7 @@ import 'package:linum/models/balance_document.dart';
 import 'package:linum/models/changed_transaction.dart';
 import 'package:linum/types/date_time_map.dart';
 
-class RepeatedBalanceDataRemover {
+class SerialTransactionRemover {
   static bool removeAll(BalanceDocument data, String id) {
     final int length = data.serialTransactions.length;
     data.serialTransactions.removeWhere((element) {

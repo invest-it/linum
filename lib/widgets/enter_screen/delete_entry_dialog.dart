@@ -7,7 +7,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/constants/repeatable_change_type_enum.dart';
+import 'package:linum/constants/serial_transaction_change_type_enum.dart';
 import 'package:linum/models/dialog_action.dart';
 import 'package:linum/models/serial_transaction.dart';
 import 'package:linum/models/transaction.dart';
@@ -15,7 +15,7 @@ import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:provider/provider.dart';
 
-Future<bool?> generateDeleteDialogFromSingleBalanceData(
+Future<bool?> generateDeleteDialogFromTransaction(
   BuildContext context,
   BalanceDataProvider balanceDataProvider,
   Transaction transaction,
@@ -31,8 +31,8 @@ Future<bool?> generateDeleteDialogFromSingleBalanceData(
 }
 
 
-Future<bool?> generateDeleteDialogFromRepetableBalanceData(BuildContext context, BalanceDataProvider balanceDataProvider, SerialTransaction repeatedBalanceData) async{
-  return showDefaultDeleteDialog(context, repeatedBalanceData.id);
+Future<bool?> generateDeleteDialogFromSerialTransaction(BuildContext context, BalanceDataProvider balanceDataProvider, SerialTransaction serialTransaction) async{
+  return showDefaultDeleteDialog(context, serialTransaction.id);
 }
 
 Future<bool?> showRepeatableDeleteDialog(
@@ -50,9 +50,9 @@ Future<bool?> showRepeatableDeleteDialog(
         dialogPurpose: DialogPurpose.primary,
         actionTitle: "enter_screen.delete-entry.dialog-button-onlyonce",
         function: () {
-          balanceDataProvider.removeRepeatedBalanceUsingId(
+          balanceDataProvider.removeSerialTransactionUsingId(
             id: transactionId,
-            removeType: RepeatableChangeType.onlyThisOne,
+            removeType: SerialTransactionChangeType.onlyThisOne,
             time: formerTime,
           );
           Navigator.of(context, rootNavigator: true).pop(true);
@@ -62,9 +62,9 @@ Future<bool?> showRepeatableDeleteDialog(
         dialogPurpose: DialogPurpose.danger,
         actionTitle: "enter_screen.delete-entry.dialog-button-untilnow",
         function: () {
-          balanceDataProvider.removeRepeatedBalanceUsingId(
+          balanceDataProvider.removeSerialTransactionUsingId(
             id: transactionId,
-            removeType: RepeatableChangeType.thisAndAllBefore,
+            removeType: SerialTransactionChangeType.thisAndAllBefore,
             time: formerTime,
           );
           Navigator.of(context, rootNavigator: true).pop(true);
@@ -74,9 +74,9 @@ Future<bool?> showRepeatableDeleteDialog(
         dialogPurpose: DialogPurpose.danger,
         actionTitle: "enter_screen.delete-entry.dialog-button-fromnow",
         function: () {
-          balanceDataProvider.removeRepeatedBalanceUsingId(
+          balanceDataProvider.removeSerialTransactionUsingId(
             id: transactionId,
-            removeType: RepeatableChangeType.thisAndAllAfter,
+            removeType: SerialTransactionChangeType.thisAndAllAfter,
             time: formerTime,
           );
           Navigator.of(context, rootNavigator: true).pop(true);
@@ -86,9 +86,9 @@ Future<bool?> showRepeatableDeleteDialog(
         dialogPurpose: DialogPurpose.danger,
         actionTitle: "enter_screen.delete-entry.dialog-button-allentries",
         function: () {
-          balanceDataProvider.removeRepeatedBalanceUsingId(
+          balanceDataProvider.removeSerialTransactionUsingId(
             id: transactionId,
-            removeType: RepeatableChangeType.all,
+            removeType: SerialTransactionChangeType.all,
           );
           Navigator.of(context, rootNavigator: true).pop(true);
         },
@@ -122,7 +122,7 @@ Future<bool?> showDefaultDeleteDialog(
         dialogPurpose: DialogPurpose.danger,
         actionTitle: "enter_screen.delete-entry.dialog-button-delete",
         function: () {
-          balanceDataProvider.removeSingleBalanceUsingId(
+          balanceDataProvider.removeTransactionUsingId(
             balanceDataId,
           );
           Navigator.of(context, rootNavigator: true).pop(true);

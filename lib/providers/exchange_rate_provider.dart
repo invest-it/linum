@@ -11,8 +11,8 @@ class ExchangeRateProvider extends ChangeNotifier {
   final Store _store;
   ExchangeRateProvider(this._store) : _repository = ExchangeRateRepository(_store);
 
-  Future addExchangeRatesToBalanceData(List<Transaction> balanceData) async {
-    final dates = balanceData.map((e) => e.time.toDate()).toList();
+  Future addExchangeRatesToBalanceData(List<Transaction> transactions) async {
+    final dates = transactions.map((e) => e.time.toDate()).toList();
     final ratesMap = await _repository.getExchangeRatesForDates(dates);
 
     if (ratesMap.isEmpty) {
@@ -21,13 +21,13 @@ class ExchangeRateProvider extends ChangeNotifier {
 
     ExchangeRatesForDate lastSuccessful = ratesMap.values.first;
 
-    for (final balanceEntry in balanceData) {
-      if (balanceEntry.currency == "EUR") {
+    for (final transaction in transactions) {
+      if (transaction.currency == "EUR") {
         continue;
         // TODO: Handle default Currency settings
       }
 
-      final dateTime = balanceEntry.time.toDate();
+      final dateTime = transaction.time.toDate();
       final key = DateTime(dateTime.year, dateTime.day).millisecondsSinceEpoch;
       var exchangeRates = ratesMap[key];
 
@@ -38,10 +38,10 @@ class ExchangeRateProvider extends ChangeNotifier {
         lastSuccessful = exchangeRates;
       }
 
-      final exchangeRate = exchangeRates.rates?[balanceEntry.currency];
+      final exchangeRate = exchangeRates.rates?[transaction.currency];
 
       if (exchangeRate != null) {
-        balanceEntry.rateInfo = ExchangeRateInfo(
+        transaction.rateInfo = ExchangeRateInfo(
             int.parse(exchangeRate),
             firestore.Timestamp.fromMillisecondsSinceEpoch(exchangeRates.date),
             isOtherDate: key != exchangeRates.date,

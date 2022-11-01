@@ -185,8 +185,8 @@ class StatisticsCalculations {
   ) {
     final Set<String> result = {};
 
-    for (final singleBalance in data) {
-      result.add(singleBalance.category);
+    for (final transaction in data) {
+      result.add(transaction.category);
     }
 
     return result.toList();

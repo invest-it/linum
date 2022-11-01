@@ -14,7 +14,7 @@ import 'package:linum/utilities/backend/statistic_calculations.dart';
 import 'package:linum/utilities/frontend/filters.dart';
 import 'package:uuid/uuid.dart';
 
-final Transaction baseSingleBalanceData = Transaction(
+final Transaction baseTransaction = Transaction(
   amount: 0,
   category: "None",
   currency: "EUR",
@@ -30,44 +30,44 @@ void main() {
     final List<Transaction> emptyData = [];
 
     final List<Transaction> exampleData1 = [
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 15),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 35.5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 25.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: 15),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: 35.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: 5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: 25.5),
     ];
     final List<Transaction> exampleData2 = [
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0.5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -2.5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -2.5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -0.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -2.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -2.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -0),
     ];
     final List<Transaction> exampleData3 = [
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0.5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -2.5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -2.5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 15),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 25.5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 4),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -0.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -2.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -2.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -0),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: 15),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: 5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: 25.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: 4),
     ];
     final List<Transaction> exampleData4 = [
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0.5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -2.5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -2.5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 15),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 25.5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 4),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -20.5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -23.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -0.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -2.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -2.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -0),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: 15),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: 5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: 25.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: 4),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -20.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -23.5),
     ];
     final List<Transaction> exampleData5 = [
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -0),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -0),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -0),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -0),
     ];
 
     group("balance", () {
@@ -961,7 +961,7 @@ List<Transaction> _createRandomStatisticDataWithFixedTime(
   final int max = rand.nextInt(256) + 1;
   for (int i = 0; i < max; i++) {
     returnList.add(
-      baseSingleBalanceData.copyWith(
+      baseTransaction.copyWith(
         amount:
             ((((0.5 - rand.nextDouble()) * 2 * 256) * 100).roundToDouble()) /
                 100.0,

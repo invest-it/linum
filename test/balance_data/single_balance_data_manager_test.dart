@@ -9,15 +9,15 @@ import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/models/balance_document.dart';
 import 'package:linum/models/transaction.dart';
-import 'package:linum/utilities/balance_data/single_balance_data_manager.dart';
+import 'package:linum/utilities/balance_data/transaction_manager.dart';
 import 'package:uuid/uuid.dart';
 
 void main() {
-  group("SingleBalanceDataManager", () {
-    group("addSingleBalanceToData", () {
-      test("singleBalance.category == ''", () {
+  group("TransactionDataManager", () {
+    group("addTransactionToData", () {
+      test("transaction.category == ''", () {
         // Arrange (Initialization)
-        final Transaction singleBalance = Transaction(
+        final Transaction transaction = Transaction(
           amount: 5.55,
           category: "",
           currency: "EUR",
@@ -29,8 +29,8 @@ void main() {
         final data = BalanceDocument();
 
         // Act (Execution)
-        final bool result = SingleBalanceDataManager.addSingleBalanceToData(
-          singleBalance,
+        final bool result = TransactionManager.addTransactionToData(
+          transaction,
           data,
         );
 
@@ -39,9 +39,9 @@ void main() {
         expect(data.transactions.length, 0);
       });
 
-      test("singleBalance.currency == ''", () {
+      test("transaction.currency == ''", () {
         // Arrange (Initialization)
-        final Transaction singleBalance = Transaction(
+        final Transaction transaction = Transaction(
           amount: 5.55,
           category: "none",
           currency: "",
@@ -53,8 +53,8 @@ void main() {
         final data = BalanceDocument();
 
         // Act (Execution)
-        final bool result = SingleBalanceDataManager.addSingleBalanceToData(
-          singleBalance,
+        final bool result = TransactionManager.addTransactionToData(
+          transaction,
           data,
         );
 
@@ -81,7 +81,7 @@ void main() {
                 ),
           );
 
-          final Transaction singleBalance = Transaction(
+          final Transaction transaction = Transaction(
             amount: amount,
             category: "none",
             currency: "EUR",
@@ -90,8 +90,8 @@ void main() {
           );
 
           // Act (Execution)
-          final bool result = SingleBalanceDataManager.addSingleBalanceToData(
-            singleBalance,
+          final bool result = TransactionManager.addTransactionToData(
+            transaction,
             data,
           );
 
@@ -113,7 +113,7 @@ void main() {
         expect(data.transactions.length, max);
       });
     });
-    group("removeSingleBalanceFromData", () {
+    group("removeTransactionFromData", () {
       test("id not found", () {
         // Arrange (Initialization)
 
@@ -126,7 +126,7 @@ void main() {
 
         // Act (Execution)
         final bool result =
-            SingleBalanceDataManager.removeSingleBalanceFromData(id, data);
+            TransactionManager.removeTransactionFromData(id, data);
 
         // Assert (Observation)
         expect(result, false);
@@ -149,7 +149,7 @@ void main() {
 
           // Act (Execution)
           final bool result =
-              SingleBalanceDataManager.removeSingleBalanceFromData(id, data);
+              TransactionManager.removeTransactionFromData(id, data);
 
           // Assert (Observation)
           expect(result, true);
@@ -158,7 +158,7 @@ void main() {
       });
     });
 
-    group("updateSingleBalanceInData", () {
+    group("updateTransactionInData", () {
       test("id not found", () {
         // Arrange (Initialization)
 
@@ -169,8 +169,8 @@ void main() {
 
 
         // Act (Execution)
-        final bool result = SingleBalanceDataManager
-            .updateSingleBalanceInData(id, data, amount: 5);
+        final bool result = TransactionManager
+            .updateTransactionInData(id, data, amount: 5);
 
         // Assert (Observation)
         expect(result, false);
@@ -184,8 +184,8 @@ void main() {
 
 
         // Act (Execution)
-        final bool result = SingleBalanceDataManager
-            .updateSingleBalanceInData("", data, amount: 5);
+        final bool result = TransactionManager
+            .updateTransactionInData("", data, amount: 5);
 
         // Assert (Observation)
         expect(result, false);
@@ -203,8 +203,8 @@ void main() {
 
 
         // Act (Execution)
-        final bool result = SingleBalanceDataManager
-            .updateSingleBalanceInData(id, data, category: "");
+        final bool result = TransactionManager
+            .updateTransactionInData(id, data, category: "");
 
         // Assert (Observation)
         expect(result, false);
@@ -222,8 +222,8 @@ void main() {
 
 
         // Act (Execution)
-        final bool result = SingleBalanceDataManager
-            .updateSingleBalanceInData(id, data, currency: "");
+        final bool result = TransactionManager
+            .updateTransactionInData(id, data, currency: "");
 
         // Assert (Observation)
         expect(result, false);
@@ -244,7 +244,7 @@ void main() {
 
           // Act (Execution)
           final bool result =
-              SingleBalanceDataManager.updateSingleBalanceInData(
+              TransactionManager.updateTransactionInData(
             id,
             data,
             amount: 5,

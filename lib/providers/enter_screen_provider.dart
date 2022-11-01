@@ -69,19 +69,19 @@ class EnterScreenProvider with ChangeNotifier {
     _note = note;
   }
 
-  factory EnterScreenProvider.fromBalanceData(Transaction singleBalanceData, {bool editMode = true}) {
+  factory EnterScreenProvider.fromBalanceData(Transaction transaction, {bool editMode = true}) {
     return EnterScreenProvider(
-      id: singleBalanceData.id,
-      amount: singleBalanceData.amount,
-      category: singleBalanceData.category,
-      name: singleBalanceData.name,
+      id: transaction.id,
+      amount: transaction.amount,
+      category: transaction.category,
+      name: transaction.name,
       selectedDate:
-      singleBalanceData.time.toDate(),
+      transaction.time.toDate(),
       editMode: editMode,
-      repeatId: singleBalanceData.repeatId,
+      repeatId: transaction.repeatId,
       formerTime:
-      singleBalanceData.formerTime ??
-          singleBalanceData.time,
+      transaction.formerTime ??
+          transaction.time,
     );
   }
 

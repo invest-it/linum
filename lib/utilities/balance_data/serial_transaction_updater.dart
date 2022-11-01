@@ -15,7 +15,7 @@ import 'package:linum/types/date_time_map.dart';
 import 'package:linum/utilities/backend/date_time_calculation_functions.dart';
 import 'package:linum/utilities/backend/repeated_balance_help_functions.dart';
 
-class RepeatedBalanceDataUpdater {
+class SerialTransactionUpdater {
   static bool updateAll({
     required BalanceDocument data,
     required String id,

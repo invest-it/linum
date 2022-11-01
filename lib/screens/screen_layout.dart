@@ -191,7 +191,7 @@ class _ScreenLayoutState extends State<ScreenLayout>
       final firestore.Timestamp time = firestore.Timestamp.fromDate(
         DateTime.now().subtract(Duration(days: rand.nextInt(365 * 5))),
       );
-      balanceDataProvider.addSingleBalance(
+      balanceDataProvider.addTransaction(
         Transaction(
           amount: ((rand.nextDouble() * -10000).round()) / 100.0,
           category: categories[rand.nextInt(categories.length)],
