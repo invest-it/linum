@@ -11,17 +11,17 @@ import 'package:linum/types/date_time_map.dart';
 import 'package:uuid/uuid.dart';
 
 class RepeatedBalanceData {
-  num amount;
-  String category;
-  String currency;
-  String id;
-  String name;
-  String? note;
-  DateTimeMap<String, ChangedRepeatedBalanceData>? changed;
-  Timestamp initialTime;
-  Timestamp? endTime;
-  int repeatDuration;
-  RepeatDurationType repeatDurationType;
+  final num amount;
+  final String category;
+  final String currency;
+  final String id;
+  final String name;
+  final String? note;
+  final DateTimeMap<String, ChangedRepeatedBalanceData>? changed;
+  final Timestamp initialTime;
+  final Timestamp? endTime;
+  final int repeatDuration;
+  final RepeatDurationType repeatDurationType;
 
   RepeatedBalanceData({
     required this.amount,
