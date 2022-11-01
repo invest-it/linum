@@ -36,9 +36,7 @@ class TransactionManager {
   ) {
     final int dataLength = (data.transactions).length;
     (data.transactions).removeWhere((value) {
-      return value.id == id ||
-          value.id == null || // TODO: Check if this is a problem
-          value.repeatId != null; // Auto delete trash data
+      return value.id == id || value.repeatId != null; // Auto delete trash data
     });
     if (dataLength > data.transactions.length) {
       return true;

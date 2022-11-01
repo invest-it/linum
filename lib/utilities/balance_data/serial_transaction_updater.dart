@@ -107,7 +107,7 @@ class SerialTransactionUpdater {
       updatedEndTime = endTime;
       isEdited = true;
     }
-    if (resetEndTime != null && resetEndTime) {
+    if (resetEndTime) {
       updatedEndTime = null;
       isEdited = true;
     }
