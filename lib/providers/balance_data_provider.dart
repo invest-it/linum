@@ -38,10 +38,10 @@ class BalanceDataProvider extends ChangeNotifier {
 
   /// Creates the BalanceDataProvider. Inparticular it sets [_balance] correctly
   BalanceDataProvider(BuildContext context) {
-
     _uid = Provider.of<AuthenticationService>(context, listen: false).uid;
     _algorithmProvider = Provider.of<AlgorithmProvider>(context, listen: false);
-    _exchangeRateProvicer = Provider.of<ExchangeRateProvider>(context, listen: false);
+    _exchangeRateProvicer =
+        Provider.of<ExchangeRateProvider>(context, listen: false);
     asynConstructor();
   }
 
@@ -75,7 +75,8 @@ class BalanceDataProvider extends ChangeNotifier {
       _balance = firestore.FirebaseFirestore.instance
           .collection('balance')
           .withConverter<BalanceDocument>(
-            fromFirestore: (snapshot, _) => BalanceDocument.fromMap(snapshot.data()!),
+            fromFirestore: (snapshot, _) =>
+                BalanceDocument.fromMap(snapshot.data()!),
             toFirestore: (doc, _) => doc.toMap(),
           )
           .doc(docs[0] as String);
@@ -88,8 +89,8 @@ class BalanceDataProvider extends ChangeNotifier {
   /// Creates Document if it doesn't exist
   Future<List<dynamic>> _createDoc() async {
     dev.log("creating document");
-    final firestore.DocumentSnapshot<Map<String, dynamic>> doc = await firestore.FirebaseFirestore
-        .instance
+    final firestore.DocumentSnapshot<Map<String, dynamic>> doc = await firestore
+        .FirebaseFirestore.instance
         .collection('balance')
         .doc("documentToUser")
         .get();
@@ -190,7 +191,8 @@ class BalanceDataProvider extends ChangeNotifier {
       return true;
     }
 
-    await _balance!.update(data.toMap()); // TODO: Check this out, sounds crazy, right?
+    await _balance!
+        .update(data.toMap()); // TODO: Check this out, sounds crazy, right?
     return true;
   }
 
@@ -389,7 +391,7 @@ class BalanceDataProvider extends ChangeNotifier {
       listView: blistview,
       context: context,
       dataStream: _dataStream,
-      isRepeatable: true,
+      isSerial: true,
     );
   }
 
@@ -427,7 +429,8 @@ class BalanceDataProvider extends ChangeNotifier {
     return data!.settings;
   }
 
-  static SingleChildWidget provider(BuildContext context, {bool testing = false}) {
+  static SingleChildWidget provider(BuildContext context,
+      {bool testing = false}) {
     return ChangeNotifierProxyProvider3<AuthenticationService,
         AlgorithmProvider, ExchangeRateProvider, BalanceDataProvider>(
       create: (ctx) {

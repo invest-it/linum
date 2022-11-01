@@ -28,12 +28,13 @@ class BalanceDataStreamBuilder {
     required BalanceDataListView listView,
     required BuildContext context,
     required Stream<firestore.DocumentSnapshot<BalanceDocument>>? dataStream,
-    bool isRepeatable = false,
+    bool isSerial = false,
   }) {
     return StreamBuilder<firestore.DocumentSnapshot<BalanceDocument>>(
       stream: dataStream,
       builder: (ctx, snapshot) {
-        if (snapshot.connectionState == ConnectionState.none || snapshot.connectionState == ConnectionState.waiting) {
+        if (snapshot.connectionState == ConnectionState.none ||
+            snapshot.connectionState == ConnectionState.waiting) {
           return const LoadingSpinner();
         }
         if (snapshot.data == null) {
@@ -45,7 +46,7 @@ class BalanceDataStreamBuilder {
           log("ERROR LOADING");
           return listView.listview;
         } else {
-          if (!isRepeatable) {
+          if (!isSerial) {
             final preparedData = _prepareData(
               snapshot,
             );
@@ -108,9 +109,9 @@ class BalanceDataStreamBuilder {
           final List<Transaction> balanceData = preparedData.item1;
           final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(
-                balanceData,
-                algorithmProvider,
-              );
+            balanceData,
+            algorithmProvider,
+          );
           statisticPanel.addStatisticData(statisticsCalculations);
           return statisticPanel.returnWidget;
         }
