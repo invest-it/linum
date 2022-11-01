@@ -7,6 +7,7 @@
 import 'dart:math' as math;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:linum/models/balance_document.dart';
 import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/utilities/balance_data/single_balance_data_manager.dart';
 import 'package:uuid/uuid.dart';
@@ -24,19 +25,18 @@ void main() {
           time: Timestamp.fromDate(DateTime.now()),
         );
 
-        final SingleBalanceDataManager singleBalanceDataManager =
-            SingleBalanceDataManager();
-        final Map<String, dynamic> data = {"balanceData": []};
+
+        final data = BalanceDocument();
 
         // Act (Execution)
-        final bool result = singleBalanceDataManager.addSingleBalanceToData(
+        final bool result = SingleBalanceDataManager.addSingleBalanceToData(
           singleBalance,
           data,
         );
 
         // Assert (Observation)
         expect(result, false);
-        expect((data["balanceData"] as List<dynamic>).length, 0);
+        expect(data.balanceData.length, 0);
       });
 
       test("singleBalance.currency == ''", () {
@@ -49,27 +49,25 @@ void main() {
           time: Timestamp.fromDate(DateTime.now()),
         );
 
-        final SingleBalanceDataManager singleBalanceDataManager =
-            SingleBalanceDataManager();
-        final Map<String, dynamic> data = {"balanceData": []};
+
+        final data = BalanceDocument();
 
         // Act (Execution)
-        final bool result = singleBalanceDataManager.addSingleBalanceToData(
+        final bool result = SingleBalanceDataManager.addSingleBalanceToData(
           singleBalance,
           data,
         );
 
         // Assert (Observation)
         expect(result, false);
-        expect((data["balanceData"] as List<dynamic>).length, 0);
+        expect(data.balanceData.length, 0);
       });
 
       test("random data test", () {
         final math.Random rand = math.Random();
 
-        final SingleBalanceDataManager singleBalanceDataManager =
-            SingleBalanceDataManager();
-        final Map<String, dynamic> data = {"balanceData": []};
+
+        final data = BalanceDocument();
 
         final int max = rand.nextInt(2000) + 1;
         for (int i = 0; i < max; i++) {
@@ -92,7 +90,7 @@ void main() {
           );
 
           // Act (Execution)
-          final bool result = singleBalanceDataManager.addSingleBalanceToData(
+          final bool result = SingleBalanceDataManager.addSingleBalanceToData(
             singleBalance,
             data,
           );
@@ -100,68 +98,62 @@ void main() {
           // Assert (Observation)
           expect(result, true);
           expect(
-            ((data["balanceData"] as List<dynamic>).last
-                as Map<String, dynamic>)["amount"],
+            data.balanceData.last.amount,
             amount,
           );
           expect(
-            ((data["balanceData"] as List<dynamic>).last
-                as Map<String, dynamic>)["name"],
+            data.balanceData.last.name,
             "Item Nr $i",
           );
           expect(
-            ((data["balanceData"] as List<dynamic>).last
-                as Map<String, dynamic>)["time"],
+            data.balanceData.last.time,
             time,
           );
         }
-        expect((data["balanceData"] as List<dynamic>).length, max);
+        expect(data.balanceData.length, max);
       });
     });
     group("removeSingleBalanceFromData", () {
       test("id not found", () {
         // Arrange (Initialization)
 
-        final Map<String, List<Map<String, dynamic>>> data =
-            generateRandomData();
+        final data = generateRandomData();
 
         const String id = "Impossible id";
 
-        final SingleBalanceDataManager singleBalanceDataManager =
-            SingleBalanceDataManager();
-        final int expectedLength = data["balanceData"]!.length;
+
+        final int expectedLength = data.balanceData.length;
 
         // Act (Execution)
         final bool result =
-            singleBalanceDataManager.removeSingleBalanceFromData(id, data);
+            SingleBalanceDataManager.removeSingleBalanceFromData(id, data);
 
         // Assert (Observation)
         expect(result, false);
-        expect(data["balanceData"]!.length, expectedLength);
+        expect(data.balanceData.length, expectedLength);
       });
 
       test("random data test", () {
         final math.Random rand = math.Random();
-        final SingleBalanceDataManager singleBalanceDataManager =
-            SingleBalanceDataManager();
+
 
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
           // Arrange (Initialization)
 
-          final Map<String, List<Map<String, dynamic>>> data =
+          final data =
               generateRandomData();
-          final int expectedLength = data["balanceData"]!.length - 1;
+          final int expectedLength = data.balanceData.length - 1;
           final int idIndex = rand.nextInt(expectedLength) + 1;
-          final String id = data["balanceData"]![idIndex]["id"] as String;
+          final String id = data.balanceData[idIndex].id;
 
           // Act (Execution)
           final bool result =
-              singleBalanceDataManager.removeSingleBalanceFromData(id, data);
+              SingleBalanceDataManager.removeSingleBalanceFromData(id, data);
 
           // Assert (Observation)
           expect(result, true);
-          expect(data["balanceData"]!.length, expectedLength);
+          expect(data.balanceData.length, expectedLength);
         }
       });
     });
@@ -170,15 +162,14 @@ void main() {
       test("id not found", () {
         // Arrange (Initialization)
 
-        final Map<String, List<Map<String, dynamic>>> data =
+        final data =
             generateRandomData();
 
         const String id = "Impossible id";
-        final SingleBalanceDataManager singleBalanceDataManager =
-            SingleBalanceDataManager();
+
 
         // Act (Execution)
-        final bool result = singleBalanceDataManager
+        final bool result = SingleBalanceDataManager
             .updateSingleBalanceInData(id, data, amount: 5);
 
         // Assert (Observation)
@@ -187,14 +178,13 @@ void main() {
 
       test("id = ''", () {
         // Arrange (Initialization)
-        final Map<String, List<Map<String, dynamic>>> data =
+        final data =
             generateRandomData();
 
-        final SingleBalanceDataManager singleBalanceDataManager =
-            SingleBalanceDataManager();
+
 
         // Act (Execution)
-        final bool result = singleBalanceDataManager
+        final bool result = SingleBalanceDataManager
             .updateSingleBalanceInData("", data, amount: 5);
 
         // Assert (Observation)
@@ -203,18 +193,17 @@ void main() {
       test("category == ''", () {
         // Arrange (Initialization)
 
-        final Map<String, List<Map<String, dynamic>>> data =
+        final data =
             generateRandomData();
 
         final math.Random rand = math.Random();
-        final int idIndex = rand.nextInt(data["balanceData"]!.length);
-        final String id = data["balanceData"]![idIndex]["id"] as String;
+        final int idIndex = rand.nextInt(data.balanceData.length);
+        final String id = data.balanceData[idIndex].id;
 
-        final SingleBalanceDataManager singleBalanceDataManager =
-            SingleBalanceDataManager();
+
 
         // Act (Execution)
-        final bool result = singleBalanceDataManager
+        final bool result = SingleBalanceDataManager
             .updateSingleBalanceInData(id, data, category: "");
 
         // Assert (Observation)
@@ -223,18 +212,17 @@ void main() {
       test("currency == ''", () {
         // Arrange (Initialization)
 
-        final Map<String, List<Map<String, dynamic>>> data =
+        final data =
             generateRandomData();
 
         final math.Random rand = math.Random();
-        final int idIndex = rand.nextInt(data["balanceData"]!.length);
-        final String id = data["balanceData"]![idIndex]["id"] as String;
+        final int idIndex = rand.nextInt(data.balanceData.length);
+        final String id = data.balanceData[idIndex].id;
 
-        final SingleBalanceDataManager singleBalanceDataManager =
-            SingleBalanceDataManager();
+
 
         // Act (Execution)
-        final bool result = singleBalanceDataManager
+        final bool result = SingleBalanceDataManager
             .updateSingleBalanceInData(id, data, currency: "");
 
         // Assert (Observation)
@@ -243,22 +231,20 @@ void main() {
 
       test("random data test", () {
         final math.Random rand = math.Random();
-        final SingleBalanceDataManager singleBalanceDataManager =
-            SingleBalanceDataManager();
+
 
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
           // Arrange (Initialization)
 
-          final Map<String, List<Map<String, dynamic>>> data =
-              generateRandomData();
-          final int expectedLength = data["balanceData"]!.length;
-          final int idIndex = rand.nextInt(data["balanceData"]!.length);
-          final String id = data["balanceData"]![idIndex]["id"] as String;
+          final data = generateRandomData();
+          final int expectedLength = data.balanceData.length;
+          final int idIndex = rand.nextInt(data.balanceData.length);
+          final String id = data.balanceData[idIndex].id;
 
           // Act (Execution)
           final bool result =
-              singleBalanceDataManager.updateSingleBalanceInData(
+              SingleBalanceDataManager.updateSingleBalanceInData(
             id,
             data,
             amount: 5,
@@ -270,13 +256,13 @@ void main() {
 
           // Assert (Observation)
           expect(result, true);
-          expect(data["balanceData"]!.length, expectedLength);
-          expect(data["balanceData"]![idIndex]["amount"], 5);
-          expect(data["balanceData"]![idIndex]["category"], "allowance");
-          expect(data["balanceData"]![idIndex]["currency"], "EUR");
-          expect(data["balanceData"]![idIndex]["name"], "New Name");
+          expect(data.balanceData.length, expectedLength);
+          expect(data.balanceData[idIndex].amount, 5);
+          expect(data.balanceData[idIndex].category, "allowance");
+          expect(data.balanceData[idIndex].currency, "EUR");
+          expect(data.balanceData[idIndex].name, "New Name");
           expect(
-            data["balanceData"]![idIndex]["time"],
+            data.balanceData[idIndex].time,
             Timestamp.fromMillisecondsSinceEpoch(1648000000000),
           );
         }
@@ -285,10 +271,10 @@ void main() {
   });
 }
 
-Map<String, List<Map<String, dynamic>>> generateRandomData({
+BalanceDocument generateRandomData({
   int averageNumberOfEntries = 1024,
 }) {
-  final Map<String, List<Map<String, dynamic>>> data = {"balanceData": []};
+  final data = BalanceDocument();
   final math.Random rand = math.Random();
   final int max = rand.nextInt(averageNumberOfEntries * 2) + 1;
   for (int i = 0; i < max; i++) {
@@ -300,14 +286,17 @@ Map<String, List<Map<String, dynamic>>> generateRandomData({
             ),
           ),
     );
-    data["balanceData"]!.add(<String, dynamic>{
-      "amount": amount,
-      "category": "none",
-      "currency": "EUR",
-      "name": "Item Nr $i",
-      "time": time,
-      "id": const Uuid().v4(),
-    });
+
+    data.balanceData.add(
+      SingleBalanceData(
+          amount: amount,
+          category: "none",
+          currency: "EUR",
+          name: "Item Nr $i",
+          time: time,
+          id: const Uuid().v4(),
+      ),
+    );
   }
 
   return data;

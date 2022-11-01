@@ -8,29 +8,31 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
+import 'package:linum/models/balance_document.dart';
 import 'package:linum/models/repeat_balance_data.dart';
 import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/providers/algorithm_provider.dart';
+import 'package:linum/providers/exchange_rate_provider.dart';
 import 'package:linum/utilities/backend/statistic_calculations.dart';
 import 'package:linum/utilities/balance_data/repeated_balance_data_manager.dart';
 import 'package:linum/widgets/abstract/abstract_home_screen_card.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
 import 'package:linum/widgets/loading_spinner.dart';
+import 'package:tuple/tuple.dart';
 
 class BalanceDataStreamBuilderManager {
   /// Returns a StreamBuilder that builds the ListView from the document-datastream
-  StreamBuilder fillListViewWithData({
+  static StreamBuilder fillListViewWithData({
     required AlgorithmProvider algorithmProvider,
-    required BalanceDataListView blistview,
+    required ExchangeRateProvider exchangeRateProvider,
+    required BalanceDataListView listView,
     required BuildContext context,
-    required Stream<DocumentSnapshot<Map<String, dynamic>>>? dataStream,
-    required RepeatedBalanceDataManager repeatedBalanceDataManager,
-    bool repeatables = false,
+    required Stream<DocumentSnapshot<BalanceDocument>>? dataStream,
   }) {
-    return StreamBuilder(
+    return StreamBuilder<DocumentSnapshot<BalanceDocument>>(
       stream: dataStream,
-      builder: (ctx, AsyncSnapshot<dynamic> snapshot) {
-        if (snapshot.connectionState == ConnectionState.none) {
+      builder: (ctx, snapshot) {
+        if (snapshot.connectionState == ConnectionState.none || snapshot.connectionState == ConnectionState.waiting) {
           return const LoadingSpinner();
         }
         if (snapshot.data == null) {
@@ -40,7 +42,7 @@ class BalanceDataStreamBuilderManager {
             context: context,
           );
           log("ERROR LOADING");
-          return blistview.listview;
+          return listView.listview;
         } else {
           if (!repeatables) {
             final List<List<Map<String, dynamic>>> arrayData = prepareData(
@@ -96,29 +98,27 @@ class BalanceDataStreamBuilderManager {
   }
 
   /// Returns a StreamBuilder that builds the ListView from the document-datastream
-  StreamBuilder fillStatisticPanelWithData({
+  static StreamBuilder fillStatisticPanelWithData({
     required AlgorithmProvider algorithmProvider,
-    required Stream<DocumentSnapshot<Map<String, dynamic>>>? dataStream,
-    required RepeatedBalanceDataManager repeatedBalanceDataManager,
+    required Stream<DocumentSnapshot<BalanceDocument>>? dataStream,
     required AbstractHomeScreenCard statisticPanel,
   }) {
-    return StreamBuilder(
+    return StreamBuilder<DocumentSnapshot<BalanceDocument>>(
       stream: dataStream,
-      builder: (ctx, AsyncSnapshot<dynamic> snapshot) {
+      builder: (ctx, snapshot) {
         if (snapshot.data == null) {
           statisticPanel.addStatisticData(null);
           return statisticPanel.returnWidget;
         } else {
-          final List<List<Map<String, dynamic>>> arrayData = prepareData(
-            repeatedBalanceDataManager,
+          final Tuple2<List<SingleBalanceData>, List<RepeatedBalanceData>> preparedData = _prepareData(
             snapshot,
           );
-          final List<Map<String, dynamic>> balanceData = arrayData[0];
+          final List<SingleBalanceData> balanceData = preparedData.item1;
           final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(
-            listOfSingleMapsToListOfModels(balanceData),
-            algorithmProvider,
-          );
+                balanceData,
+                algorithmProvider,
+              );
           statisticPanel.addStatisticData(statisticsCalculations);
           return statisticPanel.returnWidget;
         }
@@ -132,34 +132,35 @@ class BalanceDataStreamBuilderManager {
   /// use the current _algorithmProvider filter
   /// (will still be used after filter on firebase, because of repeated balanced)
   /// may be moved into the data generation function
-  List<List<Map<String, dynamic>>> prepareData(
-    RepeatedBalanceDataManager repeatedBalanceDataManager,
-    AsyncSnapshot<dynamic> snapshot,
+  static Tuple2<List<SingleBalanceData>, List<RepeatedBalanceData>> _prepareData(
+    AsyncSnapshot<DocumentSnapshot<BalanceDocument>> snapshot,
   ) {
-    final Map<String, dynamic>? data =
-        (snapshot.data as DocumentSnapshot<Map<String, dynamic>>).data();
-    final List<dynamic> balanceDataDynamic =
-        data!["balanceData"] as List<dynamic>;
-    final List<Map<String, dynamic>> balanceData = <Map<String, dynamic>>[];
-    for (final singleBalance in balanceDataDynamic) {
-      if ((singleBalance as Map<String, dynamic>)["repeatId"] == null) {
+    final data = snapshot.data?.data(); // TODO: Model for Document
+
+    if (data == null) {
+      return const Tuple2(<SingleBalanceData>[], <RepeatedBalanceData>[]);
+    }
+
+    final List<SingleBalanceData> balanceData = <SingleBalanceData>[];
+
+    for (final singleBalance in data.balanceData) {
+      if (singleBalance.repeatId == null) {
         balanceData.add(singleBalance);
       }
     }
 
-    final List<dynamic> repeatedBalanceDynamic =
-        data["repeatedBalance"] as List<dynamic>;
-    final List<Map<String, dynamic>> repeatedBalance = <Map<String, dynamic>>[];
-    for (final singleRepeatable in repeatedBalanceDynamic) {
-      repeatedBalance.add(singleRepeatable as Map<String, dynamic>);
+    final List<RepeatedBalanceData> repeatedBalance = <RepeatedBalanceData>[];
+
+    for (final singleRepeatable in data.repeatedBalance) {
+      repeatedBalance.add(singleRepeatable);
     }
 
-    repeatedBalanceDataManager.addAllRepeatablesToBalanceDataLocally(
+    RepeatedBalanceDataManager.addAllRepeatablesToBalanceDataLocally(
       repeatedBalance,
       balanceData,
     );
 
-    return [balanceData, repeatedBalance];
+    return Tuple2(balanceData, repeatedBalance);
   }
 }
 

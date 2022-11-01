@@ -2,7 +2,7 @@
 //
 //  Author: SoTBurst
 //  Co-Author: n/a //TODO @SoTBurst this is also rather a critical file that might need more trained people
-//  (Refactored)
+//  tored)
 
 import 'dart:developer' as dev;
 
@@ -10,10 +10,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/constants/repeat_duration_type_enum.dart';
 import 'package:linum/constants/repeatable_change_type_enum.dart';
+import 'package:linum/models/balance_document.dart';
 import 'package:linum/models/repeat_balance_data.dart';
 import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
+import 'package:linum/providers/exchange_rate_provider.dart';
 import 'package:linum/utilities/balance_data/balance_data_stream_builder_manager.dart';
 import 'package:linum/utilities/balance_data/repeated_balance_data_manager.dart';
 import 'package:linum/utilities/balance_data/single_balance_data_manager.dart';
@@ -25,26 +27,21 @@ import 'package:provider/single_child_widget.dart';
 /// Provides the balance data from the database using the uid.
 class BalanceDataProvider extends ChangeNotifier {
   /// _balance is the documentReference to get the balance data from the database. It will be null if the constructor isnt ready yet
-  DocumentReference<Map<String, dynamic>>? _balance;
+  DocumentReference<BalanceDocument>? _balance;
 
   /// The uid of the user
   late String _uid;
 
   late AlgorithmProvider _algorithmProvider;
-
+  late ExchangeRateProvider _exchangeRateProvicer;
   // Manager
-  late final SingleBalanceDataManager singleBalanceDataManager;
-  late final RepeatedBalanceDataManager repeatedBalanceDataManager;
-  late final BalanceDataStreamBuilderManager balanceDataStreamBuilderManager;
 
   /// Creates the BalanceDataProvider. Inparticular it sets [_balance] correctly
   BalanceDataProvider(BuildContext context) {
-    singleBalanceDataManager = SingleBalanceDataManager();
-    repeatedBalanceDataManager = RepeatedBalanceDataManager();
-    balanceDataStreamBuilderManager = BalanceDataStreamBuilderManager();
 
     _uid = Provider.of<AuthenticationService>(context, listen: false).uid;
     _algorithmProvider = Provider.of<AlgorithmProvider>(context, listen: false);
+    _exchangeRateProvicer = Provider.of<ExchangeRateProvider>(context, listen: false);
     asynConstructor();
   }
 
@@ -77,6 +74,10 @@ class BalanceDataProvider extends ChangeNotifier {
       // Future support multiple docs per user
       _balance = FirebaseFirestore.instance
           .collection('balance')
+          .withConverter<BalanceDocument>(
+            fromFirestore: (snapshot, _) => BalanceDocument.fromMap(snapshot.data()!),
+            toFirestore: (doc, _) => doc.toMap(),
+          )
           .doc(docs[0] as String);
       notifyListeners();
     } else {
@@ -138,20 +139,20 @@ class BalanceDataProvider extends ChangeNotifier {
   }
 
   /// Get the document-datastream. Maybe in the future it might be a public function
-  Stream<DocumentSnapshot<Map<String, dynamic>>>? get _dataStream {
+  Stream<DocumentSnapshot<BalanceDocument>>? get _dataStream {
     return _balance?.snapshots();
   }
 
   /// add a single Balance and upload it
   Future<bool> addSingleBalance(SingleBalanceData singleBalance) async {
     // get Data
-    final Map<String, dynamic>? data = await _getData();
+    final data = await _getData();
     if (data == null) {
       return false;
     }
 
     // add and upload
-    if (singleBalanceDataManager.addSingleBalanceToData(singleBalance, data)) {
+    if (SingleBalanceDataManager.addSingleBalanceToData(singleBalance, data)) {
       await _balance!.set(data);
       return true;
     }
@@ -170,13 +171,13 @@ class BalanceDataProvider extends ChangeNotifier {
     Timestamp? time,
   }) async {
     // get Data
-    final Map<String, dynamic>? data = await _getData();
+    final data = await _getData();
     if (data == null) {
       return false;
     }
 
     // update and upload
-    if (singleBalanceDataManager.updateSingleBalanceInData(
+    if (SingleBalanceDataManager.updateSingleBalanceInData(
       id,
       data,
       amount: amount,
@@ -189,7 +190,7 @@ class BalanceDataProvider extends ChangeNotifier {
       return true;
     }
 
-    await _balance!.update(data);
+    await _balance!.update(data.toMap()); // TODO: Check this out, sounds crazy, right?
     return true;
   }
 
@@ -209,13 +210,13 @@ class BalanceDataProvider extends ChangeNotifier {
   /// remove a single Balance and upload it (identified using id)
   Future<bool> removeSingleBalanceUsingId(String id) async {
     // get Data
-    final Map<String, dynamic>? data = await _getData();
+    final data = await _getData();
     if (data == null) {
       return false;
     }
 
     // remove and upload
-    if (singleBalanceDataManager.removeSingleBalanceFromData(id, data)) {
+    if (SingleBalanceDataManager.removeSingleBalanceFromData(id, data)) {
       await _balance!.set(data);
       return true;
     }
@@ -229,7 +230,7 @@ class BalanceDataProvider extends ChangeNotifier {
     return removeSingleBalanceUsingId(singleBalance.id);
   }
 
-  Future<Map<String, dynamic>?> _getData() async {
+  Future<BalanceDocument?> _getData() async {
     // check connection
     if (_balance == null) {
       dev.log("_balance is null");
@@ -237,9 +238,9 @@ class BalanceDataProvider extends ChangeNotifier {
     }
 
     // get data
-    final DocumentSnapshot<Map<String, dynamic>> snapshot =
+    final DocumentSnapshot<BalanceDocument> snapshot =
         await _balance!.get();
-    final Map<String, dynamic>? data = snapshot.data();
+    final BalanceDocument? data = snapshot.data();
 
     // check if data exists
     if (data == null) {
@@ -255,13 +256,13 @@ class BalanceDataProvider extends ChangeNotifier {
     RepeatedBalanceData repeatBalanceData,
   ) async {
     // get Data
-    final Map<String, dynamic>? data = await _getData();
+    final data = await _getData();
     if (data == null) {
       return false;
     }
 
     // add and upload
-    if (repeatedBalanceDataManager.addRepeatedBalanceToData(
+    if (RepeatedBalanceDataManager.addRepeatedBalanceToData(
       repeatBalanceData,
       data,
     )) {
@@ -292,13 +293,13 @@ class BalanceDataProvider extends ChangeNotifier {
     Timestamp? newTime,
   }) async {
     // get Data
-    final Map<String, dynamic>? data = await _getData();
+    final data = await _getData();
     if (data == null) {
       return false;
     }
 
     // update and upload
-    if (repeatedBalanceDataManager.updateRepeatedBalanceInData(
+    if (RepeatedBalanceDataManager.updateRepeatedBalanceInData(
       id: id,
       changeType: changeType,
       data: data,
@@ -330,13 +331,13 @@ class BalanceDataProvider extends ChangeNotifier {
     Timestamp? time,
   }) async {
     // get Data
-    final Map<String, dynamic>? data = await _getData();
+    final data = await _getData();
     if (data == null) {
       return false;
     }
 
     // remove and upload
-    if (repeatedBalanceDataManager.removeRepeatedBalanceFromData(
+    if (RepeatedBalanceDataManager.removeRepeatedBalanceFromData(
       id: id,
       data: data,
       removeType: removeType,
@@ -366,15 +367,15 @@ class BalanceDataProvider extends ChangeNotifier {
 
   /// Returns a StreamBuilder that builds the ListView from the document-datastream
   StreamBuilder fillListViewWithData(
-    BalanceDataListView blistview, {
+    BalanceDataListView listView, {
     required BuildContext context,
   }) {
-    return balanceDataStreamBuilderManager.fillListViewWithData(
+    return BalanceDataStreamBuilderManager.fillListViewWithData(
       algorithmProvider: _algorithmProvider,
-      blistview: blistview,
+      exchangeRateProvider: _exchangeRateProvicer,
+      listView: listView,
       context: context,
       dataStream: _dataStream,
-      repeatedBalanceDataManager: repeatedBalanceDataManager,
     );
   }
 
@@ -396,10 +397,9 @@ class BalanceDataProvider extends ChangeNotifier {
   StreamBuilder fillStatisticPanelWithData(
     AbstractHomeScreenCard statisticPanel,
   ) {
-    return balanceDataStreamBuilderManager.fillStatisticPanelWithData(
+    return BalanceDataStreamBuilderManager.fillStatisticPanelWithData(
       algorithmProvider: _algorithmProvider,
       dataStream: _dataStream,
-      repeatedBalanceDataManager: repeatedBalanceDataManager,
       statisticPanel: statisticPanel,
     );
   }
@@ -411,10 +411,9 @@ class BalanceDataProvider extends ChangeNotifier {
     if (_balance == null) {
       dev.log("_balance is null");
     }
-    final DocumentSnapshot<Map<String, dynamic>> snapshot =
-        await _balance!.get();
-    final Map<String, dynamic>? data = snapshot.data();
-    data!["settings"] = settings;
+    final snapshot = await _balance!.get();
+    final data = snapshot.data();
+    data!.settings = settings;
     await _balance!.set(data);
   }
 
@@ -423,20 +422,18 @@ class BalanceDataProvider extends ChangeNotifier {
     if (_balance == null) {
       dev.log("_balance is null");
     }
-    final DocumentSnapshot<Map<String, dynamic>> snapshot =
-        await _balance!.get();
-    final Map<String, dynamic>? data = snapshot.data();
-    return data!["settings"] as Map<String, dynamic>;
+    final snapshot = await _balance!.get(); // TODO: WILD
+    final data = snapshot.data();
+    return data!.settings;
   }
 
-  static SingleChildWidget provider(BuildContext context,
-      {bool testing = false}) {
-    return ChangeNotifierProxyProvider2<AuthenticationService,
-        AlgorithmProvider, BalanceDataProvider>(
+  static SingleChildWidget provider(BuildContext context, {bool testing = false}) {
+    return ChangeNotifierProxyProvider3<AuthenticationService,
+        AlgorithmProvider, ExchangeRateProvider, BalanceDataProvider>(
       create: (ctx) {
         return BalanceDataProvider(ctx);
       },
-      update: (ctx, auth, algo, oldBalance) {
+      update: (ctx, auth, algo, exchange, oldBalance) {
         if (oldBalance != null) {
           oldBalance.updateAuth(auth);
           return oldBalance..updateAlgorithmProvider(algo);

@@ -7,13 +7,14 @@
 import 'dart:developer' as dev;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:linum/models/balance_document.dart';
 import 'package:linum/models/single_balance_data.dart';
 import 'package:uuid/uuid.dart';
 
 class SingleBalanceDataManager {
-  bool addSingleBalanceToData(
+  static bool addSingleBalanceToData(
     SingleBalanceData singleBalance,
-    Map<String, dynamic> data,
+    BalanceDocument data,
   ) {
     // conditions
     if (singleBalance.category == "") {
@@ -25,31 +26,23 @@ class SingleBalanceDataManager {
       return false;
     }
 
-    final Map<String, dynamic> singleBalanceMap = {
-      "amount": singleBalance.amount,
-      "category": singleBalance.category,
-      "currency": singleBalance.currency,
-      "name": singleBalance.name,
-      "note": singleBalance.note,
-      "time": singleBalance.time,
-      "id": const Uuid().v4(),
-    };
-    (data["balanceData"] as List<dynamic>).add(singleBalanceMap);
+    singleBalance.id = const Uuid().v4();
+    data.balanceData.add(singleBalance);
     return true;
   }
 
   /// remove a single Balance and upload it (identified using id)
-  bool removeSingleBalanceFromData(
+  static bool removeSingleBalanceFromData(
     String id,
-    Map<String, dynamic> data,
+    BalanceDocument data,
   ) {
-    final int dataLength = (data["balanceData"] as List<dynamic>).length;
-    (data["balanceData"] as List<dynamic>).removeWhere((value) {
-      return (value as Map<String, dynamic>)["id"] == id ||
-          value["id"] == null ||
-          value["repeatId"] != null; // Auto delete trash data
+    final int dataLength = (data.balanceData).length;
+    (data.balanceData).removeWhere((value) {
+      return value.id == id ||
+          value.id == null || // TODO: Check if this is a problem
+          value.repeatId != null; // Auto delete trash data
     });
-    if (dataLength > (data["balanceData"] as List<dynamic>).length) {
+    if (dataLength > data.balanceData.length) {
       return true;
     }
 
@@ -57,9 +50,9 @@ class SingleBalanceDataManager {
     return false;
   }
 
-  bool updateSingleBalanceInData(
+  static bool updateSingleBalanceInData(
     String id,
-    Map<String, dynamic> data, {
+    BalanceDocument data, {
     num? amount,
     String? category,
     String? currency,
@@ -82,15 +75,14 @@ class SingleBalanceDataManager {
       return false;
     }
 
-    for (final value in data["balanceData"] as List<dynamic>) {
-      if ((value as Map<String, dynamic>)["id"] == id) {
-        value["amount"] = amount ?? value["amount"];
-        value["category"] = category ?? value["category"];
-        value["currency"] = currency ?? value["currency"];
-        value["name"] = name ?? value["name"];
-        value["note"] =
-            (deleteNote != null && deleteNote) ? null : note ?? value["note"];
-        value["time"] = time ?? value["time"];
+    for (final value in data.balanceData) {
+      if (value.id == id) {
+        value.amount = amount ?? value.amount;
+        value.category = category ?? value.category;
+        value.currency = currency ?? value.currency;
+        value.name = name ?? value.name;
+        value.note = (deleteNote != null && deleteNote) ? null : note ?? value.note;
+        value.time = time ?? value.time;
 
         // ids are unique
         return true;

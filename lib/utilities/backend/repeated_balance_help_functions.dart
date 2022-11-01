@@ -5,52 +5,52 @@
 //
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:linum/models/repeat_balance_data.dart';
 
-bool isMonthly(Map<String, dynamic> singleRepeatedBalance) {
-  return singleRepeatedBalance["repeatDurationType"] != null &&
-      (singleRepeatedBalance["repeatDurationType"] as String).toUpperCase() ==
+bool isMonthly(RepeatedBalanceData singleRepeatedBalance) {
+  return singleRepeatedBalance.repeatDurationType.name.toUpperCase() ==
           "MONTHS";
 }
 
 /// after splitting a repeatable delete copied "changes" attributes that are out of the time limits of that repeatable
 void removeUnusedChangedAttributes(
-  Map<String, dynamic> singleRepeatedBalance,
+  RepeatedBalanceData singleRepeatedBalance,
 ) {
-  if (singleRepeatedBalance["changes"] == null) {
+  if (singleRepeatedBalance.changed == null || singleRepeatedBalance.endTime == null) {
     return;
   }
   final List<String> keysToRemove = <String>[];
-  for (final timeStampString
-      in (singleRepeatedBalance["changes"] as Map<String, dynamic>).keys) {
+  for (final timeStampString in singleRepeatedBalance.changed!.keys) {
     if (!DateTime.fromMillisecondsSinceEpoch(
           (num.tryParse(timeStampString) as int?) ?? 0,
         ).isBefore(
-          (singleRepeatedBalance["initialTime"] as Timestamp).toDate(),
+          singleRepeatedBalance.initialTime.toDate(),
         ) &&
         !DateTime.fromMillisecondsSinceEpoch(
           (num.tryParse(timeStampString) as int?) ?? 0,
         ).isAfter(
-          (singleRepeatedBalance["endTime"] as Timestamp).toDate(),
+          singleRepeatedBalance.endTime!.toDate(),
         )) {
       keysToRemove.add(timeStampString);
     }
   }
   for (final key in keysToRemove) {
-    (singleRepeatedBalance["changes"] as Map<String, dynamic>).remove(key);
+    singleRepeatedBalance.changed!.remove(key);
   }
 }
+// TODO: Söncke fragen
 
 Timestamp? changeThisAndAllAfterEndTimeHelpFunction(
   Timestamp? checkedEndTime,
-  Map<String, dynamic> newRepeatedBalance,
+  RepeatedBalanceData newRepeatedBalance,
   Duration timeDifference,
 ) {
   if (checkedEndTime != null) {
     return checkedEndTime;
   }
-  if (newRepeatedBalance["endTime"] != null) {
+  if (newRepeatedBalance.endTime != null) {
     return Timestamp.fromDate(
-      (newRepeatedBalance["endTime"] as Timestamp)
+      newRepeatedBalance.endTime!
           .toDate()
           .subtract(timeDifference),
     );
