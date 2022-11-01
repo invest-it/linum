@@ -79,6 +79,8 @@ class BalanceDataStreamBuilder {
               });
             });
 
+            serialTransactions.sort((a, b) => a.name.compareTo(b.name));
+
             listView.setSerialTransactions(
               serialTransactions,
               context: context,
