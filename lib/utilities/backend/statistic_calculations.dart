@@ -4,29 +4,29 @@
 //  Co-Author: n/a
 //
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:linum/models/single_balance_data.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:linum/models/single_month_statistic.dart';
+import 'package:linum/models/transaction.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/utilities/frontend/filters.dart';
 import 'package:tuple/tuple.dart';
 
 class StatisticsCalculations {
   /// the data that should be processed
-  late List<SingleBalanceData> _allData;
+  late List<Transaction> _allData;
 
   /// the data that should be processed for monthly calculations
-  List<SingleBalanceData> get _currentData =>
+  List<Transaction> get _currentData =>
       getDataUsingFilter(_algorithmProvider.currentFilter);
 
-  List<SingleBalanceData> get _allTimeData =>
-      getDataUsingFilter(Filters.newerThan(Timestamp.now()));
+  List<Transaction> get _allTimeData =>
+      getDataUsingFilter(Filters.newerThan(firestore.Timestamp.now()));
 
   late AlgorithmProvider _algorithmProvider;
 
   /// create a new instance and set the data
   StatisticsCalculations(
-    List<SingleBalanceData> data,
+    List<Transaction> data,
     AlgorithmProvider algorithmProvider,
   ) {
     _allData = [];
@@ -38,23 +38,23 @@ class StatisticsCalculations {
   }
 
   /// filter the data further down to only include the data with income information (excluding 0 cost products)
-  List<SingleBalanceData> get _currentIncomeData => getDataUsingFilter(
+  List<Transaction> get _currentIncomeData => getDataUsingFilter(
         Filters.amountAtMost(0),
         baseData: _currentData,
       );
 
-  List<SingleBalanceData> get _allTimeIncomeData => getDataUsingFilter(
+  List<Transaction> get _allTimeIncomeData => getDataUsingFilter(
         Filters.amountAtMost(0),
         baseData: _allTimeData,
       );
 
   /// filter the data further down to only include the data with cost information (including 0 cost products)
-  List<SingleBalanceData> get _currentCostData => getDataUsingFilter(
+  List<Transaction> get _currentCostData => getDataUsingFilter(
         Filters.amountMoreThan(0),
         baseData: _currentData,
       );
 
-  List<SingleBalanceData> get _allTimeCostData => getDataUsingFilter(
+  List<Transaction> get _allTimeCostData => getDataUsingFilter(
         Filters.amountMoreThan(0),
         baseData: _allTimeData,
       );
@@ -71,20 +71,20 @@ class StatisticsCalculations {
       final List<bool Function(dynamic)> filterList = [
         Filters.inBetween(
           Tuple2(
-            Timestamp.fromDate(startDate),
-            Timestamp.fromDate(endDate),
+            firestore.Timestamp.fromDate(startDate),
+            firestore.Timestamp.fromDate(endDate),
           ),
         )
       ];
 
-      final List<SingleBalanceData> allThisMonthData =
+      final List<Transaction> allThisMonthData =
           getDataUsingFilter(Filters.combineFilterStrict(filterList));
 
-      final List<SingleBalanceData> costsThisMonthData = getDataUsingFilter(
+      final List<Transaction> costsThisMonthData = getDataUsingFilter(
         Filters.amountMoreThan(0),
         baseData: allThisMonthData,
       );
-      final List<SingleBalanceData> incomesThisMonthData = getDataUsingFilter(
+      final List<Transaction> incomesThisMonthData = getDataUsingFilter(
         Filters.amountAtMost(0),
         baseData: allThisMonthData,
       );
@@ -156,7 +156,7 @@ class StatisticsCalculations {
       ? allTimeSumIncomes / _allTimeIncomeData.length
       : 0;
 
-  num _getSumFrom(List<SingleBalanceData> data) {
+  num _getSumFrom(List<Transaction> data) {
     num sum = 0;
     for (final value in data) {
       sum += value.amount;
@@ -164,24 +164,24 @@ class StatisticsCalculations {
     return sum;
   }
 
-  num _getAverageFrom(List<SingleBalanceData> data) {
+  num _getAverageFrom(List<Transaction> data) {
     return data.isNotEmpty ? _getSumFrom(data) / data.length : 0;
   }
 
   /// baseData is the data used as base. return will always be a subset of baseData
   /// baseData == null => baseData = _allData
-  List<SingleBalanceData> getDataUsingFilter(
+  List<Transaction> getDataUsingFilter(
     bool Function(dynamic) filter, {
-    List<SingleBalanceData>? baseData,
+    List<Transaction>? baseData,
   }) {
     if (baseData != null) {
-      return List<SingleBalanceData>.from(baseData)..removeWhere(filter);
+      return List<Transaction>.from(baseData)..removeWhere(filter);
     }
-    return List<SingleBalanceData>.from(_allData)..removeWhere(filter);
+    return List<Transaction>.from(_allData)..removeWhere(filter);
   }
 
   List<String> _getSubcategoriesFrom(
-    List<SingleBalanceData> data,
+    List<Transaction> data,
   ) {
     final Set<String> result = {};
 

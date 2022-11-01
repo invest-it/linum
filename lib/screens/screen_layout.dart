@@ -6,10 +6,10 @@
 import 'dart:developer' as dev;
 import 'dart:math';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:linum/models/single_balance_data.dart';
+import 'package:linum/models/transaction.dart';
 import 'package:linum/navigation/enter_screen_page.dart';
 import 'package:linum/navigation/main_router_delegate.dart';
 import 'package:linum/navigation/main_routes.dart';
@@ -67,8 +67,8 @@ class _ScreenLayoutState extends State<ScreenLayout>
     final AccountSettingsProvider accountSettingsProvider =
         Provider.of<AccountSettingsProvider>(context);
 
-    final CollectionReference balance =
-        FirebaseFirestore.instance.collection('balance');
+    final firestore.CollectionReference balance =
+      firestore.FirebaseFirestore.instance.collection('balance');
 
     // ignore: unused_local_variable
     final Widget loadingIndicator = Container(
@@ -87,7 +87,7 @@ class _ScreenLayoutState extends State<ScreenLayout>
       body: Center(
         child: StreamBuilder(
           stream: balance.snapshots(),
-          builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
+          builder: (ctx, AsyncSnapshot<firestore.QuerySnapshot> snapshot) {
             //returns the page at the current index, or at the lock screen index if a) the PIN lock is active AND b) there is a code for the email used for login stored in sharedPreferences AND c) the pin code has not been recalled before
             return screens[widget.currentRoute]!; // TODO: Check if this can be kept
           },
@@ -188,11 +188,11 @@ class _ScreenLayoutState extends State<ScreenLayout>
     const List<String> categories = ["food", "clothing", "computer games"];
     final Random rand = Random();
     for (int i = 0; i < 365 * 5 * 4; i++) {
-      final Timestamp time = Timestamp.fromDate(
+      final firestore.Timestamp time = firestore.Timestamp.fromDate(
         DateTime.now().subtract(Duration(days: rand.nextInt(365 * 5))),
       );
       balanceDataProvider.addSingleBalance(
-        SingleBalanceData(
+        Transaction(
           amount: ((rand.nextDouble() * -10000).round()) / 100.0,
           category: categories[rand.nextInt(categories.length)],
           currency: "EUR",

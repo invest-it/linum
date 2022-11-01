@@ -4,11 +4,11 @@
 //  Co-Author: NightmindOfficial, thebluebaronx
 /// NO PAGE INDEX (This screen is not part of the default route and needs to be pushed onto the Navigator)
 import 'dart:developer' as dev;
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/models/repeat_balance_data.dart';
-import 'package:linum/models/single_balance_data.dart';
+import 'package:linum/models/serial_transaction.dart';
+import 'package:linum/models/transaction.dart';
 import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
@@ -199,25 +199,25 @@ class _EnterScreenState extends State<EnterScreen> {
     if (enterScreenProvider.repeatDuration == null ||
         enterScreenProvider.repeatDurationTyp == null) {
       balanceDataProvider.addSingleBalance(
-        SingleBalanceData(
+        Transaction(
           amount: enterScreenProvider.amountToDisplay(),
           category: enterScreenProvider.category,
           currency: "EUR",
           name: enterScreenProvider.name,
           note: enterScreenProvider.note,
-          time: Timestamp.fromDate(
+          time: firestore.Timestamp.fromDate(
             selectedDate,
           ),
         ),
       );
     } else {
       balanceDataProvider.addRepeatedBalance(
-        RepeatedBalanceData(
+        SerialTransaction(
           amount: enterScreenProvider.amountToDisplay(),
           category: enterScreenProvider.category,
           currency: "EUR",
           name: enterScreenProvider.name,
-          initialTime: Timestamp.fromDate(
+          initialTime: firestore.Timestamp.fromDate(
             DateTime(
               selectedDate.year,
               selectedDate.month,
@@ -245,14 +245,14 @@ class _EnterScreenState extends State<EnterScreen> {
     final BalanceDataProvider balanceDataProvider = Provider.of<BalanceDataProvider>(context, listen: false);
     if (enterScreenProvider.repeatId == null) {
       balanceDataProvider.updateSingleBalance(
-        SingleBalanceData(
+        Transaction(
           id: enterScreenProvider.formerId ?? "",
           amount: enterScreenProvider.amountToDisplay(),
           category: enterScreenProvider.category,
           currency: "EUR",
           name: enterScreenProvider.name,
           note: enterScreenProvider.note,
-          time: Timestamp.fromDate(
+          time: firestore.Timestamp.fromDate(
             selectedDate,
           ),
         ),

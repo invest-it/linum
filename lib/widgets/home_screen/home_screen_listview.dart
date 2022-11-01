@@ -14,8 +14,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
-import 'package:linum/models/repeat_balance_data.dart';
-import 'package:linum/models/single_balance_data.dart';
+import 'package:linum/models/serial_transaction.dart';
+import 'package:linum/models/serial_transaction.dart';
+import 'package:linum/models/transaction.dart';
 import 'package:linum/navigation/enter_screen_page.dart';
 import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/navigation/main_routes.dart';
@@ -74,7 +75,7 @@ class HomeScreenListView implements BalanceDataListView {
 
   @override
   void setSingleBalanceData(
-    List<SingleBalanceData> balanceDataList, {
+    List<Transaction> balanceDataList, {
     required BuildContext context,
     bool error = false,
   }) {
@@ -88,7 +89,7 @@ class HomeScreenListView implements BalanceDataListView {
 
   @override
   void setRepeatedBalanceData(
-    List<RepeatedBalanceData> balanceDataList, {
+    List<SerialTransaction> balanceDataList, {
     required BuildContext context,
     bool error = false,
   }) {
@@ -107,7 +108,7 @@ class HomeScreenListView implements BalanceDataListView {
 
   List<Widget> buildSingleBalanceList(
     BuildContext context,
-    List<SingleBalanceData> balanceDataList, {
+    List<Transaction> balanceDataList, {
     bool error = false,
     bool repeatedData = false,
   }) {
@@ -127,7 +128,7 @@ class HomeScreenListView implements BalanceDataListView {
     } else if (balanceDataList.isEmpty) {
       list.add(const TimeWidget(displayValue: "listview.label-no-entries"));
     } else {
-      for (final SingleBalanceData singleBalanceData in balanceDataList) {
+      for (final Transaction singleBalanceData in balanceDataList) {
         final DateTime date = singleBalanceData.time.toDate();
         final bool isFutureItem = date.isAfter(
           DateTime(
@@ -201,7 +202,7 @@ class HomeScreenListView implements BalanceDataListView {
 
   List<Widget> buildRepeatedBalanceList(
     BuildContext context,
-    List<RepeatedBalanceData> balanceDataList, {
+    List<SerialTransaction> balanceDataList, {
     bool error = false,
     bool repeatedData = false,
   }) {
@@ -214,7 +215,7 @@ class HomeScreenListView implements BalanceDataListView {
   /// Builds a [GestureDetector] for displaying a single balance on the home screen. Below, there is another function for handling the active contracts display.
   GestureDetector buildSingleBalanceGestureDetector(
     BuildContext context,
-    SingleBalanceData singleBalanceData, {
+    Transaction singleBalanceData, {
     bool isFutureItem = false,
   }) {
     final BalanceDataProvider balanceDataProvider =
@@ -392,7 +393,7 @@ class HomeScreenListView implements BalanceDataListView {
   /// As mentioned above, this function handles the active contracts display.
   GestureDetector buildRepeatedBalanceGestureDetector(
     BuildContext context,
-    RepeatedBalanceData repeatedBalanceData,
+    SerialTransaction repeatedBalanceData,
   ) {
     final BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);

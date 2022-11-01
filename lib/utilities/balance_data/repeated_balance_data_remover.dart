@@ -14,11 +14,11 @@ import 'package:linum/types/date_time_map.dart';
 
 class RepeatedBalanceDataRemover {
   static bool removeAll(BalanceDocument data, String id) {
-    final int length = data.repeatedBalance.length;
-    data.repeatedBalance.removeWhere((element) {
+    final int length = data.serialTransactions.length;
+    data.serialTransactions.removeWhere((element) {
       return element.id == id;
     });
-    if (length == data.repeatedBalance.length) {
+    if (length == data.serialTransactions.length) {
       dev.log("The repeatable balance wasn't found"); // ???
       return false;
     }
@@ -30,30 +30,34 @@ class RepeatedBalanceDataRemover {
     String id,
     Timestamp time,
   ) {
-    final singleRepeatedBalance = data.repeatedBalance.firstWhereOrNull((element) => element.id == id);
-    if (singleRepeatedBalance == null) {
+    final index = data.serialTransactions.indexWhere((serial) => serial.id == id);
+    if (index == -1) {
       return false;
     }
+    final serialTransaction = data.serialTransactions[index];
 
-    if (singleRepeatedBalance.repeatDurationType.toString().toUpperCase() == "MONTHS") {
-      singleRepeatedBalance.initialTime = Timestamp.fromDate(
+
+    // if not month => seconds
+    var newInitialTime = Timestamp.fromDate(
+      time.toDate().add(
+        Duration(
+          seconds: serialTransaction.repeatDuration,
+        ),
+      ),
+    );
+
+    if (serialTransaction.repeatDurationType.toString().toUpperCase() == "MONTHS") {
+      newInitialTime = Timestamp.fromDate(
         DateTime(
           time.toDate().year,
           time.toDate().month +
-              singleRepeatedBalance.repeatDuration,
+              serialTransaction.repeatDuration,
           time.toDate().day,
         ),
       );
-    } else {
-      // if not month => seconds
-      singleRepeatedBalance.initialTime = Timestamp.fromDate(
-        time.toDate().add(
-          Duration(
-            seconds: singleRepeatedBalance.repeatDuration,
-          ),
-        ),
-      );
     }
+
+    data.serialTransactions[index] = serialTransaction.copyWith(initialTime: newInitialTime);
 
     return true;
   }
@@ -63,29 +67,33 @@ class RepeatedBalanceDataRemover {
     String id,
     Timestamp time,
   ) {
-    final singleRepeatedBalance = data.repeatedBalance.firstWhereOrNull((element) => element.id == id);
-    if (singleRepeatedBalance == null) {
+    final index = data.serialTransactions.indexWhere((serial) => serial.id == id);
+    if (index == -1) {
       return false;
     }
+    final serialTransaction = data.serialTransactions[index];
 
-    if (singleRepeatedBalance.repeatDurationType.toString().toUpperCase() == "MONTHS") {
-      singleRepeatedBalance.endTime = Timestamp.fromDate(
+    // if not month => seconds
+    var newEndTime = Timestamp.fromDate(
+      time.toDate().subtract(
+        Duration(
+          seconds: serialTransaction.repeatDuration,
+        ),
+      ),
+    );
+
+    if (serialTransaction.repeatDurationType.toString().toUpperCase() == "MONTHS") {
+      newEndTime = Timestamp.fromDate(
         DateTime(
           time.toDate().year,
-          time.toDate().month - singleRepeatedBalance.repeatDuration,
+          time.toDate().month - serialTransaction.repeatDuration,
           time.toDate().day,
         ),
       );
-    } else {
-      // if not month => seconds
-      singleRepeatedBalance.endTime = Timestamp.fromDate(
-        time.toDate().subtract(
-          Duration(
-            seconds: singleRepeatedBalance.repeatDuration,
-          ),
-        ),
-      );
     }
+
+    data.serialTransactions[index] = serialTransaction.copyWith(endTime: newEndTime);
+
     return true;
   }
 
@@ -94,16 +102,20 @@ class RepeatedBalanceDataRemover {
     String id,
     Timestamp time,
   ) {
-    final singleRepeatedBalance = data.repeatedBalance.firstWhereOrNull((element) => element.id == id);
-    if (singleRepeatedBalance == null) {
+    final index = data.serialTransactions.indexWhere((serial) => serial.id == id);
+    if (index == -1) {
       return false;
     }
+    final serialTransaction = data.serialTransactions[index];
 
-    singleRepeatedBalance.changed ??= DateTimeMap();
+    final changed = serialTransaction.changed ?? DateTimeMap();
 
-    singleRepeatedBalance.changed!.addAll({
+
+    changed.addAll({
       time.millisecondsSinceEpoch.toString(): ChangedRepeatedBalanceData(deleted: true)
     });
+
+    data.serialTransactions[index] = serialTransaction.copyWith(changed: changed);
 
     return true;
   }

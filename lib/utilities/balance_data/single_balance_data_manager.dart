@@ -6,14 +6,13 @@
 
 import 'dart:developer' as dev;
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:linum/models/balance_document.dart';
-import 'package:linum/models/single_balance_data.dart';
-import 'package:uuid/uuid.dart';
+import 'package:linum/models/transaction.dart';
 
 class SingleBalanceDataManager {
   static bool addSingleBalanceToData(
-    SingleBalanceData singleBalance,
+    Transaction singleBalance,
     BalanceDocument data,
   ) {
     // conditions
@@ -26,8 +25,7 @@ class SingleBalanceDataManager {
       return false;
     }
 
-    singleBalance.id = const Uuid().v4();
-    data.balanceData.add(singleBalance);
+    data.transactions.add(singleBalance);
     return true;
   }
 
@@ -36,13 +34,13 @@ class SingleBalanceDataManager {
     String id,
     BalanceDocument data,
   ) {
-    final int dataLength = (data.balanceData).length;
-    (data.balanceData).removeWhere((value) {
+    final int dataLength = (data.transactions).length;
+    (data.transactions).removeWhere((value) {
       return value.id == id ||
           value.id == null || // TODO: Check if this is a problem
           value.repeatId != null; // Auto delete trash data
     });
-    if (dataLength > data.balanceData.length) {
+    if (dataLength > data.transactions.length) {
       return true;
     }
 
@@ -59,7 +57,7 @@ class SingleBalanceDataManager {
     bool? deleteNote,
     String? name,
     String? note,
-    Timestamp? time,
+    firestore.Timestamp? time,
   }) {
     // conditions
     if (id == "") {
@@ -75,21 +73,25 @@ class SingleBalanceDataManager {
       return false;
     }
 
-    for (final value in data.balanceData) {
-      if (value.id == id) {
-        value.amount = amount ?? value.amount;
-        value.category = category ?? value.category;
-        value.currency = currency ?? value.currency;
-        value.name = name ?? value.name;
-        value.note = (deleteNote != null && deleteNote) ? null : note ?? value.note;
-        value.time = time ?? value.time;
-
-        // ids are unique
-        return true;
-      }
+    final transactionIndex = data.transactions.indexWhere((trans) => trans.id == id);
+    if (transactionIndex == -1) {
+      dev.log("couldn't find the balance with id: $id");
+      return false;
     }
+    final transaction = data.transactions[transactionIndex];
 
-    dev.log("couldn't find the balance with id: $id");
-    return false;
+    final updatedTransaction = transaction.copyWith(
+      amount: amount ?? transaction.amount,
+      category: category ?? transaction.category,
+      currency: currency ?? transaction.currency,
+      name: name ?? transaction.name,
+      note: (deleteNote != null && deleteNote) ? null : note ?? transaction.note,
+      time: time ?? transaction.time,
+    );
+
+    data.transactions[transactionIndex] = updatedTransaction;
+
+    return true;
+
   }
 }

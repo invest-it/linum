@@ -6,13 +6,13 @@
 
 import 'dart:developer' as dev;
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:flutter/material.dart';
 import 'package:linum/constants/repeat_duration_type_enum.dart';
 import 'package:linum/constants/repeatable_change_type_enum.dart';
 import 'package:linum/models/balance_document.dart';
-import 'package:linum/models/repeat_balance_data.dart';
-import 'package:linum/models/single_balance_data.dart';
+import 'package:linum/models/serial_transaction.dart';
+import 'package:linum/models/transaction.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/exchange_rate_provider.dart';
@@ -27,7 +27,7 @@ import 'package:provider/single_child_widget.dart';
 /// Provides the balance data from the database using the uid.
 class BalanceDataProvider extends ChangeNotifier {
   /// _balance is the documentReference to get the balance data from the database. It will be null if the constructor isnt ready yet
-  DocumentReference<BalanceDocument>? _balance;
+  firestore.DocumentReference<BalanceDocument>? _balance;
 
   /// The uid of the user
   late String _uid;
@@ -50,8 +50,8 @@ class BalanceDataProvider extends ChangeNotifier {
     if (_uid == "") {
       return;
     }
-    final DocumentSnapshot<Map<String, dynamic>> documentToUser =
-        await FirebaseFirestore.instance
+    final firestore.DocumentSnapshot<Map<String, dynamic>> documentToUser =
+        await firestore.FirebaseFirestore.instance
             .collection('balance')
             .doc("documentToUser")
             .get();
@@ -72,7 +72,7 @@ class BalanceDataProvider extends ChangeNotifier {
       }
 
       // Future support multiple docs per user
-      _balance = FirebaseFirestore.instance
+      _balance = firestore.FirebaseFirestore.instance
           .collection('balance')
           .withConverter<BalanceDocument>(
             fromFirestore: (snapshot, _) => BalanceDocument.fromMap(snapshot.data()!),
@@ -88,7 +88,7 @@ class BalanceDataProvider extends ChangeNotifier {
   /// Creates Document if it doesn't exist
   Future<List<dynamic>> _createDoc() async {
     dev.log("creating document");
-    final DocumentSnapshot<Map<String, dynamic>> doc = await FirebaseFirestore
+    final firestore.DocumentSnapshot<Map<String, dynamic>> doc = await firestore.FirebaseFirestore
         .instance
         .collection('balance')
         .doc("documentToUser")
@@ -99,14 +99,14 @@ class BalanceDataProvider extends ChangeNotifier {
       docDataNullSafe = docData;
     }
 
-    final DocumentReference<Map<String, dynamic>> ref =
-        await FirebaseFirestore.instance.collection('balance').add({
+    final firestore.DocumentReference<Map<String, dynamic>> ref =
+        await firestore.FirebaseFirestore.instance.collection('balance').add({
       "balanceData": [],
       "repeatedBalance": [],
       "settings": {},
     });
 
-    await FirebaseFirestore.instance
+    await firestore.FirebaseFirestore.instance
         .collection('balance')
         .doc("documentToUser")
         .set(
@@ -139,12 +139,12 @@ class BalanceDataProvider extends ChangeNotifier {
   }
 
   /// Get the document-datastream. Maybe in the future it might be a public function
-  Stream<DocumentSnapshot<BalanceDocument>>? get _dataStream {
+  Stream<firestore.DocumentSnapshot<BalanceDocument>>? get _dataStream {
     return _balance?.snapshots();
   }
 
   /// add a single Balance and upload it
-  Future<bool> addSingleBalance(SingleBalanceData singleBalance) async {
+  Future<bool> addSingleBalance(Transaction transaction) async {
     // get Data
     final data = await _getData();
     if (data == null) {
@@ -152,7 +152,7 @@ class BalanceDataProvider extends ChangeNotifier {
     }
 
     // add and upload
-    if (SingleBalanceDataManager.addSingleBalanceToData(singleBalance, data)) {
+    if (SingleBalanceDataManager.addSingleBalanceToData(transaction, data)) {
       await _balance!.set(data);
       return true;
     }
@@ -168,7 +168,7 @@ class BalanceDataProvider extends ChangeNotifier {
     String? category,
     String? currency,
     String? name,
-    Timestamp? time,
+    firestore.Timestamp? time,
   }) async {
     // get Data
     final data = await _getData();
@@ -195,15 +195,15 @@ class BalanceDataProvider extends ChangeNotifier {
   }
 
   Future<bool> updateSingleBalance(
-    SingleBalanceData updatedSingleBalanceData,
+    Transaction transaction,
   ) async {
     return updateSingleBalanceDirectly(
-      id: updatedSingleBalanceData.id,
-      amount: updatedSingleBalanceData.amount,
-      category: updatedSingleBalanceData.category,
-      currency: updatedSingleBalanceData.currency,
-      name: updatedSingleBalanceData.name,
-      time: updatedSingleBalanceData.time,
+      id: transaction.id,
+      amount: transaction.amount,
+      category: transaction.category,
+      currency: transaction.currency,
+      name: transaction.name,
+      time: transaction.time,
     );
   }
 
@@ -226,7 +226,7 @@ class BalanceDataProvider extends ChangeNotifier {
   }
 
   /// it is an alias for removeSingleBalanceUsingId(singleBalance.id);
-  Future<bool> removeSingleBalance(SingleBalanceData singleBalance) {
+  Future<bool> removeSingleBalance(Transaction singleBalance) {
     return removeSingleBalanceUsingId(singleBalance.id);
   }
 
@@ -238,7 +238,7 @@ class BalanceDataProvider extends ChangeNotifier {
     }
 
     // get data
-    final DocumentSnapshot<BalanceDocument> snapshot =
+    final firestore.DocumentSnapshot<BalanceDocument> snapshot =
         await _balance!.get();
     final BalanceDocument? data = snapshot.data();
 
@@ -253,7 +253,7 @@ class BalanceDataProvider extends ChangeNotifier {
 
   /// add a repeated Balance and upload it (the stream will automatically show it in the app again)
   Future<bool> addRepeatedBalance(
-    RepeatedBalanceData repeatBalanceData,
+    SerialTransaction serialTransaction,
   ) async {
     // get Data
     final data = await _getData();
@@ -263,7 +263,7 @@ class BalanceDataProvider extends ChangeNotifier {
 
     // add and upload
     if (RepeatedBalanceDataManager.addRepeatedBalanceToData(
-      repeatBalanceData,
+      serialTransaction,
       data,
     )) {
       await _balance!.set(data);
@@ -284,13 +284,13 @@ class BalanceDataProvider extends ChangeNotifier {
     String? category,
     String? currency,
     String? name,
-    Timestamp? initialTime,
+    firestore.Timestamp? initialTime,
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
-    Timestamp? endTime,
-    bool? resetEndTime,
-    Timestamp? time,
-    Timestamp? newTime,
+    firestore.Timestamp? endTime,
+    bool resetEndTime = false,
+    firestore.Timestamp? time,
+    firestore.Timestamp? newTime,
   }) async {
     // get Data
     final data = await _getData();
@@ -328,7 +328,7 @@ class BalanceDataProvider extends ChangeNotifier {
   Future<bool> removeRepeatedBalanceUsingId({
     required String id,
     required RepeatableChangeType removeType,
-    Timestamp? time,
+    firestore.Timestamp? time,
   }) async {
     // get Data
     final data = await _getData();
@@ -350,14 +350,14 @@ class BalanceDataProvider extends ChangeNotifier {
     return false;
   }
 
-  /// it is an alias for removeRepeatedBalanceUsingId with that repeatBalanceData.id
+  /// it is an alias for removeRepeatedBalanceUsingId with that serialTransaction.id
   Future<bool> removeRepeatedBalance({
-    required RepeatedBalanceData repeatBalanceData,
+    required SerialTransaction serialTransaction,
     required RepeatableChangeType removeType,
-    Timestamp? time,
+    firestore.Timestamp? time,
   }) async {
     return removeRepeatedBalanceUsingId(
-      id: repeatBalanceData.id,
+      id: serialTransaction.id,
       removeType: removeType,
       time: time,
     );

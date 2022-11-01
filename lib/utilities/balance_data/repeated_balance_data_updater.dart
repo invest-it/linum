@@ -3,13 +3,15 @@
 //  Author: SoTBurst
 //  Co-Author: n/a
 //  (refactored)
+//
+//  300 ZEILEN PURER HASS
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:collection/collection.dart';
 import 'package:linum/constants/repeat_duration_type_enum.dart';
 import 'package:linum/models/balance_document.dart';
 import 'package:linum/models/changed_repeated_balance.dart';
-import 'package:linum/models/repeat_balance_data.dart';
+import 'package:linum/models/serial_transaction.dart';
 import 'package:linum/types/date_time_map.dart';
 import 'package:linum/utilities/backend/date_time_calculation_functions.dart';
 import 'package:linum/utilities/backend/repeated_balance_help_functions.dart';
@@ -23,81 +25,92 @@ class RepeatedBalanceDataUpdater {
     String? category,
     String? currency,
     bool? deleteNote,
-    Timestamp? endTime,
-    Timestamp? initialTime,
+    firestore.Timestamp? endTime,
+    firestore.Timestamp? initialTime,
     String? name,
     String? note,
-    Timestamp? newTime,
+    firestore.Timestamp? newTime,
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
-    bool? resetEndTime,
-    Timestamp? time,
+    bool resetEndTime = false,
+    firestore.Timestamp? time,
   }) {
     bool isEdited = false;
 
-    final singleRepeatedBalance = data.repeatedBalance.firstWhereOrNull((element) => element.id == id);
-    if (singleRepeatedBalance == null) {
+    final index = data.serialTransactions.indexWhere((serial) => serial.id == id);
+    if (index == -1) {
       return false;
     }
+    final serialTransaction = data.serialTransactions[index];
 
+    num? updatedAmount;
+    String? updatedCategory;
+    String? updatedCurrency;
+    String? updatedName;
+    String? updatedNote;
+    DateTimeMap<String, ChangedRepeatedBalanceData>? updatedChanged = serialTransaction.changed;
+    firestore.Timestamp? updatedInitialTime;
+    firestore.Timestamp? updatedEndTime;
+    int? updatedRepeatDuration;
+    RepeatDurationType? updatedRepeatDurationType;
 
-    if (amount != null) {
-      singleRepeatedBalance.amount = amount;
+    if (amount != null && amount != serialTransaction.amount) {
+      updatedAmount = amount;
       isEdited = true;
     }
-    if (category != null && category != singleRepeatedBalance.category) {
-      singleRepeatedBalance.category = category;
+    if (category != null && category != serialTransaction.category) {
+      updatedCategory = category;
       isEdited = true;
     }
-    if (currency != null && currency != singleRepeatedBalance.currency) {
-      singleRepeatedBalance.currency = currency;
+    if (currency != null && currency != serialTransaction.currency) {
+      updatedCurrency = currency;
       isEdited = true;
     }
-    if (name != null && name != singleRepeatedBalance.name) {
-      singleRepeatedBalance.name = name;
+    if (name != null && name != serialTransaction.name) {
+      updatedName = name;
       isEdited = true;
     }
-    if ((note != null && note != singleRepeatedBalance.note) ||
+    if ((note != null && note != serialTransaction.note) ||
         (deleteNote != null && deleteNote)) {
-      singleRepeatedBalance.note = note;
+      updatedNote = note;
       isEdited = true;
     }
     if (initialTime != null &&
-        initialTime != singleRepeatedBalance.initialTime) {
-      singleRepeatedBalance.initialTime = initialTime;
+        initialTime != serialTransaction.initialTime) {
+      updatedInitialTime = initialTime;
       isEdited = true;
     } else if (newTime != null && time != null) {
-      singleRepeatedBalance.initialTime = Timestamp.fromDate(
-        (singleRepeatedBalance.initialTime)
+      updatedInitialTime = firestore.Timestamp.fromDate(
+        (serialTransaction.initialTime)
             .toDate()
             .subtract(
           time.toDate().difference(newTime.toDate()),
         ),
       );
-      if (singleRepeatedBalance.endTime != null) {
-        singleRepeatedBalance.endTime = Timestamp.fromDate(
-          singleRepeatedBalance.endTime!.toDate().subtract(
+      if (serialTransaction.endTime != null) {
+        updatedEndTime = firestore.Timestamp.fromDate(
+          serialTransaction.endTime!.toDate().subtract(
             time.toDate().difference(newTime.toDate()),
           ),
         );
       }
       isEdited = true;
     }
-    if (repeatDuration != null && repeatDuration != singleRepeatedBalance.repeatDuration) {
-      singleRepeatedBalance.repeatDuration = repeatDuration;
+    if (repeatDuration != null && repeatDuration != serialTransaction.repeatDuration) {
+      updatedRepeatDuration = repeatDuration;
       isEdited = true;
     }
     if (repeatDurationType != null &&
-        repeatDurationType != singleRepeatedBalance.repeatDurationType) {
-      singleRepeatedBalance.repeatDurationType = repeatDurationType;
+        repeatDurationType != serialTransaction.repeatDurationType) {
+      updatedRepeatDurationType = repeatDurationType;
       isEdited = true;
     }
-    if (endTime != null && endTime != singleRepeatedBalance.endTime) {
-      singleRepeatedBalance.endTime = endTime;
+    if (endTime != null && endTime != serialTransaction.endTime) {
+      updatedEndTime = endTime;
       isEdited = true;
     }
     if (resetEndTime != null && resetEndTime) {
-      singleRepeatedBalance.endTime = null;
+      updatedEndTime = null;
       isEdited = true;
     }
     if (initialTime != null ||
@@ -106,11 +119,11 @@ class RepeatedBalanceDataUpdater {
         (newTime != null && time != null)) {
       // FUTURE lazy approach. might think of something clever in the future
       // (what if repeat duration changes. single repeatable changes change time or not? use the nth? complicated...)
-      singleRepeatedBalance.changed = null;
+      updatedChanged = null;
     }
 
-    if (isEdited && singleRepeatedBalance.changed != null) {
-      singleRepeatedBalance.changed?.forEach((key, value) {
+    if (isEdited && serialTransaction.changed != null) {
+      serialTransaction.changed?.forEach((key, value) {
         if (amount != null) {
           value.amount = null;
         }
@@ -137,73 +150,94 @@ class RepeatedBalanceDataUpdater {
         // dont need resetEndTime,
       });
     }
+
+    final updatedSerialTransaction = SerialTransaction(
+      id: serialTransaction.id,
+      amount: updatedAmount ?? serialTransaction.amount,
+      category: updatedCategory ?? serialTransaction.category,
+      currency: updatedCurrency ?? serialTransaction.currency,
+      initialTime: updatedInitialTime ?? serialTransaction.initialTime,
+      endTime: resetEndTime ? null : (updatedEndTime ?? serialTransaction.endTime),
+      name: updatedName ?? serialTransaction.name,
+      note: updatedNote ?? serialTransaction.note,
+      changed: updatedChanged,
+      repeatDuration: updatedRepeatDuration ?? serialTransaction.repeatDuration,
+      repeatDurationType: updatedRepeatDurationType ?? serialTransaction.repeatDurationType,
+    );
+
+    data.serialTransactions[index] = updatedSerialTransaction;
+
     return isEdited;
   }
 
   static bool updateThisAndAllBefore({
     required BalanceDocument data,
     required String id,
-    required Timestamp time,
+    required firestore.Timestamp time,
     num? amount,
     String? category,
     String? currency,
     bool? deleteNote,
-    Timestamp? endTime,
-    Timestamp? initialTime,
+    firestore.Timestamp? endTime,
+    firestore.Timestamp? initialTime,
     String? name,
     String? note,
-    Timestamp? newTime,
+    firestore.Timestamp? newTime,
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
     bool? resetEndTime,
   }) {
     bool isEdited = false;
-    RepeatedBalanceData? newRepeatedBalance;
 
-    final oldRepeatedBalance = data.repeatedBalance.firstWhereOrNull((element) => element.id == id);
-    if (oldRepeatedBalance == null) {
+    final index = data.serialTransactions.indexWhere((serial) => serial.id == id);
+    if (index == -1) {
       return false;
     }
+    final oldSerialTransaction = data.serialTransactions[index];
 
-    newRepeatedBalance = oldRepeatedBalance.copyWith();
-    newRepeatedBalance.id = const Uuid().v4();
-    if (oldRepeatedBalance.repeatDurationType.toString().toUpperCase() == "MONTHS") {
-      oldRepeatedBalance.initialTime = Timestamp.fromDate(
+    firestore.Timestamp? updatedInitialTime;
+
+    if (oldSerialTransaction.repeatDurationType.toString().toUpperCase() == "MONTHS") {
+      updatedInitialTime = firestore.Timestamp.fromDate(
         calculateOneTimeStep(
-          oldRepeatedBalance.repeatDuration,
+          oldSerialTransaction.repeatDuration,
           time.toDate(),
           monthly: true,
           dayOfTheMonth: time.toDate().day,
         ),
       );
     } else {
-      oldRepeatedBalance.initialTime = Timestamp.fromDate(
+      updatedInitialTime = firestore.Timestamp.fromDate(
         time.toDate()
-            .add(Duration(seconds: oldRepeatedBalance.repeatDuration)),
+            .add(Duration(seconds: oldSerialTransaction.repeatDuration)),
       );
     }
     final Duration timeDifference =
     time.toDate().difference(newTime?.toDate() ?? time.toDate());
 
-    newRepeatedBalance = newRepeatedBalance.copyWith(
+    final newSerialTransaction = oldSerialTransaction.copyWith(
       amount: amount,
       category: category,
       currency: currency,
       name: name,
       initialTime: initialTime ??
-          Timestamp.fromDate(newRepeatedBalance.initialTime.toDate().subtract(timeDifference)),
+          firestore.Timestamp.fromDate(updatedInitialTime.toDate().subtract(timeDifference)),
       repeatDuration: repeatDuration,
       repeatDurationType: repeatDurationType,
-      endTime: Timestamp.fromDate(time.toDate().subtract(timeDifference)),
+      endTime: firestore.Timestamp.fromDate(time.toDate().subtract(timeDifference)),
+      note: (deleteNote ?? false) ? null : note,
     );
-    newRepeatedBalance.note = (deleteNote ?? false) ? null : note;
 
-    removeUnusedChangedAttributes(newRepeatedBalance);
-    removeUnusedChangedAttributes(oldRepeatedBalance);
+    removeUnusedChangedAttributes(newSerialTransaction);
+    removeUnusedChangedAttributes(oldSerialTransaction);
 
     isEdited = true;
 
-    data.repeatedBalance.add(newRepeatedBalance);
+    data.serialTransactions[index] = oldSerialTransaction.copyWith(
+      initialTime: updatedInitialTime,
+    );
+
+    data.serialTransactions.add(newSerialTransaction);
 
     return isEdited;
   }
@@ -211,44 +245,44 @@ class RepeatedBalanceDataUpdater {
   static bool updateThisAndAllAfter({
     required BalanceDocument data,
     required String id,
-    required Timestamp time,
+    required firestore.Timestamp time,
     num? amount,
     String? category,
     String? currency,
     bool? deleteNote,
-    Timestamp? endTime,
-    Timestamp? initialTime,
+    firestore.Timestamp? endTime,
+    firestore.Timestamp? initialTime,
     String? name,
-    Timestamp? newTime,
+    firestore.Timestamp? newTime,
     String? note,
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
     bool? resetEndTime,
   }) {
     bool isEdited = false;
-    RepeatedBalanceData? newRepeatedBalance;
 
-    final oldRepeatedBalance = data.repeatedBalance.firstWhereOrNull((element) => element.id == id);
-    if (oldRepeatedBalance == null) {
+    final index = data.serialTransactions.indexWhere((serial) => serial.id == id);
+    if (index == -1) {
       return false;
     }
+    final oldSerialTransaction = data.serialTransactions[index];
 
-    newRepeatedBalance = oldRepeatedBalance.copyWith();
-    newRepeatedBalance.id = const Uuid().v4();
-    if (oldRepeatedBalance.repeatDurationType.toString().toUpperCase() == "MONTHS") {
-      oldRepeatedBalance.endTime = Timestamp.fromDate(
+    firestore.Timestamp? updatedEndTime;
+
+    if (oldSerialTransaction.repeatDurationType.toString().toUpperCase() == "MONTHS") {
+      updatedEndTime = firestore.Timestamp.fromDate(
         calculateOneTimeStepBackwards(
-          oldRepeatedBalance.repeatDuration,
+          oldSerialTransaction.repeatDuration,
           time.toDate(),
           monthly: true,
           dayOfTheMonth: time.toDate().day,
         ),
       );
     } else {
-      oldRepeatedBalance.endTime = Timestamp.fromDate(
+      updatedEndTime = firestore.Timestamp.fromDate(
         time.toDate().subtract(
           Duration(
-            seconds: oldRepeatedBalance.repeatDuration,
+            seconds: oldSerialTransaction.repeatDuration,
           ),
         ),
       );
@@ -257,27 +291,29 @@ class RepeatedBalanceDataUpdater {
     time.toDate().difference(newTime?.toDate() ?? time.toDate());
 
 
-    newRepeatedBalance = newRepeatedBalance.copyWith(
+    final newSerialTransaction = oldSerialTransaction.copyWith(
       amount: amount,
       category: category,
       currency: currency,
       name: name,
-      initialTime: Timestamp.fromDate(time.toDate().subtract(timeDifference)),
+      initialTime: firestore.Timestamp.fromDate(time.toDate().subtract(timeDifference)),
       repeatDuration: repeatDuration,
       repeatDurationType: repeatDurationType,
       endTime: changeThisAndAllAfterEndTimeHelpFunction(
         endTime,
-        newRepeatedBalance,
+        oldSerialTransaction,
         timeDifference,
       ),
     );
 
-    removeUnusedChangedAttributes(newRepeatedBalance);
-    removeUnusedChangedAttributes(oldRepeatedBalance);
+    removeUnusedChangedAttributes(newSerialTransaction);
+    removeUnusedChangedAttributes(oldSerialTransaction);
 
     isEdited = true;
 
-    data.repeatedBalance.add(newRepeatedBalance);
+    data.serialTransactions[index] = oldSerialTransaction.copyWith(endTime: updatedEndTime);
+
+    data.serialTransactions.add(newSerialTransaction);
 
     return isEdited;
   }
@@ -286,19 +322,23 @@ class RepeatedBalanceDataUpdater {
   static bool updateOnlyThisOne({
     required BalanceDocument data,
     required String id,
-    required Timestamp time,
+    required firestore.Timestamp time,
     required ChangedRepeatedBalanceData changed,
   }) {
-    final singleRepeatedBalance = data.repeatedBalance.firstWhereOrNull((element) => element.id == id);
-    if (singleRepeatedBalance == null) {
+    final index = data.serialTransactions.indexWhere((serial) => serial.id == id);
+    if (index == -1) {
       return false;
     }
+    final serialTransaction = data.serialTransactions[index];
 
-    singleRepeatedBalance.changed ??= DateTimeMap();
+    final changedMap = serialTransaction.changed ?? DateTimeMap();
 
-    singleRepeatedBalance.changed?.addAll({
+    changedMap.addAll({
       time.millisecondsSinceEpoch.toString(): changed
     });
+
+    data.serialTransactions[index] = serialTransaction.copyWith(changed: changedMap);
+
     return true;
   }
 }

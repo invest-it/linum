@@ -6,11 +6,11 @@
 
 import 'dart:developer';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:flutter/widgets.dart';
 import 'package:linum/models/balance_document.dart';
-import 'package:linum/models/repeat_balance_data.dart';
-import 'package:linum/models/single_balance_data.dart';
+import 'package:linum/models/serial_transaction.dart';
+import 'package:linum/models/transaction.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/exchange_rate_provider.dart';
 import 'package:linum/utilities/backend/statistic_calculations.dart';
@@ -27,10 +27,10 @@ class BalanceDataStreamBuilderManager {
     required ExchangeRateProvider exchangeRateProvider,
     required BalanceDataListView listView,
     required BuildContext context,
-    required Stream<DocumentSnapshot<BalanceDocument>>? dataStream,
+    required Stream<firestore.DocumentSnapshot<BalanceDocument>>? dataStream,
     bool isRepeatable = false,
   }) {
-    return StreamBuilder<DocumentSnapshot<BalanceDocument>>(
+    return StreamBuilder<firestore.DocumentSnapshot<BalanceDocument>>(
       stream: dataStream,
       builder: (ctx, snapshot) {
         if (snapshot.connectionState == ConnectionState.none || snapshot.connectionState == ConnectionState.waiting) {
@@ -92,10 +92,10 @@ class BalanceDataStreamBuilderManager {
   /// Returns a StreamBuilder that builds the ListView from the document-datastream
   static StreamBuilder fillStatisticPanelWithData({
     required AlgorithmProvider algorithmProvider,
-    required Stream<DocumentSnapshot<BalanceDocument>>? dataStream,
+    required Stream<firestore.DocumentSnapshot<BalanceDocument>>? dataStream,
     required AbstractHomeScreenCard statisticPanel,
   }) {
-    return StreamBuilder<DocumentSnapshot<BalanceDocument>>(
+    return StreamBuilder<firestore.DocumentSnapshot<BalanceDocument>>(
       stream: dataStream,
       builder: (ctx, snapshot) {
         if (snapshot.data == null) {
@@ -105,7 +105,7 @@ class BalanceDataStreamBuilderManager {
           final preparedData = _prepareData(
             snapshot,
           );
-          final List<SingleBalanceData> balanceData = preparedData.item1;
+          final List<Transaction> balanceData = preparedData.item1;
           final StatisticsCalculations statisticsCalculations =
               StatisticsCalculations(
                 balanceData,
@@ -124,26 +124,26 @@ class BalanceDataStreamBuilderManager {
   /// use the current _algorithmProvider filter
   /// (will still be used after filter on firebase, because of repeated balanced)
   /// may be moved into the data generation function
-  static Tuple2<List<SingleBalanceData>, List<RepeatedBalanceData>> _prepareData(
-    AsyncSnapshot<DocumentSnapshot<BalanceDocument>> snapshot,
+  static Tuple2<List<Transaction>, List<SerialTransaction>> _prepareData(
+    AsyncSnapshot<firestore.DocumentSnapshot<BalanceDocument>> snapshot,
   ) {
     final data = snapshot.data?.data(); // TODO: Model for Document
 
     if (data == null) {
-      return const Tuple2(<SingleBalanceData>[], <RepeatedBalanceData>[]);
+      return const Tuple2(<Transaction>[], <SerialTransaction>[]);
     }
 
-    final List<SingleBalanceData> balanceData = <SingleBalanceData>[];
+    final List<Transaction> balanceData = <Transaction>[];
 
-    for (final singleBalance in data.balanceData) {
+    for (final singleBalance in data.transactions) {
       if (singleBalance.repeatId == null) {
         balanceData.add(singleBalance);
       }
     }
 
-    final List<RepeatedBalanceData> repeatedBalance = <RepeatedBalanceData>[];
+    final List<SerialTransaction> repeatedBalance = <SerialTransaction>[];
 
-    for (final singleRepeatable in data.repeatedBalance) {
+    for (final singleRepeatable in data.serialTransactions) {
       repeatedBalance.add(singleRepeatable);
     }
 

@@ -6,42 +6,42 @@
 
 import 'dart:math' as math;
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:flutter_test/flutter_test.dart';
-import 'package:linum/models/single_balance_data.dart';
+import 'package:linum/models/transaction.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/utilities/backend/statistic_calculations.dart';
 import 'package:linum/utilities/frontend/filters.dart';
 import 'package:uuid/uuid.dart';
 
-final SingleBalanceData baseSingleBalanceData = SingleBalanceData(
+final Transaction baseSingleBalanceData = Transaction(
   amount: 0,
   category: "None",
   currency: "EUR",
   name: "Test Single Balance Data",
-  time: Timestamp.fromMillisecondsSinceEpoch(
-    Timestamp.now().millisecondsSinceEpoch - (3600 * 1000),
+  time: firestore.Timestamp.fromMillisecondsSinceEpoch(
+    firestore.Timestamp.now().millisecondsSinceEpoch - (3600 * 1000),
   ),
   id: const Uuid().v4(),
 );
 
 void main() {
   group("basic_statistic_calculation", () {
-    final List<SingleBalanceData> emptyData = [];
+    final List<Transaction> emptyData = [];
 
-    final List<SingleBalanceData> exampleData1 = [
+    final List<Transaction> exampleData1 = [
       baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 15),
       baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 35.5),
       baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 5),
       baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 25.5),
     ];
-    final List<SingleBalanceData> exampleData2 = [
+    final List<Transaction> exampleData2 = [
       baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0.5),
       baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -2.5),
       baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -2.5),
       baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0),
     ];
-    final List<SingleBalanceData> exampleData3 = [
+    final List<Transaction> exampleData3 = [
       baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0.5),
       baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -2.5),
       baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -2.5),
@@ -51,7 +51,7 @@ void main() {
       baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 25.5),
       baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 4),
     ];
-    final List<SingleBalanceData> exampleData4 = [
+    final List<Transaction> exampleData4 = [
       baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0.5),
       baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -2.5),
       baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -2.5),
@@ -63,7 +63,7 @@ void main() {
       baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -20.5),
       baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -23.5),
     ];
-    final List<SingleBalanceData> exampleData5 = [
+    final List<Transaction> exampleData5 = [
       baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0),
       baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0),
       baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0),
@@ -190,7 +190,7 @@ void main() {
           final math.Random rand = math.Random();
           for (int i = 0; i < 10000; i++) {
             // Arrange (Initialization)
-            final List<SingleBalanceData> randomData =
+            final List<Transaction> randomData =
                 _createRandomStatisticDataWithFixedTime(rand);
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
@@ -333,7 +333,7 @@ void main() {
           final math.Random rand = math.Random();
           for (int i = 0; i < 10000; i++) {
             // Arrange (Initialization)
-            final List<SingleBalanceData> randomData =
+            final List<Transaction> randomData =
                 _createRandomStatisticDataWithFixedTime(rand);
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
@@ -479,7 +479,7 @@ void main() {
           final math.Random rand = math.Random();
           for (int i = 0; i < 10000; i++) {
             // Arrange (Initialization)
-            final List<SingleBalanceData> randomData =
+            final List<Transaction> randomData =
                 _createRandomStatisticDataWithFixedTime(rand);
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
@@ -623,7 +623,7 @@ void main() {
           final math.Random rand = math.Random();
           for (int i = 0; i < 10000; i++) {
             // Arrange (Initialization)
-            final List<SingleBalanceData> randomData =
+            final List<Transaction> randomData =
                 _createRandomStatisticDataWithFixedTime(rand);
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
@@ -775,7 +775,7 @@ void main() {
           final math.Random rand = math.Random();
           for (int i = 0; i < 10000; i++) {
             // Arrange (Initialization)
-            final List<SingleBalanceData> randomData =
+            final List<Transaction> randomData =
                 _createRandomStatisticDataWithFixedTime(rand);
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
@@ -920,7 +920,7 @@ void main() {
           final math.Random rand = math.Random();
           for (int i = 0; i < 10000; i++) {
             // Arrange (Initialization)
-            final List<SingleBalanceData> randomData =
+            final List<Transaction> randomData =
                 _createRandomStatisticDataWithFixedTime(rand);
             final StatisticsCalculations statisticsCalculations =
                 StatisticsCalculations(
@@ -954,10 +954,10 @@ void main() {
   });
 }
 
-List<SingleBalanceData> _createRandomStatisticDataWithFixedTime(
+List<Transaction> _createRandomStatisticDataWithFixedTime(
   math.Random rand,
 ) {
-  final List<SingleBalanceData> returnList = <SingleBalanceData>[];
+  final List<Transaction> returnList = <Transaction>[];
   final int max = rand.nextInt(256) + 1;
   for (int i = 0; i < max; i++) {
     returnList.add(

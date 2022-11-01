@@ -8,7 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:linum/models/exchange_rate_info.dart';
 import 'package:uuid/uuid.dart';
 
-class SingleBalanceData {
+class Transaction {
   final num amount;
   final String category;
   final String currency;
@@ -20,7 +20,7 @@ class SingleBalanceData {
   final Timestamp? formerTime; // strictly for changed repeatables
   ExchangeRateInfo? rateInfo;
 
-  SingleBalanceData({
+  Transaction({
     required this.amount,
     required this.category,
     required this.currency,
@@ -32,7 +32,7 @@ class SingleBalanceData {
     this.formerTime,
   })  : id = id ?? const Uuid().v4();
 
-  SingleBalanceData copyWith({
+  Transaction copyWith({
     num? amount,
     String? category,
     String? currency,
@@ -43,7 +43,7 @@ class SingleBalanceData {
     Timestamp? time,
     Timestamp? formerTime,
   }) {
-    return SingleBalanceData(
+    return Transaction(
       amount: amount ?? this.amount,
       category: category ?? this.category,
       currency: currency ?? this.currency,
@@ -70,8 +70,8 @@ class SingleBalanceData {
     };
   }
 
-  factory SingleBalanceData.fromMap(Map<String, dynamic> map) {
-    return SingleBalanceData(
+  factory Transaction.fromMap(Map<String, dynamic> map) {
+    return Transaction(
       amount: map['amount'] as num,
       category: map['category'] as String,
       currency: map['currency'] as String,
@@ -93,7 +93,7 @@ class SingleBalanceData {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is SingleBalanceData &&
+    return other is Transaction &&
         other.amount == amount &&
         other.category == category &&
         other.currency == currency &&

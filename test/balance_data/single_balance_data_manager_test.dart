@@ -5,10 +5,10 @@
 //
 
 import 'dart:math' as math;
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/models/balance_document.dart';
-import 'package:linum/models/single_balance_data.dart';
+import 'package:linum/models/transaction.dart';
 import 'package:linum/utilities/balance_data/single_balance_data_manager.dart';
 import 'package:uuid/uuid.dart';
 
@@ -17,12 +17,12 @@ void main() {
     group("addSingleBalanceToData", () {
       test("singleBalance.category == ''", () {
         // Arrange (Initialization)
-        final SingleBalanceData singleBalance = SingleBalanceData(
+        final Transaction singleBalance = Transaction(
           amount: 5.55,
           category: "",
           currency: "EUR",
           name: "",
-          time: Timestamp.fromDate(DateTime.now()),
+          time: firestore.Timestamp.fromDate(DateTime.now()),
         );
 
 
@@ -36,17 +36,17 @@ void main() {
 
         // Assert (Observation)
         expect(result, false);
-        expect(data.balanceData.length, 0);
+        expect(data.transactions.length, 0);
       });
 
       test("singleBalance.currency == ''", () {
         // Arrange (Initialization)
-        final SingleBalanceData singleBalance = SingleBalanceData(
+        final Transaction singleBalance = Transaction(
           amount: 5.55,
           category: "none",
           currency: "",
           name: "",
-          time: Timestamp.fromDate(DateTime.now()),
+          time: firestore.Timestamp.fromDate(DateTime.now()),
         );
 
 
@@ -60,7 +60,7 @@ void main() {
 
         // Assert (Observation)
         expect(result, false);
-        expect(data.balanceData.length, 0);
+        expect(data.transactions.length, 0);
       });
 
       test("random data test", () {
@@ -73,7 +73,7 @@ void main() {
         for (int i = 0; i < max; i++) {
           // Arrange (Initialization)
           final num amount = rand.nextInt(100000) / 100.0;
-          final Timestamp time = Timestamp.fromDate(
+          final firestore.Timestamp time = firestore.Timestamp.fromDate(
             DateTime.now().subtract(const Duration(days: 365 * 4)).add(
                   Duration(
                     days: rand.nextInt(365 * 4 * 2),
@@ -81,7 +81,7 @@ void main() {
                 ),
           );
 
-          final SingleBalanceData singleBalance = SingleBalanceData(
+          final Transaction singleBalance = Transaction(
             amount: amount,
             category: "none",
             currency: "EUR",
@@ -98,19 +98,19 @@ void main() {
           // Assert (Observation)
           expect(result, true);
           expect(
-            data.balanceData.last.amount,
+            data.transactions.last.amount,
             amount,
           );
           expect(
-            data.balanceData.last.name,
+            data.transactions.last.name,
             "Item Nr $i",
           );
           expect(
-            data.balanceData.last.time,
+            data.transactions.last.time,
             time,
           );
         }
-        expect(data.balanceData.length, max);
+        expect(data.transactions.length, max);
       });
     });
     group("removeSingleBalanceFromData", () {
@@ -122,7 +122,7 @@ void main() {
         const String id = "Impossible id";
 
 
-        final int expectedLength = data.balanceData.length;
+        final int expectedLength = data.transactions.length;
 
         // Act (Execution)
         final bool result =
@@ -130,7 +130,7 @@ void main() {
 
         // Assert (Observation)
         expect(result, false);
-        expect(data.balanceData.length, expectedLength);
+        expect(data.transactions.length, expectedLength);
       });
 
       test("random data test", () {
@@ -143,9 +143,9 @@ void main() {
 
           final data =
               generateRandomData();
-          final int expectedLength = data.balanceData.length - 1;
+          final int expectedLength = data.transactions.length - 1;
           final int idIndex = rand.nextInt(expectedLength) + 1;
-          final String id = data.balanceData[idIndex].id;
+          final String id = data.transactions[idIndex].id;
 
           // Act (Execution)
           final bool result =
@@ -153,7 +153,7 @@ void main() {
 
           // Assert (Observation)
           expect(result, true);
-          expect(data.balanceData.length, expectedLength);
+          expect(data.transactions.length, expectedLength);
         }
       });
     });
@@ -197,8 +197,8 @@ void main() {
             generateRandomData();
 
         final math.Random rand = math.Random();
-        final int idIndex = rand.nextInt(data.balanceData.length);
-        final String id = data.balanceData[idIndex].id;
+        final int idIndex = rand.nextInt(data.transactions.length);
+        final String id = data.transactions[idIndex].id;
 
 
 
@@ -216,8 +216,8 @@ void main() {
             generateRandomData();
 
         final math.Random rand = math.Random();
-        final int idIndex = rand.nextInt(data.balanceData.length);
-        final String id = data.balanceData[idIndex].id;
+        final int idIndex = rand.nextInt(data.transactions.length);
+        final String id = data.transactions[idIndex].id;
 
 
 
@@ -238,9 +238,9 @@ void main() {
           // Arrange (Initialization)
 
           final data = generateRandomData();
-          final int expectedLength = data.balanceData.length;
-          final int idIndex = rand.nextInt(data.balanceData.length);
-          final String id = data.balanceData[idIndex].id;
+          final int expectedLength = data.transactions.length;
+          final int idIndex = rand.nextInt(data.transactions.length);
+          final String id = data.transactions[idIndex].id;
 
           // Act (Execution)
           final bool result =
@@ -251,19 +251,19 @@ void main() {
             category: "allowance",
             currency: "EUR",
             name: "New Name",
-            time: Timestamp.fromMillisecondsSinceEpoch(1648000000000),
+            time: firestore.Timestamp.fromMillisecondsSinceEpoch(1648000000000),
           );
 
           // Assert (Observation)
           expect(result, true);
-          expect(data.balanceData.length, expectedLength);
-          expect(data.balanceData[idIndex].amount, 5);
-          expect(data.balanceData[idIndex].category, "allowance");
-          expect(data.balanceData[idIndex].currency, "EUR");
-          expect(data.balanceData[idIndex].name, "New Name");
+          expect(data.transactions.length, expectedLength);
+          expect(data.transactions[idIndex].amount, 5);
+          expect(data.transactions[idIndex].category, "allowance");
+          expect(data.transactions[idIndex].currency, "EUR");
+          expect(data.transactions[idIndex].name, "New Name");
           expect(
-            data.balanceData[idIndex].time,
-            Timestamp.fromMillisecondsSinceEpoch(1648000000000),
+            data.transactions[idIndex].time,
+            firestore.Timestamp.fromMillisecondsSinceEpoch(1648000000000),
           );
         }
       });
@@ -279,7 +279,7 @@ BalanceDocument generateRandomData({
   final int max = rand.nextInt(averageNumberOfEntries * 2) + 1;
   for (int i = 0; i < max; i++) {
     final num amount = rand.nextInt(100000) / 100.0;
-    final Timestamp time = Timestamp.fromDate(
+    final firestore.Timestamp time = firestore.Timestamp.fromDate(
       DateTime.now().subtract(const Duration(days: 365 * 4)).add(
             Duration(
               days: rand.nextInt(365 * 4 * 2),
@@ -287,8 +287,8 @@ BalanceDocument generateRandomData({
           ),
     );
 
-    data.balanceData.add(
-      SingleBalanceData(
+    data.transactions.add(
+      Transaction(
           amount: amount,
           category: "none",
           currency: "EUR",

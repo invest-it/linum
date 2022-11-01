@@ -10,7 +10,7 @@ import 'package:linum/models/changed_repeated_balance.dart';
 import 'package:linum/types/date_time_map.dart';
 import 'package:uuid/uuid.dart';
 
-class RepeatedBalanceData {
+class SerialTransaction {
   final num amount;
   final String category;
   final String currency;
@@ -23,7 +23,7 @@ class RepeatedBalanceData {
   final int repeatDuration;
   final RepeatDurationType repeatDurationType;
 
-  RepeatedBalanceData({
+  SerialTransaction({
     required this.amount,
     required this.category,
     required this.currency,
@@ -37,7 +37,7 @@ class RepeatedBalanceData {
     this.repeatDurationType = RepeatDurationType.seconds,
   })  : id = id ?? const Uuid().v4();
 
-  RepeatedBalanceData copyWith({
+  SerialTransaction copyWith({
     num? amount,
     String? category,
     String? currency,
@@ -51,7 +51,7 @@ class RepeatedBalanceData {
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
   }) {
-    return RepeatedBalanceData(
+    return SerialTransaction(
       amount: amount ?? this.amount,
       category: category ?? this.category,
       currency: currency ?? this.currency,
@@ -82,8 +82,8 @@ class RepeatedBalanceData {
     };
   }
 
-  factory RepeatedBalanceData.fromMap(Map<String, dynamic> map) {
-    return RepeatedBalanceData(
+  factory SerialTransaction.fromMap(Map<String, dynamic> map) {
+    return SerialTransaction(
       amount: map['amount'] as num,
       category: map['category'] as String,
       currency: map['currency'] as String,
@@ -108,7 +108,7 @@ class RepeatedBalanceData {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is RepeatedBalanceData &&
+    return other is SerialTransaction &&
         other.amount == amount &&
         other.category == category &&
         other.currency == currency &&

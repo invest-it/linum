@@ -1,39 +1,40 @@
 
-import 'package:linum/models/repeat_balance_data.dart';
-import 'package:linum/models/single_balance_data.dart';
 
+
+import 'package:linum/models/serial_transaction.dart';
+import 'package:linum/models/transaction.dart';
 
 class BalanceDocument {
-  final List<SingleBalanceData> balanceData;
-  final List<RepeatedBalanceData> repeatedBalance;
+  final List<Transaction> transactions;
+  final List<SerialTransaction> serialTransactions;
   Map<String, dynamic> settings;
 
   BalanceDocument({
-    List<SingleBalanceData>? balanceData,
-    List<RepeatedBalanceData>? repeatedBalance,
+    List<Transaction>? transactions,
+    List<SerialTransaction>? serialTransactions,
     Map<String, dynamic>? settings,
   }) :
-    balanceData = balanceData ?? <SingleBalanceData>[],
-    repeatedBalance = repeatedBalance ?? <RepeatedBalanceData>[],
+    transactions = transactions ?? <Transaction>[],
+    serialTransactions = serialTransactions ?? <SerialTransaction>[],
     settings = settings ?? <String, dynamic>{};
 
 
   factory BalanceDocument.fromMap(Map<String, dynamic> map) {
     final rawBalanceData = map['balanceData'] as List<dynamic>;
-    final balanceData = rawBalanceData.map((data) => SingleBalanceData.fromMap(data as Map<String, dynamic>)).toList();
+    final balanceData = rawBalanceData.map((data) => Transaction.fromMap(data as Map<String, dynamic>)).toList();
     final rawRepeatedBalance = map['repeatedBalance'] as List<dynamic>;
-    final repeatedBalance = rawRepeatedBalance.map((data) => RepeatedBalanceData.fromMap(data as Map<String, dynamic>)).toList();
+    final repeatedBalance = rawRepeatedBalance.map((data) => SerialTransaction.fromMap(data as Map<String, dynamic>)).toList();
     return BalanceDocument(
-      balanceData: balanceData,
-      repeatedBalance: repeatedBalance,
+      transactions: balanceData,
+      serialTransactions: repeatedBalance,
       settings: map['settings'] as Map<String, dynamic>,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'balanceData': balanceData.map((e) => e.toMap()).toList(),
-      'repeatedBalance': repeatedBalance.map((e) => e.toMap()).toList(),
+      'balanceData': transactions.map((e) => e.toMap()).toList(),
+      'repeatedBalance': serialTransactions.map((e) => e.toMap()).toList(),
       'settings': settings,
     };
   }

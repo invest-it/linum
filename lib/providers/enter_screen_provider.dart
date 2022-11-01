@@ -4,11 +4,11 @@
 //  Co-Author: thebluebaronx
 //
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:flutter/material.dart';
 import 'package:linum/constants/repeat_duration_type_enum.dart';
 import 'package:linum/constants/settings_enums.dart';
-import 'package:linum/models/single_balance_data.dart';
+import 'package:linum/models/transaction.dart';
 
 class EnterScreenProvider with ChangeNotifier {
   late bool _isExpenses;
@@ -27,7 +27,7 @@ class EnterScreenProvider with ChangeNotifier {
   String? _formerId;
   String? _repeatId;
   int? _repeatDuration;
-  Timestamp? _formerTime;
+  firestore.Timestamp? _formerTime;
   RepeatDurationType? _repeatDurationType;
 
   EnterScreenProvider({
@@ -44,7 +44,7 @@ class EnterScreenProvider with ChangeNotifier {
     RepeatDurationType? repeatDurationType,
     RepeatDuration initRepeatDurationEnum = RepeatDuration.none,
     String? repeatId,
-    Timestamp? formerTime,
+    firestore.Timestamp? formerTime,
   }) {
     _amount = amount.abs();
     _expenseCategory = amount <= 0 ? category : secondaryCategory;
@@ -69,7 +69,7 @@ class EnterScreenProvider with ChangeNotifier {
     _note = note;
   }
 
-  factory EnterScreenProvider.fromBalanceData(SingleBalanceData singleBalanceData, {bool editMode = true}) {
+  factory EnterScreenProvider.fromBalanceData(Transaction singleBalanceData, {bool editMode = true}) {
     return EnterScreenProvider(
       id: singleBalanceData.id,
       amount: singleBalanceData.amount,
@@ -143,7 +143,7 @@ class EnterScreenProvider with ChangeNotifier {
 
   String? get repeatId => _repeatId;
 
-  Timestamp? get formerTime => _formerTime;
+  firestore.Timestamp? get formerTime => _formerTime;
 
   void setExpense() {
     _isExpenses = true;

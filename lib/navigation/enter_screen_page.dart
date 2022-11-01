@@ -6,21 +6,21 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:linum/models/single_balance_data.dart';
+import 'package:linum/models/transaction.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/screens/enter_screen.dart';
 import 'package:provider/provider.dart';
 
 class EnterScreenPageSettings {
   final bool isFromBalanceData;
-  final SingleBalanceData? singleBalanceData;
+  final Transaction? singleBalanceData;
   final String? category;
   final String? secondaryCategory;
 
   EnterScreenPageSettings._(
       {this.singleBalanceData, this.category, this.secondaryCategory, this.isFromBalanceData = false,});
 
-  factory EnterScreenPageSettings.withBalanceData(SingleBalanceData singleBalanceData) {
+  factory EnterScreenPageSettings.withBalanceData(Transaction singleBalanceData) {
     return EnterScreenPageSettings._(singleBalanceData: singleBalanceData, isFromBalanceData: true);
   }
   factory EnterScreenPageSettings.withCategories(

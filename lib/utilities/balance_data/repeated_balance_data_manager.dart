@@ -6,13 +6,13 @@
 
 import 'dart:developer' as dev;
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:linum/constants/repeat_duration_type_enum.dart';
 import 'package:linum/constants/repeatable_change_type_enum.dart';
 import 'package:linum/models/balance_document.dart';
 import 'package:linum/models/changed_repeated_balance.dart';
-import 'package:linum/models/repeat_balance_data.dart';
-import 'package:linum/models/single_balance_data.dart';
+import 'package:linum/models/serial_transaction.dart';
+import 'package:linum/models/transaction.dart';
 import 'package:linum/utilities/backend/date_time_calculation_functions.dart';
 import 'package:linum/utilities/backend/repeated_balance_help_functions.dart';
 import 'package:linum/utilities/balance_data/repeated_balance_data_remover.dart';
@@ -22,7 +22,7 @@ import 'package:uuid/uuid.dart';
 class RepeatedBalanceDataManager {
   /// add a repeated Balance and upload it (the stream will automatically show it in the app again)
   static bool addRepeatedBalanceToData(
-    RepeatedBalanceData repeatBalanceData,
+    SerialTransaction repeatBalanceData,
     BalanceDocument data,
   ) {
     // conditions
@@ -35,9 +35,7 @@ class RepeatedBalanceDataManager {
       return false;
     }
 
-    repeatBalanceData.id = const Uuid().v4();
-
-    data.repeatedBalance.add(repeatBalanceData);
+    data.serialTransactions.add(repeatBalanceData);
     return true;
   }
 
@@ -51,13 +49,13 @@ class RepeatedBalanceDataManager {
     String? name,
     String? note,
     bool? deleteNote,
-    Timestamp? initialTime,
+    firestore.Timestamp? initialTime,
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
-    Timestamp? endTime,
-    bool? resetEndTime,
-    Timestamp? time,
-    Timestamp? newTime,
+    firestore.Timestamp? endTime,
+    bool resetEndTime = false,
+    firestore.Timestamp? time,
+    firestore.Timestamp? newTime,
   }) {
     // conditions
     if (id == "") {
@@ -110,14 +108,14 @@ class RepeatedBalanceDataManager {
     String? checkedCurrency;
     String? checkedName;
     String? checkedNote;
-    Timestamp? checkedInitialTime;
+    firestore.Timestamp? checkedInitialTime;
     int? checkedRepeatDuration;
     RepeatDurationType? checkedRepeatDurationType;
-    Timestamp? checkedEndTime;
-    Timestamp? checkedNewTime;
+    firestore.Timestamp? checkedEndTime;
+    firestore.Timestamp? checkedNewTime;
 
     for (final singleRepeatedBalance
-        in data.repeatedBalance) {
+        in data.serialTransactions) {
       if (singleRepeatedBalance.id == id) {
         if (amount != singleRepeatedBalance.amount) {
           checkedAmount = amount;
@@ -230,7 +228,7 @@ class RepeatedBalanceDataManager {
     required String id,
     required BalanceDocument data,
     required RepeatableChangeType removeType,
-    Timestamp? time,
+    firestore.Timestamp? time,
   }) {
     // conditions
     if (removeType == RepeatableChangeType.thisAndAllBefore && time == null) {
@@ -275,8 +273,8 @@ class RepeatedBalanceDataManager {
   /// goes trough the repeatable list and uses addSingleRepeatableToBalanceDataLocally
   /// TODO: DOC: WHY DOES IT DO THAT?
   static void addAllRepeatablesToBalanceDataLocally(
-    List<RepeatedBalanceData> repeatedBalance,
-    List<SingleBalanceData> balanceData,
+    List<SerialTransaction> repeatedBalance,
+    List<Transaction> balanceData,
   ) {
     for (final singleRepeatedBalance in repeatedBalance) {
       addSingleRepeatableToBalanceDataLocally(
@@ -288,8 +286,8 @@ class RepeatedBalanceDataManager {
 
   /// adds a repeatable for the whole needed duration up to one year with all needed "changes" into the balancedata
   static void addSingleRepeatableToBalanceDataLocally(
-    RepeatedBalanceData singleRepeatedBalance,
-    List<SingleBalanceData> balanceData,
+    SerialTransaction singleRepeatedBalance,
+    List<Transaction> balanceData,
   ) {
     DateTime currentTime =
         singleRepeatedBalance.initialTime.toDate();
@@ -301,13 +299,13 @@ class RepeatedBalanceDataManager {
         // !isbefore => currentime = endtime = true
         ? !singleRepeatedBalance.endTime!.toDate().isBefore(currentTime)
         : DateTime.now().add(futureDuration).isAfter(currentTime)) {
-      // if "changed" -> "this timestamp" -> deleted exist AND it is true, dont add this balance
+      // if "changed" -> "this firestore.Timestamp" -> deleted exist AND it is true, dont add this balance
       if (singleRepeatedBalance.changed == null
           || singleRepeatedBalance.changed![currentTime] == null
           || singleRepeatedBalance.changed![currentTime]!.deleted == null
           || !singleRepeatedBalance.changed![currentTime]!.deleted!) {
         balanceData.add(
-            SingleBalanceData(
+            Transaction(
               amount: singleRepeatedBalance.changed?[currentTime]?.amount
                   ?? singleRepeatedBalance.amount,
               category: singleRepeatedBalance.changed?[currentTime]?.category ??
@@ -317,11 +315,11 @@ class RepeatedBalanceDataManager {
               name: singleRepeatedBalance.changed?[currentTime]?.name ??
                   singleRepeatedBalance.name,
               time: singleRepeatedBalance.changed?[currentTime]?.time ??
-                  Timestamp.fromDate(currentTime),
+                  firestore.Timestamp.fromDate(currentTime),
               repeatId: singleRepeatedBalance.id,
               id: const Uuid().v4(),
               formerTime: (singleRepeatedBalance.changed?[currentTime]?.time != null)
-                  ? Timestamp.fromDate(currentTime) : null,
+                  ? firestore.Timestamp.fromDate(currentTime) : null,
             ),
         );
       }

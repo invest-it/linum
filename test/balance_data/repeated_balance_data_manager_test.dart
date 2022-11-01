@@ -12,7 +12,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/constants/repeat_duration_type_enum.dart';
 import 'package:linum/constants/repeatable_change_type_enum.dart';
 import 'package:linum/models/balance_document.dart';
-import 'package:linum/models/repeat_balance_data.dart';
+import 'package:linum/models/serial_transaction.dart';
 import 'package:linum/utilities/backend/date_time_calculation_functions.dart';
 import 'package:linum/utilities/backend/repeated_balance_help_functions.dart';
 import 'package:linum/utilities/balance_data/repeated_balance_data_manager.dart';
@@ -23,7 +23,7 @@ void main() {
     group("addRepeatedBalanceToData", () {
       test("repeatBalanceData.category == ''", () {
         // Arrange (Initialization)
-        final RepeatedBalanceData repeatBalanceData = RepeatedBalanceData(
+        final SerialTransaction repeatBalanceData = SerialTransaction(
           amount: 5.55,
           category: "",
           currency: "EUR",
@@ -42,12 +42,12 @@ void main() {
 
         // Assert (Observation)
         expect(result, false);
-        expect(data.repeatedBalance.length, 0);
+        expect(data.serialTransactions.length, 0);
       });
 
       test("repeatBalanceData.currency == ''", () {
         // Arrange (Initialization)
-        final RepeatedBalanceData repeatBalanceData = RepeatedBalanceData(
+        final SerialTransaction repeatBalanceData = SerialTransaction(
           amount: 5.55,
           category: "none",
           currency: "",
@@ -66,7 +66,7 @@ void main() {
 
         // Assert (Observation)
         expect(result, false);
-        expect(data.repeatedBalance.length, 0);
+        expect(data.serialTransactions.length, 0);
       });
 
       test("random data test", () {
@@ -89,7 +89,7 @@ void main() {
           final RepeatDurationType repeatDurationType = RepeatDurationType
               .values[rand.nextInt(RepeatDurationType.values.length)];
 
-          final RepeatedBalanceData repeatBalanceData = RepeatedBalanceData(
+          final SerialTransaction repeatBalanceData = SerialTransaction(
             amount: amount,
             category: "none",
             currency: "EUR",
@@ -109,35 +109,35 @@ void main() {
           // Assert (Observation)
           expect(result, true);
           expect(
-            data.repeatedBalance.last.amount,
+            data.serialTransactions.last.amount,
             amount,
           );
           expect(
-            data.repeatedBalance.last.category,
+            data.serialTransactions.last.category,
             "none",
           );
           expect(
-            data.repeatedBalance.last.currency,
+            data.serialTransactions.last.currency,
             "EUR",
           );
           expect(
-            data.repeatedBalance.last.name,
+            data.serialTransactions.last.name,
             "Item Nr $i",
           );
           expect(
-            data.repeatedBalance.last.initialTime,
+            data.serialTransactions.last.initialTime,
             time,
           );
           expect(
-            data.repeatedBalance.last.repeatDuration,
+            data.serialTransactions.last.repeatDuration,
             repeatBalanceData.repeatDuration,
           );
           expect(
-            data.repeatedBalance.last.repeatDurationType,
+            data.serialTransactions.last.repeatDurationType,
             repeatBalanceData.repeatDurationType.toString().substring(19),
           );
         }
-        expect(data.repeatedBalance.length, max);
+        expect(data.serialTransactions.length, max);
       });
     });
 
@@ -150,7 +150,7 @@ void main() {
         const String id = "Impossible id";
 
 
-        final int expectedLength = data.repeatedBalance.length;
+        final int expectedLength = data.serialTransactions.length;
 
         for (final removeType in RepeatableChangeType.values) {
           // Act (Execution)
@@ -166,7 +166,7 @@ void main() {
           expect(result, false);
         }
 
-        expect(data.repeatedBalance.length, expectedLength);
+        expect(data.serialTransactions.length, expectedLength);
       });
 
       test("removeType == thisAndAllBefore => time != null", () {
@@ -176,7 +176,7 @@ void main() {
         const String id = "Impossible id";
 
 
-        final int expectedLength = data.repeatedBalance.length;
+        final int expectedLength = data.serialTransactions.length;
 
         const RepeatableChangeType removeType =
             RepeatableChangeType.thisAndAllBefore;
@@ -192,7 +192,7 @@ void main() {
         // Assert (Observation)
         expect(result, false);
 
-        expect(data.repeatedBalance.length, expectedLength);
+        expect(data.serialTransactions.length, expectedLength);
       });
 
       test("removeType == thisAndAllAfter => time != null", () {
@@ -202,7 +202,7 @@ void main() {
         const String id = "Impossible id";
 
 
-        final int expectedLength = data.repeatedBalance.length;
+        final int expectedLength = data.serialTransactions.length;
 
         const RepeatableChangeType removeType =
             RepeatableChangeType.thisAndAllAfter;
@@ -218,7 +218,7 @@ void main() {
         // Assert (Observation)
         expect(result, false);
 
-        expect(data.repeatedBalance.length, expectedLength);
+        expect(data.serialTransactions.length, expectedLength);
       });
 
       test("removeType == onlyThisOne => time != null", () {
@@ -228,7 +228,7 @@ void main() {
         const String id = "Impossible id";
 
 
-        final int expectedLength = data.repeatedBalance.length;
+        final int expectedLength = data.serialTransactions.length;
 
         const RepeatableChangeType removeType =
             RepeatableChangeType.onlyThisOne;
@@ -244,7 +244,7 @@ void main() {
         // Assert (Observation)
         expect(result, false);
 
-        expect(data.repeatedBalance.length, expectedLength);
+        expect(data.serialTransactions.length, expectedLength);
       });
 
       test("random data test removeType=all", () {
@@ -258,9 +258,9 @@ void main() {
 
           final data =
               generateRandomData();
-          final int expectedLength = data.repeatedBalance.length - 1;
+          final int expectedLength = data.serialTransactions.length - 1;
           final int idIndex = rand.nextInt(expectedLength) + 1;
-          final String id = data.repeatedBalance[idIndex].id;
+          final String id = data.serialTransactions[idIndex].id;
 
           // Act (Execution)
           final bool result =
@@ -272,7 +272,7 @@ void main() {
 
           // Assert (Observation)
           expect(result, true);
-          expect(data.repeatedBalance.length, expectedLength);
+          expect(data.serialTransactions.length, expectedLength);
         }
       });
 
@@ -287,20 +287,20 @@ void main() {
 
           final data =
               generateRandomData();
-          final int expectedLength = data.repeatedBalance.length;
+          final int expectedLength = data.serialTransactions.length;
           final int idIndex = rand.nextInt(expectedLength);
-          final String id = data.repeatedBalance[idIndex].id;
+          final String id = data.serialTransactions[idIndex].id;
 
           final DateTime initialTime =
-              (data.repeatedBalance[idIndex].initialTime)
+              (data.serialTransactions[idIndex].initialTime)
                   .toDate();
 
           final Timestamp time = Timestamp.fromDate(
             calculateOneTimeStep(
-              data.repeatedBalance[idIndex].repeatDuration,
+              data.serialTransactions[idIndex].repeatDuration,
               initialTime,
               monthly: isMonthly(
-                data.repeatedBalance[idIndex],
+                data.serialTransactions[idIndex],
               ),
             ),
           );
@@ -316,9 +316,9 @@ void main() {
 
           // Assert (Observation)
           expect(result, true);
-          expect(data.repeatedBalance.length, expectedLength);
+          expect(data.serialTransactions.length, expectedLength);
           expect(
-            (data.repeatedBalance[idIndex].initialTime)
+            (data.serialTransactions[idIndex].initialTime)
                 .toDate()
                 .isAfter(initialTime),
             true,
@@ -337,21 +337,21 @@ void main() {
 
           final data =
               generateRandomData();
-          final int expectedLength = data.repeatedBalance.length;
+          final int expectedLength = data.serialTransactions.length;
           final int idIndex = rand.nextInt(expectedLength);
-          final String id = data.repeatedBalance[idIndex].id;
+          final String id = data.serialTransactions[idIndex].id;
 
           final Timestamp? endTime =
-              data.repeatedBalance[idIndex].endTime;
+              data.serialTransactions[idIndex].endTime;
           final DateTime initialTime =
-              (data.repeatedBalance[idIndex].initialTime)
+              (data.serialTransactions[idIndex].initialTime)
                   .toDate();
 
           final Timestamp time = Timestamp.fromDate(
             calculateOneTimeStep(
-              data.repeatedBalance[idIndex].repeatDuration,
+              data.serialTransactions[idIndex].repeatDuration,
               initialTime,
-              monthly: isMonthly(data.repeatedBalance[idIndex]),
+              monthly: isMonthly(data.serialTransactions[idIndex]),
             ),
           );
 
@@ -366,17 +366,17 @@ void main() {
 
           // Assert (Observation)
           expect(result, true);
-          expect(data.repeatedBalance.length, expectedLength);
+          expect(data.serialTransactions.length, expectedLength);
           if (endTime != null) {
             expect(
-              (data.repeatedBalance[idIndex].endTime!)
+              (data.serialTransactions[idIndex].endTime!)
                   .toDate()
                   .isBefore(endTime.toDate()),
               true,
             );
           } else {
             expect(
-              data.repeatedBalance[idIndex].endTime != null,
+              data.serialTransactions[idIndex].endTime != null,
               true,
             );
           }
@@ -394,19 +394,19 @@ void main() {
 
           final data =
               generateRandomData();
-          final int expectedLength = data.repeatedBalance.length;
+          final int expectedLength = data.serialTransactions.length;
           final int idIndex = rand.nextInt(expectedLength);
-          final String id = data.repeatedBalance[idIndex].id;
+          final String id = data.serialTransactions[idIndex].id;
 
           final DateTime initialTime =
-              (data.repeatedBalance[idIndex].initialTime)
+              (data.serialTransactions[idIndex].initialTime)
                   .toDate();
 
           final Timestamp time = Timestamp.fromDate(
             calculateOneTimeStep(
-              data.repeatedBalance[idIndex].repeatDuration,
+              data.serialTransactions[idIndex].repeatDuration,
               initialTime,
-              monthly: isMonthly(data.repeatedBalance[idIndex]),
+              monthly: isMonthly(data.serialTransactions[idIndex]),
             ),
           );
 
@@ -421,10 +421,10 @@ void main() {
 
           // Assert (Observation)
           expect(result, true);
-          expect(data.repeatedBalance.length, expectedLength);
-          expect(data.repeatedBalance[idIndex].changed != null, true);
+          expect(data.serialTransactions.length, expectedLength);
+          expect(data.serialTransactions[idIndex].changed != null, true);
           expect(
-            (data.repeatedBalance[idIndex].changed!)
+            (data.serialTransactions[idIndex].changed!)
                 .values
                 .last.deleted,
             true,
@@ -485,8 +485,8 @@ void main() {
             generateRandomData();
 
         final math.Random rand = math.Random();
-        final int idIndex = rand.nextInt(data.repeatedBalance.length);
-        final String id = data.repeatedBalance[idIndex].id;
+        final int idIndex = rand.nextInt(data.serialTransactions.length);
+        final String id = data.serialTransactions[idIndex].id;
 
 
         for (final changeType in RepeatableChangeType.values) {
@@ -510,8 +510,8 @@ void main() {
             generateRandomData();
 
         final math.Random rand = math.Random();
-        final int idIndex = rand.nextInt(data.repeatedBalance.length);
-        final String id = data.repeatedBalance[idIndex].id;
+        final int idIndex = rand.nextInt(data.serialTransactions.length);
+        final String id = data.serialTransactions[idIndex].id;
 
 
         for (final changeType in RepeatableChangeType.values) {
@@ -536,8 +536,8 @@ void main() {
             generateRandomData();
 
         final math.Random rand = math.Random();
-        final int idIndex = rand.nextInt(data.repeatedBalance.length);
-        final String id = data.repeatedBalance[idIndex].id;
+        final int idIndex = rand.nextInt(data.serialTransactions.length);
+        final String id = data.serialTransactions[idIndex].id;
 
 
 
@@ -563,8 +563,8 @@ void main() {
             generateRandomData();
 
         final math.Random rand = math.Random();
-        final int idIndex = rand.nextInt(data.repeatedBalance.length);
-        final String id = data.repeatedBalance[idIndex].id;
+        final int idIndex = rand.nextInt(data.serialTransactions.length);
+        final String id = data.serialTransactions[idIndex].id;
 
 
 
@@ -590,8 +590,8 @@ void main() {
             generateRandomData();
 
         final math.Random rand = math.Random();
-        final int idIndex = rand.nextInt(data.repeatedBalance.length);
-        final String id = data.repeatedBalance[idIndex].id;
+        final int idIndex = rand.nextInt(data.serialTransactions.length);
+        final String id = data.serialTransactions[idIndex].id;
 
 
 
@@ -621,9 +621,9 @@ void main() {
 
           final data =
               generateRandomData();
-          final int expectedLength = data.repeatedBalance.length;
+          final int expectedLength = data.serialTransactions.length;
           final int idIndex = rand.nextInt(expectedLength);
-          final String id = data.repeatedBalance[idIndex].id;
+          final String id = data.serialTransactions[idIndex].id;
 
           num amount = rand.nextInt(100000) / 100.0;
           amount = -1 * math.pow(amount, 2);
@@ -647,7 +647,7 @@ void main() {
           if (rand.nextInt(2) == 0) {
             endTime = null;
           }
-          final singleRepeatedBalance = data.repeatedBalance[idIndex];
+          final singleRepeatedBalance = data.serialTransactions[idIndex];
 
           // Act (Execution)
           final bool result =
@@ -667,7 +667,7 @@ void main() {
 
           // Assert (Observation)
           expect(result, true);
-          expect(data.repeatedBalance.length, expectedLength);
+          expect(data.serialTransactions.length, expectedLength);
           expect(singleRepeatedBalance.amount, amount);
           expect(singleRepeatedBalance.category, "food");
           expect(singleRepeatedBalance.name, "New Name $i");
@@ -692,11 +692,11 @@ void main() {
 
           final data =
               generateRandomData();
-          final int expectedLength = data.repeatedBalance.length;
+          final int expectedLength = data.serialTransactions.length;
           final int idIndex = rand.nextInt(expectedLength);
-          final String id = data.repeatedBalance[idIndex].id;
+          final String id = data.serialTransactions[idIndex].id;
 
-          final singleRepeatedBalance = data.repeatedBalance[idIndex];
+          final singleRepeatedBalance = data.serialTransactions[idIndex];
 
           final Timestamp newTime = Timestamp.fromDate(
             DateTime.now().subtract(const Duration(days: 365 * 4)).add(
@@ -723,7 +723,7 @@ void main() {
 
           // Assert (Observation)
           expect(result, true);
-          expect(data.repeatedBalance.length, expectedLength);
+          expect(data.serialTransactions.length, expectedLength);
           if (formerEndTime == null) {
             expect(singleRepeatedBalance.endTime, null);
           } else {
@@ -752,12 +752,12 @@ void main() {
 
           final data =
               generateRandomData();
-          final int expectedLength = data.repeatedBalance.length + 1;
+          final int expectedLength = data.serialTransactions.length + 1;
           final int idIndex = rand.nextInt(expectedLength - 1);
           final String oldId =
-              data.repeatedBalance[idIndex].id;
+              data.serialTransactions[idIndex].id;
 
-          final oldSingleRepeatedBalance = data.repeatedBalance[idIndex];
+          final oldSingleRepeatedBalance = data.serialTransactions[idIndex];
 
           final num oldAmount = oldSingleRepeatedBalance.amount;
           final String oldCategory =
@@ -790,9 +790,9 @@ void main() {
 
           final Timestamp time = Timestamp.fromDate(
             calculateOneTimeStep(
-              data.repeatedBalance[idIndex].repeatDuration,
+              data.serialTransactions[idIndex].repeatDuration,
               oldInitialTime.toDate(),
-              monthly: isMonthly(data.repeatedBalance[idIndex]),
+              monthly: isMonthly(data.serialTransactions[idIndex]),
             ),
           );
 
@@ -811,11 +811,11 @@ void main() {
             time: time,
           );
 
-          final newSingleRepeatedBalance = data.repeatedBalance.last;
+          final newSingleRepeatedBalance = data.serialTransactions.last;
 
           // Assert (Observation)
           expect(result, true);
-          expect(data.repeatedBalance.length, expectedLength);
+          expect(data.serialTransactions.length, expectedLength);
           // old repeated balance
           expect(oldSingleRepeatedBalance.amount, oldAmount);
           expect(oldSingleRepeatedBalance.category, oldCategory);
@@ -825,9 +825,9 @@ void main() {
             oldSingleRepeatedBalance.initialTime,
             Timestamp.fromDate(
               calculateOneTimeStep(
-                data.repeatedBalance[idIndex].repeatDuration,
+                data.serialTransactions[idIndex].repeatDuration,
                 time.toDate(),
-                monthly: isMonthly(data.repeatedBalance[idIndex]),
+                monthly: isMonthly(data.serialTransactions[idIndex]),
                 dayOfTheMonth: time.toDate().day,
               ),
             ),
@@ -864,12 +864,12 @@ void main() {
 
           final data =
               generateRandomData();
-          final int expectedLength = data.repeatedBalance.length + 1;
+          final int expectedLength = data.serialTransactions.length + 1;
           final int idIndex = rand.nextInt(expectedLength - 1);
           final String oldId =
-              data.repeatedBalance[idIndex].id;
+              data.serialTransactions[idIndex].id;
 
-          final oldSingleRepeatedBalance = data.repeatedBalance[idIndex];
+          final oldSingleRepeatedBalance = data.serialTransactions[idIndex];
 
           final Timestamp? oldEndTime = oldSingleRepeatedBalance.endTime;
           Timestamp oldInitialTime = oldSingleRepeatedBalance.initialTime;
@@ -889,9 +889,9 @@ void main() {
 
           final Timestamp newInitialTime = Timestamp.fromDate(
             calculateOneTimeStep(
-              data.repeatedBalance[idIndex].repeatDuration,
+              data.serialTransactions[idIndex].repeatDuration,
               time.toDate(),
-              monthly: isMonthly(data.repeatedBalance[idIndex]),
+              monthly: isMonthly(data.serialTransactions[idIndex]),
               dayOfTheMonth: time.toDate().day,
             ),
           );
@@ -908,11 +908,11 @@ void main() {
             newTime: newTime,
           );
 
-          final newSingleRepeatedBalance = data.repeatedBalance.last;
+          final newSingleRepeatedBalance = data.serialTransactions.last;
 
           // Assert (Observation)
           expect(result, true);
-          expect(data.repeatedBalance.length, expectedLength);
+          expect(data.serialTransactions.length, expectedLength);
           // old repeated balance
           expect(oldSingleRepeatedBalance.endTime, oldEndTime);
           expect(oldSingleRepeatedBalance.initialTime, newInitialTime);
@@ -934,12 +934,12 @@ void main() {
 
           final data =
               generateRandomData();
-          final int expectedLength = data.repeatedBalance.length + 1;
+          final int expectedLength = data.serialTransactions.length + 1;
           final int idIndex = rand.nextInt(expectedLength - 1);
           final String oldId =
-              data.repeatedBalance[idIndex].id;
+              data.serialTransactions[idIndex].id;
 
-          final oldSingleRepeatedBalance = data.repeatedBalance[idIndex];
+          final oldSingleRepeatedBalance = data.serialTransactions[idIndex];
 
           final num oldAmount = oldSingleRepeatedBalance.amount;
           final String oldCategory = oldSingleRepeatedBalance.category;
@@ -971,9 +971,9 @@ void main() {
 
           final Timestamp time = Timestamp.fromDate(
             calculateOneTimeStep(
-              data.repeatedBalance[idIndex].repeatDuration,
+              data.serialTransactions[idIndex].repeatDuration,
               oldInitialTime.toDate(),
-              monthly: isMonthly(data.repeatedBalance[idIndex]),
+              monthly: isMonthly(data.serialTransactions[idIndex]),
             ),
           );
 
@@ -993,11 +993,11 @@ void main() {
             resetEndTime: newEndTime == null,
           );
 
-          final newSingleRepeatedBalance = data.repeatedBalance.last;
+          final newSingleRepeatedBalance = data.serialTransactions.last;
 
           // Assert (Observation)
           expect(result, true);
-          expect(data.repeatedBalance.length, expectedLength);
+          expect(data.serialTransactions.length, expectedLength);
           // old repeated balance
           expect(oldSingleRepeatedBalance.amount, oldAmount);
           expect(oldSingleRepeatedBalance.category, oldCategory);
@@ -1014,9 +1014,9 @@ void main() {
             oldSingleRepeatedBalance.endTime,
             Timestamp.fromDate(
               calculateOneTimeStepBackwards(
-                data.repeatedBalance[idIndex].repeatDuration,
+                data.serialTransactions[idIndex].repeatDuration,
                 time.toDate(),
-                monthly: isMonthly(data.repeatedBalance[idIndex]),
+                monthly: isMonthly(data.serialTransactions[idIndex]),
               ),
             ),
           );
@@ -1045,12 +1045,12 @@ void main() {
 
           final data =
               generateRandomData();
-          final int expectedLength = data.repeatedBalance.length + 1;
+          final int expectedLength = data.serialTransactions.length + 1;
           final int idIndex = rand.nextInt(expectedLength - 1);
           final String oldId =
-              data.repeatedBalance[idIndex].id;
+              data.serialTransactions[idIndex].id;
 
-          final oldSingleRepeatedBalance = data.repeatedBalance[idIndex];
+          final oldSingleRepeatedBalance = data.serialTransactions[idIndex];
 
           Timestamp? oldEndTime = oldSingleRepeatedBalance.endTime;
           final Timestamp oldInitialTime = oldSingleRepeatedBalance.initialTime;
@@ -1075,9 +1075,9 @@ void main() {
 
           final Timestamp newEndTime = Timestamp.fromDate(
             calculateOneTimeStepBackwards(
-              data.repeatedBalance[idIndex].repeatDuration,
+              data.serialTransactions[idIndex].repeatDuration,
               time.toDate(),
-              monthly: isMonthly(data.repeatedBalance[idIndex]),
+              monthly: isMonthly(data.serialTransactions[idIndex]),
               dayOfTheMonth: time.toDate().day,
             ),
           );
@@ -1092,11 +1092,11 @@ void main() {
             newTime: newTime,
           );
 
-          final newSingleRepeatedBalance = data.repeatedBalance.last;
+          final newSingleRepeatedBalance = data.serialTransactions.last;
 
           // Assert (Observation)
           expect(result, true);
-          expect(data.repeatedBalance.length, expectedLength);
+          expect(data.serialTransactions.length, expectedLength);
           // old repeated balance
           expect(oldSingleRepeatedBalance.endTime, newEndTime);
           expect(oldSingleRepeatedBalance.initialTime, oldInitialTime);
@@ -1117,11 +1117,11 @@ void main() {
 
           final data =
               generateRandomData();
-          final int expectedLength = data.repeatedBalance.length;
+          final int expectedLength = data.serialTransactions.length;
           final int idIndex = rand.nextInt(expectedLength - 1);
-          final String id = data.repeatedBalance[idIndex].id;
+          final String id = data.serialTransactions[idIndex].id;
 
-          final singleRepeatedBalance = data.repeatedBalance[idIndex];
+          final singleRepeatedBalance = data.serialTransactions[idIndex];
 
           final Timestamp initialTime = singleRepeatedBalance.initialTime;
 
@@ -1130,9 +1130,9 @@ void main() {
 
           final Timestamp time = Timestamp.fromDate(
             calculateOneTimeStep(
-              data.repeatedBalance[idIndex].repeatDuration,
+              data.serialTransactions[idIndex].repeatDuration,
               initialTime.toDate(),
-              monthly: isMonthly(data.repeatedBalance[idIndex]),
+              monthly: isMonthly(data.serialTransactions[idIndex]),
             ),
           );
 
@@ -1158,7 +1158,7 @@ void main() {
 
           // Assert (Observation)
           expect(result, true);
-          expect(data.repeatedBalance.length, expectedLength);
+          expect(data.serialTransactions.length, expectedLength);
           expect(singleRepeatedBalance.changed != null, true);
 
           final singleRepeatedBalanceChanged =
@@ -1297,8 +1297,8 @@ BalanceDocument generateRandomData({
     if (rand.nextInt(2) == 0) {
       endTime = null;
     }
-    data.repeatedBalance.add(
-      RepeatedBalanceData(
+    data.serialTransactions.add(
+      SerialTransaction(
           amount: amount,
           category: "none",
           currency: "EUR",

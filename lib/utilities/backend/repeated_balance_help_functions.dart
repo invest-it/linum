@@ -4,17 +4,17 @@
 //  Co-Author: n/a
 //
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:linum/models/repeat_balance_data.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
+import 'package:linum/models/serial_transaction.dart';
 
-bool isMonthly(RepeatedBalanceData singleRepeatedBalance) {
+bool isMonthly(SerialTransaction singleRepeatedBalance) {
   return singleRepeatedBalance.repeatDurationType.name.toUpperCase() ==
           "MONTHS";
 }
 
 /// after splitting a repeatable delete copied "changes" attributes that are out of the time limits of that repeatable
 void removeUnusedChangedAttributes(
-  RepeatedBalanceData singleRepeatedBalance,
+  SerialTransaction singleRepeatedBalance,
 ) {
   if (singleRepeatedBalance.changed == null || singleRepeatedBalance.endTime == null) {
     return;
@@ -38,19 +38,19 @@ void removeUnusedChangedAttributes(
     singleRepeatedBalance.changed!.remove(key);
   }
 }
-// TODO: Söncke fragen
 
-Timestamp? changeThisAndAllAfterEndTimeHelpFunction(
-  Timestamp? checkedEndTime,
-  RepeatedBalanceData newRepeatedBalance,
-  Duration timeDifference,
+
+firestore.Timestamp? changeThisAndAllAfterEndTimeHelpFunction(
+    firestore.Timestamp? checkedEndTime,
+    SerialTransaction oldSerialTransaction,
+    Duration timeDifference,
 ) {
   if (checkedEndTime != null) {
     return checkedEndTime;
   }
-  if (newRepeatedBalance.endTime != null) {
-    return Timestamp.fromDate(
-      newRepeatedBalance.endTime!
+  if (oldSerialTransaction.endTime != null) {
+    return firestore.Timestamp.fromDate(
+      oldSerialTransaction.endTime!
           .toDate()
           .subtract(timeDifference),
     );
