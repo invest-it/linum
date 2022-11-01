@@ -383,13 +383,13 @@ class BalanceDataProvider extends ChangeNotifier {
     BalanceDataListView blistview, {
     required BuildContext context,
   }) {
-    return balanceDataStreamBuilderManager.fillListViewWithData(
+    return BalanceDataStreamBuilderManager.fillListViewWithData(
       algorithmProvider: _algorithmProvider,
-      blistview: blistview,
+      exchangeRateProvider: _exchangeRateProvicer,
+      listView: blistview,
       context: context,
       dataStream: _dataStream,
-      repeatedBalanceDataManager: repeatedBalanceDataManager,
-      repeatables: true,
+      isRepeatable: true,
     );
   }
 

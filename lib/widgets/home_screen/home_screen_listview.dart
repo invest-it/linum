@@ -14,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
-import 'package:linum/models/abstract/balance_data.dart';
 import 'package:linum/models/repeat_balance_data.dart';
 import 'package:linum/models/single_balance_data.dart';
 import 'package:linum/navigation/enter_screen_page.dart';

@@ -1308,7 +1308,7 @@ BalanceDocument generateRandomData({
           endTime: endTime,
           repeatDuration: repeatDuration,
           repeatDurationType: repeatDurationType,
-      )
+      ),
     );
   }
 

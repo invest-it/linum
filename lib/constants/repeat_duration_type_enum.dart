@@ -20,5 +20,3 @@ RepeatDurationType? repeatDurationTypeFromString(String enumStr) {
     return null;
   }
 }
-
-

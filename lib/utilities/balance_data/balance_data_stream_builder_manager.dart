@@ -28,6 +28,7 @@ class BalanceDataStreamBuilderManager {
     required BalanceDataListView listView,
     required BuildContext context,
     required Stream<DocumentSnapshot<BalanceDocument>>? dataStream,
+    bool isRepeatable = false,
   }) {
     return StreamBuilder<DocumentSnapshot<BalanceDocument>>(
       stream: dataStream,
@@ -37,61 +38,52 @@ class BalanceDataStreamBuilderManager {
         }
         if (snapshot.data == null) {
           // TODO tell the user that the connection is broken
-          blistview.setSingleBalanceData(
+          listView.setSingleBalanceData(
             [],
             context: context,
           );
           log("ERROR LOADING");
           return listView.listview;
         } else {
-          if (!repeatables) {
-            final List<List<Map<String, dynamic>>> arrayData = prepareData(
-              repeatedBalanceDataManager,
+          if (!isRepeatable) {
+            final preparedData = _prepareData(
               snapshot,
             );
-            final List<Map<String, dynamic>> balanceData = arrayData[0];
+            final balanceData = preparedData.item1;
 
             // Future there could be an sort algorithm provider
             // (and possibly also a filter algorithm provided)
             balanceData.removeWhere(algorithmProvider.currentFilter);
             balanceData.sort(algorithmProvider.currentSorter);
 
-            blistview.setSingleBalanceData(
-              listOfSingleMapsToListOfModels(balanceData),
+            listView.setSingleBalanceData(
+              balanceData,
               context: context,
             );
           } else {
-            final List<List<Map<String, dynamic>>> arrayData = prepareData(
-              repeatedBalanceDataManager,
+            final data = _prepareData(
               snapshot,
             );
-            final List<Map<String, dynamic>> singleBalanceDataMap =
-                arrayData[0];
-            final List<Map<String, dynamic>> repeatedBalanceDataMap =
-                arrayData[1];
-            List<SingleBalanceData> singleBalanceData =
-                listOfSingleMapsToListOfModels(singleBalanceDataMap);
-
-            List<RepeatedBalanceData> repeatedBalanceData =
-                listOfRepeatedMapsToListOfModels(repeatedBalanceDataMap);
+            final singleBalanceData = data.item1;
+            final repeatedBalanceData = data.item2;
 
             singleBalanceData.removeWhere(algorithmProvider.currentFilter);
-            singleBalanceData.removeWhere((sin) {
-              return sin.repeatId == null;
+            singleBalanceData.removeWhere((transaction) {
+              return transaction.repeatId == null;
             });
 
-            repeatedBalanceData.removeWhere((rep) {
-              return !singleBalanceData.any((sin) {
-                return sin.repeatId == rep.id;
+            repeatedBalanceData.removeWhere((serialTransaction) {
+              return !singleBalanceData.any((transaction) {
+                return transaction.repeatId == serialTransaction.id;
               });
             });
 
-            blistview.setRepeatedBalanceData(
+            listView.setRepeatedBalanceData(
               repeatedBalanceData,
               context: context,
             );
           }
-          return blistview.listview;
+          return listView.listview;
         }
       },
     );
@@ -110,7 +102,7 @@ class BalanceDataStreamBuilderManager {
           statisticPanel.addStatisticData(null);
           return statisticPanel.returnWidget;
         } else {
-          final Tuple2<List<SingleBalanceData>, List<RepeatedBalanceData>> preparedData = _prepareData(
+          final preparedData = _prepareData(
             snapshot,
           );
           final List<SingleBalanceData> balanceData = preparedData.item1;
@@ -162,26 +154,4 @@ class BalanceDataStreamBuilderManager {
 
     return Tuple2(balanceData, repeatedBalance);
   }
-}
-
-List<SingleBalanceData> listOfSingleMapsToListOfModels(
-  List<Map<String, dynamic>> balanceData,
-) {
-  final List<SingleBalanceData> listOfModels = [];
-  for (final mapEntry in balanceData) {
-    listOfModels.add(SingleBalanceData.fromMap(mapEntry));
-  }
-
-  return listOfModels;
-}
-
-List<RepeatedBalanceData> listOfRepeatedMapsToListOfModels(
-  List<Map<String, dynamic>> balanceData,
-) {
-  final List<RepeatedBalanceData> listOfModels = [];
-  for (final mapEntry in balanceData) {
-    listOfModels.add(RepeatedBalanceData.fromMap(mapEntry));
-  }
-
-  return listOfModels;
 }

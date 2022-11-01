@@ -7,9 +7,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:linum/navigation/get_delegate.dart';
-import 'package:linum/navigation/main_router_delegate.dart';
 import 'package:linum/navigation/main_routes.dart';
 
 abstract class AppBarAction {
