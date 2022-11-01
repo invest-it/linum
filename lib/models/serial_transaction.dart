@@ -6,7 +6,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:linum/constants/repeat_duration_type_enum.dart';
-import 'package:linum/models/changed_repeated_balance.dart';
+import 'package:linum/models/changed_transaction.dart';
 import 'package:linum/types/date_time_map.dart';
 import 'package:uuid/uuid.dart';
 
@@ -17,7 +17,7 @@ class SerialTransaction {
   final String id;
   final String name;
   final String? note;
-  final DateTimeMap<String, ChangedRepeatedBalanceData>? changed;
+  final DateTimeMap<String, ChangedTransaction>? changed;
   final Timestamp initialTime;
   final Timestamp? endTime;
   final int repeatDuration;
@@ -44,7 +44,7 @@ class SerialTransaction {
     String? id,
     String? name,
     String? note,
-    DateTimeMap<String, ChangedRepeatedBalanceData>? changed,
+    DateTimeMap<String, ChangedTransaction>? changed,
     String? repeatId,
     Timestamp? initialTime,
     Timestamp? endTime,
@@ -90,7 +90,7 @@ class SerialTransaction {
       id: map['id'] as String,
       name: map['name'] as String,
       note: map['note'] as String?,
-      changed: map['changed'] as DateTimeMap<String, ChangedRepeatedBalanceData>?, // TODO: Might not work
+      changed: map['changed'] as DateTimeMap<String, ChangedTransaction>?, // TODO: Might not work
       initialTime: map['initialTime'] as Timestamp,
       endTime: map['endTime'] as Timestamp?,
       repeatDuration: map['repeatDuration'] as int,

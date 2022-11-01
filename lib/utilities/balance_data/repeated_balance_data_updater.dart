@@ -7,15 +7,13 @@
 //  300 ZEILEN PURER HASS
 
 import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
-import 'package:collection/collection.dart';
 import 'package:linum/constants/repeat_duration_type_enum.dart';
 import 'package:linum/models/balance_document.dart';
-import 'package:linum/models/changed_repeated_balance.dart';
+import 'package:linum/models/changed_transaction.dart';
 import 'package:linum/models/serial_transaction.dart';
 import 'package:linum/types/date_time_map.dart';
 import 'package:linum/utilities/backend/date_time_calculation_functions.dart';
 import 'package:linum/utilities/backend/repeated_balance_help_functions.dart';
-import 'package:uuid/uuid.dart';
 
 class RepeatedBalanceDataUpdater {
   static bool updateAll({
@@ -48,7 +46,7 @@ class RepeatedBalanceDataUpdater {
     String? updatedCurrency;
     String? updatedName;
     String? updatedNote;
-    DateTimeMap<String, ChangedRepeatedBalanceData>? updatedChanged = serialTransaction.changed;
+    DateTimeMap<String, ChangedTransaction>? updatedChanged = serialTransaction.changed;
     firestore.Timestamp? updatedInitialTime;
     firestore.Timestamp? updatedEndTime;
     int? updatedRepeatDuration;
@@ -323,7 +321,7 @@ class RepeatedBalanceDataUpdater {
     required BalanceDocument data,
     required String id,
     required firestore.Timestamp time,
-    required ChangedRepeatedBalanceData changed,
+    required ChangedTransaction changed,
   }) {
     final index = data.serialTransactions.indexWhere((serial) => serial.id == id);
     if (index == -1) {

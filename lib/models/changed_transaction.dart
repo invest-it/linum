@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ChangedRepeatedBalanceData {
+class ChangedTransaction {
   num? amount;
   String? category;
   String? currency;
@@ -9,7 +9,7 @@ class ChangedRepeatedBalanceData {
   Timestamp? time;
   bool? deleted;
 
-  ChangedRepeatedBalanceData({
+  ChangedTransaction({
     this.amount,
     this.category,
     this.currency,
@@ -19,8 +19,8 @@ class ChangedRepeatedBalanceData {
     this.deleted,
   });
 
-  factory ChangedRepeatedBalanceData.fromMap(Map<String, dynamic> map) {
-    return ChangedRepeatedBalanceData(
+  factory ChangedTransaction.fromMap(Map<String, dynamic> map) {
+    return ChangedTransaction(
       amount: map['amount'] as num?,
       category: map['category'] as String?,
       currency: map['currency'] as String?,

@@ -10,7 +10,7 @@ import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:linum/constants/repeat_duration_type_enum.dart';
 import 'package:linum/constants/repeatable_change_type_enum.dart';
 import 'package:linum/models/balance_document.dart';
-import 'package:linum/models/changed_repeated_balance.dart';
+import 'package:linum/models/changed_transaction.dart';
 import 'package:linum/models/serial_transaction.dart';
 import 'package:linum/models/transaction.dart';
 import 'package:linum/utilities/backend/date_time_calculation_functions.dart';
@@ -212,7 +212,7 @@ class RepeatedBalanceDataManager {
           data: data,
           id: id,
           time: time!,
-          changed: ChangedRepeatedBalanceData(
+          changed: ChangedTransaction(
               amount: checkedAmount,
               category: checkedCategory,
               currency: checkedCurrency,

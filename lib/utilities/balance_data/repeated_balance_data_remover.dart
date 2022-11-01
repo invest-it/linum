@@ -7,9 +7,8 @@
 import 'dart:developer' as dev;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:collection/collection.dart';
 import 'package:linum/models/balance_document.dart';
-import 'package:linum/models/changed_repeated_balance.dart';
+import 'package:linum/models/changed_transaction.dart';
 import 'package:linum/types/date_time_map.dart';
 
 class RepeatedBalanceDataRemover {
@@ -112,7 +111,7 @@ class RepeatedBalanceDataRemover {
 
 
     changed.addAll({
-      time.millisecondsSinceEpoch.toString(): ChangedRepeatedBalanceData(deleted: true)
+      time.millisecondsSinceEpoch.toString(): ChangedTransaction(deleted: true)
     });
 
     data.serialTransactions[index] = serialTransaction.copyWith(changed: changed);
