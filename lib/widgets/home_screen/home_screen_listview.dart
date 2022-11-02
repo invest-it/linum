@@ -213,7 +213,20 @@ class HomeScreenListView implements BalanceDataListView {
     } else if (serialTransactions.isEmpty) {
       list.add(const TimeWidget(displayValue: "listview.label-no-entries"));
     } else {
+      bool wroteExpensesTag = false;
+      bool wroteIncomeTag = false;
+
       for (final serTrans in serialTransactions) {
+        if (!wroteExpensesTag && serTrans.amount <= 0) {
+          // TODO: @Nightmind translation
+          list.add(const TimeWidget(displayValue: "Expenses"));
+          wroteExpensesTag = true;
+        }
+        if (!wroteIncomeTag && serTrans.amount > 0) {
+          // TODO: @Nightmind translation
+          list.add(const TimeWidget(displayValue: "Incomes"));
+          wroteIncomeTag = true;
+        }
         list.add(buildSerialTransactionGestureDetector(context, serTrans));
       }
     }
@@ -404,8 +417,8 @@ class HomeScreenListView implements BalanceDataListView {
   ) {
     final BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
-    final String langCode = context.locale.languageCode;
-    final DateFormat formatter = DateFormat('EEEE, dd. MMMM yyyy', langCode);
+    // final String langCode = context.locale.languageCode;
+    // final DateFormat formatter = DateFormat('EEEE, dd. MMMM yyyy', langCode);
 
     log(
       calculateTimeFrequenzy(
