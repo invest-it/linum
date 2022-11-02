@@ -34,9 +34,9 @@ class TransactionManager {
     String id,
     BalanceDocument data,
   ) {
-    final int dataLength = (data.transactions).length;
-    (data.transactions).removeWhere((value) {
-      return value.id == id || value.repeatId != null; // Auto delete trash data
+    final int dataLength = data.transactions.length;
+    data.transactions.removeWhere((value) {
+      return value.id == id; // Auto delete trash data
     });
     if (dataLength > data.transactions.length) {
       return true;
