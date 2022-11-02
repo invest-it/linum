@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+
+// TODO: Make final
 class ChangedTransaction {
   num? amount;
   String? category;

@@ -13,7 +13,7 @@ import 'package:linum/models/serial_transaction.dart';
 import 'package:linum/models/transaction.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/exchange_rate_provider.dart';
-import 'package:linum/utilities/backend/statistic_calculations.dart';
+import 'package:linum/utilities/backend/statistical_calculations.dart';
 import 'package:linum/utilities/balance_data/serial_transaction_manager.dart';
 import 'package:linum/widgets/abstract/abstract_home_screen_card.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
@@ -105,10 +105,11 @@ class BalanceDataStreamBuilder {
           final preparedData = _prepareData(
             snapshot,
           );
-          final List<Transaction> balanceData = preparedData.item1;
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-                balanceData,
+          final List<Transaction> transactions = preparedData.item1;
+
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+                transactions,
                 algorithmProvider,
               );
           statisticPanel.addStatisticData(statisticsCalculations);

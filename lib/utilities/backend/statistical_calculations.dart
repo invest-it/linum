@@ -11,7 +11,7 @@ import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/utilities/frontend/filters.dart';
 import 'package:tuple/tuple.dart';
 
-class StatisticsCalculations {
+class StatisticalCalculations {
   /// the data that should be processed
   late List<Transaction> _allData;
 
@@ -25,7 +25,7 @@ class StatisticsCalculations {
   late AlgorithmProvider _algorithmProvider;
 
   /// create a new instance and set the data
-  StatisticsCalculations(
+  StatisticalCalculations(
     List<Transaction> data,
     AlgorithmProvider algorithmProvider,
   ) {
