@@ -111,12 +111,12 @@ class BalanceDataStreamBuilder {
             snapshot,
           );
           final List<Transaction> balanceData = preparedData.item1;
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticalCalculations =
+              StatisticalCalculations(
             balanceData,
             algorithmProvider,
           );
-          statisticPanel.addStatisticData(statisticsCalculations);
+          statisticPanel.addStatisticData(statisticalCalculations);
           return statisticPanel.returnWidget;
         }
       },
