@@ -202,7 +202,12 @@
         "label-thismonth": "This month",
         "label-today": "Today",
         "label-yesterday": "Yesterday",
-        "label-error-translation": "Translation missing"
+        "label-error-translation": "Translation missing",
+        "label-every": "Every",
+        "label-days": "days",
+        "label-weeks": "weeks",
+        "label-months": "months",
+        "label-years": "years"
     },
     "lock_screen": {
         "change": {

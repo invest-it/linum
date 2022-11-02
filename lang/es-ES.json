@@ -198,7 +198,12 @@
         "label-thismonth": "Este mes",
         "label-today": "Hoy",
         "label-yesterday": "Ayer",
-        "label-error-translation": "Falta la traducción"
+        "label-error-translation": "Falta la traducción",
+        "label-every": "Cada",
+        "label-days": "días",
+        "label-weeks": "semanas",
+        "label-months": "meses",
+        "label-years": "años"
     },
     "lock_screen": {
         "change": {

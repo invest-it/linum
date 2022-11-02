@@ -13,6 +13,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:linum/constants/repeat_duration_type_enum.dart';
+import 'package:linum/constants/settings_enums.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/models/serial_transaction.dart';
@@ -219,12 +220,16 @@ class HomeScreenListView implements BalanceDataListView {
       for (final serTrans in serialTransactions) {
         if (!wroteExpensesTag && serTrans.amount <= 0) {
           // TODO: @Nightmind translation
-          list.add(const TimeWidget(displayValue: "Expenses"));
+          list.add(
+            const TimeWidget(displayValue: "home_screen_card.label-expenses"),
+          );
           wroteExpensesTag = true;
         }
         if (!wroteIncomeTag && serTrans.amount > 0) {
           // TODO: @Nightmind translation
-          list.add(const TimeWidget(displayValue: "Incomes"));
+          list.add(
+            const TimeWidget(displayValue: "home_screen_card.label-income"),
+          );
           wroteIncomeTag = true;
         }
         list.add(buildSerialTransactionGestureDetector(context, serTrans));
@@ -420,13 +425,6 @@ class HomeScreenListView implements BalanceDataListView {
     // final String langCode = context.locale.languageCode;
     // final DateFormat formatter = DateFormat('EEEE, dd. MMMM yyyy', langCode);
 
-    log(
-      calculateTimeFrequency(
-        serialTransaction.repeatDuration,
-        serialTransaction.repeatDurationType,
-      ),
-    );
-
     return GestureDetector(
       onTap: () {
         // TODO implement custom edit screen handling here
@@ -508,17 +506,12 @@ class HomeScreenListView implements BalanceDataListView {
                   ),
             style: Theme.of(context).textTheme.bodyText1,
           ),
-          //TODO FIX THIS ASAP!!!
-          // subtitle: Text(
-          //   formatter
-          //       .format(
-          //         // serialTransaction.time.toDate(), singleBalanceData.amount == 0 TODO Implement the following format: "27,99€ alle 7 Tage" oder "3,50 täglich"
-          //       )
-          //       .toUpperCase(),
-          //   style: Theme.of(context).textTheme.overline,
-          // ),
+          subtitle: Text(
+            calculateTimeFrequency(serialTransaction),
+            style: Theme.of(context).textTheme.overline,
+          ),
           trailing: IconButton(
-            icon: const Icon(Icons.arrow_forward_ios_rounded),
+            icon: const Icon(Icons.edit_rounded),
             onPressed: () => {},
           ), //TODO implement Edit function
         ),
@@ -539,12 +532,12 @@ class HomeScreenListView implements BalanceDataListView {
     if (isExpense) {
       return tr(
         standardExpenseCategories[category]?.label ??
-            tr('home_screen/listview/label-error-translation'),
+            tr('listview.label-error-translation'),
       );
     } else if (!isExpense) {
       return tr(
         standardIncomeCategories[category]?.label ??
-            tr('home_screen/listview/label-error-translation'),
+            tr('listview.label-error-translation'),
       );
     }
     return "Error"; // This should never happen.
@@ -552,27 +545,54 @@ class HomeScreenListView implements BalanceDataListView {
 
   // TODO: @Nightmind you only need to create proper translation (and you can rearrange the grammar the way you want)
   String calculateTimeFrequency(
-    int duration,
-    RepeatDurationType repeatDurationType,
+    SerialTransaction serialTransaction,
   ) {
+    final int duration = serialTransaction.repeatDuration;
+    final RepeatDurationType repeatDurationType =
+        serialTransaction.repeatDurationType;
+    final String amount = serialTransaction.amount.toStringAsFixed(2);
+
     switch (repeatDurationType) {
       case RepeatDurationType.seconds:
-        const int secondsInOneDay = 86400;
+        //The following constants represent the seconds equivalent of the respecive timeframes - to make the following if-else clause easier to understand
+        const int week = 604800;
+        const int day = 86400;
 
-        if (duration % (secondsInOneDay * 7) == 0) {
-          return "${(duration / secondsInOneDay).floor()} Weeks";
-        } else if (duration % secondsInOneDay == 0) {
-          return "${(duration / secondsInOneDay).floor()} Days";
-        } else if (duration % 3600 == 0) {
-          return "${(duration / secondsInOneDay).floor()} Hours";
+        // If the repeatDuration is on a weekly basis
+        if (duration % week == 0) {
+          if (duration / week == 1) {
+            return "$amount€ ${tr('enter_screen.label-repeat-weekly').toLowerCase()}";
+          }
+          return "${tr('listview.label-every')} ${(duration / day).floor()} ${tr('listview.label-weeks')}";
         }
-        return "$duration seconds";
 
+        // If the repeatDuration is on a daily basis
+        else if (duration % day == 0) {
+          if (duration / day == 1) {
+            return "$amount€ ${tr('enter_screen.label-repeat-daily').toLowerCase()}";
+          }
+          return "${tr('listview.label-every')} ${(duration / day).floor()} ${tr('listview.label-days')}";
+        } else {
+          //This should never happen, but just in case (if we forget to cap the repeat duration to at least one day)
+          return tr('main.label-error');
+        }
+
+      // If the repeatDuration is on a monthly / yearly basis
       case RepeatDurationType.months:
         if (duration % 12 == 0) {
-          return "${(duration / 12).floor()} Years";
+          if (duration / 12 == 1) {
+            return "$amount€ ${tr('enter_screen.label-repeat-yearly').toLowerCase()}";
+          }
+          return "${tr('listview.label-every')} ${(duration / 12).floor()} ${tr('listview.label-years')}";
         }
-        return "$duration Months";
+        if (duration == 1) {
+          return "$amount€ ${tr('enter_screen.label-repeat-30days').toLowerCase()}";
+        } else if (duration == 3) {
+          return "$amount€ ${tr('enter_screen.label-repeat-quarterly').toLowerCase()}";
+        } else if (duration == 6) {
+          return "$amount€ ${tr('enter_screen.label-repeat-semiannually').toLowerCase()}";
+        }
+        return "${tr('listview.label-every')} ${(duration / 12).floor()} ${tr('listview.label-months')}";
     }
   }
 

@@ -202,7 +202,12 @@
         "label-thismonth": "Deze Maand",
         "label-today": "Vandaag",
         "label-yesterday": "Gisteren",
-        "label-error-translation": "Vertaling ontbreekt"
+        "label-error-translation": "Vertaling ontbreekt",
+        "label-every": "Elke",
+        "label-days": "dagen",
+        "label-weeks": "weken",
+        "label-months": "maanden",
+        "label-years": "jaar"
     },
     "lock_screen": {
         "change": {
