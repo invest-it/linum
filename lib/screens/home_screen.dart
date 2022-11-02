@@ -104,9 +104,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         underline: Container(),
                         elevation: 2,
                         style: Theme.of(context).textTheme.headline5,
-                        onChanged: (_) {
+                        onChanged: (value) {
                           setState(() {
-                            showRepeatables = !showRepeatables;
+                            showRepeatables = value! as bool;
                           });
                         },
                       ),
