@@ -74,10 +74,10 @@
             "message": "Uw wachtwoord is bijgewerkt.",
             "title": "Klaar!"
         },
-        "delete-account":{ 
-            "title":"Wilt u de rekening veilig verwijderen?",
+        "delete-account": {
+            "title": "Wilt u de rekening veilig verwijderen?",
             "cancel": "Geen",
-            "action": "Ja"      
+            "action": "Ja"
         }
     },
     "auth": {
@@ -179,8 +179,10 @@
     "enter_screen_attribute_repeat": "Herhaal",
     "home_screen": {
         "button-show-more": "MEER ZIEN",
+        "button-show-all": "ALLE",
         "free-text": "Gratis",
-        "label-recent-transactions": "Recente transacties"
+        "label-recent-transactions": "Recente transacties",
+        "label-active-serialcontracts": "Contracten deze maand"
     },
     "home_screen_card": {
         "home-screen-card-toast": "Veeg naar links en rechts om de vorige of komende maanden te bekijken. Ingedrukt houden om terug te keren naar de huidige maand.",

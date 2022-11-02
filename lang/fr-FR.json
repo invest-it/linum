@@ -74,10 +74,10 @@
             "message": "Ton mot de passe a été mis à jour.",
             "title": "Prêt!"
         },
-        "delete-account":{ 
-            "title":"Tu souhaites supprimer ton compte en toute sécurité ?",
+        "delete-account": {
+            "title": "Tu souhaites supprimer ton compte en toute sécurité ?",
             "cancel": "Non",
-            "action": "Oui"      
+            "action": "Oui"
         }
     },
     "auth": {
@@ -179,8 +179,10 @@
     "enter_screen_attribute_repeat": "Répéter",
     "home_screen": {
         "button-show-more": "AFFICHER PLUS",
+        "button-show-all": "TOUS",
         "free-text": "Gratis",
-        "label-recent-transactions": "Transactions récentes"
+        "label-recent-transactions": "Transactions récentes",
+        "label-active-serialcontracts": "Contrats de ce mois"
     },
     "home_screen_card": {
         "home-screen-card-toast": "Swipe vers la gauche et la droite pour voir les mois précédents ou à venir. Veuillez rester appuyé pour revenir au mois en cours",
