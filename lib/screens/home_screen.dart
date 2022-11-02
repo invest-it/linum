@@ -85,21 +85,41 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0),
-                      child: Text(
-                        tr('home_screen.label-recent-transactions'),
+                      child: DropdownButton(
+                        value: showRepeatables,
+                        items: [
+                          DropdownMenuItem<bool>(
+                            value: false,
+                            child: Text(
+                              tr('home_screen.label-recent-transactions'),
+                            ),
+                          ),
+                          DropdownMenuItem<bool>(
+                            value: true,
+                            child: Text(
+                              tr('home_screen.label-active-serialcontracts'),
+                            ),
+                          ),
+                        ],
+                        underline: Container(),
+                        elevation: 2,
                         style: Theme.of(context).textTheme.headline5,
+                        onChanged: (_) {
+                          setState(() {
+                            showRepeatables = !showRepeatables;
+                          });
+                        },
                       ),
                     ),
                     TextButton(
                       onPressed: () {
-                        // TODO: change to correct path to get there @NightmindOfficial
+                        //TODO add Filter Screen Route here some day
                         // getRouterDelegate().replaceLastRoute(MainRoute.budget);
-                        setState(() {
-                          showRepeatables = !showRepeatables;
-                        });
                       },
                       child: Text(
-                        tr('home_screen.button-show-more'),
+                        showRepeatables
+                            ? tr('home_screen.button-show-all')
+                            : tr('home_screen.button-show-more'),
                         style: Theme.of(context).textTheme.overline?.copyWith(
                               color: Theme.of(context).colorScheme.primary,
                               fontSize: 14,

@@ -74,10 +74,10 @@
             "message": "Dein Passwort wurde aktualisiert.",
             "title": "Fertig!"
         },
-        "delete-account":{ 
-            "title":"Möchtest du den Account sicher löschen?",
+        "delete-account": {
+            "title": "Möchtest du den Account sicher löschen?",
             "cancel": "Nein",
-            "action": "Ja"      
+            "action": "Ja"
         }
     },
     "auth": {
@@ -179,8 +179,10 @@
     "enter_screen_attribute_repeat": "Wiederholen",
     "home_screen": {
         "button-show-more": "MEHR",
+        "button-show-all": "ALLE",
         "free-text": "Gratis",
-        "label-recent-transactions": "Neueste Transaktionen"
+        "label-recent-transactions": "Neueste Transaktionen",
+        "label-active-serialcontracts": "Verträge diesen Monat"
     },
     "home_screen_card": {
         "home-screen-card-toast": "Swipe nach links und rechts, um vorige oder kommende Monate anzusehen. Gedrückt halten, um in den aktuellen Monat zurückzukehren.",

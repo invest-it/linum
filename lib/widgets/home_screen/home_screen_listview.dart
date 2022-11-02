@@ -421,7 +421,7 @@ class HomeScreenListView implements BalanceDataListView {
     // final DateFormat formatter = DateFormat('EEEE, dd. MMMM yyyy', langCode);
 
     log(
-      calculateTimeFrequenzy(
+      calculateTimeFrequency(
         serialTransaction.repeatDuration,
         serialTransaction.repeatDurationType,
       ),
@@ -480,7 +480,7 @@ class HomeScreenListView implements BalanceDataListView {
             backgroundColor: serialTransaction.amount > 0
                 ? Theme.of(context)
                     .colorScheme
-                    .tertiary // FUTURE INCOME BACKGROUND
+                    .tertiary // FU-TURE INCOME BACKGROUND
                 : Theme.of(context).colorScheme.errorContainer,
             child: serialTransaction.amount > 0
                 ? Icon(
@@ -547,8 +547,10 @@ class HomeScreenListView implements BalanceDataListView {
   }
 
   // TODO: @Nightmind you only need to create proper translation (and you can rearrange the grammar the way you want)
-  String calculateTimeFrequenzy(
-      int duration, RepeatDurationType repeatDurationType) {
+  String calculateTimeFrequency(
+    int duration,
+    RepeatDurationType repeatDurationType,
+  ) {
     switch (repeatDurationType) {
       case RepeatDurationType.seconds:
         const int secondsInOneDay = 86400;
