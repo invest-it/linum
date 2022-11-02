@@ -80,17 +80,17 @@ class Sorters {
 
   static int timeNewToOld(dynamic a, dynamic b) {
     if (a is Transaction && b is Transaction) {
-      return (a.time).compareTo(b.time);
+      return (b.time).compareTo(a.time);
     }
-    return (b["time"] as firestore.Timestamp).compareTo(a["time"] as firestore.Timestamp);
+    return (b["time"] as firestore.Timestamp)
+        .compareTo(a["time"] as firestore.Timestamp);
   }
 
   static int timeOldToNew(dynamic b, dynamic a) {
     if (a is Transaction && b is Transaction) {
       return (a.time).compareTo(b.time);
     }
-    return (a["time"] as firestore.Timestamp).compareTo(b["time"] as firestore.Timestamp);
+    return (a["time"] as firestore.Timestamp)
+        .compareTo(b["time"] as firestore.Timestamp);
   }
-
-
 }
