@@ -201,7 +201,8 @@
         "label-no-entries": "- Geen inzendingen gevonden -",
         "label-thismonth": "Deze Maand",
         "label-today": "Vandaag",
-        "label-yesterday": "Gisteren"
+        "label-yesterday": "Gisteren",
+        "label-error-translation": "Vertaling ontbreekt"
     },
     "lock_screen": {
         "change": {

@@ -537,11 +537,15 @@ class HomeScreenListView implements BalanceDataListView {
     required bool isExpense,
   }) {
     if (isExpense) {
-      return tr(standardExpenseCategories[category]?.label ?? "");
-      // TODO @Nightmind you could add a String here that will show something like "error translating your category"
+      return tr(
+        standardExpenseCategories[category]?.label ??
+            tr('home_screen/listview/label-error-translation'),
+      );
     } else if (!isExpense) {
-      return tr(standardIncomeCategories[category]?.label ?? "");
-      // TODO @Nightmind you could add a String here that will show something like "error translating your category"
+      return tr(
+        standardIncomeCategories[category]?.label ??
+            tr('home_screen/listview/label-error-translation'),
+      );
     }
     return "Error"; // This should never happen.
   }

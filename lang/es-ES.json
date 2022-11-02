@@ -197,7 +197,8 @@
         "label-no-entries": "- No se han encontrado entradas -",
         "label-thismonth": "Este mes",
         "label-today": "Hoy",
-        "label-yesterday": "Ayer"
+        "label-yesterday": "Ayer",
+        "label-error-translation": "Falta la traducción"
     },
     "lock_screen": {
         "change": {

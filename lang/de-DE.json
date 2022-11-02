@@ -201,7 +201,8 @@
         "label-no-entries": "- Keine Einträge bisher -",
         "label-thismonth": "Diesen Monat",
         "label-today": "Heute",
-        "label-yesterday": "Gestern"
+        "label-yesterday": "Gestern",
+        "label-error-translation": "Übersetzung fehlt"
     },
     "lock_screen": {
         "change": {
