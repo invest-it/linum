@@ -34,6 +34,7 @@ class BalanceDataProvider extends ChangeNotifier {
 
   late AlgorithmProvider _algorithmProvider;
   late ExchangeRateProvider _exchangeRateProvicer;
+  late BalanceDataStreamBuilder _streamBuilder;
   // Manager
 
   /// Creates the BalanceDataProvider. Inparticular it sets [_balance] correctly
@@ -42,6 +43,7 @@ class BalanceDataProvider extends ChangeNotifier {
     _uid = Provider.of<AuthenticationService>(context, listen: false).uid;
     _algorithmProvider = Provider.of<AlgorithmProvider>(context, listen: false);
     _exchangeRateProvicer = Provider.of<ExchangeRateProvider>(context, listen: false);
+    _streamBuilder = BalanceDataStreamBuilder(_algorithmProvider, _exchangeRateProvicer);
     asynConstructor();
   }
 
@@ -370,9 +372,7 @@ class BalanceDataProvider extends ChangeNotifier {
     BalanceDataListView listView, {
     required BuildContext context,
   }) {
-    return BalanceDataStreamBuilder.fillListViewWithData(
-      algorithmProvider: _algorithmProvider,
-      exchangeRateProvider: _exchangeRateProvicer,
+    return _streamBuilder.fillListViewWithData(
       listView: listView,
       context: context,
       dataStream: _dataStream,
@@ -383,9 +383,7 @@ class BalanceDataProvider extends ChangeNotifier {
     BalanceDataListView blistview, {
     required BuildContext context,
   }) {
-    return BalanceDataStreamBuilder.fillListViewWithData(
-      algorithmProvider: _algorithmProvider,
-      exchangeRateProvider: _exchangeRateProvicer,
+    return _streamBuilder.fillListViewWithData(
       listView: blistview,
       context: context,
       dataStream: _dataStream,
@@ -397,8 +395,7 @@ class BalanceDataProvider extends ChangeNotifier {
   StreamBuilder fillStatisticPanelWithData(
     AbstractHomeScreenCard statisticPanel,
   ) {
-    return BalanceDataStreamBuilder.fillStatisticPanelWithData(
-      algorithmProvider: _algorithmProvider,
+    return _streamBuilder.fillStatisticPanelWithData(
       dataStream: _dataStream,
       statisticPanel: statisticPanel,
     );

@@ -21,10 +21,13 @@ import 'package:linum/widgets/loading_spinner.dart';
 import 'package:tuple/tuple.dart';
 
 class BalanceDataStreamBuilder {
+  final AlgorithmProvider algorithmProvider;
+  final ExchangeRateProvider exchangeRateProvider;
+
+  BalanceDataStreamBuilder(this.algorithmProvider, this.exchangeRateProvider);
+
   /// Returns a StreamBuilder that builds the ListView from the document-datastream
-  static StreamBuilder fillListViewWithData({
-    required AlgorithmProvider algorithmProvider,
-    required ExchangeRateProvider exchangeRateProvider,
+  StreamBuilder fillListViewWithData({
     required BalanceDataListView listView,
     required BuildContext context,
     required Stream<firestore.DocumentSnapshot<BalanceDocument>>? dataStream,
@@ -90,8 +93,7 @@ class BalanceDataStreamBuilder {
   }
 
   /// Returns a StreamBuilder that builds the ListView from the document-datastream
-  static StreamBuilder fillStatisticPanelWithData({
-    required AlgorithmProvider algorithmProvider,
+  StreamBuilder fillStatisticPanelWithData({
     required Stream<firestore.DocumentSnapshot<BalanceDocument>>? dataStream,
     required AbstractHomeScreenCard statisticPanel,
   }) {
@@ -125,7 +127,7 @@ class BalanceDataStreamBuilder {
   /// use the current _algorithmProvider filter
   /// (will still be used after filter on firebase, because of repeated balanced)
   /// may be moved into the data generation function
-  static Tuple2<List<Transaction>, List<SerialTransaction>> _prepareData(
+  Tuple2<List<Transaction>, List<SerialTransaction>> _prepareData(
     AsyncSnapshot<firestore.DocumentSnapshot<BalanceDocument>> snapshot,
   ) {
     final data = snapshot.data?.data(); // TODO: Model for Document
@@ -152,6 +154,8 @@ class BalanceDataStreamBuilder {
       serialTransactions,
       transactions,
     );
+
+    exchangeRateProvider.addExchangeRatesToTransactions(transactions);
 
     return Tuple2(transactions, serialTransactions);
   }
