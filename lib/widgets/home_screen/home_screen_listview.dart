@@ -1,7 +1,7 @@
 //  Home Screen Listview - Specific ListView settings for the Home Screen
 //
-//  Author: SoTBurst
-//  Co-Author: thebluebaronx, NightmindOfficial
+//  Author: SoTBurst, NightmindOfficial
+//  Co-Author: thebluebaronx
 //
 
 // ignore_for_file: avoid_dynamic_calls
