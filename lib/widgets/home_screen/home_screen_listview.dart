@@ -12,6 +12,7 @@ import 'package:badges/badges.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:linum/constants/repeat_duration_type_enum.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/models/serial_transaction.dart';
@@ -100,7 +101,7 @@ class HomeScreenListView implements BalanceDataListView {
         context,
         serialTransactions,
         error: error,
-        repeatedData: true,
+        // repeatedData: true,
       ),
     );
   }
@@ -203,12 +204,18 @@ class HomeScreenListView implements BalanceDataListView {
     BuildContext context,
     List<SerialTransaction> serialTransactions, {
     bool error = false,
-    bool repeatedData = false,
+    // bool repeatedData = false,
   }) {
     final List<Widget> list = [];
 
-    for (final serTrans in serialTransactions) {
-      list.add(buildSerialTransactionGestureDetector(context, serTrans));
+    if (error) {
+      // TODO: tell user there was an error loading @damattl
+    } else if (serialTransactions.isEmpty) {
+      list.add(const TimeWidget(displayValue: "listview.label-no-entries"));
+    } else {
+      for (final serTrans in serialTransactions) {
+        list.add(buildSerialTransactionGestureDetector(context, serTrans));
+      }
     }
 
     return list;
@@ -400,6 +407,13 @@ class HomeScreenListView implements BalanceDataListView {
     final String langCode = context.locale.languageCode;
     final DateFormat formatter = DateFormat('EEEE, dd. MMMM yyyy', langCode);
 
+    log(
+      calculateTimeFrequenzy(
+        serialTransaction.repeatDuration,
+        serialTransaction.repeatDurationType,
+      ),
+    );
+
     return GestureDetector(
       onTap: () {
         // TODO implement custom edit screen handling here
@@ -517,6 +531,30 @@ class HomeScreenListView implements BalanceDataListView {
       // TODO @Nightmind you could add a String here that will show something like "error translating your category"
     }
     return "Error"; // This should never happen.
+  }
+
+  // TODO: @Nightmind you only need to create proper translation (and you can rearrange the grammar the way you want)
+  String calculateTimeFrequenzy(
+      int duration, RepeatDurationType repeatDurationType) {
+    switch (repeatDurationType) {
+      case RepeatDurationType.seconds:
+        const int secondsInOneDay = 86400;
+
+        if (duration % (secondsInOneDay * 7) == 0) {
+          return "${(duration / secondsInOneDay).floor()} Weeks";
+        } else if (duration % secondsInOneDay == 0) {
+          return "${(duration / secondsInOneDay).floor()} Days";
+        } else if (duration % 3600 == 0) {
+          return "${(duration / secondsInOneDay).floor()} Hours";
+        }
+        return "$duration seconds";
+
+      case RepeatDurationType.months:
+        if (duration % 12 == 0) {
+          return "${(duration / 12).floor()} Years";
+        }
+        return "$duration Months";
+    }
   }
 
   @override

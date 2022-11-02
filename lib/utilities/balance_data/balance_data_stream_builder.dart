@@ -82,7 +82,15 @@ class BalanceDataStreamBuilder {
               });
             });
 
-            serialTransactions.sort((a, b) => a.name.compareTo(b.name));
+            serialTransactions.sort((a, b) {
+              // are both expenses / incomes
+              if ((a.amount <= 0 && b.amount <= 0) ||
+                  (a.amount > 0 && b.amount > 0)) {
+                return a.name.compareTo(b.name);
+              } else {
+                return a.amount.compareTo(b.amount);
+              }
+            });
 
             listView.setSerialTransactions(
               serialTransactions,
