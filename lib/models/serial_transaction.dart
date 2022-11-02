@@ -83,6 +83,12 @@ class SerialTransaction {
   }
 
   factory SerialTransaction.fromMap(Map<String, dynamic> map) {
+    final changed = DateTimeMap.fromDynamicMap(
+        map['changed'],
+        keyMapper: (key) => key as String,
+        valueMapper: (value) => ChangedTransaction.fromMap(value as Map<String, dynamic>),
+    );
+
     return SerialTransaction(
       amount: map['amount'] as num,
       category: map['category'] as String,
@@ -90,7 +96,7 @@ class SerialTransaction {
       id: map['id'] as String,
       name: map['name'] as String,
       note: map['note'] as String?,
-      changed: map['changed'] as DateTimeMap<String, ChangedTransaction>?, // TODO: Might not work
+      changed: changed, // TODO: Might not work
       initialTime: map['initialTime'] as Timestamp,
       endTime: map['endTime'] as Timestamp?,
       repeatDuration: map['repeatDuration'] as int,

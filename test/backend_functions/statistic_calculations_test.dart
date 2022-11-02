@@ -10,7 +10,7 @@ import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/models/transaction.dart';
 import 'package:linum/providers/algorithm_provider.dart';
-import 'package:linum/utilities/backend/statistic_calculations.dart';
+import 'package:linum/utilities/backend/statistical_calculations.dart';
 import 'package:linum/utilities/frontend/filters.dart';
 import 'package:uuid/uuid.dart';
 
@@ -74,8 +74,8 @@ void main() {
       group("sum", () {
         test("empty data", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             emptyData,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -93,8 +93,8 @@ void main() {
 
         test("example data 1 (only incomes)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData1,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -112,8 +112,8 @@ void main() {
 
         test("example data 2 (only expenses)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData2,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -131,8 +131,8 @@ void main() {
 
         test("example data 3", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData3,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -150,8 +150,8 @@ void main() {
 
         test("example data 4 (adds up to 0)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData4,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -169,8 +169,8 @@ void main() {
 
         test("example data 5 (only 0 expenses)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData5,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -192,8 +192,8 @@ void main() {
             // Arrange (Initialization)
             final List<Transaction> randomData =
                 _createRandomStatisticDataWithFixedTime(rand);
-            final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
+            final StatisticalCalculations statisticsCalculations =
+                StatisticalCalculations(
               randomData,
               AlgorithmProvider()
                 ..setCurrentFilterAlgorithm(
@@ -217,8 +217,8 @@ void main() {
       group("average", () {
         test("empty data", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             emptyData,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -236,8 +236,8 @@ void main() {
 
         test("example data 1 (only incomes)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData1,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -255,8 +255,8 @@ void main() {
 
         test("example data 2 (only expenses)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData2,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -274,8 +274,8 @@ void main() {
 
         test("example data 3", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData3,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -293,8 +293,8 @@ void main() {
 
         test("example data 4 (adds up to 0)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData4,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -312,8 +312,8 @@ void main() {
 
         test("example data 5 (only 0 expenses)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData5,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -335,8 +335,8 @@ void main() {
             // Arrange (Initialization)
             final List<Transaction> randomData =
                 _createRandomStatisticDataWithFixedTime(rand);
-            final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
+            final StatisticalCalculations statisticsCalculations =
+                StatisticalCalculations(
               randomData,
               AlgorithmProvider()
                 ..setCurrentFilterAlgorithm(
@@ -363,8 +363,8 @@ void main() {
       group("sum", () {
         test("empty data", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             emptyData,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -382,8 +382,8 @@ void main() {
 
         test("example data 1 (only incomes)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData1,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -401,8 +401,8 @@ void main() {
 
         test("example data 2 (only expenses)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData2,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -420,8 +420,8 @@ void main() {
 
         test("example data 3", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData3,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -439,8 +439,8 @@ void main() {
 
         test("example data 4 (adds up to 0)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData4,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -458,8 +458,8 @@ void main() {
 
         test("example data 5 (only 0 expenses)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData5,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -481,8 +481,8 @@ void main() {
             // Arrange (Initialization)
             final List<Transaction> randomData =
                 _createRandomStatisticDataWithFixedTime(rand);
-            final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
+            final StatisticalCalculations statisticsCalculations =
+                StatisticalCalculations(
               randomData,
               AlgorithmProvider()
                 ..setCurrentFilterAlgorithm(
@@ -507,8 +507,8 @@ void main() {
       group("average", () {
         test("empty data", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             emptyData,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -526,8 +526,8 @@ void main() {
 
         test("example data 1 (only incomes)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData1,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -545,8 +545,8 @@ void main() {
 
         test("example data 2 (only expenses)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData2,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -564,8 +564,8 @@ void main() {
 
         test("example data 3", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData3,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -583,8 +583,8 @@ void main() {
 
         test("example data 4 (adds up to 0)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData4,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -602,8 +602,8 @@ void main() {
 
         test("example data 5 (only 0 expenses)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData5,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -625,8 +625,8 @@ void main() {
             // Arrange (Initialization)
             final List<Transaction> randomData =
                 _createRandomStatisticDataWithFixedTime(rand);
-            final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
+            final StatisticalCalculations statisticsCalculations =
+                StatisticalCalculations(
               randomData,
               AlgorithmProvider()
                 ..setCurrentFilterAlgorithm(
@@ -659,8 +659,8 @@ void main() {
       group("sum", () {
         test("empty data", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             emptyData,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -678,8 +678,8 @@ void main() {
 
         test("example data 1 (only incomes)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData1,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -697,8 +697,8 @@ void main() {
 
         test("example data 2 (only expenses)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData2,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -716,8 +716,8 @@ void main() {
 
         test("example data 3", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData3,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -735,8 +735,8 @@ void main() {
 
         test("example data 4 (adds up to 0)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData4,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -754,8 +754,8 @@ void main() {
 
         test("example data 5 (only 0 expenses)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData5,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -777,8 +777,8 @@ void main() {
             // Arrange (Initialization)
             final List<Transaction> randomData =
                 _createRandomStatisticDataWithFixedTime(rand);
-            final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
+            final StatisticalCalculations statisticsCalculations =
+                StatisticalCalculations(
               randomData,
               AlgorithmProvider()
                 ..setCurrentFilterAlgorithm(
@@ -804,8 +804,8 @@ void main() {
       group("average", () {
         test("empty data", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             emptyData,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -823,8 +823,8 @@ void main() {
 
         test("example data 1 (only incomes)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData1,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -842,8 +842,8 @@ void main() {
 
         test("example data 2 (only expenses)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData2,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -861,8 +861,8 @@ void main() {
 
         test("example data 3", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData3,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -880,8 +880,8 @@ void main() {
 
         test("example data 4 (adds up to 0)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData4,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -899,8 +899,8 @@ void main() {
 
         test("example data 5 (only 0 expenses)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
             exampleData5,
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
@@ -922,8 +922,8 @@ void main() {
             // Arrange (Initialization)
             final List<Transaction> randomData =
                 _createRandomStatisticDataWithFixedTime(rand);
-            final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
+            final StatisticalCalculations statisticsCalculations =
+                StatisticalCalculations(
               randomData,
               AlgorithmProvider()
                 ..setCurrentFilterAlgorithm(
