@@ -219,14 +219,12 @@ class HomeScreenListView implements BalanceDataListView {
 
       for (final serTrans in serialTransactions) {
         if (!wroteExpensesTag && serTrans.amount <= 0) {
-          // TODO: @Nightmind translation
           list.add(
             const TimeWidget(displayValue: "home_screen_card.label-expenses"),
           );
           wroteExpensesTag = true;
         }
         if (!wroteIncomeTag && serTrans.amount > 0) {
-          // TODO: @Nightmind translation
           list.add(
             const TimeWidget(displayValue: "home_screen_card.label-income"),
           );
@@ -430,7 +428,7 @@ class HomeScreenListView implements BalanceDataListView {
         // TODO implement custom edit screen handling here
         // getRouterDelegate().pushRoute(
         //   MainRoute.enter,
-        //   settings: EnterScreenPageSettings.withBalanceData(singleBalanceData),
+        //   settings: EnterScreenPageSettings.withTransaction(serialTransaction),
         // );
       },
       child: Dismissible(
@@ -550,7 +548,7 @@ class HomeScreenListView implements BalanceDataListView {
     final int duration = serialTransaction.repeatDuration;
     final RepeatDurationType repeatDurationType =
         serialTransaction.repeatDurationType;
-    final String amount = serialTransaction.amount.toStringAsFixed(2);
+    final String amount = serialTransaction.amount.abs().toStringAsFixed(2);
 
     switch (repeatDurationType) {
       case RepeatDurationType.seconds:
