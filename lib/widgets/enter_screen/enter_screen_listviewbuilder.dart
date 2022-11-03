@@ -156,8 +156,7 @@ class _EnterScreenListViewBuilderState
                               "enter_screen_attribute_category",
                               timeEntryCategory.label,
                               repeatDurationEntryCategory.label,
-                              ][index].tr()
-                            }: ",
+                            ][index].tr()}: ",
                           ),
                           const SizedBox(
                             width: 5,
@@ -184,6 +183,7 @@ class _EnterScreenListViewBuilderState
     );
   }
 
+  //TODO implement changablity of repeatDuration when in edit mode @SoTBurst
   int calculateItemCount(EnterScreenProvider enterScreenProvider) {
     if (enterScreenProvider.editMode) {
       return 2;
@@ -194,10 +194,11 @@ class _EnterScreenListViewBuilderState
 
   //function executed when one of the categories (category, account, date etc.) is tapped
   void _onCategoryPressed(
-      int index,
-      EnterScreenProvider enterScreenProvider,
-      AccountSettingsProvider accountSettingsProvider,
-      ActionLipStatusProvider actionLipStatusProvider,) {
+    int index,
+    EnterScreenProvider enterScreenProvider,
+    AccountSettingsProvider accountSettingsProvider,
+    ActionLipStatusProvider actionLipStatusProvider,
+  ) {
     if (index == 1) {
       //opens the date picker
       _openDatePicker(enterScreenProvider);
@@ -258,8 +259,7 @@ class _EnterScreenListViewBuilderState
       "enter_screen_attribute_category",
       timeEntryCategory.label,
       repeatDurationEntryCategory.label,
-    ][index].tr()
-    }: ";
+    ][index].tr()}: ";
   }
 
   //which lists view is built depending on expense etc.
@@ -312,7 +312,11 @@ class _EnterScreenListViewBuilderState
                     .icon,
               ),
               title: Text(
-                tr(standardExpenseCategories[StandardCategoryExpense.values[indexBuilder]]!.label),
+                tr(
+                  standardExpenseCategories[
+                          StandardCategoryExpense.values[indexBuilder]]!
+                      .label,
+                ),
               ),
               //selects the item as the categories value
               onTap: () => _selectCategoryItemExpenses(
@@ -339,18 +343,23 @@ class _EnterScreenListViewBuilderState
                     .icon,
               ),
               title: Text(
-                tr(standardIncomeCategories[StandardCategoryIncome.values[indexBuilder]]!.label),
+                tr(
+                  standardIncomeCategories[
+                          StandardCategoryIncome.values[indexBuilder]]!
+                      .label,
+                ),
               ),
               //selects the item as the categories value
               onTap: () => _selectCategoryItemIncome(
-                  StandardCategoryIncome.values[indexBuilder]
-                      .toString()
-                      .split(".")[1],
-                  enterScreenProvider,
-                  standardIncomeCategories[
-                          StandardCategoryExpense.values[indexBuilder]]!
-                      .icon,
-                  actionLipStatusProvider,),
+                StandardCategoryIncome.values[indexBuilder]
+                    .toString()
+                    .split(".")[1],
+                enterScreenProvider,
+                standardIncomeCategories[
+                        StandardCategoryExpense.values[indexBuilder]]!
+                    .icon,
+                actionLipStatusProvider,
+              ),
             );
           },
         );
@@ -382,11 +391,19 @@ class _EnterScreenListViewBuilderState
                   Icons.error,
             ),
             title: Text(
-              tr(categoriesRepeat[RepeatDuration.values[indexBuilder]]?["entryCategory"].label as String),
+              tr(
+                categoriesRepeat[RepeatDuration.values[indexBuilder]]
+                        ?["entryCategory"]
+                    .label as String,
+              ),
             ),
             //selects the item as the repeat value
-            onTap: () => _selectRepeatItem(enterScreenProvider, indexBuilder,
-                accountSettingsProvider, actionLipStatusProvider,),
+            onTap: () => _selectRepeatItem(
+              enterScreenProvider,
+              indexBuilder,
+              accountSettingsProvider,
+              actionLipStatusProvider,
+            ),
           );
         },
       );
@@ -411,17 +428,22 @@ class _EnterScreenListViewBuilderState
                   .icon,
             ),
             title: Text(
-              tr(standardIncomeCategories[StandardCategoryIncome.values[indexBuilder]]!.label),
-            ),
-            onTap: () => _selectCategoryItemIncome(
-                StandardCategoryIncome.values[indexBuilder]
-                    .toString()
-                    .split(".")[1],
-                enterScreenProvider,
+              tr(
                 standardIncomeCategories[
                         StandardCategoryIncome.values[indexBuilder]]!
-                    .icon,
-                actionLipStatusProvider,),
+                    .label,
+              ),
+            ),
+            onTap: () => _selectCategoryItemIncome(
+              StandardCategoryIncome.values[indexBuilder]
+                  .toString()
+                  .split(".")[1],
+              enterScreenProvider,
+              standardIncomeCategories[
+                      StandardCategoryIncome.values[indexBuilder]]!
+                  .icon,
+              actionLipStatusProvider,
+            ),
           );
         },
       );
@@ -451,10 +473,18 @@ class _EnterScreenListViewBuilderState
                   Icons.error,
             ),
             title: Text(
-              tr(categoriesRepeat[RepeatDuration.values[indexBuilder]]?["entryCategory"].label as String),
+              tr(
+                categoriesRepeat[RepeatDuration.values[indexBuilder]]
+                        ?["entryCategory"]
+                    .label as String,
+              ),
             ),
-            onTap: () => _selectRepeatItem(enterScreenProvider, indexBuilder,
-                accountSettingsProvider, actionLipStatusProvider,),
+            onTap: () => _selectRepeatItem(
+              enterScreenProvider,
+              indexBuilder,
+              accountSettingsProvider,
+              actionLipStatusProvider,
+            ),
           );
         },
       );
@@ -479,10 +509,18 @@ class _EnterScreenListViewBuilderState
                 Icons.error,
           ),
           title: Text(
-            tr(categoriesRepeat[RepeatDuration.values[indexBuilder]]?["entryCategory"].label as String),
+            tr(
+              categoriesRepeat[RepeatDuration.values[indexBuilder]]
+                      ?["entryCategory"]
+                  .label as String,
+            ),
           ),
-          onTap: () => _selectRepeatItem(enterScreenProvider, indexBuilder,
-              accountSettingsProvider, actionLipStatusProvider,),
+          onTap: () => _selectRepeatItem(
+            enterScreenProvider,
+            indexBuilder,
+            accountSettingsProvider,
+            actionLipStatusProvider,
+          ),
         );
       },
     );
@@ -502,7 +540,10 @@ class _EnterScreenListViewBuilderState
           );
         }
         return Text(
-          tr(standardExpenseCategories[enterScreenProvider.category]?.label ?? 'chosen expense'),
+          tr(
+            standardExpenseCategories[enterScreenProvider.category]?.label ??
+                'chosen expense',
+          ),
         );
       } else {
         if (enterScreenProvider.category == "") {
@@ -511,7 +552,10 @@ class _EnterScreenListViewBuilderState
           );
         }
         return Text(
-          tr(standardIncomeCategories[enterScreenProvider.category]?.label ?? 'chosen income'),
+          tr(
+            standardIncomeCategories[enterScreenProvider.category]?.label ??
+                'chosen income',
+          ),
         );
       }
     } else if (index == 1) {
@@ -521,7 +565,11 @@ class _EnterScreenListViewBuilderState
       return Text(formatter.format(enterScreenProvider.selectedDate));
     } else if (index == 2) {
       return Text(
-        tr(categoriesRepeat[enterScreenProvider.repeatDurationEnum]?["entryCategory"].label as String),
+        tr(
+          categoriesRepeat[enterScreenProvider.repeatDurationEnum]
+                  ?["entryCategory"]
+              .label as String,
+        ),
       );
     } else {
       log("Something has gone wrong with the index in enter_screen_listviewbuilder.dart");
