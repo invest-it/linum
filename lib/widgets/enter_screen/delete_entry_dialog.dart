@@ -20,28 +20,31 @@ Future<bool?> generateDeleteDialogFromTransaction(
   BalanceDataProvider balanceDataProvider,
   Transaction transaction,
 ) async {
-  final bool isRepeatable = transaction.repeatId != null;
+  final bool isSerial = transaction.repeatId != null;
   return generateDeleteDialog(
     context,
     balanceDataProvider,
-    isRepeatable ? transaction.repeatId! : transaction.id,
-    isRepeatable: isRepeatable,
+    isSerial ? transaction.repeatId! : transaction.id,
+    isSerial: isSerial,
     formerTime: transaction.formerTime ?? transaction.time,
   );
 }
 
-
-Future<bool?> generateDeleteDialogFromSerialTransaction(BuildContext context, BalanceDataProvider balanceDataProvider, SerialTransaction serialTransaction) async{
+Future<bool?> generateDeleteDialogFromSerialTransaction(
+    BuildContext context,
+    BalanceDataProvider balanceDataProvider,
+    SerialTransaction serialTransaction) async {
   return showDefaultDeleteDialog(context, serialTransaction.id);
 }
 
 Future<bool?> showRepeatableDeleteDialog(
-    BuildContext context,
-    String transactionId, {
-    firestore.Timestamp? formerTime,
+  BuildContext context,
+  String transactionId, {
+  firestore.Timestamp? formerTime,
 }) async {
   final UserAlert userAlert = UserAlert(context: context);
-  final BalanceDataProvider balanceDataProvider = Provider.of<BalanceDataProvider>(context, listen: false);
+  final BalanceDataProvider balanceDataProvider =
+      Provider.of<BalanceDataProvider>(context, listen: false);
   return userAlert.showActionDialog(
     "enter_screen.delete-entry.dialog-label-deleterep",
     [
@@ -104,12 +107,13 @@ Future<bool?> showRepeatableDeleteDialog(
 }
 
 Future<bool?> showDefaultDeleteDialog(
-    BuildContext context,
-    String balanceDataId, {
-    firestore.Timestamp? formerTime,
+  BuildContext context,
+  String balanceDataId, {
+  firestore.Timestamp? formerTime,
 }) async {
   final UserAlert userAlert = UserAlert(context: context);
-  final BalanceDataProvider balanceDataProvider = Provider.of<BalanceDataProvider>(context, listen: false);
+  final BalanceDataProvider balanceDataProvider =
+      Provider.of<BalanceDataProvider>(context, listen: false);
   return userAlert.showActionDialog(
     "enter_screen.delete-entry.dialog-label-delete",
     [
@@ -137,12 +141,14 @@ Future<bool?> generateDeleteDialog(
   BuildContext context,
   BalanceDataProvider balanceDataProvider,
   String transactionId, {
-  required bool isRepeatable,
+  required bool isSerial,
   firestore.Timestamp? formerTime,
 }) async {
-
-
-  return isRepeatable
-      ? showRepeatableDeleteDialog(context, transactionId, formerTime: formerTime)
+  return isSerial
+      ? showRepeatableDeleteDialog(
+          context,
+          transactionId,
+          formerTime: formerTime,
+        )
       : showDefaultDeleteDialog(context, transactionId, formerTime: formerTime);
 }

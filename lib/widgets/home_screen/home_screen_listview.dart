@@ -205,8 +205,11 @@ class HomeScreenListView implements BalanceDataListView {
     bool error = false,
     bool repeatedData = false,
   }) {
-    log(serialTransactions.toString());
-    final List<Widget> list = [const Text("W.I.P.")];
+    final List<Widget> list = [];
+
+    for (final serTrans in serialTransactions) {
+      list.add(buildSerialTransactionGestureDetector(context, serTrans));
+    }
 
     return list;
   }
@@ -316,8 +319,7 @@ class HomeScreenListView implements BalanceDataListView {
                           .secondary, // PRESENT EXPENSE BACKGROUND
               child: transaction.amount > 0
                   ? Icon(
-                      standardIncomeCategories[transaction.category]
-                              ?.icon ??
+                      standardIncomeCategories[transaction.category]?.icon ??
                           Icons.error,
                       color: isFutureItem
                           ? Theme.of(context)
@@ -328,8 +330,7 @@ class HomeScreenListView implements BalanceDataListView {
                               .tertiary, // PRESENT INCOME ICON
                     )
                   : Icon(
-                      standardExpenseCategories[transaction.category]
-                              ?.icon ??
+                      standardExpenseCategories[transaction.category]?.icon ??
                           Icons.error,
                       color: isFutureItem
                           ? Theme.of(context)

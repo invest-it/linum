@@ -47,8 +47,7 @@ class _EnterScreenState extends State<EnterScreen> {
     //and get parsed back to a date time
     final String partialSelectedDate =
         enterScreenProvider.selectedDate.toString().split(' ')[0];
-    final DateTime formattedSelectedDate =
-        DateTime.parse(partialSelectedDate);
+    final DateTime formattedSelectedDate = DateTime.parse(partialSelectedDate);
 
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -121,11 +120,13 @@ class _EnterScreenState extends State<EnterScreen> {
                                     balanceDataProvider,
                                     enterScreenProvider.repeatId ??
                                         enterScreenProvider.formerId!,
-                                    isRepeatable:
+                                    isSerial:
                                         enterScreenProvider.repeatId != null,
                                     formerTime: enterScreenProvider.formerTime,
                                   ).then(
-                                    (pop) => pop != null && pop ? getRouterDelegate().popRoute() : {},
+                                    (pop) => pop != null && pop
+                                        ? getRouterDelegate().popRoute()
+                                        : {},
                                   );
                                 },
                                 child: Text(
@@ -134,7 +135,8 @@ class _EnterScreenState extends State<EnterScreen> {
                                       .textTheme
                                       .button
                                       ?.copyWith(
-                                        color: Theme.of(context).colorScheme.error,
+                                        color:
+                                            Theme.of(context).colorScheme.error,
                                       ),
                                 ),
                               )
@@ -161,8 +163,10 @@ class _EnterScreenState extends State<EnterScreen> {
                               ),
                               onPressed: () {
                                 if (enterScreenProvider.isIncome &&
-                                    enterScreenProvider.amountToDisplay() <= 0) {
-                                  showAddAmountAlertDialog(context, enterScreenProvider);
+                                    enterScreenProvider.amountToDisplay() <=
+                                        0) {
+                                  showAddAmountAlertDialog(
+                                      context, enterScreenProvider);
                                   dev.log(
                                     "amount was to low: ${enterScreenProvider.amountToDisplay()}",
                                   );
@@ -192,10 +196,11 @@ class _EnterScreenState extends State<EnterScreen> {
     );
   }
 
-
   void addBalance(DateTime selectedDate) {
-    final EnterScreenProvider enterScreenProvider = Provider.of<EnterScreenProvider>(context, listen: false);
-    final BalanceDataProvider balanceDataProvider = Provider.of<BalanceDataProvider>(context, listen: false);
+    final EnterScreenProvider enterScreenProvider =
+        Provider.of<EnterScreenProvider>(context, listen: false);
+    final BalanceDataProvider balanceDataProvider =
+        Provider.of<BalanceDataProvider>(context, listen: false);
     if (enterScreenProvider.repeatDuration == null ||
         enterScreenProvider.repeatDurationTyp == null) {
       balanceDataProvider.addTransaction(
@@ -222,9 +227,7 @@ class _EnterScreenState extends State<EnterScreen> {
               selectedDate.year,
               selectedDate.month,
               selectedDate.day,
-              selectedDate.hour != 0
-                  ? selectedDate.hour
-                  : DateTime.now().hour,
+              selectedDate.hour != 0 ? selectedDate.hour : DateTime.now().hour,
               selectedDate.minute != 0
                   ? selectedDate.minute
                   : DateTime.now().minute,
@@ -241,8 +244,10 @@ class _EnterScreenState extends State<EnterScreen> {
   }
 
   void updateBalance(DateTime selectedDate) {
-    final EnterScreenProvider enterScreenProvider = Provider.of<EnterScreenProvider>(context, listen: false);
-    final BalanceDataProvider balanceDataProvider = Provider.of<BalanceDataProvider>(context, listen: false);
+    final EnterScreenProvider enterScreenProvider =
+        Provider.of<EnterScreenProvider>(context, listen: false);
+    final BalanceDataProvider balanceDataProvider =
+        Provider.of<BalanceDataProvider>(context, listen: false);
     if (enterScreenProvider.repeatId == null) {
       balanceDataProvider.updateTransaction(
         Transaction(
@@ -261,7 +266,7 @@ class _EnterScreenState extends State<EnterScreen> {
     } else {
       // open popup
       showChangeEntryDialog(context, selectedDate).then(
-            (pop) => pop != null && pop ? getRouterDelegate().popRoute() : {},
+        (pop) => pop != null && pop ? getRouterDelegate().popRoute() : {},
       );
     }
   }

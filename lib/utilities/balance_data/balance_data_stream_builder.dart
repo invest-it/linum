@@ -21,19 +21,23 @@ import 'package:linum/widgets/loading_spinner.dart';
 import 'package:tuple/tuple.dart';
 
 class BalanceDataStreamBuilder {
+  final AlgorithmProvider algorithmProvider;
+  final ExchangeRateProvider exchangeRateProvider;
+
+  BalanceDataStreamBuilder(this.algorithmProvider, this.exchangeRateProvider);
+
   /// Returns a StreamBuilder that builds the ListView from the document-datastream
-  static StreamBuilder fillListViewWithData({
-    required AlgorithmProvider algorithmProvider,
-    required ExchangeRateProvider exchangeRateProvider,
+  StreamBuilder fillListViewWithData({
     required BalanceDataListView listView,
     required BuildContext context,
     required Stream<firestore.DocumentSnapshot<BalanceDocument>>? dataStream,
-    bool isRepeatable = false,
+    bool isSerial = false,
   }) {
     return StreamBuilder<firestore.DocumentSnapshot<BalanceDocument>>(
       stream: dataStream,
       builder: (ctx, snapshot) {
-        if (snapshot.connectionState == ConnectionState.none || snapshot.connectionState == ConnectionState.waiting) {
+        if (snapshot.connectionState == ConnectionState.none ||
+            snapshot.connectionState == ConnectionState.waiting) {
           return const LoadingSpinner();
         }
         if (snapshot.data == null) {
@@ -45,7 +49,7 @@ class BalanceDataStreamBuilder {
           log("ERROR LOADING");
           return listView.listview;
         } else {
-          if (!isRepeatable) {
+          if (!isSerial) {
             final preparedData = _prepareData(
               snapshot,
             );
@@ -78,6 +82,8 @@ class BalanceDataStreamBuilder {
               });
             });
 
+            serialTransactions.sort((a, b) => a.name.compareTo(b.name));
+
             listView.setSerialTransactions(
               serialTransactions,
               context: context,
@@ -90,8 +96,7 @@ class BalanceDataStreamBuilder {
   }
 
   /// Returns a StreamBuilder that builds the ListView from the document-datastream
-  static StreamBuilder fillStatisticPanelWithData({
-    required AlgorithmProvider algorithmProvider,
+  StreamBuilder fillStatisticPanelWithData({
     required Stream<firestore.DocumentSnapshot<BalanceDocument>>? dataStream,
     required AbstractHomeScreenCard statisticPanel,
   }) {
@@ -105,14 +110,13 @@ class BalanceDataStreamBuilder {
           final preparedData = _prepareData(
             snapshot,
           );
-          final List<Transaction> transactions = preparedData.item1;
-
-          final StatisticalCalculations statisticsCalculations =
+          final List<Transaction> balanceData = preparedData.item1;
+          final StatisticalCalculations statisticalCalculations =
               StatisticalCalculations(
-                transactions,
-                algorithmProvider,
-              );
-          statisticPanel.addStatisticData(statisticsCalculations);
+            balanceData,
+            algorithmProvider,
+          );
+          statisticPanel.addStatisticData(statisticalCalculations);
           return statisticPanel.returnWidget;
         }
       },
@@ -125,7 +129,7 @@ class BalanceDataStreamBuilder {
   /// use the current _algorithmProvider filter
   /// (will still be used after filter on firebase, because of repeated balanced)
   /// may be moved into the data generation function
-  static Tuple2<List<Transaction>, List<SerialTransaction>> _prepareData(
+  Tuple2<List<Transaction>, List<SerialTransaction>> _prepareData(
     AsyncSnapshot<firestore.DocumentSnapshot<BalanceDocument>> snapshot,
   ) {
     final data = snapshot.data?.data(); // TODO: Model for Document
@@ -152,6 +156,8 @@ class BalanceDataStreamBuilder {
       serialTransactions,
       transactions,
     );
+
+    exchangeRateProvider.addExchangeRatesToTransactions(transactions);
 
     return Tuple2(transactions, serialTransactions);
   }
