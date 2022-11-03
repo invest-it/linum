@@ -4,7 +4,6 @@
 //  Co-Author: damattl
 //  (Refactored)
 
-
 enum StandardCategoryIncome {
   none,
   income,
@@ -40,6 +39,12 @@ enum StandardAccount {
   credit,
   cash,
   depot,
+}
+
+enum StandardCurrency {
+  euro,
+  yen,
+  dollar;
 }
 
 enum RepeatDuration {
