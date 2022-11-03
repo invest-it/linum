@@ -14,7 +14,12 @@
             "logged-out": {
                 "button-submit": "Code anfordern",
                 "label-description": "Bitte trage deine E-Mail-Adresse ein, die mit deinem Account verbunden ist. Wir schicken die einen Verifizierungscode zu, mit dem du dein Passwort neu setzen kannst.",
-                "label-title": "Passwort zurücksetzen"
+                "label-title": [
+                    "Passwort zurücksetzen",
+                    {
+                        "no-overwrite": "es-ES"
+                    }
+                ]
             }
         },
         "standard-category": {

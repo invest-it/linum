@@ -2,28 +2,27 @@ import typing
 
 
 def flatten_dict(
-    data: dict[str, dict], 
-    prevNodes: typing.Optional[list[str]] = None, 
-    flattened: typing.Optional[dict[str, str]] = None,
+        data: dict[str, dict],
+        prev_nodes: typing.Optional[list[str]] = None,
+        flattened: typing.Optional[dict[str, str]] = None,
 ):
-    if prevNodes is None:
-        prevNodes = []
+    if prev_nodes is None:
+        prev_nodes = []
     if flattened is None:
         flattened = {}
 
     for key in data.keys():
         child = data.get(key)
-        nodes = prevNodes.copy()
+        nodes = prev_nodes.copy()
         nodes.append(key)
-        if isinstance(child, str):
+        if isinstance(child, str) or isinstance(child, list):
             flattened[".".join(nodes)] = child
         else:
-            flatten_dict(child, nodes, flattened)    # type: ignore
-            
+            flatten_dict(child, nodes, flattened)  # type: ignore
+
     return flattened
 
 
-                
 def dict_from_nodes(prev_dict: dict, nodes: list[str], index: int, value: str):
     node = nodes[index]
 
@@ -33,7 +32,7 @@ def dict_from_nodes(prev_dict: dict, nodes: list[str], index: int, value: str):
 
     if prev_dict.get(node) is None:
         prev_dict[node] = {}
-        
+
     dict_from_nodes(prev_dict[node], nodes, index + 1, value)
 
 
