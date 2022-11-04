@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:translation_script/flatten.dart';
+import 'package:translation_script/types.dart';
 import 'package:tuple/tuple.dart';
-import '../flatten.dart';
+
 
 List<String> getDeletedEntries(
     Map<String, LanguageEntry> baseFlattened,

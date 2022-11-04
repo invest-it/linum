@@ -4,23 +4,11 @@ import 'dart:io';
 import 'package:args/args.dart';
 import 'package:path/path.dart' as path;
 import 'package:translation_script/compare.dart';
+import 'package:translation_script/deepl.dart';
+import 'package:translation_script/flatten.dart';
 import 'package:translation_script/helpers.dart';
+import 'package:translation_script/types.dart';
 
-import '../deepl.dart';
-import '../flatten.dart';
-
-class TranslatorConfig {
-  final String authKey;
-  final Map<String, String> lang;
-  TranslatorConfig(this.authKey, this.lang);
-
-  factory TranslatorConfig.fromJson(Map<String, dynamic> json) {
-    return TranslatorConfig(
-      json["auth_key"] as String,
-      (json["lang"] as Map<String, dynamic>).map((key, value) => MapEntry(key, value as String)),
-    );
-  }
-}
 
 Future<Map<String, String>> translate(
     Map<String, LanguageEntry> differences,
