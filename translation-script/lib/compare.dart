@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
-
-import 'flatten.dart';
+import 'package:tuple/tuple.dart';
+import '../flatten.dart';
 
 List<String> getDeletedEntries(
     Map<String, LanguageEntry> baseFlattened,
@@ -23,14 +23,19 @@ Map<String, LanguageEntry> getChangedEntries(
   final differences = <String, LanguageEntry>{};
   for (final baseEntry in baseFlattened.entries) {
     final comparedLangEntry = comparedFlattened[baseEntry.key];
-    if (comparedLangEntry == null || comparedLangEntry != baseEntry.value) {
+    if (comparedLangEntry == null || comparedLangEntry.value != baseEntry.value.value) {
       differences[baseEntry.key] = baseEntry.value;
     }
+
   }
   return differences;
 }
 
-void compareFiles(String baseFilePath, String comparedFilePath) async {
+Future<Tuple2<Map<String, LanguageEntry>, List<String>>> compareFiles(
+    String baseFilePath,
+    String comparedFilePath
+) async {
+
   final baseStr = await File(baseFilePath).readAsString();
   final baseData = jsonDecode(baseStr) as Map<String, dynamic>;
 
@@ -43,5 +48,5 @@ void compareFiles(String baseFilePath, String comparedFilePath) async {
   final differences = getChangedEntries(baseFlattened, comparedFlattened);
   final deleted = getDeletedEntries(baseFlattened, comparedFlattened);
 
-  // return Tuple2(differences, deleted)
+  return Tuple2(differences, deleted);
 }

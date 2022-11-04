@@ -1,11 +1,6 @@
 <b>Installation</b>
 
-(Install Python 3 first, if not already installed)
-
-To install the required packages run <code>pip install -r requirements.txt</code>.
-
-
-Before running the script you need to add the *translator-config.json* to the same directory as the _translate.py_ file. There you have to add following json: <br>
+Before running the script you need to add the *translator-config.json* to the same directory as the _README.md_ file. There you have to add following json: <br>
 ```yaml
 {
    "auth_key": "YOUR_PERSONAL_DEEPL_AUTH_KEY",
@@ -45,7 +40,7 @@ Add a new tag to the specified base language file (file to be translated) like t
 ```
 
 Then open a console and type <br> 
-<code>python translate.py <br>
+<code>dart run bin/translation_script.dart<br>
 -d LANGUAGE_FILE_DIR <br>
 -b LANGUAGE_BASE_FILE <br>
 -c LANGUAGE_FILE_TO_COMPARE_AGAINST
@@ -53,7 +48,7 @@ Then open a console and type <br>
 to run the script.
 
 From the <code>translation-script</code> directory this resolves to: <br>
-<code>python translate.py -d ../lang -b base.json -c de-DE.json</code>
+<code>dart run bin/translation_script.dart -d ../lang -b base.json -c de-DE.json</code>
 
 The missing language-tags will now be added to the other files.
 <br>
@@ -70,10 +65,10 @@ To launch the script with one click add following lines to your <code>launch.jso
 "configurations": [
         {
             "name": "Translate",
-            "type": "python",
+            "type": "dart",
 
             "request": "launch",
-            "program": "translate.py",
+            "program": "bin/translation_script.dart",
             "args": [
                 "-d",
                 "../lang",
@@ -89,16 +84,11 @@ To launch the script with one click add following lines to your <code>launch.jso
     ]
 ```
 
-You need to install the [Python Extension for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-python.python) first: 
-<br>
-You should now be able to simply run the script from _Run and Debug Window (Ctrl + Shift + D)_
-<br>
-<br>
 
 <b>Android Studio</b>
 
 Add new Configuration via _Run -> Edit Configurations... -> + -> Shell Script_
-Select _Script text_ as execution mode and add <code>python translate.py -d ../lang -b base.json -c de-DE.json</code> <br>
+Select _Script text_ as execution mode and add <code>dart run bin/translation_script.dart -d ../lang -b base.json -c de-DE.json</code> <br>
 Set the working directory to the scripts base directory _translation-script_
 <br>
 <br>
