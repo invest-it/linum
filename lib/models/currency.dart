@@ -6,9 +6,10 @@
 
 import 'package:flutter/material.dart';
 
-class EntryCurrency {
+class Currency {
   final String label;
+  final String name;
   final IconData icon;
 
-  const EntryCurrency({required this.label, required this.icon});
+  const Currency({required this.label, required this.name, required this.icon});
 }

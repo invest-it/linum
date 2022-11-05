@@ -41,11 +41,6 @@ enum StandardAccount {
   depot,
 }
 
-enum StandardCurrency {
-  euro,
-  yen,
-  dollar;
-}
 
 enum RepeatDuration {
   none,

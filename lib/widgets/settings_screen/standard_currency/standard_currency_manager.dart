@@ -27,10 +27,12 @@ class StandardCurrencyManager extends StatefulWidget {
 class _StandardCurrencyManagerState extends State<StandardCurrencyManager> {
   @override
   Widget build(BuildContext context) {
-    final AccountSettingsProvider accountSettingsProvider =
-        Provider.of<AccountSettingsProvider>(context);
     final ActionLipStatusProvider actionLipStatusProvider =
         Provider.of<ActionLipStatusProvider>(context);
+    final accountSettingsProvider = Provider.of<AccountSettingsProvider>(context);
+
+    final currentCurrency = accountSettingsProvider.getStandardCurrency();
+
     return Column(
       children: [
         GestureDetector(
@@ -39,16 +41,11 @@ class _StandardCurrencyManagerState extends State<StandardCurrencyManager> {
               providerKey: ProviderKey.settings,
               actionLipStatus: ActionLipStatus.onviewport,
               actionLipTitle: "Currency",
-              actionLipBody: CurrencyListView(
-                accountSettingsProvider,
-                actionLipStatusProvider,
-              ),
+              actionLipBody: CurrencyListView(),
             );
           },
           child: CurrencyListTile(
-            defaultLabel: "Test",
-            labelTitle: "",
-            currency: null,
+            currency: currentCurrency,
           ),
         ),
       ],

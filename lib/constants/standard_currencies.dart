@@ -5,22 +5,23 @@
 //  (Refactored)
 
 import 'package:flutter/material.dart';
-import 'package:linum/constants/settings_enums.dart';
-import 'package:linum/models/entry_currency.dart';
-import 'package:linum/types/category_map_currency.dart';
+import 'package:linum/models/currency.dart';
 
-final CategoryMapCurrency<StandardCurrency> standardCurrency =
-    CategoryMapCurrency.fromMap({
-  StandardCurrency.euro: const EntryCurrency(
-    label: 'Euro',
-    icon: Icons.euro,
-  ),
-  StandardCurrency.yen: const EntryCurrency(
-    label: 'Yen',
-    icon: Icons.currency_yen,
-  ),
-  StandardCurrency.dollar: const EntryCurrency(
-    label: 'Pound',
-    icon: Icons.currency_pound,
-  ),
-});
+final standardCurrencies = Map<String, Currency>.unmodifiable({
+      "EUR": const Currency(
+        label: 'Euro',
+        name: 'EUR',
+        icon: Icons.euro,
+      ),
+      "JPY": const Currency(
+        label: 'Yen',
+        name: 'JPY',
+        icon: Icons.currency_yen,
+      ),
+      "GBP": const Currency(
+        label: 'Pound',
+        name: 'GBP',
+        icon: Icons.currency_pound,
+      ),
+    }
+);

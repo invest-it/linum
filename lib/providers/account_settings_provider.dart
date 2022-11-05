@@ -10,12 +10,15 @@ import 'dart:developer' as dev;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/constants/standard_currencies.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/models/entry_category.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+
+import '../models/currency.dart';
 
 class AccountSettingsProvider extends ChangeNotifier {
   DocumentReference<Map<String, dynamic>>? _settings;
@@ -44,6 +47,18 @@ class AccountSettingsProvider extends ChangeNotifier {
         settings["StandardCategoryExpense"] as String? ?? "None";
     final EntryCategory? catExp = standardExpenseCategories[categoryId];
     return catExp;
+  }
+
+  Currency getStandardCurrency() {
+    final String? currency = settings["StandardCurrency"] as String?;
+    return standardCurrencies[currency] ?? standardCurrencies["EUR"]!;
+  }
+  Future<bool> setStandardCurrency(Currency currency) async {
+    final isInMap = standardCurrencies[currency.name] != null;
+    if (!isInMap) {
+      return false;
+    }
+    return updateSettings({"StandardCurrency": currency.name});
   }
 
   AccountSettingsProvider(BuildContext context) {

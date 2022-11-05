@@ -1,31 +1,23 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/constants/settings_enums.dart';
 import 'package:linum/constants/standard_currencies.dart';
-import 'package:linum/models/entry_category.dart';
-import 'package:linum/models/entry_currency.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:provider/provider.dart';
 
 class CurrencyListView extends StatelessWidget {
-  final ActionLipStatusProvider actionLipStatusProvider;
-  final AccountSettingsProvider accountSettingsProvider;
+  final currencies = standardCurrencies.values.toList();
+  final int enumItemCount = standardCurrencies.length;
 
-  late final int enumItemCount;
-  late final EntryCurrency? Function(int indexBuilder) standardCurrencyFunction;
-  late final String Function(int indexBuilder) enumStr;
 
-  CurrencyListView(this.accountSettingsProvider, this.actionLipStatusProvider) {
-    enumItemCount = StandardCurrency.values.length;
-    standardCurrencyFunction = (int indexBuilder) =>
-        standardCurrency[StandardCurrency.values[indexBuilder]];
-    enumStr =
-        (int indexBuilder) => StandardCurrency.values[indexBuilder].toString();
-  }
+  CurrencyListView();
 
   @override
   Widget build(BuildContext context) {
+    final accountSettingsProvider = Provider.of<AccountSettingsProvider>(context);
+    final actionLipStatusProvider = Provider.of<ActionLipStatusProvider>(context);
+
     return Column(
       children: [
         Padding(
@@ -41,18 +33,18 @@ class CurrencyListView extends StatelessWidget {
                 child: ListView.builder(
                   shrinkWrap: true,
                   itemCount: enumItemCount,
-                  itemBuilder: (BuildContext context, int indexBuilder) {
+                  itemBuilder: (BuildContext context, int index) {
                     return ListTile(
                       leading: Icon(
-                        standardCurrencyFunction(indexBuilder)?.icon,
+                        currencies[index].icon,
                       ),
                       title: Text(
                         tr(
-                          standardCurrencyFunction(indexBuilder)?.label ??
-                              "Currency",
+                          currencies[index].label,
                         ),
                       ),
                       onTap: () {
+                        accountSettingsProvider.setStandardCurrency(currencies[index]);
                         actionLipStatusProvider.setActionLipStatus(
                           providerKey: ProviderKey.settings,
                         );
