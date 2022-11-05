@@ -5,6 +5,7 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:linum/models/currency.dart';
 import 'package:linum/models/serial_transaction.dart';
 import 'package:linum/models/transaction.dart';
 

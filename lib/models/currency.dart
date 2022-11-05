@@ -9,7 +9,8 @@ import 'package:flutter/material.dart';
 class Currency {
   final String label;
   final String name;
+  final String symbol;
   final IconData icon;
 
-  const Currency({required this.label, required this.name, required this.icon});
+  const Currency({required this.label, required this.name, required this.symbol, required this.icon});
 }

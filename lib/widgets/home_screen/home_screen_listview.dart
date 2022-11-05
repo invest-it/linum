@@ -14,15 +14,19 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
+import 'package:linum/models/currency.dart';
 import 'package:linum/models/serial_transaction.dart';
 import 'package:linum/models/transaction.dart';
 import 'package:linum/navigation/enter_screen_page.dart';
 import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/navigation/main_routes.dart';
+import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
+import 'package:linum/utilities/frontend/transaction_amount_formatter.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
 import 'package:linum/widgets/budget_screen/time_widget.dart';
 import 'package:linum/widgets/enter_screen/delete_entry_dialog.dart';
+import 'package:linum/widgets/home_screen/transaction_amount_display.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreenListView implements BalanceDataListView {
@@ -117,6 +121,8 @@ class HomeScreenListView implements BalanceDataListView {
     final DateFormat monthFormatter = DateFormat('MMMM', langCode);
     final DateFormat monthAndYearFormatter = DateFormat('MMMM yyyy', langCode);
 
+    final settings = Provider.of<AccountSettingsProvider>(context);
+    final amountFormatter = TransactionAmountFormatter(context.locale, settings.getStandardCurrency());
     // remember last used index in the list
     int currentIndex = 0;
     DateTime? currentTime;
@@ -191,6 +197,7 @@ class HomeScreenListView implements BalanceDataListView {
           buildTransactionGestureDetector(
             context,
             transaction,
+            amountFormatter,
             isFutureItem: isFutureItem,
           ),
         );
@@ -217,7 +224,8 @@ class HomeScreenListView implements BalanceDataListView {
   /// Builds a [GestureDetector] for displaying a single balance on the home screen. Below, there is another function for handling the active contracts display.
   GestureDetector buildTransactionGestureDetector(
     BuildContext context,
-    Transaction transaction, {
+    Transaction transaction,
+    TransactionAmountFormatter amountFormatter, {
     bool isFutureItem = false,
   }) {
     final BalanceDataProvider balanceDataProvider =
@@ -370,21 +378,10 @@ class HomeScreenListView implements BalanceDataListView {
                     )
                 : Theme.of(context).textTheme.overline,
           ),
-          trailing: transaction.amount == 0
-              ? Text(
-                  tr('home_screen.free-text'),
-                  style: Theme.of(context).textTheme.bodyLarge,
-                )
-              : Text(
-                  "${transaction.amount.toStringAsFixed(2)}€",
-                  style: transaction.amount <= 0
-                      ? Theme.of(context).textTheme.bodyText1?.copyWith(
-                            color: Theme.of(context).colorScheme.error,
-                          )
-                      : Theme.of(context).textTheme.bodyText1?.copyWith(
-                            color: Theme.of(context).colorScheme.onSurface,
-                          ),
-                ),
+          trailing: TransactionAmountDisplay(
+            transaction: transaction,
+            formatter: amountFormatter,
+          )
         ),
       ),
     );

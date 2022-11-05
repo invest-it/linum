@@ -69,8 +69,10 @@ Future<List<ExchangeRatesForDate>> fetchExchangeRatesForTimeSpan(DateTime earlie
   final response = await http.get(uri);
 
   if (response.statusCode == 200) {
-    final jsonList = jsonDecode(response.body) as List<Map<String, dynamic>>;
+    final jsonList = (jsonDecode(response.body) as List<dynamic>).map((e) => e as Map<String, dynamic>);
+    print(jsonList);
     return jsonList.map((e) => ExchangeRatesForDate.fromJson(e)).toList();
+
   } else {
     throw Exception("Failed to get exchange rates for time-span");
   }

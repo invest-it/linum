@@ -47,6 +47,7 @@ class ExchangeRateRepository {
         rates = await fetchExchangeRatesUntil(date);
         _box.putMany(rates); // TODO: What happens when one entry already exists
       } catch(e) {
+        print(e);
         // TODO: Handle error
       }
     }
@@ -65,6 +66,7 @@ class ExchangeRateRepository {
         rates = await fetchExchangeRatesForTimeSpan(dates.first, dates.last);
         _box.putMany(rates);
       } catch(e) {
+        print(e);
         // TODO: Handle error
       }
     }
@@ -87,6 +89,7 @@ class ExchangeRateRepository {
         rates = await fetchExchangeRatesForTimeSpan(earliest, latest);
         _box.putMany(rates);
       } catch(e) {
+        print(e);
         // TODO: Handle error
       }
     }

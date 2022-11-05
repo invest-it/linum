@@ -15,7 +15,8 @@ class ExchangeRatesForDate {
     final dateStr = json["date"] as String;
     final date = DateFormat("yyyy-MM-dd").parse(dateStr);
     final exRateForDate = ExchangeRatesForDate(date.millisecondsSinceEpoch);
-    exRateForDate.rates = json["rates"] as Map<String, String>;
+    exRateForDate.rates = (json["exchange_rates"] as Map<String, dynamic>)
+        .map((key, value) => MapEntry(key, value as String));
     return exRateForDate;
   }
 

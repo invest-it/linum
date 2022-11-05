@@ -33,8 +33,44 @@ class BalanceDataStreamBuilder {
     required Stream<firestore.DocumentSnapshot<BalanceDocument>>? dataStream,
     bool isSerial = false,
   }) {
-    return StreamBuilder<firestore.DocumentSnapshot<BalanceDocument>>(
-      stream: dataStream,
+    final processedStream = dataStream?.asyncMap<Tuple2<List<Transaction>, List<SerialTransaction>>>((snapshot) async {
+      if (!isSerial) {
+        final preparedData = _prepareData(snapshot);
+        final transactions = preparedData.item1;
+
+        // Future there could be an sort algorithm provider
+        // (and possibly also a filter algorithm provided)
+        transactions.removeWhere(algorithmProvider.currentFilter);
+        transactions.sort(algorithmProvider.currentSorter);
+        await exchangeRateProvider.addExchangeRatesToTransactions(transactions);
+        print("waited");
+        return Tuple2(transactions, preparedData.item2);
+      } else {
+        final data = _prepareData(
+          snapshot,
+        );
+        final transactions = data.item1;
+        final serialTransactions = data.item2;
+
+        transactions.removeWhere(algorithmProvider.currentFilter);
+        transactions.removeWhere((transaction) {
+          return transaction.repeatId == null;
+        });
+
+        serialTransactions.removeWhere((serialTransaction) {
+          return !transactions.any((transaction) {
+            return transaction.repeatId == serialTransaction.id;
+          });
+        });
+
+        serialTransactions.sort((a, b) => a.name.compareTo(b.name));
+
+        return Tuple2(data.item1, serialTransactions);
+      }
+    });
+
+    return StreamBuilder<Tuple2<List<Transaction>, List<SerialTransaction>>>(
+      stream: processedStream,
       builder: (ctx, snapshot) {
         if (snapshot.connectionState == ConnectionState.none ||
             snapshot.connectionState == ConnectionState.waiting) {
@@ -50,42 +86,13 @@ class BalanceDataStreamBuilder {
           return listView.listview;
         } else {
           if (!isSerial) {
-            final preparedData = _prepareData(
-              snapshot,
-            );
-            final transactions = preparedData.item1;
-
-            // Future there could be an sort algorithm provider
-            // (and possibly also a filter algorithm provided)
-            transactions.removeWhere(algorithmProvider.currentFilter);
-            transactions.sort(algorithmProvider.currentSorter);
-
             listView.setTransactions(
-              transactions,
+              snapshot.data!.item1,
               context: context,
             );
           } else {
-            final data = _prepareData(
-              snapshot,
-            );
-            final transactions = data.item1;
-            final serialTransactions = data.item2;
-
-            transactions.removeWhere(algorithmProvider.currentFilter);
-            transactions.removeWhere((transaction) {
-              return transaction.repeatId == null;
-            });
-
-            serialTransactions.removeWhere((serialTransaction) {
-              return !transactions.any((transaction) {
-                return transaction.repeatId == serialTransaction.id;
-              });
-            });
-
-            serialTransactions.sort((a, b) => a.name.compareTo(b.name));
-
             listView.setSerialTransactions(
-              serialTransactions,
+              snapshot.data!.item2,
               context: context,
             );
           }
@@ -100,23 +107,26 @@ class BalanceDataStreamBuilder {
     required Stream<firestore.DocumentSnapshot<BalanceDocument>>? dataStream,
     required AbstractHomeScreenCard statisticPanel,
   }) {
-    return StreamBuilder<firestore.DocumentSnapshot<BalanceDocument>>(
-      stream: dataStream,
+    final processedStream = dataStream?.asyncMap<StatisticalCalculations>((snapshot) async {
+      final preparedData = _prepareData(
+        snapshot,
+      );
+      final List<Transaction> balanceData = preparedData.item1;
+      return StatisticalCalculations(
+        balanceData,
+        algorithmProvider,
+      );
+
+    });
+
+    return StreamBuilder<StatisticalCalculations>(
+      stream: processedStream,
       builder: (ctx, snapshot) {
         if (snapshot.data == null) {
           statisticPanel.addStatisticData(null);
           return statisticPanel.returnWidget;
         } else {
-          final preparedData = _prepareData(
-            snapshot,
-          );
-          final List<Transaction> balanceData = preparedData.item1;
-          final StatisticalCalculations statisticalCalculations =
-              StatisticalCalculations(
-            balanceData,
-            algorithmProvider,
-          );
-          statisticPanel.addStatisticData(statisticalCalculations);
+          statisticPanel.addStatisticData(snapshot.data);
           return statisticPanel.returnWidget;
         }
       },
@@ -130,9 +140,9 @@ class BalanceDataStreamBuilder {
   /// (will still be used after filter on firebase, because of repeated balanced)
   /// may be moved into the data generation function
   Tuple2<List<Transaction>, List<SerialTransaction>> _prepareData(
-    AsyncSnapshot<firestore.DocumentSnapshot<BalanceDocument>> snapshot,
+    firestore.DocumentSnapshot<BalanceDocument> snapshot,
   ) {
-    final data = snapshot.data?.data(); // TODO: Model for Document
+    final data = snapshot.data(); // TODO: Model for Document
 
     if (data == null) {
       return const Tuple2(<Transaction>[], <SerialTransaction>[]);

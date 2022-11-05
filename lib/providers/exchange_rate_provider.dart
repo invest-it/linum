@@ -13,19 +13,20 @@ import 'package:provider/provider.dart';
 class ExchangeRateProvider extends ChangeNotifier {
   late final ExchangeRateRepository _repository;
   final Store _store;
-  late Currency _standardCurrency;
+  late AccountSettingsProvider _settings;
   ExchangeRateProvider(BuildContext context, this._store) {
     _repository = ExchangeRateRepository(_store);
-    final settings = Provider.of<AccountSettingsProvider>(context, listen: false);
-    _standardCurrency = settings.getStandardCurrency();
+    _settings = Provider.of<AccountSettingsProvider>(context, listen: false);
+
+
   }
 
-  Currency get standardCurrency => _standardCurrency;
+  Currency get standardCurrency => _settings.getStandardCurrency();
 
   Future addExchangeRatesToTransactions(List<Transaction> transactions) async {
     // Get dates for transactions that need exchange rates (currency != standardCurrency)
     final dates = transactions
-        .where((transaction) => transaction.currency != _standardCurrency.name)
+        .where((transaction) => transaction.currency != standardCurrency.name)
         .map((e) => e.time.toDate()).toList();
     final ratesMap = await _repository.getExchangeRatesForDates(dates);
 
@@ -36,7 +37,9 @@ class ExchangeRateProvider extends ChangeNotifier {
     ExchangeRatesForDate lastSuccessful = ratesMap.values.first;
 
     for (final transaction in transactions) {
-      if (transaction.currency == _standardCurrency.name) {
+      if (transaction.currency == standardCurrency.name) {
+        print("Debug provider");
+        print("Default");
         continue;
       }
 
@@ -51,14 +54,22 @@ class ExchangeRateProvider extends ChangeNotifier {
         lastSuccessful = exchangeRates;
       }
 
-      final exchangeRate = exchangeRates.rates?[transaction.currency];
+      // Always compared to EUR
+      final transactionCurrencyRate = exchangeRates.rates?[transaction.currency]
+        ?? (transaction.currency == "EUR" ? "1" : null); // FOR NOW
+      final standardCurrencyRate = exchangeRates.rates?[standardCurrency.name];
 
+      print("Debug provider rates");
+      print(transaction.currency);
+      print(transactionCurrencyRate);
+      print(standardCurrencyRate);
       // TODO: Check if entry exists and re-fetch
       // TODO: Make call to another API to get rate
       // TODO: If the exchange rate is not found but needed it should be guessed
-      if (exchangeRate != null) {
+      if (transactionCurrencyRate != null) {
         transaction.rateInfo = ExchangeRateInfo(
-            int.parse(exchangeRate),
+            num.parse(transactionCurrencyRate),
+            num.parse(standardCurrencyRate ?? "1"),
             firestore.Timestamp.fromMillisecondsSinceEpoch(exchangeRates.date),
             isOtherDate: key != exchangeRates.date,
         );
@@ -70,9 +81,8 @@ class ExchangeRateProvider extends ChangeNotifier {
   }
 
   void update(AccountSettingsProvider settings) {
-    if (settings.getStandardCurrency() == _standardCurrency) {
-      _standardCurrency = settings.getStandardCurrency();
-    }
+    _settings = settings;
+    // TODO: Do this better
   }
 
   static ChangeNotifierProviderBuilder builder(Store store) {
