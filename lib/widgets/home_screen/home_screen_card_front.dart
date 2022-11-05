@@ -8,6 +8,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/models/home_screen_card_data.dart';
+import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
 import 'package:linum/widgets/home_screen/home_screen_card_arrow.dart';
@@ -41,6 +42,7 @@ class HomeScreenCardFront extends StatelessWidget {
   Widget build(BuildContext context) {
     final AlgorithmProvider algorithmProvider =
         Provider.of<AlgorithmProvider>(context);
+    final settings = Provider.of<AccountSettingsProvider>(context);
     final String langCode = context.locale.languageCode;
     final DateFormat dateFormat = DateFormat('MMMM yyyy', langCode);
 
@@ -94,7 +96,7 @@ class HomeScreenCardFront extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '€',
+                    settings.getStandardCurrency().symbol,
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ],

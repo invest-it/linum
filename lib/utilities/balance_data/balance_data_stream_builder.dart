@@ -34,6 +34,7 @@ class BalanceDataStreamBuilder {
     bool isSerial = false,
   }) {
     final processedStream = dataStream?.asyncMap<Tuple2<List<Transaction>, List<SerialTransaction>>>((snapshot) async {
+      print("waited");
       if (!isSerial) {
         final preparedData = _prepareData(snapshot);
         final transactions = preparedData.item1;
@@ -43,7 +44,7 @@ class BalanceDataStreamBuilder {
         transactions.removeWhere(algorithmProvider.currentFilter);
         transactions.sort(algorithmProvider.currentSorter);
         await exchangeRateProvider.addExchangeRatesToTransactions(transactions);
-        print("waited");
+
         return Tuple2(transactions, preparedData.item2);
       } else {
         final data = _prepareData(

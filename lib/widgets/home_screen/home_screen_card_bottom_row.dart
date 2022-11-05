@@ -12,6 +12,8 @@ import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
 import 'package:linum/widgets/home_screen/home_screen_card_arrow.dart';
 import 'package:provider/provider.dart';
 
+import '../../providers/account_settings_provider.dart';
+
 class HomeScreenCardBottomRow extends StatelessWidget {
   final HomeScreenCardData data;
   final HomeScreenCardArrow upwardArrow;
@@ -54,6 +56,7 @@ class HomeScreenCardBottomRow extends StatelessWidget {
     BuildContext context, {
     bool isIncome = false,
   }) {
+    final settings = Provider.of<AccountSettingsProvider>(context);
     return Expanded(
       flex: 10,
       child: Row(
@@ -74,7 +77,7 @@ class HomeScreenCardBottomRow extends StatelessWidget {
               ),
               const SizedBox(height: 5),
               Text(
-                '${isIncome ? data.income.toStringAsFixed(2) : data.expense.toStringAsFixed(2)} €',
+                '${isIncome ? data.income.toStringAsFixed(2) : data.expense.toStringAsFixed(2)} ${settings.getStandardCurrency().symbol}',
                 style: TextStyle(
                   color: Colors.grey[700],
                   fontWeight: FontWeight.bold,
