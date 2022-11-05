@@ -16,6 +16,7 @@ import 'package:linum/models/transaction.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/exchange_rate_provider.dart';
+import 'package:linum/types/change_notifier_provider_builder.dart';
 import 'package:linum/utilities/balance_data/balance_data_stream_builder.dart';
 import 'package:linum/utilities/balance_data/serial_transaction_manager.dart';
 import 'package:linum/utilities/balance_data/transaction_manager.dart';
@@ -33,7 +34,7 @@ class BalanceDataProvider extends ChangeNotifier {
   late String _uid;
 
   late AlgorithmProvider _algorithmProvider;
-  late ExchangeRateProvider _exchangeRateProvicer;
+  late ExchangeRateProvider _exchangeRateProvider;
   late BalanceDataStreamBuilder _streamBuilder;
   // Manager
 
@@ -41,8 +42,8 @@ class BalanceDataProvider extends ChangeNotifier {
   BalanceDataProvider(BuildContext context) {
     _uid = Provider.of<AuthenticationService>(context, listen: false).uid;
     _algorithmProvider = Provider.of<AlgorithmProvider>(context, listen: false);
-    _exchangeRateProvicer = Provider.of<ExchangeRateProvider>(context, listen: false);
-    _streamBuilder = BalanceDataStreamBuilder(_algorithmProvider, _exchangeRateProvicer);
+    _exchangeRateProvider = Provider.of<ExchangeRateProvider>(context, listen: false);
+    _streamBuilder = BalanceDataStreamBuilder(_algorithmProvider, _exchangeRateProvider);
     asynConstructor();
   }
 
@@ -138,6 +139,11 @@ class BalanceDataProvider extends ChangeNotifier {
       // notifyListeners(); // Called during update,
       // which already notifies its listeners
     }
+  }
+
+  /// update [_exchangeRateProvider].
+  void updateExchangeRateProvider(ExchangeRateProvider provider) {
+    _exchangeRateProvider = provider;
   }
 
   /// Get the document-datastream. Maybe in the future it might be a public function
@@ -425,23 +431,28 @@ class BalanceDataProvider extends ChangeNotifier {
     return data!.settings;
   }
 
-  static SingleChildWidget provider(BuildContext context,
-      {bool testing = false}) {
-    return ChangeNotifierProxyProvider3<AuthenticationService,
-        AlgorithmProvider, ExchangeRateProvider, BalanceDataProvider>(
-      create: (ctx) {
-        return BalanceDataProvider(ctx);
-      },
-      update: (ctx, auth, algo, exchange, oldBalance) {
-        if (oldBalance != null) {
-          oldBalance.updateAuth(auth);
-          return oldBalance..updateAlgorithmProvider(algo);
-        } else {
+
+  static ChangeNotifierProviderBuilder builder() {
+    return (BuildContext context, {bool testing = false}) {
+      return ChangeNotifierProxyProvider3<AuthenticationService,
+          AlgorithmProvider, ExchangeRateProvider, BalanceDataProvider>(
+        create: (ctx) {
           return BalanceDataProvider(ctx);
-        }
-      },
-      lazy: false,
-    );
+        },
+        update: (ctx, auth, algo, exchange, oldBalance) {
+          if (oldBalance != null) {
+            return oldBalance
+              ..updateAuth(auth)
+              ..updateAlgorithmProvider(algo)
+              ..updateExchangeRateProvider(exchange);
+          } else {
+            return BalanceDataProvider(ctx);
+          }
+        },
+        lazy: false,
+      );
+    };
   }
+
 }
 // TODO: Refactor

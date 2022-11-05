@@ -7,6 +7,7 @@
 // ignore_for_file: avoid_dynamic_calls
 
 import 'package:flutter/material.dart';
+import 'package:linum/types/change_notifier_provider_builder.dart';
 import 'package:linum/utilities/backend/in_between_timestamps.dart';
 import 'package:linum/utilities/frontend/filters.dart';
 import 'package:linum/utilities/frontend/sorters.dart';
@@ -109,10 +110,12 @@ class AlgorithmProvider extends ChangeNotifier {
     }
   }
 
-  static SingleChildWidget provider(BuildContext context, {bool testing = false}) {
-    return ChangeNotifierProvider<AlgorithmProvider>(
-      create: (_) => AlgorithmProvider(),
-      lazy: false,
-    );
+  static ChangeNotifierProviderBuilder builder() {
+      return (BuildContext context, {bool testing = false}) {
+        return ChangeNotifierProvider<AlgorithmProvider>(
+          create: (_) => AlgorithmProvider(),
+          lazy: false,
+        );
+      };
   }
 }

@@ -5,6 +5,7 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:linum/types/change_notifier_provider_builder.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -97,13 +98,13 @@ class ActionLipStatusProvider extends ChangeNotifier {
     return _actionTitleMap[providerKey] != null;
   }
 
-  static SingleChildWidget provider(
-    BuildContext context, {
-    bool testing = false,
-  }) {
-    return ChangeNotifierProvider<ActionLipStatusProvider>(
-      create: (_) => ActionLipStatusProvider(),
-    );
+
+  static ChangeNotifierProviderBuilder builder() {
+    return (BuildContext context, {bool testing = false}) {
+      return ChangeNotifierProvider<ActionLipStatusProvider>(
+        create: (_) => ActionLipStatusProvider(),
+      );
+    };
   }
 }
 

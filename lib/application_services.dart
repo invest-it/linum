@@ -50,20 +50,13 @@ class ApplicationServices extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           return MultiProviderBuilder(context: context, child: router)
               .setKey("MainMultiProvider")
-              .useProvider(AuthenticationService.provider)
-              .useProvider(AccountSettingsProvider.provider)
-              .useProvider(AlgorithmProvider.provider)
-              .useProvider((context, {bool testing = false}) {
-                return ChangeNotifierProvider<ExchangeRateProvider>(
-                  key: const Key("ExchangeRateChangeNotifierProvider"),
-                  create: (_) {
-                    return ExchangeRateProvider(store);
-                  },
-                );
-              })
-              .useProvider(BalanceDataProvider.provider)
-              .useProvider(ActionLipStatusProvider.provider)
-              .useProvider(PinCodeProvider.provider)
+              .useProvider(AuthenticationService.builder())
+              .useProvider(AccountSettingsProvider.builder())
+              .useProvider(AlgorithmProvider.builder())
+              .useProvider(ExchangeRateProvider.builder(store))
+              .useProvider(BalanceDataProvider.builder())
+              .useProvider(ActionLipStatusProvider.builder())
+              .useProvider(PinCodeProvider.builder())
               .build();
         }
         return const LoadingScaffold();

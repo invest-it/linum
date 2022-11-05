@@ -13,6 +13,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:linum/types/buildable_provider.dart';
+import 'package:linum/types/change_notifier_provider_builder.dart';
 import 'package:linum/utilities/backend/cryptography.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -312,26 +313,25 @@ class AuthenticationService extends ChangeNotifier
     );
   }
 
-  static SingleChildWidget provider(
-    BuildContext context, {
-    bool testing = false,
-  }) {
-    return ChangeNotifierProvider<AuthenticationService>(
-      key: const Key("AuthenticationChangeNotifierProvider"),
-      create: (_) {
-        final AuthenticationService auth =
-            AuthenticationService(FirebaseAuth.instance, context);
-        if (testing) {
-          auth.signOut();
-          while (auth.isLoggedIn) {
-            sleep(const Duration(milliseconds: 50));
-            // this should only be called when we are testing.
+  static ChangeNotifierProviderBuilder builder() {
+    return (BuildContext context, {bool testing = false,}) {
+      return ChangeNotifierProvider<AuthenticationService>(
+        key: const Key("AuthenticationChangeNotifierProvider"),
+        create: (_) {
+          final AuthenticationService auth =
+          AuthenticationService(FirebaseAuth.instance, context);
+          if (testing) {
+            auth.signOut();
+            while (auth.isLoggedIn) {
+              sleep(const Duration(milliseconds: 50));
+              // this should only be called when we are testing.
+            }
           }
-        }
 
-        return auth;
-      },
-      lazy: false,
-    );
+          return auth;
+        },
+        lazy: false,
+      );
+    };
   }
 }
