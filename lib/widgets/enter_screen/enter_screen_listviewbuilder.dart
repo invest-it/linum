@@ -562,8 +562,12 @@ class _EnterScreenListViewBuilderState
       final DateFormat formatter = DateFormat('dd. MMMM yyyy', langCode);
       return Text(formatter.format(enterScreenProvider.selectedDate));
     } else if (index == 2) {
+      return const Text("Currency by Martin");
+    } else if (index == 3) {
       return Text(
-        tr(categoriesRepeat[enterScreenProvider.repeatDurationEnum]?["entryCategory"].label as String),
+        tr(categoriesRepeat[enterScreenProvider.repeatDurationEnum]
+                ?["entryCategory"]
+            .label as String),
       );
     } else {
       log("Something has gone wrong with the index in enter_screen_listviewbuilder.dart");
