@@ -266,6 +266,7 @@ class _EnterScreenListViewBuilderState
     return "${[
       "enter_screen_attribute_category",
       timeEntryCategory.label,
+      currencyEntryCategory.label,
       repeatDurationEntryCategory.label,
     ][index].tr()}: ";
   }
@@ -562,9 +563,7 @@ class _EnterScreenListViewBuilderState
       return Text(formatter.format(enterScreenProvider.selectedDate));
     } else if (index == 2) {
       return Text(
-        tr(categoriesRepeat[enterScreenProvider.repeatDurationEnum]
-                ?["entryCategory"]
-            .label as String),
+        tr(categoriesRepeat[enterScreenProvider.repeatDurationEnum]?["entryCategory"].label as String),
       );
     } else {
       log("Something has gone wrong with the index in enter_screen_listviewbuilder.dart");
