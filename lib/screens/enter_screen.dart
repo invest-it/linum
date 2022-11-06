@@ -78,7 +78,6 @@ class _EnterScreenState extends State<EnterScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              //the top, green lip
               const EnterScreenTopInputField(),
               enterScreenProvider.isTransaction
                   ? Center(
@@ -94,13 +93,6 @@ class _EnterScreenState extends State<EnterScreen> {
                       ),
                     )
                   : EnterScreenListViewBuilder(),
-              /*SizedBox(
-                  height: MediaQuery.of(context).viewInsets.bottom,
-                ),*/
-              /*Expanded(
-                  child: Container(color: Colors.red),
-                ),*/
-
               MediaQuery.of(context).viewInsets.bottom > 1
                   ? Container()
                   : Column(
@@ -148,14 +140,11 @@ class _EnterScreenState extends State<EnterScreen> {
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 textStyle: Theme.of(context).textTheme.button,
-                                // TODO REMOVE IGNORES
-                                // ignore: deprecated_member_use
-                                primary: Theme.of(context).colorScheme.primary,
-                                // ignore: deprecated_member_use
-                                onPrimary:
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.primary,
+                                foregroundColor:
                                     Theme.of(context).colorScheme.background,
-                                // ignore: deprecated_member_use
-                                onSurface: Colors.white,
+                                disabledForegroundColor: Colors.white,
                                 fixedSize: Size(
                                   proportionateScreenWidth(300),
                                   proportionateScreenHeight(40),
