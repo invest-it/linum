@@ -12,7 +12,6 @@ import 'package:linum/utilities/backend/in_between_timestamps.dart';
 import 'package:linum/utilities/frontend/filters.dart';
 import 'package:linum/utilities/frontend/sorters.dart';
 import 'package:provider/provider.dart';
-import 'package:provider/single_child_widget.dart';
 
 /// gives sort algorithm (later it will probably also have filter algorithm) and
 /// all algorithm will have an active version instead of being static

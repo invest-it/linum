@@ -18,7 +18,6 @@ import 'package:linum/models/entry_category.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/types/change_notifier_provider_builder.dart';
 import 'package:provider/provider.dart';
-import 'package:provider/single_child_widget.dart';
 
 
 class AccountSettingsProvider extends ChangeNotifier {

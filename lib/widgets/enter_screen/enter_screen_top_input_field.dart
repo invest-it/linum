@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:linum/constants/standard_currencies.dart';
 import 'package:linum/navigation/get_delegate.dart';
-import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/utilities/frontend/currency_formatter.dart';
@@ -122,7 +121,9 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                       showCursor: true,
                       cursorColor: Colors.white,
                       keyboardType: const TextInputType.numberWithOptions(
-                          signed: true, decimal: true),
+                          signed: true,
+                          decimal: true,
+                      ),
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       decoration: InputDecoration(
                         counter: const SizedBox.shrink(),
@@ -185,8 +186,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                             child: enterScreenProvider.isExpenses
                                 ? TextContainer(
                                     //context: context,
-                                    transactionClass: tr(
-                                        'enter_screen.button-expenses-label'),
+                                    transactionClass: tr('enter_screen.button-expenses-label'),
                                   )
                                 : Center(
                                     child: Text(

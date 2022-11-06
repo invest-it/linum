@@ -19,7 +19,6 @@ import 'package:linum/providers/exchange_rate_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/utilities/frontend/multi_provider_builder.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
-import 'package:provider/provider.dart';
 
 class ApplicationServices extends StatelessWidget {
   final Router router;

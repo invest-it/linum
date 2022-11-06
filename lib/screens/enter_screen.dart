@@ -155,7 +155,8 @@ class _EnterScreenState extends State<EnterScreen> {
                                     enterScreenProvider.amountToDisplay() <=
                                         0) {
                                   showAddAmountAlertDialog(
-                                      context, enterScreenProvider);
+                                      context, enterScreenProvider,
+                                  );
                                   dev.log(
                                     "amount was to low: ${enterScreenProvider.amountToDisplay()}",
                                   );

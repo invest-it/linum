@@ -33,7 +33,8 @@ Future<bool?> generateDeleteDialogFromTransaction(
 Future<bool?> generateDeleteDialogFromSerialTransaction(
     BuildContext context,
     BalanceDataProvider balanceDataProvider,
-    SerialTransaction serialTransaction) async {
+    SerialTransaction serialTransaction,
+) async {
   return showDefaultDeleteDialog(context, serialTransaction.id);
 }
 

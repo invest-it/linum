@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:linum/types/change_notifier_provider_builder.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
-import 'package:provider/single_child_widget.dart';
 
 class ActionLipStatusProvider extends ChangeNotifier {
   final Map<ProviderKey, ActionLipStatus> _actionLipMap = {};

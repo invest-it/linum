@@ -23,7 +23,6 @@ import 'package:linum/utilities/balance_data/transaction_manager.dart';
 import 'package:linum/widgets/abstract/abstract_home_screen_card.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
 import 'package:provider/provider.dart';
-import 'package:provider/single_child_widget.dart';
 
 /// Provides the balance data from the database using the uid.
 class BalanceDataProvider extends ChangeNotifier {

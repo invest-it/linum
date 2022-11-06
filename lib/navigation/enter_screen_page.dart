@@ -25,8 +25,11 @@ class EnterScreenPageSettings {
   factory EnterScreenPageSettings.withTransaction(Transaction transaction) {
     return EnterScreenPageSettings._(transaction: transaction, isFromBalanceData: true);
   }
-  factory EnterScreenPageSettings.withSettings(
-      {required Currency currency, String? category, String? secondaryCategory}) {
+  factory EnterScreenPageSettings.withSettings({
+    required Currency currency,
+    String? category,
+    String? secondaryCategory,
+  }) {
     return EnterScreenPageSettings._(category: category, secondaryCategory: secondaryCategory, currency: currency);
   }
 }

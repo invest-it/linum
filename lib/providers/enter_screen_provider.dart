@@ -8,8 +8,6 @@ import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:flutter/material.dart';
 import 'package:linum/constants/repeat_duration_type_enum.dart';
 import 'package:linum/constants/settings_enums.dart';
-import 'package:linum/constants/standard_currencies.dart';
-import 'package:linum/models/currency.dart';
 import 'package:linum/models/transaction.dart';
 
 class EnterScreenProvider with ChangeNotifier {

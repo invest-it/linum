@@ -21,7 +21,6 @@ import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/types/change_notifier_provider_builder.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:provider/provider.dart';
-import 'package:provider/single_child_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PinCodeProvider extends ChangeNotifier {

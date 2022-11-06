@@ -317,14 +317,10 @@ class _EnterScreenListViewBuilderState
             itemBuilder: (BuildContext context, int index) {
               return ListTile(
                 leading: Icon(
-                  standardExpenseCategories[
-                          StandardCategoryExpense.values[index]]!
-                      .icon,
+                  standardExpenseCategories[StandardCategoryExpense.values[index]]!.icon,
                 ),
                 title: Text(
-                  tr(standardExpenseCategories[
-                          StandardCategoryExpense.values[index]]!
-                      .label),
+                  tr(standardExpenseCategories[StandardCategoryExpense.values[index]]!.label),
                 ),
                 onTap: () => _selectCategoryItemExpenses(
                   StandardCategoryExpense.values[index]
@@ -353,9 +349,7 @@ class _EnterScreenListViewBuilderState
                       .icon,
                 ),
                 title: Text(
-                  tr(standardIncomeCategories[
-                          StandardCategoryIncome.values[index]]!
-                      .label),
+                  tr(standardIncomeCategories[StandardCategoryIncome.values[index]]!.label),
                 ),
                 //selects the item as the categories value
                 onTap: () => _selectCategoryItemIncome(
@@ -379,10 +373,17 @@ class _EnterScreenListViewBuilderState
         child: ListView.builder(
           itemCount: standardCurrencies.length,
           itemBuilder: (BuildContext context, int index) {
+            final currency = currencies[index];
             return ListTile(
-              leading: Icon(currencies[index].icon),
-              title: Text(currencies[index].label),
-              onTap: () => {},
+              leading: Icon(currency.icon),
+              title: Text(currency.label),
+              onTap: () => {
+                _selectCurrency(
+                  enterScreenProvider,
+                  currency,
+                  actionLipStatusProvider,
+                ),
+              },
             );
           },
         ),
@@ -401,9 +402,7 @@ class _EnterScreenListViewBuilderState
                     Icons.error,
               ),
               title: Text(
-                tr(categoriesRepeat[RepeatDuration.values[index]]
-                        ?["entryCategory"]
-                    .label as String),
+                tr(categoriesRepeat[RepeatDuration.values[index]]?["entryCategory"].label as String),
               ),
               //selects the item as the repeat value
               onTap: () => _selectRepeatItem(
@@ -439,9 +438,7 @@ class _EnterScreenListViewBuilderState
                     .icon,
               ),
               title: Text(
-                tr(standardIncomeCategories[
-                        StandardCategoryIncome.values[index]]!
-                    .label),
+                tr(standardIncomeCategories[StandardCategoryIncome.values[index]]!.label),
               ),
               onTap: () => _selectCategoryItemIncome(
                 StandardCategoryIncome.values[index]
@@ -500,15 +497,11 @@ class _EnterScreenListViewBuilderState
           itemBuilder: (BuildContext context, int index) {
             return ListTile(
               leading: Icon(
-                categoriesRepeat[RepeatDuration.values[index]]
-                            ?["entryCategory"]
-                        .icon as IconData? ??
-                    Icons.error,
+                categoriesRepeat[RepeatDuration.values[index]]?["entryCategory"]
+                    .icon as IconData? ?? Icons.error,
               ),
               title: Text(
-                tr(categoriesRepeat[RepeatDuration.values[index]]
-                        ?["entryCategory"]
-                    .label as String),
+                tr(categoriesRepeat[RepeatDuration.values[index]]?["entryCategory"].label as String),
               ),
               onTap: () => _selectRepeatItem(
                 enterScreenProvider,
@@ -570,8 +563,7 @@ class _EnterScreenListViewBuilderState
           );
         }
         return Text(
-          tr(standardExpenseCategories[enterScreenProvider.category]?.label ??
-              'chosen expense'),
+          tr(standardExpenseCategories[enterScreenProvider.category]?.label ?? 'chosen expense'),
         );
       } else {
         if (enterScreenProvider.category == "") {

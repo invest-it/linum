@@ -6,15 +6,12 @@
 
 // ignore_for_file: avoid_dynamic_calls
 
-import 'dart:developer';
-
 import 'package:badges/badges.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
-import 'package:linum/models/currency.dart';
 import 'package:linum/models/serial_transaction.dart';
 import 'package:linum/models/transaction.dart';
 import 'package:linum/navigation/enter_screen_page.dart';
@@ -381,7 +378,7 @@ class HomeScreenListView implements BalanceDataListView {
           trailing: TransactionAmountDisplay(
             transaction: transaction,
             formatter: amountFormatter,
-          )
+          ),
         ),
       ),
     );
@@ -394,8 +391,6 @@ class HomeScreenListView implements BalanceDataListView {
   ) {
     final BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
-    final String langCode = context.locale.languageCode;
-    final DateFormat formatter = DateFormat('EEEE, dd. MMMM yyyy', langCode);
 
     return GestureDetector(
       onTap: () {

@@ -16,7 +16,6 @@ import 'package:linum/types/buildable_provider.dart';
 import 'package:linum/types/change_notifier_provider_builder.dart';
 import 'package:linum/utilities/backend/cryptography.dart';
 import 'package:provider/provider.dart';
-import 'package:provider/single_child_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
