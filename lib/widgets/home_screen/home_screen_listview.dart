@@ -190,7 +190,7 @@ class HomeScreenListView implements BalanceDataListView {
         }
 
         list.add(
-          buildTransactionGestureDetector(
+          buildTransaction(
             context,
             transaction,
             isFutureItem: isFutureItem,
@@ -230,7 +230,7 @@ class HomeScreenListView implements BalanceDataListView {
           );
           wroteIncomeTag = true;
         }
-        list.add(buildSerialTransactionGestureDetector(context, serTrans));
+        list.add(buildSerialTransaction(context, serTrans));
       }
     }
 
@@ -238,7 +238,7 @@ class HomeScreenListView implements BalanceDataListView {
   }
 
   /// Builds a [GestureDetector] for displaying a single balance on the home screen. Below, there is another function for handling the active contracts display.
-  GestureDetector buildTransactionGestureDetector(
+  GestureDetector buildTransaction(
     BuildContext context,
     Transaction transaction, {
     bool isFutureItem = false,
@@ -414,7 +414,7 @@ class HomeScreenListView implements BalanceDataListView {
   }
 
   /// As mentioned above, this function handles the active contracts display.
-  Material buildSerialTransactionGestureDetector(
+  Material buildSerialTransaction(
     BuildContext context,
     SerialTransaction serialTransaction,
   ) {
@@ -424,7 +424,6 @@ class HomeScreenListView implements BalanceDataListView {
     return Material(
       child: ListTile(
         isThreeLine: true,
-        dense: true,
         leading: CircleAvatar(
           backgroundColor: serialTransaction.amount > 0
               ? Theme.of(context)
