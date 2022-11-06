@@ -6,6 +6,8 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/navigation/get_delegate.dart';
+import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
@@ -113,8 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     TextButton(
                       onPressed: () {
-                        //TODO add Filter Screen Route here some day
-                        // getRouterDelegate().replaceLastRoute(MainRoute.budget);
+                        getRouterDelegate().pushRoute(MainRoute.filter);
                       },
                       child: Text(
                         showRepeatables
