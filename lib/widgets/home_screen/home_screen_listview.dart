@@ -418,8 +418,13 @@ class HomeScreenListView implements BalanceDataListView {
     BuildContext context,
     SerialTransaction serialTransaction,
   ) {
+    final String langCode = context.locale.languageCode;
+    final DateFormat serialFormatter = DateFormat('dd.MM.yyyy', langCode);
+
     return Material(
       child: ListTile(
+        isThreeLine: true,
+        dense: true,
         leading: CircleAvatar(
           backgroundColor: serialTransaction.amount > 0
               ? Theme.of(context)
@@ -451,7 +456,8 @@ class HomeScreenListView implements BalanceDataListView {
           style: Theme.of(context).textTheme.bodyText1,
         ),
         subtitle: Text(
-          calculateTimeFrequency(serialTransaction),
+          "${calculateTimeFrequency(serialTransaction)} \nSeit ${serialFormatter.format(serialTransaction.initialTime.toDate())}"
+              .toUpperCase(),
           style: Theme.of(context).textTheme.overline,
         ),
         trailing: IconButton(
@@ -466,7 +472,7 @@ class HomeScreenListView implements BalanceDataListView {
               settings: EnterScreenPageSettings.withSerialTransaction(
                 serialTransaction,
               ),
-            )
+            ),
           },
         ),
       ),
@@ -497,7 +503,6 @@ class HomeScreenListView implements BalanceDataListView {
     return "Error"; // This should never happen.
   }
 
-  // TODO: @Nightmind you only need to create proper translation (and you can rearrange the grammar the way you want)
   String calculateTimeFrequency(
     SerialTransaction serialTransaction,
   ) {
@@ -515,7 +520,7 @@ class HomeScreenListView implements BalanceDataListView {
         // If the repeatDuration is on a weekly basis
         if (duration % week == 0) {
           if (duration / week == 1) {
-            return "$amount€ ${tr('enter_screen.label-repeat-weekly').toLowerCase()}";
+            return "$amount€ ${tr('enter_screen.label-repeat-weekly')}";
           }
           return "${tr('listview.label-every')} ${(duration / day).floor()} ${tr('listview.label-weeks')}";
         }
@@ -523,7 +528,7 @@ class HomeScreenListView implements BalanceDataListView {
         // If the repeatDuration is on a daily basis
         else if (duration % day == 0) {
           if (duration / day == 1) {
-            return "$amount€ ${tr('enter_screen.label-repeat-daily').toLowerCase()}";
+            return "$amount€ ${tr('enter_screen.label-repeat-daily')}";
           }
           return "${tr('listview.label-every')} ${(duration / day).floor()} ${tr('listview.label-days')}";
         } else {
@@ -535,16 +540,16 @@ class HomeScreenListView implements BalanceDataListView {
       case RepeatDurationType.months:
         if (duration % 12 == 0) {
           if (duration / 12 == 1) {
-            return "$amount€ ${tr('enter_screen.label-repeat-yearly').toLowerCase()}";
+            return "$amount€ ${tr('enter_screen.label-repeat-yearly')}";
           }
           return "${tr('listview.label-every')} ${(duration / 12).floor()} ${tr('listview.label-years')}";
         }
         if (duration == 1) {
-          return "$amount€ ${tr('enter_screen.label-repeat-30days').toLowerCase()}";
+          return "$amount€ ${tr('enter_screen.label-repeat-30days')}";
         } else if (duration == 3) {
-          return "$amount€ ${tr('enter_screen.label-repeat-quarterly').toLowerCase()}";
+          return "$amount€ ${tr('enter_screen.label-repeat-quarterly')}";
         } else if (duration == 6) {
-          return "$amount€ ${tr('enter_screen.label-repeat-semiannually').toLowerCase()}";
+          return "$amount€ ${tr('enter_screen.label-repeat-semiannually')}";
         }
         return "${tr('listview.label-every')} ${(duration / 12).floor()} ${tr('listview.label-months')}";
     }
