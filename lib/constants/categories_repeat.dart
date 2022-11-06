@@ -37,11 +37,35 @@ final Map<RepeatDuration, Map<String, dynamic>> categoriesRepeat = {
   RepeatDuration.monthly: {
     "entryCategory": const EntryCategory(
       label: 'enter_screen.label-repeat-30days',
-      icon: Icons.calendar_view_month_rounded,
+      icon: Icons.calendar_month_rounded,
     ),
     "duration": 1,
     "durationType": RepeatDurationType.months,
   },
+  RepeatDuration.quarterly: {
+    "entryCategory": const EntryCategory(
+      label: 'enter_screen.label-repeat-quarterly',
+      icon: Icons.error, //FIXME @NightmindOfficial
+    ),
+    "duration": 3,
+    "durationType": RepeatDurationType.months,
+  },
+  RepeatDuration.semiannually: {
+    "entryCategory": const EntryCategory(
+      label: 'enter_screen.label-repeat-semiannually',
+      icon: Icons.error, //FIXME @NightmindOfficial
+    ),
+    "duration": 6,
+    "durationType": RepeatDurationType.months,
+  },
+  RepeatDuration.annually: {
+    "entryCategory": const EntryCategory(
+      label: 'enter_screen.label-repeat-annually',
+      icon: Icons.error, //FIXME @NightmindOfficial
+    ),
+    "duration": 12,
+    "durationType": RepeatDurationType.months,
+  }
   // TODO implement custom range picker
   // {
   //   "entryCategory": EntryCategory(
