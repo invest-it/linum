@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/models/home_screen_card_data.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/algorithm_provider.dart';
+import 'package:linum/utilities/frontend/currency_formatter.dart';
 import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
 import 'package:linum/widgets/home_screen/home_screen_card_arrow.dart';
 import 'package:linum/widgets/home_screen/home_screen_card_side.dart';
@@ -85,21 +86,25 @@ class HomeScreenCardFront extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.baseline,
                 textBaseline: TextBaseline.alphabetic,
-                children: [
-                  Flexible(
+                children: CurrencyFormatter(
+                  context.locale,
+                  symbol: settings.getStandardCurrency().symbol,
+                ).formatWithWidgets(
+                  data.balance,
+                  (amount) => Flexible(
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Text(
-                        data.balance.toStringAsFixed(2),
+                        amount,
                         style: getBalanceTextStyle(context, data.balance),
                       ),
                     ),
                   ),
-                  Text(
-                    settings.getStandardCurrency().symbol,
+                  (symbol) => Text(
+                    symbol,
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
-                ],
+                ),
               ),
             ),
             IconButton(
