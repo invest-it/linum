@@ -29,7 +29,8 @@ class _StandardCurrencyManagerState extends State<StandardCurrencyManager> {
   Widget build(BuildContext context) {
     final ActionLipStatusProvider actionLipStatusProvider =
         Provider.of<ActionLipStatusProvider>(context);
-    final accountSettingsProvider = Provider.of<AccountSettingsProvider>(context);
+    final accountSettingsProvider =
+        Provider.of<AccountSettingsProvider>(context);
 
     final currentCurrency = accountSettingsProvider.getStandardCurrency();
 
@@ -40,7 +41,8 @@ class _StandardCurrencyManagerState extends State<StandardCurrencyManager> {
             actionLipStatusProvider.setActionLip(
               providerKey: ProviderKey.settings,
               actionLipStatus: ActionLipStatus.onviewport,
-              actionLipTitle: "Currency", // FIXME: translate
+              actionLipTitle:
+                  "Currency", // FIXME: Translate settings_screen.standard-currency.action-lip-title
               actionLipBody: CurrencyListView(),
             );
           },

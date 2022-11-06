@@ -20,7 +20,7 @@ class CurrencyListTile extends StatelessWidget {
         Icons.arrow_forward,
       ),
       leading: Icon(
-        currency.icon ?? Icons.error,
+        currency.icon,
       ),
     );
   }
