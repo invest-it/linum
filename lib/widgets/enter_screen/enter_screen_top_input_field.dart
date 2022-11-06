@@ -195,7 +195,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                           ),
                         ),
                         const SizedBox(
-                          width: 15,
+                          width: 10,
                         ),
                         GestureDetector(
                           onTap: () {
