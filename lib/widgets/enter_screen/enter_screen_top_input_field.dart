@@ -167,7 +167,8 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                   SizedBox(
                     width: proportionateScreenWidth(282),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         GestureDetector(
                           onTap: () {
@@ -193,6 +194,9 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                                   ),
                           ),
                         ),
+                        const SizedBox(
+                          width: 15,
+                        ),
                         GestureDetector(
                           onTap: () {
                             enterScreenProvider.setIncome();
@@ -217,7 +221,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                                   ),
                           ),
                         ),
-                        GestureDetector(
+                        /*GestureDetector(
                           onTap: () {
                             enterScreenProvider.setTransaction();
                           },
@@ -240,7 +244,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                                     ),
                                   ),
                           ),
-                        ),
+                        ),*/
                       ],
                     ),
                   ),
