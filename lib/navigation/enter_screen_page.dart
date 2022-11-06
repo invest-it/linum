@@ -6,26 +6,49 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:linum/models/serial_transaction.dart';
 import 'package:linum/models/transaction.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/screens/enter_screen.dart';
 import 'package:provider/provider.dart';
 
 class EnterScreenPageSettings {
-  final bool isFromBalanceData;
+  final bool isFromExistingBalanceData;
   final Transaction? transaction;
+  final SerialTransaction? serialTransaction;
   final String? category;
   final String? secondaryCategory;
 
-  EnterScreenPageSettings._(
-      {this.transaction, this.category, this.secondaryCategory, this.isFromBalanceData = false,});
+  EnterScreenPageSettings._({
+    this.transaction,
+    this.serialTransaction,
+    this.category,
+    this.secondaryCategory,
+    this.isFromExistingBalanceData = false,
+  });
 
   factory EnterScreenPageSettings.withTransaction(Transaction transaction) {
-    return EnterScreenPageSettings._(transaction: transaction, isFromBalanceData: true);
+    return EnterScreenPageSettings._(
+      transaction: transaction,
+      isFromExistingBalanceData: true,
+    );
   }
-  factory EnterScreenPageSettings.withCategories(
-      {String? category, String? secondaryCategory,}) {
-    return EnterScreenPageSettings._(category: category, secondaryCategory: secondaryCategory);
+  factory EnterScreenPageSettings.withSerialTransaction(
+    SerialTransaction serialTransaction,
+  ) {
+    return EnterScreenPageSettings._(
+      serialTransaction: serialTransaction,
+      isFromExistingBalanceData: true,
+    );
+  }
+  factory EnterScreenPageSettings.withCategories({
+    String? category,
+    String? secondaryCategory,
+  }) {
+    return EnterScreenPageSettings._(
+      category: category,
+      secondaryCategory: secondaryCategory,
+    );
   }
 }
 
@@ -37,14 +60,18 @@ class EnterScreenPage extends Page {
   Route createRoute(BuildContext context) {
     final enterScreenProvider = ChangeNotifierProvider<EnterScreenProvider>(
       create: (_) {
-        if (settings.isFromBalanceData) {
-          return EnterScreenProvider.fromBalanceData(settings.transaction!);
+        if (settings.isFromExistingBalanceData) {
+          if (settings.transaction != null) {
+            return EnterScreenProvider.fromTransaction(settings.transaction!);
+          } else {
+            return EnterScreenProvider.fromSerialTransaction(
+              settings.serialTransaction!,
+            );
+          }
         } else {
           return EnterScreenProvider(
-            category: settings.category ??
-                "None",
-            secondaryCategory: settings.secondaryCategory ??
-                "None",
+            category: settings.category ?? "None",
+            secondaryCategory: settings.secondaryCategory ?? "None",
           );
         }
       },
@@ -62,5 +89,4 @@ class EnterScreenPage extends Page {
       },
     );
   }
-  
 }

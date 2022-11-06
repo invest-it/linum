@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:flutter/material.dart';
 import 'package:linum/constants/repeat_duration_type_enum.dart';
 import 'package:linum/constants/settings_enums.dart';
+import 'package:linum/models/serial_transaction.dart';
 import 'package:linum/models/transaction.dart';
 
 class EnterScreenProvider with ChangeNotifier {
@@ -69,19 +70,33 @@ class EnterScreenProvider with ChangeNotifier {
     _note = note;
   }
 
-  factory EnterScreenProvider.fromBalanceData(Transaction transaction, {bool editMode = true}) {
+  factory EnterScreenProvider.fromTransaction(
+    Transaction transaction, {
+    bool editMode = true,
+  }) {
     return EnterScreenProvider(
       id: transaction.id,
       amount: transaction.amount,
       category: transaction.category,
       name: transaction.name,
-      selectedDate:
-      transaction.time.toDate(),
+      selectedDate: transaction.time.toDate(),
       editMode: editMode,
       repeatId: transaction.repeatId,
-      formerTime:
-      transaction.formerTime ??
-          transaction.time,
+      formerTime: transaction.formerTime ?? transaction.time,
+    );
+  }
+
+  factory EnterScreenProvider.fromSerialTransaction(
+    SerialTransaction serialTransaction, {
+    bool editMode = true,
+  }) {
+    return EnterScreenProvider(
+      id: serialTransaction.id,
+      amount: serialTransaction.amount,
+      category: serialTransaction.category,
+      name: serialTransaction.name,
+      editMode: editMode,
+      // TODO: Also pass initialTime and endTime
     );
   }
 
@@ -232,5 +247,4 @@ class EnterScreenProvider with ChangeNotifier {
       return amount;
     }
   }
-
 }
