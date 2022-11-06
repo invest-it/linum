@@ -197,7 +197,7 @@ class _EnterScreenState extends State<EnterScreen> {
         Transaction(
           amount: enterScreenProvider.amountToDisplay(),
           category: enterScreenProvider.category,
-          currency: "EUR",
+          currency: enterScreenProvider.currency,
           name: enterScreenProvider.name,
           note: enterScreenProvider.note,
           time: firestore.Timestamp.fromDate(
@@ -210,7 +210,7 @@ class _EnterScreenState extends State<EnterScreen> {
         SerialTransaction(
           amount: enterScreenProvider.amountToDisplay(),
           category: enterScreenProvider.category,
-          currency: "EUR",
+          currency: enterScreenProvider.currency,
           name: enterScreenProvider.name,
           initialTime: firestore.Timestamp.fromDate(
             DateTime(
@@ -244,7 +244,7 @@ class _EnterScreenState extends State<EnterScreen> {
           id: enterScreenProvider.formerId ?? "",
           amount: enterScreenProvider.amountToDisplay(),
           category: enterScreenProvider.category,
-          currency: "EUR",
+          currency: enterScreenProvider.currency,
           name: enterScreenProvider.name,
           note: enterScreenProvider.note,
           time: firestore.Timestamp.fromDate(

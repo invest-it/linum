@@ -65,8 +65,14 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
         textController = TextEditingController(text: formatter.format(0));
       }
     } else {
-      textController?.text = formatter.format(enterScreenProvider.amount);
+      textController!.text = formatter.format(enterScreenProvider.amount);
+      textController!.selection = TextSelection.fromPosition(
+        TextPosition(
+          offset: textController!.text.length - (formatter.amountBeforeSymbol() ? 2 : 0),
+        ),
+      );
     }
+
     //calculation of the size (width and height) of a text - here it
     //is "Expenses"
     //use like this: variable.width or variable.height
@@ -157,8 +163,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                         final value = _parseInput(str);
                         setState(() {
                           textController!.text = formatter.format(value);
-                          textController!.selection =
-                              TextSelection.fromPosition(
+                          textController!.selection = TextSelection.fromPosition(
                             TextPosition(
                               offset: textController!.text.length - (formatter.amountBeforeSymbol() ? 2 : 0),
                             ),
