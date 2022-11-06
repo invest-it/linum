@@ -414,104 +414,60 @@ class HomeScreenListView implements BalanceDataListView {
   }
 
   /// As mentioned above, this function handles the active contracts display.
-  GestureDetector buildSerialTransactionGestureDetector(
+  Material buildSerialTransactionGestureDetector(
     BuildContext context,
     SerialTransaction serialTransaction,
   ) {
-    final BalanceDataProvider balanceDataProvider =
-        Provider.of<BalanceDataProvider>(context);
-    // final String langCode = context.locale.languageCode;
-    // final DateFormat formatter = DateFormat('EEEE, dd. MMMM yyyy', langCode);
-
-    return GestureDetector(
-      onTap: () {
-        // TODO implement custom edit screen handling here
-        // getRouterDelegate().pushRoute(
-        //   MainRoute.enter,
-        //   settings: EnterScreenPageSettings.withTransaction(serialTransaction),
-        // );
-      },
-      child: Dismissible(
-        background: ColoredBox(
-          color: Colors.red,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 30),
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 16.0,
-                  children: [
-                    Text(
-                      tr("listview.dismissible.label-delete"),
-                      style: Theme.of(context).textTheme.button,
-                    ),
-                    Icon(
-                      Icons.delete,
-                      color: Theme.of(context).colorScheme.secondaryContainer,
-                    ),
-                  ],
+    return Material(
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundColor: serialTransaction.amount > 0
+              ? Theme.of(context)
+                  .colorScheme
+                  .tertiary // FU-TURE INCOME BACKGROUND
+              : Theme.of(context).colorScheme.errorContainer,
+          child: serialTransaction.amount > 0
+              ? Icon(
+                  standardIncomeCategories[serialTransaction.category]?.icon ??
+                      Icons.error,
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onPrimary, // PRESENT INCOME ICON
+                )
+              : Icon(
+                  standardExpenseCategories[serialTransaction.category]?.icon ??
+                      Icons.error,
+                  color: Theme.of(context).colorScheme.onPrimary,
                 ),
-              ),
-            ],
-          ),
         ),
-        key: Key(serialTransaction.id),
-        direction: DismissDirection.endToStart,
-        dismissThresholds: const {
-          DismissDirection.endToStart: 0.5,
-        },
-        confirmDismiss: (DismissDirection direction) async {
-          return generateDeleteDialogFromSerialTransaction(
-            //FIXME: @SoTBurst
-            context,
-            balanceDataProvider,
-            serialTransaction,
-          );
-        },
-        child: ListTile(
-          leading: CircleAvatar(
-            backgroundColor: serialTransaction.amount > 0
-                ? Theme.of(context)
-                    .colorScheme
-                    .tertiary // FU-TURE INCOME BACKGROUND
-                : Theme.of(context).colorScheme.errorContainer,
-            child: serialTransaction.amount > 0
-                ? Icon(
-                    standardIncomeCategories[serialTransaction.category]
-                            ?.icon ??
-                        Icons.error,
-                    color: Theme.of(context)
-                        .colorScheme
-                        .onPrimary, // PRESENT INCOME ICON
-                  )
-                : Icon(
-                    standardExpenseCategories[serialTransaction.category]
-                            ?.icon ??
-                        Icons.error,
-                    color: Theme.of(context).colorScheme.onPrimary,
-                  ),
+        title: Text(
+          serialTransaction.name != ""
+              ? serialTransaction.name
+              : translateCategory(
+                  serialTransaction.category,
+                  context,
+                  isExpense: serialTransaction.amount <= 0,
+                ),
+          style: Theme.of(context).textTheme.bodyText1,
+        ),
+        subtitle: Text(
+          calculateTimeFrequency(serialTransaction),
+          style: Theme.of(context).textTheme.overline,
+        ),
+        trailing: IconButton(
+          splashRadius: 24.0,
+          icon: Icon(
+            Icons.edit_rounded,
+            color: Theme.of(context).colorScheme.secondary,
           ),
-          title: Text(
-            serialTransaction.name != ""
-                ? serialTransaction.name
-                : translateCategory(
-                    serialTransaction.category,
-                    context,
-                    isExpense: serialTransaction.amount <= 0,
-                  ),
-            style: Theme.of(context).textTheme.bodyText1,
-          ),
-          subtitle: Text(
-            calculateTimeFrequency(serialTransaction),
-            style: Theme.of(context).textTheme.overline,
-          ),
-          trailing: IconButton(
-            icon: const Icon(Icons.edit_rounded),
-            onPressed: () => {},
-          ), //TODO implement Edit function
+          onPressed: () => {
+            getRouterDelegate().pushRoute(
+              MainRoute.enter,
+              settings: EnterScreenPageSettings.withSerialTransaction(
+                serialTransaction,
+              ),
+            )
+          },
         ),
       ),
     );
