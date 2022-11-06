@@ -222,7 +222,7 @@ class _EnterScreenListViewBuilderState
         ),
         actionLipBody: SingleChildScrollView(
           child: SizedBox(
-            height: proportionateScreenHeightFraction(ScreenFraction.twofifths),
+            height: proportionateScreenHeight(419),
             child: _chooseListViewBuilder(
               enterScreenProvider,
               index,
