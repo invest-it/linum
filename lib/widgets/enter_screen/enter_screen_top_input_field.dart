@@ -49,10 +49,10 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
         Provider.of<EnterScreenProvider>(context);
     final ActionLipStatusProvider actionLipStatusProvider =
         Provider.of<ActionLipStatusProvider>(context);
-    
+
     final formatter = CurrencyFormatter(context.locale);
     // TODO: Write a better formatter for every currency symbol
-    
+
     if (textController == null) {
       if (enterScreenProvider.amount != 0) {
         textController = TextEditingController(
@@ -115,7 +115,8 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                       controller: textController,
                       showCursor: true,
                       cursorColor: Colors.white,
-                      keyboardType:  const TextInputType.numberWithOptions(signed: true, decimal: true),
+                      keyboardType: const TextInputType.numberWithOptions(
+                          signed: true, decimal: true),
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       decoration: InputDecoration(
                         counter: const SizedBox.shrink(),
@@ -149,7 +150,8 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                         final value = _parseInput(str);
                         setState(() {
                           textController!.text = formatter.format(value);
-                          textController!.selection = TextSelection.fromPosition(
+                          textController!.selection =
+                              TextSelection.fromPosition(
                             TextPosition(
                               offset: textController!.text.length - 2,
                             ),
@@ -165,7 +167,8 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                   SizedBox(
                     width: proportionateScreenWidth(282),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         GestureDetector(
                           onTap: () {
@@ -176,7 +179,8 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                             child: enterScreenProvider.isExpenses
                                 ? TextContainer(
                                     //context: context,
-                                    transactionClass: tr('enter_screen.button-expenses-label'),
+                                    transactionClass: tr(
+                                        'enter_screen.button-expenses-label'),
                                   )
                                 : Center(
                                     child: Text(
@@ -190,6 +194,9 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                                   ),
                           ),
                         ),
+                        const SizedBox(
+                          width: 15,
+                        ),
                         GestureDetector(
                           onTap: () {
                             enterScreenProvider.setIncome();
@@ -199,7 +206,8 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                             child: enterScreenProvider.isIncome
                                 ? TextContainer(
                                     //context: context,
-                                    transactionClass: tr('enter_screen.button-income-label'),
+                                    transactionClass:
+                                        tr('enter_screen.button-income-label'),
                                   )
                                 : Center(
                                     child: Text(
@@ -213,7 +221,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                                   ),
                           ),
                         ),
-                        GestureDetector(
+                        /*GestureDetector(
                           onTap: () {
                             enterScreenProvider.setTransaction();
                           },
@@ -222,7 +230,8 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                             child: enterScreenProvider.isTransaction
                                 ? TextContainer(
                                     //context: context,
-                                    transactionClass: tr('enter_screen.button-transaction-label'),
+                                    transactionClass: tr(
+                                        'enter_screen.button-transaction-label'),
                                   )
                                 : Center(
                                     child: Text(
@@ -235,11 +244,10 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                                     ),
                                   ),
                           ),
-                        ),
+                        ),*/
                       ],
                     ),
                   ),
-
                   const SizedBox(
                     height: 8,
                   )
@@ -281,7 +289,8 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
   double _parseInput(String str) {
     final trimmedStr = str.trim().replaceAll(RegExp(r"^[\$,£,€]\s?0+"), "");
     final paddedStr = trimmedStr.padLeft(3, "0");
-    final decimalStr = "${paddedStr.substring(0, paddedStr.length - 2)}.${paddedStr.substring(paddedStr.length - 2)}";
+    final decimalStr =
+        "${paddedStr.substring(0, paddedStr.length - 2)}.${paddedStr.substring(paddedStr.length - 2)}";
     return double.parse(decimalStr);
   }
 
