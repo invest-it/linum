@@ -202,12 +202,12 @@ class _EnterScreenListViewBuilderState
 
   //function executed when one of the categories (category, account, date etc.) is tapped
   void _onCategoryPressed(
-    int index,
+    int menuIndex,
     EnterScreenProvider enterScreenProvider,
     AccountSettingsProvider accountSettingsProvider,
     ActionLipStatusProvider actionLipStatusProvider,
   ) {
-    if (index == 1) {
+    if (menuIndex == 1) {
       //opens the date picker
       _openDatePicker(enterScreenProvider);
     } else {
@@ -218,14 +218,14 @@ class _EnterScreenListViewBuilderState
         actionLipTitle: _typeChooser(
           enterScreenProvider,
           accountSettingsProvider,
-          index,
+          menuIndex,
         ),
         actionLipBody: SingleChildScrollView(
           child: SizedBox(
             height: proportionateScreenHeightFraction(ScreenFraction.twofifths),
             child: _chooseListViewBuilder(
               enterScreenProvider,
-              index,
+              menuIndex,
               accountSettingsProvider,
               actionLipStatusProvider,
             ),
@@ -261,40 +261,39 @@ class _EnterScreenListViewBuilderState
   String _typeChooser(
     EnterScreenProvider enterScreenProvider,
     AccountSettingsProvider accountSettingsProvider,
-    int index,
+    int menuIndex,
   ) {
     return "${[
       "enter_screen_attribute_category",
       timeEntryCategory.label,
       currencyEntryCategory.label,
       repeatDurationEntryCategory.label,
-    ][index].tr()}: ";
+    ][menuIndex].tr()}: ";
   }
 
   //which lists view is built depending on expense etc.
   ListView _chooseListViewBuilder(
     EnterScreenProvider enterScreenProvider,
-    int index,
+    int menuIndex,
     AccountSettingsProvider accountSettingsProvider,
     ActionLipStatusProvider actionLipStatusProvider,
   ) {
     if (enterScreenProvider.isExpenses) {
       return _listViewBuilderExpenses(
-        index,
+        menuIndex,
         enterScreenProvider,
         accountSettingsProvider,
         actionLipStatusProvider,
       );
     } else if (enterScreenProvider.isIncome) {
       return _listViewBuilderIncome(
-        index,
+        menuIndex,
         enterScreenProvider,
         accountSettingsProvider,
         actionLipStatusProvider,
       );
     } else {
       return _listViewBuilderTransaction(
-        index,
         enterScreenProvider,
         accountSettingsProvider,
         actionLipStatusProvider,
@@ -303,34 +302,34 @@ class _EnterScreenListViewBuilderState
   }
 
   ListView _listViewBuilderExpenses(
-    int index,
+    int menuIndex,
     EnterScreenProvider enterScreenProvider,
     AccountSettingsProvider accountSettingsProvider,
     ActionLipStatusProvider actionLipStatusProvider,
   ) {
-    if (index == 0) {
+    if (menuIndex == 0) {
       if (enterScreenProvider.isExpenses) {
         return ListView.builder(
           itemCount: standardExpenseCategories.length,
-          itemBuilder: (BuildContext context, int indexBuilder) {
+          itemBuilder: (BuildContext context, int index) {
             return ListTile(
               leading: Icon(
                 standardExpenseCategories[
-                        StandardCategoryExpense.values[indexBuilder]]!
+                        StandardCategoryExpense.values[index]]!
                     .icon,
               ),
               title: Text(
                 tr(standardExpenseCategories[
-                        StandardCategoryExpense.values[indexBuilder]]!
+                        StandardCategoryExpense.values[index]]!
                     .label),
               ),
               onTap: () => _selectCategoryItemExpenses(
-                StandardCategoryExpense.values[indexBuilder]
+                StandardCategoryExpense.values[index]
                     .toString()
                     .split(".")[1],
                 enterScreenProvider,
                 standardExpenseCategories[
-                        StandardCategoryExpense.values[indexBuilder]]!
+                        StandardCategoryExpense.values[index]]!
                     .icon,
                 actionLipStatusProvider,
               ),
@@ -340,26 +339,26 @@ class _EnterScreenListViewBuilderState
       } else {
         return ListView.builder(
           itemCount: standardIncomeCategories.length,
-          itemBuilder: (BuildContext context, int indexBuilder) {
+          itemBuilder: (BuildContext context, int index) {
             return ListTile(
               leading: Icon(
                 standardIncomeCategories[
-                        StandardCategoryIncome.values[indexBuilder]]!
+                        StandardCategoryIncome.values[index]]!
                     .icon,
               ),
               title: Text(
                 tr(standardIncomeCategories[
-                        StandardCategoryIncome.values[indexBuilder]]!
+                        StandardCategoryIncome.values[index]]!
                     .label),
               ),
               //selects the item as the categories value
               onTap: () => _selectCategoryItemIncome(
-                StandardCategoryIncome.values[indexBuilder]
+                StandardCategoryIncome.values[index]
                     .toString()
                     .split(".")[1],
                 enterScreenProvider,
                 standardIncomeCategories[
-                        StandardCategoryExpense.values[indexBuilder]]!
+                        StandardCategoryExpense.values[index]]!
                     .icon,
                 actionLipStatusProvider,
               ),
@@ -367,13 +366,13 @@ class _EnterScreenListViewBuilderState
           },
         );
       }
-    } else if (index == 2) {
+    } else if (menuIndex == 2) {
       return ListView.builder(
         itemCount: standardCurrencies.length,
-        itemBuilder: (BuildContext context, int indexBuilder) {
+        itemBuilder: (BuildContext context, int index) {
           return ListTile(
-            leading: Icon(currencies[indexBuilder].icon),
-            title: Text(currencies[indexBuilder].label),
+            leading: Icon(currencies[index].icon),
+            title: Text(currencies[index].label),
             onTap: () => {},
           );
         },
@@ -381,23 +380,23 @@ class _EnterScreenListViewBuilderState
     } else {
       return ListView.builder(
         itemCount: categoriesRepeat.length,
-        itemBuilder: (BuildContext context, int indexBuilder) {
+        itemBuilder: (BuildContext context, int index) {
           return ListTile(
             leading: Icon(
-              categoriesRepeat[RepeatDuration.values[indexBuilder]]
+              categoriesRepeat[RepeatDuration.values[index]]
                           ?["entryCategory"]
                       .icon as IconData? ??
                   Icons.error,
             ),
             title: Text(
-              tr(categoriesRepeat[RepeatDuration.values[indexBuilder]]
+              tr(categoriesRepeat[RepeatDuration.values[index]]
                       ?["entryCategory"]
                   .label as String),
             ),
             //selects the item as the repeat value
             onTap: () => _selectRepeatItem(
               enterScreenProvider,
-              indexBuilder,
+              index,
               accountSettingsProvider,
               actionLipStatusProvider,
             ),
@@ -409,33 +408,33 @@ class _EnterScreenListViewBuilderState
   //which list view is built depending on the tapped category at INCOME
 
   ListView _listViewBuilderIncome(
-    int index,
+    int menuIndex,
     EnterScreenProvider enterScreenProvider,
     AccountSettingsProvider accountSettingsProvider,
     ActionLipStatusProvider actionLipStatusProvider,
   ) {
-    if (index == 0) {
+    if (menuIndex == 0) {
       return ListView.builder(
         itemCount: standardIncomeCategories.length,
-        itemBuilder: (BuildContext context, int indexBuilder) {
+        itemBuilder: (BuildContext context, int index) {
           return ListTile(
             leading: Icon(
               standardIncomeCategories[
-                      StandardCategoryIncome.values[indexBuilder]]!
+                      StandardCategoryIncome.values[index]]!
                   .icon,
             ),
             title: Text(
               tr(standardIncomeCategories[
-                      StandardCategoryIncome.values[indexBuilder]]!
+                      StandardCategoryIncome.values[index]]!
                   .label),
             ),
             onTap: () => _selectCategoryItemIncome(
-              StandardCategoryIncome.values[indexBuilder]
+              StandardCategoryIncome.values[index]
                   .toString()
                   .split(".")[1],
               enterScreenProvider,
               standardIncomeCategories[
-                      StandardCategoryIncome.values[indexBuilder]]!
+                      StandardCategoryIncome.values[index]]!
                   .icon,
               actionLipStatusProvider,
             ),
@@ -456,36 +455,43 @@ class _EnterScreenListViewBuilderState
       //     );
       //   },
       // );
-    } else if (index == 2) {
+    } else if (menuIndex == 2) {
       return ListView.builder(
         itemCount: standardCurrencies.length,
-        itemBuilder: (BuildContext context, int indexBuilder) {
+        itemBuilder: (BuildContext context, int index) {
+          final currency = currencies[index];
           return ListTile(
-            leading: Icon(currencies[indexBuilder].icon),
-            title: Text(currencies[indexBuilder].label),
-            onTap: () => {},
+            leading: Icon(currency.icon),
+            title: Text(currency.label),
+            onTap: () => {
+              _selectCurrency(
+                  enterScreenProvider,
+                  currency,
+                  actionLipStatusProvider,
+              ),
+            },
           );
         },
       );
     } else {
       return ListView.builder(
         itemCount: categoriesRepeat.length,
-        itemBuilder: (BuildContext context, int indexBuilder) {
+        itemBuilder: (BuildContext context, int index) {
           return ListTile(
             leading: Icon(
-              categoriesRepeat[RepeatDuration.values[indexBuilder]]
+              categoriesRepeat[RepeatDuration.values[index]]
                           ?["entryCategory"]
                       .icon as IconData? ??
                   Icons.error,
             ),
             title: Text(
-              tr(categoriesRepeat[RepeatDuration.values[indexBuilder]]
+              tr(categoriesRepeat[RepeatDuration.values[index]]
                       ?["entryCategory"]
                   .label as String),
             ),
             onTap: () => _selectRepeatItem(
               enterScreenProvider,
-              indexBuilder,
+              index,
               accountSettingsProvider,
               actionLipStatusProvider,
             ),
@@ -497,29 +503,26 @@ class _EnterScreenListViewBuilderState
   //which list view is built depending on the tapped category at TRANSACTION
 
   ListView _listViewBuilderTransaction(
-    int index,
     EnterScreenProvider enterScreenProvider,
     AccountSettingsProvider accountSettingsProvider,
     ActionLipStatusProvider actionLipStatusProvider,
   ) {
     return ListView.builder(
       itemCount: categoriesRepeat.length,
-      itemBuilder: (BuildContext context, int indexBuilder) {
+      itemBuilder: (BuildContext context, int index) {
         return ListTile(
           leading: Icon(
-            categoriesRepeat[RepeatDuration.values[indexBuilder]]
+            categoriesRepeat[RepeatDuration.values[index]]
                         ?["entryCategory"]
                     .icon as IconData? ??
                 Icons.error,
           ),
           title: Text(
-            tr(categoriesRepeat[RepeatDuration.values[indexBuilder]]
-                    ?["entryCategory"]
-                .label as String),
+            tr(categoriesRepeat[RepeatDuration.values[index]]?["entryCategory"].label as String),
           ),
           onTap: () => _selectRepeatItem(
             enterScreenProvider,
-            indexBuilder,
+            index,
             accountSettingsProvider,
             actionLipStatusProvider,
           ),
@@ -530,11 +533,11 @@ class _EnterScreenListViewBuilderState
 
   //returns the selected value as a text
   Text _selectText(
-    int index,
+    int menuIndex,
     EnterScreenProvider enterScreenProvider,
     AccountSettingsProvider accountSettingsProvider,
   ) {
-    if (index == 0) {
+    if (menuIndex == 0) {
       if (enterScreenProvider.isExpenses) {
         if (enterScreenProvider.category == "") {
           return Text(
@@ -552,22 +555,19 @@ class _EnterScreenListViewBuilderState
           );
         }
         return Text(
-          tr(standardIncomeCategories[enterScreenProvider.category]?.label ??
-              'chosen income'),
+          tr(standardIncomeCategories[enterScreenProvider.category]?.label ?? 'chosen income'),
         );
       }
-    } else if (index == 1) {
+    } else if (menuIndex == 1) {
       final String langCode = context.locale.languageCode;
 
       final DateFormat formatter = DateFormat('dd. MMMM yyyy', langCode);
       return Text(formatter.format(enterScreenProvider.selectedDate));
-    } else if (index == 2) {
-      return const Text("Currency by Martin");
-    } else if (index == 3) {
+    } else if (menuIndex == 2) {
+      return Text(standardCurrencies[enterScreenProvider.currency]?.label ?? "Currency not found"); // FIXME: translate currency.error
+    } else if (menuIndex == 3) {
       return Text(
-        tr(categoriesRepeat[enterScreenProvider.repeatDurationEnum]
-                ?["entryCategory"]
-            .label as String),
+        tr(categoriesRepeat[enterScreenProvider.repeatDurationEnum]?["entryCategory"].label as String),
       );
     } else {
       log("Something has gone wrong with the index in enter_screen_listviewbuilder.dart");
@@ -638,6 +638,19 @@ class _EnterScreenListViewBuilderState
       providerKey: ProviderKey.enter,
     );
     enterScreenProvider.setCategory(name);
+  }
+
+  void _selectCurrency(
+      EnterScreenProvider enterScreenProvider,
+      Currency currency,
+      ActionLipStatusProvider actionLipStatusProvider,
+      ) {
+    actionLipStatusProvider.setActionLipStatus(
+      providerKey: ProviderKey.enter,
+    );
+    print("Setting currency");
+    print(currency.name);
+    enterScreenProvider.setCurrency(currency.name);
   }
 
   void _selectRepeatItem(

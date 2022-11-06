@@ -7,7 +7,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:linum/constants/standard_currencies.dart';
 import 'package:linum/navigation/get_delegate.dart';
+import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/utilities/frontend/currency_formatter.dart';
@@ -49,8 +51,10 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
         Provider.of<EnterScreenProvider>(context);
     final ActionLipStatusProvider actionLipStatusProvider =
         Provider.of<ActionLipStatusProvider>(context);
-
-    final formatter = CurrencyFormatter(context.locale);
+    print("Rebuild on changes");
+    print(enterScreenProvider.currency);
+    final currency = standardCurrencies[enterScreenProvider.currency];
+    final formatter = CurrencyFormatter(context.locale, symbol: currency?.symbol ?? enterScreenProvider.currency);
     // TODO: Write a better formatter for every currency symbol
 
     if (textController == null) {
@@ -61,6 +65,8 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
       } else {
         textController = TextEditingController(text: formatter.format(0));
       }
+    } else {
+      textController?.text = formatter.format(enterScreenProvider.amount);
     }
     //calculation of the size (width and height) of a text - here it
     //is "Expenses"
@@ -142,7 +148,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                         ),
                         textController!.selection = TextSelection.fromPosition(
                           TextPosition(
-                            offset: textController!.text.length - 2,
+                            offset: textController!.text.length - (formatter.amountBeforeSymbol() ? 2 : 0),
                           ),
                         )
                       },
@@ -153,7 +159,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                           textController!.selection =
                               TextSelection.fromPosition(
                             TextPosition(
-                              offset: textController!.text.length - 2,
+                              offset: textController!.text.length - (formatter.amountBeforeSymbol() ? 2 : 0),
                             ),
                           );
                         });
@@ -287,7 +293,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
   }
 
   double _parseInput(String str) {
-    final trimmedStr = str.trim().replaceAll(RegExp(r"^[\$,£,€]\s?0+"), "");
+    final trimmedStr = str.trim().replaceAll(RegExp(r"^[\$,£,€]\s?"), "");
     final paddedStr = trimmedStr.padLeft(3, "0");
     final decimalStr =
         "${paddedStr.substring(0, paddedStr.length - 2)}.${paddedStr.substring(paddedStr.length - 2)}";

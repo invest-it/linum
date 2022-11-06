@@ -8,6 +8,8 @@ import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:flutter/material.dart';
 import 'package:linum/constants/repeat_duration_type_enum.dart';
 import 'package:linum/constants/settings_enums.dart';
+import 'package:linum/constants/standard_currencies.dart';
+import 'package:linum/models/currency.dart';
 import 'package:linum/models/transaction.dart';
 
 class EnterScreenProvider with ChangeNotifier {
@@ -69,11 +71,12 @@ class EnterScreenProvider with ChangeNotifier {
     _note = note;
   }
 
-  factory EnterScreenProvider.fromBalanceData(Transaction transaction, {bool editMode = true}) {
+  factory EnterScreenProvider.fromTransaction(Transaction transaction, {bool editMode = true}) {
     return EnterScreenProvider(
       id: transaction.id,
       amount: transaction.amount,
       category: transaction.category,
+      currency: transaction.currency,
       name: transaction.name,
       selectedDate:
       transaction.time.toDate(),
@@ -192,6 +195,7 @@ class EnterScreenProvider with ChangeNotifier {
 
   void setCurrency(String currency) {
     _currency = currency;
+    print("Set Currency");
     notifyListeners();
   }
 

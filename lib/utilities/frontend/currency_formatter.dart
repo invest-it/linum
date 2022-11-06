@@ -18,6 +18,14 @@ class CurrencyFormatter {
     }
   }
 
+  bool amountBeforeSymbol() {
+    if (symbol == "€") {
+      return true;
+    } else { // $, £
+      return false;
+    }
+  }
+
   List<Widget> formatWithWidgets(
       num value,
       Widget Function(String amount) amountDisplayBuilder,

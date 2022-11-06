@@ -6,6 +6,7 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:linum/models/currency.dart';
 import 'package:linum/models/transaction.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/screens/enter_screen.dart';
@@ -16,16 +17,17 @@ class EnterScreenPageSettings {
   final Transaction? transaction;
   final String? category;
   final String? secondaryCategory;
+  final Currency? currency;
 
   EnterScreenPageSettings._(
-      {this.transaction, this.category, this.secondaryCategory, this.isFromBalanceData = false,});
+      {this.transaction, this.category, this.secondaryCategory, this.currency, this.isFromBalanceData = false,});
 
   factory EnterScreenPageSettings.withTransaction(Transaction transaction) {
     return EnterScreenPageSettings._(transaction: transaction, isFromBalanceData: true);
   }
-  factory EnterScreenPageSettings.withCategories(
-      {String? category, String? secondaryCategory,}) {
-    return EnterScreenPageSettings._(category: category, secondaryCategory: secondaryCategory);
+  factory EnterScreenPageSettings.withSettings(
+      {required Currency currency, String? category, String? secondaryCategory}) {
+    return EnterScreenPageSettings._(category: category, secondaryCategory: secondaryCategory, currency: currency);
   }
 }
 
@@ -38,13 +40,14 @@ class EnterScreenPage extends Page {
     final enterScreenProvider = ChangeNotifierProvider<EnterScreenProvider>(
       create: (_) {
         if (settings.isFromBalanceData) {
-          return EnterScreenProvider.fromBalanceData(settings.transaction!);
+          return EnterScreenProvider.fromTransaction(settings.transaction!);
         } else {
           return EnterScreenProvider(
             category: settings.category ??
                 "None",
             secondaryCategory: settings.secondaryCategory ??
                 "None",
+            currency: settings.currency!.name,
           );
         }
       },

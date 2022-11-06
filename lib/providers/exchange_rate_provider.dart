@@ -38,8 +38,6 @@ class ExchangeRateProvider extends ChangeNotifier {
 
     for (final transaction in transactions) {
       if (transaction.currency == standardCurrency.name) {
-        print("Debug provider");
-        print("Default");
         continue;
       }
 
@@ -59,10 +57,6 @@ class ExchangeRateProvider extends ChangeNotifier {
         ?? (transaction.currency == "EUR" ? "1" : null); // FOR NOW
       final standardCurrencyRate = exchangeRates.rates?[standardCurrency.name];
 
-      print("Debug provider rates");
-      print(transaction.currency);
-      print(transactionCurrencyRate);
-      print(standardCurrencyRate);
       // TODO: Check if entry exists and re-fetch
       // TODO: Make call to another API to get rate
       // TODO: If the exchange rate is not found but needed it should be guessed

@@ -23,7 +23,7 @@ Future<bool?> showChangeEntryDialog(BuildContext context, DateTime selectedDate)
             changeType: SerialTransactionChangeType.onlyThisOne,
             amount: enterScreenProvider.amountToDisplay(),
             category: enterScreenProvider.category,
-            currency: "EUR",
+            currency: enterScreenProvider.currency,
             name: enterScreenProvider.name,
             time: enterScreenProvider.formerTime,
             newTime: Timestamp.fromDate(
@@ -49,7 +49,7 @@ Future<bool?> showChangeEntryDialog(BuildContext context, DateTime selectedDate)
             amount: enterScreenProvider.amountToDisplay(),
             category: enterScreenProvider
                 .category,
-            currency: "EUR",
+            currency: enterScreenProvider.currency,
             name:
             enterScreenProvider.name,
             time: enterScreenProvider
@@ -77,7 +77,7 @@ Future<bool?> showChangeEntryDialog(BuildContext context, DateTime selectedDate)
             amount: enterScreenProvider.amountToDisplay(),
             category: enterScreenProvider
                 .category,
-            currency: "EUR",
+            currency: enterScreenProvider.currency,
             name:
             enterScreenProvider.name,
             time: enterScreenProvider
@@ -104,7 +104,7 @@ Future<bool?> showChangeEntryDialog(BuildContext context, DateTime selectedDate)
             amount: enterScreenProvider.amountToDisplay(),
             category: enterScreenProvider
                 .category,
-            currency: "EUR",
+            currency: enterScreenProvider.currency,
             name:
             enterScreenProvider.name,
             time: enterScreenProvider

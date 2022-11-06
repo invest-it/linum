@@ -97,9 +97,10 @@ class _ScreenLayoutState extends State<ScreenLayout>
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          final enterScreenSettings = EnterScreenPageSettings.withCategories(
+          final enterScreenSettings = EnterScreenPageSettings.withSettings(
             category: accountSettingsProvider.settings['StandardCategoryExpense'] as String?,
             secondaryCategory: accountSettingsProvider.settings['StandardCategoryIncome'] as String?,
+            currency: accountSettingsProvider.getStandardCurrency(),
           );
 
           Get.find<MainRouterDelegate>().pushRoute(

@@ -21,7 +21,7 @@ final standardCurrencies = Map<String, Currency>.unmodifiable({
         icon: Icons.currency_yen,
       ),
       "GBP": const Currency(
-        label: 'British Pound', // FIXME: translate maybe
+        label: 'Britisches Pfund', // FIXME: translate maybe
         name: 'GBP',
         symbol: '£',
         icon: Icons.currency_pound,
