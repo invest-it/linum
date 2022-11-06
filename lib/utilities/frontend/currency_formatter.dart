@@ -17,4 +17,23 @@ class CurrencyFormatter {
       return "$symbol $numberPart";
     }
   }
+
+  List<Widget> formatWithWidgets(
+      num value,
+      Widget Function(String amount) amountDisplayBuilder,
+      Widget Function(String symbol) symbolDisplayBuilder,
+  ) {
+    if (symbol == "€") {
+      return [
+        amountDisplayBuilder(_formatter.format(value)),
+        symbolDisplayBuilder(symbol),
+      ];
+    } else {
+      return [
+        symbolDisplayBuilder(symbol),
+        amountDisplayBuilder(_formatter.format(value)),
+      ];
+    }
+
+  }
 }

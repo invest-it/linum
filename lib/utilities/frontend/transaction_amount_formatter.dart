@@ -23,7 +23,7 @@ class TransactionAmountFormatter {
     final rateInfo = transaction.rateInfo;
 
     if (rateInfo != null) {
-      final amountInEuro = rateInfo.rate * transaction.amount;
+      final amountInEuro = transaction.amount / rateInfo.rate;
       return CurrencyFormatter(locale, symbol: standardCurrency.symbol)
           .format(amountInEuro * rateInfo.standardCurrencyRate);
     }

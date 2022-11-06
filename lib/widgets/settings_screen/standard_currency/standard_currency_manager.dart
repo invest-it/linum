@@ -40,7 +40,7 @@ class _StandardCurrencyManagerState extends State<StandardCurrencyManager> {
             actionLipStatusProvider.setActionLip(
               providerKey: ProviderKey.settings,
               actionLipStatus: ActionLipStatus.onviewport,
-              actionLipTitle: "Currency",
+              actionLipTitle: "Currency", // FIXME: translate
               actionLipBody: CurrencyListView(),
             );
           },

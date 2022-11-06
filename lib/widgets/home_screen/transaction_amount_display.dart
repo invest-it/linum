@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/models/currency.dart';
 import 'package:linum/models/transaction.dart';
 import 'package:linum/utilities/frontend/transaction_amount_formatter.dart';
 
