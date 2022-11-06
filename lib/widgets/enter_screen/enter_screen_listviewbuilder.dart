@@ -21,6 +21,7 @@ import 'package:linum/models/entry_category.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
+import 'package:linum/utilities/frontend/silent_scroll.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
@@ -222,7 +223,7 @@ class _EnterScreenListViewBuilderState
         ),
         actionLipBody: SingleChildScrollView(
           child: SizedBox(
-            height: proportionateScreenHeightFraction(ScreenFraction.twofifths),
+            height: proportionateScreenHeight(419),
             child: _chooseListViewBuilder(
               enterScreenProvider,
               menuIndex,
@@ -272,7 +273,7 @@ class _EnterScreenListViewBuilderState
   }
 
   //which lists view is built depending on expense etc.
-  ListView _chooseListViewBuilder(
+  ScrollConfiguration _chooseListViewBuilder(
     EnterScreenProvider enterScreenProvider,
     int menuIndex,
     AccountSettingsProvider accountSettingsProvider,
@@ -313,6 +314,20 @@ class _EnterScreenListViewBuilderState
           itemCount: standardExpenseCategories.length,
           itemBuilder: (BuildContext context, int index) {
             return ListTile(
+              leading: Icon(currencies[indexBuilder].icon),
+              title: Text(currencies[indexBuilder].label),
+              onTap: () => {},
+            );
+          },
+        ),
+      );
+    } else {
+      return ScrollConfiguration(
+        behavior: SilentScroll(),
+        child: ListView.builder(
+          itemCount: categoriesRepeat.length,
+          itemBuilder: (BuildContext context, int indexBuilder) {
+            return ListTile(
               leading: Icon(
                 standardExpenseCategories[
                         StandardCategoryExpense.values[index]]!
@@ -335,9 +350,22 @@ class _EnterScreenListViewBuilderState
               ),
             );
           },
-        );
-      } else {
-        return ListView.builder(
+        ),
+      );
+    }
+  }
+  //which list view is built depending on the tapped category at INCOME
+
+  ScrollConfiguration _listViewBuilderIncome(
+    int index,
+    EnterScreenProvider enterScreenProvider,
+    AccountSettingsProvider accountSettingsProvider,
+    ActionLipStatusProvider actionLipStatusProvider,
+  ) {
+    if (index == 0) {
+      return ScrollConfiguration(
+        behavior: SilentScroll(),
+        child: ListView.builder(
           itemCount: standardIncomeCategories.length,
           itemBuilder: (BuildContext context, int index) {
             return ListTile(
@@ -351,7 +379,6 @@ class _EnterScreenListViewBuilderState
                         StandardCategoryIncome.values[index]]!
                     .label),
               ),
-              //selects the item as the categories value
               onTap: () => _selectCategoryItemIncome(
                 StandardCategoryIncome.values[index]
                     .toString()
@@ -474,7 +501,48 @@ class _EnterScreenListViewBuilderState
         },
       );
     } else {
-      return ListView.builder(
+      return ScrollConfiguration(
+        behavior: SilentScroll(),
+        child: ListView.builder(
+          itemCount: categoriesRepeat.length,
+          itemBuilder: (BuildContext context, int indexBuilder) {
+            return ListTile(
+              leading: Icon(
+                categoriesRepeat[RepeatDuration.values[indexBuilder]]
+                            ?["entryCategory"]
+                        .icon as IconData? ??
+                    Icons.error,
+              ),
+              title: Text(
+                tr(
+                  categoriesRepeat[RepeatDuration.values[indexBuilder]]
+                          ?["entryCategory"]
+                      .label as String,
+                ),
+              ),
+              onTap: () => _selectRepeatItem(
+                enterScreenProvider,
+                indexBuilder,
+                accountSettingsProvider,
+                actionLipStatusProvider,
+              ),
+            );
+          },
+        ),
+      );
+    }
+  }
+  //which list view is built depending on the tapped category at TRANSACTION
+
+  ScrollConfiguration _listViewBuilderTransaction(
+    int index,
+    EnterScreenProvider enterScreenProvider,
+    AccountSettingsProvider accountSettingsProvider,
+    ActionLipStatusProvider actionLipStatusProvider,
+  ) {
+    return ScrollConfiguration(
+      behavior: SilentScroll(),
+      child: ListView.builder(
         itemCount: categoriesRepeat.length,
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
@@ -545,8 +613,10 @@ class _EnterScreenListViewBuilderState
           );
         }
         return Text(
-          tr(standardExpenseCategories[enterScreenProvider.category]?.label ??
-              'chosen expense'),
+          tr(
+            standardExpenseCategories[enterScreenProvider.category]?.label ??
+                'chosen expense',
+          ),
         );
       } else {
         if (enterScreenProvider.category == "") {
