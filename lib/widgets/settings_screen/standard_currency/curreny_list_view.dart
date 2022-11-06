@@ -22,7 +22,6 @@ class CurrencyListView extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(
-            vertical: 12.0,
             horizontal: 24.0,
           ),
           child: Column(

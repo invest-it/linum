@@ -47,21 +47,20 @@ class CategoryListView<T extends Enum> extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(
-            vertical: 12.0,
             horizontal: 24.0,
           ),
           child: Column(
             children: [
               SizedBox(
                 height:
-                proportionateScreenHeightFraction(ScreenFraction.twofifths),
+                  proportionateScreenHeightFraction(ScreenFraction.twofifths),
                 child: ListView.builder(
                   shrinkWrap: true,
                   itemCount: enumItemCount,
                   itemBuilder: (BuildContext context, int indexBuilder) {
                     return ListTile(
                       //leading: Icon(widget.categories[index].icon),
-                      leading: Icon(standardCategory(indexBuilder)?.icon,),
+                      leading: Icon(standardCategory(indexBuilder)?.icon),
                       title: Text(
                         tr(standardCategory(indexBuilder)?.label ?? "Category"),
                       ),
