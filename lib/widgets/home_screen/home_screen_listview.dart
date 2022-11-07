@@ -539,7 +539,7 @@ class HomeScreenListView implements BalanceDataListView {
       case RepeatDurationType.months:
         if (duration % 12 == 0) {
           if (duration / 12 == 1) {
-            return "$amount€ ${tr('enter_screen.label-repeat-yearly')}";
+            return "$amount€ ${tr('enter_screen.label-repeat-annually')}";
           }
           return "${tr('listview.label-every')} ${(duration / 12).floor()} ${tr('listview.label-years')}";
         }
