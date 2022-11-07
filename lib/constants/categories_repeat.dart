@@ -44,7 +44,7 @@ final Map<RepeatDuration, Map<String, dynamic>> categoriesRepeat = {
   },
   RepeatDuration.quarterly: {
     "entryCategory": const EntryCategory(
-      label: 'enter_screen.label-repeat-quarterly', //TODO Transaction
+      label: 'enter_screen.label-repeat-quarterly',
       icon: Icons.grid_view_rounded,
     ),
     "duration": 3,
@@ -52,7 +52,7 @@ final Map<RepeatDuration, Map<String, dynamic>> categoriesRepeat = {
   },
   RepeatDuration.semiannually: {
     "entryCategory": const EntryCategory(
-      label: 'enter_screen.label-repeat-semiannually', //TODO Translate
+      label: 'enter_screen.label-repeat-semiannually',
       icon: Icons.splitscreen_rounded,
     ),
     "duration": 6,
@@ -60,7 +60,7 @@ final Map<RepeatDuration, Map<String, dynamic>> categoriesRepeat = {
   },
   RepeatDuration.annually: {
     "entryCategory": const EntryCategory(
-      label: 'enter_screen.label-repeat-annually', //TODO Translate
+      label: 'enter_screen.label-repeat-annually',
       icon: Icons.calendar_month_rounded,
     ),
     "duration": 12,
