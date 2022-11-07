@@ -165,6 +165,9 @@
         "label-repeat-monthly": "Begin van de maand",
         "label-repeat-none": "Niet herhalen",
         "label-repeat-weekly": "Wekelijks",
+        "label-repeat-quarterly": "Alle 3 maanden",
+        "label-repeat-semiannually": "Halfjaarlijks",
+        "label-repeat-annually": "Jaarlijks",
         "title": {
             "add": "Nieuw item",
             "edit": "Bewerk item"

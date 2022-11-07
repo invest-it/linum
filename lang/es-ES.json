@@ -161,6 +161,9 @@
         "label-repeat-monthly": "A principios de mes",
         "label-repeat-none": "No repitas",
         "label-repeat-weekly": "Semanal",
+        "label-repeat-quarterly": "Cada tres meses",
+        "label-repeat-semiannually": "Semestral",
+        "label-repeat-annually": "Anual",
         "title": {
             "add": "Nueva entrada",
             "edit": "Editar entrada"
