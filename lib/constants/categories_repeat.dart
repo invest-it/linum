@@ -37,31 +37,31 @@ final Map<RepeatDuration, Map<String, dynamic>> categoriesRepeat = {
   RepeatDuration.monthly: {
     "entryCategory": const EntryCategory(
       label: 'enter_screen.label-repeat-30days',
-      icon: Icons.calendar_month_rounded,
+      icon: Icons.calendar_view_month_rounded,
     ),
     "duration": 1,
     "durationType": RepeatDurationType.months,
   },
   RepeatDuration.quarterly: {
     "entryCategory": const EntryCategory(
-      label: 'enter_screen.label-repeat-quarterly',
-      icon: Icons.error, //FIXME @NightmindOfficial
+      label: 'enter_screen.label-repeat-quarterly', //TODO Transaction
+      icon: Icons.grid_view_rounded,
     ),
     "duration": 3,
     "durationType": RepeatDurationType.months,
   },
   RepeatDuration.semiannually: {
     "entryCategory": const EntryCategory(
-      label: 'enter_screen.label-repeat-semiannually',
-      icon: Icons.error, //FIXME @NightmindOfficial
+      label: 'enter_screen.label-repeat-semiannually', //TODO Translate
+      icon: Icons.splitscreen_rounded,
     ),
     "duration": 6,
     "durationType": RepeatDurationType.months,
   },
   RepeatDuration.annually: {
     "entryCategory": const EntryCategory(
-      label: 'enter_screen.label-repeat-annually',
-      icon: Icons.error, //FIXME @NightmindOfficial
+      label: 'enter_screen.label-repeat-annually', //TODO Translate
+      icon: Icons.calendar_month_rounded,
     ),
     "duration": 12,
     "durationType": RepeatDurationType.months,
