@@ -8,12 +8,15 @@ import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:linum/models/single_month_statistic.dart';
 import 'package:linum/models/transaction.dart';
 import 'package:linum/providers/algorithm_provider.dart';
+import 'package:linum/utilities/backend/exchange_rate_converter.dart';
 import 'package:linum/utilities/frontend/filters.dart';
 import 'package:tuple/tuple.dart';
 
 class StatisticalCalculations {
   /// the data that should be processed
   late List<Transaction> _allData;
+
+  final String _standardCurrencyName;
 
   /// the data that should be processed for monthly calculations
   List<Transaction> get _currentData =>
@@ -27,6 +30,7 @@ class StatisticalCalculations {
   /// create a new instance and set the data
   StatisticalCalculations(
     List<Transaction> data,
+    this._standardCurrencyName,
     AlgorithmProvider algorithmProvider,
   ) {
     _allData = [];
@@ -158,8 +162,13 @@ class StatisticalCalculations {
 
   num _getSumFrom(List<Transaction> data) {
     num sum = 0;
-    for (final value in data) {
-      sum += value.amount;
+    for (final transaction in data) {
+      print(transaction.rateInfo);
+      if (transaction.currency == _standardCurrencyName) {
+        sum += transaction.amount;
+      } else if (transaction.rateInfo != null) { // Normally this is always true
+        sum += convertCurrencyAmountWithExchangeRate(transaction.amount, transaction.rateInfo!);
+      }
     }
     return sum;
   }

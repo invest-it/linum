@@ -77,6 +77,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             emptyData,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -96,6 +97,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData1,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -115,6 +117,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData2,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -134,6 +137,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData3,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -153,6 +157,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData4,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -172,6 +177,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData5,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -195,6 +201,7 @@ void main() {
             final StatisticalCalculations statisticsCalculations =
                 StatisticalCalculations(
               randomData,
+              "EUR",
               AlgorithmProvider()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
@@ -220,6 +227,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             emptyData,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -239,6 +247,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData1,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -258,6 +267,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData2,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -277,6 +287,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData3,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -296,6 +307,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData4,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -315,6 +327,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData5,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -338,6 +351,7 @@ void main() {
             final StatisticalCalculations statisticsCalculations =
                 StatisticalCalculations(
               randomData,
+              "EUR",
               AlgorithmProvider()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
@@ -366,6 +380,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             emptyData,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -385,6 +400,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData1,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -404,6 +420,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData2,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -423,6 +440,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData3,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -442,6 +460,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData4,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -461,6 +480,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData5,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -484,6 +504,7 @@ void main() {
             final StatisticalCalculations statisticsCalculations =
                 StatisticalCalculations(
               randomData,
+              "EUR",
               AlgorithmProvider()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
@@ -510,6 +531,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             emptyData,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -529,6 +551,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData1,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -548,6 +571,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData2,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -567,6 +591,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData3,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -586,6 +611,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData4,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -605,6 +631,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData5,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -628,6 +655,7 @@ void main() {
             final StatisticalCalculations statisticsCalculations =
                 StatisticalCalculations(
               randomData,
+              "EUR",
               AlgorithmProvider()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
@@ -662,6 +690,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             emptyData,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -681,6 +710,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData1,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -700,6 +730,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData2,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -719,6 +750,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData3,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -738,6 +770,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData4,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -757,6 +790,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData5,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -780,6 +814,7 @@ void main() {
             final StatisticalCalculations statisticsCalculations =
                 StatisticalCalculations(
               randomData,
+              "EUR",
               AlgorithmProvider()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
@@ -807,6 +842,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             emptyData,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -826,6 +862,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData1,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -845,6 +882,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData2,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -864,6 +902,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData3,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -883,6 +922,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData4,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -902,6 +942,7 @@ void main() {
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
             exampleData5,
+            "EUR",
             AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
@@ -925,6 +966,7 @@ void main() {
             final StatisticalCalculations statisticsCalculations =
                 StatisticalCalculations(
               randomData,
+              "EUR",
               AlgorithmProvider()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,

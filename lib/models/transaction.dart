@@ -30,6 +30,7 @@ class Transaction {
     this.repeatId,
     required this.time,
     this.formerTime,
+    this.rateInfo,
   })  : id = id ?? const Uuid().v4();
 
   Transaction copyWith({
@@ -53,6 +54,7 @@ class Transaction {
       repeatId: repeatId ?? this.repeatId,
       time: time ?? this.time,
       formerTime: formerTime ?? this.formerTime,
+      rateInfo: rateInfo,
     );
   }
 

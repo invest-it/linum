@@ -15,8 +15,8 @@ class CurrencyListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accountSettingsProvider = Provider.of<AccountSettingsProvider>(context);
-    final actionLipStatusProvider = Provider.of<ActionLipStatusProvider>(context);
+    final settings = Provider.of<AccountSettingsProvider>(context);
+    final actionLipStatus = Provider.of<ActionLipStatusProvider>(context);
 
     return Column(
       children: [
@@ -33,18 +33,20 @@ class CurrencyListView extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: enumItemCount,
                   itemBuilder: (BuildContext context, int index) {
+                    final currency = currencies[index];
                     return ListTile(
                       leading: Icon(
-                        currencies[index].icon,
+                        currency.icon,
                       ),
+                      selected: currency.name == settings.getStandardCurrency().name,
                       title: Text(
                         tr(
-                          currencies[index].label,
+                          currency.label,
                         ),
                       ),
                       onTap: () {
-                        accountSettingsProvider.setStandardCurrency(currencies[index]);
-                        actionLipStatusProvider.setActionLipStatus(
+                        settings.setStandardCurrency(currencies[index]);
+                        actionLipStatus.setActionLipStatus(
                           providerKey: ProviderKey.settings,
                         );
                       },

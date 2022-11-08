@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/constants/standard_currencies.dart';
 import 'package:linum/models/currency.dart';
 import 'package:linum/models/transaction.dart';
+import 'package:linum/utilities/backend/exchange_rate_converter.dart';
 import 'package:linum/utilities/frontend/currency_formatter.dart';
 
 class TransactionAmountFormatter {
@@ -23,9 +24,8 @@ class TransactionAmountFormatter {
     final rateInfo = transaction.rateInfo;
 
     if (rateInfo != null) {
-      final amountInEuro = transaction.amount / rateInfo.rate;
       return CurrencyFormatter(locale, symbol: standardCurrency.symbol)
-          .format(amountInEuro * rateInfo.standardCurrencyRate);
+          .format(convertCurrencyAmountWithExchangeRate(transaction.amount, rateInfo));
     }
 
     // Inform the user about the missing rate

@@ -112,9 +112,12 @@ class BalanceDataStreamBuilder {
       final preparedData = _prepareData(
         snapshot,
       );
-      final List<Transaction> balanceData = preparedData.item1;
+      final List<Transaction> transactions = preparedData.item1;
+      await exchangeRateProvider.addExchangeRatesToTransactions(transactions);
+
       return StatisticalCalculations(
-        balanceData,
+        transactions,
+        exchangeRateProvider.standardCurrency.name,
         algorithmProvider,
       );
 
