@@ -42,11 +42,14 @@ class ExchangeRateProvider extends ChangeNotifier {
       }
 
       final dateTime = transaction.time.toDate();
-      final key = DateTime(dateTime.year, dateTime.day).millisecondsSinceEpoch;
+      final key = DateTime(dateTime.year, dateTime.month, dateTime.day).millisecondsSinceEpoch;
       var exchangeRates = ratesMap[key];
 
+      if ((exchangeRates == null || exchangeRates.rates == null) && transaction.time.toDate().isBefore(DateTime.now())) {
+        exchangeRates = await _repository.getExchangeRatesForDate(transaction.time.toDate());
+      }
+
       if (exchangeRates == null || exchangeRates.rates == null) {
-        // TODO: Handle null case
         exchangeRates = lastSuccessful;
       } else {
         lastSuccessful = exchangeRates;
@@ -57,9 +60,6 @@ class ExchangeRateProvider extends ChangeNotifier {
         ?? (transaction.currency == "EUR" ? "1" : null); // FOR NOW
       final standardCurrencyRate = exchangeRates.rates?[standardCurrency.name];
 
-      // TODO: Check if entry exists and re-fetch
-      // TODO: Make call to another API to get rate
-      // TODO: If the exchange rate is not found but needed it should be guessed
       if (transactionCurrencyRate != null) {
         transaction.rateInfo = ExchangeRateInfo(
             num.parse(transactionCurrencyRate),

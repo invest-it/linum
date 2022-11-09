@@ -24,8 +24,12 @@ class TransactionAmountFormatter {
     final rateInfo = transaction.rateInfo;
 
     if (rateInfo != null) {
-      return CurrencyFormatter(locale, symbol: standardCurrency.symbol)
+      final formated = CurrencyFormatter(locale, symbol: standardCurrency.symbol)
           .format(convertCurrencyAmountWithExchangeRate(transaction.amount, rateInfo));
+      if (transaction.rateInfo!.isOtherDate) {
+        return "($formated)";
+      }
+      return formated;
     }
 
     // Inform the user about the missing rate

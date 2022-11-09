@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:linum/models/exchange_rate.dart';
 import 'package:linum/models/exchange_rates_for_date.dart';
 
-const webAPIUrl = "https://exchange-rates.linum.martins-lightart.de/";
+const webAPIUrl = "https://exchange-rates.investit-academy.de/";
 
 Future<ExchangeRate> fetchExchangeRate(DateTime date, String currency) async {
   final dateStr = DateFormat("yyyy-MM-dd").format(date);

@@ -34,20 +34,19 @@ class BalanceDataStreamBuilder {
     bool isSerial = false,
   }) {
     final processedStream = dataStream?.asyncMap<Tuple2<List<Transaction>, List<SerialTransaction>>>((snapshot) async {
-      print("waited");
       if (!isSerial) {
-        final preparedData = _prepareData(snapshot);
+        final preparedData = await _prepareData(snapshot);
         final transactions = preparedData.item1;
 
         // Future there could be an sort algorithm provider
         // (and possibly also a filter algorithm provided)
         transactions.removeWhere(algorithmProvider.currentFilter);
         transactions.sort(algorithmProvider.currentSorter);
-        await exchangeRateProvider.addExchangeRatesToTransactions(transactions);
 
         return Tuple2(transactions, preparedData.item2);
       } else {
-        final data = _prepareData(
+        // TODO: Prepare Data once
+        final data = await _prepareData(
           snapshot,
         );
         final transactions = data.item1;
@@ -109,11 +108,10 @@ class BalanceDataStreamBuilder {
     required AbstractHomeScreenCard statisticPanel,
   }) {
     final processedStream = dataStream?.asyncMap<StatisticalCalculations>((snapshot) async {
-      final preparedData = _prepareData(
+      final preparedData = await _prepareData(
         snapshot,
       );
       final List<Transaction> transactions = preparedData.item1;
-      await exchangeRateProvider.addExchangeRatesToTransactions(transactions);
 
       return StatisticalCalculations(
         transactions,
@@ -143,9 +141,9 @@ class BalanceDataStreamBuilder {
   /// use the current _algorithmProvider filter
   /// (will still be used after filter on firebase, because of repeated balanced)
   /// may be moved into the data generation function
-  Tuple2<List<Transaction>, List<SerialTransaction>> _prepareData(
+  Future<Tuple2<List<Transaction>, List<SerialTransaction>>> _prepareData(
     firestore.DocumentSnapshot<BalanceDocument> snapshot,
-  ) {
+  ) async {
     final data = snapshot.data(); // TODO: Model for Document
 
     if (data == null) {
@@ -171,7 +169,7 @@ class BalanceDataStreamBuilder {
       transactions,
     );
 
-    exchangeRateProvider.addExchangeRatesToTransactions(transactions);
+    await exchangeRateProvider.addExchangeRatesToTransactions(transactions);
 
     return Tuple2(transactions, serialTransactions);
   }

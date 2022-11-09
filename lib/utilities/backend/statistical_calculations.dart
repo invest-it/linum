@@ -163,7 +163,6 @@ class StatisticalCalculations {
   num _getSumFrom(List<Transaction> data) {
     num sum = 0;
     for (final transaction in data) {
-      print(transaction.rateInfo);
       if (transaction.currency == _standardCurrencyName) {
         sum += transaction.amount;
       } else if (transaction.rateInfo != null) { // Normally this is always true

@@ -25,7 +25,7 @@ class ExchangeRatesForDate {
     if (value == null) {
       rates = null;
     } else {
-      rates = jsonDecode(value) as Map<String, String>;
+      rates = (jsonDecode(value) as Map<String, dynamic>).map((key, value) => MapEntry(key, value as String));
     }
   }
 
