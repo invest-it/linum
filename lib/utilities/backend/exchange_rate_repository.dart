@@ -56,7 +56,7 @@ class ExchangeRateRepository {
   }
 
   Future<Map<int, ExchangeRatesForDate>> getExchangeRatesForDates(List<DateTime> dates) async {
-    final sanitizedDates = dates.map((e) => DateTime(e.year, e.month, e.day).millisecondsSinceEpoch).toList();
+    final sanitizedDates = dates.map((e) => DateTime(e.year, e.month, e.day).millisecondsSinceEpoch).toSet().toList();
     final query = _box.query(
       ExchangeRatesForDate_.date.oneOf(sanitizedDates),
     ).build();

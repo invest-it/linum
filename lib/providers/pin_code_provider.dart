@@ -105,6 +105,12 @@ class PinCodeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void resetOnLogout() {
+    _pinSet = false;
+    _removePIN();
+    notifyListeners();
+  }
+
   ///Returns the PIN status based on whether a PIN code is currently being stored in sharedPreferences
   Future<bool> _isPinSet() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();

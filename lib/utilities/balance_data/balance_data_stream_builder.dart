@@ -169,8 +169,12 @@ class BalanceDataStreamBuilder {
       transactions,
     );
 
-    await exchangeRateProvider.addExchangeRatesToTransactions(transactions);
-
+    try {
+      await exchangeRateProvider.addExchangeRatesToTransactions(transactions);
+    } catch(e) {
+      print("RatesError");
+      print(e);
+    }
     return Tuple2(transactions, serialTransactions);
   }
 }
