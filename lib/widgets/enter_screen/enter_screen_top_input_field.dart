@@ -53,7 +53,10 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
     print("Rebuild on changes");
     print(enterScreenProvider.currency);
     final currency = standardCurrencies[enterScreenProvider.currency];
-    final formatter = CurrencyFormatter(context.locale, symbol: currency?.symbol ?? enterScreenProvider.currency);
+    final formatter = CurrencyFormatter(
+      context.locale,
+      symbol: currency?.symbol ?? enterScreenProvider.currency,
+    );
     // TODO: Write a better formatter for every currency symbol
 
     if (textController == null) {
@@ -68,7 +71,8 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
       textController!.text = formatter.format(enterScreenProvider.amount);
       textController!.selection = TextSelection.fromPosition(
         TextPosition(
-          offset: textController!.text.length - (formatter.amountBeforeSymbol() ? 2 : 0),
+          offset: textController!.text.length -
+              (formatter.amountBeforeSymbol() ? 2 : 0),
         ),
       );
     }
@@ -127,8 +131,8 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                       showCursor: true,
                       cursorColor: Colors.white,
                       keyboardType: const TextInputType.numberWithOptions(
-                          signed: true,
-                          decimal: true,
+                        signed: true,
+                        decimal: true,
                       ),
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       decoration: InputDecoration(
@@ -155,7 +159,8 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                         ),
                         textController!.selection = TextSelection.fromPosition(
                           TextPosition(
-                            offset: textController!.text.length - (formatter.amountBeforeSymbol() ? 2 : 0),
+                            offset: textController!.text.length -
+                                (formatter.amountBeforeSymbol() ? 2 : 0),
                           ),
                         )
                       },
@@ -163,9 +168,11 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                         final value = _parseInput(str);
                         setState(() {
                           textController!.text = formatter.format(value);
-                          textController!.selection = TextSelection.fromPosition(
+                          textController!.selection =
+                              TextSelection.fromPosition(
                             TextPosition(
-                              offset: textController!.text.length - (formatter.amountBeforeSymbol() ? 2 : 0),
+                              offset: textController!.text.length -
+                                  (formatter.amountBeforeSymbol() ? 2 : 0),
                             ),
                           );
                         });
@@ -174,8 +181,6 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                       },
                     ),
                   ),
-                  //the user chooses between expenses, income etc.
-                  //standard is expenses
                   SizedBox(
                     width: proportionateScreenWidth(282),
                     child: Row(
@@ -191,7 +196,9 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                             child: enterScreenProvider.isExpenses
                                 ? TextContainer(
                                     //context: context,
-                                    transactionClass: tr('enter_screen.button-expenses-label'),
+                                    transactionClass: tr(
+                                      'enter_screen.button-expenses-label',
+                                    ),
                                   )
                                 : Center(
                                     child: Text(

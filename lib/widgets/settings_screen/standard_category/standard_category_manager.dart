@@ -35,7 +35,8 @@ class _StandardCategoryState extends State<StandardCategory> {
             actionLipStatusProvider.setActionLip(
               providerKey: ProviderKey.settings,
               actionLipStatus: ActionLipStatus.onviewport,
-              actionLipTitle: tr('action_lip.standard-category.income.label-title'),
+              actionLipTitle:
+                  tr('action_lip.standard-category.income.label-title'),
               actionLipBody: CategoryListView<StandardCategoryIncome>(
                 accountSettingsProvider,
                 actionLipStatusProvider,
@@ -44,8 +45,11 @@ class _StandardCategoryState extends State<StandardCategory> {
           },
           child: CategoryListTile(
             defaultLabel: "ChosenStandardIncome",
-            labelTitle: tr('settings_screen.standard-income-selector.label-title'),
+            labelTitle:
+                tr('settings_screen.standard-income-selector.label-title'),
             category: accountSettingsProvider.getIncomeEntryCategory(),
+            trailingIcon: Icons.north_east,
+            trailingIconColor: Colors.green,
           ),
         ),
         GestureDetector(
@@ -53,7 +57,8 @@ class _StandardCategoryState extends State<StandardCategory> {
             actionLipStatusProvider.setActionLip(
               providerKey: ProviderKey.settings,
               actionLipStatus: ActionLipStatus.onviewport,
-              actionLipTitle: tr('action_lip.standard-category.expenses.label-title'),
+              actionLipTitle:
+                  tr('action_lip.standard-category.expenses.label-title'),
               actionLipBody: CategoryListView<StandardCategoryExpense>(
                 accountSettingsProvider,
                 actionLipStatusProvider,
@@ -62,8 +67,11 @@ class _StandardCategoryState extends State<StandardCategory> {
           },
           child: CategoryListTile(
             defaultLabel: "ChosenStandardExpense",
-            labelTitle: tr('settings_screen.standard-expense-selector.label-title'),
+            labelTitle:
+                tr('settings_screen.standard-expense-selector.label-title'),
             category: accountSettingsProvider.getExpenseEntryCategory(),
+            trailingIcon: Icons.south_east,
+            trailingIconColor: Colors.red,
           ),
         ),
       ],

@@ -8,10 +8,14 @@ class CategoryListTile extends StatelessWidget {
     required this.category,
     required this.labelTitle,
     required this.defaultLabel,
+    required this.trailingIconColor,
+    required this.trailingIcon,
   });
   final String labelTitle;
   final String defaultLabel;
   final EntryCategory? category;
+  final IconData trailingIcon;
+  final Color trailingIconColor;
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +26,13 @@ class CategoryListTile extends StatelessWidget {
             tr(category?.label ?? defaultLabel),
         style: Theme.of(context).textTheme.bodyText1,
       ),
-      trailing: const Icon(
-        Icons.north_east,
-        color: Color(0xFF97BC4E),
+      trailing: Icon(
+        trailingIcon,
+        color: trailingIconColor,
       ),
       leading: Icon(
         category?.icon ?? Icons.error,
       ),
     );
   }
-
 }
