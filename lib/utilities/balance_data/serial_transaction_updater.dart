@@ -14,6 +14,7 @@ import 'package:linum/models/serial_transaction.dart';
 import 'package:linum/types/date_time_map.dart';
 import 'package:linum/utilities/backend/date_time_calculation_functions.dart';
 import 'package:linum/utilities/backend/repeated_balance_help_functions.dart';
+import 'package:uuid/uuid.dart';
 
 class SerialTransactionUpdater {
   static bool updateAll({
@@ -35,7 +36,8 @@ class SerialTransactionUpdater {
   }) {
     bool isEdited = false;
 
-    final index = data.serialTransactions.indexWhere((serial) => serial.id == id);
+    final index =
+        data.serialTransactions.indexWhere((serial) => serial.id == id);
     if (index == -1) {
       return false;
     }
@@ -46,7 +48,8 @@ class SerialTransactionUpdater {
     String? updatedCurrency;
     String? updatedName;
     String? updatedNote;
-    DateTimeMap<String, ChangedTransaction>? updatedChanged = serialTransaction.changed;
+    DateTimeMap<String, ChangedTransaction>? updatedChanged =
+        serialTransaction.changed;
     firestore.Timestamp? updatedInitialTime;
     firestore.Timestamp? updatedEndTime;
     int? updatedRepeatDuration;
@@ -73,28 +76,26 @@ class SerialTransactionUpdater {
       updatedNote = note;
       isEdited = true;
     }
-    if (initialTime != null &&
-        initialTime != serialTransaction.initialTime) {
+    if (initialTime != null && initialTime != serialTransaction.initialTime) {
       updatedInitialTime = initialTime;
       isEdited = true;
     } else if (newTime != null && time != null) {
       updatedInitialTime = firestore.Timestamp.fromDate(
-        (serialTransaction.initialTime)
-            .toDate()
-            .subtract(
-          time.toDate().difference(newTime.toDate()),
-        ),
+        (serialTransaction.initialTime).toDate().subtract(
+              time.toDate().difference(newTime.toDate()),
+            ),
       );
       if (serialTransaction.endTime != null) {
         updatedEndTime = firestore.Timestamp.fromDate(
           serialTransaction.endTime!.toDate().subtract(
-            time.toDate().difference(newTime.toDate()),
-          ),
+                time.toDate().difference(newTime.toDate()),
+              ),
         );
       }
       isEdited = true;
     }
-    if (repeatDuration != null && repeatDuration != serialTransaction.repeatDuration) {
+    if (repeatDuration != null &&
+        repeatDuration != serialTransaction.repeatDuration) {
       updatedRepeatDuration = repeatDuration;
       isEdited = true;
     }
@@ -155,12 +156,14 @@ class SerialTransactionUpdater {
       category: updatedCategory ?? serialTransaction.category,
       currency: updatedCurrency ?? serialTransaction.currency,
       initialTime: updatedInitialTime ?? serialTransaction.initialTime,
-      endTime: resetEndTime ? null : (updatedEndTime ?? serialTransaction.endTime),
+      endTime:
+          resetEndTime ? null : (updatedEndTime ?? serialTransaction.endTime),
       name: updatedName ?? serialTransaction.name,
       note: updatedNote ?? serialTransaction.note,
       changed: updatedChanged,
       repeatDuration: updatedRepeatDuration ?? serialTransaction.repeatDuration,
-      repeatDurationType: updatedRepeatDurationType ?? serialTransaction.repeatDurationType,
+      repeatDurationType:
+          updatedRepeatDurationType ?? serialTransaction.repeatDurationType,
     );
 
     data.serialTransactions[index] = updatedSerialTransaction;
@@ -187,7 +190,8 @@ class SerialTransactionUpdater {
   }) {
     bool isEdited = false;
 
-    final index = data.serialTransactions.indexWhere((serial) => serial.id == id);
+    final index =
+        data.serialTransactions.indexWhere((serial) => serial.id == id);
     if (index == -1) {
       return false;
     }
@@ -195,7 +199,8 @@ class SerialTransactionUpdater {
 
     firestore.Timestamp? updatedInitialTime;
 
-    if (oldSerialTransaction.repeatDurationType.toString().toUpperCase() == "MONTHS") {
+    if (oldSerialTransaction.repeatDurationType.toString().toUpperCase() ==
+        "MONTHS") {
       updatedInitialTime = firestore.Timestamp.fromDate(
         calculateOneTimeStep(
           oldSerialTransaction.repeatDuration,
@@ -206,12 +211,13 @@ class SerialTransactionUpdater {
       );
     } else {
       updatedInitialTime = firestore.Timestamp.fromDate(
-        time.toDate()
+        time
+            .toDate()
             .add(Duration(seconds: oldSerialTransaction.repeatDuration)),
       );
     }
     final Duration timeDifference =
-    time.toDate().difference(newTime?.toDate() ?? time.toDate());
+        time.toDate().difference(newTime?.toDate() ?? time.toDate());
 
     final newSerialTransaction = oldSerialTransaction.copyWith(
       amount: amount,
@@ -219,10 +225,14 @@ class SerialTransactionUpdater {
       currency: currency,
       name: name,
       initialTime: initialTime ??
-          firestore.Timestamp.fromDate(updatedInitialTime.toDate().subtract(timeDifference)),
+          firestore.Timestamp.fromDate(
+            updatedInitialTime.toDate().subtract(timeDifference),
+          ),
+      id: const Uuid().v4(),
       repeatDuration: repeatDuration,
       repeatDurationType: repeatDurationType,
-      endTime: firestore.Timestamp.fromDate(time.toDate().subtract(timeDifference)),
+      endTime:
+          firestore.Timestamp.fromDate(time.toDate().subtract(timeDifference)),
       note: (deleteNote ?? false) ? null : note,
     );
 
@@ -259,7 +269,8 @@ class SerialTransactionUpdater {
   }) {
     bool isEdited = false;
 
-    final index = data.serialTransactions.indexWhere((serial) => serial.id == id);
+    final index =
+        data.serialTransactions.indexWhere((serial) => serial.id == id);
     if (index == -1) {
       return false;
     }
@@ -267,7 +278,8 @@ class SerialTransactionUpdater {
 
     firestore.Timestamp? updatedEndTime;
 
-    if (oldSerialTransaction.repeatDurationType.toString().toUpperCase() == "MONTHS") {
+    if (oldSerialTransaction.repeatDurationType.toString().toUpperCase() ==
+        "MONTHS") {
       updatedEndTime = firestore.Timestamp.fromDate(
         calculateOneTimeStepBackwards(
           oldSerialTransaction.repeatDuration,
@@ -279,22 +291,23 @@ class SerialTransactionUpdater {
     } else {
       updatedEndTime = firestore.Timestamp.fromDate(
         time.toDate().subtract(
-          Duration(
-            seconds: oldSerialTransaction.repeatDuration,
-          ),
-        ),
+              Duration(
+                seconds: oldSerialTransaction.repeatDuration,
+              ),
+            ),
       );
     }
     final Duration timeDifference =
-    time.toDate().difference(newTime?.toDate() ?? time.toDate());
-
+        time.toDate().difference(newTime?.toDate() ?? time.toDate());
 
     final newSerialTransaction = oldSerialTransaction.copyWith(
       amount: amount,
       category: category,
       currency: currency,
       name: name,
-      initialTime: firestore.Timestamp.fromDate(time.toDate().subtract(timeDifference)),
+      initialTime:
+          firestore.Timestamp.fromDate(time.toDate().subtract(timeDifference)),
+      id: const Uuid().v4(),
       repeatDuration: repeatDuration,
       repeatDurationType: repeatDurationType,
       endTime: changeThisAndAllAfterEndTimeHelpFunction(
@@ -309,7 +322,8 @@ class SerialTransactionUpdater {
 
     isEdited = true;
 
-    data.serialTransactions[index] = oldSerialTransaction.copyWith(endTime: updatedEndTime);
+    data.serialTransactions[index] =
+        oldSerialTransaction.copyWith(endTime: updatedEndTime);
 
     data.serialTransactions.add(newSerialTransaction);
 
@@ -323,7 +337,8 @@ class SerialTransactionUpdater {
     required firestore.Timestamp time,
     required ChangedTransaction changed,
   }) {
-    final index = data.serialTransactions.indexWhere((serial) => serial.id == id);
+    final index =
+        data.serialTransactions.indexWhere((serial) => serial.id == id);
     if (index == -1) {
       return false;
     }
@@ -331,11 +346,10 @@ class SerialTransactionUpdater {
 
     final changedMap = serialTransaction.changed ?? DateTimeMap();
 
-    changedMap.addAll({
-      time.millisecondsSinceEpoch.toString(): changed
-    });
+    changedMap.addAll({time.millisecondsSinceEpoch.toString(): changed});
 
-    data.serialTransactions[index] = serialTransaction.copyWith(changed: changedMap);
+    data.serialTransactions[index] =
+        serialTransaction.copyWith(changed: changedMap);
 
     return true;
   }
