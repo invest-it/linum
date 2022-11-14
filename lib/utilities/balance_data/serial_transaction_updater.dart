@@ -6,6 +6,8 @@
 //
 //  300 ZEILEN PURER HASS
 
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:linum/constants/repeat_duration_type_enum.dart';
 import 'package:linum/models/balance_document.dart';
@@ -14,6 +16,7 @@ import 'package:linum/models/serial_transaction.dart';
 import 'package:linum/types/date_time_map.dart';
 import 'package:linum/utilities/backend/date_time_calculation_functions.dart';
 import 'package:linum/utilities/backend/repeated_balance_help_functions.dart';
+import 'package:logger/logger.dart';
 import 'package:uuid/uuid.dart';
 
 class SerialTransactionUpdater {
@@ -200,7 +203,7 @@ class SerialTransactionUpdater {
     firestore.Timestamp? updatedInitialTime;
 
     if (oldSerialTransaction.repeatDurationType.toString().toUpperCase() ==
-        "MONTHS") {
+        "REPEATDURATIONTYPE.MONTHS") {
       updatedInitialTime = firestore.Timestamp.fromDate(
         calculateOneTimeStep(
           oldSerialTransaction.repeatDuration,
@@ -210,11 +213,11 @@ class SerialTransactionUpdater {
         ),
       );
     } else {
-      updatedInitialTime = firestore.Timestamp.fromDate(
-        time
-            .toDate()
-            .add(Duration(seconds: oldSerialTransaction.repeatDuration)),
-      );
+      updatedInitialTime = firestore.Timestamp.fromDate(calculateOneTimeStep(
+        oldSerialTransaction.repeatDuration,
+        time.toDate(),
+        monthly: false,
+      ));
     }
     final Duration timeDifference =
         time.toDate().difference(newTime?.toDate() ?? time.toDate());
@@ -226,7 +229,7 @@ class SerialTransactionUpdater {
       name: name,
       initialTime: initialTime ??
           firestore.Timestamp.fromDate(
-            updatedInitialTime.toDate().subtract(timeDifference),
+            oldSerialTransaction.initialTime.toDate().subtract(timeDifference),
           ),
       id: const Uuid().v4(),
       repeatDuration: repeatDuration,
@@ -279,7 +282,7 @@ class SerialTransactionUpdater {
     firestore.Timestamp? updatedEndTime;
 
     if (oldSerialTransaction.repeatDurationType.toString().toUpperCase() ==
-        "MONTHS") {
+        "REPEATDURATIONTYPE.MONTHS") {
       updatedEndTime = firestore.Timestamp.fromDate(
         calculateOneTimeStepBackwards(
           oldSerialTransaction.repeatDuration,
