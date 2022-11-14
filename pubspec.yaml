@@ -49,6 +49,7 @@ dependencies:
   http: ^0.13.5
   intl: ^0.17.0
   json_annotation: ^4.7.0
+  logger: ^1.1.0
   objectbox: ^1.6.2
   objectbox_flutter_libs: ^1.6.2
   objectbox_generator: ^1.6.2
