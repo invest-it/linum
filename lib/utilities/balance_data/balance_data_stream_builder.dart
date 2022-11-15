@@ -122,6 +122,7 @@ class BalanceDataStreamBuilder {
           final StatisticalCalculations statisticalCalculations =
               StatisticalCalculations(
             balanceData,
+            preparedData.item2,
             algorithmProvider,
           );
           statisticPanel.addStatisticData(statisticalCalculations);
