@@ -290,7 +290,7 @@ class HomeScreenListView implements BalanceDataListView {
         confirmDismiss: (DismissDirection direction) async {
           return generateDeleteDialogFromTransaction(
             context,
-            balanceDataProvider,
+            // balanceDataProvider,
             transaction,
           );
         },

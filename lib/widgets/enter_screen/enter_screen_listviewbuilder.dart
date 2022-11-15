@@ -152,6 +152,7 @@ class _EnterScreenListViewBuilderState
                           const SizedBox(
                             width: 20,
                           ),
+                          // TODO: onRework: cant bring it to say "InitialDate"
                           Text(
                             "${[
                               "enter_screen_attribute_category",
@@ -159,6 +160,7 @@ class _EnterScreenListViewBuilderState
                               repeatDurationEntryCategory.label,
                             ][index].tr()}: ",
                           ),
+                          // TODO: Add EndTime for Repeatables
                           const SizedBox(
                             width: 5,
                           ),

@@ -45,8 +45,11 @@ class _EnterScreenState extends State<EnterScreen> {
 
     //to format the date time it has to be parsed to a string, get formatted
     //and get parsed back to a date time
-    final String partialSelectedDate =
-        enterScreenProvider.selectedDate.toString().split(' ')[0];
+
+    final String partialSelectedDate = enterScreenProvider.isSerialTransaction
+        ? enterScreenProvider.initialTime.toString().split(' ')[0]
+        : enterScreenProvider.selectedDate.toString().split(' ')[0];
+
     final DateTime formattedSelectedDate = DateTime.parse(partialSelectedDate);
 
     return GestureDetector(
@@ -115,19 +118,33 @@ class _EnterScreenState extends State<EnterScreen> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  generateDeleteDialog(
-                                    context,
-                                    balanceDataProvider,
-                                    enterScreenProvider.repeatId ??
-                                        enterScreenProvider.formerId!,
-                                    isSerial:
-                                        enterScreenProvider.repeatId != null,
-                                    formerTime: enterScreenProvider.formerTime,
-                                  ).then(
-                                    (pop) => pop != null && pop
-                                        ? getRouterDelegate().popRoute()
-                                        : {},
-                                  );
+                                  if (enterScreenProvider.isSerialTransaction) {
+                                    generateWholeSerialTransactionDeleteDialog(
+                                      context,
+                                      // balanceDataProvider,
+                                      enterScreenProvider.repeatId ??
+                                          enterScreenProvider.formerId!,
+                                    ).then(
+                                      (pop) => pop != null && pop
+                                          ? getRouterDelegate().popRoute()
+                                          : {},
+                                    );
+                                  } else {
+                                    generateDeleteDialog(
+                                      context,
+                                      // balanceDataProvider,
+                                      enterScreenProvider.repeatId ??
+                                          enterScreenProvider.formerId!,
+                                      isSerial:
+                                          enterScreenProvider.repeatId != null,
+                                      formerTime:
+                                          enterScreenProvider.formerTime,
+                                    ).then(
+                                      (pop) => pop != null && pop
+                                          ? getRouterDelegate().popRoute()
+                                          : {},
+                                    );
+                                  }
                                 },
                                 child: Text(
                                   tr("enter_screen.button-delete-entry"),
@@ -248,6 +265,14 @@ class _EnterScreenState extends State<EnterScreen> {
         Provider.of<EnterScreenProvider>(context, listen: false);
     final BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context, listen: false);
+
+    if (enterScreenProvider.isSerialTransaction) {
+      showChangeEntryDialog(context, selectedDate, isTheWholeSerial: true).then(
+        (pop) => pop != null && pop ? getRouterDelegate().popRoute() : {},
+      );
+      return;
+    }
+
     if (enterScreenProvider.repeatId == null) {
       balanceDataProvider.updateTransaction(
         Transaction(
