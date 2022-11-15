@@ -41,8 +41,10 @@ class BalanceDataProvider extends ChangeNotifier {
   BalanceDataProvider(BuildContext context) {
     _uid = Provider.of<AuthenticationService>(context, listen: false).uid;
     _algorithmProvider = Provider.of<AlgorithmProvider>(context, listen: false);
-    _exchangeRateProvicer = Provider.of<ExchangeRateProvider>(context, listen: false);
-    _streamBuilder = BalanceDataStreamBuilder(_algorithmProvider, _exchangeRateProvicer);
+    _exchangeRateProvicer =
+        Provider.of<ExchangeRateProvider>(context, listen: false);
+    _streamBuilder =
+        BalanceDataStreamBuilder(_algorithmProvider, _exchangeRateProvicer);
     asynConstructor();
   }
 
@@ -425,8 +427,10 @@ class BalanceDataProvider extends ChangeNotifier {
     return data!.settings;
   }
 
-  static SingleChildWidget provider(BuildContext context,
-      {bool testing = false}) {
+  static SingleChildWidget provider(
+    BuildContext context, {
+    bool testing = false,
+  }) {
     return ChangeNotifierProxyProvider3<AuthenticationService,
         AlgorithmProvider, ExchangeRateProvider, BalanceDataProvider>(
       create: (ctx) {

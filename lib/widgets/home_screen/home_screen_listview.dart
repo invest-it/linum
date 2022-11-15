@@ -6,14 +6,11 @@
 
 // ignore_for_file: avoid_dynamic_calls
 
-import 'dart:developer';
-
 import 'package:badges/badges.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:linum/constants/repeat_duration_type_enum.dart';
-import 'package:linum/constants/settings_enums.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/models/serial_transaction.dart';
@@ -21,11 +18,9 @@ import 'package:linum/models/transaction.dart';
 import 'package:linum/navigation/enter_screen_page.dart';
 import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/navigation/main_routes.dart';
-import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
 import 'package:linum/widgets/budget_screen/time_widget.dart';
 import 'package:linum/widgets/enter_screen/delete_entry_dialog.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreenListView implements BalanceDataListView {
   late ListView _listview;
@@ -243,8 +238,8 @@ class HomeScreenListView implements BalanceDataListView {
     Transaction transaction, {
     bool isFutureItem = false,
   }) {
-    final BalanceDataProvider balanceDataProvider =
-        Provider.of<BalanceDataProvider>(context);
+    // final BalanceDataProvider balanceDataProvider =
+    //     Provider.of<BalanceDataProvider>(context);
     final String langCode = context.locale.languageCode;
     final DateFormat formatter = DateFormat('EEEE, dd. MMMM yyyy', langCode);
 
