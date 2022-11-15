@@ -10,8 +10,10 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/models/home_screen_card_data.dart';
+import 'package:linum/providers/screen_card_provider.dart';
 import 'package:linum/widgets/home_screen/home_screen_card_back.dart';
 import 'package:linum/widgets/home_screen/home_screen_card_front.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreenCard extends StatefulWidget {
   final HomeScreenCardData frontData;
@@ -38,6 +40,10 @@ class _HomeScreenCardState extends State<HomeScreenCard> {
 
   @override
   Widget build(BuildContext context) {
+    // Hand over FlipCardController of current screen (home screen in this example)
+    Provider.of<ScreenCardProvider>(context)
+        .setFlipCardControllerSoftSilently(_flipCardController);
+
     return FlipCard(
       controller: _flipCardController,
       front: HomeScreenCardFront(

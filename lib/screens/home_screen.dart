@@ -11,6 +11,7 @@ import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
+import 'package:linum/providers/screen_card_provider.dart';
 import 'package:linum/utilities/backend/in_between_timestamps.dart';
 import 'package:linum/utilities/frontend/filters.dart';
 import 'package:linum/utilities/frontend/silent_scroll.dart';
@@ -49,6 +50,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     final PinCodeProvider pinCodeProvider =
         Provider.of<PinCodeProvider>(context);
+
+    final ScreenCardProvider screenCardProvider =
+        Provider.of<ScreenCardProvider>(context);
 
     resetAlgorithmProvider();
     // AlgorithmProvider algorithmProvider =
@@ -110,6 +114,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           setState(() {
                             showRepeatables = value! as bool;
                           });
+                          if (value == true) {
+                            screenCardProvider.turnToBack();
+                          } else {
+                            screenCardProvider.turnToFront();
+                          }
                         },
                       ),
                     ),
