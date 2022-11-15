@@ -9,21 +9,19 @@ import 'package:flutter/material.dart';
 import 'package:linum/models/home_screen_card_data.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
-import 'package:linum/widgets/home_screen/home_screen_card_arrow.dart';
+import 'package:linum/widgets/home_screen/home_screen_card_avatar.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreenCardBottomRow extends StatelessWidget {
   final HomeScreenCardData data;
-  final HomeScreenCardArrow upwardArrow;
-  final HomeScreenCardArrow downwardArrow;
-  final bool isBack;
+  final HomeScreenCardAvatar upwardArrow;
+  final HomeScreenCardAvatar downwardArrow;
 
   const HomeScreenCardBottomRow({
     super.key,
     required this.data,
     required this.upwardArrow,
     required this.downwardArrow,
-    this.isBack = false,
   });
 
   IconButton _buildGoToCurrentDateIcon(BuildContext context) {
@@ -32,8 +30,7 @@ class HomeScreenCardBottomRow extends StatelessWidget {
     final DateTime now = DateTime.now();
 
     return (algorithmProvider.currentShownMonth !=
-                DateTime(now.year, now.month) &&
-            !isBack)
+            DateTime(now.year, now.month))
         ? IconButton(
             icon: const Icon(Icons.today_rounded),
             color: Theme.of(context).colorScheme.onSurface.withAlpha(64),
@@ -66,7 +63,9 @@ class HomeScreenCardBottomRow extends StatelessWidget {
                 isIncome ? CrossAxisAlignment.start : CrossAxisAlignment.end,
             children: [
               Text(
-                tr(isIncome? 'home_screen_card.label-income' : 'home_screen_card.label-expenses'),
+                tr(isIncome
+                    ? 'home_screen_card.label-income'
+                    : 'home_screen_card.label-expenses'),
                 style: Theme.of(context)
                     .textTheme
                     .overline!

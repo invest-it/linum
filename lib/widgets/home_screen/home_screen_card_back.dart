@@ -8,9 +8,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/models/home_screen_card_data.dart';
-import 'package:linum/widgets/home_screen/home_screen_card_arrow.dart';
-import 'package:linum/widgets/home_screen/home_screen_card_side.dart';
+import 'package:linum/providers/algorithm_provider.dart';
+import 'package:linum/widgets/home_screen/home_screen_card_avatar.dart';
+import 'package:linum/widgets/home_screen/home_screen_card_bottom_row.dart';
+import 'package:linum/widgets/home_screen/home_screen_card_skeleton.dart';
 import 'package:linum/widgets/home_screen/home_screen_functions.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreenCardBack extends StatelessWidget {
   final HomeScreenCardData data;
@@ -24,57 +27,88 @@ class HomeScreenCardBack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AlgorithmProvider algorithmProvider =
+        Provider.of<AlgorithmProvider>(context);
+    final String langCode = context.locale.languageCode;
+    final DateFormat dateFormat = DateFormat('MMMM yyyy', langCode);
+
     return GestureDetector(
       onTap: () => onFlipCardTap(context, flipCardController),
-      child: HomeScreenCardSide(
+      child: HomeScreenCardSkeleton(
         flipCardController: flipCardController,
+        cardWidth: 345,
+        cardHeight: 196,
         data: data,
-        isBack: true,
-        headline: Text(
-          tr('home_screen_card.label-total-balance'),
-          style: MediaQuery.of(context).size.height < 650
-              ? Theme.of(context).textTheme.headline5
-              : Theme.of(context).textTheme.headline3,
-        ),
-        subHeadline: Text(
-          tr('home_screen_card.label-total-balance-sub'),
-          style: Theme.of(context).textTheme.headline5,
-        ),
-        middleRow: Row(
+        body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.baseline,
-                textBaseline: TextBaseline.alphabetic,
-                children: [
-                  Flexible(
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
+            Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Spacer(),
+                    Center(
                       child: Text(
-                        data.balance.toStringAsFixed(2),
-                        style: getBalanceTextStyle(context, data.balance),
+                        'Monatsplanung', //TODO @NightmindOfficial translate!
+                        style: MediaQuery.of(context).size.height < 650
+                            ? Theme.of(context).textTheme.headline5
+                            : Theme.of(context).textTheme.headline3,
                       ),
                     ),
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: IconButton(
+                          padding: const EdgeInsets.only(right: 16),
+                          constraints: const BoxConstraints(),
+                          onPressed: () {
+                            flipCardController.toggleCard();
+                          },
+                          icon: const Icon(
+                            Icons.flip_camera_android_rounded,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Text(
+                  dateFormat.format(
+                    algorithmProvider.currentShownMonth,
                   ),
-                  Text(
-                    '€',
-                    style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Flexible(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            data.balance.toStringAsFixed(2),
+                            style: getBalanceTextStyle(context, data.balance),
+                          ),
+                        ),
+                      ),
+                      Text(
+                        '€',
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ],
-        ),
-        upwardArrow: HomeScreenCardArrow(
-          arrowBoxColor: Theme.of(context).colorScheme.tertiaryContainer,
-          arrowColor: Theme.of(context).colorScheme.background,
-          isUpward: true,
-        ),
-        downwardArrow: HomeScreenCardArrow(
-          arrowBoxColor: Theme.of(context).colorScheme.secondary,
-          arrowColor: Theme.of(context).colorScheme.background,
         ),
       ),
     );

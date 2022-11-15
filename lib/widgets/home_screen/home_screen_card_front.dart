@@ -10,8 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:linum/models/home_screen_card_data.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
-import 'package:linum/widgets/home_screen/home_screen_card_arrow.dart';
-import 'package:linum/widgets/home_screen/home_screen_card_side.dart';
+import 'package:linum/widgets/home_screen/home_screen_card_avatar.dart';
+import 'package:linum/widgets/home_screen/home_screen_card_bottom_row.dart';
+import 'package:linum/widgets/home_screen/home_screen_card_skeleton.dart';
 import 'package:linum/widgets/home_screen/home_screen_functions.dart';
 import 'package:provider/provider.dart';
 
@@ -51,73 +52,112 @@ class HomeScreenCardFront extends StatelessWidget {
       onLongPress: () {
         goToCurrentTime(algorithmProvider);
       },
-      child: HomeScreenCardSide(
+      child: HomeScreenCardSkeleton(
         flipCardController: flipCardController,
+        cardWidth: 345,
+        cardHeight: 196,
         data: data,
-        isBack: false,
-        headline: Text(
-          dateFormat.format(
-            algorithmProvider.currentShownMonth,
-          ),
-          style: MediaQuery.of(context).size.height < 650
-              ? Theme.of(context).textTheme.headline5
-              : Theme.of(context).textTheme.headline3,
-        ),
-        subHeadline: Text(
-          tr('home_screen_card.label-current-balance'),
-          style: Theme.of(context).textTheme.headline5,
-        ),
-        middleRow: Row(
-          // MiddleRow
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            IconButton(
-              onPressed: () {
-
-                goBackInTime(algorithmProvider);
-              },
-              icon: const Icon(Icons.arrow_back_ios_new_rounded),
-            ),
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.baseline,
-                textBaseline: TextBaseline.alphabetic,
-                children: [
-                  Flexible(
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
+            Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Spacer(),
+                    Center(
                       child: Text(
-                        data.balance.toStringAsFixed(2),
-                        style: getBalanceTextStyle(context, data.balance),
+                        // HEADLINE
+                        dateFormat.format(
+                          algorithmProvider.currentShownMonth,
+                        ),
+                        style: MediaQuery.of(context).size.height < 650
+                            ? Theme.of(context).textTheme.headline5
+                            : Theme.of(context).textTheme.headline3,
                       ),
                     ),
-                  ),
-                  Text(
-                    '€',
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                ],
-              ),
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: IconButton(
+                          padding: const EdgeInsets.only(right: 16),
+                          constraints: const BoxConstraints(),
+                          onPressed: () {
+                            flipCardController.toggleCard();
+                          },
+                          icon: const Icon(
+                            Icons.flip_camera_android_rounded,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Text(
+                  //SUBHEADLINE
+                  tr('home_screen_card.label-current-balance'),
+                  style: Theme.of(context).textTheme.headline5,
+                ),
+              ],
             ),
-            IconButton(
-              onPressed: () {
-                goForwardInTime(algorithmProvider);
-              },
-              icon: const Icon(
-                Icons.arrow_forward_ios_rounded,
-              ),
+            Row(
+              // MiddleRow
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    goBackInTime(algorithmProvider);
+                  },
+                  icon: const Icon(Icons.arrow_back_ios_new_rounded),
+                ),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Flexible(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            data.balance.toStringAsFixed(2),
+                            style: getBalanceTextStyle(context, data.balance),
+                          ),
+                        ),
+                      ),
+                      Text(
+                        '€',
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                    ],
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    goForwardInTime(algorithmProvider);
+                  },
+                  icon: const Icon(
+                    Icons.arrow_forward_ios_rounded,
+                  ),
+                ),
+              ],
             ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: HomeScreenCardBottomRow(
+                data: data,
+                upwardArrow: HomeScreenCardAvatar.withArrow(
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  arrow: Preset.arrowUp,
+                ),
+                downwardArrow: HomeScreenCardAvatar.withArrow(
+                  backgroundColor: Theme.of(context).colorScheme.error,
+                  arrow: Preset.arrowDown,
+                ),
+              ),
+            )
           ],
-        ), //TODO: Refactor even more?
-        upwardArrow: HomeScreenCardArrow(
-          arrowBoxColor: Theme.of(context).colorScheme.primary,
-          arrowColor: Theme.of(context).colorScheme.background,
-          isUpward: true,
-        ),
-        downwardArrow: HomeScreenCardArrow(
-          arrowBoxColor: Theme.of(context).colorScheme.error,
-          arrowColor: Theme.of(context).colorScheme.background,
         ),
       ),
     );
