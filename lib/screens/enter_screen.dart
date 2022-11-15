@@ -37,8 +37,8 @@ class _EnterScreenState extends State<EnterScreen> {
   Widget build(BuildContext context) {
     final EnterScreenProvider enterScreenProvider =
         Provider.of<EnterScreenProvider>(context);
-    final BalanceDataProvider balanceDataProvider =
-        Provider.of<BalanceDataProvider>(context);
+    // final BalanceDataProvider balanceDataProvider =
+    //     Provider.of<BalanceDataProvider>(context);
 
     //  AccountSettingsProvider accountSettingsProvider =
     //       Provider.of<AccountSettingsProvider>(context);
@@ -183,7 +183,9 @@ class _EnterScreenState extends State<EnterScreen> {
                                     enterScreenProvider.amountToDisplay() <=
                                         0) {
                                   showAddAmountAlertDialog(
-                                      context, enterScreenProvider);
+                                    context,
+                                    enterScreenProvider,
+                                  );
                                   dev.log(
                                     "amount was to low: ${enterScreenProvider.amountToDisplay()}",
                                   );
