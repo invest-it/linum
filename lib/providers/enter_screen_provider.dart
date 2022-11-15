@@ -30,6 +30,9 @@ class EnterScreenProvider with ChangeNotifier {
   int? _repeatDuration;
   firestore.Timestamp? _formerTime;
   RepeatDurationType? _repeatDurationType;
+  DateTime? _initialTime;
+  DateTime? _endTime;
+  bool _isSerialTransaction = false;
 
   EnterScreenProvider({
     num amount = 0.0,
@@ -45,6 +48,9 @@ class EnterScreenProvider with ChangeNotifier {
     RepeatDurationType? repeatDurationType,
     RepeatDuration initRepeatDurationEnum = RepeatDuration.none,
     String? repeatId,
+    DateTime? initialTime,
+    DateTime? endTime,
+    bool isSerialTransaction = false,
     firestore.Timestamp? formerTime,
   }) {
     _amount = amount.abs();
@@ -68,6 +74,9 @@ class EnterScreenProvider with ChangeNotifier {
       _selectedDate = selectedDate;
     }
     _note = note;
+    _isSerialTransaction = isSerialTransaction;
+    _initialTime = initialTime;
+    _endTime = endTime;
   }
 
   factory EnterScreenProvider.fromTransaction(
@@ -87,16 +96,17 @@ class EnterScreenProvider with ChangeNotifier {
   }
 
   factory EnterScreenProvider.fromSerialTransaction(
-    SerialTransaction serialTransaction, {
-    bool editMode = true,
-  }) {
+    SerialTransaction serialTransaction,
+  ) {
     return EnterScreenProvider(
       id: serialTransaction.id,
       amount: serialTransaction.amount,
       category: serialTransaction.category,
       name: serialTransaction.name,
-      editMode: editMode,
-      // TODO: Also pass initialTime and endTime
+      editMode: true,
+      isSerialTransaction: true,
+      initialTime: serialTransaction.initialTime.toDate(),
+      endTime: serialTransaction.endTime?.toDate(),
     );
   }
 
@@ -150,6 +160,18 @@ class EnterScreenProvider with ChangeNotifier {
 
   String? get formerId {
     return _formerId;
+  }
+
+  bool get isSerialTransaction {
+    return _isSerialTransaction;
+  }
+
+  DateTime? get initialTime {
+    return _initialTime;
+  }
+
+  DateTime? get endTime {
+    return _endTime;
   }
 
   RepeatDuration get repeatDurationEnum {
@@ -232,6 +254,14 @@ class EnterScreenProvider with ChangeNotifier {
 
   void setRepeatDurationEnumSilently(RepeatDuration repeatDuration) {
     _repeatDurationEnum = repeatDuration;
+  }
+
+  void setInitialTime(DateTime initialTime) {
+    _initialTime = initialTime;
+  }
+
+  void setEndTime(DateTime? endTime) {
+    _endTime = endTime;
   }
 
   //if the amount is entered in expenses, it's set to the negative equivalent if
