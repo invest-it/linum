@@ -10,9 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:linum/models/home_screen_card_data.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
-import 'package:linum/widgets/home_screen/home_screen_card_avatar.dart';
-import 'package:linum/widgets/home_screen/home_screen_card_bottom_row.dart';
-import 'package:linum/widgets/home_screen/home_screen_card_skeleton.dart';
+import 'package:linum/widgets/home_screen/card_widgets/home_screen_card_avatar.dart';
+import 'package:linum/widgets/home_screen/card_widgets/screen_card_spaced_row.dart';
+import 'package:linum/widgets/home_screen/card_widgets/screen_card_skeleton.dart';
 import 'package:linum/widgets/home_screen/home_screen_functions.dart';
 import 'package:provider/provider.dart';
 
@@ -25,19 +25,6 @@ class HomeScreenCardFront extends StatelessWidget {
     required this.flipCardController,
   });
 
-  void _onHorizontalDragEnd(DragEndDetails details, BuildContext context) {
-    // Note: Sensitivity is integer used when you don't want to mess up vertical drag
-    final algorithmProvider =
-        Provider.of<AlgorithmProvider>(context, listen: false);
-    const int sensitivity = 1;
-    if (details.primaryVelocity! > sensitivity) {
-      //Right Swipe, going back in time
-      goBackInTime(algorithmProvider);
-    } else if (details.primaryVelocity! < -sensitivity) {
-      goForwardInTime(algorithmProvider);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final AlgorithmProvider algorithmProvider =
@@ -47,12 +34,12 @@ class HomeScreenCardFront extends StatelessWidget {
 
     return GestureDetector(
       onHorizontalDragEnd: (DragEndDetails details) =>
-          _onHorizontalDragEnd(details, context),
+          onHorizontalDragEnd(details, context),
       onTap: () => onFlipCardTap(context, flipCardController),
       onLongPress: () {
         goToCurrentTime(algorithmProvider);
       },
-      child: HomeScreenCardSkeleton(
+      child: ScreenCardSkeleton(
         flipCardController: flipCardController,
         cardWidth: 345,
         cardHeight: 196,
@@ -145,7 +132,7 @@ class HomeScreenCardFront extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: HomeScreenCardBottomRow(
+              child: ScreenCardSpacedRow(
                 data: data,
                 upwardArrow: HomeScreenCardAvatar.withArrow(
                   backgroundColor: Theme.of(context).colorScheme.primary,

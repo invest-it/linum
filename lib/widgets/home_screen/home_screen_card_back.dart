@@ -9,9 +9,11 @@ import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/models/home_screen_card_data.dart';
 import 'package:linum/providers/algorithm_provider.dart';
-import 'package:linum/widgets/home_screen/home_screen_card_avatar.dart';
-import 'package:linum/widgets/home_screen/home_screen_card_bottom_row.dart';
-import 'package:linum/widgets/home_screen/home_screen_card_skeleton.dart';
+import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
+import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/widgets/home_screen/card_widgets/home_screen_card_avatar.dart';
+import 'package:linum/widgets/home_screen/card_widgets/screen_card_spaced_row.dart';
+import 'package:linum/widgets/home_screen/card_widgets/screen_card_skeleton.dart';
 import 'package:linum/widgets/home_screen/home_screen_functions.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +36,10 @@ class HomeScreenCardBack extends StatelessWidget {
 
     return GestureDetector(
       onTap: () => onFlipCardTap(context, flipCardController),
-      child: HomeScreenCardSkeleton(
+      onHorizontalDragEnd: (DragEndDetails details) =>
+          onHorizontalDragEnd(details, context),
+      onLongPress: () => goToCurrentTime(algorithmProvider),
+      child: ScreenCardSkeleton(
         flipCardController: flipCardController,
         cardWidth: 345,
         cardHeight: 196,
@@ -84,6 +89,12 @@ class HomeScreenCardBack extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                IconButton(
+                  onPressed: () {
+                    goBackInTime(algorithmProvider);
+                  },
+                  icon: const Icon(Icons.arrow_back_ios_new_rounded),
+                ),
                 Expanded(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -106,7 +117,28 @@ class HomeScreenCardBack extends StatelessWidget {
                     ],
                   ),
                 ),
+                IconButton(
+                  onPressed: () {
+                    goForwardInTime(algorithmProvider);
+                  },
+                  icon: const Icon(Icons.arrow_forward_ios_rounded),
+                ),
               ],
+            ),
+            Divider(
+              thickness: 1,
+              indent: proportionateScreenWidthFraction(ScreenFraction.onetenth),
+              endIndent:
+                  proportionateScreenWidthFraction(ScreenFraction.onetenth),
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: ScreenCardSpacedRow(
+                data: data,
+                upwardArrow: HomeScreenCardAvatar.withText(text: "o"),
+                downwardArrow: HomeScreenCardAvatar.withText(text: "o"),
+              ),
             ),
           ],
         ),

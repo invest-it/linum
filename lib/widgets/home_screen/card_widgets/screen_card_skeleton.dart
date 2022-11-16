@@ -9,13 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:linum/models/home_screen_card_data.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 
-class HomeScreenCardSkeleton extends StatelessWidget {
+class ScreenCardSkeleton extends StatelessWidget {
   final FlipCardController flipCardController;
   final HomeScreenCardData data;
   final Widget body;
   final double cardWidth;
   final double cardHeight;
-  const HomeScreenCardSkeleton({
+  const ScreenCardSkeleton({
     super.key,
     required this.flipCardController,
     required this.data,

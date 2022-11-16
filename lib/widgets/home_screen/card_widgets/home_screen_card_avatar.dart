@@ -29,7 +29,7 @@ class HomeScreenCardAvatar extends StatelessWidget {
   });
 
   factory HomeScreenCardAvatar.withArrow({
-    required Color backgroundColor,
+    Color backgroundColor = Colors.grey,
     required Preset arrow,
   }) {
     return HomeScreenCardAvatar._(
@@ -39,8 +39,8 @@ class HomeScreenCardAvatar extends StatelessWidget {
   }
 
   factory HomeScreenCardAvatar.withText({
-    required Color backgroundColor,
-    required Color bodyColor,
+    Color backgroundColor = Colors.grey,
+    Color bodyColor = Colors.white,
     required String text,
   }) {
     return HomeScreenCardAvatar._(

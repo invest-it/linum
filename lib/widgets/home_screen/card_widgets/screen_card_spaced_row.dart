@@ -9,15 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:linum/models/home_screen_card_data.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
-import 'package:linum/widgets/home_screen/home_screen_card_avatar.dart';
+import 'package:linum/widgets/home_screen/card_widgets/home_screen_card_avatar.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreenCardBottomRow extends StatelessWidget {
+class ScreenCardSpacedRow extends StatelessWidget {
   final HomeScreenCardData data;
   final HomeScreenCardAvatar upwardArrow;
   final HomeScreenCardAvatar downwardArrow;
 
-  const HomeScreenCardBottomRow({
+  const ScreenCardSpacedRow({
     super.key,
     required this.data,
     required this.upwardArrow,
