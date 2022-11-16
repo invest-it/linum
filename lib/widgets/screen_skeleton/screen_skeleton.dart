@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
-import 'package:linum/widgets/home_screen/home_screen_card_manager.dart';
 import 'package:linum/widgets/onboarding/action_lip.dart';
+import 'package:linum/widgets/screen_card/screen_card_manager.dart';
 import 'package:linum/widgets/screen_skeleton/body_section.dart';
 import 'package:linum/widgets/screen_skeleton/lip_section.dart';
 import 'package:provider/provider.dart';
@@ -169,7 +169,7 @@ class ScreenSkeleton extends StatelessWidget {
                   left: 0,
                   right: 0,
                   child: balanceDataProvider
-                      .fillStatisticPanelWithData(HomeScreenCardManager()),
+                      .fillStatisticPanelWithData(ScreenCardManager()),
                 )
               : Container(
                   /// to make sure we'd actually notice fuck-ups with this

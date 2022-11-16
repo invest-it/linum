@@ -11,8 +11,8 @@ import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/models/home_screen_card_data.dart';
 import 'package:linum/providers/screen_card_provider.dart';
-import 'package:linum/widgets/home_screen/home_screen_card_back.dart';
-import 'package:linum/widgets/home_screen/home_screen_card_front.dart';
+import 'package:linum/widgets/screen_card/home_screen_card_back.dart';
+import 'package:linum/widgets/screen_card/home_screen_card_front.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreenCard extends StatefulWidget {

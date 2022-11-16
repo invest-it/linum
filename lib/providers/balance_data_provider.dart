@@ -396,7 +396,7 @@ class BalanceDataProvider extends ChangeNotifier {
 
   /// Returns a StreamBuilder that builds the ListView from the document-datastream
   StreamBuilder fillStatisticPanelWithData(
-    AbstractHomeScreenCard statisticPanel,
+    AbstractScreenCard statisticPanel,
   ) {
     return _streamBuilder.fillStatisticPanelWithData(
       dataStream: _dataStream,

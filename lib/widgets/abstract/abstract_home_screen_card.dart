@@ -7,7 +7,7 @@
 import 'package:flutter/material.dart';
 import 'package:linum/utilities/backend/statistical_calculations.dart';
 
-abstract class AbstractHomeScreenCard {
+abstract class AbstractScreenCard {
   /// [statData] will calculate all needed Data. It also already has the filter implemented
   /// It is possible that statData is null. In that case place some kind of loading screen or
   /// everywhere a 0

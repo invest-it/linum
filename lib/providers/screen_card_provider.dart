@@ -5,6 +5,13 @@ import 'package:provider/single_child_widget.dart';
 
 class ScreenCardProvider extends ChangeNotifier {
   FlipCardController? _controller;
+  dynamic _data;
+
+  void setData(dynamic data) {
+    _data = data;
+  }
+
+  dynamic get data => _data;
 
   void setFlipCardControllerSoftSilently(FlipCardController controller) {
     _controller = controller;

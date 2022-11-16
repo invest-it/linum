@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/models/home_screen_card_data.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
-import 'package:linum/widgets/home_screen/card_widgets/home_screen_card_avatar.dart';
+import 'package:linum/widgets/screen_card/card_widgets/home_screen_card_avatar.dart';
 import 'package:provider/provider.dart';
 
 class ScreenCardSpacedRow extends StatelessWidget {
@@ -73,7 +73,7 @@ class ScreenCardSpacedRow extends StatelessWidget {
               ),
               const SizedBox(height: 5),
               Text(
-                '${isIncome ? data.income.toStringAsFixed(2) : data.expense.toStringAsFixed(2)} €',
+                '${isIncome ? data.mtdIncome.toStringAsFixed(2) : data.mtdExpenses.toStringAsFixed(2)} €',
                 style: TextStyle(
                   color: Colors.grey[700],
                   fontWeight: FontWeight.bold,

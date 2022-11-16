@@ -10,10 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:linum/models/home_screen_card_data.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
-import 'package:linum/widgets/home_screen/card_widgets/home_screen_card_avatar.dart';
-import 'package:linum/widgets/home_screen/card_widgets/screen_card_spaced_row.dart';
-import 'package:linum/widgets/home_screen/card_widgets/screen_card_skeleton.dart';
-import 'package:linum/widgets/home_screen/home_screen_functions.dart';
+import 'package:linum/widgets/screen_card/card_widgets/home_screen_card_avatar.dart';
+import 'package:linum/widgets/screen_card/card_widgets/screen_card_skeleton.dart';
+import 'package:linum/widgets/screen_card/card_widgets/screen_card_spaced_row.dart';
+import 'package:linum/widgets/screen_card/home_screen_functions.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreenCardFront extends StatelessWidget {
@@ -29,6 +29,10 @@ class HomeScreenCardFront extends StatelessWidget {
   Widget build(BuildContext context) {
     final AlgorithmProvider algorithmProvider =
         Provider.of<AlgorithmProvider>(context);
+    // final ScreenCardProvider screenCardProvider =
+    //     Provider.of<ScreenCardProvider>(context);
+    // final HomeScreenCardData data =
+    //     screenCardProvider.data as HomeScreenCardData;
     final String langCode = context.locale.languageCode;
     final DateFormat dateFormat = DateFormat('MMMM yyyy', langCode);
 
@@ -108,8 +112,9 @@ class HomeScreenCardFront extends StatelessWidget {
                         child: FittedBox(
                           fit: BoxFit.scaleDown,
                           child: Text(
-                            data.balance.toStringAsFixed(2),
-                            style: getBalanceTextStyle(context, data.balance),
+                            data.mtdBalance.toStringAsFixed(2),
+                            style:
+                                getBalanceTextStyle(context, data.mtdBalance),
                           ),
                         ),
                       ),

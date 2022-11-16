@@ -106,7 +106,7 @@ class BalanceDataStreamBuilder {
   /// Returns a StreamBuilder that builds the ListView from the document-datastream
   StreamBuilder fillStatisticPanelWithData({
     required Stream<firestore.DocumentSnapshot<BalanceDocument>>? dataStream,
-    required AbstractHomeScreenCard statisticPanel,
+    required AbstractScreenCard statisticPanel,
   }) {
     return StreamBuilder<firestore.DocumentSnapshot<BalanceDocument>>(
       stream: dataStream,

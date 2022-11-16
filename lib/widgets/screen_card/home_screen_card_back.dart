@@ -11,10 +11,10 @@ import 'package:linum/models/home_screen_card_data.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
-import 'package:linum/widgets/home_screen/card_widgets/home_screen_card_avatar.dart';
-import 'package:linum/widgets/home_screen/card_widgets/screen_card_spaced_row.dart';
-import 'package:linum/widgets/home_screen/card_widgets/screen_card_skeleton.dart';
-import 'package:linum/widgets/home_screen/home_screen_functions.dart';
+import 'package:linum/widgets/screen_card/card_widgets/home_screen_card_avatar.dart';
+import 'package:linum/widgets/screen_card/card_widgets/screen_card_spaced_row.dart';
+import 'package:linum/widgets/screen_card/card_widgets/screen_card_skeleton.dart';
+import 'package:linum/widgets/screen_card/home_screen_functions.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreenCardBack extends StatelessWidget {
@@ -58,7 +58,7 @@ class HomeScreenCardBack extends StatelessWidget {
                         'Monatsplanung', //TODO @NightmindOfficial translate!
                         style: MediaQuery.of(context).size.height < 650
                             ? Theme.of(context).textTheme.headline5
-                            : Theme.of(context).textTheme.headline3,
+                            : Theme.of(context).textTheme.headline4,
                       ),
                     ),
                     Expanded(
@@ -105,8 +105,9 @@ class HomeScreenCardBack extends StatelessWidget {
                         child: FittedBox(
                           fit: BoxFit.scaleDown,
                           child: Text(
-                            data.balance.toStringAsFixed(2),
-                            style: getBalanceTextStyle(context, data.balance),
+                            data.eomBalance.toStringAsFixed(2),
+                            style:
+                                getBalanceTextStyle(context, data.eomBalance),
                           ),
                         ),
                       ),
