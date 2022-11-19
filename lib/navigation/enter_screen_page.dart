@@ -26,6 +26,7 @@ class EnterScreenPageSettings {
     this.serialTransaction,
     this.category,
     this.secondaryCategory,
+    this.currency,
     this.isFromExistingBalanceData = false,
   });
 
@@ -42,21 +43,14 @@ class EnterScreenPageSettings {
       serialTransaction: serialTransaction,
       isFromExistingBalanceData: true,
     );
+  }
+
   factory EnterScreenPageSettings.withSettings({
     required Currency currency,
     String? category,
     String? secondaryCategory,
   }) {
     return EnterScreenPageSettings._(category: category, secondaryCategory: secondaryCategory, currency: currency);
-  }
-  factory EnterScreenPageSettings.withCategories({
-    String? category,
-    String? secondaryCategory,
-  }) {
-    return EnterScreenPageSettings._(
-      category: category,
-      secondaryCategory: secondaryCategory,
-    );
   }
 }
 

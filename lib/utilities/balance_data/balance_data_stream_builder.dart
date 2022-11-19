@@ -118,11 +118,11 @@ class BalanceDataStreamBuilder {
         snapshot,
       );
       return StatisticalCalculations(
-        preparedData.item1,
-        preparedData.item2,
-        algorithmProvider,
+        data: preparedData.item1,
+        serialData: preparedData.item2,
+        standardCurrencyName: exchangeRateProvider.standardCurrency.name,
+        algorithmProvider: algorithmProvider,
       );
-
     });
   }
 

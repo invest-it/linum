@@ -21,7 +21,7 @@ class StatisticalCalculations {
   /// the data that should be processed
   late List<SerialTransaction> _allSerialData;
 
-  final String _standardCurrencyName;
+  final String standardCurrencyName;
 
   /// the data that should be processed for monthly calculations
   List<Transaction> get _currentData =>
@@ -40,12 +40,12 @@ class StatisticalCalculations {
   late Logger log;
 
   /// create a new instance and set the data
-  StatisticalCalculations(
-    List<Transaction> data,
-    this._standardCurrencyName,
-    List<SerialTransaction> serialData,
-    AlgorithmProvider algorithmProvider,
-  ) {
+  StatisticalCalculations({
+    required List<Transaction> data,
+    required List<SerialTransaction> serialData,
+    required this.standardCurrencyName,
+    required AlgorithmProvider algorithmProvider,
+  }) {
     _allData = [];
 
     for (int i = 0; i < data.length; i++) {
@@ -247,7 +247,7 @@ class StatisticalCalculations {
   num _getSumFrom(List<Transaction> data) {
     num sum = 0;
     for (final transaction in data) {
-      if (transaction.currency == _standardCurrencyName) {
+      if (transaction.currency == standardCurrencyName) {
         sum += transaction.amount;
       } else if (transaction.rateInfo != null) { // Normally this is always true
         sum += convertCurrencyAmountWithExchangeRate(transaction.amount, transaction.rateInfo!);

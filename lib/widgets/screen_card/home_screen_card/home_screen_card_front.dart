@@ -5,17 +5,17 @@
 //  (Refactored by damattl)
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/models/home_screen_card_data.dart';
+import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/screen_card_provider.dart';
+import 'package:linum/utilities/frontend/currency_formatter.dart';
 import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
 import 'package:linum/widgets/loading_spinner.dart';
 import 'package:linum/widgets/screen_card/card_widgets/home_screen_card_avatar.dart';
-import 'package:linum/widgets/screen_card/card_widgets/screen_card_skeleton.dart';
-import 'package:linum/widgets/screen_card/home_screen_card_row.dart';
+import 'package:linum/widgets/screen_card/home_screen_card/home_screen_card_row.dart';
 import 'package:linum/widgets/screen_card/home_screen_functions.dart';
 import 'package:linum/widgets/screen_card/screen_card_data_extensions.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +29,7 @@ class HomeScreenCardFront extends StatelessWidget {
     final String langCode = context.locale.languageCode;
     final DateFormat dateFormat = DateFormat('MMMM yyyy', langCode);
 
+    final settings = Provider.of<AccountSettingsProvider>(context);
     final screenCardProvider = Provider.of<ScreenCardProvider>(context, listen: false);
     final balanceDataProvider = Provider.of<BalanceDataProvider>(context);
 
@@ -94,36 +95,37 @@ class HomeScreenCardFront extends StatelessWidget {
                     icon: const Icon(Icons.arrow_back_ios_new_rounded),
                   ),
                   Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.baseline,
-                      textBaseline: TextBaseline.alphabetic,
-                      children: [
-                        Flexible(
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            // TODO: Check the plausibility
-                            child: StreamBuilder<HomeScreenCardData>(
-                              stream: balanceDataProvider.getHomeScreenCardData(),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState == ConnectionState.none ||
-                                    snapshot.connectionState == ConnectionState.waiting) {
-
-                                  return const LoadingSpinner();
-                                }
-                                return Text(
-                                  snapshot.data?.mtdBalance.toStringAsFixed(2) ?? 0.toString(),
+                    child: StreamBuilder<HomeScreenCardData>(
+                      stream: balanceDataProvider.getHomeScreenCardData(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.none ||
+                            snapshot.connectionState == ConnectionState.waiting) {
+                          return const LoadingSpinner();
+                        }
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
+                          textBaseline: TextBaseline.alphabetic,
+                          children: CurrencyFormatter(
+                            context.locale,
+                            symbol: settings.getStandardCurrency().symbol,
+                          ).formatWithWidgets(
+                            snapshot.data?.mtdBalance ?? 0,
+                            (amount) => Flexible(
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  amount,
                                   style: getBalanceTextStyle(context, snapshot.data?.mtdBalance ?? 0),
-                                );
-                              },
-                            ),
+                                ),
+                              ),
+                            ), (symbol) => Text(
+                            symbol,
+                            style: Theme.of(context).textTheme.bodyText1,
                           ),
-                        ),
-                        Text(
-                          '€',
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
-                      ],
+                          ),
+                        );
+                      },
                     ),
                   ),
                   IconButton(

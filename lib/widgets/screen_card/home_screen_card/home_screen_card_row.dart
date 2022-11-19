@@ -7,7 +7,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/models/home_screen_card_data.dart';
+import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/algorithm_provider.dart';
+import 'package:linum/utilities/frontend/currency_formatter.dart';
 import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
 import 'package:linum/widgets/loading_spinner.dart';
 import 'package:linum/widgets/screen_card/card_widgets/home_screen_card_avatar.dart';
@@ -52,6 +54,7 @@ class HomeScreenCardRow extends StatelessWidget {
     BuildContext context, {
     bool isIncome = false,
   }) {
+    final settings = Provider.of<AccountSettingsProvider>(context);
     return Expanded(
       flex: 10,
       child: Row(
@@ -82,10 +85,11 @@ class HomeScreenCardRow extends StatelessWidget {
                     return const LoadingSpinner();
                   }
                   return Text(
-                    '${isIncome
-                        ? snapshot.data?.mtdIncome.toStringAsFixed(2)
-                        : snapshot.data?.mtdExpenses.toStringAsFixed(2)
-                    } €',
+                    CurrencyFormatter(context.locale, symbol: settings.getStandardCurrency().symbol)
+                        .format(isIncome
+                          ? snapshot.data?.mtdIncome ?? 0
+                          : snapshot.data?.mtdExpenses ?? 0
+                    ),
                     style: TextStyle(
                       color: Colors.grey[700],
                       fontWeight: FontWeight.bold,

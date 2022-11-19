@@ -20,6 +20,7 @@ import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
+import 'package:linum/utilities/frontend/currency_formatter.dart';
 import 'package:linum/utilities/frontend/transaction_amount_formatter.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
 import 'package:linum/widgets/budget_screen/time_widget.dart';
@@ -450,7 +451,7 @@ class HomeScreenListView implements BalanceDataListView {
           style: Theme.of(context).textTheme.bodyText1,
         ),
         subtitle: Text(
-          "${calculateTimeFrequency(serialTransaction)} \nSeit ${serialFormatter.format(serialTransaction.initialTime.toDate())}"
+          "${calculateTimeFrequency(context, serialTransaction)} \nSeit ${serialFormatter.format(serialTransaction.initialTime.toDate())}"
               .toUpperCase(),
           style: Theme.of(context).textTheme.overline,
         ),
@@ -498,12 +499,15 @@ class HomeScreenListView implements BalanceDataListView {
   }
 
   String calculateTimeFrequency(
+    BuildContext context,
     SerialTransaction serialTransaction,
   ) {
     final int duration = serialTransaction.repeatDuration;
-    final RepeatDurationType repeatDurationType =
-        serialTransaction.repeatDurationType;
+    final RepeatDurationType repeatDurationType = serialTransaction.repeatDurationType;
+    final settings = Provider.of<AccountSettingsProvider>(context);
     final String amount = serialTransaction.amount.abs().toStringAsFixed(2);
+    final formattedAmount = CurrencyFormatter(context.locale, symbol: settings.getStandardCurrency().symbol)
+      .format(serialTransaction.amount.abs());
 
     switch (repeatDurationType) {
       case RepeatDurationType.seconds:
@@ -514,7 +518,7 @@ class HomeScreenListView implements BalanceDataListView {
         // If the repeatDuration is on a weekly basis
         if (duration % week == 0) {
           if (duration / week == 1) {
-            return "$amount€ ${tr('enter_screen.label-repeat-weekly')}";
+            return "$formattedAmount ${tr('enter_screen.label-repeat-weekly')}";
           }
           return "${tr('listview.label-every')} ${(duration / day).floor()} ${tr('listview.label-weeks')}";
         }
@@ -522,7 +526,7 @@ class HomeScreenListView implements BalanceDataListView {
         // If the repeatDuration is on a daily basis
         else if (duration % day == 0) {
           if (duration / day == 1) {
-            return "$amount€ ${tr('enter_screen.label-repeat-daily')}";
+            return "$formattedAmount ${tr('enter_screen.label-repeat-daily')}";
           }
           return "${tr('listview.label-every')} ${(duration / day).floor()} ${tr('listview.label-days')}";
         } else {
@@ -534,16 +538,16 @@ class HomeScreenListView implements BalanceDataListView {
       case RepeatDurationType.months:
         if (duration % 12 == 0) {
           if (duration / 12 == 1) {
-            return "$amount€ ${tr('enter_screen.label-repeat-annually')}";
+            return "$formattedAmount ${tr('enter_screen.label-repeat-annually')}";
           }
           return "${tr('listview.label-every')} ${(duration / 12).floor()} ${tr('listview.label-years')}";
         }
         if (duration == 1) {
-          return "$amount€ ${tr('enter_screen.label-repeat-30days')}";
+          return "$formattedAmount ${tr('enter_screen.label-repeat-30days')}";
         } else if (duration == 3) {
-          return "$amount€ ${tr('enter_screen.label-repeat-quarterly')}";
+          return "$formattedAmount ${tr('enter_screen.label-repeat-quarterly')}";
         } else if (duration == 6) {
-          return "$amount€ ${tr('enter_screen.label-repeat-semiannually')}";
+          return "$formattedAmount ${tr('enter_screen.label-repeat-semiannually')}";
         }
         return "${tr('listview.label-every')} ${(duration / 12).floor()} ${tr('listview.label-months')}";
     }

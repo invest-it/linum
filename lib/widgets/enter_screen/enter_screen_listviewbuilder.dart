@@ -206,12 +206,12 @@ class _EnterScreenListViewBuilderState
 
   //function executed when one of the categories (category, account, date etc.) is tapped
   void _onCategoryPressed(
-    int index,
+    int menuIndex,
     EnterScreenProvider enterScreenProvider,
     AccountSettingsProvider accountSettingsProvider,
     ActionLipStatusProvider actionLipStatusProvider,
   ) {
-    if (index == 1) {
+    if (menuIndex == 1) {
       //opens the date picker
       _openDatePicker(enterScreenProvider);
     } else {
@@ -273,7 +273,6 @@ class _EnterScreenListViewBuilderState
       currencyEntryCategory.label,
       repeatDurationEntryCategory.label,
     ][menuIndex].tr()}: ";
-    ][index].tr()}: ";
   }
 
   //which lists view is built depending on expense etc.
@@ -308,7 +307,7 @@ class _EnterScreenListViewBuilderState
 
   //which list view is built depending on the tapped category at EXPENSES
   ScrollConfiguration _listViewBuilderExpenses(
-    int index,
+    int menuIndex,
     EnterScreenProvider enterScreenProvider,
     AccountSettingsProvider accountSettingsProvider,
     ActionLipStatusProvider actionLipStatusProvider,
@@ -541,7 +540,6 @@ class _EnterScreenListViewBuilderState
   //which list view is built depending on the tapped category at TRANSACTION
 
   ScrollConfiguration _listViewBuilderTransaction(
-    int index,
     EnterScreenProvider enterScreenProvider,
     AccountSettingsProvider accountSettingsProvider,
     ActionLipStatusProvider actionLipStatusProvider,
@@ -553,21 +551,17 @@ class _EnterScreenListViewBuilderState
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
             leading: Icon(
-              categoriesRepeat[RepeatDuration.values[index]]
-                          ?["entryCategory"]
-                      .icon as IconData? ??
-                  Icons.error,
+              categoriesRepeat[RepeatDuration.values[index]]?["entryCategory"].icon as IconData?
+                  ?? Icons.error,
             ),
             title: Text(
               tr(
-                categoriesRepeat[RepeatDuration.values[indexBuilder]]
-                        ?["entryCategory"]
-                    .label as String,
+                categoriesRepeat[RepeatDuration.values[index]]?["entryCategory"].label as String,
               ),
             ),
             onTap: () => _selectRepeatItem(
               enterScreenProvider,
-              indexBuilder,
+              index,
               accountSettingsProvider,
               actionLipStatusProvider,
             ),

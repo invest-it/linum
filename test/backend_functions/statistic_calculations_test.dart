@@ -74,8 +74,7 @@ void main() {
       group("sum", () {
         test("empty data", () {
           // Arrange (Initialization)
-          final StatisticalCalculations statisticsCalculations =
-              StatisticalCalculations(
+          final StatisticalCalculations statisticsCalculations = StatisticalCalculations(
             emptyData,
             [],
             "EUR",
