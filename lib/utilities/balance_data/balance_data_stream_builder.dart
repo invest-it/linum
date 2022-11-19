@@ -17,11 +17,14 @@ import 'package:linum/utilities/backend/statistical_calculations.dart';
 import 'package:linum/utilities/balance_data/serial_transaction_manager.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
 import 'package:linum/widgets/loading_spinner.dart';
+import 'package:logger/logger.dart';
 import 'package:tuple/tuple.dart';
 
 class BalanceDataStreamBuilder {
   final AlgorithmProvider algorithmProvider;
   final ExchangeRateProvider exchangeRateProvider;
+
+  final logger = Logger();
 
   BalanceDataStreamBuilder(this.algorithmProvider, this.exchangeRateProvider);
 
@@ -163,8 +166,7 @@ class BalanceDataStreamBuilder {
     try {
       await exchangeRateProvider.addExchangeRatesToTransactions(transactions);
     } catch(e) {
-      print("RatesError");
-      print(e);
+      logger.e(e);
     }
     return Tuple2(transactions, serialTransactions);
   }
