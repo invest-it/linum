@@ -134,7 +134,7 @@ void main() {
           );
           expect(
             data.serialTransactions.last.repeatDurationType,
-            repeatBalanceData.repeatDurationType.toString().substring(19),
+            repeatBalanceData.repeatDurationType,
           );
         }
         expect(data.serialTransactions.length, max);
@@ -144,11 +144,9 @@ void main() {
     group("removeSerialTransactionFromData", () {
       test("id not found", () {
         // Arrange (Initialization)
-        final data =
-            generateRandomData();
+        final data = generateRandomData();
 
         const String id = "Impossible id";
-
 
         final int expectedLength = data.serialTransactions.length;
 
@@ -175,7 +173,6 @@ void main() {
 
         const String id = "Impossible id";
 
-
         final int expectedLength = data.serialTransactions.length;
 
         const SerialTransactionChangeType removeType =
@@ -200,7 +197,6 @@ void main() {
         final data = generateRandomData();
 
         const String id = "Impossible id";
-
 
         final int expectedLength = data.serialTransactions.length;
 
@@ -227,7 +223,6 @@ void main() {
 
         const String id = "Impossible id";
 
-
         final int expectedLength = data.serialTransactions.length;
 
         const SerialTransactionChangeType removeType =
@@ -250,14 +245,11 @@ void main() {
       test("random data test removeType=all", () {
         final math.Random rand = math.Random();
 
-
-
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
           // Arrange (Initialization)
 
-          final data =
-              generateRandomData();
+          final data = generateRandomData();
           final int expectedLength = data.serialTransactions.length - 1;
           final int idIndex = rand.nextInt(expectedLength) + 1;
           final String id = data.serialTransactions[idIndex].id;
@@ -279,21 +271,17 @@ void main() {
       test("random data test removeType=thisAndAllBefore", () {
         final math.Random rand = math.Random();
 
-
-
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
           // Arrange (Initialization)
 
-          final data =
-              generateRandomData();
+          final data = generateRandomData();
           final int expectedLength = data.serialTransactions.length;
           final int idIndex = rand.nextInt(expectedLength);
           final String id = data.serialTransactions[idIndex].id;
 
           final DateTime initialTime =
-              (data.serialTransactions[idIndex].initialTime)
-                  .toDate();
+              (data.serialTransactions[idIndex].initialTime).toDate();
 
           final Timestamp time = Timestamp.fromDate(
             calculateOneTimeStep(
@@ -329,23 +317,18 @@ void main() {
       test("random data test removeType=thisAndAllAfter", () {
         final math.Random rand = math.Random();
 
-
-
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
           // Arrange (Initialization)
 
-          final data =
-              generateRandomData();
+          final data = generateRandomData();
           final int expectedLength = data.serialTransactions.length;
           final int idIndex = rand.nextInt(expectedLength);
           final String id = data.serialTransactions[idIndex].id;
 
-          final Timestamp? endTime =
-              data.serialTransactions[idIndex].endTime;
+          final Timestamp? endTime = data.serialTransactions[idIndex].endTime;
           final DateTime initialTime =
-              (data.serialTransactions[idIndex].initialTime)
-                  .toDate();
+              (data.serialTransactions[idIndex].initialTime).toDate();
 
           final Timestamp time = Timestamp.fromDate(
             calculateOneTimeStep(
@@ -386,21 +369,17 @@ void main() {
       test("random data test removeType=onlyThisOne", () {
         final math.Random rand = math.Random();
 
-
-
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
           // Arrange (Initialization)
 
-          final data =
-              generateRandomData();
+          final data = generateRandomData();
           final int expectedLength = data.serialTransactions.length;
           final int idIndex = rand.nextInt(expectedLength);
           final String id = data.serialTransactions[idIndex].id;
 
           final DateTime initialTime =
-              (data.serialTransactions[idIndex].initialTime)
-                  .toDate();
+              (data.serialTransactions[idIndex].initialTime).toDate();
 
           final Timestamp time = Timestamp.fromDate(
             calculateOneTimeStep(
@@ -424,9 +403,7 @@ void main() {
           expect(data.serialTransactions.length, expectedLength);
           expect(data.serialTransactions[idIndex].changed != null, true);
           expect(
-            (data.serialTransactions[idIndex].changed!)
-                .values
-                .last.deleted,
+            (data.serialTransactions[idIndex].changed!).values.last.deleted,
             true,
           );
         }
@@ -437,8 +414,7 @@ void main() {
       test("id not found", () {
         // Arrange (Initialization)
 
-        final data =
-            generateRandomData();
+        final data = generateRandomData();
 
         const String id = "Impossible id";
 
@@ -459,8 +435,7 @@ void main() {
 
       test("id = ''", () {
         // Arrange (Initialization)
-        final data =
-            generateRandomData();
+        final data = generateRandomData();
 
         const String id = "";
 
@@ -481,13 +456,11 @@ void main() {
       test("category == ''", () {
         // Arrange (Initialization)
 
-        final data =
-            generateRandomData();
+        final data = generateRandomData();
 
         final math.Random rand = math.Random();
         final int idIndex = rand.nextInt(data.serialTransactions.length);
         final String id = data.serialTransactions[idIndex].id;
-
 
         for (final changeType in SerialTransactionChangeType.values) {
           // Act (Execution)
@@ -506,13 +479,11 @@ void main() {
       test("currency == ''", () {
         // Arrange (Initialization)
 
-        final data =
-            generateRandomData();
+        final data = generateRandomData();
 
         final math.Random rand = math.Random();
         final int idIndex = rand.nextInt(data.serialTransactions.length);
         final String id = data.serialTransactions[idIndex].id;
-
 
         for (final changeType in SerialTransactionChangeType.values) {
           // Act (Execution)
@@ -532,14 +503,11 @@ void main() {
       test("thisAndAllBefore => time != null", () {
         // Arrange (Initialization)
 
-        final data =
-            generateRandomData();
+        final data = generateRandomData();
 
         final math.Random rand = math.Random();
         final int idIndex = rand.nextInt(data.serialTransactions.length);
         final String id = data.serialTransactions[idIndex].id;
-
-
 
         const SerialTransactionChangeType changeType =
             SerialTransactionChangeType.thisAndAllBefore;
@@ -559,14 +527,11 @@ void main() {
       test("thisAndAllAfter => time != null", () {
         // Arrange (Initialization)
 
-        final data =
-            generateRandomData();
+        final data = generateRandomData();
 
         final math.Random rand = math.Random();
         final int idIndex = rand.nextInt(data.serialTransactions.length);
         final String id = data.serialTransactions[idIndex].id;
-
-
 
         const SerialTransactionChangeType changeType =
             SerialTransactionChangeType.thisAndAllAfter;
@@ -586,14 +551,11 @@ void main() {
       test("onlyThisOne => time != null", () {
         // Arrange (Initialization)
 
-        final data =
-            generateRandomData();
+        final data = generateRandomData();
 
         final math.Random rand = math.Random();
         final int idIndex = rand.nextInt(data.serialTransactions.length);
         final String id = data.serialTransactions[idIndex].id;
-
-
 
         const SerialTransactionChangeType changeType =
             SerialTransactionChangeType.onlyThisOne;
@@ -613,14 +575,11 @@ void main() {
       test("random data test changeType=all (all except newTime)", () {
         final math.Random rand = math.Random();
 
-
-
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
           // Arrange (Initialization)
 
-          final data =
-              generateRandomData();
+          final data = generateRandomData();
           final int expectedLength = data.serialTransactions.length;
           final int idIndex = rand.nextInt(expectedLength);
           final String id = data.serialTransactions[idIndex].id;
@@ -675,7 +634,7 @@ void main() {
           expect(serialTransaction.repeatDuration, repeatDuration);
           expect(
             serialTransaction.repeatDurationType,
-            repeatDurationType.toString().substring(19),
+            repeatDurationType,
           );
           expect(serialTransaction.endTime, endTime);
         }
@@ -684,14 +643,11 @@ void main() {
       test("random data test changeType=all (only newTime)", () {
         final math.Random rand = math.Random();
 
-
-
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
           // Arrange (Initialization)
 
-          final data =
-              generateRandomData();
+          final data = generateRandomData();
           final int expectedLength = data.serialTransactions.length;
           final int idIndex = rand.nextInt(expectedLength);
           final String id = data.serialTransactions[idIndex].id;
@@ -705,11 +661,9 @@ void main() {
                   ),
                 ),
           );
-          final Timestamp formerInitialTime =
-              serialTransaction.initialTime;
+          final Timestamp formerInitialTime = serialTransaction.initialTime;
 
-          final Timestamp? formerEndTime =
-              serialTransaction.endTime;
+          final Timestamp? formerEndTime = serialTransaction.endTime;
 
           // Act (Execution)
           final bool result =
@@ -744,36 +698,29 @@ void main() {
           () {
         final math.Random rand = math.Random();
 
-
-
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
           // Arrange (Initialization)
 
-          final data =
-              generateRandomData();
+          final data = generateRandomData();
           final int expectedLength = data.serialTransactions.length + 1;
           final int idIndex = rand.nextInt(expectedLength - 1);
-          final String oldId =
-              data.serialTransactions[idIndex].id;
+          final String oldId = data.serialTransactions[idIndex].id;
 
           final oldSerialTransaction = data.serialTransactions[idIndex];
 
           final num oldAmount = oldSerialTransaction.amount;
-          final String oldCategory =
-              oldSerialTransaction.category;
+          final String oldCategory = oldSerialTransaction.category;
           final String oldName = oldSerialTransaction.name;
 
-          final int oldRepeatDuration =
-              oldSerialTransaction.repeatDuration;
+          final int oldRepeatDuration = oldSerialTransaction.repeatDuration;
 
-          final String oldRepeatDurationTypeAsString = oldSerialTransaction.repeatDurationType.toString();
+          final String oldRepeatDurationTypeAsString =
+              oldSerialTransaction.repeatDurationType.toString();
 
-          final Timestamp? oldEndTime =
-              oldSerialTransaction.endTime;
+          final Timestamp? oldEndTime = oldSerialTransaction.endTime;
 
-          final Timestamp oldInitialTime =
-              oldSerialTransaction.initialTime;
+          final Timestamp oldInitialTime = oldSerialTransaction.initialTime;
 
           num newAmount = rand.nextInt(100000) / 100.0;
           newAmount = -1 * math.pow(newAmount, 2);
@@ -847,7 +794,7 @@ void main() {
           expect(newSerialTransaction.repeatDuration, newRepeatDuration);
           expect(
             newSerialTransaction.repeatDurationType,
-            newRepeatDurationType.toString().substring(19),
+            newRepeatDurationType,
           );
         }
       });
@@ -855,19 +802,15 @@ void main() {
       test("random data test changeType=thisAndAllBefore (only newTime)", () {
         final math.Random rand = math.Random();
 
-
-
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
           dev.log("$i");
           // Arrange (Initialization)
 
-          final data =
-              generateRandomData();
+          final data = generateRandomData();
           final int expectedLength = data.serialTransactions.length + 1;
           final int idIndex = rand.nextInt(expectedLength - 1);
-          final String oldId =
-              data.serialTransactions[idIndex].id;
+          final String oldId = data.serialTransactions[idIndex].id;
 
           final oldSerialTransaction = data.serialTransactions[idIndex];
 
@@ -926,18 +869,14 @@ void main() {
           () {
         final math.Random rand = math.Random();
 
-
-
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
           // Arrange (Initialization)
 
-          final data =
-              generateRandomData();
+          final data = generateRandomData();
           final int expectedLength = data.serialTransactions.length + 1;
           final int idIndex = rand.nextInt(expectedLength - 1);
-          final String oldId =
-              data.serialTransactions[idIndex].id;
+          final String oldId = data.serialTransactions[idIndex].id;
 
           final oldSerialTransaction = data.serialTransactions[idIndex];
 
@@ -945,13 +884,12 @@ void main() {
           final String oldCategory = oldSerialTransaction.category;
           final String oldName = oldSerialTransaction.name;
 
-          final int oldRepeatDuration =
-              oldSerialTransaction.repeatDuration;
+          final int oldRepeatDuration = oldSerialTransaction.repeatDuration;
 
-          final String oldRepeatDurationTypeAsString = oldSerialTransaction.repeatDurationType.toString();
+          final String oldRepeatDurationTypeAsString =
+              oldSerialTransaction.repeatDurationType.toString();
 
-          final Timestamp oldInitialTime =
-              oldSerialTransaction.initialTime;
+          final Timestamp oldInitialTime = oldSerialTransaction.initialTime;
 
           num newAmount = rand.nextInt(100000) / 100.0;
           newAmount = -1 * math.pow(newAmount, 2);
@@ -1029,7 +967,7 @@ void main() {
           expect(newSerialTransaction.repeatDuration, newRepeatDuration);
           expect(
             newSerialTransaction.repeatDurationType,
-            newRepeatDurationType.toString().substring(19),
+            newRepeatDurationType,
           );
         }
       });
@@ -1037,18 +975,14 @@ void main() {
       test("random data test changeType=thisAndAllAfter (only newTime)", () {
         final math.Random rand = math.Random();
 
-
-
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
           // Arrange (Initialization)
 
-          final data =
-              generateRandomData();
+          final data = generateRandomData();
           final int expectedLength = data.serialTransactions.length + 1;
           final int idIndex = rand.nextInt(expectedLength - 1);
-          final String oldId =
-              data.serialTransactions[idIndex].id;
+          final String oldId = data.serialTransactions[idIndex].id;
 
           final oldSerialTransaction = data.serialTransactions[idIndex];
 
@@ -1109,14 +1043,11 @@ void main() {
       test("random data test changeType=onlyThisOne", () {
         final math.Random rand = math.Random();
 
-
-
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
           // Arrange (Initialization)
 
-          final data =
-              generateRandomData();
+          final data = generateRandomData();
           final int expectedLength = data.serialTransactions.length;
           final int idIndex = rand.nextInt(expectedLength - 1);
           final String id = data.serialTransactions[idIndex].id;
@@ -1161,8 +1092,8 @@ void main() {
           expect(data.serialTransactions.length, expectedLength);
           expect(serialTransaction.changed != null, true);
 
-          final changedTransaction =
-              serialTransaction.changed![time.millisecondsSinceEpoch.toString()];
+          final changedTransaction = serialTransaction
+              .changed![time.millisecondsSinceEpoch.toString()];
           expect(changedTransaction?.amount, newAmount);
           expect(changedTransaction?.category, "food");
           expect(changedTransaction?.currency, "USD");
@@ -1299,15 +1230,15 @@ BalanceDocument generateRandomData({
     }
     data.serialTransactions.add(
       SerialTransaction(
-          amount: amount,
-          category: "none",
-          currency: "EUR",
-          name: "Item Nr $i",
-          id: const Uuid().v4(),
-          initialTime: time,
-          endTime: endTime,
-          repeatDuration: repeatDuration,
-          repeatDurationType: repeatDurationType,
+        amount: amount,
+        category: "none",
+        currency: "EUR",
+        name: "Item Nr $i",
+        id: const Uuid().v4(),
+        initialTime: time,
+        endTime: endTime,
+        repeatDuration: repeatDuration,
+        repeatDurationType: repeatDurationType,
       ),
     );
   }
