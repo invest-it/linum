@@ -16,10 +16,10 @@ import 'package:linum/models/transaction.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/exchange_rate_provider.dart';
+import 'package:linum/utilities/backend/statistical_calculations.dart';
 import 'package:linum/utilities/balance_data/balance_data_stream_builder.dart';
 import 'package:linum/utilities/balance_data/serial_transaction_manager.dart';
 import 'package:linum/utilities/balance_data/transaction_manager.dart';
-import 'package:linum/widgets/abstract/abstract_home_screen_card.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -394,14 +394,8 @@ class BalanceDataProvider extends ChangeNotifier {
     );
   }
 
-  /// Returns a StreamBuilder that builds the ListView from the document-datastream
-  StreamBuilder fillStatisticPanelWithData(
-    AbstractScreenCard statisticPanel,
-  ) {
-    return _streamBuilder.fillStatisticPanelWithData(
-      dataStream: _dataStream,
-      statisticPanel: statisticPanel,
-    );
+  Stream<StatisticalCalculations>? getStatisticalCalculations() {
+    return _streamBuilder.getStatisticCalculations(dataStream: _dataStream);
   }
 
   // Settings

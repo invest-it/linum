@@ -63,7 +63,6 @@ class ApplicationServices extends StatelessWidget {
               .useProvider(BalanceDataProvider.provider)
               .useProvider(ActionLipStatusProvider.provider)
               .useProvider(PinCodeProvider.provider)
-              .useProvider(ScreenCardProvider.provider)
               .build();
         }
         return const LoadingScaffold();

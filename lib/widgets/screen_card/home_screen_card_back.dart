@@ -9,24 +9,19 @@ import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/models/home_screen_card_data.dart';
 import 'package:linum/providers/algorithm_provider.dart';
+import 'package:linum/providers/balance_data_provider.dart';
+import 'package:linum/providers/screen_card_provider.dart';
 import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/widgets/loading_spinner.dart';
 import 'package:linum/widgets/screen_card/card_widgets/home_screen_card_avatar.dart';
-import 'package:linum/widgets/screen_card/card_widgets/screen_card_spaced_row.dart';
+import 'package:linum/widgets/screen_card/home_screen_card_row.dart';
 import 'package:linum/widgets/screen_card/card_widgets/screen_card_skeleton.dart';
 import 'package:linum/widgets/screen_card/home_screen_functions.dart';
+import 'package:linum/widgets/screen_card/screen_card_data_extensions.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreenCardBack extends StatelessWidget {
-  final HomeScreenCardData data;
-  final FlipCardController flipCardController;
-
-  const HomeScreenCardBack({
-    super.key,
-    required this.data,
-    required this.flipCardController,
-  });
-
   @override
   Widget build(BuildContext context) {
     final AlgorithmProvider algorithmProvider =
@@ -34,116 +29,128 @@ class HomeScreenCardBack extends StatelessWidget {
     final String langCode = context.locale.languageCode;
     final DateFormat dateFormat = DateFormat('MMMM yyyy', langCode);
 
+    final screenCardProvider = Provider.of<ScreenCardProvider>(context, listen: false);
+    final balanceDataProvider = Provider.of<BalanceDataProvider>(context);
+
     return GestureDetector(
-      onTap: () => onFlipCardTap(context, flipCardController),
-      onHorizontalDragEnd: (DragEndDetails details) =>
-          onHorizontalDragEnd(details, context),
-      onLongPress: () => goToCurrentTime(algorithmProvider),
-      child: ScreenCardSkeleton(
-        flipCardController: flipCardController,
-        cardWidth: 345,
-        cardHeight: 196,
-        data: data,
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
+          onTap: () => onFlipCardTap(context, screenCardProvider.controller!),
+          onHorizontalDragEnd: (DragEndDetails details) =>
+              onHorizontalDragEnd(details, context),
+          onLongPress: () => goToCurrentTime(algorithmProvider),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Column(
                   children: [
-                    const Spacer(),
-                    Center(
-                      child: Text(
-                        'Monatsplanung', //TODO @NightmindOfficial translate!
-                        style: MediaQuery.of(context).size.height < 650
-                            ? Theme.of(context).textTheme.headline5
-                            : Theme.of(context).textTheme.headline4,
-                      ),
-                    ),
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.topRight,
-                        child: IconButton(
-                          padding: const EdgeInsets.only(right: 16),
-                          constraints: const BoxConstraints(),
-                          onPressed: () {
-                            flipCardController.toggleCard();
-                          },
-                          icon: const Icon(
-                            Icons.flip_camera_android_rounded,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Spacer(),
+                        Center(
+                          child: Text(
+                            'Monatsplanung', //TODO @NightmindOfficial translate!
+                            style: MediaQuery.of(context).size.height < 650
+                                ? Theme.of(context).textTheme.headline5
+                                : Theme.of(context).textTheme.headline4,
                           ),
                         ),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.topRight,
+                            child: IconButton(
+                              padding: const EdgeInsets.only(right: 16),
+                              constraints: const BoxConstraints(),
+                              onPressed: () {
+                                screenCardProvider.controller?.toggleCard();
+                              },
+                              icon: const Icon(
+                                Icons.flip_camera_android_rounded,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      dateFormat.format(
+                        algorithmProvider.currentShownMonth,
                       ),
+                      style: Theme.of(context).textTheme.bodyText1,
                     ),
                   ],
                 ),
-                Text(
-                  dateFormat.format(
-                    algorithmProvider.currentShownMonth,
-                  ),
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  onPressed: () {
-                    goBackInTime(algorithmProvider);
-                  },
-                  icon: const Icon(Icons.arrow_back_ios_new_rounded),
-                ),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.baseline,
-                    textBaseline: TextBaseline.alphabetic,
-                    children: [
-                      Flexible(
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            data.eomBalance.toStringAsFixed(2),
-                            style:
-                                getBalanceTextStyle(context, data.eomBalance),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        goBackInTime(algorithmProvider);
+                      },
+                      icon: const Icon(Icons.arrow_back_ios_new_rounded),
+                    ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        textBaseline: TextBaseline.alphabetic,
+                        children: [
+                          Flexible(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: StreamBuilder<HomeScreenCardData>(
+                                stream: balanceDataProvider.getHomeScreenCardData(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState == ConnectionState.none ||
+                                      snapshot.connectionState == ConnectionState.waiting) {
+                                    return const LoadingSpinner();
+                                  }
+                                  return Text(
+                                    snapshot.data?.eomBalance.toStringAsFixed(2) ?? 0.toString(),
+                                    style: getBalanceTextStyle(context, snapshot.data?.eomBalance ?? 0),
+                                  );
+                                },
+                              ),
+                            ),
                           ),
-                        ),
+                          Text(
+                            '€',
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                        ],
                       ),
-                      Text(
-                        '€',
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                    ],
-                  ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        goForwardInTime(algorithmProvider);
+                      },
+                      icon: const Icon(Icons.arrow_forward_ios_rounded),
+                    ),
+                  ],
                 ),
-                IconButton(
-                  onPressed: () {
-                    goForwardInTime(algorithmProvider);
-                  },
-                  icon: const Icon(Icons.arrow_forward_ios_rounded),
+                Divider(
+                  thickness: 1,
+                  indent: proportionateScreenWidthFraction(ScreenFraction.onetenth),
+                  endIndent:
+                  proportionateScreenWidthFraction(ScreenFraction.onetenth),
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  child: HomeScreenCardRow(
+                    data: balanceDataProvider.getHomeScreenCardData(),
+                    upwardArrow: HomeScreenCardAvatar.withArrow(
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      arrow: Preset.arrowUp,
+                    ),
+                    downwardArrow: HomeScreenCardAvatar.withArrow(
+                      backgroundColor: Theme.of(context).colorScheme.error,
+                      arrow: Preset.arrowDown,
+                    ),
+                  ),
                 ),
               ],
             ),
-            Divider(
-              thickness: 1,
-              indent: proportionateScreenWidthFraction(ScreenFraction.onetenth),
-              endIndent:
-                  proportionateScreenWidthFraction(ScreenFraction.onetenth),
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: ScreenCardSpacedRow(
-                data: data,
-                upwardArrow: HomeScreenCardAvatar.withText(text: "o"),
-                downwardArrow: HomeScreenCardAvatar.withText(text: "o"),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+          );
+
   }
 }
