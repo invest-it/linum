@@ -19,7 +19,6 @@ import 'package:linum/navigation/enter_screen_page.dart';
 import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/providers/account_settings_provider.dart';
-import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/utilities/frontend/currency_formatter.dart';
 import 'package:linum/utilities/frontend/transaction_amount_formatter.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
@@ -412,8 +411,6 @@ class HomeScreenListView implements BalanceDataListView {
     BuildContext context,
     SerialTransaction serialTransaction,
   ) {
-    final BalanceDataProvider balanceDataProvider =
-        Provider.of<BalanceDataProvider>(context);
     final String langCode = context.locale.languageCode;
     final DateFormat serialFormatter = DateFormat('dd.MM.yyyy', langCode);
 
@@ -505,7 +502,6 @@ class HomeScreenListView implements BalanceDataListView {
     final int duration = serialTransaction.repeatDuration;
     final RepeatDurationType repeatDurationType = serialTransaction.repeatDurationType;
     final settings = Provider.of<AccountSettingsProvider>(context);
-    final String amount = serialTransaction.amount.abs().toStringAsFixed(2);
     final formattedAmount = CurrencyFormatter(context.locale, symbol: settings.getStandardCurrency().symbol)
       .format(serialTransaction.amount.abs());
 

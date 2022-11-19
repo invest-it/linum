@@ -697,8 +697,6 @@ class _EnterScreenListViewBuilderState
     actionLipStatusProvider.setActionLipStatus(
       providerKey: ProviderKey.enter,
     );
-    print("Setting currency");
-    print(currency.name);
     enterScreenProvider.setCurrency(currency.name);
   }
 

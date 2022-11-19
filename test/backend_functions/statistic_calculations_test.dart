@@ -17,7 +17,7 @@ import 'package:uuid/uuid.dart';
 final Transaction baseTransaction = Transaction(
   amount: 0,
   category: "None",
-  standardCurrencyName: "EUR",
+  currency: "EUR",
   name: "Test Single Balance Data",
   time: firestore.Timestamp.fromMillisecondsSinceEpoch(
     firestore.Timestamp.now().millisecondsSinceEpoch - (3600 * 1000),
@@ -206,10 +206,10 @@ void main() {
                 _createRandomStatisticDataWithFixedTime(rand);
             final StatisticalCalculations statisticsCalculations =
                 StatisticalCalculations(
-              randomData,
-              [],
-              "EUR",
-              AlgorithmProvider()
+              data: randomData,
+              serialData: [],
+              standardCurrencyName: "EUR",
+              algorithmProvider: AlgorithmProvider()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
                 ),
@@ -363,10 +363,10 @@ void main() {
                 _createRandomStatisticDataWithFixedTime(rand);
             final StatisticalCalculations statisticsCalculations =
                 StatisticalCalculations(
-              randomData,
-              [],
-              "EUR",
-              AlgorithmProvider()
+              data: randomData,
+              serialData: [],
+              standardCurrencyName: "EUR",
+              algorithmProvider: AlgorithmProvider()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
                 ),

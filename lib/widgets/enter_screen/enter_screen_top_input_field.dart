@@ -50,8 +50,6 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
         Provider.of<EnterScreenProvider>(context);
     final ActionLipStatusProvider actionLipStatusProvider =
         Provider.of<ActionLipStatusProvider>(context);
-    print("Rebuild on changes");
-    print(enterScreenProvider.currency);
     final currency = standardCurrencies[enterScreenProvider.currency];
     final formatter = CurrencyFormatter(
       context.locale,

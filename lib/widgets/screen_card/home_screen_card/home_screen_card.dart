@@ -29,6 +29,3 @@ class HomeScreenCard extends StatelessWidget {
     );
   }
 }
-
-
-

@@ -2,15 +2,19 @@ import 'package:linum/models/exchange_rates_for_date.dart';
 import 'package:linum/objectbox.g.dart';
 import 'package:linum/utilities/backend/exchange_rate_api.dart';
 import 'package:linum/utilities/backend/exchange_rate_synchronizer.dart';
+import 'package:logger/logger.dart';
 
 class ExchangeRateRepository {
   final Box<ExchangeRatesForDate> _box;
   late final ExchangeRateSynchronizer _synchronizer;
 
+  final logger = Logger();
+
   ExchangeRateRepository(Store store) : _box = store.box() {
     _synchronizer = ExchangeRateSynchronizer(_box);
   }
 
+  /*
   Future<void> _addExchangeRatesForDate() async {
     throw UnimplementedError();
   }
@@ -18,6 +22,7 @@ class ExchangeRateRepository {
   Future<void> _addMultipleExchangeRatesForDate() async {
     throw UnimplementedError();
   }
+  */
 
   Future<void> sync() async {
     _synchronizer.sync();
@@ -31,7 +36,6 @@ class ExchangeRateRepository {
         rates = await fetchExchangeRatesForDate(date);
         _box.put(rates);
       } catch(e) {
-        print(e);
         // TODO: Handle error
       }
     }
@@ -48,7 +52,7 @@ class ExchangeRateRepository {
         rates = await fetchExchangeRatesUntil(date);
         _box.putMany(rates); // TODO: What happens when one entry already exists
       } catch(e) {
-        print(e);
+        logger.e(e);
         // TODO: Handle error
       }
     }
@@ -67,8 +71,7 @@ class ExchangeRateRepository {
         rates = await fetchExchangeRatesForTimeSpan(dates.first, dates.last);
         _box.putMany(rates);
       } catch(e) {
-        print("Error in getExchangeRatesForDate");
-        print(e);
+        logger.e(e);
         // TODO: Handle error
       }
     }
@@ -91,7 +94,7 @@ class ExchangeRateRepository {
         rates = await fetchExchangeRatesForTimeSpan(earliest, latest);
         _box.putMany(rates);
       } catch(e) {
-        print(e);
+        logger.e(e);
         // TODO: Handle error
       }
     }

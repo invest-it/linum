@@ -230,7 +230,6 @@ class EnterScreenProvider with ChangeNotifier {
 
   void setCurrency(String currency) {
     _currency = currency;
-    print("Set Currency");
     notifyListeners();
   }
 

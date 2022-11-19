@@ -16,7 +16,6 @@ import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/exchange_rate_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
-import 'package:linum/providers/screen_card_provider.dart';
 import 'package:linum/utilities/frontend/multi_provider_builder.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 

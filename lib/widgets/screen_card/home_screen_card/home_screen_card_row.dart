@@ -88,7 +88,7 @@ class HomeScreenCardRow extends StatelessWidget {
                     CurrencyFormatter(context.locale, symbol: settings.getStandardCurrency().symbol)
                         .format(isIncome
                           ? snapshot.data?.mtdIncome ?? 0
-                          : snapshot.data?.mtdExpenses ?? 0
+                          : snapshot.data?.mtdExpenses ?? 0,
                     ),
                     style: TextStyle(
                       color: Colors.grey[700],

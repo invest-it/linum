@@ -70,7 +70,6 @@ Future<List<ExchangeRatesForDate>> fetchExchangeRatesForTimeSpan(DateTime earlie
 
   if (response.statusCode == 200) {
     final jsonList = (jsonDecode(response.body) as List<dynamic>).map((e) => e as Map<String, dynamic>);
-    print(jsonList);
     return jsonList.map((e) => ExchangeRatesForDate.fromJson(e)).toList();
 
   } else {

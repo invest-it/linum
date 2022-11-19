@@ -93,5 +93,3 @@ class _ScreenCardSkeletonState<TData> extends State<ScreenCardSkeleton> {
     );
   }
 }
-
-
