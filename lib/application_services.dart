@@ -4,7 +4,6 @@
 //  Co-Author: n/a
 //
 
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +16,7 @@ import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/exchange_rate_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
+import 'package:linum/providers/screen_card_provider.dart';
 import 'package:linum/utilities/frontend/multi_provider_builder.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 
@@ -35,11 +35,10 @@ class ApplicationServices extends StatelessWidget {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     SizeGuide.init(context);
-    
+
     return FutureBuilder(
       future: _initializedApp,
       builder: (innerContext, snapshot) {

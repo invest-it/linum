@@ -9,7 +9,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/constants/serial_transaction_change_type_enum.dart';
 import 'package:linum/models/dialog_action.dart';
-import 'package:linum/models/serial_transaction.dart';
 import 'package:linum/models/transaction.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
@@ -17,13 +16,13 @@ import 'package:provider/provider.dart';
 
 Future<bool?> generateDeleteDialogFromTransaction(
   BuildContext context,
-  BalanceDataProvider balanceDataProvider,
+  // BalanceDataProvider balanceDataProvider,
   Transaction transaction,
 ) async {
   final bool isSerial = transaction.repeatId != null;
   return generateDeleteDialog(
     context,
-    balanceDataProvider,
+    // balanceDataProvider,
     isSerial ? transaction.repeatId! : transaction.id,
     isSerial: isSerial,
     formerTime: transaction.formerTime ?? transaction.time,
@@ -41,6 +40,7 @@ Future<bool?> generateDeleteDialogFromSerialTransaction(
 Future<bool?> showRepeatableDeleteDialog(
   BuildContext context,
   String transactionId, {
+  bool isWholeSerial = false,
   firestore.Timestamp? formerTime,
 }) async {
   final UserAlert userAlert = UserAlert(context: context);
@@ -49,43 +49,46 @@ Future<bool?> showRepeatableDeleteDialog(
   return userAlert.showActionDialog(
     "enter_screen.delete-entry.dialog-label-deleterep",
     [
-      DialogAction(
-        // ignore: avoid_redundant_argument_values
-        dialogPurpose: DialogPurpose.primary,
-        actionTitle: "enter_screen.delete-entry.dialog-button-onlyonce",
-        function: () {
-          balanceDataProvider.removeSerialTransactionUsingId(
-            id: transactionId,
-            removeType: SerialTransactionChangeType.onlyThisOne,
-            time: formerTime,
-          );
-          Navigator.of(context, rootNavigator: true).pop(true);
-        },
-      ),
-      DialogAction(
-        dialogPurpose: DialogPurpose.danger,
-        actionTitle: "enter_screen.delete-entry.dialog-button-untilnow",
-        function: () {
-          balanceDataProvider.removeSerialTransactionUsingId(
-            id: transactionId,
-            removeType: SerialTransactionChangeType.thisAndAllBefore,
-            time: formerTime,
-          );
-          Navigator.of(context, rootNavigator: true).pop(true);
-        },
-      ),
-      DialogAction(
-        dialogPurpose: DialogPurpose.danger,
-        actionTitle: "enter_screen.delete-entry.dialog-button-fromnow",
-        function: () {
-          balanceDataProvider.removeSerialTransactionUsingId(
-            id: transactionId,
-            removeType: SerialTransactionChangeType.thisAndAllAfter,
-            time: formerTime,
-          );
-          Navigator.of(context, rootNavigator: true).pop(true);
-        },
-      ),
+      if (!isWholeSerial)
+        DialogAction(
+          // ignore: avoid_redundant_argument_values
+          dialogPurpose: DialogPurpose.primary,
+          actionTitle: "enter_screen.delete-entry.dialog-button-onlyonce",
+          function: () {
+            balanceDataProvider.removeSerialTransactionUsingId(
+              id: transactionId,
+              removeType: SerialTransactionChangeType.onlyThisOne,
+              time: formerTime,
+            );
+            Navigator.of(context, rootNavigator: true).pop(true);
+          },
+        ),
+      if (!isWholeSerial)
+        DialogAction(
+          dialogPurpose: DialogPurpose.danger,
+          actionTitle: "enter_screen.delete-entry.dialog-button-untilnow",
+          function: () {
+            balanceDataProvider.removeSerialTransactionUsingId(
+              id: transactionId,
+              removeType: SerialTransactionChangeType.thisAndAllBefore,
+              time: formerTime,
+            );
+            Navigator.of(context, rootNavigator: true).pop(true);
+          },
+        ),
+      if (!isWholeSerial)
+        DialogAction(
+          dialogPurpose: DialogPurpose.danger,
+          actionTitle: "enter_screen.delete-entry.dialog-button-fromnow",
+          function: () {
+            balanceDataProvider.removeSerialTransactionUsingId(
+              id: transactionId,
+              removeType: SerialTransactionChangeType.thisAndAllAfter,
+              time: formerTime,
+            );
+            Navigator.of(context, rootNavigator: true).pop(true);
+          },
+        ),
       DialogAction(
         dialogPurpose: DialogPurpose.danger,
         actionTitle: "enter_screen.delete-entry.dialog-button-allentries",
@@ -140,7 +143,7 @@ Future<bool?> showDefaultDeleteDialog(
 
 Future<bool?> generateDeleteDialog(
   BuildContext context,
-  BalanceDataProvider balanceDataProvider,
+  //BalanceDataProvider balanceDataProvider,
   String transactionId, {
   required bool isSerial,
   firestore.Timestamp? formerTime,
@@ -152,4 +155,16 @@ Future<bool?> generateDeleteDialog(
           formerTime: formerTime,
         )
       : showDefaultDeleteDialog(context, transactionId, formerTime: formerTime);
+}
+
+Future<bool?> generateWholeSerialTransactionDeleteDialog(
+  BuildContext context,
+  // BalanceDataProvider balanceDataProvider,
+  String serialTransactionId,
+) {
+  return showRepeatableDeleteDialog(
+    context,
+    serialTransactionId,
+    isWholeSerial: true,
+  );
 }

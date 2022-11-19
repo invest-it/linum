@@ -15,7 +15,6 @@ import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/exchange_rate_provider.dart';
 import 'package:linum/utilities/backend/statistical_calculations.dart';
 import 'package:linum/utilities/balance_data/serial_transaction_manager.dart';
-import 'package:linum/widgets/abstract/abstract_home_screen_card.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
 import 'package:linum/widgets/loading_spinner.dart';
 import 'package:tuple/tuple.dart';
@@ -63,7 +62,15 @@ class BalanceDataStreamBuilder {
           });
         });
 
-        serialTransactions.sort((a, b) => a.name.compareTo(b.name));
+        serialTransactions.sort((a, b) {
+          // are both expenses / incomes
+          if ((a.amount <= 0 && b.amount <= 0) ||
+              (a.amount > 0 && b.amount > 0)) {
+            return a.name.compareTo(b.name);
+          } else {
+            return a.amount.compareTo(b.amount);
+          }
+        });
 
         return Tuple2(data.item1, serialTransactions);
       }
@@ -102,37 +109,21 @@ class BalanceDataStreamBuilder {
     );
   }
 
-  /// Returns a StreamBuilder that builds the ListView from the document-datastream
-  StreamBuilder fillStatisticPanelWithData({
+
+  Stream<StatisticalCalculations>? getStatisticCalculations({
     required Stream<firestore.DocumentSnapshot<BalanceDocument>>? dataStream,
-    required AbstractHomeScreenCard statisticPanel,
   }) {
-    final processedStream = dataStream?.asyncMap<StatisticalCalculations>((snapshot) async {
+    return dataStream?.asyncMap<StatisticalCalculations>((snapshot) async {
       final preparedData = await _prepareData(
         snapshot,
       );
-      final List<Transaction> transactions = preparedData.item1;
-
       return StatisticalCalculations(
-        transactions,
-        exchangeRateProvider.standardCurrency.name,
+        preparedData.item1,
+        preparedData.item2,
         algorithmProvider,
       );
 
     });
-
-    return StreamBuilder<StatisticalCalculations>(
-      stream: processedStream,
-      builder: (ctx, snapshot) {
-        if (snapshot.data == null) {
-          statisticPanel.addStatisticData(null);
-          return statisticPanel.returnWidget;
-        } else {
-          statisticPanel.addStatisticData(snapshot.data);
-          return statisticPanel.returnWidget;
-        }
-      },
-    );
   }
 
   /// use the snapshot to get all data from the document.
@@ -142,8 +133,8 @@ class BalanceDataStreamBuilder {
   /// (will still be used after filter on firebase, because of repeated balanced)
   /// may be moved into the data generation function
   Future<Tuple2<List<Transaction>, List<SerialTransaction>>> _prepareData(
-    firestore.DocumentSnapshot<BalanceDocument> snapshot,
-  ) async {
+      firestore.DocumentSnapshot<BalanceDocument> snapshot,
+      ) async {
     final data = snapshot.data(); // TODO: Model for Document
 
     if (data == null) {

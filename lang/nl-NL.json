@@ -74,10 +74,10 @@
             "message": "Uw wachtwoord is bijgewerkt.",
             "title": "Klaar!"
         },
-        "delete-account":{ 
-            "title":"Wilt u de rekening veilig verwijderen?",
+        "delete-account": {
+            "title": "Wilt u de rekening veilig verwijderen?",
             "cancel": "Geen",
-            "action": "Ja"      
+            "action": "Ja"
         }
     },
     "auth": {
@@ -165,6 +165,9 @@
         "label-repeat-monthly": "Begin van de maand",
         "label-repeat-none": "Niet herhalen",
         "label-repeat-weekly": "Wekelijks",
+        "label-repeat-quarterly": "Alle 3 maanden",
+        "label-repeat-semiannually": "Halfjaarlijks",
+        "label-repeat-annually": "Jaarlijks",
         "title": {
             "add": "Nieuw item",
             "edit": "Bewerk item"
@@ -179,8 +182,10 @@
     "enter_screen_attribute_repeat": "Herhaal",
     "home_screen": {
         "button-show-more": "MEER ZIEN",
+        "button-show-all": "ALLE",
         "free-text": "Gratis",
-        "label-recent-transactions": "Recente transacties"
+        "label-recent-transactions": "Recente transacties",
+        "label-active-serialcontracts": "Contracten deze maand"
     },
     "home_screen_card": {
         "home-screen-card-toast": "Veeg naar links en rechts om de vorige of komende maanden te bekijken. Ingedrukt houden om terug te keren naar de huidige maand.",
@@ -199,7 +204,13 @@
         "label-no-entries": "- Geen inzendingen gevonden -",
         "label-thismonth": "Deze Maand",
         "label-today": "Vandaag",
-        "label-yesterday": "Gisteren"
+        "label-yesterday": "Gisteren",
+        "label-error-translation": "Vertaling ontbreekt",
+        "label-every": "Elke",
+        "label-days": "dagen",
+        "label-weeks": "weken",
+        "label-months": "maanden",
+        "label-years": "jaar"
     },
     "lock_screen": {
         "change": {

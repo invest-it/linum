@@ -74,10 +74,10 @@
             "message": "Your password has been updated.",
             "title": "Done!"
         },
-        "delete-account":{ 
-            "title":"Are you sure?",
+        "delete-account": {
+            "title": "Are you sure?",
             "cancel": "No",
-            "action": "Yes"      
+            "action": "Yes"
         }
     },
     "auth": {
@@ -165,6 +165,9 @@
         "label-repeat-monthly": "Beginning of the month",
         "label-repeat-none": "Don't repeat",
         "label-repeat-weekly": "Weekly",
+        "label-repeat-quarterly": "Every three months",
+        "label-repeat-semiannually": "Semi-Annual",
+        "label-repeat-annually": "Annual",
         "title": {
             "add": "New Entry",
             "edit": "Edit Entry"
@@ -179,8 +182,10 @@
     "enter_screen_attribute_repeat": "Repeat",
     "home_screen": {
         "button-show-more": "SHOW MORE",
+        "button-show-all": "SHOW ALL",
         "free-text": "Free",
-        "label-recent-transactions": "Recent transactions"
+        "label-recent-transactions": "Recent transactions",
+        "label-active-serialcontracts": "Contracts this month"
     },
     "home_screen_card": {
         "home-screen-card-toast": "Swipe left and right to view previous or upcoming months. Press and hold to return to the current month.",
@@ -199,7 +204,13 @@
         "label-no-entries": "- No Entries found -",
         "label-thismonth": "This month",
         "label-today": "Today",
-        "label-yesterday": "Yesterday"
+        "label-yesterday": "Yesterday",
+        "label-error-translation": "Translation missing",
+        "label-every": "Every",
+        "label-days": "days",
+        "label-weeks": "weeks",
+        "label-months": "months",
+        "label-years": "years"
     },
     "lock_screen": {
         "change": {

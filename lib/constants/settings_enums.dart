@@ -47,6 +47,9 @@ enum RepeatDuration {
   daily,
   weekly,
   monthly,
+  quarterly,
+  semiannually,
+  annually,
   // TODO implement custom repeat
   // custom,
 }

@@ -1,7 +1,7 @@
 //  Home Screen Listview - Specific ListView settings for the Home Screen
 //
-//  Author: SoTBurst
-//  Co-Author: thebluebaronx, NightmindOfficial
+//  Author: SoTBurst, NightmindOfficial
+//  Co-Author: thebluebaronx
 //
 
 // ignore_for_file: avoid_dynamic_calls
@@ -10,6 +10,7 @@ import 'package:badges/badges.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:linum/constants/repeat_duration_type_enum.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/models/serial_transaction.dart';
@@ -101,7 +102,7 @@ class HomeScreenListView implements BalanceDataListView {
         context,
         serialTransactions,
         error: error,
-        repeatedData: true,
+        // repeatedData: true,
       ),
     );
   }
@@ -191,7 +192,7 @@ class HomeScreenListView implements BalanceDataListView {
         }
 
         list.add(
-          buildTransactionGestureDetector(
+          buildTransaction(
             context,
             transaction,
             amountFormatter,
@@ -207,26 +208,47 @@ class HomeScreenListView implements BalanceDataListView {
     BuildContext context,
     List<SerialTransaction> serialTransactions, {
     bool error = false,
-    bool repeatedData = false,
+    // bool repeatedData = false,
   }) {
     final List<Widget> list = [];
 
-    for (final serTrans in serialTransactions) {
-      list.add(buildSerialTransactionGestureDetector(context, serTrans));
+    if (error) {
+      // TODO: tell user there was an error loading @damattl
+    } else if (serialTransactions.isEmpty) {
+      list.add(const TimeWidget(displayValue: "listview.label-no-entries"));
+    } else {
+      bool wroteExpensesTag = false;
+      bool wroteIncomeTag = false;
+
+      for (final serTrans in serialTransactions) {
+        if (!wroteExpensesTag && serTrans.amount <= 0) {
+          list.add(
+            const TimeWidget(displayValue: "home_screen_card.label-expenses"),
+          );
+          wroteExpensesTag = true;
+        }
+        if (!wroteIncomeTag && serTrans.amount > 0) {
+          list.add(
+            const TimeWidget(displayValue: "home_screen_card.label-income"),
+          );
+          wroteIncomeTag = true;
+        }
+        list.add(buildSerialTransaction(context, serTrans));
+      }
     }
 
     return list;
   }
 
   /// Builds a [GestureDetector] for displaying a single balance on the home screen. Below, there is another function for handling the active contracts display.
-  GestureDetector buildTransactionGestureDetector(
+  GestureDetector buildTransaction(
     BuildContext context,
     Transaction transaction,
     TransactionAmountFormatter amountFormatter, {
     bool isFutureItem = false,
   }) {
-    final BalanceDataProvider balanceDataProvider =
-        Provider.of<BalanceDataProvider>(context);
+    // final BalanceDataProvider balanceDataProvider =
+    //     Provider.of<BalanceDataProvider>(context);
     final String langCode = context.locale.languageCode;
     final DateFormat formatter = DateFormat('EEEE, dd. MMMM yyyy', langCode);
 
@@ -272,7 +294,7 @@ class HomeScreenListView implements BalanceDataListView {
         confirmDismiss: (DismissDirection direction) async {
           return generateDeleteDialogFromTransaction(
             context,
-            balanceDataProvider,
+            // balanceDataProvider,
             transaction,
           );
         },
@@ -385,107 +407,67 @@ class HomeScreenListView implements BalanceDataListView {
   }
 
   /// As mentioned above, this function handles the active contracts display.
-  GestureDetector buildSerialTransactionGestureDetector(
+  Material buildSerialTransaction(
     BuildContext context,
     SerialTransaction serialTransaction,
   ) {
     final BalanceDataProvider balanceDataProvider =
         Provider.of<BalanceDataProvider>(context);
+    final String langCode = context.locale.languageCode;
+    final DateFormat serialFormatter = DateFormat('dd.MM.yyyy', langCode);
 
-    return GestureDetector(
-      onTap: () {
-        // TODO implement custom edit screen handling here
-        // getRouterDelegate().pushRoute(
-        //   MainRoute.enter,
-        //   settings: EnterScreenPageSettings.withBalanceData(singleBalanceData),
-        // );
-      },
-      child: Dismissible(
-        background: ColoredBox(
-          color: Colors.red,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 30),
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 16.0,
-                  children: [
-                    Text(
-                      tr("listview.dismissible.label-delete"),
-                      style: Theme.of(context).textTheme.button,
-                    ),
-                    Icon(
-                      Icons.delete,
-                      color: Theme.of(context).colorScheme.secondaryContainer,
-                    ),
-                  ],
+    return Material(
+      child: ListTile(
+        isThreeLine: true,
+        leading: CircleAvatar(
+          backgroundColor: serialTransaction.amount > 0
+              ? Theme.of(context)
+                  .colorScheme
+                  .tertiary // FU-TURE INCOME BACKGROUND
+              : Theme.of(context).colorScheme.errorContainer,
+          child: serialTransaction.amount > 0
+              ? Icon(
+                  standardIncomeCategories[serialTransaction.category]?.icon ??
+                      Icons.error,
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onPrimary, // PRESENT INCOME ICON
+                )
+              : Icon(
+                  standardExpenseCategories[serialTransaction.category]?.icon ??
+                      Icons.error,
+                  color: Theme.of(context).colorScheme.onPrimary,
                 ),
-              ),
-            ],
-          ),
         ),
-        key: Key(serialTransaction.id),
-        direction: DismissDirection.endToStart,
-        dismissThresholds: const {
-          DismissDirection.endToStart: 0.5,
-        },
-        confirmDismiss: (DismissDirection direction) async {
-          return generateDeleteDialogFromSerialTransaction(
-            //FIXME: @SoTBurst
-            context,
-            balanceDataProvider,
-            serialTransaction,
-          );
-        },
-        child: ListTile(
-          leading: CircleAvatar(
-            backgroundColor: serialTransaction.amount > 0
-                ? Theme.of(context)
-                    .colorScheme
-                    .tertiary // FUTURE INCOME BACKGROUND
-                : Theme.of(context).colorScheme.errorContainer,
-            child: serialTransaction.amount > 0
-                ? Icon(
-                    standardIncomeCategories[serialTransaction.category]
-                            ?.icon ??
-                        Icons.error,
-                    color: Theme.of(context)
-                        .colorScheme
-                        .onPrimary, // PRESENT INCOME ICON
-                  )
-                : Icon(
-                    standardExpenseCategories[serialTransaction.category]
-                            ?.icon ??
-                        Icons.error,
-                    color: Theme.of(context).colorScheme.onPrimary,
-                  ),
+        title: Text(
+          serialTransaction.name != ""
+              ? serialTransaction.name
+              : translateCategory(
+                  serialTransaction.category,
+                  context,
+                  isExpense: serialTransaction.amount <= 0,
+                ),
+          style: Theme.of(context).textTheme.bodyText1,
+        ),
+        subtitle: Text(
+          "${calculateTimeFrequency(serialTransaction)} \nSeit ${serialFormatter.format(serialTransaction.initialTime.toDate())}"
+              .toUpperCase(),
+          style: Theme.of(context).textTheme.overline,
+        ),
+        trailing: IconButton(
+          splashRadius: 24.0,
+          icon: Icon(
+            Icons.edit_rounded,
+            color: Theme.of(context).colorScheme.secondary,
           ),
-          title: Text(
-            serialTransaction.name != ""
-                ? serialTransaction.name
-                : translateCategory(
-                    serialTransaction.category,
-                    context,
-                    isExpense: serialTransaction.amount <= 0,
-                  ),
-            style: Theme.of(context).textTheme.bodyText1,
-          ),
-          //TODO FIX THIS ASAP!!!
-          // subtitle: Text(
-          //   formatter
-          //       .format(
-          //         // serialTransaction.time.toDate(), singleBalanceData.amount == 0 TODO Implement the following format: "27,99€ alle 7 Tage" oder "3,50 täglich"
-          //       )
-          //       .toUpperCase(),
-          //   style: Theme.of(context).textTheme.overline,
-          // ),
-          trailing: IconButton(
-            icon: const Icon(Icons.arrow_forward_ios_rounded),
-            onPressed: () => {},
-          ), //TODO implement Edit function
+          onPressed: () => {
+            getRouterDelegate().pushRoute(
+              MainRoute.enter,
+              settings: EnterScreenPageSettings.withSerialTransaction(
+                serialTransaction,
+              ),
+            ),
+          },
         ),
       ),
     );
@@ -502,13 +484,69 @@ class HomeScreenListView implements BalanceDataListView {
     required bool isExpense,
   }) {
     if (isExpense) {
-      return tr(standardExpenseCategories[category]?.label ?? "");
-      // TODO @Nightmind you could add a String here that will show something like "error translating your category"
+      return tr(
+        standardExpenseCategories[category]?.label ??
+            tr('listview.label-error-translation'),
+      );
     } else if (!isExpense) {
-      return tr(standardIncomeCategories[category]?.label ?? "");
-      // TODO @Nightmind you could add a String here that will show something like "error translating your category"
+      return tr(
+        standardIncomeCategories[category]?.label ??
+            tr('listview.label-error-translation'),
+      );
     }
     return "Error"; // This should never happen.
+  }
+
+  String calculateTimeFrequency(
+    SerialTransaction serialTransaction,
+  ) {
+    final int duration = serialTransaction.repeatDuration;
+    final RepeatDurationType repeatDurationType =
+        serialTransaction.repeatDurationType;
+    final String amount = serialTransaction.amount.abs().toStringAsFixed(2);
+
+    switch (repeatDurationType) {
+      case RepeatDurationType.seconds:
+        //The following constants represent the seconds equivalent of the respecive timeframes - to make the following if-else clause easier to understand
+        const int week = 604800;
+        const int day = 86400;
+
+        // If the repeatDuration is on a weekly basis
+        if (duration % week == 0) {
+          if (duration / week == 1) {
+            return "$amount€ ${tr('enter_screen.label-repeat-weekly')}";
+          }
+          return "${tr('listview.label-every')} ${(duration / day).floor()} ${tr('listview.label-weeks')}";
+        }
+
+        // If the repeatDuration is on a daily basis
+        else if (duration % day == 0) {
+          if (duration / day == 1) {
+            return "$amount€ ${tr('enter_screen.label-repeat-daily')}";
+          }
+          return "${tr('listview.label-every')} ${(duration / day).floor()} ${tr('listview.label-days')}";
+        } else {
+          //This should never happen, but just in case (if we forget to cap the repeat duration to at least one day)
+          return tr('main.label-error');
+        }
+
+      // If the repeatDuration is on a monthly / yearly basis
+      case RepeatDurationType.months:
+        if (duration % 12 == 0) {
+          if (duration / 12 == 1) {
+            return "$amount€ ${tr('enter_screen.label-repeat-annually')}";
+          }
+          return "${tr('listview.label-every')} ${(duration / 12).floor()} ${tr('listview.label-years')}";
+        }
+        if (duration == 1) {
+          return "$amount€ ${tr('enter_screen.label-repeat-30days')}";
+        } else if (duration == 3) {
+          return "$amount€ ${tr('enter_screen.label-repeat-quarterly')}";
+        } else if (duration == 6) {
+          return "$amount€ ${tr('enter_screen.label-repeat-semiannually')}";
+        }
+        return "${tr('listview.label-every')} ${(duration / 12).floor()} ${tr('listview.label-months')}";
+    }
   }
 
   @override

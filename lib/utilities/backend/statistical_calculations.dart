@@ -5,16 +5,21 @@
 //
 
 import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
+import 'package:linum/models/serial_transaction.dart';
 import 'package:linum/models/single_month_statistic.dart';
 import 'package:linum/models/transaction.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/utilities/backend/exchange_rate_converter.dart';
 import 'package:linum/utilities/frontend/filters.dart';
+import 'package:logger/logger.dart';
 import 'package:tuple/tuple.dart';
 
 class StatisticalCalculations {
   /// the data that should be processed
   late List<Transaction> _allData;
+
+  /// the data that should be processed
+  late List<SerialTransaction> _allSerialData;
 
   final String _standardCurrencyName;
 
@@ -22,29 +27,53 @@ class StatisticalCalculations {
   List<Transaction> get _currentData =>
       getDataUsingFilter(_algorithmProvider.currentFilter);
 
+  List<Transaction> get _currentTillNowData => getDataUsingFilter(
+        Filters.newerThan(firestore.Timestamp.now()),
+        baseData: _currentData,
+      );
+
   List<Transaction> get _allTimeData =>
       getDataUsingFilter(Filters.newerThan(firestore.Timestamp.now()));
 
   late AlgorithmProvider _algorithmProvider;
 
+  late Logger log;
+
   /// create a new instance and set the data
   StatisticalCalculations(
     List<Transaction> data,
     this._standardCurrencyName,
+    List<SerialTransaction> serialData,
     AlgorithmProvider algorithmProvider,
   ) {
     _allData = [];
+
     for (int i = 0; i < data.length; i++) {
       _allData
           .add(data[i].copyWith()); // copy data so there is no change in data
     }
+
+    _allSerialData = [];
+    for (int i = 0; i < serialData.length; i++) {
+      _allSerialData.add(
+        serialData[i].copyWith(),
+      ); // copy data so there is no change in data
+    }
+
     _algorithmProvider = algorithmProvider;
+
+    log = Logger();
   }
 
   /// filter the data further down to only include the data with income information (excluding 0 cost products)
   List<Transaction> get _currentIncomeData => getDataUsingFilter(
         Filters.amountAtMost(0),
         baseData: _currentData,
+      );
+
+  List<Transaction> get _currentTillNowIncomeData => getDataUsingFilter(
+        Filters.amountAtMost(0),
+        baseData: _currentTillNowData,
       );
 
   List<Transaction> get _allTimeIncomeData => getDataUsingFilter(
@@ -58,9 +87,52 @@ class StatisticalCalculations {
         baseData: _currentData,
       );
 
+  List<Transaction> get _currentTillNowCostData => getDataUsingFilter(
+        Filters.amountMoreThan(0),
+        baseData: _currentTillNowData,
+      );
+
   List<Transaction> get _allTimeCostData => getDataUsingFilter(
         Filters.amountMoreThan(0),
         baseData: _allTimeData,
+      );
+
+  // All means all inside the filter. AllTime means ALL ALL
+  List<Transaction> get _allSerialGeneratedData => getDataUsingFilter(
+        (t) {
+          if (t is Transaction) {
+            return t.repeatId == null;
+          }
+          log.wtf(
+            "Somehow in a list of Transaction an item wasn't a Transaction",
+          );
+          return true;
+        },
+      );
+
+  List<Transaction> get _allSerialGeneratedIncomeData => getDataUsingFilter(
+        Filters.amountAtMost(0),
+        baseData: _allSerialGeneratedData,
+      );
+
+  List<Transaction> get _allSerialGeneratedCostData => getDataUsingFilter(
+        Filters.amountMoreThan(0),
+        baseData: _allSerialGeneratedData,
+      );
+
+  List<Transaction> get _futureSerialGeneratedIncomeData => getDataUsingFilter(
+        Filters.amountAtMost(0),
+        baseData: _futureSerialGeneratedData,
+      );
+
+  List<Transaction> get _futureSerialGeneratedCostData => getDataUsingFilter(
+        Filters.amountMoreThan(0),
+        baseData: _futureSerialGeneratedData,
+      );
+
+  List<Transaction> get _futureSerialGeneratedData => getDataUsingFilter(
+        Filters.olderThan(firestore.Timestamp.now()),
+        baseData: _allSerialGeneratedData,
       );
 
   List<SingleMonthStatistic> getBundledDataPerMonth({
@@ -114,6 +186,10 @@ class StatisticalCalculations {
     return _getSumFrom(_currentData);
   }
 
+  num get tillNowSumBalance {
+    return _getSumFrom(_currentTillNowData);
+  }
+
   num get allTimeSumBalance {
     return _getSumFrom(_allTimeData);
   }
@@ -128,6 +204,10 @@ class StatisticalCalculations {
   /// sum up the cost data
   num get sumCosts {
     return _getSumFrom(_currentCostData);
+  }
+
+  num get tillNowSumCosts {
+    return _getSumFrom(_currentTillNowCostData);
   }
 
   num get allTimeSumCosts {
@@ -145,6 +225,10 @@ class StatisticalCalculations {
   /// sum up the income data. if data is empty = 0
   num get sumIncomes {
     return _getSumFrom(_currentIncomeData);
+  }
+
+  num get tillNowSumIncomes {
+    return _getSumFrom(_currentTillNowIncomeData);
   }
 
   num get allTimeSumIncomes {
@@ -174,6 +258,24 @@ class StatisticalCalculations {
 
   num _getAverageFrom(List<Transaction> data) {
     return data.isNotEmpty ? _getSumFrom(data) / data.length : 0;
+  }
+
+  num get serialTransactionCount => _allSerialData.length;
+
+  num get sumFutureSerialCosts {
+    return _getSumFrom(_futureSerialGeneratedCostData);
+  }
+
+  num get sumFutureSerialIncomes {
+    return _getSumFrom(_futureSerialGeneratedIncomeData);
+  }
+
+  num get sumSerialIncomes {
+    return _getSumFrom(_allSerialGeneratedIncomeData);
+  }
+
+  num get sumSerialCosts {
+    return _getSumFrom(_allSerialGeneratedCostData);
   }
 
   /// baseData is the data used as base. return will always be a subset of baseData

@@ -74,10 +74,10 @@
             "message": "Dein Passwort wurde aktualisiert.",
             "title": "Fertig!"
         },
-        "delete-account":{ 
-            "title":"Möchtest du den Account sicher löschen?",
+        "delete-account": {
+            "title": "Möchtest du den Account sicher löschen?",
             "cancel": "Nein",
-            "action": "Ja"      
+            "action": "Ja"
         }
     },
     "auth": {
@@ -165,6 +165,9 @@
         "label-repeat-monthly": "Zum Monatsanfang",
         "label-repeat-none": "Nicht wiederholen",
         "label-repeat-weekly": "Wöchentlich",
+        "label-repeat-quarterly": "Alle 3 Monate",
+        "label-repeat-semiannually": "Halbjährlich",
+        "label-repeat-annually": "Jährlich",
         "title": {
             "add": "Neuer Eintrag",
             "edit": "Eintrag bearbeiten"
@@ -179,8 +182,10 @@
     "enter_screen_attribute_repeat": "Wiederholen",
     "home_screen": {
         "button-show-more": "MEHR",
+        "button-show-all": "ALLE",
         "free-text": "Gratis",
-        "label-recent-transactions": "Neueste Transaktionen"
+        "label-recent-transactions": "Neueste Transaktionen",
+        "label-active-serialcontracts": "Verträge diesen Monat"
     },
     "home_screen_card": {
         "home-screen-card-toast": "Swipe nach links und rechts, um vorige oder kommende Monate anzusehen. Gedrückt halten, um in den aktuellen Monat zurückzukehren.",
@@ -199,7 +204,13 @@
         "label-no-entries": "- Keine Einträge bisher -",
         "label-thismonth": "Diesen Monat",
         "label-today": "Heute",
-        "label-yesterday": "Gestern"
+        "label-yesterday": "Gestern",
+        "label-error-translation": "Übersetzung fehlt",
+        "label-every": "Alle",
+        "label-days": "Tage",
+        "label-weeks": "Wochen",
+        "label-months": "Monate",
+        "label-years": "Jahre"
     },
     "lock_screen": {
         "change": {

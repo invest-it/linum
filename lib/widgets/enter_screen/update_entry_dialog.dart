@@ -7,20 +7,85 @@ import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:provider/provider.dart';
 
-Future<bool?> showChangeEntryDialog(BuildContext context, DateTime selectedDate) {
+Future<bool?> showChangeEntryDialog(
+  BuildContext context,
+  DateTime selectedDate, {
+  bool isTheWholeSerial = false,
+}) {
   final UserAlert userAlert = UserAlert(context: context);
-  final BalanceDataProvider balanceDataProvider = Provider.of<BalanceDataProvider>(context, listen: false);
-  final EnterScreenProvider enterScreenProvider = Provider.of<EnterScreenProvider>(context, listen: false);
+  final BalanceDataProvider balanceDataProvider =
+      Provider.of<BalanceDataProvider>(context, listen: false);
+  final EnterScreenProvider enterScreenProvider =
+      Provider.of<EnterScreenProvider>(context, listen: false);
   return userAlert.showActionDialog(
     "enter_screen.change-entry.dialog-label-change",
     <DialogAction>[
+      if (!isTheWholeSerial)
+        DialogAction(
+          actionTitle: "enter_screen.delete-entry.dialog-button-onlyonce",
+          function: () {
+            balanceDataProvider.updateSerialTransaction(
+              id: enterScreenProvider.repeatId!,
+              changeType: SerialTransactionChangeType.onlyThisOne,
+              amount: enterScreenProvider.amountToDisplay(),
+              category: enterScreenProvider.category,
+              currency: "EUR",
+              name: enterScreenProvider.name,
+              time: enterScreenProvider.formerTime,
+              newTime: Timestamp.fromDate(
+                selectedDate,
+              ),
+            );
+            Navigator.of(context, rootNavigator: true).pop(true);
+          },
+        ),
+      if (!isTheWholeSerial)
+        DialogAction(
+          actionTitle: "enter_screen.delete-entry.dialog-button-untilnow",
+          dialogPurpose: DialogPurpose.danger,
+          function: () {
+            balanceDataProvider.updateSerialTransaction(
+              id: enterScreenProvider.repeatId!,
+              changeType: SerialTransactionChangeType.thisAndAllBefore,
+              amount: enterScreenProvider.amountToDisplay(),
+              category: enterScreenProvider.category,
+              currency: "EUR",
+              name: enterScreenProvider.name,
+              time: enterScreenProvider.formerTime,
+              newTime: Timestamp.fromDate(
+                selectedDate,
+              ),
+            );
+            Navigator.of(context, rootNavigator: true).pop(true);
+          },
+        ),
+      if (!isTheWholeSerial)
+        DialogAction(
+          actionTitle: "enter_screen.delete-entry.dialog-button-fromnow",
+          dialogPurpose: DialogPurpose.danger,
+          function: () {
+            balanceDataProvider.updateSerialTransaction(
+              id: enterScreenProvider.repeatId!,
+              changeType: SerialTransactionChangeType.thisAndAllAfter,
+              amount: enterScreenProvider.amountToDisplay(),
+              category: enterScreenProvider.category,
+              currency: "EUR",
+              name: enterScreenProvider.name,
+              time: enterScreenProvider.formerTime,
+              newTime: Timestamp.fromDate(
+                selectedDate,
+              ),
+            );
+            Navigator.of(context, rootNavigator: true).pop(true);
+          },
+        ),
       DialogAction(
-        actionTitle: "enter_screen.delete-entry.dialog-button-onlyonce",
+        actionTitle: "enter_screen.delete-entry.dialog-button-allentries",
+        dialogPurpose: DialogPurpose.danger,
         function: () {
           balanceDataProvider.updateSerialTransaction(
-            id: enterScreenProvider
-                .repeatId!,
-            changeType: SerialTransactionChangeType.onlyThisOne,
+            id: enterScreenProvider.repeatId!,
+            changeType: SerialTransactionChangeType.all,
             amount: enterScreenProvider.amountToDisplay(),
             category: enterScreenProvider.category,
             currency: enterScreenProvider.currency,
@@ -34,10 +99,8 @@ Future<bool?> showChangeEntryDialog(BuildContext context, DateTime selectedDate)
         },
       ),
       DialogAction(
-        actionTitle:
-        "enter_screen.delete-entry.dialog-button-untilnow",
-        dialogPurpose:
-        DialogPurpose.danger,
+        actionTitle: "enter_screen.delete-entry.dialog-button-cancel",
+        dialogPurpose: DialogPurpose.secondary,
         function: () {
           balanceDataProvider
               .updateSerialTransaction(
@@ -127,7 +190,8 @@ Future<bool?> showChangeEntryDialog(BuildContext context, DateTime selectedDate)
         },
       ),
     ],
+    // TODO: @NightMind chjange "" to a translation
     title:
-    "enter_screen.delete-entry.dialog-label-title",
+        isTheWholeSerial ? "" : "enter_screen.delete-entry.dialog-label-title",
   );
 }

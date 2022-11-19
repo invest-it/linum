@@ -74,10 +74,10 @@
             "message": "Su contraseña ha sido actualizada.",
             "title": "¡Listo!"
         },
-        "delete-account":{ 
-            "title":"¿Quieres eliminar la cuenta de forma segura?",
+        "delete-account": {
+            "title": "¿Quieres eliminar la cuenta de forma segura?",
             "cancel": "No",
-            "action": "Sí"      
+            "action": "Sí"
         }
     },
     "auth": {
@@ -161,6 +161,9 @@
         "label-repeat-monthly": "A principios de mes",
         "label-repeat-none": "No repitas",
         "label-repeat-weekly": "Semanal",
+        "label-repeat-quarterly": "Cada tres meses",
+        "label-repeat-semiannually": "Semestral",
+        "label-repeat-annually": "Anual",
         "title": {
             "add": "Nueva entrada",
             "edit": "Editar entrada"
@@ -174,9 +177,11 @@
     "enter_screen_attribute_date": "Fecha",
     "enter_screen_attribute_repeat": "Repita",
     "home_screen": {
-        "button-show-more": "MOSTRAR MÁS",
+        "button-show-more": "VER MÁS",
+        "button-show-all": "TODOS",
         "free-text": "Gratis",
-        "label-recent-transactions": "Transacciones recientes"
+        "label-recent-transactions": "Transacciones recientes",
+        "label-active-serialcontracts": "Contratos de este mes"
     },
     "home_screen_card": {
         "home-screen-card-toast": "Deslice el dedo hacia la izquierda y hacia la derecha para ver los meses anteriores o los próximos. Mantenga pulsado para volver al mes actual.",
@@ -195,7 +200,13 @@
         "label-no-entries": "- No se han encontrado entradas -",
         "label-thismonth": "Este mes",
         "label-today": "Hoy",
-        "label-yesterday": "Ayer"
+        "label-yesterday": "Ayer",
+        "label-error-translation": "Falta la traducción",
+        "label-every": "Cada",
+        "label-days": "días",
+        "label-weeks": "semanas",
+        "label-months": "meses",
+        "label-years": "años"
     },
     "lock_screen": {
         "change": {
