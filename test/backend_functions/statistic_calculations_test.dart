@@ -17,7 +17,7 @@ import 'package:uuid/uuid.dart';
 final Transaction baseTransaction = Transaction(
   amount: 0,
   category: "None",
-  currency: "EUR",
+  standardCurrencyName: "EUR",
   name: "Test Single Balance Data",
   time: firestore.Timestamp.fromMillisecondsSinceEpoch(
     firestore.Timestamp.now().millisecondsSinceEpoch - (3600 * 1000),
@@ -76,10 +76,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            emptyData,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: emptyData,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -97,10 +97,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData1,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData1,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -118,10 +118,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData2,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData2,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -139,10 +139,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData3,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData3,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -160,10 +160,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData4,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData4,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -181,10 +181,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData5,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData5,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -233,10 +233,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            emptyData,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: emptyData,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -254,10 +254,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData1,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData1,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -275,10 +275,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData2,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData2,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -296,10 +296,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData3,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData3,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -317,10 +317,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData4,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData4,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -338,10 +338,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData5,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData5,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -393,10 +393,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            emptyData,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: emptyData,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -414,10 +414,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData1,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData1,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -435,10 +435,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData2,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData2,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -456,10 +456,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData3,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData3,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -477,10 +477,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData4,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData4,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -498,10 +498,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData5,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData5,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -523,10 +523,10 @@ void main() {
                 _createRandomStatisticDataWithFixedTime(rand);
             final StatisticalCalculations statisticsCalculations =
                 StatisticalCalculations(
-              randomData,
-              [],
-              "EUR",
-              AlgorithmProvider()
+              data: randomData,
+              serialData: [],
+              standardCurrencyName: "EUR",
+              algorithmProvider: AlgorithmProvider()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
                 ),
@@ -551,10 +551,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            emptyData,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: emptyData,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -572,10 +572,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData1,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData1,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -593,10 +593,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData2,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData2,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -614,10 +614,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData3,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData3,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -635,10 +635,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData4,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData4,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -656,10 +656,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData5,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData5,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -681,10 +681,10 @@ void main() {
                 _createRandomStatisticDataWithFixedTime(rand);
             final StatisticalCalculations statisticsCalculations =
                 StatisticalCalculations(
-              randomData,
-              [],
-              "EUR",
-              AlgorithmProvider()
+              data: randomData,
+              serialData: [],
+              standardCurrencyName: "EUR",
+              algorithmProvider: AlgorithmProvider()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
                 ),
@@ -717,10 +717,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            emptyData,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: emptyData,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -738,10 +738,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData1,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData1,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -759,10 +759,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData2,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData2,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -780,10 +780,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData3,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData3,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -801,10 +801,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData4,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData4,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -822,10 +822,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData5,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData5,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -847,10 +847,10 @@ void main() {
                 _createRandomStatisticDataWithFixedTime(rand);
             final StatisticalCalculations statisticsCalculations =
                 StatisticalCalculations(
-              randomData,
-              [],
-              "EUR",
-              AlgorithmProvider()
+              data: randomData,
+              serialData: [],
+              standardCurrencyName: "EUR",
+              algorithmProvider: AlgorithmProvider()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
                 ),
@@ -876,10 +876,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            emptyData,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: emptyData,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -897,10 +897,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData1,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData1,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -918,10 +918,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData2,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData2,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -939,10 +939,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData3,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData3,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -960,10 +960,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData4,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData4,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -981,10 +981,10 @@ void main() {
           // Arrange (Initialization)
           final StatisticalCalculations statisticsCalculations =
               StatisticalCalculations(
-            exampleData5,
-            [],
-            "EUR",
-            AlgorithmProvider()
+            data: exampleData5,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -1006,10 +1006,10 @@ void main() {
                 _createRandomStatisticDataWithFixedTime(rand);
             final StatisticalCalculations statisticsCalculations =
                 StatisticalCalculations(
-              randomData,
-              [],
-              "EUR",
-              AlgorithmProvider()
+              data: randomData,
+              serialData: [],
+              standardCurrencyName: "EUR",
+              algorithmProvider: AlgorithmProvider()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
                 ),
