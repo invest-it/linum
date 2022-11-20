@@ -272,8 +272,7 @@ class SerialTransactionUpdater {
   }) {
     bool isEdited = false;
 
-    final index =
-        data.serialTransactions.indexWhere((serial) => serial.id == id);
+    final index = data.serialTransactions.indexWhere((serial) => serial.id == id);
     if (index == -1) {
       return false;
     }
@@ -281,8 +280,7 @@ class SerialTransactionUpdater {
 
     firestore.Timestamp? updatedEndTime;
 
-    if (oldSerialTransaction.repeatDurationType.name.toUpperCase() ==
-        "MONTHS") {
+    if (oldSerialTransaction.repeatDurationType.name.toUpperCase() == "MONTHS") {
       updatedEndTime = firestore.Timestamp.fromDate(
         calculateOneTimeStepBackwards(
           oldSerialTransaction.repeatDuration,
@@ -293,11 +291,12 @@ class SerialTransactionUpdater {
       );
     } else {
       updatedEndTime = firestore.Timestamp.fromDate(
-        time.toDate().subtract(
-              Duration(
-                seconds: oldSerialTransaction.repeatDuration,
-              ),
-            ),
+        calculateOneTimeStepBackwards(
+          oldSerialTransaction.repeatDuration,
+          time.toDate(),
+          monthly: false,
+          dayOfTheMonth: time.toDate().day,
+        ),
       );
     }
     final Duration timeDifference =

@@ -613,7 +613,7 @@ void main() {
           if (rand.nextInt(2) == 0) {
             endTime = null;
           }
-          final serialTransaction = data.serialTransactions[idIndex];
+          var serialTransaction = data.serialTransactions[idIndex];
 
           // Act (Execution)
           final bool result =
@@ -630,6 +630,8 @@ void main() {
             endTime: endTime,
             resetEndTime: endTime == null,
           );
+
+          serialTransaction = data.serialTransactions[idIndex];
 
           // Assert (Observation)
           expect(result, true);
@@ -659,7 +661,7 @@ void main() {
           final int idIndex = rand.nextInt(expectedLength);
           final String id = data.serialTransactions[idIndex].id;
 
-          final serialTransaction = data.serialTransactions[idIndex];
+          var serialTransaction = data.serialTransactions[idIndex];
 
           final Timestamp newTime = Timestamp.fromDate(
             DateTime.now().subtract(const Duration(days: 365 * 4)).add(
@@ -681,6 +683,8 @@ void main() {
             newTime: newTime,
             time: formerInitialTime,
           );
+
+          serialTransaction = data.serialTransactions[idIndex];
 
           // Assert (Observation)
           expect(result, true);
@@ -714,7 +718,7 @@ void main() {
           final int idIndex = rand.nextInt(expectedLength - 1);
           final String oldId = data.serialTransactions[idIndex].id;
 
-          final oldSerialTransaction = data.serialTransactions[idIndex];
+          var oldSerialTransaction = data.serialTransactions[idIndex];
 
           final num oldAmount = oldSerialTransaction.amount;
           final String oldCategory = oldSerialTransaction.category;
@@ -722,8 +726,7 @@ void main() {
 
           final int oldRepeatDuration = oldSerialTransaction.repeatDuration;
 
-          final String oldRepeatDurationTypeAsString =
-              oldSerialTransaction.repeatDurationType.toString();
+          final oldRepeatDurationType = oldSerialTransaction.repeatDurationType;
 
           final Timestamp? oldEndTime = oldSerialTransaction.endTime;
 
@@ -766,6 +769,7 @@ void main() {
           );
 
           final newSerialTransaction = data.serialTransactions.last;
+          oldSerialTransaction = data.serialTransactions[idIndex];
 
           // Assert (Observation)
           expect(result, true);
@@ -789,7 +793,7 @@ void main() {
           expect(oldSerialTransaction.repeatDuration, oldRepeatDuration);
           expect(
             oldSerialTransaction.repeatDurationType,
-            oldRepeatDurationTypeAsString,
+            oldRepeatDurationType,
           );
           expect(oldSerialTransaction.endTime, oldEndTime);
           // new repeated balance
@@ -819,7 +823,7 @@ void main() {
           final int idIndex = rand.nextInt(expectedLength - 1);
           final String oldId = data.serialTransactions[idIndex].id;
 
-          final oldSerialTransaction = data.serialTransactions[idIndex];
+          var oldSerialTransaction = data.serialTransactions[idIndex];
 
           final Timestamp? oldEndTime = oldSerialTransaction.endTime;
           Timestamp oldInitialTime = oldSerialTransaction.initialTime;
@@ -859,6 +863,7 @@ void main() {
           );
 
           final newSerialTransaction = data.serialTransactions.last;
+          oldSerialTransaction = data.serialTransactions[idIndex];
 
           // Assert (Observation)
           expect(result, true);
@@ -885,7 +890,7 @@ void main() {
           final int idIndex = rand.nextInt(expectedLength - 1);
           final String oldId = data.serialTransactions[idIndex].id;
 
-          final oldSerialTransaction = data.serialTransactions[idIndex];
+          var oldSerialTransaction = data.serialTransactions[idIndex];
 
           final num oldAmount = oldSerialTransaction.amount;
           final String oldCategory = oldSerialTransaction.category;
@@ -893,8 +898,7 @@ void main() {
 
           final int oldRepeatDuration = oldSerialTransaction.repeatDuration;
 
-          final String oldRepeatDurationTypeAsString =
-              oldSerialTransaction.repeatDurationType.toString();
+          final oldRepeatDurationType = oldSerialTransaction.repeatDurationType;
 
           final Timestamp oldInitialTime = oldSerialTransaction.initialTime;
 
@@ -921,7 +925,6 @@ void main() {
               monthly: isMonthly(data.serialTransactions[idIndex]),
             ),
           );
-
           // Act (Execution)
           final bool result =
               SerialTransactionManager.updateSerialTransactionInData(
@@ -939,7 +942,7 @@ void main() {
           );
 
           final newSerialTransaction = data.serialTransactions.last;
-
+          oldSerialTransaction = data.serialTransactions[idIndex];
           // Assert (Observation)
           expect(result, true);
           expect(data.serialTransactions.length, expectedLength);
@@ -953,7 +956,7 @@ void main() {
           expect(oldSerialTransaction.repeatDuration, oldRepeatDuration);
           expect(
             oldSerialTransaction.repeatDurationType,
-            oldRepeatDurationTypeAsString,
+            oldRepeatDurationType,
           );
           expect(
             oldSerialTransaction.endTime,
@@ -962,6 +965,7 @@ void main() {
                 data.serialTransactions[idIndex].repeatDuration,
                 time.toDate(),
                 monthly: isMonthly(data.serialTransactions[idIndex]),
+                dayOfTheMonth: time.toDate().day,
               ),
             ),
           );
@@ -991,7 +995,7 @@ void main() {
           final int idIndex = rand.nextInt(expectedLength - 1);
           final String oldId = data.serialTransactions[idIndex].id;
 
-          final oldSerialTransaction = data.serialTransactions[idIndex];
+          var oldSerialTransaction = data.serialTransactions[idIndex];
 
           Timestamp? oldEndTime = oldSerialTransaction.endTime;
           final Timestamp oldInitialTime = oldSerialTransaction.initialTime;
@@ -1034,6 +1038,7 @@ void main() {
           );
 
           final newSerialTransaction = data.serialTransactions.last;
+          oldSerialTransaction = data.serialTransactions[idIndex];
 
           // Assert (Observation)
           expect(result, true);
@@ -1059,7 +1064,7 @@ void main() {
           final int idIndex = rand.nextInt(expectedLength - 1);
           final String id = data.serialTransactions[idIndex].id;
 
-          final serialTransaction = data.serialTransactions[idIndex];
+          var serialTransaction = data.serialTransactions[idIndex];
 
           final Timestamp initialTime = serialTransaction.initialTime;
 
@@ -1093,6 +1098,8 @@ void main() {
             time: time,
             newTime: newTime,
           );
+
+          serialTransaction = data.serialTransactions[idIndex];
 
           // Assert (Observation)
           expect(result, true);
