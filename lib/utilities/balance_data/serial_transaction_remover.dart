@@ -90,7 +90,6 @@ class SerialTransactionRemover {
         ),
       );
     }
-    print(newEndTime.toDate().toString());
     data.serialTransactions[index] = serialTransaction.copyWith(endTime: newEndTime);
     return true;
   }

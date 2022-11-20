@@ -337,13 +337,6 @@ void main() {
               monthly: isMonthly(data.serialTransactions[idIndex]),
             ),
           );
-          print("RepeatDuration: ${data.serialTransactions[idIndex].repeatDuration}");
-
-          print("RepeatDurationType: ${data.serialTransactions[idIndex].repeatDurationType}");
-          print("InitialTime: $initialTime");
-          print("NextTime: ${time.toDate().toString()}");
-          print("EndTime: ${endTime?.toDate().toString()}");
-
 
           // Act (Execution)
           final bool result =
@@ -353,7 +346,7 @@ void main() {
             removeType: SerialTransactionChangeType.thisAndAllAfter,
             time: time,
           );
-          print("New EndTime: ${data.serialTransactions[idIndex].endTime?.toDate()}");
+
           // Assert (Observation)
           expect(result, true);
           expect(data.serialTransactions.length, expectedLength);
