@@ -200,8 +200,8 @@ class SerialTransactionUpdater {
 
     firestore.Timestamp? updatedInitialTime;
 
-    if (oldSerialTransaction.repeatDurationType.toString().toUpperCase() ==
-        "REPEATDURATIONTYPE.MONTHS") {
+    if (oldSerialTransaction.repeatDurationType.name.toUpperCase() ==
+        "MONTHS") {
       updatedInitialTime = firestore.Timestamp.fromDate(
         calculateOneTimeStep(
           oldSerialTransaction.repeatDuration,
@@ -281,8 +281,8 @@ class SerialTransactionUpdater {
 
     firestore.Timestamp? updatedEndTime;
 
-    if (oldSerialTransaction.repeatDurationType.toString().toUpperCase() ==
-        "REPEATDURATIONTYPE.MONTHS") {
+    if (oldSerialTransaction.repeatDurationType.name.toUpperCase() ==
+        "MONTHS") {
       updatedEndTime = firestore.Timestamp.fromDate(
         calculateOneTimeStepBackwards(
           oldSerialTransaction.repeatDuration,

@@ -45,7 +45,7 @@ class SerialTransactionRemover {
       ),
     );
 
-    if (serialTransaction.repeatDurationType.toString().toUpperCase() == "MONTHS") {
+    if (serialTransaction.repeatDurationType.name.toUpperCase() == "MONTHS") {
       newInitialTime = Timestamp.fromDate(
         DateTime(
           time.toDate().year,
@@ -81,7 +81,7 @@ class SerialTransactionRemover {
       ),
     );
 
-    if (serialTransaction.repeatDurationType.toString().toUpperCase() == "MONTHS") {
+    if (serialTransaction.repeatDurationType.name.toUpperCase() == "MONTHS") {
       newEndTime = Timestamp.fromDate(
         DateTime(
           time.toDate().year,
@@ -90,9 +90,8 @@ class SerialTransactionRemover {
         ),
       );
     }
-
+    print(newEndTime.toDate().toString());
     data.serialTransactions[index] = serialTransaction.copyWith(endTime: newEndTime);
-
     return true;
   }
 

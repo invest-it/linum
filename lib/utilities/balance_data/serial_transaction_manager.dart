@@ -258,11 +258,12 @@ class SerialTransactionManager {
           time!,
         );
       case SerialTransactionChangeType.thisAndAllAfter:
-        return SerialTransactionRemover.removeThisAndAllAfter(
+        final value = SerialTransactionRemover.removeThisAndAllAfter(
           data,
           id,
           time!,
         );
+        return value;
       case SerialTransactionChangeType.onlyThisOne:
         return SerialTransactionRemover.removeOnlyThisOne(data, id, time!);
     }
