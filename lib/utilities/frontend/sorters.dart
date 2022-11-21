@@ -7,8 +7,8 @@
 // will be removed when sorters will only be used on SingleBalanceData
 // ignore_for_file: avoid_dynamic_calls
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:linum/models/single_balance_data.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
+import 'package:linum/models/transaction.dart';
 
 class Sorters {
   /// returns a new sort algorithm. It sorts using the first
@@ -36,7 +36,7 @@ class Sorters {
   static int amountLeastToMost(dynamic a, dynamic b) {
     // maybe filter is used on maps
     // if can be deleted later
-    if (a is SingleBalanceData && b is SingleBalanceData) {
+    if (a is Transaction && b is Transaction) {
       return (a.amount).compareTo(b.amount);
     }
 
@@ -44,53 +44,53 @@ class Sorters {
   }
 
   static int amountMostToLeast(dynamic b, dynamic a) {
-    if (a is SingleBalanceData && b is SingleBalanceData) {
+    if (a is Transaction && b is Transaction) {
       return (a.amount).compareTo(b.amount);
     }
     return (a["amount"] as num).compareTo(b["amount"] as num);
   }
 
   static int categoryAlphabetically(dynamic a, dynamic b) {
-    if (a is SingleBalanceData && b is SingleBalanceData) {
+    if (a is Transaction && b is Transaction) {
       return (a.category).compareTo(b.category);
     }
     return (a["category"] as String).compareTo(b["category"] as String);
   }
 
   static int categoryAlphabeticallyReversed(dynamic b, dynamic a) {
-    if (a is SingleBalanceData && b is SingleBalanceData) {
+    if (a is Transaction && b is Transaction) {
       return (a.category).compareTo(b.category);
     }
     return (a["category"] as String).compareTo(b["category"] as String);
   }
 
   static int nameAlphabetically(dynamic a, dynamic b) {
-    if (a is SingleBalanceData && b is SingleBalanceData) {
+    if (a is Transaction && b is Transaction) {
       return (a.name).compareTo(b.name);
     }
     return (a["name"] as String).compareTo(b["name"] as String);
   }
 
   static int nameAlphabeticallyReversed(dynamic b, dynamic a) {
-    if (a is SingleBalanceData && b is SingleBalanceData) {
+    if (a is Transaction && b is Transaction) {
       return (a.name).compareTo(b.name);
     }
     return (a["name"] as String).compareTo(b["name"] as String);
   }
 
   static int timeNewToOld(dynamic a, dynamic b) {
-    if (a is SingleBalanceData && b is SingleBalanceData) {
-      return (a.time).compareTo(b.time);
+    if (a is Transaction && b is Transaction) {
+      return (b.time).compareTo(a.time);
     }
-    return (b["time"] as Timestamp).compareTo(a["time"] as Timestamp);
+    return (b["time"] as firestore.Timestamp)
+        .compareTo(a["time"] as firestore.Timestamp);
   }
 
   static int timeOldToNew(dynamic b, dynamic a) {
-    if (a is SingleBalanceData && b is SingleBalanceData) {
+    if (a is Transaction && b is Transaction) {
       return (a.time).compareTo(b.time);
     }
-    return (a["time"] as Timestamp).compareTo(b["time"] as Timestamp);
+    return (a["time"] as firestore.Timestamp)
+        .compareTo(b["time"] as firestore.Timestamp);
   }
-
-
 }

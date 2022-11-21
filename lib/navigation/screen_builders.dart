@@ -10,10 +10,8 @@ import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/screens/academy_screen.dart';
 import 'package:linum/screens/budget_screen.dart';
 import 'package:linum/screens/home_screen.dart';
-import 'package:linum/screens/lock_screen.dart';
 import 'package:linum/screens/settings_screen.dart';
 import 'package:linum/screens/statistics_screen.dart';
-
 
 final _screens = Map<MainRoute, Widget>.of({
   MainRoute.home: const HomeScreen(), //0
@@ -21,7 +19,7 @@ final _screens = Map<MainRoute, Widget>.of({
   MainRoute.statistics: const StatisticsScreen(), //2
   MainRoute.settings: const SettingsScreen(), //3
   MainRoute.academy: const AcademyScreen(), //4
-  MainRoute.lock: LockScreen(), //5
+  // MainRoute.lock: LockScreen(), //5
 });
 
 Map<MainRoute, Widget> get screens => _screens;

@@ -16,14 +16,13 @@ import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/screens/onboarding_screen.dart';
 import 'package:provider/provider.dart';
 
-
 class MainRouterDelegate extends RouterDelegate<MainRoute>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<MainRoute> {
-
   @override
   final GlobalKey<NavigatorState> navigatorKey;
   MainRouterDelegate() : navigatorKey = GlobalKey<NavigatorState>();
 
+  Page? _replacedRoute;
   final _pageStack = <Page> [];
   /* MaterialPage _createPage(RouteSettings routeSettings) {
     Widget child;
@@ -34,7 +33,7 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
   } */
 
   List<Page> _buildPageStackUnauthorized() {
-    return <Page> [
+    return <Page>[
       MaterialPage(
         child: MultiProvider(
           providers: [
@@ -49,7 +48,7 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
   }
 
   List<Page> _buildPinCodeStack(PinCodeProvider pinCodeProvider) {
-    final pinCodeStack = <Page> [
+    final pinCodeStack = <Page>[
       mainRoutes.pageFromRoute(MainRoute.lock),
     ];
     pinCodeProvider.setRecallIntent();
@@ -57,7 +56,8 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
   }
 
   List<Page> _buildPageStackAuthorized(BuildContext context) {
-    final PinCodeProvider pinCodeProvider = Provider.of<PinCodeProvider>(context);
+    final PinCodeProvider pinCodeProvider =
+        Provider.of<PinCodeProvider>(context);
     if (_pageStack.isEmpty) {
       _pageStack.add(mainRoutes.pageFromRoute(MainRoute.home));
     }
@@ -68,9 +68,9 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
     return List.of(_pageStack);
   }
 
-
   List<Page> _buildPageStack(BuildContext context) {
-    final AuthenticationService auth = Provider.of<AuthenticationService>(context);
+    final AuthenticationService auth =
+        Provider.of<AuthenticationService>(context);
     if (auth.isLoggedIn) {
       return _buildPageStackAuthorized(context);
     } else {
@@ -89,10 +89,10 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
-    final pinCodeProvider = Provider.of<PinCodeProvider>(context, listen: false);
+    final pinCodeProvider =
+        Provider.of<PinCodeProvider>(context, listen: false);
     if (pinCodeProvider.pinSetStillLoading) {
       return FutureBuilder(
         future: pinCodeProvider.initializeIsPINSet(),
@@ -108,7 +108,6 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
     }
   }
 
-
   bool _onPopPage(Route route, dynamic result) {
     dev.log("Route: $route");
     if (!route.didPop(result)) return false;
@@ -122,6 +121,13 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
   @override
   Future<bool> popRoute() async {
     dev.log("Stack: ${_pageStack.toString()}");
+    if (_replacedRoute != null) {
+      _pageStack.removeLast();
+      _pageStack.add(_replacedRoute!);
+      _replacedRoute = null;
+      return Future.value(true);
+    }
+
     if (_pageStack.length > 1) {
       _pageStack.removeLast();
       notifyListeners();
@@ -140,8 +146,9 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
 
   /// Replace the last route on the MainRouter's Stack with a new one.
   /// Notifies all listening widgets.
-  void replaceLastRoute(MainRoute route) {
-    _pageStack.removeLast();
+  void replaceLastRoute(MainRoute route, {bool rememberReplacedRoute = false}) {
+    final replaced = _pageStack.removeLast();
+    _replacedRoute = rememberReplacedRoute ? replaced : null;
     _pageStack.add(mainRoutes.pageFromRoute(route));
 
     notifyListeners();
@@ -156,6 +163,4 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
 
   @override
   Future<void> setNewRoutePath(MainRoute route) async {}
-
-
 }

@@ -22,23 +22,23 @@ class CategoryListView<T extends Enum> extends StatelessWidget {
   CategoryListView(this.accountSettingsProvider, this.actionLipStatusProvider) {
     if (T == StandardCategoryExpense) {
       enumItemCount = StandardCategoryExpense.values.length;
-      standardCategory = (int indexBuilder) =>
-      standardExpenseCategories[StandardCategoryExpense.values[indexBuilder]];
-      itemIsSelected = (int indexBuilder) =>
-          StandardCategoryExpense.values[indexBuilder]
+      standardCategory = (int index) =>
+      standardExpenseCategories[StandardCategoryExpense.values[index]];
+      itemIsSelected = (int index) =>
+          StandardCategoryExpense.values[index]
               .equals(accountSettingsProvider.settings["StandardCategoryExpense"] as String?);
-      enumStr = (int indexBuilder) =>
-          StandardCategoryExpense.values[indexBuilder].toString();
+      enumStr = (int index) =>
+          StandardCategoryExpense.values[index].toString();
     }
     if (T == StandardCategoryIncome) {
       enumItemCount = StandardCategoryIncome.values.length;
-      standardCategory = (int indexBuilder) =>
-      standardIncomeCategories[StandardCategoryIncome.values[indexBuilder]];
-      itemIsSelected = (int indexBuilder) =>
-          StandardCategoryIncome.values[indexBuilder]
+      standardCategory = (int index) =>
+      standardIncomeCategories[StandardCategoryIncome.values[index]];
+      itemIsSelected = (int index) =>
+          StandardCategoryIncome.values[index]
               .equals(accountSettingsProvider.settings["StandardCategoryIncome"] as String?);
-      enumStr = (int indexBuilder) =>
-          StandardCategoryIncome.values[indexBuilder].toString();
+      enumStr = (int index) =>
+          StandardCategoryIncome.values[index].toString();
     }
   }
   @override
@@ -47,27 +47,26 @@ class CategoryListView<T extends Enum> extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(
-            vertical: 12.0,
             horizontal: 24.0,
           ),
           child: Column(
             children: [
               SizedBox(
                 height:
-                proportionateScreenHeightFraction(ScreenFraction.twofifths),
+                  proportionateScreenHeightFraction(ScreenFraction.twofifths),
                 child: ListView.builder(
                   shrinkWrap: true,
                   itemCount: enumItemCount,
-                  itemBuilder: (BuildContext context, int indexBuilder) {
+                  itemBuilder: (BuildContext context, int index) {
                     return ListTile(
                       //leading: Icon(widget.categories[index].icon),
-                      leading: Icon(standardCategory(indexBuilder)?.icon,),
+                      leading: Icon(standardCategory(index)?.icon),
                       title: Text(
-                        tr(standardCategory(indexBuilder)?.label ?? "Category"),
+                        tr(standardCategory(index)?.label ?? "Category"),
                       ),
-                      selected: itemIsSelected(indexBuilder),
+                      selected: itemIsSelected(index),
                       onTap: () {
-                        final List<String> stringArr = enumStr(indexBuilder).split(".");
+                        final List<String> stringArr = enumStr(index).split(".");
                         accountSettingsProvider.updateSettings({
                           stringArr[0]: stringArr[1],
                         });

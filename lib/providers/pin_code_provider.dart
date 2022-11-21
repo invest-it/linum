@@ -18,9 +18,9 @@ import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/navigation/main_router_delegate.dart';
 import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/providers/authentication_service.dart';
+import 'package:linum/types/change_notifier_provider_builder.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:provider/provider.dart';
-import 'package:provider/single_child_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PinCodeProvider extends ChangeNotifier {
@@ -102,6 +102,12 @@ class PinCodeProvider extends ChangeNotifier {
         msg: tr("lock_screen.toast-pin-deactivated"),
       );
     }
+    notifyListeners();
+  }
+
+  void resetOnLogout() {
+    _pinSet = false;
+    _removePIN();
     notifyListeners();
   }
 
@@ -391,18 +397,21 @@ class PinCodeProvider extends ChangeNotifier {
   bool get pinSetStillLoading => _pinSetStillLoading;
   bool get lastEmailStillLoading => _lastEmailStillLoading;
 
-  static SingleChildWidget provider(BuildContext context,
-      {bool testing = false,}) {
-    return ChangeNotifierProxyProvider<AuthenticationService, PinCodeProvider>(
-      create: (context) => PinCodeProvider(context),
-      update: (context, auth, oldPinCodeProvider) {
-        if (oldPinCodeProvider == null) {
-          return PinCodeProvider(context);
-        } else {
-          return oldPinCodeProvider..updateSipAndAuth(context);
-        }
-      },
-    );
+
+  static ChangeNotifierProviderBuilder builder() {
+    return (BuildContext context, {bool testing = false,}) {
+      return ChangeNotifierProxyProvider<AuthenticationService,
+          PinCodeProvider>(
+        create: (context) => PinCodeProvider(context),
+        update: (context, auth, oldPinCodeProvider) {
+          if (oldPinCodeProvider == null) {
+            return PinCodeProvider(context);
+          } else {
+            return oldPinCodeProvider..updateSipAndAuth(context);
+          }
+        },
+      );
+    };
   }
 }
 

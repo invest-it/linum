@@ -41,7 +41,7 @@ class _LogoutFormState extends State<LogoutForm> {
           increaseHeightBy: proportionateScreenHeight(16),
           callback: () => auth.signOut().then((_) {
             getRouterDelegate().rebuild();
-            Provider.of<PinCodeProvider>(context, listen: false).resetSession();
+            Provider.of<PinCodeProvider>(context, listen: false).resetOnLogout();
           }),
           gradient: LinearGradient(
             colors: [

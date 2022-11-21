@@ -5,7 +5,8 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:linum/models/single_balance_data.dart';
+import 'package:linum/models/serial_transaction.dart';
+import 'package:linum/models/transaction.dart';
 
 /// Classes that are BalanceDataListView have to create a ListView using the addBalanceData function
 abstract class BalanceDataListView {
@@ -13,9 +14,9 @@ abstract class BalanceDataListView {
   /// It will fill the ListView using that data.
   /// @balanceData Mapped Data from the Balance
   /// It has the following structure:
-  /// [singleBalance1, singleBalance2, singleBalance3...]
-  /// with singleBalance1 having the structure:
-  /// singleBalance =
+  /// [transaction1, transaction2, transaction3...]
+  /// with transaction1 having the structure:
+  /// transaction =
   /// {
   ///   amount: <Number>
   ///   category: <String>
@@ -23,8 +24,14 @@ abstract class BalanceDataListView {
   ///   name: <String>
   ///   time: <Timestamp>
   /// }
-  void setBalanceData(
-    List<SingleBalanceData> balanceData, {
+  void setTransactions(
+    List<Transaction> transactions, {
+    required BuildContext context,
+    bool error = false,
+  });
+
+  void setSerialTransactions(
+    List<SerialTransaction> transactions, {
     required BuildContext context,
     bool error = false,
   });

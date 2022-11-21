@@ -4,11 +4,11 @@
 //  Co-Author: NightmindOfficial, thebluebaronx
 /// NO PAGE INDEX (This screen is not part of the default route and needs to be pushed onto the Navigator)
 import 'dart:developer' as dev;
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/models/repeat_balance_data.dart';
-import 'package:linum/models/single_balance_data.dart';
+import 'package:linum/models/serial_transaction.dart';
+import 'package:linum/models/transaction.dart';
 import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
@@ -37,18 +37,20 @@ class _EnterScreenState extends State<EnterScreen> {
   Widget build(BuildContext context) {
     final EnterScreenProvider enterScreenProvider =
         Provider.of<EnterScreenProvider>(context);
-    final BalanceDataProvider balanceDataProvider =
-        Provider.of<BalanceDataProvider>(context);
+    // final BalanceDataProvider balanceDataProvider =
+    //     Provider.of<BalanceDataProvider>(context);
 
     //  AccountSettingsProvider accountSettingsProvider =
     //       Provider.of<AccountSettingsProvider>(context);
 
     //to format the date time it has to be parsed to a string, get formatted
     //and get parsed back to a date time
-    final String partialSelectedDate =
-        enterScreenProvider.selectedDate.toString().split(' ')[0];
-    final DateTime formattedSelectedDate =
-        DateTime.parse(partialSelectedDate);
+
+    final String partialSelectedDate = enterScreenProvider.isSerialTransaction
+        ? enterScreenProvider.initialTime.toString().split(' ')[0]
+        : enterScreenProvider.selectedDate.toString().split(' ')[0];
+
+    final DateTime formattedSelectedDate = DateTime.parse(partialSelectedDate);
 
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -79,7 +81,6 @@ class _EnterScreenState extends State<EnterScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              //the top, green lip
               const EnterScreenTopInputField(),
               enterScreenProvider.isTransaction
                   ? Center(
@@ -95,13 +96,6 @@ class _EnterScreenState extends State<EnterScreen> {
                       ),
                     )
                   : EnterScreenListViewBuilder(),
-              /*SizedBox(
-                  height: MediaQuery.of(context).viewInsets.bottom,
-                ),*/
-              /*Expanded(
-                  child: Container(color: Colors.red),
-                ),*/
-
               MediaQuery.of(context).viewInsets.bottom > 1
                   ? Container()
                   : Column(
@@ -116,17 +110,33 @@ class _EnterScreenState extends State<EnterScreen> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  generateDeleteDialog(
-                                    context,
-                                    balanceDataProvider,
-                                    enterScreenProvider.repeatId ??
-                                        enterScreenProvider.formerId!,
-                                    isRepeatable:
-                                        enterScreenProvider.repeatId != null,
-                                    formerTime: enterScreenProvider.formerTime,
-                                  ).then(
-                                    (pop) => pop != null && pop ? getRouterDelegate().popRoute() : {},
-                                  );
+                                  if (enterScreenProvider.isSerialTransaction) {
+                                    generateWholeSerialTransactionDeleteDialog(
+                                      context,
+                                      // balanceDataProvider,
+                                      enterScreenProvider.repeatId ??
+                                          enterScreenProvider.formerId!,
+                                    ).then(
+                                      (pop) => pop != null && pop
+                                          ? getRouterDelegate().popRoute()
+                                          : {},
+                                    );
+                                  } else {
+                                    generateDeleteDialog(
+                                      context,
+                                      // balanceDataProvider,
+                                      enterScreenProvider.repeatId ??
+                                          enterScreenProvider.formerId!,
+                                      isSerial:
+                                          enterScreenProvider.repeatId != null,
+                                      formerTime:
+                                          enterScreenProvider.formerTime,
+                                    ).then(
+                                      (pop) => pop != null && pop
+                                          ? getRouterDelegate().popRoute()
+                                          : {},
+                                    );
+                                  }
                                 },
                                 child: Text(
                                   tr("enter_screen.button-delete-entry"),
@@ -134,7 +144,8 @@ class _EnterScreenState extends State<EnterScreen> {
                                       .textTheme
                                       .button
                                       ?.copyWith(
-                                        color: Theme.of(context).colorScheme.error,
+                                        color:
+                                            Theme.of(context).colorScheme.error,
                                       ),
                                 ),
                               )
@@ -146,14 +157,11 @@ class _EnterScreenState extends State<EnterScreen> {
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 textStyle: Theme.of(context).textTheme.button,
-                                // TODO REMOVE IGNORES
-                                // ignore: deprecated_member_use
-                                primary: Theme.of(context).colorScheme.primary,
-                                // ignore: deprecated_member_use
-                                onPrimary:
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.primary,
+                                foregroundColor:
                                     Theme.of(context).colorScheme.background,
-                                // ignore: deprecated_member_use
-                                onSurface: Colors.white,
+                                disabledForegroundColor: Colors.white,
                                 fixedSize: Size(
                                   proportionateScreenWidth(300),
                                   proportionateScreenHeight(40),
@@ -161,8 +169,12 @@ class _EnterScreenState extends State<EnterScreen> {
                               ),
                               onPressed: () {
                                 if (enterScreenProvider.isIncome &&
-                                    enterScreenProvider.amountToDisplay() <= 0) {
-                                  showAddAmountAlertDialog(context, enterScreenProvider);
+                                    enterScreenProvider.amountToDisplay() <=
+                                        0) {
+                                  showAddAmountAlertDialog(
+                                    context,
+                                    enterScreenProvider,
+                                  );
                                   dev.log(
                                     "amount was to low: ${enterScreenProvider.amountToDisplay()}",
                                   );
@@ -192,39 +204,38 @@ class _EnterScreenState extends State<EnterScreen> {
     );
   }
 
-
   void addBalance(DateTime selectedDate) {
-    final EnterScreenProvider enterScreenProvider = Provider.of<EnterScreenProvider>(context, listen: false);
-    final BalanceDataProvider balanceDataProvider = Provider.of<BalanceDataProvider>(context, listen: false);
+    final EnterScreenProvider enterScreenProvider =
+        Provider.of<EnterScreenProvider>(context, listen: false);
+    final BalanceDataProvider balanceDataProvider =
+        Provider.of<BalanceDataProvider>(context, listen: false);
     if (enterScreenProvider.repeatDuration == null ||
         enterScreenProvider.repeatDurationTyp == null) {
-      balanceDataProvider.addSingleBalance(
-        SingleBalanceData(
+      balanceDataProvider.addTransaction(
+        Transaction(
           amount: enterScreenProvider.amountToDisplay(),
           category: enterScreenProvider.category,
-          currency: "EUR",
+          currency: enterScreenProvider.currency,
           name: enterScreenProvider.name,
           note: enterScreenProvider.note,
-          time: Timestamp.fromDate(
+          time: firestore.Timestamp.fromDate(
             selectedDate,
           ),
         ),
       );
     } else {
-      balanceDataProvider.addRepeatedBalance(
-        RepeatedBalanceData(
+      balanceDataProvider.addSerialTransaction(
+        SerialTransaction(
           amount: enterScreenProvider.amountToDisplay(),
           category: enterScreenProvider.category,
-          currency: "EUR",
+          currency: enterScreenProvider.currency,
           name: enterScreenProvider.name,
-          initialTime: Timestamp.fromDate(
+          initialTime: firestore.Timestamp.fromDate(
             DateTime(
               selectedDate.year,
               selectedDate.month,
               selectedDate.day,
-              selectedDate.hour != 0
-                  ? selectedDate.hour
-                  : DateTime.now().hour,
+              selectedDate.hour != 0 ? selectedDate.hour : DateTime.now().hour,
               selectedDate.minute != 0
                   ? selectedDate.minute
                   : DateTime.now().minute,
@@ -241,18 +252,28 @@ class _EnterScreenState extends State<EnterScreen> {
   }
 
   void updateBalance(DateTime selectedDate) {
-    final EnterScreenProvider enterScreenProvider = Provider.of<EnterScreenProvider>(context, listen: false);
-    final BalanceDataProvider balanceDataProvider = Provider.of<BalanceDataProvider>(context, listen: false);
+    final EnterScreenProvider enterScreenProvider =
+        Provider.of<EnterScreenProvider>(context, listen: false);
+    final BalanceDataProvider balanceDataProvider =
+        Provider.of<BalanceDataProvider>(context, listen: false);
+
+    if (enterScreenProvider.isSerialTransaction) {
+      showChangeEntryDialog(context, selectedDate, isTheWholeSerial: true).then(
+        (pop) => pop != null && pop ? getRouterDelegate().popRoute() : {},
+      );
+      return;
+    }
+
     if (enterScreenProvider.repeatId == null) {
-      balanceDataProvider.updateSingleBalance(
-        SingleBalanceData(
+      balanceDataProvider.updateTransaction(
+        Transaction(
           id: enterScreenProvider.formerId ?? "",
           amount: enterScreenProvider.amountToDisplay(),
           category: enterScreenProvider.category,
-          currency: "EUR",
+          currency: enterScreenProvider.currency,
           name: enterScreenProvider.name,
           note: enterScreenProvider.note,
-          time: Timestamp.fromDate(
+          time: firestore.Timestamp.fromDate(
             selectedDate,
           ),
         ),
@@ -261,7 +282,7 @@ class _EnterScreenState extends State<EnterScreen> {
     } else {
       // open popup
       showChangeEntryDialog(context, selectedDate).then(
-            (pop) => pop != null && pop ? getRouterDelegate().popRoute() : {},
+        (pop) => pop != null && pop ? getRouterDelegate().popRoute() : {},
       );
     }
   }

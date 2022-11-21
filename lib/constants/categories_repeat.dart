@@ -42,6 +42,30 @@ final Map<RepeatDuration, Map<String, dynamic>> categoriesRepeat = {
     "duration": 1,
     "durationType": RepeatDurationType.months,
   },
+  RepeatDuration.quarterly: {
+    "entryCategory": const EntryCategory(
+      label: 'enter_screen.label-repeat-quarterly',
+      icon: Icons.grid_view_rounded,
+    ),
+    "duration": 3,
+    "durationType": RepeatDurationType.months,
+  },
+  RepeatDuration.semiannually: {
+    "entryCategory": const EntryCategory(
+      label: 'enter_screen.label-repeat-semiannually',
+      icon: Icons.splitscreen_rounded,
+    ),
+    "duration": 6,
+    "durationType": RepeatDurationType.months,
+  },
+  RepeatDuration.annually: {
+    "entryCategory": const EntryCategory(
+      label: 'enter_screen.label-repeat-annually',
+      icon: Icons.calendar_month_rounded,
+    ),
+    "duration": 12,
+    "durationType": RepeatDurationType.months,
+  }
   // TODO implement custom range picker
   // {
   //   "entryCategory": EntryCategory(

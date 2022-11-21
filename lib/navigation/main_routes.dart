@@ -10,6 +10,7 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:linum/navigation/enter_screen_page.dart';
 import 'package:linum/navigation/route_configuration.dart';
+import 'package:linum/screens/filter_screen.dart';
 import 'package:linum/screens/lock_screen.dart';
 import 'package:linum/screens/screen_layout.dart';
 
@@ -20,9 +21,9 @@ enum MainRoute {
   settings,
   academy,
   lock,
-  enter
+  enter,
+  filter
 }
-
 
 final mainRoutes = Map<MainRoute, RouteConfiguration>.of({
   MainRoute.home: RouteConfiguration(
@@ -45,7 +46,6 @@ final mainRoutes = Map<MainRoute, RouteConfiguration>.of({
   MainRoute.statistics: RouteConfiguration(
     path: "/statistics",
     builder: <T>(_) {
-
       return MaterialPage(
         child: const ScreenLayout(currentRoute: MainRoute.statistics),
         name: MainRoute.statistics.toString(),
@@ -66,7 +66,8 @@ final mainRoutes = Map<MainRoute, RouteConfiguration>.of({
     builder: <T>(_) {
       return MaterialPage(
         child: const ScreenLayout(currentRoute: MainRoute.academy),
-        name: MainRoute.academy.toString(), // TODO: Not sure if this is needed anywhere
+        name: MainRoute.academy
+            .toString(), // TODO: Not sure if this is needed anywhere
       );
     },
   ),
@@ -86,7 +87,15 @@ final mainRoutes = Map<MainRoute, RouteConfiguration>.of({
       return EnterScreenPage(settings as EnterScreenPageSettings);
     },
   ),
-
+  MainRoute.filter: RouteConfiguration(
+    path: "/filter",
+    builder: <T>(_) {
+      return MaterialPage(
+        child: const FilterScreen(),
+        name: MainRoute.filter.toString(),
+      );
+    },
+  ),
 });
 
 

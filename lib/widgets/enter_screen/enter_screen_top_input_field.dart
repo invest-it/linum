@@ -7,6 +7,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:linum/constants/standard_currencies.dart';
 import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
@@ -49,10 +50,13 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
         Provider.of<EnterScreenProvider>(context);
     final ActionLipStatusProvider actionLipStatusProvider =
         Provider.of<ActionLipStatusProvider>(context);
-    
-    final formatter = CurrencyFormatter(context.locale);
+    final currency = standardCurrencies[enterScreenProvider.currency];
+    final formatter = CurrencyFormatter(
+      context.locale,
+      symbol: currency?.symbol ?? enterScreenProvider.currency,
+    );
     // TODO: Write a better formatter for every currency symbol
-    
+
     if (textController == null) {
       if (enterScreenProvider.amount != 0) {
         textController = TextEditingController(
@@ -61,7 +65,16 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
       } else {
         textController = TextEditingController(text: formatter.format(0));
       }
+    } else {
+      textController!.text = formatter.format(enterScreenProvider.amount);
+      textController!.selection = TextSelection.fromPosition(
+        TextPosition(
+          offset: textController!.text.length -
+              (formatter.amountBeforeSymbol() ? 2 : 0),
+        ),
+      );
     }
+
     //calculation of the size (width and height) of a text - here it
     //is "Expenses"
     //use like this: variable.width or variable.height
@@ -115,7 +128,10 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                       controller: textController,
                       showCursor: true,
                       cursorColor: Colors.white,
-                      keyboardType:  const TextInputType.numberWithOptions(signed: true, decimal: true),
+                      keyboardType: const TextInputType.numberWithOptions(
+                        signed: true,
+                        decimal: true,
+                      ),
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       decoration: InputDecoration(
                         counter: const SizedBox.shrink(),
@@ -141,7 +157,8 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                         ),
                         textController!.selection = TextSelection.fromPosition(
                           TextPosition(
-                            offset: textController!.text.length - 2,
+                            offset: textController!.text.length -
+                                (formatter.amountBeforeSymbol() ? 2 : 0),
                           ),
                         )
                       },
@@ -149,9 +166,11 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                         final value = _parseInput(str);
                         setState(() {
                           textController!.text = formatter.format(value);
-                          textController!.selection = TextSelection.fromPosition(
+                          textController!.selection =
+                              TextSelection.fromPosition(
                             TextPosition(
-                              offset: textController!.text.length - 2,
+                              offset: textController!.text.length -
+                                  (formatter.amountBeforeSymbol() ? 2 : 0),
                             ),
                           );
                         });
@@ -160,12 +179,11 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                       },
                     ),
                   ),
-                  //the user chooses between expenses, income etc.
-                  //standard is expenses
                   SizedBox(
                     width: proportionateScreenWidth(282),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         GestureDetector(
                           onTap: () {
@@ -176,7 +194,9 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                             child: enterScreenProvider.isExpenses
                                 ? TextContainer(
                                     //context: context,
-                                    transactionClass: tr('enter_screen.button-expenses-label'),
+                                    transactionClass: tr(
+                                      'enter_screen.button-expenses-label',
+                                    ),
                                   )
                                 : Center(
                                     child: Text(
@@ -190,6 +210,9 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                                   ),
                           ),
                         ),
+                        const SizedBox(
+                          width: 10,
+                        ),
                         GestureDetector(
                           onTap: () {
                             enterScreenProvider.setIncome();
@@ -199,7 +222,8 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                             child: enterScreenProvider.isIncome
                                 ? TextContainer(
                                     //context: context,
-                                    transactionClass: tr('enter_screen.button-income-label'),
+                                    transactionClass:
+                                        tr('enter_screen.button-income-label'),
                                   )
                                 : Center(
                                     child: Text(
@@ -213,7 +237,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                                   ),
                           ),
                         ),
-                        GestureDetector(
+                        /*GestureDetector(
                           onTap: () {
                             enterScreenProvider.setTransaction();
                           },
@@ -222,7 +246,8 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                             child: enterScreenProvider.isTransaction
                                 ? TextContainer(
                                     //context: context,
-                                    transactionClass: tr('enter_screen.button-transaction-label'),
+                                    transactionClass: tr(
+                                        'enter_screen.button-transaction-label'),
                                   )
                                 : Center(
                                     child: Text(
@@ -235,11 +260,10 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                                     ),
                                   ),
                           ),
-                        ),
+                        ),*/
                       ],
                     ),
                   ),
-
                   const SizedBox(
                     height: 8,
                   )
@@ -279,9 +303,10 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
   }
 
   double _parseInput(String str) {
-    final trimmedStr = str.trim().replaceAll(RegExp(r"^[\$,£,€]\s?0+"), "");
+    final trimmedStr = str.trim().replaceAll(RegExp(r"^[\$,£,€]\s?"), "");
     final paddedStr = trimmedStr.padLeft(3, "0");
-    final decimalStr = "${paddedStr.substring(0, paddedStr.length - 2)}.${paddedStr.substring(paddedStr.length - 2)}";
+    final decimalStr =
+        "${paddedStr.substring(0, paddedStr.length - 2)}.${paddedStr.substring(paddedStr.length - 2)}";
     return double.parse(decimalStr);
   }
 

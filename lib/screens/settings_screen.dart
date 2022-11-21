@@ -19,6 +19,7 @@ import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:linum/widgets/settings_screen/language_selector.dart';
 import 'package:linum/widgets/settings_screen/pin_switch.dart';
 import 'package:linum/widgets/settings_screen/standard_category/standard_category_manager.dart';
+import 'package:linum/widgets/settings_screen/standard_currency/standard_currency_manager.dart';
 import 'package:linum/widgets/settings_screen/version_number.dart';
 import 'package:provider/provider.dart';
 
@@ -65,6 +66,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
               tooltipMessage: 'settings_screen.pin-lock.label-tooltip',
             ),
             PinSwitch(pinCodeProvider: pinCodeProvider),
+            const ListDivider(),
+
+            const ListHeader("STANDARD-CURRENCY"),
+            const StandardCurrencyManager(),
             const ListDivider(),
 
             /// LANGUAGE SWITCH

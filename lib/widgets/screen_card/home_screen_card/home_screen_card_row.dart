@@ -7,23 +7,24 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/models/home_screen_card_data.dart';
+import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/algorithm_provider.dart';
+import 'package:linum/utilities/frontend/currency_formatter.dart';
 import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
-import 'package:linum/widgets/home_screen/home_screen_card_arrow.dart';
+import 'package:linum/widgets/loading_spinner.dart';
+import 'package:linum/widgets/screen_card/card_widgets/home_screen_card_avatar.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreenCardBottomRow extends StatelessWidget {
-  final HomeScreenCardData data;
-  final HomeScreenCardArrow upwardArrow;
-  final HomeScreenCardArrow downwardArrow;
-  final bool isBack;
+class HomeScreenCardRow extends StatelessWidget {
+  final Stream<HomeScreenCardData>? data;
+  final HomeScreenCardAvatar upwardArrow;
+  final HomeScreenCardAvatar downwardArrow;
 
-  const HomeScreenCardBottomRow({
+  const HomeScreenCardRow({
     super.key,
     required this.data,
     required this.upwardArrow,
     required this.downwardArrow,
-    this.isBack = false,
   });
 
   IconButton _buildGoToCurrentDateIcon(BuildContext context) {
@@ -32,8 +33,7 @@ class HomeScreenCardBottomRow extends StatelessWidget {
     final DateTime now = DateTime.now();
 
     return (algorithmProvider.currentShownMonth !=
-                DateTime(now.year, now.month) &&
-            !isBack)
+            DateTime(now.year, now.month))
         ? IconButton(
             icon: const Icon(Icons.today_rounded),
             color: Theme.of(context).colorScheme.onSurface.withAlpha(64),
@@ -54,6 +54,7 @@ class HomeScreenCardBottomRow extends StatelessWidget {
     BuildContext context, {
     bool isIncome = false,
   }) {
+    final settings = Provider.of<AccountSettingsProvider>(context);
     return Expanded(
       flex: 10,
       child: Row(
@@ -66,19 +67,35 @@ class HomeScreenCardBottomRow extends StatelessWidget {
                 isIncome ? CrossAxisAlignment.start : CrossAxisAlignment.end,
             children: [
               Text(
-                tr(isIncome? 'home_screen_card.label-income' : 'home_screen_card.label-expenses'),
+                tr(isIncome
+                    ? 'home_screen_card.label-income'
+                    : 'home_screen_card.label-expenses',
+                ),
                 style: Theme.of(context)
                     .textTheme
                     .overline!
                     .copyWith(fontSize: 12),
               ),
               const SizedBox(height: 5),
-              Text(
-                '${isIncome ? data.income.toStringAsFixed(2) : data.expense.toStringAsFixed(2)} €',
-                style: TextStyle(
-                  color: Colors.grey[700],
-                  fontWeight: FontWeight.bold,
-                ),
+              StreamBuilder<HomeScreenCardData>(
+                stream: data,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.none ||
+                      snapshot.connectionState == ConnectionState.waiting) {
+                    return const LoadingSpinner();
+                  }
+                  return Text(
+                    CurrencyFormatter(context.locale, symbol: settings.getStandardCurrency().symbol)
+                        .format(isIncome
+                          ? snapshot.data?.mtdIncome ?? 0
+                          : snapshot.data?.mtdExpenses ?? 0,
+                    ),
+                    style: TextStyle(
+                      color: Colors.grey[700],
+                      fontWeight: FontWeight.bold,
+                    ),
+                  );
+                },
               ),
             ],
           ),

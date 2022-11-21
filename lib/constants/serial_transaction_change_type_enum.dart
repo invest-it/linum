@@ -4,7 +4,7 @@
 //  Co-Author: n/a
 //
 
-enum RepeatableChangeType {
+enum SerialTransactionChangeType {
   all,
   thisAndAllBefore,
   thisAndAllAfter,
