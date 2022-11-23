@@ -22,13 +22,15 @@ class LoadingSpinner extends StatelessWidget {
             color: Theme.of(context).colorScheme.primary,
             size: 40.0,
           ),
-          const SizedBox(
-            height: 10,
-          ),
-          Text(
-            loadingTitle,
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
+          if (loadingTitle != "") ...[
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              loadingTitle,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          ]
         ],
       ),
     );
