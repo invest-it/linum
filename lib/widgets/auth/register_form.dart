@@ -81,7 +81,7 @@ class _RegisterFormState extends State<RegisterForm> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 12.0),
           child: Text(
-            tr('onboarding_screen.register-lip-title'),
+            tr('onboarding_screen.register-lip-title').toUpperCase(),
             style: Theme.of(context).textTheme.headline5,
           ),
         ),

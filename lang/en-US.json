@@ -132,7 +132,7 @@
         "wrong-password": "Your email or password is not correct. Check for spelling errors?"
     },
     "budget_screen": {
-        "button-filter": "FILTER",
+        "button-filter": "Filter",
         "label-all-transactions": "All Transactions"
     },
     "enter_screen": {
@@ -184,8 +184,8 @@
     "enter_screen_attribute_date": "Date",
     "enter_screen_attribute_repeat": "Repeat",
     "home_screen": {
-        "button-show-more": "SHOW MORE",
-        "button-show-all": "SHOW ALL",
+        "button-show-more": "More",
+        "button-show-all": "All",
         "free-text": "Free",
         "label-recent-transactions": "Recent transactions",
         "label-active-serialcontracts": "Contracts this month"
@@ -193,8 +193,8 @@
     "home_screen_card": {
         "home-screen-card-toast": "Swipe left and right to view previous or upcoming months. Press and hold to return to the current month.",
         "label-current-balance": "Current balance",
-        "label-expenses": "EXPENSES",
-        "label-income": "INCOME",
+        "label-expenses": "Expenditure",
+        "label-income": "Revenue",
         "label-total-balance": "Balance",
         "label-total-balance-sub": "until today"
     },
@@ -270,7 +270,7 @@
         "register-email-hintlabel": "Email address",
         "register-lip-forgot-password-button": "Alternative sign-in methods",
         "register-lip-signup-button": "Sign up",
-        "register-lip-title": "SIGN UP",
+        "register-lip-title": "Register",
         "register-password-errorlabel": "Please enter a password with at least 6 characters.",
         "register-password-hintlabel": "Password",
         "register-privacy": {
@@ -286,21 +286,21 @@
             "label-en": "Deutsch",
             "label-nl": "Nederlands",
             "label-systemlang": "Use System Language",
-            "label-title": "LANGUAGE SETTINGS",
+            "label-title": "Language settings",
             "label-tooltip": "Currently, only the system language is supported. Supported languages: German, English."
         },
         "pin-lock": {
             "label-change-pin": "Change PIN code",
-            "label-title": "PIN LOCK",
+            "label-title": "PIN lock",
             "label-tooltip": "If the PIN lock is active, you will need to enter your personal PIN code upon starting the app to protect your data.",
             "switch-label": "PIN lock active"
         },
         "special-settings": {
             "label-schwabenmodus": "Dagobert Duck Mode",
-            "label-title": "SPECIAL SETTINGS"
+            "label-title": "Special settings"
         },
         "standard-account": {
-            "label-title": "STANDARD ACCOUNTS",
+            "label-title": "Standard accounts",
             "label-tooltip": "These accounts are used by default for each new income/expense. You can also change them individually."
         },
         "standard-account-selector": {
@@ -312,11 +312,11 @@
             "modal-label-title": "Accounts"
         },
         "standard-category": {
-            "label-title": "STANDARD CATEGORIES",
+            "label-title": "Standard categories",
             "label-tooltip": "These categories are used by default for each new income/expense/transaction. You can also change them individually."
         },
         "standard-currency": {
-            "label-title": "STANDARD CURRENCY",
+            "label-title": "Standard currency",
             "label-tooltip": "This currency is used by default for every new transaction. You can also change it individually."
         },
         "standard-expense-selector": {
@@ -344,7 +344,7 @@
             "button-delete-user": "Delete User",
             "button-forgot-password-tooltip": "You can request a password reset here if you forgot your old password.",
             "button-signout": "Sign out",
-            "label-title": "YOUR ACCOUNT"
+            "label-title": "Your account"
         }
     },
     "currency": {

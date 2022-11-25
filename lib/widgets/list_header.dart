@@ -17,7 +17,7 @@ class ListHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     if (tooltipMessage == null) {
       return Text(
-        tr(title),
+        tr(title).toUpperCase(),
         style: Theme.of(context).textTheme.overline,
       );
     } else {
@@ -26,7 +26,7 @@ class ListHeader extends StatelessWidget {
         spacing: 8,
         children: [
           Text(
-            tr(title),
+            tr(title).toUpperCase(),
             style: Theme.of(context).textTheme.overline,
           ),
           Tooltip(

@@ -137,8 +137,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       child: Text(
                         showRepeatables
-                            ? tr('home_screen.button-show-all')
-                            : tr('home_screen.button-show-more'),
+                            ? tr('home_screen.button-show-all').toUpperCase()
+                            : tr('home_screen.button-show-more').toUpperCase(),
                         style: Theme.of(context).textTheme.overline?.copyWith(
                               color: Theme.of(context).colorScheme.primary,
                               fontSize: 14,

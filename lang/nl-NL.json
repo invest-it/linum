@@ -132,7 +132,7 @@
         "wrong-password": "Uw e-mail of wachtwoord is niet correct. Controleer op spelfouten?"
     },
     "budget_screen": {
-        "button-filter": "FILTER",
+        "button-filter": "Filter",
         "label-all-transactions": "Alle Verrichtingen"
     },
     "enter_screen": {
@@ -184,8 +184,8 @@
     "enter_screen_attribute_date": "Datum",
     "enter_screen_attribute_repeat": "Herhaal",
     "home_screen": {
-        "button-show-more": "MEER ZIEN",
-        "button-show-all": "ALLE",
+        "button-show-more": "Meer",
+        "button-show-all": "Alle",
         "free-text": "Gratis",
         "label-recent-transactions": "Recente transacties",
         "label-active-serialcontracts": "Contracten deze maand"
@@ -193,8 +193,8 @@
     "home_screen_card": {
         "home-screen-card-toast": "Veeg naar links en rechts om de vorige of komende maanden te bekijken. Ingedrukt houden om terug te keren naar de huidige maand.",
         "label-current-balance": "Huidig maandelijks saldo",
-        "label-expenses": "UITGAVEN",
-        "label-income": "INKOMEN",
+        "label-expenses": "Uitgaven",
+        "label-income": "Inkomsten",
         "label-total-balance": "Saldo",
         "label-total-balance-sub": "tot vandaag"
     },
@@ -270,7 +270,7 @@
         "register-email-hintlabel": "Emailadres",
         "register-lip-forgot-password-button": "Alternative sign-in methods",
         "register-lip-signup-button": "Registeren",
-        "register-lip-title": "SIGN UP",
+        "register-lip-title": "Registreer",
         "register-password-errorlabel": "Voer een wachtwoord in van ten minste 6 tekens.",
         "register-password-hintlabel": "Wachtwoord",
         "register-privacy": {
@@ -286,21 +286,21 @@
             "label-en": "Deutsch",
             "label-nl": "Nederlands",
             "label-systemlang": "Systeemtaal gebruiken",
-            "label-title": "TAALINSTELLINGEN",
+            "label-title": "Taalinstellingen",
             "label-tooltip": "Currently, only the system language is supported. Supported languages: German, English."
         },
         "pin-lock": {
             "label-change-pin": "Wijzig PIN code",
-            "label-title": "PIN SLOT",
+            "label-title": "PIN slot",
             "label-tooltip": "Als de PIN slot actief is, moet u bij het starten van de app uw persoonlijke PIN-code invoeren om uw gegevens te beschermen.",
             "switch-label": "PIN slot actief"
         },
         "special-settings": {
             "label-schwabenmodus": "Dagobert Duck Mode",
-            "label-title": "SPECIALE INSTELLINGEN"
+            "label-title": "Speciale instellingen"
         },
         "standard-account": {
-            "label-title": "STANDAARDREKENINGEN",
+            "label-title": "Standaardrekeningen",
             "label-tooltip": "Deze rekeningen worden standaard gebruikt voor elke nieuwe inkomsten/uitgaven. U kunt ze ook afzonderlijk wijzigen."
         },
         "standard-account-selector": {
@@ -312,11 +312,11 @@
             "modal-label-title": "Accounts"
         },
         "standard-category": {
-            "label-title": "STANDAARDCATEGORIEËN",
+            "label-title": "Standaard categorieën",
             "label-tooltip": "Deze categorieën worden standaard gebruikt voor elke nieuwe inkomsten/uitgaven/transactie. U kunt ze ook afzonderlijk wijzigen."
         },
         "standard-currency": {
-            "label-title": "STANDAARDVALUTA",
+            "label-title": "Standaard valuta",
             "label-tooltip": "Deze valuta wordt standaard gebruikt voor elke nieuwe transactie. U kunt deze ook individueel wijzigen."
         },
         "standard-expense-selector": {
@@ -344,7 +344,7 @@
             "button-delete-user": "Gebruiker verwijderen",
             "button-forgot-password-tooltip": "U kunt hier een nieuw wachtwoord aanvragen als u uw oude wachtwoord bent vergeten.",
             "button-signout": "Uitschrijven",
-            "label-title": "UW ACCOUNT"
+            "label-title": "Uw rekening"
         }
     },
     "currency": {
