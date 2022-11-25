@@ -45,7 +45,7 @@ class _ActionLipState extends State<ActionLip> {
           // : log('Because the keyboard is not opened,');
           // log('the offset has been reduced by ' +
           // (SizeGuide.keyboardHeight / 2).toString());
-          _lipYOffset = SizeGuide.keyboardIsOpened
+          _lipYOffset = SizeGuide.isKeyboardOpen(context)
               ? proportionateScreenHeightFraction(ScreenFraction.twofifths) -
                   (SizeGuide.keyboardHeight / 2)
               : proportionateScreenHeightFraction(ScreenFraction.twofifths);

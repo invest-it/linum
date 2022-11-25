@@ -11,7 +11,6 @@ import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/utilities/frontend/currency_formatter.dart';
 import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
-import 'package:linum/widgets/loading_spinner.dart';
 import 'package:linum/widgets/screen_card/card_widgets/home_screen_card_avatar.dart';
 import 'package:provider/provider.dart';
 
@@ -58,8 +57,7 @@ class HomeScreenCardRow extends StatelessWidget {
     return Expanded(
       flex: 10,
       child: Row(
-        mainAxisAlignment:
-            isIncome ? MainAxisAlignment.start : MainAxisAlignment.end,
+        mainAxisAlignment: isIncome ? MainAxisAlignment.start : MainAxisAlignment.end,
         children: [
           if (isIncome) ...[upwardArrow, const SizedBox(width: 10)],
           Column(
@@ -74,15 +72,21 @@ class HomeScreenCardRow extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .overline!
-                    .copyWith(fontSize: 12),
+                    .copyWith(fontSize: 10),
               ),
-              const SizedBox(height: 5),
               StreamBuilder<HomeScreenCardData>(
                 stream: data,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.none ||
                       snapshot.connectionState == ConnectionState.waiting) {
-                    return const LoadingSpinner();
+                    return Text(
+                      "--",
+                      style: TextStyle(
+                        color: Colors.grey[700],
+                        fontWeight: FontWeight.bold,
+                        fontSize: 10,
+                      ),
+                    );
                   }
                   return Text(
                     CurrencyFormatter(context.locale, symbol: settings.getStandardCurrency().symbol)
@@ -93,6 +97,7 @@ class HomeScreenCardRow extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.grey[700],
                       fontWeight: FontWeight.bold,
+                      fontSize: 10,
                     ),
                   );
                 },

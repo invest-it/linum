@@ -206,8 +206,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                           ),
                     ),
                     onPressed: () => {
-                      onboardingScreenProvider
-                          .setPageState(OnboardingPageState.login),
+                      onboardingScreenProvider.setPageState(OnboardingPageState.login),
                     },
                   ),
                 ],

@@ -118,6 +118,9 @@ class _LoginFormState extends State<LoginForm> {
                               ? tr('onboarding_screen.login-email-errorlabel')
                               : null,
                         ),
+                        onTap: () {
+                          onboardingScreenProvider.setPageState(OnboardingPageState.login);
+                        },
                       ),
                     ),
                     Container(

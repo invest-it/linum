@@ -11,7 +11,6 @@ class SizeGuide {
   static late double screenWidth;
   static late double screenHeight;
   static late Orientation orientation;
-  static late bool keyboardIsOpened;
   static late double keyboardHeight;
   static const double referenceScreenWidth = 375.0;
   static const double referenceScreenHeight = 812.0;
@@ -21,8 +20,11 @@ class SizeGuide {
     screenWidth = _mediaQueryData.size.width;
     screenHeight = _mediaQueryData.size.height;
     orientation = _mediaQueryData.orientation;
-    keyboardIsOpened = _mediaQueryData.viewInsets.bottom != 0.0;
     keyboardHeight = _mediaQueryData.viewInsets.bottom;
+  }
+
+  static bool isKeyboardOpen(BuildContext context) {
+    return MediaQuery.of(context).viewInsets.bottom != 0.0;
   }
 }
 
