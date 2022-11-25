@@ -120,7 +120,7 @@ class _LoginFormState extends State<LoginForm> {
                         ),
                         onTap: () {
                           onboardingScreenProvider.setPageState(OnboardingPageState.login);
-                        }
+                        },
                       ),
                     ),
                     Container(

@@ -213,4 +213,3 @@ enum ScreenFraction {
   ///1%
   quantile,
 }
-
