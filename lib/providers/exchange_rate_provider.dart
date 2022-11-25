@@ -29,9 +29,7 @@ class ExchangeRateProvider extends ChangeNotifier {
     final dates = <DateTime>[];
 
     for (final transaction in transactions) {
-      if (transaction.currency != standardCurrency.name) {
-        continue;
-      }
+
       var date = transaction.time.toDate();
 
       final today = DateTime.now();
@@ -75,13 +73,13 @@ class ExchangeRateProvider extends ChangeNotifier {
     }
 
     var key = sanitizedDateTime.millisecondsSinceEpoch;
-
     var exchangeRates = ratesMap[key];
 
     // Still necessary, due to the possibility of missing rates;
     if ((exchangeRates == null || exchangeRates.rates == null) && transaction.time.toDate().isBefore(DateTime.now())) {
       exchangeRates = await _repository.getExchangeRatesForDate(sanitizedDateTime);
     }
+
 
     if (exchangeRates == null) {
       var lastSmallerIndex = sortedKeys.lastSmallerIndex(key);
@@ -127,10 +125,10 @@ class ExchangeRateProvider extends ChangeNotifier {
         final sanitizedDateTime = DateTime(dateTime.year, dateTime.month, dateTime.day);
         final dateInMs = sanitizedDateTime.millisecondsSinceEpoch;
         transaction.rateInfo = ExchangeRateInfo(
-            num.parse(transactionCurrencyRate),
-            num.parse(standardCurrencyRate ?? "1"),
-            firestore.Timestamp.fromMillisecondsSinceEpoch(exchangeRates.date),
-            isOtherDate: dateInMs != exchangeRates.date,
+          num.parse(transactionCurrencyRate),
+          num.parse(standardCurrencyRate ?? "1"),
+          firestore.Timestamp.fromMillisecondsSinceEpoch(exchangeRates.date),
+          isOtherDate: dateInMs != exchangeRates.date,
         );
         continue;
       }
