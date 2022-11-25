@@ -19,7 +19,7 @@ class TextIcon extends StatelessWidget {
             fontSize: 16,
             fontWeight: FontWeight.bold,
             color: !selected
-              ? Color.fromRGBO(136, 136, 136, 1)
+              ? const Color.fromRGBO(136, 136, 136, 1)
               : Theme.of(context).colorScheme.primary,
           ),
         ),

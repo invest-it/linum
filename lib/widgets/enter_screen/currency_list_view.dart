@@ -4,6 +4,7 @@ import 'package:linum/constants/standard_currencies.dart';
 import 'package:linum/models/currency.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
+import 'package:linum/utilities/frontend/silent_scroll.dart';
 import 'package:linum/widgets/text_icon.dart';
 import 'package:provider/provider.dart';
 
@@ -27,23 +28,26 @@ class CurrencyListView extends StatelessWidget {
   Widget build(BuildContext context) {
     final currencies = standardCurrencies.values.toList();
 
-    return ListView.builder(
-      itemCount: standardCurrencies.length,
-      itemBuilder: (BuildContext context, int index) {
-        final currency = currencies[index];
-        return ListTile(
-          leading: currency.icon != null
-              ? Icon(currency.icon)
-              : TextIcon(currency.symbol),
-          title: Text(tr(currency.label)),
-          onTap: () => {
-            _selectCurrency(
-              context,
-              currency,
-            ),
-          },
-        );
-      },
+    return ScrollConfiguration(
+      behavior: SilentScroll(),
+      child: ListView.builder(
+        itemCount: standardCurrencies.length,
+        itemBuilder: (BuildContext context, int index) {
+          final currency = currencies[index];
+          return ListTile(
+            leading: currency.icon != null
+                ? Icon(currency.icon)
+                : TextIcon(currency.symbol),
+            title: Text(tr(currency.label)),
+            onTap: () => {
+              _selectCurrency(
+                context,
+                currency,
+              ),
+            },
+          );
+        },
+      ),
     );
   }
 }
