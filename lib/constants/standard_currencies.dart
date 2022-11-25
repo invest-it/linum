@@ -9,25 +9,25 @@ import 'package:linum/models/currency.dart';
 
 final standardCurrencies = Map<String, Currency>.unmodifiable({
       "EUR": const Currency(
-        label: 'Euro', // FIXME: translate maybe
+        label: 'currency.name.eur',
         name: 'EUR',
         symbol: '€',
         icon: Icons.euro,
       ),
       "JPY": const Currency(
-        label: 'Yen', // FIXME: translate maybe
+        label: 'currency.name.jpy',
         name: 'JPY',
         symbol: '¥',
         icon: Icons.currency_yen,
       ),
       "GBP": const Currency(
-        label: 'Britisches Pfund', // FIXME: translate maybe
+        label: 'currency.name.gbp',
         name: 'GBP',
         symbol: '£',
         icon: Icons.currency_pound,
       ),
       "USD": const Currency(
-        label: 'US Dollar', // FIXME: translate maybe
+        label: 'currency.name.usd',
         name: 'USD',
         symbol: '\$',
         icon: Icons.attach_money,

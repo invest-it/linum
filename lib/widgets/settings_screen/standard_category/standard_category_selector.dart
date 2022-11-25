@@ -14,14 +14,14 @@ import 'package:linum/widgets/settings_screen/standard_category/category_list_ti
 import 'package:linum/widgets/settings_screen/standard_category/category_list_view.dart';
 import 'package:provider/provider.dart';
 
-class StandardCategory extends StatefulWidget {
-  const StandardCategory({super.key});
+class StandardCategorySelector extends StatefulWidget {
+  const StandardCategorySelector({super.key});
 
   @override
-  State<StandardCategory> createState() => _StandardCategoryState();
+  State<StandardCategorySelector> createState() => _StandardCategorySelectorState();
 }
 
-class _StandardCategoryState extends State<StandardCategory> {
+class _StandardCategorySelectorState extends State<StandardCategorySelector> {
   @override
   Widget build(BuildContext context) {
     final AccountSettingsProvider accountSettingsProvider =

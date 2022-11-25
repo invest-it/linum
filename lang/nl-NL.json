@@ -24,6 +24,9 @@
             "income": {
                 "label-title": "Inkomsten"
             }
+        },
+        "standard-currency": {
+            "label-title": "Valuta"
         }
     },
     "alertdialog": {
@@ -342,6 +345,17 @@
             "button-forgot-password-tooltip": "U kunt hier een nieuw wachtwoord aanvragen als u uw oude wachtwoord bent vergeten.",
             "button-signout": "Uitschrijven",
             "label-title": "UW ACCOUNT"
+        }
+    },
+    "currency": {
+        "error": {
+            "not-found": "Valuta wordt niet ondersteund"
+        },
+        "name": {
+            "eur": "Euro",
+            "gbp": "Pond sterling",
+            "jpy": "Yen",
+            "usd": "Amerikaanse dollar"
         }
     }
 }

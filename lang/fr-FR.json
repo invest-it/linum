@@ -24,6 +24,9 @@
             "income": {
                 "label-title": "Recettes"
             }
+        },
+        "standard-currency": {
+            "label-title": "Monnaie"
         }
     },
     "alertdialog": {
@@ -342,6 +345,17 @@
             "button-forgot-password-tooltip": "Vous pouvez demander une réinitialisation du mot de passe ici si vous avez oublié votre ancien mot de passe.",
             "button-signout": "Se déconnecter",
             "label-title": "VOTRE COMPTE"
+        }
+    },
+    "currency": {
+        "error": {
+            "not-found": "La devise n'est pas prise en charge"
+        },
+        "name": {
+            "eur": "Euro",
+            "gbp": "Livre sterling",
+            "jpy": "Yen",
+            "usd": "Dollar américain"
         }
     }
 }

@@ -24,6 +24,9 @@
             "income": {
                 "label-title": "Ingresos"
             }
+        },
+        "standard-currency": {
+            "label-title": "Moneda"
         }
     },
     "alertdialog": {
@@ -338,6 +341,17 @@
             "button-forgot-password-tooltip": "Puede solicitar un restablecimiento de la contraseña aquí si ha olvidado su antigua contraseña.",
             "button-signout": "Firmar la salida",
             "label-title": "SU CUENTA"
+        }
+    },
+    "currency": {
+        "error": {
+            "not-found": "No se admite la moneda"
+        },
+        "name": {
+            "eur": "Euro",
+            "gbp": "Libra esterlina",
+            "jpy": "Yen",
+            "usd": "Dólar estadounidense"
         }
     }
 }

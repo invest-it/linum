@@ -5,7 +5,7 @@ Before running the script you need to add the *translator-config.json* to the sa
 {
    "auth_key": "YOUR_PERSONAL_DEEPL_AUTH_KEY",
     "lang": {
-        "DE": "de-DE.json"
+        "DE": "de-DE.json",
         "EN-GB": "en-US.json",
         "ES": "es-ES.json",
         "FR": "fr-FR.json",

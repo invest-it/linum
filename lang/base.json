@@ -24,6 +24,9 @@
             "income": {
                 "label-title": "Einnahmen"
             }
+        },
+        "standard-currency": {
+            "label-title": "Währung"
         }
     },
     "alertdialog": {
@@ -131,6 +134,17 @@
     "budget_screen": {
         "button-filter": "FILTER",
         "label-all-transactions": "Alle Transaktionen"
+    },
+    "currency": {
+        "error": {
+            "not-found": "Währung wird nicht unterstützt"
+        },
+        "name": {
+            "eur": "Euro",
+            "gbp": "Britisches Pfund",
+            "jpy": "Yen",
+            "usd": "US Dollar"
+        }
     },
     "enter_screen": {
         "add-amount": {

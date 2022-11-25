@@ -609,7 +609,10 @@ class _EnterScreenListViewBuilderState
       final DateFormat formatter = DateFormat('dd. MMMM yyyy', langCode);
       return Text(formatter.format(enterScreenProvider.selectedDate));
     } else if (menuIndex == 2) {
-      return Text(standardCurrencies[enterScreenProvider.currency]?.label ?? "Currency not found"); // FIXME: translate currency.error
+      return Text(
+          standardCurrencies[enterScreenProvider.currency]?.label
+              ?? "currency.error.not-found",
+      );
     } else if (menuIndex == 3) {
       return Text(
         tr(

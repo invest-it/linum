@@ -24,6 +24,9 @@
             "income": {
                 "label-title": "Einnahmen"
             }
+        },
+        "standard-currency": {
+            "label-title": "Währung"
         }
     },
     "alertdialog": {
@@ -342,6 +345,17 @@
             "button-forgot-password-tooltip": "Falls du dein Passwort vergessen hast, kannst du hier ein neues einstellen.",
             "button-signout": "Ausloggen",
             "label-title": "DEIN ACCOUNT"
+        }
+    },
+    "currency": {
+        "error": {
+            "not-found": "Währung wird nicht unterstützt"
+        },
+        "name": {
+            "eur": "Euro",
+            "gbp": "Britisches Pfund",
+            "jpy": "Yen",
+            "usd": "US Dollar"
         }
     }
 }

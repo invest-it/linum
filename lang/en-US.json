@@ -24,6 +24,9 @@
             "income": {
                 "label-title": "Income"
             }
+        },
+        "standard-currency": {
+            "label-title": "Currency"
         }
     },
     "alertdialog": {
@@ -342,6 +345,17 @@
             "button-forgot-password-tooltip": "You can request a password reset here if you forgot your old password.",
             "button-signout": "Sign out",
             "label-title": "YOUR ACCOUNT"
+        }
+    },
+    "currency": {
+        "error": {
+            "not-found": "Currency is not supported"
+        },
+        "name": {
+            "eur": "Euro",
+            "gbp": "Pound sterling",
+            "jpy": "Yen",
+            "usd": "US Dollar"
         }
     }
 }
