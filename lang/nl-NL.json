@@ -355,7 +355,16 @@
             "eur": "Euro",
             "gbp": "Pond sterling",
             "jpy": "Yen",
-            "usd": "Amerikaanse dollar"
+            "usd": "Amerikaanse dollar",
+            "cny": "Chinese Yuan",
+            "chf": "Zwitserse frank",
+            "aud": "Australische dollar",
+            "cad": "Canadese dollar",
+            "nzd": "Nieuw-Zeelandse dollar",
+            "sek": "Zweedse kroon",
+            "nok": "Noorse kroon",
+            "myr": "Maleisische Ringgit"
         }
-    }
+    },
+    "enter_screen_attribute_currency": "Valuta"
 }

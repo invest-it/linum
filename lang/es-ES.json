@@ -351,7 +351,16 @@
             "eur": "Euro",
             "gbp": "Libra esterlina",
             "jpy": "Yen",
-            "usd": "Dólar estadounidense"
+            "usd": "Dólar estadounidense",
+            "cny": "Yuan chino",
+            "chf": "Franco suizo",
+            "aud": "Dólar australiano",
+            "cad": "Dólar canadiense",
+            "nzd": "Dólar neozelandés",
+            "sek": "Corona sueca",
+            "nok": "Corona noruega",
+            "myr": "Ringgit malayo"
         }
-    }
+    },
+    "enter_screen_attribute_currency": "Moneda"
 }

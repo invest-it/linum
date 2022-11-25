@@ -143,7 +143,15 @@
             "eur": "Euro",
             "gbp": "Britisches Pfund",
             "jpy": "Yen",
-            "usd": "US Dollar"
+            "cny": "Chinesischer Yuan",
+            "usd": "US Dollar",
+            "chf": "Schweizer Franken",
+            "aud": "Australischer Dollar",
+            "cad": "Kanadischer Dollar",
+            "nzd": "Neuseeland-Dollar",
+            "sek": "Schwedische Krone",
+            "nok": "Norwegische Krone",
+            "myr": "Malaysischer Ringgit"
         }
     },
     "enter_screen": {
@@ -192,6 +200,7 @@
     "enter_screen_attribute_account_from": "Von Account",
     "enter_screen_attribute_account_to": "Zu Account",
     "enter_screen_attribute_category": "Kategorie",
+    "enter_screen_attribute_currency": "Währung",
     "enter_screen_attribute_date": "Datum",
     "enter_screen_attribute_repeat": "Wiederholen",
     "home_screen": {

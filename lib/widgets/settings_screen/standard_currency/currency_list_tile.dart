@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/models/currency.dart';
+import 'package:linum/widgets/text_icon.dart';
 
 class CurrencyListTile extends StatelessWidget {
   const CurrencyListTile({
@@ -19,9 +20,9 @@ class CurrencyListTile extends StatelessWidget {
       trailing: const Icon(
         Icons.arrow_forward,
       ),
-      leading: Icon(
-        currency.icon,
-      ),
+      leading: currency.icon != null
+          ? Icon(currency.icon)
+          : TextIcon(currency.symbol),
     );
   }
 }

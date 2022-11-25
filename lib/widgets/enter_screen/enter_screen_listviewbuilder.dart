@@ -23,7 +23,7 @@ import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/utilities/frontend/silent_scroll.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
-
+import 'package:linum/widgets/enter_screen/currency_list_view.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
@@ -45,7 +45,7 @@ class _EnterScreenListViewBuilderState
   );
 
   EntryCategory currencyEntryCategory = const EntryCategory(
-    label: "Currency",
+    label: "enter_screen_attribute_currency",
     icon: Icons.currency_exchange_outlined,
   );
 
@@ -267,12 +267,12 @@ class _EnterScreenListViewBuilderState
     AccountSettingsProvider accountSettingsProvider,
     int menuIndex,
   ) {
-    return "${[
+    return [
       "enter_screen_attribute_category",
       timeEntryCategory.label,
       currencyEntryCategory.label,
       repeatDurationEntryCategory.label,
-    ][menuIndex].tr()}: ";
+    ][menuIndex].tr();
   }
 
   //which lists view is built depending on expense etc.
@@ -382,40 +382,10 @@ class _EnterScreenListViewBuilderState
           ),
         );
       }
-      // } else if (index == 1) {
-      // return ListView.builder(
-      //   itemCount: widget.categoriesAccount.length,
-      //   itemBuilder: (BuildContext context, int indexBuilder) {
-      //     return ListTile(
-      //       leading: Icon(widget.categoriesAccount[indexBuilder].categoryIcon),
-      //       title: Text(widget.categoriesAccount[indexBuilder].categoryName),
-      //       onTap: () => _selectAccountItem(
-      //         widget.categoriesAccount[indexBuilder].categoryName,
-      //         widget.categoriesAccount[indexBuilder].categoryIcon,
-      //       ),
-      //     );
-      //   },
-      // );
     } else if (menuIndex == 2) {
       return ScrollConfiguration(
         behavior: SilentScroll(),
-        child: ListView.builder(
-          itemCount: standardCurrencies.length,
-          itemBuilder: (BuildContext context, int index) {
-            final currency = currencies[index];
-            return ListTile(
-              leading: Icon(currency.icon),
-              title: Text(currency.label),
-              onTap: () => {
-                _selectCurrency(
-                    enterScreenProvider,
-                    currency,
-                    actionLipStatusProvider,
-                ),
-              },
-            );
-          },
-        ),
+        child: const CurrencyListView(),
       );
     } else {
       return ScrollConfiguration(
@@ -453,12 +423,12 @@ class _EnterScreenListViewBuilderState
   //which list view is built depending on the tapped category at TRANSACTION
 
   ScrollConfiguration _listViewBuilderIncome(
-    int index,
+    int menuIndex,
     EnterScreenProvider enterScreenProvider,
     AccountSettingsProvider accountSettingsProvider,
     ActionLipStatusProvider actionLipStatusProvider,
   ) {
-    if (index == 0) {
+    if (menuIndex == 0) {
       return ScrollConfiguration(
         behavior: SilentScroll(),
         child: ListView.builder(
@@ -491,20 +461,11 @@ class _EnterScreenListViewBuilderState
           },
         ),
       );
-      // } else if (index == 1) {
-      // return ListView.builder(
-      //   itemCount: widget.categoriesAccount.length,
-      //   itemBuilder: (BuildContext context, int indexBuilder) {
-      //     return ListTile(
-      //       leading: Icon(widget.categoriesAccount[indexBuilder].categoryIcon),
-      //       title: Text(widget.categoriesAccount[indexBuilder].categoryName),
-      //       onTap: () => _selectAccountItem(
-      //         widget.categoriesAccount[indexBuilder].categoryName,
-      //         widget.categoriesAccount[indexBuilder].categoryIcon,
-      //       ),
-      //     );
-      //   },
-      // );
+    } else if (menuIndex == 2) {
+      return ScrollConfiguration(
+        behavior: SilentScroll(),
+        child: const CurrencyListView(),
+      );
     } else {
       return ScrollConfiguration(
         behavior: SilentScroll(),
@@ -610,7 +571,7 @@ class _EnterScreenListViewBuilderState
       return Text(formatter.format(enterScreenProvider.selectedDate));
     } else if (menuIndex == 2) {
       return Text(
-          standardCurrencies[enterScreenProvider.currency]?.label
+          standardCurrencies[enterScreenProvider.currency]?.label.tr()
               ?? "currency.error.not-found",
       );
     } else if (menuIndex == 3) {
@@ -690,17 +651,6 @@ class _EnterScreenListViewBuilderState
       providerKey: ProviderKey.enter,
     );
     enterScreenProvider.setCategory(name);
-  }
-
-  void _selectCurrency(
-      EnterScreenProvider enterScreenProvider,
-      Currency currency,
-      ActionLipStatusProvider actionLipStatusProvider,
-      ) {
-    actionLipStatusProvider.setActionLipStatus(
-      providerKey: ProviderKey.enter,
-    );
-    enterScreenProvider.setCurrency(currency.name);
   }
 
   void _selectRepeatItem(

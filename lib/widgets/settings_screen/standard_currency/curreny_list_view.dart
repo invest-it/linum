@@ -4,6 +4,7 @@ import 'package:linum/constants/standard_currencies.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/widgets/text_icon.dart';
 import 'package:provider/provider.dart';
 
 class CurrencyListView extends StatelessWidget {
@@ -35,14 +36,15 @@ class CurrencyListView extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     final currency = currencies[index];
                     return ListTile(
-                      leading: Icon(
-                        currency.icon,
-                      ),
+                      leading: currency.icon != null
+                          ? Icon(currency.icon)
+                          : TextIcon(
+                              currency.symbol,
+                              selected: currency.name == settings.getStandardCurrency().name,
+                          ),
                       selected: currency.name == settings.getStandardCurrency().name,
                       title: Text(
-                        tr(
-                          currency.label,
-                        ),
+                        tr(currency.label),
                       ),
                       onTap: () {
                         settings.setStandardCurrency(currencies[index]);
