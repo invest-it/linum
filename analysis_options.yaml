@@ -13,3 +13,4 @@ analyzer:
   exclude:
     - lib/models/*.g.dart
     - lib/*.g.dart
+    - translation-script
