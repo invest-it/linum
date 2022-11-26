@@ -4,7 +4,6 @@
 //  Co-Author: damattl
 //  (Refactored)
 
-import 'package:flutter/material.dart';
 import 'package:linum/models/currency.dart';
 
 final standardCurrencies = Map<String, Currency>.unmodifiable({

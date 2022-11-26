@@ -16,7 +16,7 @@ import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/enter_screen/add_amount_dialog.dart';
 import 'package:linum/widgets/enter_screen/delete_entry_dialog.dart';
-import 'package:linum/widgets/enter_screen/enter_screen_listviewbuilder.dart';
+import 'package:linum/widgets/enter_screen/enter_screen_list_view.dart';
 import 'package:linum/widgets/enter_screen/enter_screen_top_input_field.dart';
 import 'package:linum/widgets/enter_screen/update_entry_dialog.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
@@ -95,7 +95,7 @@ class _EnterScreenState extends State<EnterScreen> {
                         ],
                       ),
                     )
-                  : EnterScreenListViewBuilder(),
+                  : EnterScreenListView(),
               MediaQuery.of(context).viewInsets.bottom > 1
                   ? Container()
                   : Column(
