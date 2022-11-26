@@ -18,13 +18,13 @@ class TransactionAmountFormatter {
     }
 
     if (!showConverted || standardCurrency.name == currency.name) {
-      return CurrencyFormatter(locale, symbol: currency.symbol).format(transaction.amount);
+      return CurrencyFormatter(locale, symbol: currency.name).format(transaction.amount);
     }
 
     final rateInfo = transaction.rateInfo;
 
     if (rateInfo != null) {
-      final formated = CurrencyFormatter(locale, symbol: standardCurrency.symbol)
+      final formated = CurrencyFormatter(locale, symbol: standardCurrency.name)
           .format(convertCurrencyAmountWithExchangeRate(transaction.amount, rateInfo));
       if (transaction.rateInfo!.isOtherDate) {
         return "($formated)";
@@ -33,6 +33,6 @@ class TransactionAmountFormatter {
     }
 
     // Inform the user about the missing rate
-    return CurrencyFormatter(locale, symbol: currency.symbol).format(transaction.amount);
+    return CurrencyFormatter(locale, symbol: currency.name).format(transaction.amount);
   }
 }

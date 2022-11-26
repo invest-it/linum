@@ -20,9 +20,7 @@ class CurrencyListTile extends StatelessWidget {
       trailing: const Icon(
         Icons.arrow_forward,
       ),
-      leading: currency.icon != null
-          ? Icon(currency.icon)
-          : TextIcon(currency.symbol),
+      leading: TextIcon(currency.name),
     );
   }
 }

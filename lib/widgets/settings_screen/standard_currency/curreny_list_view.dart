@@ -36,12 +36,10 @@ class CurrencyListView extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     final currency = currencies[index];
                     return ListTile(
-                      leading: currency.icon != null
-                          ? Icon(currency.icon)
-                          : TextIcon(
-                              currency.symbol,
-                              selected: currency.name == settings.getStandardCurrency().name,
-                          ),
+                      leading: TextIcon(
+                        currency.name,
+                        selected: currency.name == settings.getStandardCurrency().name,
+                      ),
                       selected: currency.name == settings.getStandardCurrency().name,
                       title: Text(
                         tr(currency.label),

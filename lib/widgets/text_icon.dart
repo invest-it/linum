@@ -13,8 +13,10 @@ class TextIcon extends StatelessWidget {
       child: Center(
         child: Text(
           text,
+          overflow: TextOverflow.visible,
           textAlign: TextAlign.center,
           textDirection: TextDirection.ltr,
+          softWrap: false,
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,

@@ -103,7 +103,7 @@ class HomeScreenCardBack extends StatelessWidget {
                             textBaseline: TextBaseline.alphabetic,
                             children: CurrencyFormatter(
                               context.locale,
-                              symbol: settings.getStandardCurrency().symbol,
+                              symbol: settings.getStandardCurrency().name,
                             ).formatWithWidgets(
                               snapshot.data?.eomBalance ?? 0,
                               (amount) => Flexible(
