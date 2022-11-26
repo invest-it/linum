@@ -363,7 +363,20 @@
             "nzd": "Nieuw-Zeelandse dollar",
             "sek": "Zweedse kroon",
             "nok": "Noorse kroon",
-            "myr": "Maleisische Ringgit"
+            "myr": "Maleisische Ringgit",
+            "pln": "Złoty",
+            "czk": "Tsjechische kroon",
+            "krw": "Zuid-Koreaanse won",
+            "dkk": "Deense kroon",
+            "isk": "IJslandse kroon",
+            "tyr": "Turkse lire",
+            "zar": "Zuid-Afrikaanse Rand",
+            "mxn": "Mexicaanse peso",
+            "inr": "Indiase roepie",
+            "idr": "Indonesische Rupiah",
+            "thb": "Baht",
+            "ils": "Shekel",
+            "blr": "Braziliaanse Real"
         }
     },
     "enter_screen_attribute_currency": "Valuta"

@@ -142,8 +142,11 @@
         "name": {
             "eur": "Euro",
             "gbp": "Britisches Pfund",
+            "pln": "Złoty",
+            "czk": "Tschechische Krone",
             "jpy": "Yen",
             "cny": "Chinesischer Yuan",
+            "krw": "Südkoreanischer Won",
             "usd": "US Dollar",
             "chf": "Schweizer Franken",
             "aud": "Australischer Dollar",
@@ -151,7 +154,18 @@
             "nzd": "Neuseeland-Dollar",
             "sek": "Schwedische Krone",
             "nok": "Norwegische Krone",
-            "myr": "Malaysischer Ringgit"
+            "dkk": "Dänische Krone",
+            "isk": "Isländische Krone",
+            "myr": "Malaysischer Ringgit",
+            "tyr": "Türkische Lira",
+            "zar": "Südafrikanischer Rand",
+            "mxn": "Mexikanischer Peso",
+            "inr": "Indische Rupie",
+            "idr": "Indonesische Rupiah",
+            "thb": "Baht",
+            "ils": "Schekel",
+            "blr": "Brasilianischer Real"
+
         }
     },
     "enter_screen": {

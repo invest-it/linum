@@ -363,7 +363,20 @@
             "nzd": "Neuseeland-Dollar",
             "sek": "Schwedische Krone",
             "nok": "Norwegische Krone",
-            "myr": "Malaysischer Ringgit"
+            "myr": "Malaysischer Ringgit",
+            "pln": "Złoty",
+            "czk": "Tschechische Krone",
+            "krw": "Südkoreanischer Won",
+            "dkk": "Dänische Krone",
+            "isk": "Isländische Krone",
+            "tyr": "Türkische Lira",
+            "zar": "Südafrikanischer Rand",
+            "mxn": "Mexikanischer Peso",
+            "inr": "Indische Rupie",
+            "idr": "Indonesische Rupiah",
+            "thb": "Baht",
+            "ils": "Schekel",
+            "blr": "Brasilianischer Real"
         }
     },
     "enter_screen_attribute_currency": "Währung"

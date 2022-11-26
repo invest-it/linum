@@ -359,7 +359,20 @@
             "nzd": "Dólar neozelandés",
             "sek": "Corona sueca",
             "nok": "Corona noruega",
-            "myr": "Ringgit malayo"
+            "myr": "Ringgit malayo",
+            "pln": "Złoty",
+            "czk": "Corona checa",
+            "krw": "El won surcoreano",
+            "dkk": "Corona danesa",
+            "isk": "Corona islandesa",
+            "tyr": "Lira turca",
+            "zar": "Rand sudafricano",
+            "mxn": "Peso mexicano",
+            "inr": "Rupia india",
+            "idr": "Rupia indonesia",
+            "thb": "Baht",
+            "ils": "Shekel",
+            "blr": "Real brasileño"
         }
     },
     "enter_screen_attribute_currency": "Moneda"
