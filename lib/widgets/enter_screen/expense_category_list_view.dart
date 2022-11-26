@@ -5,6 +5,7 @@ import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/utilities/frontend/silent_scroll.dart';
+import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
 class ExpenseCategoryListView extends StatelessWidget {
@@ -15,7 +16,10 @@ class ExpenseCategoryListView extends StatelessWidget {
       String name,
       ) {
     Provider.of<ActionLipStatusProvider>(context, listen: false)
-        .setActionLipStatus(providerKey: ProviderKey.enter);
+        .setActionLipStatus(
+          providerKey: ProviderKey.enter,
+          status: ActionLipStatus.hidden,
+        );
     Provider.of<EnterScreenProvider>(context, listen: false)
         .setCategory(name);
   }

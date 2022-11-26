@@ -5,6 +5,7 @@ import 'package:linum/models/currency.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/utilities/frontend/silent_scroll.dart';
+import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:linum/widgets/text_icon.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +20,7 @@ class CurrencyListView extends StatelessWidget {
     Provider.of<ActionLipStatusProvider>(context, listen: false)
         .setActionLipStatus(
       providerKey: ProviderKey.enter,
+      status: ActionLipStatus.hidden,
     );
     Provider.of<EnterScreenProvider>(context, listen: false)
         .setCurrency(currency.name);

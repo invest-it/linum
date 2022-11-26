@@ -94,6 +94,7 @@ class _EnterScreenListViewState
                 style: Theme.of(context).textTheme.headline5,
                 onTap: () => actionLipStatusProvider.setActionLipStatus(
                   providerKey: ProviderKey.enter,
+                  status: ActionLipStatus.hidden,
                 ),
                 onChanged: (_) {
                   enterScreenProvider.setName(myController!.text);

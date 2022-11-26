@@ -5,6 +5,7 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/types/change_notifier_provider_builder.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
@@ -16,20 +17,23 @@ class ActionLipStatusProvider extends ChangeNotifier {
 
   void setActionLipStatus({
     required ProviderKey providerKey,
-    ActionLipStatus actionLipStatus = ActionLipStatus.hidden,
+    required ActionLipStatus status,
   }) {
     setActionLipStatusSilently(
       providerKey: providerKey,
-      actionLipStatus: actionLipStatus,
+      status: status,
     );
     notifyListeners();
   }
 
   void setActionLipStatusSilently({
     required ProviderKey providerKey,
-    ActionLipStatus actionLipStatus = ActionLipStatus.hidden,
+    required ActionLipStatus status,
   }) {
-    _actionLipMap[providerKey] = actionLipStatus;
+    if (status != ActionLipStatus.onviewport) {
+      getRouterDelegate().setOnPopOverwrite(null);
+    }
+    _actionLipMap[providerKey] = status;
   }
 
   void setActionLip({
@@ -44,6 +48,14 @@ class ActionLipStatusProvider extends ChangeNotifier {
       actionLipStatus: actionLipStatus,
       actionLipTitle: actionLipTitle,
     );
+    if (actionLipStatus == ActionLipStatus.onviewport) {
+      getRouterDelegate().setOnPopOverwrite(() {
+        setActionLipStatus(
+          providerKey: providerKey,
+          status: ActionLipStatus.hidden,
+        );
+      });
+    }
     notifyListeners();
   }
 

@@ -24,6 +24,10 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
 
   Page? _replacedRoute;
   final _pageStack = <Page> [];
+
+
+  final Map<String, void Function()> _onPopListeners = {};
+  void Function()? _onPopOverwrite;
   /* MaterialPage _createPage(RouteSettings routeSettings) {
     Widget child;
 
@@ -31,6 +35,16 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
 
     }
   } */
+  void setOnPopOverwrite(void Function()? onPop) {
+    _onPopOverwrite = onPop;
+  }
+
+  void addOnPopListener(String name, void Function() onPop) {
+    _onPopListeners[name] = onPop;
+  }
+  void removeOnPopListener(String name) {
+    _onPopListeners.remove(name);
+  }
 
   List<Page> _buildPageStackUnauthorized() {
     return <Page>[
@@ -121,6 +135,17 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
   @override
   Future<bool> popRoute() async {
     dev.log("Stack: ${_pageStack.toString()}");
+
+    if (_onPopOverwrite != null) {
+      _onPopOverwrite!.call();
+      _onPopOverwrite = null;
+      return Future.value(true);
+    }
+
+    for (final listener in _onPopListeners.values) {
+      listener();
+    }
+
     if (_replacedRoute != null) {
       _pageStack.removeLast();
       _pageStack.add(_replacedRoute!);
