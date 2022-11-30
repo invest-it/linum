@@ -250,7 +250,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       recognizer: TapGestureRecognizer()
                         ..onTap = () async {
                           launchURL(
-                            'https://investit.notion.site/Datenschutzerkl-rung-Linum-Budgeting-App-b3da92953a224afba4336450a92b5d90',
+                            'https://privacy.linum-app.de',
                           );
                         },
                       style: Theme.of(context).textTheme.bodyText2?.copyWith(
