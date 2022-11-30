@@ -108,7 +108,7 @@ class HomeScreenCardFront extends StatelessWidget {
                           textBaseline: TextBaseline.alphabetic,
                           children: CurrencyFormatter(
                             context.locale,
-                            symbol: settings.getStandardCurrency().name,
+                            symbol: settings.getStandardCurrency().symbol,
                           ).formatWithWidgets(
                             snapshot.data?.mtdBalance ?? 0,
                             (amount) => Flexible(

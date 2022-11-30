@@ -142,8 +142,9 @@ class _EnterScreenListViewState
                       },
                       icon: const Icon(Icons.currency_exchange_outlined),
                       label: 'enter_screen_attribute_currency'.tr(),
-                      currentSelection: currency?.label.tr()
-                        ?? "currency.error.not-found",
+                      currentSelection: currency != null
+                        ? "${currency.label.tr()} (${currency.symbol})"
+                        : "currency.error.not-found",
                     ),
                     EnterScreenListTile(
                       onTap: () {

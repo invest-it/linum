@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class CurrencyFormatter {
   final String symbol;
   late final NumberFormat _formatter;
-  CurrencyFormatter(Locale locale, {this.symbol = "EUR"}) {
+  CurrencyFormatter(Locale locale, {this.symbol = "€"}) {
     _formatter = NumberFormat("#0.00", locale.toString());
   }
 

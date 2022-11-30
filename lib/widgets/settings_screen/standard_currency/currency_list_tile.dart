@@ -14,7 +14,7 @@ class CurrencyListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
-        tr(currency.label),
+        "${tr(currency.label)} (${currency.symbol})",
         style: Theme.of(context).textTheme.bodyText1,
       ),
       trailing: const Icon(

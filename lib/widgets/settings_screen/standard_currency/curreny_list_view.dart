@@ -43,7 +43,7 @@ class CurrencyListView extends StatelessWidget {
                       ),
                       selected: currency.name == settings.getStandardCurrency().name,
                       title: Text(
-                        tr(currency.label),
+                        "${tr(currency.label)} (${currency.symbol})"  ,
                       ),
                       onTap: () {
                         settings.setStandardCurrency(currencies[index]);

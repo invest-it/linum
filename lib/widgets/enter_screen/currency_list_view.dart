@@ -38,7 +38,7 @@ class CurrencyListView extends StatelessWidget {
           final currency = currencies[index];
           return ListTile(
             leading: TextIcon(currency.name),
-            title: Text(tr(currency.label)),
+            title: Text("${tr(currency.label)} (${currency.symbol})"),
             onTap: () => {
               _selectCurrency(
                 context,

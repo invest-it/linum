@@ -54,7 +54,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
     final currency = standardCurrencies[enterScreenProvider.currency];
     final formatter = CurrencyFormatter(
       context.locale,
-      symbol: currency?.name ?? enterScreenProvider.currency,
+      symbol: currency?.symbol ?? enterScreenProvider.currency,
     );
     // TODO: Write a better formatter for every currency symbol
 
