@@ -20,44 +20,47 @@ final standardCurrencies = Map<String, Currency>.unmodifiable({
   "USD": const Currency(
     label: 'currency.name.usd',
     name: 'USD',
-    symbol: '\$',
+    symbol: 'US\$',
   ),
   "CHF": const Currency(
     label: 'currency.name.chf',
     name: 'CHF',
-    symbol: '₣',
+    symbol: 'CHF',
   ),
   "PLN": const Currency(
     label: 'currency.name.pln',
     name: 'PLN',
+    symbol: 'zł',
   ),
   "CZK": const Currency(
     label: 'currency.name.czk',
     name: 'CZK',
+    symbol: 'Kč'
   ),
   "JPY": const Currency(
     label: 'currency.name.jpy',
     name: 'JPY',
-    symbol: '¥',
+    symbol: 'JP¥',
   ),
   "CNY": const Currency(
     label: 'currency.name.cny',
     name: 'CNY',
-    symbol: '¥',
+    symbol: 'CN¥',
   ),
   "KRW": const Currency(
     label: 'currency.name.krw',
     name: 'KRW',
+    symbol: '원'
   ),
   "AUD": const Currency(
     label: 'currency.name.aud',
     name: 'AUD',
-    symbol: '\$',
+    symbol: 'AU\$',
   ),
   "NZD": const Currency(
     label: 'currency.name.nzd',
     name: 'NZD',
-    symbol: '\$',
+    symbol: 'CA\$',
   ),
   "CAD": const Currency(
     label: 'currency.name.cad',
@@ -67,24 +70,27 @@ final standardCurrencies = Map<String, Currency>.unmodifiable({
   "NOK": const Currency(
     label: 'currency.name.nok',
     name: 'NOK',
-    symbol: 'kr',
+    symbol: 'nkr',
   ),
   "SEK": const Currency(
     label: 'currency.name.sek',
     name: 'SEK',
-    symbol: 'kr',
+    symbol: 'skr',
   ),
   "DKK": const Currency(
     label: 'currency.name.dkk',
     name: 'DKK',
+    symbol: 'dkr'
   ),
   "ISK": const Currency(
     label: 'currency.name.isk',
     name: 'ISK',
+    symbol: 'Íkr',
   ),
-  "TYR": const Currency(
-    label: 'currency.name.tyr',
-    name: 'TYR',
+  "TRY": const Currency(
+    label: 'currency.name.tyr', // TODO: fix key name
+    name: 'TRY',
+    symbol: '₺',
   ),
   "MYR": const Currency(
     label: 'currency.name.myr',
@@ -94,29 +100,36 @@ final standardCurrencies = Map<String, Currency>.unmodifiable({
   "INR": const Currency(
     label: 'currency.name.inr',
     name: 'INR',
+    symbol: '₹',
   ),
   "IDR": const Currency(
     label: 'currency.name.idr',
     name: 'IDR',
+    symbol: 'Rp',
   ),
   "MXN": const Currency(
     label: 'currency.name.mxn',
     name: 'MXN',
+    symbol: 'Mex\$',
   ),
   "THB": const Currency(
     label: 'currency.name.thb',
     name: 'THB',
+    symbol: '฿',
   ),
   "ILS": const Currency(
     label: 'currency.name.ils',
     name: 'ILS',
+    symbol: '₪',
   ),
-  "BLR": const Currency(
-    label: 'currency.name.blr',
-    name: 'BLR',
+  "BRL": const Currency(
+    label: 'currency.name.blr', // TODO: fix key name
+    name: 'BRL',
+    symbol: 'R\$',
   ),
   "ZAR": const Currency(
     label: 'currency.name.zar',
     name: 'ZAR',
+    symbol: 'R',
   ),
 });
