@@ -8,7 +8,6 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/providers/screen_card_provider.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:provider/provider.dart';
 
 class ScreenCardSkeleton extends StatefulWidget {
@@ -74,8 +73,8 @@ class _ScreenCardSkeletonState<TData> extends State<ScreenCardSkeleton> {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  width: proportionateScreenWidth(widget.cardWidth), //345 old value
-                  height: proportionateScreenHeight(widget.cardHeight), //196 old value
+                  width: widget.cardWidth, //345 old value
+                  height: widget.cardHeight, //196 old value
                   // color: Colors.grey[100],
                   child: widget.backSide == null
                       ? widget.frontSide

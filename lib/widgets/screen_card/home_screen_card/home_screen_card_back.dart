@@ -13,7 +13,6 @@ import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/screen_card_provider.dart';
 import 'package:linum/utilities/frontend/currency_formatter.dart';
 import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/loading_spinner.dart';
 import 'package:linum/widgets/screen_card/card_widgets/home_screen_card_avatar.dart';
 import 'package:linum/widgets/screen_card/home_screen_card/home_screen_card_row.dart';
@@ -39,7 +38,7 @@ class HomeScreenCardBack extends StatelessWidget {
               onHorizontalDragEnd(details, context),
           onLongPress: () => goToCurrentTime(algorithmProvider),
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Column(
                   children: [
@@ -130,13 +129,6 @@ class HomeScreenCardBack extends StatelessWidget {
                       icon: const Icon(Icons.arrow_forward_ios_rounded),
                     ),
                   ],
-                ),
-                Divider(
-                  thickness: 1,
-                  indent: proportionateScreenWidthFraction(ScreenFraction.onetenth),
-                  endIndent:
-                  proportionateScreenWidthFraction(ScreenFraction.onetenth),
-                  color: Theme.of(context).colorScheme.primary,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24.0),

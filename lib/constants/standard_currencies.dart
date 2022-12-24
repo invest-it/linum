@@ -35,7 +35,7 @@ final standardCurrencies = Map<String, Currency>.unmodifiable({
   "CZK": const Currency(
     label: 'currency.name.czk',
     name: 'CZK',
-    symbol: 'Kč'
+    symbol: 'Kč',
   ),
   "JPY": const Currency(
     label: 'currency.name.jpy',
@@ -50,7 +50,7 @@ final standardCurrencies = Map<String, Currency>.unmodifiable({
   "KRW": const Currency(
     label: 'currency.name.krw',
     name: 'KRW',
-    symbol: '원'
+    symbol: '원',
   ),
   "AUD": const Currency(
     label: 'currency.name.aud',
@@ -80,7 +80,7 @@ final standardCurrencies = Map<String, Currency>.unmodifiable({
   "DKK": const Currency(
     label: 'currency.name.dkk',
     name: 'DKK',
-    symbol: 'dkr'
+    symbol: 'dkr',
   ),
   "ISK": const Currency(
     label: 'currency.name.isk',
