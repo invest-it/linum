@@ -11,6 +11,7 @@ import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/utilities/frontend/currency_formatter.dart';
 import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
+import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/screen_card/card_widgets/home_screen_card_avatar.dart';
 import 'package:provider/provider.dart';
 
@@ -59,7 +60,7 @@ class HomeScreenCardRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: isIncome ? MainAxisAlignment.start : MainAxisAlignment.end,
         children: [
-          if (isIncome) ...[upwardArrow, const SizedBox(width: 10)],
+          if (isIncome) ...[upwardArrow, SizedBox(width: proportionateScreenWidth(10))],
           Column(
             crossAxisAlignment:
                 isIncome ? CrossAxisAlignment.start : CrossAxisAlignment.end,
@@ -72,7 +73,7 @@ class HomeScreenCardRow extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .overline!
-                    .copyWith(fontSize: 10),
+                    .copyWith(fontSize: 12),
               ),
               StreamBuilder<HomeScreenCardData>(
                 stream: data,
@@ -84,7 +85,7 @@ class HomeScreenCardRow extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.grey[700],
                         fontWeight: FontWeight.bold,
-                        fontSize: 10,
+                        fontSize: 14,
                       ),
                     );
                   }
@@ -97,14 +98,14 @@ class HomeScreenCardRow extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.grey[700],
                       fontWeight: FontWeight.bold,
-                      fontSize: 10,
+                      fontSize: 14,
                     ),
                   );
                 },
               ),
             ],
           ),
-          if (!isIncome) ...[const SizedBox(width: 10), downwardArrow],
+          if (!isIncome) ...[SizedBox(width: proportionateScreenWidth(10)), downwardArrow],
         ],
       ),
     );
