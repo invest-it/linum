@@ -50,7 +50,7 @@ class BudgetScreen extends StatelessWidget {
                 child: TextButton(
                   onPressed: () {},
                   child: Text(
-                    tr('budget_screen.button-filter'),
+                    tr('budget_screen.button-filter').toUpperCase(),
                     style: Theme.of(context).textTheme.overline?.copyWith(
                           color: Theme.of(context).colorScheme.primary,
                           fontSize: 14,

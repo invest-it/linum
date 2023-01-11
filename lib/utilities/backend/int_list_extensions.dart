@@ -22,7 +22,7 @@ extension IntListExtensions on List<int> {
 
   int lastSmallerIndex(int value) {
     if (value > last) {
-      return last;
+      return length-1;
     }
     var index = 0;
     for (final entry in this) {

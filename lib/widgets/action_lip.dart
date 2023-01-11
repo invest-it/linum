@@ -26,11 +26,11 @@ class _ActionLipState extends State<ActionLip> {
 
   @override
   Widget build(BuildContext context) {
-    final ActionLipStatusProvider actionLipStatusProvider =
+    final ActionLipStatusProvider provider =
         Provider.of<ActionLipStatusProvider>(context);
 
     // log('Status when ActionLip was built:' + actionLipStatus.toString());
-    switch (actionLipStatusProvider.getActionLipStatus(providerKey)) {
+    switch (provider.getActionLipStatus(providerKey)) {
       case ActionLipStatus.hidden:
         setState(() {
           _lipYOffset = realScreenHeight();
@@ -84,7 +84,7 @@ class _ActionLipState extends State<ActionLip> {
               primary: false,
               automaticallyImplyLeading: false,
               title: Text(
-                actionLipStatusProvider.getActionLipTitle(providerKey),
+                provider.getActionLipTitle(providerKey),
                 style: Theme.of(context).textTheme.headline5,
               ),
               centerTitle: true,
@@ -93,8 +93,9 @@ class _ActionLipState extends State<ActionLip> {
                   icon: const Icon(Icons.close),
                   onPressed: () {
                     FocusManager.instance.primaryFocus?.unfocus();
-                    actionLipStatusProvider.setActionLipStatus(
+                    provider.setActionLipStatus(
                       providerKey: providerKey,
+                      status: ActionLipStatus.hidden,
                     );
                   },
                 ),
@@ -103,7 +104,7 @@ class _ActionLipState extends State<ActionLip> {
               backgroundColor: Colors.transparent,
               elevation: 0,
             ),
-            actionLipStatusProvider.getActionLipBody(providerKey),
+            provider.getActionLipBody(providerKey),
           ],
         ),
       ),

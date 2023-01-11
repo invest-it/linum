@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
@@ -6,15 +7,15 @@ import 'package:linum/widgets/settings_screen/standard_currency/currency_list_ti
 import 'package:linum/widgets/settings_screen/standard_currency/curreny_list_view.dart';
 import 'package:provider/provider.dart';
 
-class StandardCurrencyManager extends StatefulWidget {
-  const StandardCurrencyManager({super.key});
+class StandardCurrencySelector extends StatefulWidget {
+  const StandardCurrencySelector({super.key});
 
   @override
-  State<StandardCurrencyManager> createState() =>
-      _StandardCurrencyManagerState();
+  State<StandardCurrencySelector> createState() =>
+      _StandardCurrencySelectorState();
 }
 
-class _StandardCurrencyManagerState extends State<StandardCurrencyManager> {
+class _StandardCurrencySelectorState extends State<StandardCurrencySelector> {
   @override
   Widget build(BuildContext context) {
     final ActionLipStatusProvider actionLipStatusProvider =
@@ -31,8 +32,7 @@ class _StandardCurrencyManagerState extends State<StandardCurrencyManager> {
             actionLipStatusProvider.setActionLip(
               providerKey: ProviderKey.settings,
               actionLipStatus: ActionLipStatus.onviewport,
-              actionLipTitle:
-                  "Currency", // FIXME: Translate settings_screen.standard-currency.action-lip-title
+              actionLipTitle: tr('action_lip.standard-currency.label-title'),
               actionLipBody: CurrencyListView(),
             );
           },

@@ -502,7 +502,7 @@ class HomeScreenListView implements BalanceDataListView {
     final int duration = serialTransaction.repeatDuration;
     final RepeatDurationType repeatDurationType = serialTransaction.repeatDurationType;
     final settings = Provider.of<AccountSettingsProvider>(context);
-    final formattedAmount = CurrencyFormatter(context.locale, symbol: settings.getStandardCurrency().symbol)
+    final formattedAmount = CurrencyFormatter(context.locale, symbol: settings.getStandardCurrency().name)
       .format(serialTransaction.amount.abs());
 
     switch (repeatDurationType) {

@@ -7,7 +7,7 @@
 import 'package:flutter/material.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
-import 'package:linum/widgets/onboarding/action_lip.dart';
+import 'package:linum/widgets/action_lip.dart';
 import 'package:linum/widgets/screen_skeleton/body_section.dart';
 import 'package:linum/widgets/screen_skeleton/lip_section.dart';
 import 'package:provider/provider.dart';
@@ -127,7 +127,7 @@ class ScreenSkeleton extends StatelessWidget {
         !actionLipStatusProvider.isActionStatusInitialized(providerKey!)) {
       actionLipStatusProvider.setActionLipStatusSilently(
         providerKey: providerKey!,
-        actionLipStatus: initialActionLipStatus,
+        status: initialActionLipStatus,
       );
     }
 

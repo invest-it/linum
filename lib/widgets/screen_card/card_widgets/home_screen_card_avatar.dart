@@ -15,12 +15,12 @@ class HomeScreenCardAvatar extends StatelessWidget {
     Preset.arrowDown: Icon(
       Icons.arrow_downward_rounded,
       color: Colors.white,
-      size: 20,
+      size: 24,
     ),
     Preset.arrowUp: Icon(
       Icons.arrow_upward_rounded,
       color: Colors.white,
-      size: 20,
+      size: 24,
     ),
   };
 

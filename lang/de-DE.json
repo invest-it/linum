@@ -24,6 +24,9 @@
             "income": {
                 "label-title": "Einnahmen"
             }
+        },
+        "standard-currency": {
+            "label-title": "Währung"
         }
     },
     "alertdialog": {
@@ -129,7 +132,7 @@
         "wrong-password": "Deine E-Mail oder dein Passwort sind nicht korrekt. Vielleicht hast du dich vertippt?"
     },
     "budget_screen": {
-        "button-filter": "FILTER",
+        "button-filter": "Filter",
         "label-all-transactions": "Alle Transaktionen"
     },
     "enter_screen": {
@@ -181,8 +184,8 @@
     "enter_screen_attribute_date": "Datum",
     "enter_screen_attribute_repeat": "Wiederholen",
     "home_screen": {
-        "button-show-more": "MEHR",
-        "button-show-all": "ALLE",
+        "button-show-more": "Mehr",
+        "button-show-all": "Alle",
         "free-text": "Gratis",
         "label-recent-transactions": "Neueste Transaktionen",
         "label-active-serialcontracts": "Verträge diesen Monat"
@@ -190,8 +193,8 @@
     "home_screen_card": {
         "home-screen-card-toast": "Swipe nach links und rechts, um vorige oder kommende Monate anzusehen. Gedrückt halten, um in den aktuellen Monat zurückzukehren.",
         "label-current-balance": "Aktuelle Monatsbilanz",
-        "label-expenses": "AUSGABEN",
-        "label-income": "EINNAHMEN",
+        "label-expenses": "Ausgaben",
+        "label-income": "Einnahmen",
         "label-total-balance": "Kontostand",
         "label-total-balance-sub": "bis Heute"
     },
@@ -267,7 +270,7 @@
         "register-email-hintlabel": "E-Mail-Adresse",
         "register-lip-forgot-password-button": "Alternative sign-in methoden",
         "register-lip-signup-button": "Registrieren",
-        "register-lip-title": "REGISTRIEREN",
+        "register-lip-title": "Registrieren",
         "register-password-errorlabel": "Bitte gib ein Passwort mit mindestens 6 Zeichen ein.",
         "register-password-hintlabel": "Passwort",
         "register-privacy": {
@@ -283,21 +286,21 @@
             "label-en": "Deutsch",
             "label-nl": "Nederlands",
             "label-systemlang": "Systemsprache verwenden",
-            "label-title": "SPRACHEINSTELLUNGEN",
+            "label-title": "Spracheinstellungen",
             "label-tooltip": "Im Moment kann nur die Systemsprache verwendet werden. Unterstützte Sprachen: Deutsch, Englisch."
         },
         "pin-lock": {
             "label-change-pin": "PIN-Code ändern",
-            "label-title": "PIN-SPERRE",
+            "label-title": "PIN-Sperre",
             "label-tooltip": "Ist die PIN-Sperre aktiv, musst du beim Starten der App zum Schutz deiner Daten deinen persönlichen PIN-Code eingeben.",
             "switch-label": "PIN-Sperre aktiv"
         },
         "special-settings": {
             "label-schwabenmodus": "Schwabenmodus",
-            "label-title": "BESONDERE EINSTELLUNGEN"
+            "label-title": "Besondere Einstellungen"
         },
         "standard-account": {
-            "label-title": "STANDARD-ACCOUNTS",
+            "label-title": "Standard-Accounts",
             "label-tooltip": "Diese Accounts werden standardmäßig bei jeder neuen Einnahme/Ausgabe genutzt. Du kannst diese auch individuell ändern."
         },
         "standard-account-selector": {
@@ -309,11 +312,11 @@
             "modal-label-title": "Accounts"
         },
         "standard-category": {
-            "label-title": "STANDARD-KATEGORIEN",
+            "label-title": "Standard-Kategorien",
             "label-tooltip": "Diese Kategorien werden standardmäßig bei jeder neuen Einnahme/Ausgabe/Transaktion genutzt. Du kannst diese auch individuell ändern."
         },
         "standard-currency": {
-            "label-title": "STANDARD-WÄHRUNG",
+            "label-title": "Standard-Währung",
             "label-tooltip": "Diese Währung wird standardmäßig bei jeder neuen Transaktion genutzt. Du kannst diese auch individuell ändern."
         },
         "standard-expense-selector": {
@@ -341,7 +344,40 @@
             "button-delete-user": "Nutzer löschen",
             "button-forgot-password-tooltip": "Falls du dein Passwort vergessen hast, kannst du hier ein neues einstellen.",
             "button-signout": "Ausloggen",
-            "label-title": "DEIN ACCOUNT"
+            "label-title": "Dein Account"
         }
-    }
+    },
+    "currency": {
+        "error": {
+            "not-found": "Währung wird nicht unterstützt"
+        },
+        "name": {
+            "eur": "Euro",
+            "gbp": "Britisches Pfund",
+            "jpy": "Yen",
+            "usd": "US Dollar",
+            "cny": "Chinesischer Yuan",
+            "chf": "Schweizer Franken",
+            "aud": "Australischer Dollar",
+            "cad": "Kanadischer Dollar",
+            "nzd": "Neuseeland-Dollar",
+            "sek": "Schwedische Krone",
+            "nok": "Norwegische Krone",
+            "myr": "Malaysischer Ringgit",
+            "pln": "Złoty",
+            "czk": "Tschechische Krone",
+            "krw": "Südkoreanischer Won",
+            "dkk": "Dänische Krone",
+            "isk": "Isländische Krone",
+            "tyr": "Türkische Lira",
+            "zar": "Südafrikanischer Rand",
+            "mxn": "Mexikanischer Peso",
+            "inr": "Indische Rupie",
+            "idr": "Indonesische Rupiah",
+            "thb": "Baht",
+            "ils": "Schekel",
+            "blr": "Brasilianischer Real"
+        }
+    },
+    "enter_screen_attribute_currency": "Währung"
 }

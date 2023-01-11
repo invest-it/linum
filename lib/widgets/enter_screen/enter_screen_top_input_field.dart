@@ -14,6 +14,7 @@ import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/utilities/frontend/currency_formatter.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/screen_skeleton/app_bar_action.dart';
+import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:linum/widgets/text_container.dart';
 import 'package:provider/provider.dart';
 
@@ -154,6 +155,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                       onTap: () => {
                         actionLipStatusProvider.setActionLipStatus(
                           providerKey: ProviderKey.enter,
+                          status: ActionLipStatus.hidden,
                         ),
                         textController!.selection = TextSelection.fromPosition(
                           TextPosition(
@@ -291,6 +293,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                 ontap: () {
                   actionLipStatusProvider.setActionLipStatus(
                     providerKey: ProviderKey.enter,
+                    status: ActionLipStatus.hidden,
                   );
                   getRouterDelegate().popRoute();
                 },
