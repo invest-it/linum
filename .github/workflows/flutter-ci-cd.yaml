@@ -21,9 +21,8 @@ env:
   FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
   
 jobs:
-  code-analysis-and-testing:
-    name: Code Analysis and Testing
-    runs-on: ubuntu-latest
+  build-project-artifact:
+    name: Build Project Artifact
     timeout-minutes: 30
     steps:
     - name: Checkout Repository
@@ -33,15 +32,32 @@ jobs:
       uses: subosito/flutter-action@v2
       with:
         channel: ${{ env.FLUTTER_CHANNEL }}
-        
-    - name: Delete previous Builds
-      run: flutter clean
 
-    - name: Get Flutter Pub
-      run: flutter pub get
-    
-    - name: Set up Dart Pub
-      run: dart pub get
+    - name: Prepare Firebase Option Configuration
+      run: flutterfire configure -o lib/auth/firebase_options.dart -p linum-5d9f6 -y --platforms="android,ios"
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: linum-dir-artifact
+        path: /
+
+
+  code-analysis-and-testing:
+    name: Code Analysis and Testing
+    needs: build-project-artifact
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+    - name: Download a single artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: linum-dir-artifact
+
+    - name: Set up Flutter SDK
+      uses: subosito/flutter-action@v2
+      with:
+        channel: ${{ env.FLUTTER_CHANNEL }}
     
     - name: Analyze Flutter Code
       run: flutter analyze
@@ -59,9 +75,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-    
-    - name: Checkout Repository
-      uses: actions/checkout@v3
+    - name: Download a single artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: linum-dir-artifact
 
     - name: Set up Flutter SDK
       uses: subosito/flutter-action@v2
@@ -69,20 +86,6 @@ jobs:
         channel: ${{ env.FLUTTER_CHANNEL }}
         # flutter-version: ${{ env.FLUTTER_VERSION }} # you can also specify exact version of flutter
 
-    - name: Flutter doctor
-      run: flutter doctor
-
-    - name: Delete previous Builds
-      run: flutter clean
-
-    - name: Get Flutter Pub
-      run: flutter pub get
-    
-    - name: Set up Dart Pub
-      run: dart pub get
-
-    - name: Prepare Firebase Option Configuration
-      run: flutterfire configure -o lib/auth/firebase_options.dart -p linum-5d9f6 -y --platforms="android,ios"
 
 
     # - name: Prepare Java Keystore and Properties
@@ -91,8 +94,8 @@ jobs:
     #     LINUM_KEY_PROPERTIES_FILE: ${{ secrets.LINUM_KEY_PROPERTIES_FILE }}
     #   run: |
     #     echo "Convert base64 strings to files"
-    #     echo "§LINUM_KEYSTORE_FILE" >> key.jks.base64
-    #     echo "§LINUM_KEY_PROPERTIES_FILE" >> key.properties.base64
+    #     echo "$LINUM_KEYSTORE_FILE" >> key.jks.base64
+    #     echo "$LINUM_KEY_PROPERTIES_FILE" >> key.properties.base64
     #     echo "Done with base64 file creation"
     #     base64 --decode key.jks.base64 > key.jks
     #     echo "Encrypted Keystore successfully"
