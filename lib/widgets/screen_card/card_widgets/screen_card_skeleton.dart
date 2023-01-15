@@ -39,14 +39,13 @@ class _ScreenCardSkeletonState<TData> extends State<ScreenCardSkeleton> {
     if (widget.flipCardController != null) {
       _flipCardController = widget.flipCardController;
     } else {
-      _flipCardController = widget.backSide != null ? FlipCardController() : null;
+      _flipCardController =
+          widget.backSide != null ? FlipCardController() : null;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-
-
     return ChangeNotifierProvider<ScreenCardProvider>(
       create: (_) => ScreenCardProvider(controller: _flipCardController),
       child: Column(
@@ -68,7 +67,7 @@ class _ScreenCardSkeletonState<TData> extends State<ScreenCardSkeleton> {
                 child: Container(
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("assets/images/v01-cubes-12.png"),
+                      image: AssetImage("assets/images/cubes.png"),
                       // opacity: 0.99,
                       fit: BoxFit.cover,
                     ),
@@ -82,7 +81,7 @@ class _ScreenCardSkeletonState<TData> extends State<ScreenCardSkeleton> {
                           controller: _flipCardController,
                           front: widget.frontSide,
                           back: widget.backSide!,
-                  ),
+                        ),
                 ),
               ),
             ),
