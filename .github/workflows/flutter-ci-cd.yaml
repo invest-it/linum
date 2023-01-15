@@ -23,6 +23,7 @@ env:
 jobs:
   build-project-artifact:
     name: Build Project Artifact
+    runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
     - name: Checkout Repository
