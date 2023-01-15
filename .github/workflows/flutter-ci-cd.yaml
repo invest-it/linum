@@ -35,11 +35,11 @@ jobs:
         channel: ${{ env.FLUTTER_CHANNEL }}
 
     - name: Prepare Firebase Option Configuration
-      run:
+      run: |
         curl -sL https://firebase.tools | bash
-        | flutter pub global activate flutterfire_cli
-        | flutterfire --version
-        | flutterfire configure -o lib/auth/firebase_options.dart -p linum-5d9f6 -y --platforms="android,ios"
+        flutter pub global activate flutterfire_cli
+        flutterfire --version
+        flutterfire configure -o lib/auth/firebase_options.dart -p linum-5d9f6 -y --platforms="android,ios"
       
       
 
