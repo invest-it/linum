@@ -1,6 +1,6 @@
 # linum
 
-[![Automatic Core Checks](https://github.com/invest-it/linum/actions/workflows/core-tests.yaml/badge.svg)](https://github.com/invest-it/linum/actions/workflows/core-tests.yaml)
+[![CI Core Checks](https://github.com/invest-it/linum/actions/workflows/ci-core.yaml/badge.svg)](https://github.com/invest-it/linum/actions/workflows/ci-core.yaml)
 [![Automatic Integration Tests](https://github.com/invest-it/linum/actions/workflows/integration-tests.yaml/badge.svg)](https://github.com/invest-it/linum/actions/workflows/integration-tests.yaml)
 
 Get your money under control before your money has you under control.
