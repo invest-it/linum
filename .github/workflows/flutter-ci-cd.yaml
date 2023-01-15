@@ -78,22 +78,19 @@ jobs:
       working-directory: 'android/'
 
 
-    - name: Prepare Firebase Configuration
+    - name: Prepare Firebase Option Configuration
       env:
         LINUM_FIREBASE_OPTIONS: ${{ secrets.LINUM_FIREBASE_OPTIONS }}
-      run: |
-        echo "Convert base64 strings to files"
-        echo "$LINUM_FIREBASE_OPTIONS" >> firestore_options.dart.base64
-        base64 --decode firestore_options.dart.base64 > firestore_options.dart
-      working-directory: 'lib/auth/'
+      run: echo "$LINUM_FIREBASE_OPTIONS" >> firestore_options.dart
+      working-directory: 'lib/'
 
-    - name: Prepare Google Services
+    - name: Prepare iOS App ID File
       env:
-        LINUM_GOOGLE_SERVICES_JSON: ${{ secrets.LINUM_GOOGLE_SERVICES_JSON }}
+        FIREBASE_APP_ID_FILE: ${{ secrets.FIREBASE_APP_ID_FILE }}
       run: |
-        echo "Convert Google Services String to JSON File"
-        echo "$LINUM_GOOGLE_SERVICES_JSON" >> google-services.json
-      working-directory: 'android/app/'
+        echo "Fetch Firebase App ID File and put it in the iOS folder"
+        echo "$FIREBASE_APP_ID_FILE" >> firebase_app_id_file.json
+      working-directory: 'ios/'
 
     - name: Set up Flutter SDK
       uses: subosito/flutter-action@v2
