@@ -26,6 +26,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
+    - uses: geekyeggo/delete-artifact@v2
+      with:
+        name: linum-dir-artifact
+        failOnError: false
+        
     - name: Checkout Repository
       uses: actions/checkout@v3
 
@@ -93,31 +98,29 @@ jobs:
         channel: ${{ env.FLUTTER_CHANNEL }}
         # flutter-version: ${{ env.FLUTTER_VERSION }} # you can also specify exact version of flutter
 
+    - name: Prepare Java Keystore and Properties
+      env:
+        LINUM_KEYSTORE_FILE: ${{ secrets.LINUM_KEYSTORE_FILE }}
+        LINUM_KEY_PROPERTIES_FILE: ${{ secrets.LINUM_KEY_PROPERTIES_FILE }}
+      run: |
+        echo "Convert base64 strings to files"
+        echo "$LINUM_KEYSTORE_FILE" >> key.jks.base64
+        echo "$LINUM_KEY_PROPERTIES_FILE" >> key.properties.base64
+        echo "Done with base64 file creation"
+        base64 --decode key.jks.base64 > key.jks
+        echo "Encrypted Keystore successfully"
+        base64 --decode key.properties.base64 > key.properties
+        echo "Encrypted Properties successfully"
+      working-directory: 'android/'
 
 
-    # - name: Prepare Java Keystore and Properties
-    #   env:
-    #     LINUM_KEYSTORE_FILE: ${{ secrets.LINUM_KEYSTORE_FILE }}
-    #     LINUM_KEY_PROPERTIES_FILE: ${{ secrets.LINUM_KEY_PROPERTIES_FILE }}
-    #   run: |
-    #     echo "Convert base64 strings to files"
-    #     echo "$LINUM_KEYSTORE_FILE" >> key.jks.base64
-    #     echo "$LINUM_KEY_PROPERTIES_FILE" >> key.properties.base64
-    #     echo "Done with base64 file creation"
-    #     base64 --decode key.jks.base64 > key.jks
-    #     echo "Encrypted Keystore successfully"
-    #     base64 --decode key.properties.base64 > key.properties
-    #     echo "Encrypted Properties successfully"
-    #   working-directory: 'android/'
+    - name: Build AAB
+      run: flutter build appbundle --release
 
-
-    # - name: Build AAB
-    #   run: flutter build appbundle --release
-
-    # - name: Upload AAB artifact 
-    #   uses: actions/upload-artifact@v3
-    #   with:
-    #     name: release-aab
-    #     path: ${{ env.PATH_TO_AAB }}
+    - name: Upload AAB artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: release-aab
+        path: ${{ env.PATH_TO_AAB }}
 
     # At this stage, we might want to automatically upload to the Play Store.
