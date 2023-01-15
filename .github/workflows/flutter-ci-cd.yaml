@@ -14,17 +14,23 @@ on:
 
 env:
   FLUTTER_CHANNEL: 'stable' # 'stable', 'beta', or 'master', default to: 'stable'
-  FLUTTER_VERSION: '3.0.1'
+  FLUTTER_VERSION: '3.3.10'
   XCODE_VERSION: '13.3.1'
   PATH_TO_AAB: 'build/app/outputs/bundle/release/app-release.aab'
   ANDROID_PACKAGE_NAME: 'de.investitacademy.linum'
+  FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
   
 jobs:
-  code-analysis-and-testing:
-    name: Code Analysis and Testing
+  build-project-artifact:
+    name: Build Project Artifact
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
+    - uses: geekyeggo/delete-artifact@v2
+      with:
+        name: linum-dir-artifact
+        failOnError: false
+
     - name: Checkout Repository
       uses: actions/checkout@v3
 
@@ -32,15 +38,38 @@ jobs:
       uses: subosito/flutter-action@v2
       with:
         channel: ${{ env.FLUTTER_CHANNEL }}
-        
-    - name: Delete previous Builds
-      run: flutter clean
 
-    - name: Get Flutter Pub
-      run: flutter pub get
-    
-    - name: Set up Dart Pub
-      run: dart pub get
+    - name: Prepare Firebase Option Configuration
+      run: |
+        curl -sL https://firebase.tools | bash
+        dart pub global activate flutterfire_cli
+        ls
+        flutterfire --version
+        flutterfire configure -o lib/auth/firebase_options.dart -p linum-5d9f6 -y --platforms="android,ios" -i de.investitacademy.linum -a de.investitacademy.linum -m de.investitacademy.linum 
+          
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: linum-dir-artifact
+        path: ./
+
+
+  code-analysis-and-testing:
+    name: Code Analysis and Testing
+    needs: build-project-artifact
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+    - name: Download a single artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: linum-dir-artifact
+
+    - name: Set up Flutter SDK
+      uses: subosito/flutter-action@v2
+      with:
+        channel: ${{ env.FLUTTER_CHANNEL }}
     
     - name: Analyze Flutter Code
       run: flutter analyze
@@ -52,74 +81,46 @@ jobs:
 # We should, though.
 
 
-  android:
-    name: Android CI / CD
-    needs: code-analysis-and-testing
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-    
-    - name: Checkout Repository
-      uses: actions/checkout@v3
-
-    - name: Prepare Java Keystore and Properties
-      env:
-        LINUM_KEYSTORE_FILE: ${{ secrets.LINUM_KEYSTORE_FILE }}
-        LINUM_KEY_PROPERTIES_FILE: ${{ secrets.LINUM_KEY_PROPERTIES_FILE }}
-      run: |
-        echo "Convert base64 strings to files"
-        echo "§LINUM_KEYSTORE_FILE" >> key.jks.base64
-        echo "§LINUM_KEY_PROPERTIES_FILE" >> key.properties.base64
-        echo "Done with base64 file creation"
-        base64 --decode key.jks.base64 > key.jks
-        echo "Encrypted Keystore successfully"
-        base64 --decode key.properties.base64 > key.properties
-        echo "Encrypted Properties successfully"
-      working-directory: 'android/'
-
-
-    - name: Prepare Firebase Configuration
-      env:
-        LINUM_FIREBASE_OPTIONS: ${{ secrets.LINUM_FIREBASE_OPTIONS }}
-      run: |
-        echo "Convert base64 strings to files"
-        echo "$LINUM_FIREBASE_OPTIONS" >> firestore_options.dart.base64
-        base64 --decode firestore_options.dart.base64 > firestore_options.dart
-      working-directory: 'lib/auth/'
-
-    - name: Prepare Google Services
-      env:
-        LINUM_GOOGLE_SERVICES_JSON: ${{ secrets.LINUM_GOOGLE_SERVICES_JSON }}
-      run: |
-        echo "Convert Google Services String to JSON File"
-        echo "$LINUM_GOOGLE_SERVICES_JSON" >> google-services.json
-      working-directory: 'android/app/'
-
-    - name: Set up Flutter SDK
-      uses: subosito/flutter-action@v2
-      with:
-        channel: ${{ env.FLUTTER_CHANNEL }}
-        # flutter-version: ${{ env.FLUTTER_VERSION }} # you can also specify exact version of flutter
-    
-    - name: Flutter doctor
-      run: flutter doctor
-
-    - name: Delete previous Builds
-      run: flutter clean
-
-    - name: Get Flutter Pub
-      run: flutter pub get
-    
-    - name: Set up Dart Pub
-      run: dart pub get
-
-    - name: Build AAB
-      run: flutter build appbundle --release
-
-    - name: Upload AAB artifact 
-      uses: actions/upload-artifact@v3
-      with:
-        name: release-aab
-        path: ${{ env.PATH_TO_AAB }}
+#  android:
+#    name: Android CI / CD
+#    needs: code-analysis-and-testing
+#    runs-on: ubuntu-latest
+#    timeout-minutes: 30
+#    steps:
+#    - name: Download a single artifact
+#      uses: actions/download-artifact@v3
+#      with:
+#        name: linum-dir-artifact
+#
+#    - name: Set up Flutter SDK
+#      uses: subosito/flutter-action@v2
+#      with:
+#        channel: ${{ env.FLUTTER_CHANNEL }}
+#        # flutter-version: ${{ env.FLUTTER_VERSION }} # you can also specify exact version of flutter
+#
+#    - name: Prepare Java Keystore and Properties
+#      env:
+#        LINUM_KEYSTORE_FILE: ${{ secrets.LINUM_KEYSTORE_FILE }}
+#        LINUM_KEY_PROPERTIES_FILE: ${{ secrets.LINUM_KEY_PROPERTIES_FILE }}
+#      run: |
+#        echo "Convert base64 strings to files"
+#        echo "$LINUM_KEYSTORE_FILE" >> key.jks.base64
+#        echo "$LINUM_KEY_PROPERTIES_FILE" >> key.properties.base64
+#        echo "Done with base64 file creation"
+#        base64 --decode key.jks.base64 > key.jks
+#        echo "Encrypted Keystore successfully"
+#        base64 --decode key.properties.base64 > key.properties
+#        echo "Encrypted Properties successfully"
+#      working-directory: 'android/'
+#
+#
+#    - name: Build AAB
+#      run: flutter build appbundle --release
+#
+#    - name: Upload AAB artifact
+#      uses: actions/upload-artifact@v3
+#      with:
+#        name: release-aab
+#        path: ${{ env.PATH_TO_AAB }}
 
     # At this stage, we might want to automatically upload to the Play Store.

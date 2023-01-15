@@ -7,6 +7,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/auth/firebase_options.dart';
 import 'package:linum/loading_scaffold.dart';
 import 'package:linum/objectbox.g.dart';
 import 'package:linum/providers/account_settings_provider.dart';
@@ -24,7 +25,10 @@ class ApplicationServices extends StatelessWidget {
   final Store store;
   ApplicationServices({super.key, required this.store, required this.router});
 
-  final Future<FirebaseApp> _initializedApp = Firebase.initializeApp();
+  final Future<FirebaseApp> _initializedApp = Firebase.initializeApp(
+      name: "Linum",
+      options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   Scaffold buildErrorScaffold(BuildContext context) {
     return Scaffold(

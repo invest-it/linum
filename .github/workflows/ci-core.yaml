@@ -4,7 +4,7 @@
 #   Co-Author: n/a
 #
 
-name: Automatic Core Checks
+name: CI Core Checks
 
 # Triggered when PR request with development base is opened
 
