@@ -40,12 +40,14 @@ jobs:
         flutter pub global activate flutterfire_cli
         ls
         flutterfire --version
-        flutterfire configure /
-          -o lib/auth/firebase_options.dart /
-          -p linum-5d9f6 -y --platforms="android,ios" /
-          -i de.investitacademy.linum / 
-          -a de.investitacademy.linum /
-          -m de.investitacademy.linum 
+        flutterfire configure ç
+          -o lib/auth/firebase_options.dart √
+          -p linum-5d9f6 \
+          -y \
+          -i de.investitacademy.linum \
+          -a de.investitacademy.linum \
+          -m de.investitacademy.linum \
+          --platforms="android,ios"
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
