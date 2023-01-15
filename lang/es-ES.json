@@ -24,6 +24,9 @@
             "income": {
                 "label-title": "Ingresos"
             }
+        },
+        "standard-currency": {
+            "label-title": "Moneda"
         }
     },
     "alertdialog": {
@@ -74,10 +77,10 @@
             "message": "Su contraseña ha sido actualizada.",
             "title": "¡Listo!"
         },
-        "delete-account":{ 
-            "title":"¿Quieres eliminar la cuenta de forma segura?",
+        "delete-account": {
+            "title": "¿Quieres eliminar la cuenta de forma segura?",
             "cancel": "No",
-            "action": "Sí"      
+            "action": "Sí"
         }
     },
     "auth": {
@@ -129,7 +132,7 @@
         "wrong-password": "Su correo electrónico o su contraseña no son correctos. ¿Comprobar errores ortográficos?"
     },
     "budget_screen": {
-        "button-filter": "FILTRO",
+        "button-filter": "Filtro",
         "label-all-transactions": "Todas las transacciones"
     },
     "enter_screen": {
@@ -161,6 +164,9 @@
         "label-repeat-monthly": "A principios de mes",
         "label-repeat-none": "No repitas",
         "label-repeat-weekly": "Semanal",
+        "label-repeat-quarterly": "Cada tres meses",
+        "label-repeat-semiannually": "Semestral",
+        "label-repeat-annually": "Anual",
         "title": {
             "add": "Nueva entrada",
             "edit": "Editar entrada"
@@ -174,15 +180,17 @@
     "enter_screen_attribute_date": "Fecha",
     "enter_screen_attribute_repeat": "Repita",
     "home_screen": {
-        "button-show-more": "MOSTRAR MÁS",
+        "button-show-more": "Más",
+        "button-show-all": "Todo",
         "free-text": "Gratis",
-        "label-recent-transactions": "Transacciones recientes"
+        "label-recent-transactions": "Transacciones recientes",
+        "label-active-serialcontracts": "Contratos de este mes"
     },
     "home_screen_card": {
         "home-screen-card-toast": "Deslice el dedo hacia la izquierda y hacia la derecha para ver los meses anteriores o los próximos. Mantenga pulsado para volver al mes actual.",
         "label-current-balance": "Saldo mensual actual",
-        "label-expenses": "GASTOS",
-        "label-income": "INGRESOS",
+        "label-expenses": "Gasto",
+        "label-income": "Ingresos",
         "label-total-balance": "Saldo",
         "label-total-balance-sub": "hasta hoy"
     },
@@ -195,7 +203,13 @@
         "label-no-entries": "- No se han encontrado entradas -",
         "label-thismonth": "Este mes",
         "label-today": "Hoy",
-        "label-yesterday": "Ayer"
+        "label-yesterday": "Ayer",
+        "label-error-translation": "Falta la traducción",
+        "label-every": "Cada",
+        "label-days": "días",
+        "label-weeks": "semanas",
+        "label-months": "meses",
+        "label-years": "años"
     },
     "lock_screen": {
         "change": {
@@ -252,7 +266,7 @@
         "register-email-hintlabel": "e-mail",
         "register-lip-forgot-password-button": "Alternative sign-in methods",
         "register-lip-signup-button": "Inscríbete",
-        "register-lip-title": "SIGN UP",
+        "register-lip-title": "Registro",
         "register-password-errorlabel": "Por favor, introduzca una contraseña con al menos 6 caracteres.",
         "register-password-hintlabel": "Contraseña",
         "register-privacy": {
@@ -268,21 +282,21 @@
             "label-en": "Alemán",
             "label-nl": "Holandés",
             "label-systemlang": "Lenguaje del sistema",
-            "label-title": "AJUSTES DE IDIOMA",
+            "label-title": "Configuración del idioma",
             "label-tooltip": "Actualmente, sólo se admite el idioma del sistema. Idiomas admitidos: Alemán, inglés."
         },
         "pin-lock": {
             "label-change-pin": "Cambiar el código PIN",
-            "label-title": "BLOQUEO DEL PIN",
+            "label-title": "Bloqueo del PIN",
             "label-tooltip": "Si el bloqueo del PIN está activo, tendrás que introducir tu código PIN personal al iniciar la aplicación para proteger tus datos.",
             "switch-label": "Bloqueo del PIN activo"
         },
         "special-settings": {
             "label-schwabenmodus": "Moda de Rico McPato",
-            "label-title": "AJUSTES ESPECIALES"
+            "label-title": "Ajustes especiales"
         },
         "standard-account": {
-            "label-title": "CUENTAS ESTÁNDAR",
+            "label-title": "Cuentas estándar",
             "label-tooltip": "Estas cuentas se utilizan por defecto para cada nuevo ingreso/gasto. También puede cambiarlas individualmente."
         },
         "standard-account-selector": {
@@ -294,11 +308,11 @@
             "modal-label-title": "Cuentas"
         },
         "standard-category": {
-            "label-title": "CATEGORÍAS ESTÁNDAR",
+            "label-title": "Categorías estándar",
             "label-tooltip": "Estas categorías se utilizan por defecto para cada nuevo ingreso/gastos/transacción. También puede cambiarlas individualmente."
         },
         "standard-currency": {
-            "label-title": "MONEDA ESTÁNDAR",
+            "label-title": "Moneda estándar",
             "label-tooltip": "Esta moneda se utiliza por defecto para cada nueva transacción. También puede cambiarla individualmente."
         },
         "standard-expense-selector": {
@@ -326,7 +340,40 @@
             "button-delete-user": "Eliminar usuario",
             "button-forgot-password-tooltip": "Puede solicitar un restablecimiento de la contraseña aquí si ha olvidado su antigua contraseña.",
             "button-signout": "Firmar la salida",
-            "label-title": "SU CUENTA"
+            "label-title": "Su cuenta"
         }
-    }
+    },
+    "currency": {
+        "error": {
+            "not-found": "No se admite la moneda"
+        },
+        "name": {
+            "eur": "Euro",
+            "gbp": "Libra esterlina",
+            "jpy": "Yen",
+            "usd": "Dólar estadounidense",
+            "cny": "Yuan chino",
+            "chf": "Franco suizo",
+            "aud": "Dólar australiano",
+            "cad": "Dólar canadiense",
+            "nzd": "Dólar neozelandés",
+            "sek": "Corona sueca",
+            "nok": "Corona noruega",
+            "myr": "Ringgit malayo",
+            "pln": "Złoty",
+            "czk": "Corona checa",
+            "krw": "El won surcoreano",
+            "dkk": "Corona danesa",
+            "isk": "Corona islandesa",
+            "tyr": "Lira turca",
+            "zar": "Rand sudafricano",
+            "mxn": "Peso mexicano",
+            "inr": "Rupia india",
+            "idr": "Rupia indonesia",
+            "thb": "Baht",
+            "ils": "Shekel",
+            "blr": "Real brasileño"
+        }
+    },
+    "enter_screen_attribute_currency": "Moneda"
 }

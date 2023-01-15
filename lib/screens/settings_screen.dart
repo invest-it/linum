@@ -18,7 +18,8 @@ import 'package:linum/widgets/list_header.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:linum/widgets/settings_screen/language_selector.dart';
 import 'package:linum/widgets/settings_screen/pin_switch.dart';
-import 'package:linum/widgets/settings_screen/standard_category/standard_category_manager.dart';
+import 'package:linum/widgets/settings_screen/standard_category/standard_category_selector.dart';
+import 'package:linum/widgets/settings_screen/standard_currency/standard_currency_selector.dart';
 import 'package:linum/widgets/settings_screen/version_number.dart';
 import 'package:provider/provider.dart';
 
@@ -56,7 +57,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               'settings_screen.standard-category.label-title',
               tooltipMessage: 'settings_screen.standard-category.label-tooltip',
             ),
-            const StandardCategory(),
+            const StandardCategorySelector(),
             const ListDivider(),
 
             /// PIN SWITCH
@@ -65,6 +66,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
               tooltipMessage: 'settings_screen.pin-lock.label-tooltip',
             ),
             PinSwitch(pinCodeProvider: pinCodeProvider),
+            const ListDivider(),
+
+            const ListHeader('settings_screen.standard-currency.label-title'),
+            const StandardCurrencySelector(),
             const ListDivider(),
 
             /// LANGUAGE SWITCH

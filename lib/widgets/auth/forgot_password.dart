@@ -125,6 +125,7 @@ class ForgotPasswordButton extends StatelessWidget {
                             );
                             actionLipStatusProvider.setActionLipStatus(
                               providerKey: ProviderKey.onboarding,
+                              status: ActionLipStatus.hidden,
                             );
                             FocusManager.instance.primaryFocus?.unfocus();
                           },
@@ -251,6 +252,7 @@ class ForgotPasswordButton extends StatelessWidget {
                             );
                             actionLipStatusProvider.setActionLipStatus(
                               providerKey: ProviderKey.settings,
+                              status: ActionLipStatus.hidden,
                             );
                             FocusManager.instance.primaryFocus?.unfocus();
                           },

@@ -37,7 +37,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         _registerYOffset = windowHeight;
         break;
       case OnboardingPageState.register:
-        _registerYOffset = SizeGuide.keyboardIsOpened
+        _registerYOffset = SizeGuide.isKeyboardOpen(context)
             ? proportionateScreenHeightFraction(ScreenFraction.twofifths) -
                 (SizeGuide.keyboardHeight / 2)
             : proportionateScreenHeightFraction(ScreenFraction.twofifths);

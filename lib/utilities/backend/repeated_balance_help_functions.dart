@@ -4,53 +4,53 @@
 //  Co-Author: n/a
 //
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
+import 'package:linum/models/serial_transaction.dart';
 
-bool isMonthly(Map<String, dynamic> singleRepeatedBalance) {
-  return singleRepeatedBalance["repeatDurationType"] != null &&
-      (singleRepeatedBalance["repeatDurationType"] as String).toUpperCase() ==
+bool isMonthly(SerialTransaction serialTransaction) {
+  return serialTransaction.repeatDurationType.name.toUpperCase() ==
           "MONTHS";
 }
 
 /// after splitting a repeatable delete copied "changes" attributes that are out of the time limits of that repeatable
 void removeUnusedChangedAttributes(
-  Map<String, dynamic> singleRepeatedBalance,
+  SerialTransaction serialTransaction,
 ) {
-  if (singleRepeatedBalance["changes"] == null) {
+  if (serialTransaction.changed == null || serialTransaction.endTime == null) {
     return;
   }
   final List<String> keysToRemove = <String>[];
-  for (final timeStampString
-      in (singleRepeatedBalance["changes"] as Map<String, dynamic>).keys) {
+  for (final timeStampString in serialTransaction.changed!.keys) {
     if (!DateTime.fromMillisecondsSinceEpoch(
           (num.tryParse(timeStampString) as int?) ?? 0,
         ).isBefore(
-          (singleRepeatedBalance["initialTime"] as Timestamp).toDate(),
+          serialTransaction.initialTime.toDate(),
         ) &&
         !DateTime.fromMillisecondsSinceEpoch(
           (num.tryParse(timeStampString) as int?) ?? 0,
         ).isAfter(
-          (singleRepeatedBalance["endTime"] as Timestamp).toDate(),
+          serialTransaction.endTime!.toDate(),
         )) {
       keysToRemove.add(timeStampString);
     }
   }
   for (final key in keysToRemove) {
-    (singleRepeatedBalance["changes"] as Map<String, dynamic>).remove(key);
+    serialTransaction.changed!.remove(key);
   }
 }
 
-Timestamp? changeThisAndAllAfterEndTimeHelpFunction(
-  Timestamp? checkedEndTime,
-  Map<String, dynamic> newRepeatedBalance,
-  Duration timeDifference,
+
+firestore.Timestamp? changeThisAndAllAfterEndTimeHelpFunction(
+    firestore.Timestamp? checkedEndTime,
+    SerialTransaction oldSerialTransaction,
+    Duration timeDifference,
 ) {
   if (checkedEndTime != null) {
     return checkedEndTime;
   }
-  if (newRepeatedBalance["endTime"] != null) {
-    return Timestamp.fromDate(
-      (newRepeatedBalance["endTime"] as Timestamp)
+  if (oldSerialTransaction.endTime != null) {
+    return firestore.Timestamp.fromDate(
+      oldSerialTransaction.endTime!
           .toDate()
           .subtract(timeDifference),
     );

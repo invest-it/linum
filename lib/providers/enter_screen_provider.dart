@@ -4,11 +4,12 @@
 //  Co-Author: thebluebaronx
 //
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:flutter/material.dart';
 import 'package:linum/constants/repeat_duration_type_enum.dart';
 import 'package:linum/constants/settings_enums.dart';
-import 'package:linum/models/single_balance_data.dart';
+import 'package:linum/models/serial_transaction.dart';
+import 'package:linum/models/transaction.dart';
 
 class EnterScreenProvider with ChangeNotifier {
   late bool _isExpenses;
@@ -27,8 +28,11 @@ class EnterScreenProvider with ChangeNotifier {
   String? _formerId;
   String? _repeatId;
   int? _repeatDuration;
-  Timestamp? _formerTime;
+  firestore.Timestamp? _formerTime;
   RepeatDurationType? _repeatDurationType;
+  DateTime? _initialTime;
+  DateTime? _endTime;
+  bool _isSerialTransaction = false;
 
   EnterScreenProvider({
     num amount = 0.0,
@@ -44,7 +48,10 @@ class EnterScreenProvider with ChangeNotifier {
     RepeatDurationType? repeatDurationType,
     RepeatDuration initRepeatDurationEnum = RepeatDuration.none,
     String? repeatId,
-    Timestamp? formerTime,
+    DateTime? initialTime,
+    DateTime? endTime,
+    bool isSerialTransaction = false,
+    firestore.Timestamp? formerTime,
   }) {
     _amount = amount.abs();
     _expenseCategory = amount <= 0 ? category : secondaryCategory;
@@ -67,21 +74,40 @@ class EnterScreenProvider with ChangeNotifier {
       _selectedDate = selectedDate;
     }
     _note = note;
+    _isSerialTransaction = isSerialTransaction;
+    _initialTime = initialTime;
+    _endTime = endTime;
   }
 
-  factory EnterScreenProvider.fromBalanceData(SingleBalanceData singleBalanceData, {bool editMode = true}) {
+  factory EnterScreenProvider.fromTransaction(
+    Transaction transaction, {
+    bool editMode = true,
+  }) {
     return EnterScreenProvider(
-      id: singleBalanceData.id,
-      amount: singleBalanceData.amount,
-      category: singleBalanceData.category,
-      name: singleBalanceData.name,
-      selectedDate:
-      singleBalanceData.time.toDate(),
+      id: transaction.id,
+      amount: transaction.amount,
+      category: transaction.category,
+      currency: transaction.currency,
+      name: transaction.name,
+      selectedDate: transaction.time.toDate(),
       editMode: editMode,
-      repeatId: singleBalanceData.repeatId,
-      formerTime:
-      singleBalanceData.formerTime ??
-          singleBalanceData.time,
+      repeatId: transaction.repeatId,
+      formerTime: transaction.formerTime ?? transaction.time,
+    );
+  }
+
+  factory EnterScreenProvider.fromSerialTransaction(
+    SerialTransaction serialTransaction,
+  ) {
+    return EnterScreenProvider(
+      id: serialTransaction.id,
+      amount: serialTransaction.amount,
+      category: serialTransaction.category,
+      name: serialTransaction.name,
+      editMode: true,
+      isSerialTransaction: true,
+      initialTime: serialTransaction.initialTime.toDate(),
+      endTime: serialTransaction.endTime?.toDate(),
     );
   }
 
@@ -137,13 +163,25 @@ class EnterScreenProvider with ChangeNotifier {
     return _formerId;
   }
 
+  bool get isSerialTransaction {
+    return _isSerialTransaction;
+  }
+
+  DateTime? get initialTime {
+    return _initialTime;
+  }
+
+  DateTime? get endTime {
+    return _endTime;
+  }
+
   RepeatDuration get repeatDurationEnum {
     return _repeatDurationEnum;
   }
 
   String? get repeatId => _repeatId;
 
-  Timestamp? get formerTime => _formerTime;
+  firestore.Timestamp? get formerTime => _formerTime;
 
   void setExpense() {
     _isExpenses = true;
@@ -219,6 +257,14 @@ class EnterScreenProvider with ChangeNotifier {
     _repeatDurationEnum = repeatDuration;
   }
 
+  void setInitialTime(DateTime initialTime) {
+    _initialTime = initialTime;
+  }
+
+  void setEndTime(DateTime? endTime) {
+    _endTime = endTime;
+  }
+
   //if the amount is entered in expenses, it's set to the negative equivalent if
   //the user did not accidentally press the minus
   num amountToDisplay() {
@@ -232,5 +278,4 @@ class EnterScreenProvider with ChangeNotifier {
       return amount;
     }
   }
-
 }

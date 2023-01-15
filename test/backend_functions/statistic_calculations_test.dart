@@ -6,78 +6,80 @@
 
 import 'dart:math' as math;
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:flutter_test/flutter_test.dart';
-import 'package:linum/models/single_balance_data.dart';
+import 'package:linum/models/transaction.dart';
 import 'package:linum/providers/algorithm_provider.dart';
-import 'package:linum/utilities/backend/statistic_calculations.dart';
+import 'package:linum/utilities/backend/statistical_calculations.dart';
 import 'package:linum/utilities/frontend/filters.dart';
 import 'package:uuid/uuid.dart';
 
-final SingleBalanceData baseSingleBalanceData = SingleBalanceData(
+final Transaction baseTransaction = Transaction(
   amount: 0,
   category: "None",
   currency: "EUR",
   name: "Test Single Balance Data",
-  time: Timestamp.fromMillisecondsSinceEpoch(
-    Timestamp.now().millisecondsSinceEpoch - (3600 * 1000),
+  time: firestore.Timestamp.fromMillisecondsSinceEpoch(
+    firestore.Timestamp.now().millisecondsSinceEpoch - (3600 * 1000),
   ),
   id: const Uuid().v4(),
 );
 
 void main() {
   group("basic_statistic_calculation", () {
-    final List<SingleBalanceData> emptyData = [];
+    final List<Transaction> emptyData = [];
 
-    final List<SingleBalanceData> exampleData1 = [
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 15),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 35.5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 25.5),
+    final List<Transaction> exampleData1 = [
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: 15),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: 35.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: 5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: 25.5),
     ];
-    final List<SingleBalanceData> exampleData2 = [
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0.5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -2.5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -2.5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0),
+    final List<Transaction> exampleData2 = [
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -0.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -2.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -2.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -0),
     ];
-    final List<SingleBalanceData> exampleData3 = [
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0.5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -2.5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -2.5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 15),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 25.5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 4),
+    final List<Transaction> exampleData3 = [
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -0.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -2.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -2.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -0),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: 15),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: 5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: 25.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: 4),
     ];
-    final List<SingleBalanceData> exampleData4 = [
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0.5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -2.5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -2.5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 15),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 25.5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: 4),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -20.5),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -23.5),
+    final List<Transaction> exampleData4 = [
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -0.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -2.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -2.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -0),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: 15),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: 5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: 25.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: 4),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -20.5),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -23.5),
     ];
-    final List<SingleBalanceData> exampleData5 = [
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0),
-      baseSingleBalanceData.copyWith(id: const Uuid().v4(), amount: -0),
+    final List<Transaction> exampleData5 = [
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -0),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -0),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -0),
+      baseTransaction.copyWith(id: const Uuid().v4(), amount: -0),
     ];
 
     group("balance", () {
       group("sum", () {
         test("empty data", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            emptyData,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: emptyData,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -93,10 +95,12 @@ void main() {
 
         test("example data 1 (only incomes)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData1,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData1,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -112,10 +116,12 @@ void main() {
 
         test("example data 2 (only expenses)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData2,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData2,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -131,10 +137,12 @@ void main() {
 
         test("example data 3", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData3,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData3,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -150,10 +158,12 @@ void main() {
 
         test("example data 4 (adds up to 0)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData4,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData4,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -169,10 +179,12 @@ void main() {
 
         test("example data 5 (only 0 expenses)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData5,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData5,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -190,12 +202,14 @@ void main() {
           final math.Random rand = math.Random();
           for (int i = 0; i < 10000; i++) {
             // Arrange (Initialization)
-            final List<SingleBalanceData> randomData =
+            final List<Transaction> randomData =
                 _createRandomStatisticDataWithFixedTime(rand);
-            final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              randomData,
-              AlgorithmProvider()
+            final StatisticalCalculations statisticsCalculations =
+                StatisticalCalculations(
+              data: randomData,
+              serialData: [],
+              standardCurrencyName: "EUR",
+              algorithmProvider: AlgorithmProvider()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
                 ),
@@ -217,10 +231,12 @@ void main() {
       group("average", () {
         test("empty data", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            emptyData,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: emptyData,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -236,10 +252,12 @@ void main() {
 
         test("example data 1 (only incomes)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData1,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData1,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -255,10 +273,12 @@ void main() {
 
         test("example data 2 (only expenses)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData2,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData2,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -274,10 +294,12 @@ void main() {
 
         test("example data 3", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData3,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData3,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -293,10 +315,12 @@ void main() {
 
         test("example data 4 (adds up to 0)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData4,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData4,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -312,10 +336,12 @@ void main() {
 
         test("example data 5 (only 0 expenses)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData5,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData5,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -333,12 +359,14 @@ void main() {
           final math.Random rand = math.Random();
           for (int i = 0; i < 10000; i++) {
             // Arrange (Initialization)
-            final List<SingleBalanceData> randomData =
+            final List<Transaction> randomData =
                 _createRandomStatisticDataWithFixedTime(rand);
-            final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              randomData,
-              AlgorithmProvider()
+            final StatisticalCalculations statisticsCalculations =
+                StatisticalCalculations(
+              data: randomData,
+              serialData: [],
+              standardCurrencyName: "EUR",
+              algorithmProvider: AlgorithmProvider()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
                 ),
@@ -363,10 +391,12 @@ void main() {
       group("sum", () {
         test("empty data", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            emptyData,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: emptyData,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -382,10 +412,12 @@ void main() {
 
         test("example data 1 (only incomes)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData1,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData1,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -401,10 +433,12 @@ void main() {
 
         test("example data 2 (only expenses)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData2,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData2,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -420,10 +454,12 @@ void main() {
 
         test("example data 3", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData3,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData3,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -439,10 +475,12 @@ void main() {
 
         test("example data 4 (adds up to 0)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData4,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData4,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -458,10 +496,12 @@ void main() {
 
         test("example data 5 (only 0 expenses)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData5,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData5,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -479,12 +519,14 @@ void main() {
           final math.Random rand = math.Random();
           for (int i = 0; i < 10000; i++) {
             // Arrange (Initialization)
-            final List<SingleBalanceData> randomData =
+            final List<Transaction> randomData =
                 _createRandomStatisticDataWithFixedTime(rand);
-            final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              randomData,
-              AlgorithmProvider()
+            final StatisticalCalculations statisticsCalculations =
+                StatisticalCalculations(
+              data: randomData,
+              serialData: [],
+              standardCurrencyName: "EUR",
+              algorithmProvider: AlgorithmProvider()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
                 ),
@@ -507,10 +549,12 @@ void main() {
       group("average", () {
         test("empty data", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            emptyData,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: emptyData,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -526,10 +570,12 @@ void main() {
 
         test("example data 1 (only incomes)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData1,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData1,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -545,10 +591,12 @@ void main() {
 
         test("example data 2 (only expenses)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData2,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData2,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -564,10 +612,12 @@ void main() {
 
         test("example data 3", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData3,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData3,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -583,10 +633,12 @@ void main() {
 
         test("example data 4 (adds up to 0)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData4,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData4,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -602,10 +654,12 @@ void main() {
 
         test("example data 5 (only 0 expenses)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData5,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData5,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -623,12 +677,14 @@ void main() {
           final math.Random rand = math.Random();
           for (int i = 0; i < 10000; i++) {
             // Arrange (Initialization)
-            final List<SingleBalanceData> randomData =
+            final List<Transaction> randomData =
                 _createRandomStatisticDataWithFixedTime(rand);
-            final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              randomData,
-              AlgorithmProvider()
+            final StatisticalCalculations statisticsCalculations =
+                StatisticalCalculations(
+              data: randomData,
+              serialData: [],
+              standardCurrencyName: "EUR",
+              algorithmProvider: AlgorithmProvider()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
                 ),
@@ -659,10 +715,12 @@ void main() {
       group("sum", () {
         test("empty data", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            emptyData,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: emptyData,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -678,10 +736,12 @@ void main() {
 
         test("example data 1 (only incomes)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData1,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData1,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -697,10 +757,12 @@ void main() {
 
         test("example data 2 (only expenses)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData2,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData2,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -716,10 +778,12 @@ void main() {
 
         test("example data 3", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData3,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData3,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -735,10 +799,12 @@ void main() {
 
         test("example data 4 (adds up to 0)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData4,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData4,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -754,10 +820,12 @@ void main() {
 
         test("example data 5 (only 0 expenses)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData5,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData5,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -775,12 +843,14 @@ void main() {
           final math.Random rand = math.Random();
           for (int i = 0; i < 10000; i++) {
             // Arrange (Initialization)
-            final List<SingleBalanceData> randomData =
+            final List<Transaction> randomData =
                 _createRandomStatisticDataWithFixedTime(rand);
-            final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              randomData,
-              AlgorithmProvider()
+            final StatisticalCalculations statisticsCalculations =
+                StatisticalCalculations(
+              data: randomData,
+              serialData: [],
+              standardCurrencyName: "EUR",
+              algorithmProvider: AlgorithmProvider()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
                 ),
@@ -804,10 +874,12 @@ void main() {
       group("average", () {
         test("empty data", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            emptyData,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: emptyData,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -823,10 +895,12 @@ void main() {
 
         test("example data 1 (only incomes)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData1,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData1,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -842,10 +916,12 @@ void main() {
 
         test("example data 2 (only expenses)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData2,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData2,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -861,10 +937,12 @@ void main() {
 
         test("example data 3", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData3,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData3,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -880,10 +958,12 @@ void main() {
 
         test("example data 4 (adds up to 0)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData4,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData4,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -899,10 +979,12 @@ void main() {
 
         test("example data 5 (only 0 expenses)", () {
           // Arrange (Initialization)
-          final StatisticsCalculations statisticsCalculations =
-              StatisticsCalculations(
-            exampleData5,
-            AlgorithmProvider()
+          final StatisticalCalculations statisticsCalculations =
+              StatisticalCalculations(
+            data: exampleData5,
+            serialData: [],
+            standardCurrencyName: "EUR",
+            algorithmProvider: AlgorithmProvider()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -920,12 +1002,14 @@ void main() {
           final math.Random rand = math.Random();
           for (int i = 0; i < 10000; i++) {
             // Arrange (Initialization)
-            final List<SingleBalanceData> randomData =
+            final List<Transaction> randomData =
                 _createRandomStatisticDataWithFixedTime(rand);
-            final StatisticsCalculations statisticsCalculations =
-                StatisticsCalculations(
-              randomData,
-              AlgorithmProvider()
+            final StatisticalCalculations statisticsCalculations =
+                StatisticalCalculations(
+              data: randomData,
+              serialData: [],
+              standardCurrencyName: "EUR",
+              algorithmProvider: AlgorithmProvider()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
                 ),
@@ -954,14 +1038,14 @@ void main() {
   });
 }
 
-List<SingleBalanceData> _createRandomStatisticDataWithFixedTime(
+List<Transaction> _createRandomStatisticDataWithFixedTime(
   math.Random rand,
 ) {
-  final List<SingleBalanceData> returnList = <SingleBalanceData>[];
+  final List<Transaction> returnList = <Transaction>[];
   final int max = rand.nextInt(256) + 1;
   for (int i = 0; i < max; i++) {
     returnList.add(
-      baseSingleBalanceData.copyWith(
+      baseTransaction.copyWith(
         amount:
             ((((0.5 - rand.nextDouble()) * 2 * 256) * 100).roundToDouble()) /
                 100.0,

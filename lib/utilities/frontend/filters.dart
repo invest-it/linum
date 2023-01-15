@@ -7,8 +7,8 @@
 // will be removed when filters will only be used on SingleBalanceData
 // ignore_for_file: avoid_dynamic_calls
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:linum/models/single_balance_data.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
+import 'package:linum/models/transaction.dart';
 import 'package:tuple/tuple.dart';
 
 class Filters {
@@ -54,46 +54,46 @@ class Filters {
     return false;
   }
 
-  static bool Function(dynamic) newerThan(Timestamp timestamp) {
+  static bool Function(dynamic) newerThan(firestore.Timestamp timestamp) {
     return (dynamic a) =>
-        (_mapToSinglebalance(a).time).compareTo(timestamp) >= 0;
+        (_mapToTransaction(a).time).compareTo(timestamp) >= 0;
   }
 
-  static bool Function(dynamic) olderThan(Timestamp timestamp) {
+  static bool Function(dynamic) olderThan(firestore.Timestamp timestamp) {
     return (dynamic a) =>
-        (_mapToSinglebalance(a).time).compareTo(timestamp) <= 0;
+        (_mapToTransaction(a).time).compareTo(timestamp) <= 0;
   }
 
   static bool Function(dynamic) inBetween(
-    Tuple2<Timestamp, Timestamp> timestamps,
+    Tuple2<firestore.Timestamp, firestore.Timestamp> timestamps,
   ) {
     return (dynamic a) =>
-        (_mapToSinglebalance(a).time).compareTo(timestamps.item1) <= 0 ||
-        (_mapToSinglebalance(a).time).compareTo(timestamps.item2) >= 0;
+        (_mapToTransaction(a).time).compareTo(timestamps.item1) <= 0 ||
+        (_mapToTransaction(a).time).compareTo(timestamps.item2) >= 0;
   }
 
   static bool Function(dynamic) amountMoreThan(num amount) {
-    return (dynamic a) => (_mapToSinglebalance(a).amount).compareTo(amount) > 0;
+    return (dynamic a) => (_mapToTransaction(a).amount).compareTo(amount) > 0;
   }
 
   static bool Function(dynamic) amountAtLeast(num amount) {
     return (dynamic a) =>
-        (_mapToSinglebalance(a).amount).compareTo(amount) >= 0;
+        (_mapToTransaction(a).amount).compareTo(amount) >= 0;
   }
 
   static bool Function(dynamic) amountLessThan(num amount) {
-    return (dynamic a) => (_mapToSinglebalance(a).amount).compareTo(amount) < 0;
+    return (dynamic a) => (_mapToTransaction(a).amount).compareTo(amount) < 0;
   }
 
   static bool Function(dynamic) amountAtMost(num amount) {
     return (dynamic a) =>
-        (_mapToSinglebalance(a).amount).compareTo(amount) <= 0;
+        (_mapToTransaction(a).amount).compareTo(amount) <= 0;
   }
 
-  static SingleBalanceData _mapToSinglebalance(dynamic a) {
+  static Transaction _mapToTransaction(dynamic a) {
     if (a is Map<String, dynamic>) {
-      return SingleBalanceData.fromMap(a);
+      return Transaction.fromMap(a);
     }
-    return a as SingleBalanceData;
+    return a as Transaction;
   }
 }

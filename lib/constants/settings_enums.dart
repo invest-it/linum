@@ -4,7 +4,6 @@
 //  Co-Author: damattl
 //  (Refactored)
 
-
 enum StandardCategoryIncome {
   none,
   income,
@@ -42,11 +41,15 @@ enum StandardAccount {
   depot,
 }
 
+
 enum RepeatDuration {
   none,
   daily,
   weekly,
   monthly,
+  quarterly,
+  semiannually,
+  annually,
   // TODO implement custom repeat
   // custom,
 }

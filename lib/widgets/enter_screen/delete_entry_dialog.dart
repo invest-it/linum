@@ -4,85 +4,99 @@
 //  Co-Author: SoTBurst
 //
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/constants/repeatable_change_type_enum.dart';
+import 'package:linum/constants/serial_transaction_change_type_enum.dart';
 import 'package:linum/models/dialog_action.dart';
-import 'package:linum/models/single_balance_data.dart';
+import 'package:linum/models/serial_transaction.dart';
+import 'package:linum/models/transaction.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:provider/provider.dart';
 
-Future<bool?> generateDeleteDialogFromSingleBalanceData(
+Future<bool?> generateDeleteDialogFromTransaction(
   BuildContext context,
-  BalanceDataProvider balanceDataProvider,
-  SingleBalanceData singleBalanceData,
+  // BalanceDataProvider balanceDataProvider,
+  Transaction transaction,
 ) async {
-  final bool isRepeatable = singleBalanceData.repeatId != null;
+  final bool isSerial = transaction.repeatId != null;
   return generateDeleteDialog(
     context,
-    balanceDataProvider,
-    isRepeatable ? singleBalanceData.repeatId! : singleBalanceData.id,
-    isRepeatable: isRepeatable,
-    formerTime: singleBalanceData.formerTime ?? singleBalanceData.time,
+    // balanceDataProvider,
+    isSerial ? transaction.repeatId! : transaction.id,
+    isSerial: isSerial,
+    formerTime: transaction.formerTime ?? transaction.time,
   );
 }
 
-Future<bool?> showRepeatableDeleteDialog(
+Future<bool?> generateDeleteDialogFromSerialTransaction(
     BuildContext context,
-    String balanceDataId, {
-    Timestamp? formerTime,
+    BalanceDataProvider balanceDataProvider,
+    SerialTransaction serialTransaction,
+) async {
+  return showDefaultDeleteDialog(context, serialTransaction.id);
+}
+
+Future<bool?> showRepeatableDeleteDialog(
+  BuildContext context,
+  String transactionId, {
+  bool isWholeSerial = false,
+  firestore.Timestamp? formerTime,
 }) async {
   final UserAlert userAlert = UserAlert(context: context);
-  final BalanceDataProvider balanceDataProvider = Provider.of<BalanceDataProvider>(context, listen: false);
+  final BalanceDataProvider balanceDataProvider =
+      Provider.of<BalanceDataProvider>(context, listen: false);
   return userAlert.showActionDialog(
     "enter_screen.delete-entry.dialog-label-deleterep",
     [
-      DialogAction(
-        // ignore: avoid_redundant_argument_values
-        dialogPurpose: DialogPurpose.primary,
-        actionTitle: "enter_screen.delete-entry.dialog-button-onlyonce",
-        function: () {
-          balanceDataProvider.removeRepeatedBalanceUsingId(
-            id: balanceDataId,
-            removeType: RepeatableChangeType.onlyThisOne,
-            time: formerTime,
-          );
-          Navigator.of(context, rootNavigator: true).pop(true);
-        },
-      ),
-      DialogAction(
-        dialogPurpose: DialogPurpose.danger,
-        actionTitle: "enter_screen.delete-entry.dialog-button-untilnow",
-        function: () {
-          balanceDataProvider.removeRepeatedBalanceUsingId(
-            id: balanceDataId,
-            removeType: RepeatableChangeType.thisAndAllBefore,
-            time: formerTime,
-          );
-          Navigator.of(context, rootNavigator: true).pop(true);
-        },
-      ),
-      DialogAction(
-        dialogPurpose: DialogPurpose.danger,
-        actionTitle: "enter_screen.delete-entry.dialog-button-fromnow",
-        function: () {
-          balanceDataProvider.removeRepeatedBalanceUsingId(
-            id: balanceDataId,
-            removeType: RepeatableChangeType.thisAndAllAfter,
-            time: formerTime,
-          );
-          Navigator.of(context, rootNavigator: true).pop(true);
-        },
-      ),
+      if (!isWholeSerial)
+        DialogAction(
+          // ignore: avoid_redundant_argument_values
+          dialogPurpose: DialogPurpose.primary,
+          actionTitle: "enter_screen.delete-entry.dialog-button-onlyonce",
+          function: () {
+            balanceDataProvider.removeSerialTransactionUsingId(
+              id: transactionId,
+              removeType: SerialTransactionChangeType.onlyThisOne,
+              time: formerTime,
+            );
+            Navigator.of(context, rootNavigator: true).pop(true);
+          },
+        ),
+      if (!isWholeSerial)
+        DialogAction(
+          dialogPurpose: DialogPurpose.danger,
+          actionTitle: "enter_screen.delete-entry.dialog-button-untilnow",
+          function: () {
+            balanceDataProvider.removeSerialTransactionUsingId(
+              id: transactionId,
+              removeType: SerialTransactionChangeType.thisAndAllBefore,
+              time: formerTime,
+            );
+            Navigator.of(context, rootNavigator: true).pop(true);
+          },
+        ),
+      if (!isWholeSerial)
+        DialogAction(
+          dialogPurpose: DialogPurpose.danger,
+          actionTitle: "enter_screen.delete-entry.dialog-button-fromnow",
+          function: () {
+            balanceDataProvider.removeSerialTransactionUsingId(
+              id: transactionId,
+              removeType: SerialTransactionChangeType.thisAndAllAfter,
+              time: formerTime,
+            );
+            Navigator.of(context, rootNavigator: true).pop(true);
+          },
+        ),
       DialogAction(
         dialogPurpose: DialogPurpose.danger,
         actionTitle: "enter_screen.delete-entry.dialog-button-allentries",
         function: () {
-          balanceDataProvider.removeRepeatedBalanceUsingId(
-            id: balanceDataId,
-            removeType: RepeatableChangeType.all,
+          balanceDataProvider.removeSerialTransactionUsingId(
+            id: transactionId,
+            removeType: SerialTransactionChangeType.all,
           );
           Navigator.of(context, rootNavigator: true).pop(true);
         },
@@ -98,12 +112,13 @@ Future<bool?> showRepeatableDeleteDialog(
 }
 
 Future<bool?> showDefaultDeleteDialog(
-    BuildContext context,
-    String balanceDataId, {
-    Timestamp? formerTime,
+  BuildContext context,
+  String balanceDataId, {
+  firestore.Timestamp? formerTime,
 }) async {
   final UserAlert userAlert = UserAlert(context: context);
-  final BalanceDataProvider balanceDataProvider = Provider.of<BalanceDataProvider>(context, listen: false);
+  final BalanceDataProvider balanceDataProvider =
+      Provider.of<BalanceDataProvider>(context, listen: false);
   return userAlert.showActionDialog(
     "enter_screen.delete-entry.dialog-label-delete",
     [
@@ -116,7 +131,7 @@ Future<bool?> showDefaultDeleteDialog(
         dialogPurpose: DialogPurpose.danger,
         actionTitle: "enter_screen.delete-entry.dialog-button-delete",
         function: () {
-          balanceDataProvider.removeSingleBalanceUsingId(
+          balanceDataProvider.removeTransactionUsingId(
             balanceDataId,
           );
           Navigator.of(context, rootNavigator: true).pop(true);
@@ -129,14 +144,28 @@ Future<bool?> showDefaultDeleteDialog(
 
 Future<bool?> generateDeleteDialog(
   BuildContext context,
-  BalanceDataProvider balanceDataProvider,
-  String balanceDataId, {
-  required bool isRepeatable,
-  Timestamp? formerTime,
+  //BalanceDataProvider balanceDataProvider,
+  String transactionId, {
+  required bool isSerial,
+  firestore.Timestamp? formerTime,
 }) async {
+  return isSerial
+      ? showRepeatableDeleteDialog(
+          context,
+          transactionId,
+          formerTime: formerTime,
+        )
+      : showDefaultDeleteDialog(context, transactionId, formerTime: formerTime);
+}
 
-
-  return isRepeatable
-      ? showRepeatableDeleteDialog(context, balanceDataId, formerTime: formerTime)
-      : showDefaultDeleteDialog(context, balanceDataId, formerTime: formerTime);
+Future<bool?> generateWholeSerialTransactionDeleteDialog(
+  BuildContext context,
+  // BalanceDataProvider balanceDataProvider,
+  String serialTransactionId,
+) {
+  return showRepeatableDeleteDialog(
+    context,
+    serialTransactionId,
+    isWholeSerial: true,
+  );
 }

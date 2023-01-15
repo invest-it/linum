@@ -3,8 +3,8 @@
 //  Author: SoTBurst, thebluebaronx, NightmindOfficial
 //  Co-Author: damattl
 /// PAGE INDEX 0
-
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/navigation/main_routes.dart';
@@ -15,6 +15,8 @@ import 'package:linum/utilities/backend/in_between_timestamps.dart';
 import 'package:linum/utilities/frontend/filters.dart';
 import 'package:linum/utilities/frontend/silent_scroll.dart';
 import 'package:linum/widgets/home_screen/home_screen_listview.dart';
+import 'package:linum/widgets/screen_card/flip_card_controller_extensions.dart';
+import 'package:linum/widgets/screen_card/home_screen_card/home_screen_card.dart';
 import 'package:linum/widgets/screen_skeleton/app_bar_action.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
@@ -28,9 +30,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  late FlipCardController? _flipCardController;
+
+  @override
+  void initState() {
+    super.initState();
+    _flipCardController = FlipCardController();
+  }
+
   void resetAlgorithmProvider() {
     final AlgorithmProvider algorithmProvider =
-    Provider.of<AlgorithmProvider>(context);
+        Provider.of<AlgorithmProvider>(context);
 
     if (algorithmProvider.currentFilter == Filters.noFilter) {
       algorithmProvider.resetCurrentShownMonth();
@@ -40,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-
+  bool showRepeatables = false;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +74,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return ScreenSkeleton(
       head: 'Home',
       isInverted: true,
-      hasHomeScreenCard: true,
       leadingAction: AppBarAction.fromPreset(DefaultAction.academy),
       actions: [
         if (pinCodeProvider.pinSet)
@@ -76,6 +86,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
         AppBarAction.fromPreset(DefaultAction.settings),
       ],
+      screenCard: HomeScreenCard(
+          controller: _flipCardController!,
+      ),
       body: Stack(
         children: [
           Column(
@@ -87,17 +100,45 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0),
-                      child: Text(
-                        tr('home_screen.label-recent-transactions'),
+                      child: DropdownButton(
+                        value: showRepeatables,
+                        items: [
+                          DropdownMenuItem<bool>(
+                            value: false,
+                            child: Text(
+                              tr('home_screen.label-recent-transactions'),
+                            ),
+                          ),
+                          DropdownMenuItem<bool>(
+                            value: true,
+                            child: Text(
+                              tr('home_screen.label-active-serialcontracts'),
+                            ),
+                          ),
+                        ],
+                        underline: Container(),
+                        elevation: 2,
                         style: Theme.of(context).textTheme.headline5,
+                        onChanged: (value) {
+                          setState(() {
+                            showRepeatables = value! as bool;
+                          });
+                          if (value == true) {
+                            _flipCardController?.turnToBack();
+                          } else {
+                            _flipCardController?.turnToFront();
+                          }
+                        },
                       ),
                     ),
                     TextButton(
                       onPressed: () {
-                        getRouterDelegate().replaceLastRoute(MainRoute.budget);
+                        getRouterDelegate().pushRoute(MainRoute.filter);
                       },
                       child: Text(
-                        tr('home_screen.button-show-more'),
+                        showRepeatables
+                            ? tr('home_screen.button-show-all').toUpperCase()
+                            : tr('home_screen.button-show-more').toUpperCase(),
                         style: Theme.of(context).textTheme.overline?.copyWith(
                               color: Theme.of(context).colorScheme.primary,
                               fontSize: 14,
@@ -112,10 +153,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                   child: ScrollConfiguration(
                     behavior: SilentScroll(),
-                    child: balanceDataProvider.fillListViewWithData(
-                      HomeScreenListView(),
-                      context: context,
-                    ),
+                    child: showRepeatables
+                        ? balanceDataProvider.fillListViewWithRepeatables(
+                            HomeScreenListView(),
+                            context: context,
+                          )
+                        : balanceDataProvider.fillListViewWithData(
+                            HomeScreenListView(),
+                            context: context,
+                          ),
                   ),
                 ),
               ),

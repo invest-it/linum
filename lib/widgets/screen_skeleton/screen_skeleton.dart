@@ -6,10 +6,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
-import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
-import 'package:linum/widgets/home_screen/home_screen_card_manager.dart';
-import 'package:linum/widgets/onboarding/action_lip.dart';
+import 'package:linum/widgets/action_lip.dart';
 import 'package:linum/widgets/screen_skeleton/body_section.dart';
 import 'package:linum/widgets/screen_skeleton/lip_section.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +17,7 @@ import 'package:provider/provider.dart';
 /// [isInverted] - bei true wird der "Body" zur Karte (Lower Lip) genutzt, sonst wird das Standardlayout verwendet (grüne Lippe oben)
 ///
 /// [contentOverride] - kann genutzt werden, um die Rückgabe des ScreenSkeletons auf den Body zu beschränken. Es wird nicht das übliche Styling angewendet.
-/// [hasHomeScreenCard] - kann optional auf true gesetzt werden, dann wird zwischen der UpperLip und dem Body noch eine Content Card eingesetzt.
+/// [hasScreenCard] - kann optional auf true gesetzt werden, dann wird zwischen der UpperLip und dem Body noch eine Content Card eingesetzt.
 /// Im Moment ist das auf die HomeScreenCard hardcoded, und das ist auch gut so, falls wir es jemals woanders bräuchten, könnte man das aber u.U. noch erweitern.
 /// Dadurch kann man jetzt sogar beim HomeScreen das ScreenSkeleton->isInverted auf false setzen, und der Screen sieht trotzdem gut aus.
 ///
@@ -91,7 +89,7 @@ class ScreenSkeleton extends StatelessWidget {
   final Widget body;
   final bool contentOverride;
   final bool isInverted;
-  final bool hasHomeScreenCard;
+  final Widget? screenCard;
   final Widget Function(BuildContext)? leadingAction;
   final List<Widget Function(BuildContext)>? actions;
   final ProviderKey? providerKey;
@@ -103,7 +101,7 @@ class ScreenSkeleton extends StatelessWidget {
     required this.body,
     this.contentOverride = false,
     this.isInverted = false,
-    this.hasHomeScreenCard = false,
+    this.screenCard,
     this.initialActionLipStatus = ActionLipStatus.hidden,
     this.providerKey,
     Widget? initialActionLipBody,
@@ -122,9 +120,6 @@ class ScreenSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final BalanceDataProvider balanceDataProvider =
-        Provider.of<BalanceDataProvider>(context);
-
     final ActionLipStatusProvider actionLipStatusProvider =
         Provider.of<ActionLipStatusProvider>(context, listen: false);
 
@@ -132,7 +127,7 @@ class ScreenSkeleton extends StatelessWidget {
         !actionLipStatusProvider.isActionStatusInitialized(providerKey!)) {
       actionLipStatusProvider.setActionLipStatusSilently(
         providerKey: providerKey!,
-        actionLipStatus: initialActionLipStatus,
+        status: initialActionLipStatus,
       );
     }
 
@@ -151,7 +146,7 @@ class ScreenSkeleton extends StatelessWidget {
             children: [
               LipSection(
                 lipTitle: head,
-                hasHomeScreenCard: hasHomeScreenCard,
+                hasScreenCard: screenCard != null,
                 isInverted: isInverted,
                 actions: actions,
                 leadingAction: leadingAction,
@@ -159,17 +154,16 @@ class ScreenSkeleton extends StatelessWidget {
               BodySection(
                 body: body,
                 isInverted: isInverted,
-                hasHomeScreenCard: hasHomeScreenCard,
+                hasScreenCard: screenCard != null,
               ),
             ],
           ),
-          hasHomeScreenCard
+          screenCard != null
               ? Positioned(
                   top: proportionateScreenHeight(164 - 25),
                   left: 0,
                   right: 0,
-                  child: balanceDataProvider
-                      .fillStatisticPanelWithData(HomeScreenCardManager()),
+                  child: screenCard!,
                 )
               : Container(
                   /// to make sure we'd actually notice fuck-ups with this

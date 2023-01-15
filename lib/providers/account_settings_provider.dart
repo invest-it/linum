@@ -10,12 +10,15 @@ import 'dart:developer' as dev;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/constants/standard_currencies.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
+import 'package:linum/models/currency.dart';
 import 'package:linum/models/entry_category.dart';
 import 'package:linum/providers/authentication_service.dart';
+import 'package:linum/types/change_notifier_provider_builder.dart';
 import 'package:provider/provider.dart';
-import 'package:provider/single_child_widget.dart';
+
 
 class AccountSettingsProvider extends ChangeNotifier {
   DocumentReference<Map<String, dynamic>>? _settings;
@@ -44,6 +47,21 @@ class AccountSettingsProvider extends ChangeNotifier {
         settings["StandardCategoryExpense"] as String? ?? "None";
     final EntryCategory? catExp = standardExpenseCategories[categoryId];
     return catExp;
+  }
+
+  Currency getStandardCurrency() {
+    final String? currency = settings["StandardCurrency"] as String?;
+    return standardCurrencies[currency] ?? standardCurrencies["EUR"]!;
+  }
+  Future<void> setStandardCurrency(Currency currency) async {
+    final isInMap = standardCurrencies[currency.name] != null;
+    if (!isInMap) {
+      return;
+    }
+    final result = await updateSettings({"StandardCurrency": currency.name});
+    if (result) {
+      notifyListeners();
+    }
   }
 
   AccountSettingsProvider(BuildContext context) {
@@ -162,21 +180,22 @@ class AccountSettingsProvider extends ChangeNotifier {
     super.dispose();
   }
 
-
-  static SingleChildWidget provider(BuildContext context, {bool testing = false}) {
-    return ChangeNotifierProxyProvider<AuthenticationService,
-        AccountSettingsProvider>(
-      create: (ctx) {
-        return AccountSettingsProvider(ctx);
-      },
-      update: (ctx, auth, oldAccountSettings) {
-        if (oldAccountSettings != null) {
-          return oldAccountSettings..updateAuth(auth, ctx);
-        } else {
+  static ChangeNotifierProviderBuilder builder() {
+    return (BuildContext context, {bool testing = false}) {
+      return ChangeNotifierProxyProvider<AuthenticationService, AccountSettingsProvider>(
+        create: (ctx) {
           return AccountSettingsProvider(ctx);
-        }
-      },
-      lazy: false,
-    );
+        },
+        update: (ctx, auth, oldAccountSettings) {
+          if (oldAccountSettings != null) {
+            return oldAccountSettings..updateAuth(auth, ctx);
+          } else {
+            return AccountSettingsProvider(ctx);
+          }
+        },
+        lazy: false,
+      );
+    };
   }
+
 }

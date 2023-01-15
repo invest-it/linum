@@ -24,6 +24,9 @@
             "income": {
                 "label-title": "Recettes"
             }
+        },
+        "standard-currency": {
+            "label-title": "Monnaie"
         }
     },
     "alertdialog": {
@@ -74,10 +77,10 @@
             "message": "Ton mot de passe a été mis à jour.",
             "title": "Prêt!"
         },
-        "delete-account":{ 
-            "title":"Tu souhaites supprimer ton compte en toute sécurité ?",
+        "delete-account": {
+            "title": "Tu souhaites supprimer ton compte en toute sécurité ?",
             "cancel": "Non",
-            "action": "Oui"      
+            "action": "Oui"
         }
     },
     "auth": {
@@ -129,7 +132,7 @@
         "wrong-password": "Votre adresse électronique ou votre mot de passe n'est pas correct. Vérifier les fautes d'orthographe ?"
     },
     "budget_screen": {
-        "button-filter": "FILTRE",
+        "button-filter": "Filtre",
         "label-all-transactions": "Toutes les transactions"
     },
     "enter_screen": {
@@ -165,6 +168,9 @@
         "label-repeat-monthly": "Au début du mois",
         "label-repeat-none": "Ne répétez pas",
         "label-repeat-weekly": "Hebdomadaire",
+        "label-repeat-quarterly": "Tous les trois mois",
+        "label-repeat-semiannually": "Semestriel",
+        "label-repeat-annually": "Annuellement",
         "title": {
             "add": "Nouvelle entrée",
             "edit": "Modifier l'entrée"
@@ -178,15 +184,17 @@
     "enter_screen_attribute_date": "Date",
     "enter_screen_attribute_repeat": "Répéter",
     "home_screen": {
-        "button-show-more": "AFFICHER PLUS",
+        "button-show-more": "Plus",
+        "button-show-all": "Tous les",
         "free-text": "Gratis",
-        "label-recent-transactions": "Transactions récentes"
+        "label-recent-transactions": "Transactions récentes",
+        "label-active-serialcontracts": "Contrats de ce mois"
     },
     "home_screen_card": {
         "home-screen-card-toast": "Swipe vers la gauche et la droite pour voir les mois précédents ou à venir. Veuillez rester appuyé pour revenir au mois en cours",
         "label-current-balance": "Bilan mensuel actuel",
-        "label-expenses": "DÉPENSES",
-        "label-income": "REVENU",
+        "label-expenses": "Dépenses",
+        "label-income": "Recettes",
         "label-total-balance": "Bilan",
         "label-total-balance-sub": "jusqu'à aujourd'hui"
     },
@@ -199,7 +207,13 @@
         "label-no-entries": "- Aucune entrée trouvée -",
         "label-thismonth": "Ce mois-ci",
         "label-today": "Aujourd'hui",
-        "label-yesterday": "Hier"
+        "label-yesterday": "Hier",
+        "label-error-translation": "Traduction manquante",
+        "label-every": "Tous les",
+        "label-days": "jours",
+        "label-weeks": "semaines",
+        "label-months": "mois",
+        "label-years": "ans"
     },
     "lock_screen": {
         "change": {
@@ -256,7 +270,7 @@
         "register-email-hintlabel": "e-mail",
         "register-lip-forgot-password-button": "Alternative sign-in methods",
         "register-lip-signup-button": "S'inscrire",
-        "register-lip-title": "SIGN UP",
+        "register-lip-title": "S'inscrire",
         "register-password-errorlabel": "Veuillez saisir un mot de passe d'au moins 6 caractères.",
         "register-password-hintlabel": "Mot de passe",
         "register-privacy": {
@@ -272,21 +286,21 @@
             "label-en": "Deutsch",
             "label-nl": "Nederlands",
             "label-systemlang": "Langue du système",
-            "label-title": "PARAMÈTRES LINGUISTIQUES",
+            "label-title": "Paramètres linguistiques",
             "label-tooltip": "Actuellement, seule la langue du système est prise en charge. Langues prises en charge : Allemand, Anglais."
         },
         "pin-lock": {
             "label-change-pin": "Modifier le code PIN",
-            "label-title": "VERROUILLAGE DU PIN",
+            "label-title": "Verrouillage par code PIN",
             "label-tooltip": "Si le verrouillage du code PIN est activé, vous devrez saisir votre code PIN personnel au démarrage de l'application pour protéger vos données.",
             "switch-label": "Verrouillage du PIN actif"
         },
         "special-settings": {
             "label-schwabenmodus": "Mode Picsou",
-            "label-title": "PARAMÈTRES SPÉCIAUX"
+            "label-title": "Réglages particuliers"
         },
         "standard-account": {
-            "label-title": "COMPTES STANDARD",
+            "label-title": "Comptes standard",
             "label-tooltip": "Ces comptes sont utilisés par défaut pour chaque nouveau revenu/dépense. Vous pouvez également les modifier individuellement."
         },
         "standard-account-selector": {
@@ -298,11 +312,11 @@
             "modal-label-title": "Comptes"
         },
         "standard-category": {
-            "label-title": "CATÉGORIES STANDARD",
+            "label-title": "Catégories standard",
             "label-tooltip": "Ces catégories sont utilisées par défaut pour chaque nouveau revenu/dépense/transaction. Vous pouvez également les modifier individuellement."
         },
         "standard-currency": {
-            "label-title": "DEVISE STANDARD",
+            "label-title": "Devise par défaut",
             "label-tooltip": "Cette devise est utilisée par défaut pour chaque nouvelle transaction. Vous pouvez également la modifier individuellement."
         },
         "standard-expense-selector": {
@@ -330,7 +344,40 @@
             "button-delete-user": "Supprimer l'utilisateur",
             "button-forgot-password-tooltip": "Vous pouvez demander une réinitialisation du mot de passe ici si vous avez oublié votre ancien mot de passe.",
             "button-signout": "Se déconnecter",
-            "label-title": "VOTRE COMPTE"
+            "label-title": "Ton compte"
         }
-    }
+    },
+    "currency": {
+        "error": {
+            "not-found": "La devise n'est pas prise en charge"
+        },
+        "name": {
+            "eur": "Euro",
+            "gbp": "Livre sterling",
+            "jpy": "Yen",
+            "usd": "Dollar américain",
+            "cny": "Yuan chinois",
+            "chf": "Franc suisse",
+            "aud": "Dollar australien",
+            "cad": "Dollar canadien",
+            "nzd": "Dollar néo-zélandais",
+            "sek": "Couronne suédoise",
+            "nok": "Couronne norvégienne",
+            "myr": "Ringgit malaisien",
+            "pln": "Złoty",
+            "czk": "Couronne tchèque",
+            "krw": "Won sud-coréen",
+            "dkk": "Couronne danoise",
+            "isk": "Couronne islandaise",
+            "tyr": "Lire turque",
+            "zar": "Rand sud-africain",
+            "mxn": "Peso mexicain",
+            "inr": "Roupie indienne",
+            "idr": "Roupie indonésienne",
+            "thb": "Baht",
+            "ils": "Shekels",
+            "blr": "Réal brésilien"
+        }
+    },
+    "enter_screen_attribute_currency": "Monnaie"
 }

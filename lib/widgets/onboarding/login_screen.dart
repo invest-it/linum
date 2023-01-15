@@ -33,7 +33,6 @@ class _LoginScreenState extends State<LoginScreen> {
         Provider.of<OnboardingScreenProvider>(
       context,
     );
-
     switch (onboardingScreenProvider.pageState) {
       case OnboardingPageState.none:
         _loginYOffset = windowHeight;
@@ -42,9 +41,8 @@ class _LoginScreenState extends State<LoginScreen> {
         _loginOpacity = 1;
         break;
       case OnboardingPageState.login:
-        _loginYOffset = SizeGuide.keyboardIsOpened
-            ? proportionateScreenHeightFraction(ScreenFraction.twofifths) -
-                (SizeGuide.keyboardHeight / 2)
+        _loginYOffset = SizeGuide.isKeyboardOpen(context)
+            ? proportionateScreenHeightFraction(ScreenFraction.twofifths) - (SizeGuide.keyboardHeight / 2)
             : proportionateScreenHeightFraction(ScreenFraction.twofifths);
 
         _loginXOffset = 0;
@@ -52,10 +50,9 @@ class _LoginScreenState extends State<LoginScreen> {
         _loginOpacity = 1;
         break;
       case OnboardingPageState.register:
-        _loginYOffset = SizeGuide.keyboardIsOpened
+        _loginYOffset = SizeGuide.isKeyboardOpen(context)
             ? proportionateScreenHeightFraction(ScreenFraction.twofifths) -
-                (SizeGuide.keyboardHeight / 2) -
-                32
+                (SizeGuide.keyboardHeight / 2) - 32
             : proportionateScreenHeightFraction(ScreenFraction.twofifths) - 32;
         _loginXOffset = 20;
         _loginWidth = windowWidth - 40;
@@ -72,6 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
         curve: Curves.fastLinearToSlowEaseIn,
         duration: const Duration(milliseconds: 1200),
         transform: Matrix4.translationValues(_loginXOffset, _loginYOffset, 1),
+        // padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom / 10000),
         decoration: BoxDecoration(
           color: Theme.of(context)
               .colorScheme
@@ -147,7 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             Positioned(
               left: 0,
-              bottom: SizeGuide.keyboardIsOpened
+              bottom: SizeGuide.isKeyboardOpen(context)
                   ? 0
                   : proportionateScreenHeightFraction(
                       ScreenFraction.twofifths,
@@ -160,8 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 child: GestureDetector(
                   onTap: () {
-                    onboardingScreenProvider
-                        .setPageState(OnboardingPageState.register);
+                    onboardingScreenProvider.setPageState(OnboardingPageState.register);
                   },
                   child: Container(
                     width: double.infinity,

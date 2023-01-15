@@ -7,11 +7,11 @@
 // ignore_for_file: avoid_dynamic_calls
 
 import 'package:flutter/material.dart';
+import 'package:linum/types/change_notifier_provider_builder.dart';
 import 'package:linum/utilities/backend/in_between_timestamps.dart';
 import 'package:linum/utilities/frontend/filters.dart';
 import 'package:linum/utilities/frontend/sorters.dart';
 import 'package:provider/provider.dart';
-import 'package:provider/single_child_widget.dart';
 
 /// gives sort algorithm (later it will probably also have filter algorithm) and
 /// all algorithm will have an active version instead of being static
@@ -109,10 +109,12 @@ class AlgorithmProvider extends ChangeNotifier {
     }
   }
 
-  static SingleChildWidget provider(BuildContext context, {bool testing = false}) {
-    return ChangeNotifierProvider<AlgorithmProvider>(
-      create: (_) => AlgorithmProvider(),
-      lazy: false,
-    );
+  static ChangeNotifierProviderBuilder builder() {
+      return (BuildContext context, {bool testing = false}) {
+        return ChangeNotifierProvider<AlgorithmProvider>(
+          create: (_) => AlgorithmProvider(),
+          lazy: false,
+        );
+      };
   }
 }
