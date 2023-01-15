@@ -4,7 +4,7 @@
 #   Author: NightmindOfficial
 #   Co-Author: n/a
 
-name: Continuous Integration & Deployment
+name: Continuous Deployment
 
 on:
   # push:
