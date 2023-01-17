@@ -20,6 +20,7 @@ platform :android do
   lane :beta do
     upload_to_play_store(
         track: 'beta',
+        json_key_data: ENV['ANDROID_SECRET_JSON'],
         aab: "../build/app/outputs/bundle/release/app-release.aab"
     )
   end
@@ -27,6 +28,7 @@ platform :android do
   desc "Deploy a new version to the Google Play Store"
   lane :deploy do
     upload_to_play_store(
+        json_key_data: ENV['ANDROID_SECRET_JSON'],
         aab: "../build/app/outputs/bundle/release/app-release.aab"
     )
   end

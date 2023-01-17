@@ -98,23 +98,16 @@ jobs:
       with:
         channel: ${{ env.FLUTTER_CHANNEL }}
 
-    - name: Prepare Java Keystore and Properties
+    - name: Make script executable
+      run: chmod +x ./android/android_cd.sh
+
+    - name: Run Android CD script
       env:
         UPLOAD_KEYSTORE_JKS: ${{ secrets.UPLOAD_KEYSTORE_JKS }}
         KEY_PROPERTIES: ${{ secrets.KEY_PROPERTIES }}
+        ANDROID_SECRET_JSON: ${{ secrets.ANDROID_SECRET_JSON }}
       run: ./android/android_cd.sh
 
-
-    - name: Build AAB
-      run: flutter build appbundle --release
-
-    - name: Upload AAB artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: release-aab
-        path: ${{ env.PATH_TO_AAB }}
-
-    # At this stage, we might want to automatically upload to the Play Store.
   ios:
     name: iOS Beta Deployment
     needs: code-analysis-and-testing
