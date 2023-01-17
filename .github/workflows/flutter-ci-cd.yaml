@@ -55,7 +55,27 @@ jobs:
         path: ./
 
 
+  code-analysis-and-testing:
+    name: Code Analysis and Testing
+    needs: build-project-artifact
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+    - name: Download a single artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: linum-dir-artifact
 
+    - name: Set up Flutter SDK
+      uses: subosito/flutter-action@v2
+      with:
+        channel: ${{ env.FLUTTER_CHANNEL }}
+
+    - name: Analyze Flutter Code
+      run: flutter analyze
+
+    - name: Flutter Test
+      run: flutter test
 
 # HEADS UP - currently we don't perform integration tests at this stage.
 # We should, though.
