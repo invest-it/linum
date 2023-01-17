@@ -1,2 +1,2 @@
-json_key_file("") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+json_key_file("/Users/damattl/Development/Auth/pc-api-7761207885098550361-514-cf3dbbd70260.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
 package_name("de.investitacademy.linum") # e.g. com.krausefx.app

@@ -18,10 +18,12 @@ default_platform(:ios)
 platform :ios do
   desc "Description of what the lane does"
   lane :beta do
+    match(git_basic_authorization: ENV['GIT_BASIC_AUTH_TOKEN'])
+
     api_key = app_store_connect_api_key(
         key_id: "C78AQSB7DP",
         issuer_id: "053633dd-686e-4ec2-90dd-98af3f2296aa",
-        key_filepath: "/Users/damattl/Development/Auth/AuthKey_C78AQSB7DP.p8"
+        key_filepath: "./AuthKey.p8"
     )
     build_app(
       skip_build_archive: true,
@@ -34,11 +36,18 @@ platform :ios do
   end
 
   lane :release do
+    api_key = app_store_connect_api_key(
+            key_id: "C78AQSB7DP",
+            issuer_id: "053633dd-686e-4ec2-90dd-98af3f2296aa",
+            key_filepath: "./AuthKey.p8"
+    )
     build_app(
       skip_build_archive: true,
       archive_path: "../build/ios/archive/Runner.xcarchive",
     )
-    upload_to_app_store
+    upload_to_app_store(
+        api_key: api_key
+    )
   end
 end
 
