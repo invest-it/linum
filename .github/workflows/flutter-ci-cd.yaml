@@ -81,47 +81,38 @@ jobs:
 # We should, though.
 
 
-#  android:
-#    name: Android CI / CD
-#    needs: code-analysis-and-testing
-#    runs-on: ubuntu-latest
-#    timeout-minutes: 30
-#    steps:
-#    - name: Download a single artifact
-#      uses: actions/download-artifact@v3
-#      with:
-#        name: linum-dir-artifact
-#
-#    - name: Set up Flutter SDK
-#      uses: subosito/flutter-action@v2
-#      with:
-#        channel: ${{ env.FLUTTER_CHANNEL }}
-#        # flutter-version: ${{ env.FLUTTER_VERSION }} # you can also specify exact version of flutter
-#
-#    - name: Prepare Java Keystore and Properties
-#      env:
-#        LINUM_KEYSTORE_FILE: ${{ secrets.LINUM_KEYSTORE_FILE }}
-#        LINUM_KEY_PROPERTIES_FILE: ${{ secrets.LINUM_KEY_PROPERTIES_FILE }}
-#      run: |
-#        echo "Convert base64 strings to files"
-#        echo "$LINUM_KEYSTORE_FILE" >> key.jks.base64
-#        echo "$LINUM_KEY_PROPERTIES_FILE" >> key.properties.base64
-#        echo "Done with base64 file creation"
-#        base64 --decode key.jks.base64 > key.jks
-#        echo "Encrypted Keystore successfully"
-#        base64 --decode key.properties.base64 > key.properties
-#        echo "Encrypted Properties successfully"
-#      working-directory: 'android/'
-#
-#
-#    - name: Build AAB
-#      run: flutter build appbundle --release
-#
-#    - name: Upload AAB artifact
-#      uses: actions/upload-artifact@v3
-#      with:
-#        name: release-aab
-#        path: ${{ env.PATH_TO_AAB }}
+  android:
+    name: Android CI / CD
+    if: ${{ false }}
+    needs: code-analysis-and-testing
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+    - name: Download a single artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: linum-dir-artifact
+
+    - name: Set up Flutter SDK
+      uses: subosito/flutter-action@v2
+      with:
+        channel: ${{ env.FLUTTER_CHANNEL }}
+
+    - name: Prepare Java Keystore and Properties
+      env:
+        UPLOAD_KEYSTORE_JKS: ${{ secrets.UPLOAD_KEYSTORE_JKS }}
+        KEY_PROPERTIES: ${{ secrets.KEY_PROPERTIES }}
+      run: ./android/android_cd.sh
+
+
+    - name: Build AAB
+      run: flutter build appbundle --release
+
+    - name: Upload AAB artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: release-aab
+        path: ${{ env.PATH_TO_AAB }}
 
     # At this stage, we might want to automatically upload to the Play Store.
   ios:
@@ -146,6 +137,9 @@ jobs:
       uses: subosito/flutter-action@v2
       with:
         channel: ${{ env.FLUTTER_CHANNEL }}
+
+    - name: Make script executable
+      run: chmod +x ./ios/ios_cd.sh
 
     - name: Run iOS CD script
       env:
