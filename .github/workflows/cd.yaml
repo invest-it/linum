@@ -124,3 +124,19 @@ jobs:
 #        path: ${{ env.PATH_TO_AAB }}
 
     # At this stage, we might want to automatically upload to the Play Store.
+  ios:
+    name: iOS CD
+    needs: code-analysis-and-testing
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+    - name: Download a single artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: linum-dir-artifact
+
+    - name: Set up Flutter SDK
+      uses: subosito/flutter-action@v2
+      with:
+        channel: ${{ env.FLUTTER_CHANNEL }}
+
