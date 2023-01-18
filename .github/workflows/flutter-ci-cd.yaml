@@ -115,9 +115,10 @@ jobs:
 
   ios:
     name: iOS Beta Deployment
+    if: ${{ false }}
     needs: code-analysis-and-testing
     runs-on: macos-latest
-    timeout-minutes: 30
+    timeout-minutes: 50
 
     steps:
     - name: Download a single artifact
