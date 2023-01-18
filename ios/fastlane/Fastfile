@@ -45,7 +45,7 @@ platform :ios do
 
     match(
         type: "appstore",
-        git_basic_authorization: ENV['GIT_BASIC_AUTH_TOKEN']
+        git_basic_authorization: ENV['GIT_BASIC_AUTH_TOKEN'],
         readonly: true,
         keychain_name: ENV['MATCH_KEYCHAIN_NAME'],
         keychain_password: ENV['MATCH_KEYCHAIN_PASSWORD']
@@ -83,7 +83,7 @@ platform :ios do
 
     match(
         type: "appstore",
-        git_basic_authorization: ENV['GIT_BASIC_AUTH_TOKEN']
+        git_basic_authorization: ENV['GIT_BASIC_AUTH_TOKEN'],
         readonly: true,
         keychain_name: ENV['MATCH_KEYCHAIN_NAME'],
         keychain_password: ENV['MATCH_KEYCHAIN_PASSWORD']
