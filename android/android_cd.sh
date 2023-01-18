@@ -7,7 +7,7 @@ bundle install
 
 ls
 
-echo $(echo "$UPLOAD_KEYSTORE_JKS" | base64 --decode) > ./app/upload_keystore.jks
+openssl aes-256-cbc -d -in .encrypted -k $KEY_STORE_ENCRYPTION_KEY >> ./app/upload-keystore.jks
 echo $(echo "$KEY_PROPERTIES" | base64 --decode) > key.properties
 
 cd ../
