@@ -83,7 +83,6 @@ jobs:
 
   android:
     name: Android CI / CD
-    if: ${{ false }}
     needs: code-analysis-and-testing
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -110,6 +109,7 @@ jobs:
 
   ios:
     name: iOS Beta Deployment
+    if: ${{ false }}
     needs: code-analysis-and-testing
     runs-on: macos-latest
     timeout-minutes: 30
