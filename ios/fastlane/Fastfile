@@ -31,7 +31,23 @@ platform :ios do
 
   lane :beta do
     disable_automatic_code_signing(path: "Runner.xcodeproj")
-    match(type: "appstore", git_basic_authorization: ENV['GIT_BASIC_AUTH_TOKEN'], readonly: true)
+
+    create_keychain(
+        name: ENV['MATCH_KEYCHAIN_NAME'],
+        password: ENV['MATCH_KEYCHAIN_PASSWORD'],
+        default_keychain: true,
+        unlock: true,
+        timeout: 3600,
+        lock_when_sleeps: false
+    )
+
+    match(
+        type: "appstore",
+        git_basic_authorization: ENV['GIT_BASIC_AUTH_TOKEN'],
+        readonly: true,
+        keychain_name: ENV['MATCH_KEYCHAIN_NAME'],
+        keychain_password: ENV['MATCH_KEYCHAIN_PASSWORD']
+    )
 
     api_key = app_store_connect_api_key(
         key_id: "C78AQSB7DP",
