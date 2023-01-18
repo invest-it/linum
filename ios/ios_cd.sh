@@ -5,10 +5,10 @@ cd ./ios
 gem install bundler:1.17.2
 bundle install
 
-export GIT_BASIC_AUTH_TOKEN=$(echo -n "$GIT_USER_NAME:$GIT_ACCESS_TOKEN" | base64 | tr -d \\n)
 openssl aes-256-cbc -d -in .encrypted -k $AUTH_KEY_ENCRYPTION_KEY >> ./AuthKey.p8
 
 echo $CERTS_PRIVATE_KEY > ./CertsPrivateKey
+chmod 400 ./CertsPrivateKey
 
 flutter build ios --release --no-codesign
 
