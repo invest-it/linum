@@ -13,6 +13,9 @@ on:
     branches: [ development ]
   workflow_dispatch: # To manually run the workflow
 
+env:
+  FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
 jobs:
   code-analysis-and-testing:
     name: Code Analysis and Testing
@@ -31,7 +34,15 @@ jobs:
       uses: subosito/flutter-action@v2
       with:
         channel: 'stable'
-        
+
+    - name: Prepare Firebase Option Configuration
+      run: |
+        curl -sL https://firebase.tools | bash
+        dart pub global activate flutterfire_cli
+        ls
+        flutterfire --version
+        flutterfire configure -o lib/auth/firebase_options.dart -p linum-5d9f6 -y --platforms="android,ios" -i de.investitacademy.linum -a de.investitacademy.linum -m de.investitacademy.linum 
+
     - name: Delete previous Builds
       run: flutter clean
 

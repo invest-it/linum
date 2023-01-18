@@ -13,6 +13,9 @@ on:
   #   branches: [ development ]
   workflow_dispatch: # To manually run the workflow
 
+env:
+  FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
 jobs:
   integration-tests-ios:
     # Creates a build matrix for your jobs. You can define different
@@ -54,5 +57,14 @@ jobs:
     - uses: subosito/flutter-action@v2
       with:
         channel: 'stable' # or: 'dev' or 'beta'
+
+    - name: Prepare Firebase Option Configuration
+      run: |
+        curl -sL https://firebase.tools | bash
+        dart pub global activate flutterfire_cli
+        ls
+        flutterfire --version
+        flutterfire configure -o lib/auth/firebase_options.dart -p linum-5d9f6 -y --platforms="android,ios" -i de.investitacademy.linum -a de.investitacademy.linum -m de.investitacademy.linum 
+
     - name: "Run Flutter Driver tests"
       run: "flutter drive --target=test_driver/app.dart"
