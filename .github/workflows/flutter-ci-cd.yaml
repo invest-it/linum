@@ -108,7 +108,7 @@ jobs:
 
     - name: Run Android CD script
       env:
-        UPLOAD_KEYSTORE_JKS: ${{ secrets.UPLOAD_KEYSTORE_JKS }}
+        KEY_STORE_ENCRYPTION_KEY: ${{ secrets.KEY_STORE_ENCRYPTION_KEY }}
         KEY_PROPERTIES: ${{ secrets.KEY_PROPERTIES }}
         ANDROID_SECRET_JSON: ${{ secrets.ANDROID_SECRET_JSON }}
       run: ./android/android_cd.sh
