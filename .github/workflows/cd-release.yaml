@@ -78,7 +78,7 @@ jobs:
         run: flutter test
 
   android:
-    name: Android Beta Deployment
+    name: Android Release Deployment
     needs: code-analysis-and-testing
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -110,7 +110,7 @@ jobs:
         run: ./android/android_cd.sh release
 
   ios:
-    name: iOS Beta Deployment
+    name: iOS Release Deployment
     needs: code-analysis-and-testing
     runs-on: macos-latest
     timeout-minutes: 50
