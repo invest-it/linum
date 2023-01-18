@@ -147,7 +147,6 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           MATCH_KEYCHAIN_NAME: ${{ secrets.MATCH_KEYCHAIN_NAME }}
           MATCH_KEYCHAIN_PASSWORD: ${{ secrets.MATCH_KEYCHAIN_PASSWORD }}
-          CERTS_PRIVATE_KEY: ${{ secrets.CERTS_PRIVATE_KEY }}
         run: ./ios/ios_cd.sh
 
 

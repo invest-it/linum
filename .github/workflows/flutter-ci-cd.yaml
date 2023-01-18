@@ -141,11 +141,12 @@ jobs:
 
     - name: Run iOS CD script
       env:
+        GIT_USER_NAME: ${{ secrets.GIT_USER_NAME }}
+        GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
         AUTH_KEY_ENCRYPTION_KEY: ${{ secrets.AUTH_KEY_ENCRYPTION_KEY }}
         MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
         MATCH_KEYCHAIN_NAME: ${{ secrets.MATCH_KEYCHAIN_NAME }}
         MATCH_KEYCHAIN_PASSWORD: ${{ secrets.MATCH_KEYCHAIN_PASSWORD }}
-        CERTS_PRIVATE_KEY: ${{ secrets.CERTS_PRIVATE_KEY }}
       run: ./ios/ios_cd.sh
 
         
