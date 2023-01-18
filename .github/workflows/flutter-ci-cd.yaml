@@ -82,7 +82,7 @@ jobs:
 
 
   android:
-    name: Android CI / CD
+    name: Android Beta Deployment
     needs: code-analysis-and-testing
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -144,6 +144,7 @@ jobs:
         GIT_USER_NAME: ${{ secrets.GIT_USER_NAME }}
         GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
         APP_STORE_AUTH_KEY: ${{ secrets.APP_STORE_AUTH_KEY }}
+        MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
       run: ./ios/ios_cd.sh
 
         
