@@ -109,6 +109,7 @@ jobs:
 
   ios:
     name: iOS Beta Deployment
+    if: ${{ false }}
     needs: code-analysis-and-testing
     runs-on: macos-latest
     timeout-minutes: 30
