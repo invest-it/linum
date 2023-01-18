@@ -144,8 +144,9 @@ void main() {
           final data = generateRandomData();
           final int expectedLength = data.transactions.length - 1;
 
-          final int idIndex = rand.nextInt(expectedLength + 1) - 1;
-          final String id = data.transactions[idIndex == -1 ? 0 : idIndex].id;
+          int idIndex = rand.nextInt(expectedLength + 1) - 1;
+          idIndex = idIndex == -1 ? 0 : idIndex;
+          final String id = data.transactions[idIndex].id;
 
           // Act (Execution)
           final bool result =
