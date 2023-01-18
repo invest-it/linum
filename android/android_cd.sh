@@ -14,4 +14,9 @@ cd ../
 flutter build appbundle
 
 cd ./android
-bundle exec fastlane beta
+if [$1 -eq "release"]
+then
+  bundle exec fastlane release
+else
+  bundle exec fastlane beta
+fi
