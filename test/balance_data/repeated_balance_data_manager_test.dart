@@ -1055,7 +1055,7 @@ void main() {
           final data = generateRandomData();
           final int expectedLength = data.serialTransactions.length;
           final int idIndex = rand.nextInt(expectedLength) - 1;
-          final String id = data.serialTransactions[idIndex].id;
+          final String id = data.serialTransactions[idIndex == -1 ? 0 : idIndex].id;
 
           var serialTransaction = data.serialTransactions[idIndex];
 

@@ -145,7 +145,7 @@ void main() {
           final int expectedLength = data.transactions.length - 1;
 
           final int idIndex = rand.nextInt(expectedLength + 1) - 1;
-          final String id = data.transactions[idIndex].id;
+          final String id = data.transactions[idIndex == -1 ? 0 : idIndex].id;
 
           // Act (Execution)
           final bool result =
