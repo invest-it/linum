@@ -23,9 +23,11 @@ platform :ios do
   lane :localBeta do
     disable_automatic_code_signing(path: "Runner.xcodeproj")
     match(readonly: true)
-    build_app(
-      skip_build_archive: true,
-      archive_path: "../build/ios/archive/Runner.xcarchive",
+    gym(
+      configuration: "Release",
+      workspace: "Runner.xcworkspace",
+      scheme: "Runner",
+      export_method: "app-store",
     )
   end
 
@@ -55,9 +57,11 @@ platform :ios do
         key_filepath: "./AuthKey.p8"
     )
 
-    build_app(
-      skip_build_archive: true,
-      archive_path: "../build/ios/archive/Runner.xcarchive",
+    gym(
+      configuration: "Release",
+      workspace: "Runner.xcworkspace",
+      scheme: "Runner",
+      export_method: "app-store",
     )
 
     upload_to_testflight(
