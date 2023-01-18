@@ -141,10 +141,10 @@ void main() {
         for (int i = 0; i < max; i++) {
           // Arrange (Initialization)
 
-          final data =
-              generateRandomData();
+          final data = generateRandomData();
           final int expectedLength = data.transactions.length - 1;
-          final int idIndex = rand.nextInt(expectedLength) + 1;
+
+          final int idIndex = rand.nextInt(expectedLength + 1) - 1;
           final String id = data.transactions[idIndex].id;
 
           // Act (Execution)
