@@ -11,7 +11,6 @@ openssl aes-256-cbc -d -in .encrypted -k $AUTH_KEY_ENCRYPTION_KEY >> ./AuthKey.p
 cd ../
 flutter build ios --release --no-codesign
 
-echo GIT_TERMINAL_PROMPT
 export GIT_TERMINAL_PROMPT=1
 
 cd ./ios
