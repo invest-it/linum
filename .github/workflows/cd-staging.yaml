@@ -7,8 +7,8 @@
 name: Continuous Staging
 
 on:
-  # push:
-  #  branches: [ release ]
+  push:
+    branches: [ staging ]
   workflow_dispatch:
 
 
