@@ -4,7 +4,7 @@
 #   Author: NightmindOfficial
 #   Co-Author: n/a
 
-name: Continuous Deployment
+name: Continuous Staging
 
 on:
   # push:
