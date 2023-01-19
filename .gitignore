@@ -51,9 +51,17 @@ app.*.map.json
 # Otis
 /android/app/upload-keystore.jks
 
+# Safety Net
+*.jks
+
 # IOS
 /ios/Runner/GoogleService-Info.plist
 /ios/Podfile.lock
+/ios/Runner.ipa
+/ios/Runner.app.dSYM.zip
+
+#Fastlane
+/android/fastlane/metadata
 
 pubspec.lock
 
