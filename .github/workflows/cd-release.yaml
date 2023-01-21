@@ -9,7 +9,7 @@ name: Continuous Release
 on:
   pull_request:
     types: [ opened ]
-    branch: [ release ]
+    branches: [ release ]
   workflow_dispatch:
 
 
