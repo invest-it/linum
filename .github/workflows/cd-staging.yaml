@@ -7,8 +7,9 @@
 name: Continuous Staging
 
 on:
-  push:
-    branches: [ staging ]
+  pull_request:
+    types: [opened]
+    branches: [staging]
   workflow_dispatch:
 
 
@@ -54,7 +55,6 @@ jobs:
           name: linum-dir-artifact
           path: ./
 
-
   code-analysis-and-testing:
     name: Code Analysis and Testing
     needs: build-project-artifact
@@ -77,14 +77,11 @@ jobs:
       - name: Flutter Test
         run: flutter test
 
-  # HEADS UP - currently we don't perform integration tests at this stage.
-  # We should, though.
-
-
   android:
     name: Android Beta Deployment
     needs: code-analysis-and-testing
     runs-on: ubuntu-latest
+    environment: Staging
     timeout-minutes: 30
     steps:
       - name: Download a single artifact
@@ -117,6 +114,7 @@ jobs:
     name: iOS Beta Deployment
     needs: code-analysis-and-testing
     runs-on: macos-latest
+    environment: Staging
     timeout-minutes: 50
 
     steps:
