@@ -6,7 +6,7 @@
 
 // ignore_for_file: avoid_dynamic_calls
 
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badge;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -120,7 +120,8 @@ class HomeScreenListView implements BalanceDataListView {
     final DateFormat monthAndYearFormatter = DateFormat('MMMM yyyy', langCode);
 
     final settings = Provider.of<AccountSettingsProvider>(context);
-    final amountFormatter = TransactionAmountFormatter(context.locale, settings.getStandardCurrency());
+    final amountFormatter = TransactionAmountFormatter(
+        context.locale, settings.getStandardCurrency());
     // remember last used index in the list
     int currentIndex = 0;
     DateTime? currentTime;
@@ -299,10 +300,10 @@ class HomeScreenListView implements BalanceDataListView {
           );
         },
         child: ListTile(
-          leading: Badge(
+          leading: badge.Badge(
             padding: const EdgeInsets.all(2),
             toAnimate: false,
-            position: const BadgePosition(bottom: 23, start: 23),
+            position: const badge.BadgePosition(bottom: 23, start: 23),
             elevation: 1,
             badgeColor: isFutureItem && transaction.repeatId != null
                 ? Theme.of(context).colorScheme.tertiaryContainer
@@ -500,10 +501,12 @@ class HomeScreenListView implements BalanceDataListView {
     SerialTransaction serialTransaction,
   ) {
     final int duration = serialTransaction.repeatDuration;
-    final RepeatDurationType repeatDurationType = serialTransaction.repeatDurationType;
+    final RepeatDurationType repeatDurationType =
+        serialTransaction.repeatDurationType;
     final settings = Provider.of<AccountSettingsProvider>(context);
-    final formattedAmount = CurrencyFormatter(context.locale, symbol: settings.getStandardCurrency().name)
-      .format(serialTransaction.amount.abs());
+    final formattedAmount = CurrencyFormatter(context.locale,
+            symbol: settings.getStandardCurrency().name)
+        .format(serialTransaction.amount.abs());
 
     switch (repeatDurationType) {
       case RepeatDurationType.seconds:
