@@ -249,8 +249,10 @@ class StatisticalCalculations {
     for (final transaction in data) {
       if (transaction.currency == standardCurrencyName) {
         sum += transaction.amount;
-      } else if (transaction.rateInfo != null) { // Normally this is always true
-        sum += convertCurrencyAmountWithExchangeRate(transaction.amount, transaction.rateInfo!);
+      } else if (transaction.rateInfo != null) {
+        // Normally this is always true
+        sum += convertCurrencyAmountWithExchangeRate(
+            transaction.amount, transaction.rateInfo!);
       }
     }
     return sum;
@@ -276,6 +278,14 @@ class StatisticalCalculations {
 
   num get sumSerialCosts {
     return _getSumFrom(_allSerialGeneratedCostData);
+  }
+
+  int get countSerialIncomes {
+    return _allSerialGeneratedIncomeData.length;
+  }
+
+  int get countSerialCosts {
+    return _allSerialGeneratedCostData.length;
   }
 
   /// baseData is the data used as base. return will always be a subset of baseData
