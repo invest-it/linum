@@ -29,124 +29,126 @@ class HomeScreenCardBack extends StatelessWidget {
     final DateFormat dateFormat = DateFormat('MMMM yyyy', langCode);
 
     final settings = Provider.of<AccountSettingsProvider>(context);
-    final screenCardProvider = Provider.of<ScreenCardProvider>(context, listen: false);
+    final screenCardProvider =
+        Provider.of<ScreenCardProvider>(context, listen: false);
     final balanceDataProvider = Provider.of<BalanceDataProvider>(context);
 
     return GestureDetector(
-          onTap: () => onFlipCardTap(context, screenCardProvider.controller!),
-          onHorizontalDragEnd: (DragEndDetails details) =>
-              onHorizontalDragEnd(details, context),
-          onLongPress: () => goToCurrentTime(algorithmProvider),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Spacer(),
-                        Center(
-                          child: Text(
-                            'Monatsplanung', //TODO @NightmindOfficial translate!
-                            style: MediaQuery.of(context).size.height < 650
-                                ? Theme.of(context).textTheme.headline5
-                                : Theme.of(context).textTheme.headline4,
-                          ),
+      onTap: () => onFlipCardTap(context, screenCardProvider.controller!),
+      onHorizontalDragEnd: (DragEndDetails details) =>
+          onHorizontalDragEnd(details, context),
+      onLongPress: () => goToCurrentTime(algorithmProvider),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Spacer(),
+                  Center(
+                    child: Text(
+                      'Monatsplanung', //TODO @NightmindOfficial translate!
+                      style: MediaQuery.of(context).size.height < 650
+                          ? Theme.of(context).textTheme.headline5
+                          : Theme.of(context).textTheme.headline4,
+                    ),
+                  ),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: IconButton(
+                        padding: const EdgeInsets.only(right: 16),
+                        constraints: const BoxConstraints(),
+                        onPressed: () {
+                          screenCardProvider.controller?.toggleCard();
+                        },
+                        icon: const Icon(
+                          Icons.flip_camera_android_rounded,
                         ),
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment.topRight,
-                            child: IconButton(
-                              padding: const EdgeInsets.only(right: 16),
-                              constraints: const BoxConstraints(),
-                              onPressed: () {
-                                screenCardProvider.controller?.toggleCard();
-                              },
-                              icon: const Icon(
-                                Icons.flip_camera_android_rounded,
-                              ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Text(
+                dateFormat.format(
+                  algorithmProvider.currentShownMonth,
+                ),
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                onPressed: () {
+                  goBackInTime(algorithmProvider);
+                },
+                icon: const Icon(Icons.arrow_back_ios_new_rounded),
+              ),
+              Expanded(
+                child: StreamBuilder<HomeScreenCardData>(
+                  stream: balanceDataProvider.getHomeScreenCardData(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.none ||
+                        snapshot.connectionState == ConnectionState.waiting) {
+                      return const LoadingSpinner();
+                    }
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: CurrencyFormatter(
+                        context.locale,
+                        symbol: settings.getStandardCurrency().symbol,
+                      ).formatWithWidgets(
+                        snapshot.data?.eomBalance ?? 0,
+                        (amount) => Flexible(
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              amount,
+                              style: getBalanceTextStyle(
+                                  context, snapshot.data?.eomBalance ?? 0),
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                    Text(
-                      dateFormat.format(
-                        algorithmProvider.currentShownMonth,
+                        (symbol) => Text(
+                          symbol,
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
                       ),
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                  ],
+                    );
+                  },
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        goBackInTime(algorithmProvider);
-                      },
-                      icon: const Icon(Icons.arrow_back_ios_new_rounded),
-                    ),
-                    Expanded(
-                      child: StreamBuilder<HomeScreenCardData>(
-                        stream: balanceDataProvider.getHomeScreenCardData(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.none ||
-                              snapshot.connectionState == ConnectionState.waiting) {
-                            return const LoadingSpinner();
-                          }
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.baseline,
-                            textBaseline: TextBaseline.alphabetic,
-                            children: CurrencyFormatter(
-                              context.locale,
-                              symbol: settings.getStandardCurrency().symbol,
-                            ).formatWithWidgets(
-                              snapshot.data?.eomBalance ?? 0,
-                              (amount) => Flexible(
-                                  child: FittedBox(
-                                    fit: BoxFit.scaleDown,
-                                    child: Text(
-                                      amount,
-                                      style: getBalanceTextStyle(context, snapshot.data?.eomBalance ?? 0),
-                                    ),
-                                  ),
-                                ), (symbol) => Text(
-                                  symbol,
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                ),
-                              ),
-                          );
-                        },
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        goForwardInTime(algorithmProvider);
-                      },
-                      icon: const Icon(Icons.arrow_forward_ios_rounded),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  child: HomeScreenCardRow(
-                    data: balanceDataProvider.getHomeScreenCardData(),
-                    upwardArrow: HomeScreenCardAvatar.withArrow(
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                      arrow: Preset.arrowUp,
-                    ),
-                    downwardArrow: HomeScreenCardAvatar.withArrow(
-                      backgroundColor: Theme.of(context).colorScheme.error,
-                      arrow: Preset.arrowDown,
-                    ),
-                  ),
-                ),
-              ],
+              ),
+              IconButton(
+                onPressed: () {
+                  goForwardInTime(algorithmProvider);
+                },
+                icon: const Icon(Icons.arrow_forward_ios_rounded),
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: HomeScreenCardRow(
+              data: balanceDataProvider.getHomeScreenCardData(),
+              upwardArrow: HomeScreenCardAvatar.withArrow(
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                arrow: Preset.arrowUp,
+              ),
+              downwardArrow: HomeScreenCardAvatar.withArrow(
+                backgroundColor: Theme.of(context).colorScheme.error,
+                arrow: Preset.arrowDown,
+              ),
             ),
-          );
-
+          ),
+        ],
+      ),
+    );
   }
 }

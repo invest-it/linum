@@ -18,6 +18,8 @@ class HomeScreenCardData {
   final num eomSerialIncome; //End of Month serial income items (sum)
   final num eomSerialExpenses; //End of Month serial expense items (sum)
 
+  //Hallo Söncke
+
   const HomeScreenCardData({
     this.mtdBalance = 0,
     this.mtdExpenses = 0,
