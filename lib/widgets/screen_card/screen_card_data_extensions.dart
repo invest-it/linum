@@ -14,6 +14,9 @@ extension ScreenCardDataExtensions on BalanceDataProvider {
         eomFutureSerialIncome: statData.sumFutureSerialIncomes,
         eomSerialExpenses: statData.sumSerialCosts,
         eomSerialIncome: statData.sumSerialIncomes,
+        countSerialIncomes: statData.countSerialIncomes,
+        countSerialCosts: statData.countSerialCosts,
+        allTimeSumBalance: statData.allTimeSumBalance,
       );
     });
   }
