@@ -23,15 +23,11 @@ class HomeScreenCardOverlineHeaderRow extends StatelessWidget {
         children: [
           ..._bodyList.map(
             (e) => Expanded(
-              child: Container(
-                color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
-                    .withOpacity(1.0),
-                child: Center(
-                  child: FittedBox(
-                    child: Text(
-                      _capitalize ? e.toUpperCase() : e,
-                      style: Theme.of(context).textTheme.overline,
-                    ),
+              child: Center(
+                child: FittedBox(
+                  child: Text(
+                    _capitalize ? e.toUpperCase() : e,
+                    style: Theme.of(context).textTheme.overline,
                   ),
                 ),
               ),

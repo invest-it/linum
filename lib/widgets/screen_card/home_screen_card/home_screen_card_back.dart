@@ -33,116 +33,103 @@ class HomeScreenCardBack extends StatelessWidget {
         Provider.of<ScreenCardProvider>(context, listen: false);
     final balanceDataProvider = Provider.of<BalanceDataProvider>(context);
 
-    return GestureDetector(
-      onTap: () => onFlipCardTap(context, screenCardProvider.controller!),
-      onHorizontalDragEnd: (DragEndDetails details) =>
-          onHorizontalDragEnd(details, context),
-      onLongPress: () => goToCurrentTime(algorithmProvider),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Spacer(),
-              Center(
-                child: Text(
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GestureDetector(
+        onTap: () => onFlipCardTap(context, screenCardProvider.controller!),
+        onHorizontalDragEnd: (DragEndDetails details) =>
+            onHorizontalDragEnd(details, context),
+        onLongPress: () => goToCurrentTime(algorithmProvider),
+        child: Stack(
+          children: [
+            //Switch Button
+            Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                constraints: const BoxConstraints(),
+                padding: const EdgeInsets.all(4.0),
+                onPressed: () {
+                  screenCardProvider.controller?.toggleCard();
+                },
+                icon: const Icon(
+                  Icons.flip_camera_android_rounded,
+                ),
+              ),
+            ),
+
+            //Card Content
+            Column(
+              children: [
+                Text(
+                  textAlign: TextAlign.center,
                   "Monatsplanung | Feb '23", //TODO @NightmindOfficial translate!
                   style: MediaQuery.of(context).size.height < 650
                       ? Theme.of(context).textTheme.headline5
                       : Theme.of(context).textTheme.headline4,
                 ),
-              ),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.topRight,
-                  child: IconButton(
-                    padding: const EdgeInsets.only(right: 16),
-                    constraints: const BoxConstraints(),
-                    onPressed: () {
-                      screenCardProvider.controller?.toggleCard();
-                    },
-                    icon: const Icon(
-                      Icons.flip_camera_android_rounded,
+                Flexible(
+                  child: ColoredBox(
+                    color: Colors.yellow, //TODO REMOVE BEFORE FLIGHT
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            goBackInTime(algorithmProvider);
+                          },
+                          icon: const Icon(Icons.arrow_back_ios_new_rounded),
+                        ),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              StreamBuilder<HomeScreenCardData>(
+                                stream:
+                                    balanceDataProvider.getHomeScreenCardData(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                          ConnectionState.none ||
+                                      snapshot.connectionState ==
+                                          ConnectionState.waiting) {
+                                    return const LoadingSpinner();
+                                  }
+                                  return Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.baseline,
+                                    textBaseline: TextBaseline.alphabetic,
+                                    children: [
+                                      const Text("EOM"),
+                                      Column(
+                                        children: const [
+                                          Text("Plus"),
+                                          Text("Minus"),
+                                        ],
+                                      )
+                                    ],
+                                  );
+                                },
+                              ),
+                              //LOWER OVERLINE HEADER HERE
+                              const HomeScreenCardOverlineHeaderRow(
+                                ["= aktueller Kontostand"],
+                              ),
+                            ],
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            goForwardInTime(algorithmProvider);
+                          },
+                          icon: const Icon(Icons.arrow_forward_ios_rounded),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                onPressed: () {
-                  goBackInTime(algorithmProvider);
-                },
-                icon: const Icon(Icons.arrow_back_ios_new_rounded),
-              ),
-              Expanded(
-                child: Column(
-                  children: [
-                    //UPPER OVERLINE HEADER HERE
-                    const HomeScreenCardOverlineHeaderRow([
-                      "Bilanz",
-                      "± offene Verträge",
-                      "SHDIAHSD",
-                      "HAUHDSUD",
-                      "HAUSDHASUHDASHDAS"
-                    ]),
-                    StreamBuilder<HomeScreenCardData>(
-                      stream: balanceDataProvider.getHomeScreenCardData(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.none ||
-                            snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                          return const LoadingSpinner();
-                        }
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.baseline,
-                          textBaseline: TextBaseline.alphabetic,
-                          children: [
-                            const Text("EOM"),
-                            Column(
-                              children: const [
-                                Text("Plus"),
-                                Text("Minus"),
-                              ],
-                            )
-                          ],
-                        );
-                      },
-                    ),
-                    //LOWER OVERLINE HEADER HERE
-                    const HomeScreenCardOverlineHeaderRow(
-                        ["= aktueller Kontostand"]),
-                  ],
-                ),
-              ),
-              IconButton(
-                onPressed: () {
-                  goForwardInTime(algorithmProvider);
-                },
-                icon: const Icon(Icons.arrow_forward_ios_rounded),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: HomeScreenCardRow(
-              data: balanceDataProvider.getHomeScreenCardData(),
-              upwardArrow: HomeScreenCardAvatar.withArrow(
-                backgroundColor: Theme.of(context).colorScheme.primary,
-                arrow: Preset.arrowUp,
-              ),
-              downwardArrow: HomeScreenCardAvatar.withArrow(
-                backgroundColor: Theme.of(context).colorScheme.error,
-                arrow: Preset.arrowDown,
-              ),
+              ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
