@@ -9,20 +9,28 @@ class CurrencyFormatter {
       _formatter = NumberFormat.currency(
         locale: locale.toString(),
         symbol: symbol,
-        customPattern: "#0.00¤",
+        customPattern: "#0.00",
       );
     } else {
       _formatter = NumberFormat.currency(
           locale: locale.toString(),
           symbol: symbol,
-          customPattern: "¤#0.00",
+          customPattern: "#0.00",
       );
     }
   }
 
 
   String format(num value) {
-    return _formatter.format(value);
+    final numberPart = _formatter.format(value);
+    if (amountBeforeSymbol()) {
+      return "$numberPart$symbol";
+    } else {
+      return "$symbol$numberPart";
+    }
+
+
+
   }
 
   bool amountBeforeSymbol() {
