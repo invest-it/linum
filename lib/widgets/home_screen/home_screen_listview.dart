@@ -121,7 +121,7 @@ class HomeScreenListView implements BalanceDataListView {
 
     final settings = Provider.of<AccountSettingsProvider>(context);
     final amountFormatter = TransactionAmountFormatter(
-        context.locale, settings.getStandardCurrency());
+        context.locale, settings.getStandardCurrency(),);
     // remember last used index in the list
     int currentIndex = 0;
     DateTime? currentTime;
@@ -505,7 +505,7 @@ class HomeScreenListView implements BalanceDataListView {
         serialTransaction.repeatDurationType;
     final settings = Provider.of<AccountSettingsProvider>(context);
     final formattedAmount = CurrencyFormatter(context.locale,
-            symbol: settings.getStandardCurrency().name)
+            symbol: settings.getStandardCurrency().name,)
         .format(serialTransaction.amount.abs());
 
     switch (repeatDurationType) {

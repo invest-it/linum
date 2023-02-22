@@ -252,7 +252,7 @@ class StatisticalCalculations {
       } else if (transaction.rateInfo != null) {
         // Normally this is always true
         sum += convertCurrencyAmountWithExchangeRate(
-            transaction.amount, transaction.rateInfo!);
+            transaction.amount, transaction.rateInfo!,);
       }
     }
     return sum;

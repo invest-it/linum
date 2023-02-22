@@ -6,18 +6,12 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/models/home_screen_card_data.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/screen_card_provider.dart';
 import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
-import 'package:linum/widgets/loading_spinner.dart';
-import 'package:linum/widgets/screen_card/card_widgets/home_screen_card_avatar.dart';
-import 'package:linum/widgets/screen_card/home_screen_card/home_screen_card_overline_header_row.dart';
-import 'package:linum/widgets/screen_card/home_screen_card/home_screen_card_row.dart';
 import 'package:linum/widgets/screen_card/home_screen_functions.dart';
-import 'package:linum/widgets/screen_card/screen_card_data_extensions.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreenCardBack extends StatelessWidget {

@@ -106,25 +106,13 @@ class HomeScreenCardFront extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.baseline,
                           textBaseline: TextBaseline.alphabetic,
-                          children: CurrencyFormatter(
-                            context.locale,
-                            symbol: settings.getStandardCurrency().symbol,
-                          ).formatWithWidgets(
-                            snapshot.data?.mtdBalance ?? 0,
-                            (amount) => Flexible(
-                              child: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: Text(
-                                  amount,
-                                  style: getBalanceTextStyle(context, snapshot.data?.mtdBalance ?? 0),
-                                ),
-                              ),
-                            ), (symbol) => Text(
-                            symbol,
-                            style: Theme.of(context).textTheme.bodyText1,
-                          ),
-                          ),
-                        );
+                          children: [
+                            Text(CurrencyFormatter(
+                              context.locale,
+                              symbol: settings.getStandardCurrency().symbol,
+                            ).format(snapshot.data?.mtdBalance ?? 0),)
+                          ]
+                        ,);
                       },
                     ),
                   ),
