@@ -6,13 +6,16 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/models/home_screen_card_data.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/screen_card_provider.dart';
 import 'package:linum/utilities/frontend/currency_formatter.dart';
 import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
+import 'package:linum/widgets/loading_spinner.dart';
 import 'package:linum/widgets/screen_card/home_screen_functions.dart';
+import 'package:linum/widgets/screen_card/screen_card_data_extensions.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreenCardBack extends StatelessWidget {
@@ -126,37 +129,16 @@ class HomeScreenCardBack extends StatelessWidget {
                                                         .textTheme
                                                         .overline,
                                                   ),
-                                                  Row(
-                                                    children: CurrencyFormatter(
+                                                  Text(
+                                                    CurrencyFormatter(
                                                       context.locale,
                                                       symbol: settings
                                                           .getStandardCurrency()
                                                           .symbol,
-                                                    ).formatWithWidgets(
+                                                    ).format(
                                                       snapshot.data
                                                               ?.eomBalance ??
                                                           0,
-                                                      (amount) => Flexible(
-                                                        child: FittedBox(
-                                                          fit: BoxFit.scaleDown,
-                                                          child: Text(
-                                                            amount,
-                                                            style:
-                                                                getBalanceTextStyle(
-                                                              context,
-                                                              snapshot.data
-                                                                      ?.eomBalance ??
-                                                                  0,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      (symbol) => Text(
-                                                        symbol,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodyText1,
-                                                      ),
                                                     ),
                                                   ),
                                                 ],
@@ -183,70 +165,28 @@ class HomeScreenCardBack extends StatelessWidget {
                                                           TextAlign.center,
                                                     ),
                                                   ),
-                                                  Row(
-                                                    children: CurrencyFormatter(
+                                                  Text(
+                                                    CurrencyFormatter(
                                                       context.locale,
                                                       symbol: settings
                                                           .getStandardCurrency()
                                                           .symbol,
-                                                    ).formatWithWidgets(
+                                                    ).format(
                                                       snapshot.data
                                                               ?.eomBalance ??
                                                           0,
-                                                      (amount) => Flexible(
-                                                        child: FittedBox(
-                                                          fit: BoxFit.scaleDown,
-                                                          child: Text(
-                                                            amount,
-                                                            style:
-                                                                getBalanceTextStyle(
-                                                              context,
-                                                              snapshot.data
-                                                                      ?.eomBalance ??
-                                                                  0,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      (symbol) => Text(
-                                                        symbol,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodyText1,
-                                                      ),
                                                     ),
                                                   ),
-                                                  Row(
-                                                    children: CurrencyFormatter(
+                                                  Text(
+                                                    CurrencyFormatter(
                                                       context.locale,
                                                       symbol: settings
                                                           .getStandardCurrency()
                                                           .symbol,
-                                                    ).formatWithWidgets(
+                                                    ).format(
                                                       snapshot.data
                                                               ?.eomBalance ??
                                                           0,
-                                                      (amount) => Flexible(
-                                                        child: FittedBox(
-                                                          fit: BoxFit.scaleDown,
-                                                          child: Text(
-                                                            amount,
-                                                            style:
-                                                                getBalanceTextStyle(
-                                                              context,
-                                                              snapshot.data
-                                                                      ?.eomBalance ??
-                                                                  0,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      (symbol) => Text(
-                                                        symbol,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodyText1,
-                                                      ),
                                                     ),
                                                   ),
                                                 ],
