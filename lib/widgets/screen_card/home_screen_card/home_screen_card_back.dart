@@ -11,6 +11,7 @@ import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/screen_card_provider.dart';
+import 'package:linum/utilities/frontend/currency_formatter.dart';
 import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
 import 'package:linum/widgets/loading_spinner.dart';
 import 'package:linum/widgets/screen_card/card_widgets/home_screen_card_avatar.dart';
@@ -75,6 +76,7 @@ class HomeScreenCardBack extends StatelessWidget {
                     color: Colors.yellow, //TODO REMOVE BEFORE FLIGHT
 
                     //MOTHER ROW
+
                     child: Row(
                       children: [
                         //GO BACK IN TIME
@@ -93,71 +95,204 @@ class HomeScreenCardBack extends StatelessWidget {
 
                         //KPI COLUMN
                         Expanded(
-                          child: Column(
-                            children: [
-                              //UPPER PART
-                              Expanded(
-                                child: ColoredBox(
-                                  //TODO REMOVE BEFORE FLIGHT
-                                  color: Colors.purple,
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      Flexible(
-                                        flex: 2,
-                                        fit: FlexFit.tight,
-                                        child: ColoredBox(
-                                          //TODO REMOVE BEFORE FLIGHT
-                                          color: Colors.teal,
-                                          child: Column(
-                                            children: const [
-                                              Text("Bilanz bisher"),
-                                              Text("0,00€"),
-                                            ],
+                          //STREAM INSERT
+                          child: StreamBuilder<HomeScreenCardData>(
+                            stream: balanceDataProvider.getHomeScreenCardData(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                      ConnectionState.none ||
+                                  snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                return const LoadingSpinner();
+                              }
+                              return Column(
+                                children: [
+                                  //UPPER PART
+                                  Expanded(
+                                    flex: 5,
+                                    child: ColoredBox(
+                                      //TODO REMOVE BEFORE FLIGHT
+                                      color: Colors.purple,
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        children: [
+                                          Flexible(
+                                            flex: 5,
+                                            fit: FlexFit.tight,
+                                            child: ColoredBox(
+                                              //TODO REMOVE BEFORE FLIGHT
+                                              color: Colors.teal,
+                                              child: Column(
+                                                children: [
+                                                  Text(
+                                                    "Bilanz bisher"
+                                                        .toUpperCase(),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .overline,
+                                                  ),
+                                                  Row(
+                                                    children: CurrencyFormatter(
+                                                      context.locale,
+                                                      symbol: settings
+                                                          .getStandardCurrency()
+                                                          .symbol,
+                                                    ).formatWithWidgets(
+                                                      snapshot.data
+                                                              ?.eomBalance ??
+                                                          0,
+                                                      (amount) => Flexible(
+                                                        child: FittedBox(
+                                                          fit: BoxFit.scaleDown,
+                                                          child: Text(
+                                                            amount,
+                                                            style:
+                                                                getBalanceTextStyle(
+                                                              context,
+                                                              snapshot.data
+                                                                      ?.eomBalance ??
+                                                                  0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      (symbol) => Text(
+                                                        symbol,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyText1,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                      Flexible(
-                                        flex: 3,
-                                        fit: FlexFit.tight,
-                                        child: ColoredBox(
-                                          //TODO REMOVE BEFORE FLIGHT
-                                          color: Colors.indigo,
-                                          child: Column(
-                                            children: const [
-                                              Text("± ausstehende Verträge"),
-                                              Text("0,00€"),
-                                            ],
+                                          Flexible(
+                                            flex: 8,
+                                            fit: FlexFit.tight,
+                                            child: ColoredBox(
+                                              //TODO REMOVE BEFORE FLIGHT
+                                              color: Colors.lightBlueAccent,
+                                              child: Column(
+                                                children: [
+                                                  FittedBox(
+                                                    fit: BoxFit.fitWidth,
+                                                    child: Text(
+                                                      "± ausstehende Verträge"
+                                                          .toUpperCase(),
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .overline,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                  ),
+                                                  Row(
+                                                    children: CurrencyFormatter(
+                                                      context.locale,
+                                                      symbol: settings
+                                                          .getStandardCurrency()
+                                                          .symbol,
+                                                    ).formatWithWidgets(
+                                                      snapshot.data
+                                                              ?.eomBalance ??
+                                                          0,
+                                                      (amount) => Flexible(
+                                                        child: FittedBox(
+                                                          fit: BoxFit.scaleDown,
+                                                          child: Text(
+                                                            amount,
+                                                            style:
+                                                                getBalanceTextStyle(
+                                                              context,
+                                                              snapshot.data
+                                                                      ?.eomBalance ??
+                                                                  0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      (symbol) => Text(
+                                                        symbol,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyText1,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Row(
+                                                    children: CurrencyFormatter(
+                                                      context.locale,
+                                                      symbol: settings
+                                                          .getStandardCurrency()
+                                                          .symbol,
+                                                    ).formatWithWidgets(
+                                                      snapshot.data
+                                                              ?.eomBalance ??
+                                                          0,
+                                                      (amount) => Flexible(
+                                                        child: FittedBox(
+                                                          fit: BoxFit.scaleDown,
+                                                          child: Text(
+                                                            amount,
+                                                            style:
+                                                                getBalanceTextStyle(
+                                                              context,
+                                                              snapshot.data
+                                                                      ?.eomBalance ??
+                                                                  0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      (symbol) => Text(
+                                                        symbol,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyText1,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
                                           ),
-                                        ),
+                                        ],
                                       ),
-                                    ],
+                                    ),
                                   ),
-                                ),
-                              ),
-                              //LOWER PART
-                              Expanded(
-                                child: ColoredBox(
-                                  color: Colors.lightGreen,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
-                                      Text(
-                                        "± ausstehende Verträge",
-                                        textAlign: TextAlign.center,
+                                  //LOWER PART
+                                  Expanded(
+                                    flex: 4,
+                                    child: ColoredBox(
+                                      color: Colors.lightGreen,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "= aktueller Kontostand"
+                                                .toUpperCase(),
+                                            textAlign: TextAlign.center,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .overline,
+                                          ),
+                                          const Text(
+                                            "0,00€",
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ],
                                       ),
-                                      Text(
-                                        "0,00€",
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ],
+                                    ),
                                   ),
-                                ),
-                              ),
-                            ],
+                                ],
+                              );
+                            },
                           ),
                         ),
 
@@ -185,77 +320,3 @@ class HomeScreenCardBack extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-                        // Flexible(
-                        //   fit: FlexFit.tight,
-                        //   flex: 3,
-                        //   child: Column(
-                        //     children: [
-                        //       StreamBuilder<HomeScreenCardData>(
-                        //         stream:
-                        //             balanceDataProvider.getHomeScreenCardData(),
-                        //         builder: (context, snapshot) {
-                        //           if (snapshot.connectionState ==
-                        //                   ConnectionState.none ||
-                        //               snapshot.connectionState ==
-                        //                   ConnectionState.waiting) {
-                        //             return const LoadingSpinner();
-                        //           }
-                        //           return ColoredBox(
-                        //             color: Colors.greenAccent,
-                        //             child: Row(
-                        //               mainAxisAlignment:
-                        //                   MainAxisAlignment.center,
-                        //               crossAxisAlignment:
-                        //                   CrossAxisAlignment.baseline,
-                        //               textBaseline: TextBaseline.alphabetic,
-                        //               children: [
-                        //                 const Text("EOM"),
-                        //                 Column(
-                        //                   children: const [
-                        //                     Text("Plus"),
-                        //                     Text("Minus"),
-                        //                   ],
-                        //                 )
-                        //               ],
-                        //             ),
-                        //           );
-                        //         },
-                        //       ),
-                        //       //LOWER OVERLINE HEADER HERE
-                        //       const HomeScreenCardOverlineHeaderRow(
-                        //         ["= aktueller Kontostand"],
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
-
-
-// CURRENCY FORMATTER TEMPLATE 
-
-
-// CurrencyFormatter(
-//                         context.locale,
-//                         symbol: settings.getStandardCurrency().symbol,
-//                       ).formatWithWidgets(
-//                         snapshot.data?.eomBalance ?? 0,
-//                         (amount) => Flexible(
-//                           child: FittedBox(
-//                             fit: BoxFit.scaleDown,
-//                             child: Text(
-//                               amount,
-//                               style: getBalanceTextStyle(
-//                                   context, snapshot.data?.eomBalance ?? 0),
-//                             ),
-//                           ),
-//                         ),
-//                         (symbol) => Text(
-//                           symbol,
-//                           style: Theme.of(context).textTheme.bodyText1,
-//                         ),
-//                       ),
