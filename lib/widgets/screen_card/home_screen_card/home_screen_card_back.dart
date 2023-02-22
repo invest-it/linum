@@ -13,6 +13,7 @@ import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/screen_card_provider.dart';
 import 'package:linum/utilities/frontend/currency_formatter.dart';
 import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
+import 'package:linum/utilities/frontend/styled_amount.dart';
 import 'package:linum/widgets/loading_spinner.dart';
 import 'package:linum/widgets/screen_card/home_screen_functions.dart';
 import 'package:linum/widgets/screen_card/screen_card_data_extensions.dart';
@@ -115,7 +116,7 @@ class HomeScreenCardBack extends StatelessWidget {
                                             CrossAxisAlignment.stretch,
                                         children: [
                                           Flexible(
-                                            flex: 5,
+                                            flex: 6,
                                             fit: FlexFit.tight,
                                             child: ColoredBox(
                                               //TODO REMOVE BEFORE FLIGHT
@@ -129,17 +130,10 @@ class HomeScreenCardBack extends StatelessWidget {
                                                         .textTheme
                                                         .overline,
                                                   ),
-                                                  Text(
-                                                    CurrencyFormatter(
-                                                      context.locale,
-                                                      symbol: settings
-                                                          .getStandardCurrency()
-                                                          .symbol,
-                                                    ).format(
-                                                      snapshot.data
-                                                              ?.eomBalance ??
-                                                          0,
-                                                    ),
+                                                  StyledAmount(
+                                                    -450.13,
+                                                    context.locale,
+                                                    "\$",
                                                   ),
                                                 ],
                                               ),

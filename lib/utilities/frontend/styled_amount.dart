@@ -1,6 +1,6 @@
+import 'dart:developer' as dev;
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:linum/utilities/frontend/currency_formatter.dart';
 
 class StyledAmount extends StatelessWidget {
@@ -18,15 +18,19 @@ class StyledAmount extends StatelessWidget {
       return Text(_formatter.format(value));
     } else {
       //World Case
-      final splits = _formatter.format(value).split();
+      final RegExp exp = RegExp(r'(\p{Sc})(-?[0-9]+)([,.](?:[0-9]{1,2})?)');
+      final splits = exp
+          .allMatches(_formatter.format(value))
+          .map((e) => e.group(0))
+          .toList();
+
+      dev.log(splits.toString());
 
       return RichText(
+        maxLines: 1,
         text: TextSpan(
-          children: [
-            TextSpan(),
-            TextSpan(),
-            TextSpan(),
-          ],
+          children: splits.map((e) => TextSpan(text: e)).toList(),
+          style: Theme.of(context).textTheme.bodyText2,
         ),
       );
     }
