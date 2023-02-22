@@ -70,65 +70,108 @@ class HomeScreenCardBack extends StatelessWidget {
                 ),
 
                 //Card Content
-                Flexible(
+                Expanded(
                   child: ColoredBox(
                     color: Colors.yellow, //TODO REMOVE BEFORE FLIGHT
+
+                    //MOTHER ROW
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         //GO BACK IN TIME
-                        IconButton(
-                          onPressed: () {
-                            goBackInTime(algorithmProvider);
-                          },
-                          icon: const Icon(Icons.arrow_back_ios_new_rounded),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                goBackInTime(algorithmProvider);
+                              },
+                              icon:
+                                  const Icon(Icons.arrow_back_ios_new_rounded),
+                            ),
+                          ],
                         ),
 
-                        //KPI WINDOW
+                        //KPI COLUMN
                         Expanded(
                           child: Column(
                             children: [
-                              StreamBuilder<HomeScreenCardData>(
-                                stream:
-                                    balanceDataProvider.getHomeScreenCardData(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                          ConnectionState.none ||
-                                      snapshot.connectionState ==
-                                          ConnectionState.waiting) {
-                                    return const LoadingSpinner();
-                                  }
-                                  return Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                              //UPPER PART
+                              Expanded(
+                                child: ColoredBox(
+                                  //TODO REMOVE BEFORE FLIGHT
+                                  color: Colors.purple,
+                                  child: Row(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.baseline,
-                                    textBaseline: TextBaseline.alphabetic,
+                                        CrossAxisAlignment.stretch,
                                     children: [
-                                      const Text("EOM"),
-                                      Column(
-                                        children: const [
-                                          Text("Plus"),
-                                          Text("Minus"),
-                                        ],
-                                      )
+                                      Flexible(
+                                        flex: 2,
+                                        fit: FlexFit.tight,
+                                        child: ColoredBox(
+                                          //TODO REMOVE BEFORE FLIGHT
+                                          color: Colors.teal,
+                                          child: Column(
+                                            children: const [
+                                              Text("Bilanz bisher"),
+                                              Text("0,00€"),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Flexible(
+                                        flex: 3,
+                                        fit: FlexFit.tight,
+                                        child: ColoredBox(
+                                          //TODO REMOVE BEFORE FLIGHT
+                                          color: Colors.indigo,
+                                          child: Column(
+                                            children: const [
+                                              Text("± ausstehende Verträge"),
+                                              Text("0,00€"),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
                                     ],
-                                  );
-                                },
+                                  ),
+                                ),
                               ),
-                              //LOWER OVERLINE HEADER HERE
-                              const HomeScreenCardOverlineHeaderRow(
-                                ["= aktueller Kontostand"],
+                              //LOWER PART
+                              Expanded(
+                                child: ColoredBox(
+                                  color: Colors.lightGreen,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const [
+                                      Text(
+                                        "± ausstehende Verträge",
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      Text(
+                                        "0,00€",
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
                             ],
                           ),
                         ),
 
                         //GO FORWARD IN TIME
-                        IconButton(
-                          onPressed: () {
-                            goForwardInTime(algorithmProvider);
-                          },
-                          icon: const Icon(Icons.arrow_forward_ios_rounded),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                goForwardInTime(algorithmProvider);
+                              },
+                              icon: const Icon(Icons.arrow_forward_ios_rounded),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -143,6 +186,54 @@ class HomeScreenCardBack extends StatelessWidget {
   }
 }
 
+
+
+
+
+
+                        // Flexible(
+                        //   fit: FlexFit.tight,
+                        //   flex: 3,
+                        //   child: Column(
+                        //     children: [
+                        //       StreamBuilder<HomeScreenCardData>(
+                        //         stream:
+                        //             balanceDataProvider.getHomeScreenCardData(),
+                        //         builder: (context, snapshot) {
+                        //           if (snapshot.connectionState ==
+                        //                   ConnectionState.none ||
+                        //               snapshot.connectionState ==
+                        //                   ConnectionState.waiting) {
+                        //             return const LoadingSpinner();
+                        //           }
+                        //           return ColoredBox(
+                        //             color: Colors.greenAccent,
+                        //             child: Row(
+                        //               mainAxisAlignment:
+                        //                   MainAxisAlignment.center,
+                        //               crossAxisAlignment:
+                        //                   CrossAxisAlignment.baseline,
+                        //               textBaseline: TextBaseline.alphabetic,
+                        //               children: [
+                        //                 const Text("EOM"),
+                        //                 Column(
+                        //                   children: const [
+                        //                     Text("Plus"),
+                        //                     Text("Minus"),
+                        //                   ],
+                        //                 )
+                        //               ],
+                        //             ),
+                        //           );
+                        //         },
+                        //       ),
+                        //       //LOWER OVERLINE HEADER HERE
+                        //       const HomeScreenCardOverlineHeaderRow(
+                        //         ["= aktueller Kontostand"],
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
 
 
 // CURRENCY FORMATTER TEMPLATE 
