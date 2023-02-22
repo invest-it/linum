@@ -60,6 +60,7 @@ class HomeScreenCardBack extends StatelessWidget {
             //Card Content
             Column(
               children: [
+                //Card Header
                 Text(
                   textAlign: TextAlign.center,
                   "Monatsplanung | Feb '23", //TODO @NightmindOfficial translate!
@@ -67,18 +68,23 @@ class HomeScreenCardBack extends StatelessWidget {
                       ? Theme.of(context).textTheme.headline5
                       : Theme.of(context).textTheme.headline4,
                 ),
+
+                //Card Content
                 Flexible(
                   child: ColoredBox(
                     color: Colors.yellow, //TODO REMOVE BEFORE FLIGHT
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        //GO BACK IN TIME
                         IconButton(
                           onPressed: () {
                             goBackInTime(algorithmProvider);
                           },
                           icon: const Icon(Icons.arrow_back_ios_new_rounded),
                         ),
+
+                        //KPI WINDOW
                         Expanded(
                           child: Column(
                             children: [
@@ -116,6 +122,8 @@ class HomeScreenCardBack extends StatelessWidget {
                             ],
                           ),
                         ),
+
+                        //GO FORWARD IN TIME
                         IconButton(
                           onPressed: () {
                             goForwardInTime(algorithmProvider);
