@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:linum/utilities/frontend/currency_formatter.dart';
 
 class StyledAmount extends StatelessWidget {
-  late final String _formatted;
   final String symbol;
+  final TextAlign txtAlign;
   late final bool _euroMode;
+  late final String _formatted;
 
-  StyledAmount(num value, Locale locale, this.symbol) {
+  StyledAmount(
+    num value,
+    Locale locale,
+    this.symbol, {
+    this.txtAlign = TextAlign.center,
+  }) {
     _formatted = CurrencyFormatter(locale, symbol: symbol).format(value);
     _euroMode = CurrencyFormatter(locale, symbol: symbol).amountBeforeSymbol();
   }
@@ -19,6 +25,7 @@ class StyledAmount extends StatelessWidget {
     if (_euroMode) {
       //Euro Case
       return RichText(
+        textAlign: txtAlign,
         maxLines: 1,
         text: TextSpan(
           children: [
@@ -32,6 +39,7 @@ class StyledAmount extends StatelessWidget {
     } else {
       //World Case
       return RichText(
+        textAlign: txtAlign,
         maxLines: 1,
         text: TextSpan(
           children: [
