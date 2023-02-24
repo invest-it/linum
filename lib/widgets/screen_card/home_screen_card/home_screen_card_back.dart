@@ -131,9 +131,11 @@ class HomeScreenCardBack extends StatelessWidget {
                                                         .overline,
                                                   ),
                                                   StyledAmount(
-                                                    -450.13,
+                                                    -420.69,
                                                     context.locale,
-                                                    "\$",
+                                                    settings
+                                                        .getStandardCurrency()
+                                                        .symbol,
                                                   ),
                                                 ],
                                               ),
@@ -159,29 +161,19 @@ class HomeScreenCardBack extends StatelessWidget {
                                                           TextAlign.center,
                                                     ),
                                                   ),
-                                                  Text(
-                                                    CurrencyFormatter(
-                                                      context.locale,
-                                                      symbol: settings
-                                                          .getStandardCurrency()
-                                                          .symbol,
-                                                    ).format(
-                                                      snapshot.data
-                                                              ?.eomBalance ??
-                                                          0,
-                                                    ),
+                                                  StyledAmount(
+                                                    -42.69,
+                                                    context.locale,
+                                                    settings
+                                                        .getStandardCurrency()
+                                                        .symbol,
                                                   ),
-                                                  Text(
-                                                    CurrencyFormatter(
-                                                      context.locale,
-                                                      symbol: settings
-                                                          .getStandardCurrency()
-                                                          .symbol,
-                                                    ).format(
-                                                      snapshot.data
-                                                              ?.eomBalance ??
-                                                          0,
-                                                    ),
+                                                  StyledAmount(
+                                                    42.69,
+                                                    context.locale,
+                                                    settings
+                                                        .getStandardCurrency()
+                                                        .symbol,
                                                   ),
                                                 ],
                                               ),
@@ -199,8 +191,6 @@ class HomeScreenCardBack extends StatelessWidget {
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.stretch,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
                                         children: [
                                           Text(
                                             "= aktueller Kontostand"
@@ -210,9 +200,12 @@ class HomeScreenCardBack extends StatelessWidget {
                                                 .textTheme
                                                 .overline,
                                           ),
-                                          const Text(
-                                            "0,00€",
-                                            textAlign: TextAlign.center,
+                                          StyledAmount(
+                                            -420.69,
+                                            context.locale,
+                                            settings
+                                                .getStandardCurrency()
+                                                .symbol,
                                           ),
                                         ],
                                       ),
