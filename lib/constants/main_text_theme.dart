@@ -36,7 +36,8 @@ class MainTextTheme {
       fontWeight: FontWeight.w500,
       color: const Color(0xFF202020),
     ),
-    //the text theme for the big headlines telling the page's name
+
+    //REPLACEMENT FOUND --> displayMedium
     headline6: GoogleFonts.dmSans(
       fontSize: 84,
       letterSpacing: -1.5,
@@ -53,12 +54,16 @@ class MainTextTheme {
       fontWeight: FontWeight.w400,
       letterSpacing: 0.08,
     ),
+
+    //REPLACEMENT FOUND --> labelSmall
     overline: GoogleFonts.dmSans(
       fontSize: 10,
       fontWeight: FontWeight.w700,
       letterSpacing: 1.5,
       color: const Color(0xFF505050),
     ),
+
+    //REPLACEMENT FOUND --> labelLarge
     button: GoogleFonts.dmSans(
       fontSize: 19.2,
       fontWeight: FontWeight.w500,
@@ -66,4 +71,55 @@ class MainTextTheme {
       color: const Color(0xFFFAFAFA),
     ),
   );
+
+//PREP FOR NEW THEME
+
+  // static final TextTheme lightThemeNew = TextTheme(
+
+  //   //DISPLAY FONTS - Largest Set of Fonts, Heavy Weight, only use for very distinct purposes.
+  //   displayLarge: ,
+
+  //   displayMedium: GoogleFonts.dmSans(
+  //     fontSize: 84,
+  //     letterSpacing: -1.5,
+  //     fontWeight: FontWeight.w700,
+  //     color: const Color(0xFFC1E695),
+  //   ), //aka headline6 before the change
+
+  //   displaySmall: ,
+
+  //   //HEADLINE FONTS - use for tab headlines and larger titles.
+  //   headlineLarge: ,
+  //   headlineMedium: ,
+  //   headlineSmall: ,
+
+  //   //TITLE FONTS - use for section and navigation headings.
+  //   titleLarge: ,
+  //   titleMedium: ,
+  //   titleSmall: ,
+
+  //   //LABEL FONTS - use for identification of cards, chips and the like.
+
+  //   labelLarge: GoogleFonts.dmSans(
+  //     fontSize: 19.2,
+  //     fontWeight: FontWeight.w500,
+  //     letterSpacing: 0.15,
+  //     color: const Color(0xFFFAFAFA),
+  //   ), //aka button before the change
+
+  //   labelMedium: ,
+
+  //   labelSmall: GoogleFonts.dmSans(
+  //     fontSize: 10,
+  //     fontWeight: FontWeight.w700,
+  //     letterSpacing: 1.5,
+  //     color: const Color(0xFF505050),
+  //   ), //aka overline before the change
+
+  //   //BODY FONTS - Usual set of paragraph fonts. Use larger ones to make typography stand out, smaller ones for added paraphrases.
+  //   bodyLarge: ,
+  //   bodyMedium: ,
+  //   bodySmall: ,
+
+  // );
 }
