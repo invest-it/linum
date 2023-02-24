@@ -1,35 +1,44 @@
-import 'dart:developer' as dev;
-
 import 'package:flutter/material.dart';
 import 'package:linum/utilities/frontend/currency_formatter.dart';
 
 class StyledAmount extends StatelessWidget {
-  late final CurrencyFormatter _formatter;
-  final num value;
+  late final String _formatted;
+  final String symbol;
+  late final bool _euroMode;
 
-  StyledAmount(this.value, Locale locale, String symbol) {
-    _formatter = CurrencyFormatter(locale, symbol: symbol);
+  StyledAmount(num value, Locale locale, this.symbol) {
+    _formatted = CurrencyFormatter(locale, symbol: symbol).format(value);
+    _euroMode = CurrencyFormatter(locale, symbol: symbol).amountBeforeSymbol();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_formatter.amountBeforeSymbol()) {
+    final RegExp exp = RegExp('(-?[0-9]+)([,.](?:[0-9]+))');
+    final expMatch = exp.firstMatch(_formatted);
+
+    if (_euroMode) {
       //Euro Case
-      return Text(_formatter.format(value));
-    } else {
-      //World Case
-      final RegExp exp = RegExp(r'(\p{Sc})(-?[0-9]+)([,.](?:[0-9]{1,2})?)');
-      final splits = exp
-          .allMatches(_formatter.format(value))
-          .map((e) => e.group(0))
-          .toList();
-
-      dev.log(splits.toString());
-
       return RichText(
         maxLines: 1,
         text: TextSpan(
-          children: splits.map((e) => TextSpan(text: e)).toList(),
+          children: [
+            TextSpan(text: expMatch?.group(1) ?? "??"),
+            TextSpan(text: expMatch?.group(2) ?? ".??"),
+            TextSpan(text: symbol),
+          ],
+          style: Theme.of(context).textTheme.bodyText2,
+        ),
+      );
+    } else {
+      //World Case
+      return RichText(
+        maxLines: 1,
+        text: TextSpan(
+          children: [
+            TextSpan(text: symbol),
+            TextSpan(text: expMatch?.group(1) ?? "??"),
+            TextSpan(text: expMatch?.group(2) ?? ".??"),
+          ],
           style: Theme.of(context).textTheme.bodyText2,
         ),
       );
