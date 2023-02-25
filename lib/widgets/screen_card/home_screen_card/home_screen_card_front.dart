@@ -18,6 +18,7 @@ import 'package:linum/widgets/screen_card/card_widgets/home_screen_card_avatar.d
 import 'package:linum/widgets/screen_card/home_screen_card/home_screen_card_row.dart';
 import 'package:linum/widgets/screen_card/home_screen_functions.dart';
 import 'package:linum/widgets/screen_card/screen_card_data_extensions.dart';
+import 'package:linum/widgets/styled_amount.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreenCardFront extends StatelessWidget {
@@ -30,118 +31,110 @@ class HomeScreenCardFront extends StatelessWidget {
     final DateFormat dateFormat = DateFormat('MMMM yyyy', langCode);
 
     final settings = Provider.of<AccountSettingsProvider>(context);
-    final screenCardProvider = Provider.of<ScreenCardProvider>(context, listen: false);
+    final screenCardProvider =
+        Provider.of<ScreenCardProvider>(context, listen: false);
     final balanceDataProvider = Provider.of<BalanceDataProvider>(context);
 
     return GestureDetector(
-          onHorizontalDragEnd: (DragEndDetails details) =>
-              onHorizontalDragEnd(details, context),
-          onTap: () => onFlipCardTap(context, screenCardProvider.controller!),
-          onLongPress: () {
-            goToCurrentTime(algorithmProvider);
-          },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      onHorizontalDragEnd: (DragEndDetails details) =>
+          onHorizontalDragEnd(details, context),
+      onTap: () => onFlipCardTap(context, screenCardProvider.controller!),
+      onLongPress: () {
+        goToCurrentTime(algorithmProvider);
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Column(
             children: [
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Spacer(),
-                      Center(
-                        child: Text(
-                          // HEADLINE
-                          dateFormat.format(
-                            algorithmProvider.currentShownMonth,
-                          ),
-                          style: MediaQuery.of(context).size.height < 650
-                              ? Theme.of(context).textTheme.headline5
-                              : Theme.of(context).textTheme.headline3,
-                        ),
-                      ),
-                      Expanded(
-                        child: Align(
-                          alignment: Alignment.topRight,
-                          child: IconButton(
-                            padding: const EdgeInsets.only(right: 16),
-                            constraints: const BoxConstraints(),
-                            onPressed: () {
-                              screenCardProvider.controller!.toggleCard();
-                            },
-                            icon: const Icon(
-                              Icons.flip_camera_android_rounded,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Text(
-                    //SUBHEADLINE
-                    tr('home_screen_card.label-current-balance'),
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
-                ],
-              ),
               Row(
-                // MiddleRow
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  IconButton(
-                    onPressed: () {
-                      goBackInTime(algorithmProvider);
-                    },
-                    icon: const Icon(Icons.arrow_back_ios_new_rounded),
+                  const Spacer(),
+                  Center(
+                    child: Text(
+                      // HEADLINE
+                      dateFormat.format(
+                        algorithmProvider.currentShownMonth,
+                      ),
+                      style: MediaQuery.of(context).size.height < 650
+                          ? Theme.of(context).textTheme.headline5
+                          : Theme.of(context).textTheme.headline3,
+                    ),
                   ),
                   Expanded(
-                    child: StreamBuilder<HomeScreenCardData>(
-                      stream: balanceDataProvider.getHomeScreenCardData(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.none ||
-                            snapshot.connectionState == ConnectionState.waiting) {
-                          return const LoadingSpinner();
-                        }
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.baseline,
-                          textBaseline: TextBaseline.alphabetic,
-                          children: [
-                            Text(CurrencyFormatter(
-                              context.locale,
-                              symbol: settings.getStandardCurrency().symbol,
-                            ).format(snapshot.data?.mtdBalance ?? 0),)
-                          ]
-                        ,);
-                      },
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      goForwardInTime(algorithmProvider);
-                    },
-                    icon: const Icon(
-                      Icons.arrow_forward_ios_rounded,
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: IconButton(
+                        padding: const EdgeInsets.only(right: 16),
+                        constraints: const BoxConstraints(),
+                        onPressed: () {
+                          screenCardProvider.controller!.toggleCard();
+                        },
+                        icon: const Icon(
+                          Icons.flip_camera_android_rounded,
+                        ),
+                      ),
                     ),
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                child: HomeScreenCardRow(
-                  data: balanceDataProvider.getHomeScreenCardData(),
-                  upwardArrow: HomeScreenCardAvatar.withArrow(
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    arrow: Preset.arrowUp,
-                  ),
-                  downwardArrow: HomeScreenCardAvatar.withArrow(
-                    backgroundColor: Theme.of(context).colorScheme.error,
-                    arrow: Preset.arrowDown,
-                  ),
-                ),
-              )
+              Text(
+                //SUBHEADLINE
+                tr('home_screen_card.label-current-balance'),
+                style: Theme.of(context).textTheme.headline5,
+              ),
             ],
           ),
-        );
+          Row(
+            // MiddleRow
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                onPressed: () {
+                  goBackInTime(algorithmProvider);
+                },
+                icon: const Icon(Icons.arrow_back_ios_new_rounded),
+              ),
+              Expanded(
+                child: StreamBuilder<HomeScreenCardData>(
+                  stream: balanceDataProvider.getHomeScreenCardData(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.none ||
+                        snapshot.connectionState == ConnectionState.waiting) {
+                      return const LoadingSpinner();
+                    }
+                    return StyledAmount(snapshot.data?.mtdBalance ?? 0.00,
+                        context.locale, settings.getStandardCurrency().symbol);
+                  },
+                ),
+              ),
+              IconButton(
+                onPressed: () {
+                  goForwardInTime(algorithmProvider);
+                },
+                icon: const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                ),
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: HomeScreenCardRow(
+              data: balanceDataProvider.getHomeScreenCardData(),
+              upwardArrow: HomeScreenCardAvatar.withArrow(
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                arrow: Preset.arrowUp,
+              ),
+              downwardArrow: HomeScreenCardAvatar.withArrow(
+                backgroundColor: Theme.of(context).colorScheme.error,
+                arrow: Preset.arrowDown,
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
