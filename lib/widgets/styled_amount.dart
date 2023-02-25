@@ -29,9 +29,14 @@ class StyledAmount extends StatelessWidget {
         maxLines: 1,
         text: TextSpan(
           children: [
-            TextSpan(text: expMatch?.group(1) ?? "??"),
-            TextSpan(text: expMatch?.group(2) ?? ".??"),
-            TextSpan(text: symbol),
+            TextSpan(
+                text: expMatch?.group(1) ?? "??",
+                style: Theme.of(context).textTheme.headline4),
+            TextSpan(
+                text: expMatch?.group(2) ?? ".??",
+                style: Theme.of(context).textTheme.headline5),
+            TextSpan(
+                text: symbol, style: Theme.of(context).textTheme.headline4),
           ],
           style: Theme.of(context).textTheme.bodyText2,
         ),
@@ -43,9 +48,14 @@ class StyledAmount extends StatelessWidget {
         maxLines: 1,
         text: TextSpan(
           children: [
-            TextSpan(text: symbol),
-            TextSpan(text: expMatch?.group(1) ?? "??"),
-            TextSpan(text: expMatch?.group(2) ?? ".??"),
+            TextSpan(
+                text: symbol, style: Theme.of(context).textTheme.headline4),
+            TextSpan(
+                text: expMatch?.group(1) ?? "??",
+                style: Theme.of(context).textTheme.headline4),
+            TextSpan(
+                text: expMatch?.group(2) ?? ".??",
+                style: Theme.of(context).textTheme.headline5),
           ],
           style: Theme.of(context).textTheme.bodyText2,
         ),
