@@ -44,34 +44,13 @@ class _ScreenCardSkeletonState<TData> extends State<ScreenCardSkeleton> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ScreenCardProvider>(
       create: (_) => ScreenCardProvider(controller: _flipCardController),
-      child: Column(
-        children: [
-          DecoratedBox(
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Theme.of(context).colorScheme.onSurface.withAlpha(64),
-                  blurRadius: 16.0,
-                  spreadRadius: 1.0,
-                  offset: const Offset(0, 4),
-                )
-              ],
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: Material(
-                child: widget.backSide == null
-                ? widget.frontSide
-                : FlipCard(
-                  controller: _flipCardController,
-                  front: widget.frontSide,
-                  back: widget.backSide!,
-                ),
-              ),
-            ),
+      child: widget.backSide == null
+          ? widget.frontSide
+          : FlipCard(
+            controller: _flipCardController,
+            front: widget.frontSide,
+            back: widget.backSide!,
           ),
-        ],
-      ),
     );
   }
 }
