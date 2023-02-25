@@ -39,6 +39,14 @@ Add a new tag to the specified base language file (file to be translated) like t
 }
 ```
 
+To specify that a given tag should not be overwritten in some output files, use the options syntax: <br>
+```yaml
+{
+  "main/label-loading": ["Laden...", {"no-overwrite": "es-ES"}],
+}
+```
+At the time being, it is not possible to disable overwrite for multiple languages
+
 Then open a console and type <br> 
 <code>dart run bin/translation_script.dart<br>
 -d LANGUAGE_FILE_DIR <br>
