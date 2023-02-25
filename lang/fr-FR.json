@@ -78,9 +78,10 @@
             "title": "Prêt!"
         },
         "delete-account": {
-            "title": "Tu souhaites supprimer ton compte en toute sécurité ?",
-            "cancel": "Non",
-            "action": "Oui"
+            "title": "Tu veux vraiment supprimer ton compte ?",
+            "cancel": "Annuler",
+            "action": "Oui, supprimer le compte",
+            "message": "Cette action ne peut pas être annulée !"
         }
     },
     "auth": {
@@ -341,7 +342,7 @@
         "standards-selector-none": "Non classé",
         "system-settings": {
             "button-forgot-password": "Modifier le mot de passe",
-            "button-delete-user": "Supprimer l'utilisateur",
+            "button-delete-user": "Supprimer un compte",
             "button-forgot-password-tooltip": "Vous pouvez demander une réinitialisation du mot de passe ici si vous avez oublié votre ancien mot de passe.",
             "button-signout": "Se déconnecter",
             "label-title": "Ton compte"

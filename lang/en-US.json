@@ -78,9 +78,10 @@
             "title": "Done!"
         },
         "delete-account": {
-            "title": "Are you sure?",
-            "cancel": "No",
-            "action": "Yes"
+            "title": "Do you really want to delete your account?",
+            "cancel": "Cancel",
+            "action": "Yes, delete account",
+            "message": "This action cannot be reversed!"
         }
     },
     "auth": {
@@ -341,7 +342,7 @@
         "standards-selector-none": "Uncategorized",
         "system-settings": {
             "button-forgot-password": "Change Password",
-            "button-delete-user": "Delete User",
+            "button-delete-user": "Delete account",
             "button-forgot-password-tooltip": "You can request a password reset here if you forgot your old password.",
             "button-signout": "Sign out",
             "label-title": "Your account"

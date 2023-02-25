@@ -30,6 +30,12 @@
         }
     },
     "alertdialog": {
+        "delete-account": {
+            "title": "Möchtest du deinen Account wirklich löschen?",
+            "cancel": "Abbrechen",
+            "action": "Ja, Account löschen",
+            "message": "Diese Aktion kann nicht rückgängig gemacht werden!"
+        },
         "error": {
             "action-standard": "Okay",
             "message-standard": "Ein unbekannter Fehler ist aufgetreten.",
@@ -76,11 +82,6 @@
             "action": "Okay",
             "message": "Dein Passwort wurde aktualisiert.",
             "title": "Fertig!"
-        },
-        "delete-account": {
-            "title": "Möchtest du den Account sicher löschen?",
-            "cancel": "Nein",
-            "action": "Ja"
         }
     },
     "auth": {
@@ -165,7 +166,6 @@
             "thb": "Baht",
             "ils": "Schekel",
             "blr": "Brasilianischer Real"
-
         }
     },
     "enter_screen": {
@@ -375,7 +375,7 @@
         "standards-selector-none": "Unkategorisiert",
         "system-settings": {
             "button-forgot-password": "Passwort ändern",
-            "button-delete-user": "Nutzer löschen",
+            "button-delete-user": "Account löschen",
             "button-forgot-password-tooltip": "Falls du dein Passwort vergessen hast, kannst du hier ein neues einstellen.",
             "button-signout": "Ausloggen",
             "label-title": "Dein Account"

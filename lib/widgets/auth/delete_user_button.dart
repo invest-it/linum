@@ -23,10 +23,17 @@ class DeleteUserButton extends StatelessWidget {
       child: OutlinedButton(
         onPressed: () {
           userAlert.showActionDialog(
-            tr("alertdialog.delete-account.title"),
+            tr("alertdialog.delete-account.message"),
             <DialogAction>[
               DialogAction(
+                actionTitle: tr("alertdialog.delete-account.cancel"),
+                dialogPurpose: DialogPurpose.secondary,
+                function: () =>
+                    {Navigator.of(context, rootNavigator: true).pop()},
+              ),
+              DialogAction(
                 actionTitle: tr("alertdialog.delete-account.action"),
+                dialogPurpose: DialogPurpose.danger,
                 function: () {
                   authenticationService.deleteUserAccount(
                     onError: userAlert.showMyDialogCreator(
@@ -37,12 +44,8 @@ class DeleteUserButton extends StatelessWidget {
                   Navigator.of(context, rootNavigator: true).pop();
                 },
               ),
-              DialogAction(
-                actionTitle: tr("alertdialog.delete-account.cancel"),
-                function: () =>
-                    {Navigator.of(context, rootNavigator: true).pop()},
-              ),
             ],
+            title: tr("alertdialog.delete-account.title"),
           );
         },
         style: OutlinedButton.styleFrom(

@@ -78,9 +78,10 @@
             "title": "¡Listo!"
         },
         "delete-account": {
-            "title": "¿Quieres eliminar la cuenta de forma segura?",
-            "cancel": "No",
-            "action": "Sí"
+            "title": "¿De verdad quieres borrar tu cuenta?",
+            "cancel": "Cancelar",
+            "action": "Sí, eliminar cuenta",
+            "message": "Esta acción no tiene marcha atrás."
         }
     },
     "auth": {
@@ -337,7 +338,7 @@
         "standards-selector-none": "Sin categoría",
         "system-settings": {
             "button-forgot-password": "Cambiar contraseña",
-            "button-delete-user": "Eliminar usuario",
+            "button-delete-user": "Eliminar cuenta",
             "button-forgot-password-tooltip": "Puede solicitar un restablecimiento de la contraseña aquí si ha olvidado su antigua contraseña.",
             "button-signout": "Firmar la salida",
             "label-title": "Su cuenta"
