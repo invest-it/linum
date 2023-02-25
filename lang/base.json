@@ -31,10 +31,10 @@
     },
     "alertdialog": {
         "delete-account": {
-            "title": "Möchtest du deinen Account wirklich löschen?",
-            "cancel": "Abbrechen",
             "action": "Ja, Account löschen",
-            "message": "Diese Aktion kann nicht rückgängig gemacht werden!"
+            "cancel": "Abbrechen",
+            "message": "Diese Aktion kann nicht rückgängig gemacht werden!",
+            "title": "Möchtest du deinen Account wirklich löschen?"
         },
         "error": {
             "action-standard": "Okay",
@@ -141,31 +141,31 @@
             "not-found": "Währung wird nicht unterstützt"
         },
         "name": {
+            "aud": "Australischer Dollar",
+            "blr": "Brasilianischer Real",
+            "cad": "Kanadischer Dollar",
+            "chf": "Schweizer Franken",
+            "cny": "Chinesischer Yuan",
+            "czk": "Tschechische Krone",
+            "dkk": "Dänische Krone",
             "eur": "Euro",
             "gbp": "Britisches Pfund",
-            "pln": "Złoty",
-            "czk": "Tschechische Krone",
-            "jpy": "Yen",
-            "cny": "Chinesischer Yuan",
-            "krw": "Südkoreanischer Won",
-            "usd": "US Dollar",
-            "chf": "Schweizer Franken",
-            "aud": "Australischer Dollar",
-            "cad": "Kanadischer Dollar",
-            "nzd": "Neuseeland-Dollar",
-            "sek": "Schwedische Krone",
-            "nok": "Norwegische Krone",
-            "dkk": "Dänische Krone",
-            "isk": "Isländische Krone",
-            "myr": "Malaysischer Ringgit",
-            "tyr": "Türkische Lira",
-            "zar": "Südafrikanischer Rand",
-            "mxn": "Mexikanischer Peso",
-            "inr": "Indische Rupie",
             "idr": "Indonesische Rupiah",
-            "thb": "Baht",
             "ils": "Schekel",
-            "blr": "Brasilianischer Real"
+            "inr": "Indische Rupie",
+            "isk": "Isländische Krone",
+            "jpy": "Yen",
+            "krw": "Südkoreanischer Won",
+            "mxn": "Mexikanischer Peso",
+            "myr": "Malaysischer Ringgit",
+            "nok": "Norwegische Krone",
+            "nzd": "Neuseeland-Dollar",
+            "pln": "Złoty",
+            "sek": "Schwedische Krone",
+            "thb": "Baht",
+            "tyr": "Türkische Lira",
+            "usd": "US Dollar",
+            "zar": "Südafrikanischer Rand"
         }
     },
     "enter_screen": {
@@ -196,14 +196,14 @@
         "expenses-textfield-title": "Was hast du gekauft?",
         "income-textfield-title": "Wie heißt dieses Einkommen?",
         "label-repeat-30days": "Monatlich",
+        "label-repeat-annually": "Jährlich",
         "label-repeat-daily": "Täglich",
         "label-repeat-freeselect": "Frei auswählen",
         "label-repeat-monthly": "Zum Monatsanfang",
         "label-repeat-none": "Nicht wiederholen",
-        "label-repeat-weekly": "Wöchentlich",
         "label-repeat-quarterly": "Alle 3 Monate",
         "label-repeat-semiannually": "Halbjährlich",
-        "label-repeat-annually": "Jährlich",
+        "label-repeat-weekly": "Wöchentlich",
         "title": {
             "add": "Neuer Eintrag",
             "edit": "Eintrag bearbeiten"
@@ -218,11 +218,11 @@
     "enter_screen_attribute_date": "Datum",
     "enter_screen_attribute_repeat": "Wiederholen",
     "home_screen": {
-        "button-show-more": "Mehr",
         "button-show-all": "Alle",
+        "button-show-more": "Mehr",
         "free-text": "Gratis",
-        "label-recent-transactions": "Neueste Transaktionen",
-        "label-active-serialcontracts": "Verträge diesen Monat"
+        "label-active-serialcontracts": "Verträge diesen Monat",
+        "label-recent-transactions": "Neueste Transaktionen"
     },
     "home_screen_card": {
         "home-screen-card-toast": "Swipe nach links und rechts, um vorige oder kommende Monate anzusehen. Gedrückt halten, um in den aktuellen Monat zurückzukehren.",
@@ -236,18 +236,18 @@
         "dismissible": {
             "label-delete": "Löschen"
         },
+        "label-days": "Tage",
+        "label-error-translation": "Übersetzung fehlt",
+        "label-every": "Alle",
         "label-future": "Geplante Buchungen",
         "label-lastweek": "Letzte Woche",
+        "label-months": "Monate",
         "label-no-entries": "- Keine Einträge bisher -",
         "label-thismonth": "Diesen Monat",
         "label-today": "Heute",
-        "label-yesterday": "Gestern",
-        "label-error-translation": "Übersetzung fehlt",
-        "label-every": "Alle",
-        "label-days": "Tage",
         "label-weeks": "Wochen",
-        "label-months": "Monate",
-        "label-years": "Jahre"
+        "label-years": "Jahre",
+        "label-yesterday": "Gestern"
     },
     "lock_screen": {
         "change": {
@@ -374,8 +374,8 @@
         },
         "standards-selector-none": "Unkategorisiert",
         "system-settings": {
-            "button-forgot-password": "Passwort ändern",
             "button-delete-user": "Account löschen",
+            "button-forgot-password": "Passwort ändern",
             "button-forgot-password-tooltip": "Falls du dein Passwort vergessen hast, kannst du hier ein neues einstellen.",
             "button-signout": "Ausloggen",
             "label-title": "Dein Account"

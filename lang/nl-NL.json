@@ -30,6 +30,12 @@
         }
     },
     "alertdialog": {
+        "delete-account": {
+            "action": "Ja, account verwijderen",
+            "cancel": "Annuleren",
+            "message": "Deze actie kan niet worden teruggedraaid!",
+            "title": "Wil je echt je account verwijderen?"
+        },
         "error": {
             "action-standard": "Okay",
             "message-standard": "Er is een onbekende fout opgetreden.",
@@ -76,12 +82,6 @@
             "action": "Okay",
             "message": "Uw wachtwoord is bijgewerkt.",
             "title": "Klaar!"
-        },
-        "delete-account": {
-            "title": "Wil je echt je account verwijderen?",
-            "cancel": "Annuleren",
-            "action": "Ja, account verwijderen",
-            "message": "Deze actie kan niet worden teruggedraaid!"
         }
     },
     "auth": {
@@ -136,6 +136,38 @@
         "button-filter": "Filter",
         "label-all-transactions": "Alle Verrichtingen"
     },
+    "currency": {
+        "error": {
+            "not-found": "Valuta wordt niet ondersteund"
+        },
+        "name": {
+            "aud": "Australische dollar",
+            "blr": "Braziliaanse Real",
+            "cad": "Canadese dollar",
+            "chf": "Zwitserse frank",
+            "cny": "Chinese Yuan",
+            "czk": "Tsjechische kroon",
+            "dkk": "Deense kroon",
+            "eur": "Euro",
+            "gbp": "Pond sterling",
+            "idr": "Indonesische Rupiah",
+            "ils": "Shekel",
+            "inr": "Indiase roepie",
+            "isk": "IJslandse kroon",
+            "jpy": "Yen",
+            "krw": "Zuid-Koreaanse won",
+            "mxn": "Mexicaanse peso",
+            "myr": "Maleisische Ringgit",
+            "nok": "Noorse kroon",
+            "nzd": "Nieuw-Zeelandse dollar",
+            "pln": "Złoty",
+            "sek": "Zweedse kroon",
+            "thb": "Baht",
+            "tyr": "Turkse lire",
+            "usd": "Amerikaanse dollar",
+            "zar": "Zuid-Afrikaanse Rand"
+        }
+    },
     "enter_screen": {
         "add-amount": {
             "dialog-label-title": "OK",
@@ -164,14 +196,14 @@
         "expenses-textfield-title": "Wat heb je gekocht?",
         "income-textfield-title": "Hoe wordt dit inkomen genoemd?",
         "label-repeat-30days": "Maandelijks",
+        "label-repeat-annually": "Jaarlijks",
         "label-repeat-daily": "Dagelijks",
         "label-repeat-freeselect": "Vrij kiezen",
         "label-repeat-monthly": "Begin van de maand",
         "label-repeat-none": "Niet herhalen",
-        "label-repeat-weekly": "Wekelijks",
         "label-repeat-quarterly": "Alle 3 maanden",
         "label-repeat-semiannually": "Halfjaarlijks",
-        "label-repeat-annually": "Jaarlijks",
+        "label-repeat-weekly": "Wekelijks",
         "title": {
             "add": "Nieuw item",
             "edit": "Bewerk item"
@@ -182,14 +214,15 @@
     "enter_screen_attribute_account_from": "Van Account",
     "enter_screen_attribute_account_to": "Naar Account",
     "enter_screen_attribute_category": "Categorie",
+    "enter_screen_attribute_currency": "Valuta",
     "enter_screen_attribute_date": "Datum",
     "enter_screen_attribute_repeat": "Herhaal",
     "home_screen": {
-        "button-show-more": "Meer",
         "button-show-all": "Alle",
+        "button-show-more": "Meer",
         "free-text": "Gratis",
-        "label-recent-transactions": "Recente transacties",
-        "label-active-serialcontracts": "Contracten deze maand"
+        "label-active-serialcontracts": "Contracten deze maand",
+        "label-recent-transactions": "Recente transacties"
     },
     "home_screen_card": {
         "home-screen-card-toast": "Veeg naar links en rechts om de vorige of komende maanden te bekijken. Ingedrukt houden om terug te keren naar de huidige maand.",
@@ -203,18 +236,18 @@
         "dismissible": {
             "label-delete": "Verwijder"
         },
+        "label-days": "dagen",
+        "label-error-translation": "Vertaling ontbreekt",
+        "label-every": "Elke",
         "label-future": "Geplande boekingen",
         "label-lastweek": "Vorige Week",
+        "label-months": "maanden",
         "label-no-entries": "- Geen inzendingen gevonden -",
         "label-thismonth": "Deze Maand",
         "label-today": "Vandaag",
-        "label-yesterday": "Gisteren",
-        "label-error-translation": "Vertaling ontbreekt",
-        "label-every": "Elke",
-        "label-days": "dagen",
         "label-weeks": "weken",
-        "label-months": "maanden",
-        "label-years": "jaar"
+        "label-years": "jaar",
+        "label-yesterday": "Gisteren"
     },
     "lock_screen": {
         "change": {
@@ -341,44 +374,11 @@
         },
         "standards-selector-none": "Uncategorized",
         "system-settings": {
-            "button-forgot-password": "Wijzig Wachtwoord",
             "button-delete-user": "Account verwijderen",
+            "button-forgot-password": "Wijzig Wachtwoord",
             "button-forgot-password-tooltip": "U kunt hier een nieuw wachtwoord aanvragen als u uw oude wachtwoord bent vergeten.",
             "button-signout": "Uitschrijven",
             "label-title": "Uw rekening"
         }
-    },
-    "currency": {
-        "error": {
-            "not-found": "Valuta wordt niet ondersteund"
-        },
-        "name": {
-            "eur": "Euro",
-            "gbp": "Pond sterling",
-            "jpy": "Yen",
-            "usd": "Amerikaanse dollar",
-            "cny": "Chinese Yuan",
-            "chf": "Zwitserse frank",
-            "aud": "Australische dollar",
-            "cad": "Canadese dollar",
-            "nzd": "Nieuw-Zeelandse dollar",
-            "sek": "Zweedse kroon",
-            "nok": "Noorse kroon",
-            "myr": "Maleisische Ringgit",
-            "pln": "Złoty",
-            "czk": "Tsjechische kroon",
-            "krw": "Zuid-Koreaanse won",
-            "dkk": "Deense kroon",
-            "isk": "IJslandse kroon",
-            "tyr": "Turkse lire",
-            "zar": "Zuid-Afrikaanse Rand",
-            "mxn": "Mexicaanse peso",
-            "inr": "Indiase roepie",
-            "idr": "Indonesische Rupiah",
-            "thb": "Baht",
-            "ils": "Shekel",
-            "blr": "Braziliaanse Real"
-        }
-    },
-    "enter_screen_attribute_currency": "Valuta"
+    }
 }
