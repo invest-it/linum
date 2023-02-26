@@ -11,7 +11,6 @@ import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/screen_card_provider.dart';
-import 'package:linum/utilities/frontend/currency_formatter.dart';
 import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
 import 'package:linum/widgets/loading_spinner.dart';
 import 'package:linum/widgets/screen_card/card_widgets/home_screen_card_avatar.dart';
@@ -104,8 +103,13 @@ class HomeScreenCardFront extends StatelessWidget {
                         snapshot.connectionState == ConnectionState.waiting) {
                       return const LoadingSpinner();
                     }
-                    return StyledAmount(snapshot.data?.mtdBalance ?? 0.00,
-                        context.locale, settings.getStandardCurrency().symbol);
+
+                    //TODO As soon as the HSC Front will get its rework by @NightmindOfficial, the balance label will appear bigger again.
+                    return StyledAmount(
+                      snapshot.data?.mtdBalance ?? 0.00,
+                      context.locale,
+                      settings.getStandardCurrency().symbol,
+                    );
                   },
                 ),
               ),
