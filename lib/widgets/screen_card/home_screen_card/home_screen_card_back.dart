@@ -24,7 +24,7 @@ class HomeScreenCardBack extends StatelessWidget {
     final AlgorithmProvider algorithmProvider =
         Provider.of<AlgorithmProvider>(context);
     final String langCode = context.locale.languageCode;
-    final DateFormat dateFormat = DateFormat('MMMM yyyy', langCode);
+    final DateFormat dateFormat = DateFormat("MMM ''yy", langCode);
 
     final settings = Provider.of<AccountSettingsProvider>(context);
     final screenCardProvider =
@@ -61,7 +61,7 @@ class HomeScreenCardBack extends StatelessWidget {
                 //Card Header
                 Text(
                   textAlign: TextAlign.center,
-                  "Monatsplanung | Feb '23", //TODO @NightmindOfficial translate!
+                  "Monatsplaner | ${dateFormat.format(algorithmProvider.currentShownMonth)}", //TODO @NightmindOfficial translate!
                   style: MediaQuery.of(context).size.height < 650
                       ? Theme.of(context).textTheme.headline5
                       : Theme.of(context).textTheme.headline4,
@@ -69,167 +69,205 @@ class HomeScreenCardBack extends StatelessWidget {
 
                 //Card Content
                 Expanded(
-                  child: ColoredBox(
-                    color: Colors.yellow, //TODO REMOVE BEFORE FLIGHT
+                  //MOTHER ROW
 
-                    //MOTHER ROW
-
-                    child: Row(
-                      children: [
-                        //GO BACK IN TIME
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                goBackInTime(algorithmProvider);
-                              },
-                              icon:
-                                  const Icon(Icons.arrow_back_ios_new_rounded),
-                            ),
-                          ],
-                        ),
-
-                        //KPI COLUMN
-                        Expanded(
-                          //STREAM INSERT
-                          child: StreamBuilder<HomeScreenCardData>(
-                            stream: balanceDataProvider.getHomeScreenCardData(),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                      ConnectionState.none ||
-                                  snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                return const LoadingSpinner();
-                              }
-                              return Column(
-                                children: [
-                                  //UPPER PART
-                                  Expanded(
-                                    flex: 5,
-                                    child: ColoredBox(
-                                      //TODO REMOVE BEFORE FLIGHT
-                                      color: Colors.purple,
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.stretch,
-                                        children: [
-                                          Flexible(
-                                            flex: 6,
-                                            fit: FlexFit.tight,
-                                            child: ColoredBox(
-                                              //TODO REMOVE BEFORE FLIGHT
-                                              color: Colors.teal,
-                                              child: Column(
-                                                children: [
-                                                  Text(
-                                                    "Bilanz bisher"
-                                                        .toUpperCase(),
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .overline,
-                                                  ),
-                                                  StyledAmount(
-                                                    -420.69,
-                                                    context.locale,
-                                                    settings
-                                                        .getStandardCurrency()
-                                                        .symbol,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Flexible(
-                                            flex: 8,
-                                            fit: FlexFit.tight,
-                                            child: ColoredBox(
-                                              //TODO REMOVE BEFORE FLIGHT
-                                              color: Colors.lightBlueAccent,
-                                              child: Column(
-                                                children: [
-                                                  FittedBox(
-                                                    fit: BoxFit.fitWidth,
-                                                    child: Text(
-                                                      "± ausstehende Verträge"
-                                                          .toUpperCase(),
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .overline,
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                    ),
-                                                  ),
-                                                  StyledAmount(
-                                                    -42.69,
-                                                    context.locale,
-                                                    settings
-                                                        .getStandardCurrency()
-                                                        .symbol,
-                                                  ),
-                                                  StyledAmount(
-                                                    42.69,
-                                                    context.locale,
-                                                    settings
-                                                        .getStandardCurrency()
-                                                        .symbol,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  //LOWER PART
-                                  Expanded(
-                                    flex: 4,
-                                    child: ColoredBox(
-                                      color: Colors.lightGreen,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.stretch,
-                                        children: [
-                                          Text(
-                                            "= aktueller Kontostand"
-                                                .toUpperCase(),
-                                            textAlign: TextAlign.center,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .overline,
-                                          ),
-                                          StyledAmount(
-                                            -420.69,
-                                            context.locale,
-                                            settings
-                                                .getStandardCurrency()
-                                                .symbol,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              );
+                  child: Row(
+                    children: [
+                      //GO BACK IN TIME
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            visualDensity: VisualDensity.compact,
+                            onPressed: () {
+                              goBackInTime(algorithmProvider);
                             },
+                            icon: const Icon(Icons.arrow_back_ios_new_rounded),
                           ),
-                        ),
+                        ],
+                      ),
 
-                        //GO FORWARD IN TIME
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                goForwardInTime(algorithmProvider);
-                              },
-                              icon: const Icon(Icons.arrow_forward_ios_rounded),
-                            ),
-                          ],
+                      //KPI COLUMN
+                      Expanded(
+                        //STREAM INSERT
+                        child: StreamBuilder<HomeScreenCardData>(
+                          stream: balanceDataProvider.getHomeScreenCardData(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                    ConnectionState.none ||
+                                snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                              return const LoadingSpinner();
+                            }
+                            return Column(
+                              children: [
+                                //UPPER PART
+                                Expanded(
+                                  flex: 5,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      Flexible(
+                                        flex: 6,
+                                        fit: FlexFit.tight,
+                                        child: ColoredBox(
+                                          //TODO REMOVE BEFORE FLIGHT
+                                          color: Colors.teal,
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                "Bilanz bisher".toUpperCase(),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .overline,
+                                              ),
+                                              Expanded(
+                                                child: FittedBox(
+                                                  fit: BoxFit.scaleDown,
+                                                  child: StyledAmount(
+                                                    snapshot.data?.mtdBalance ??
+                                                        0.00,
+                                                    context.locale,
+                                                    settings
+                                                        .getStandardCurrency()
+                                                        .symbol,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Flexible(
+                                        flex: 6,
+                                        fit: FlexFit.tight,
+                                        child: ColoredBox(
+                                          //TODO REMOVE BEFORE FLIGHT
+                                          color: Colors.lightBlueAccent,
+                                          child: Column(
+                                            children: [
+                                              FittedBox(
+                                                fit: BoxFit.fitWidth,
+                                                child: Text(
+                                                  "± Verträge".toUpperCase(),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .overline,
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                              Flexible(
+                                                child: FittedBox(
+                                                  child: StyledAmount(
+                                                    snapshot.data
+                                                            ?.eomFutureSerialIncome ??
+                                                        0.00,
+                                                    context.locale,
+                                                    settings
+                                                        .getStandardCurrency()
+                                                        .symbol,
+                                                  ),
+                                                ),
+                                              ),
+                                              Flexible(
+                                                child: FittedBox(
+                                                  child: StyledAmount(
+                                                    snapshot.data
+                                                            ?.eomFutureSerialExpenses ??
+                                                        -0.00,
+                                                    context.locale,
+                                                    settings
+                                                        .getStandardCurrency()
+                                                        .symbol,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Flexible(
+                                        flex: 6,
+                                        fit: FlexFit.tight,
+                                        child: ColoredBox(
+                                          //TODO REMOVE BEFORE FLIGHT
+                                          color: Colors.lightGreenAccent,
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                "= Endbilanz".toUpperCase(),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .overline,
+                                              ),
+                                              Expanded(
+                                                child: FittedBox(
+                                                  fit: BoxFit.scaleDown,
+                                                  child: StyledAmount(
+                                                    snapshot.data?.eomBalance ??
+                                                        0.00,
+                                                    context.locale,
+                                                    settings
+                                                        .getStandardCurrency()
+                                                        .symbol,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+                                //LOWER PART
+                                Expanded(
+                                  flex: 4,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      Text(
+                                        "Gesamtkontostand".toUpperCase(),
+                                        textAlign: TextAlign.center,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .overline,
+                                      ),
+                                      FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: StyledAmount(
+                                          snapshot.data?.allTimeSumBalance ??
+                                              0.00,
+                                          context.locale,
+                                          settings.getStandardCurrency().symbol,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
                         ),
-                      ],
-                    ),
+                      ),
+
+                      //GO FORWARD IN TIME
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            visualDensity: VisualDensity.compact,
+                            onPressed: () {
+                              goForwardInTime(algorithmProvider);
+                            },
+                            icon: const Icon(Icons.arrow_forward_ios_rounded),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ],
