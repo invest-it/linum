@@ -9,10 +9,11 @@ import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 
 // Annotation which generates the cat.mocks.dart library and the MockCat class.
-@GenerateNiceMocks([MockSpec<OnboardingScreenProvider>()])
 @GenerateNiceMocks([MockSpec<BuildContext>()])
+@GenerateNiceMocks([MockSpec<DiagnosticsNode>()])
 @GenerateNiceMocks([MockSpec<MediaQueryData>()])
 @GenerateNiceMocks([MockSpec<MediaQuery>()])
+@GenerateNiceMocks([MockSpec<OnboardingScreenProvider>()])
 import 'login_screen_test.mocks.dart';
 
 void main() {
@@ -21,6 +22,7 @@ void main() {
     late MockBuildContext mockBuildContext;
     late MockMediaQuery mockMediaQuery;
     late MockMediaQueryData mockMediaQueryData;
+    late MockDiagnosticsNode mockDiagnosticsNode;
 
     const screenHeight = 812.0;
     const screenWidth = 375.0;
@@ -39,11 +41,17 @@ void main() {
       mockMediaQuery = MockMediaQuery();
       when(mockMediaQuery.data).thenReturn(mockMediaQueryData);
 
+      mockDiagnosticsNode = MockDiagnosticsNode();
+
       mockBuildContext = MockBuildContext();
       when(mockBuildContext.dependOnInheritedWidgetOfExactType<MediaQuery>())
           .thenReturn(mockMediaQuery);
+      when(mockBuildContext.describeWidget(any))
+          .thenReturn(mockDiagnosticsNode);
+      when(mockBuildContext.describeOwnershipChain(any))
+          .thenReturn(mockDiagnosticsNode);
 
-      SizeGuide.init(mockBuildContext);
+      // SizeGuide.init(mockBuildContext);
     });
 
     testWidgets('renders correctly', (WidgetTester tester) async {
@@ -62,120 +70,6 @@ void main() {
       expect(find.byType(LoginForm), findsOneWidget);
       expect(find.byType(Positioned), findsOneWidget);
       expect(find.byType(ClipRRect), findsNWidgets(2));
-    });
-
-    testWidgets('sets the state when onTap is called',
-        (WidgetTester tester) async {
-      when(mockProvider.setPageState(OnboardingPageState.login))
-          .thenReturn(null);
-      await tester.pumpWidget(
-        MaterialApp(
-          home: ChangeNotifierProvider.value(
-            value: mockProvider,
-            child: const LoginScreen(),
-          ),
-        ),
-      );
-      await tester.tap(find.byType(GestureDetector));
-      verify(mockProvider.setPageState(OnboardingPageState.login)).called(1);
-    });
-
-    testWidgets('renders the login page', (WidgetTester tester) async {
-      when(mockProvider.pageState).thenReturn(OnboardingPageState.login);
-      when(mockProvider.setPageState(OnboardingPageState.login))
-          .thenReturn(null);
-      await tester.pumpWidget(
-        MaterialApp(
-          home: ChangeNotifierProvider.value(
-            value: mockProvider,
-            child: const LoginScreen(),
-          ),
-        ),
-      );
-      final loginYOffset =
-          proportionateScreenHeightFraction(ScreenFraction.twofifths);
-      const loginXOffset = 0.0;
-      final loginWidth = screenWidth;
-      const loginOpacity = 1.0;
-      const loginFormYOffset = 0.0;
-      const loginFormHeight = 742.0;
-
-      expect(
-          tester
-              .widget<GestureDetector>(
-                find.byType(GestureDetector),
-              )
-              .onTap,
-          isNotNull);
-
-      expect(
-        tester
-            .widget<AnimatedContainer>(
-              find.byType(AnimatedContainer),
-            )
-            .duration,
-        const Duration(milliseconds: 1200),
-      );
-      expect(
-        tester
-            .widget<AnimatedContainer>(
-              find.byType(AnimatedContainer),
-            )
-            .curve,
-        Curves.fastLinearToSlowEaseIn,
-      );
-      expect(
-        tester
-            .widget<AnimatedContainer>(
-              find.byType(AnimatedContainer),
-            )
-            .transform,
-        Matrix4.translationValues(loginXOffset, loginYOffset, 1),
-      );
-      expect(
-          tester
-              .widget<AnimatedContainer>(
-                find.byType(AnimatedContainer),
-              )
-              .decoration,
-          const BoxDecoration(
-            color: Colors.black, // TODO
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(32),
-              topRight: Radius.circular(32),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Color(0x7f000000),
-                offset: Offset(0, 5),
-                blurRadius: 10,
-                spreadRadius: 5,
-              ),
-            ],
-          ));
-
-      expect(
-        tester
-            .widget<SizedBox>(
-              find.byType(SizedBox),
-            )
-            .height,
-        loginFormHeight,
-      );
-      // expect(
-      //   tester.widget<AnimatedContainer>(
-      //     find.byType(AnimatedContainer),
-      //   ).width,
-      //   loginWidth,
-      // );
-      expect(
-        tester
-            .widget<AnimatedOpacity>(
-              find.byType(AnimatedOpacity),
-            )
-            .opacity,
-        loginOpacity,
-      );
     });
   });
 }

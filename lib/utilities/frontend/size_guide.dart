@@ -3,8 +3,7 @@
 //  Author: NightmindOfficial
 //  Co-Author: n/a
 //
-
-
+/*
 import 'package:flutter/material.dart';
 
 class SizeGuide {
@@ -214,3 +213,4 @@ enum ScreenFraction {
   ///1%
   quantile,
 }
+*/
