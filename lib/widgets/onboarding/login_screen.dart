@@ -45,7 +45,8 @@ class _LoginScreenState extends State<LoginScreen> {
       case OnboardingPageState.login:
         _loginYOffset = sizeGuideProvider.isKeyboardOpen(context)
             ? sizeGuideProvider.proportionateScreenHeightFraction(
-                    ScreenFraction.twofifths) -
+                  ScreenFraction.twofifths,
+                ) -
                 (sizeGuideProvider.keyboardHeight / 2)
             : sizeGuideProvider
                 .proportionateScreenHeightFraction(ScreenFraction.twofifths);
@@ -57,11 +58,13 @@ class _LoginScreenState extends State<LoginScreen> {
       case OnboardingPageState.register:
         _loginYOffset = sizeGuideProvider.isKeyboardOpen(context)
             ? sizeGuideProvider.proportionateScreenHeightFraction(
-                    ScreenFraction.twofifths) -
+                  ScreenFraction.twofifths,
+                ) -
                 (sizeGuideProvider.keyboardHeight / 2) -
                 32
             : sizeGuideProvider.proportionateScreenHeightFraction(
-                    ScreenFraction.twofifths) -
+                  ScreenFraction.twofifths,
+                ) -
                 32;
         _loginXOffset = 20;
         _loginWidth = sizeGuideProvider.realScreenWidth() - 40;

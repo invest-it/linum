@@ -21,6 +21,8 @@ void main() {
     late MockOnboardingScreenProvider mockOnboardingScreenProvider;
     late MockSizeGuideProvider mockSizeGuideProvider;
     late MockAuthenticationService mockAuthenticationService;
+    late MultiProvider baseMultiProvider;
+
     setUp(() {
       mockOnboardingScreenProvider = MockOnboardingScreenProvider();
       when(mockOnboardingScreenProvider.pageState)
@@ -29,29 +31,31 @@ void main() {
       mockSizeGuideProvider = MockSizeGuideProvider();
 
       mockAuthenticationService = MockAuthenticationService();
+
+      baseMultiProvider = MultiProvider(
+        providers: [
+          ChangeNotifierProvider<OnboardingScreenProvider>(
+            create: (_) => mockOnboardingScreenProvider,
+          ),
+          ChangeNotifierProvider<SizeGuideProvider>(
+            create: (_) => mockSizeGuideProvider,
+          ),
+          ChangeNotifierProvider<AuthenticationService>(
+            create: (_) => mockAuthenticationService,
+          ),
+          ChangeNotifierProvider<ActionLipStatusProvider>(
+            create: (_) => ActionLipStatusProvider(),
+          ),
+        ],
+        child: const LoginScreen(),
+      );
     });
 
     testWidgets('renders all children', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: MultiProvider(
-              providers: [
-                ChangeNotifierProvider<OnboardingScreenProvider>(
-                  create: (_) => mockOnboardingScreenProvider,
-                ),
-                ChangeNotifierProvider<SizeGuideProvider>(
-                  create: (_) => mockSizeGuideProvider,
-                ),
-                ChangeNotifierProvider<AuthenticationService>(
-                  create: (_) => mockAuthenticationService,
-                ),
-                ChangeNotifierProvider<ActionLipStatusProvider>(
-                  create: (_) => ActionLipStatusProvider(),
-                ),
-              ],
-              child: const LoginScreen(),
-            ),
+            body: baseMultiProvider,
           ),
         ),
       );
