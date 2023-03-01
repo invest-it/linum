@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:linum/models/dialog_action.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/size_guide_provider.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:provider/provider.dart';
 

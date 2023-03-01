@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/auth/login_form.dart';
 import 'package:linum/widgets/onboarding/login_screen.dart';
 import 'package:mockito/annotations.dart';

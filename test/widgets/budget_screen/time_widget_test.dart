@@ -7,8 +7,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/providers/size_guide_provider.dart';
-import 'package:linum/utilities/frontend/multi_provider_builder.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/budget_screen/time_widget.dart';
 import 'package:provider/provider.dart';
 

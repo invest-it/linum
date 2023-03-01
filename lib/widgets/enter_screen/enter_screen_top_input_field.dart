@@ -13,7 +13,6 @@ import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/providers/size_guide_provider.dart';
 import 'package:linum/utilities/frontend/currency_formatter.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/screen_skeleton/app_bar_action.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:linum/widgets/text_container.dart';

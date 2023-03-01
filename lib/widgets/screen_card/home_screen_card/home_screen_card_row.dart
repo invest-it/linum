@@ -12,7 +12,6 @@ import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/size_guide_provider.dart';
 import 'package:linum/utilities/frontend/currency_formatter.dart';
 import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/screen_card/card_widgets/home_screen_card_avatar.dart';
 import 'package:provider/provider.dart';
 

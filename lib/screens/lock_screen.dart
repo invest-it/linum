@@ -10,7 +10,6 @@ import 'package:linum/models/lock_screen_action.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/providers/size_guide_provider.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/lock_screen/numeric_field.dart';
 import 'package:linum/widgets/lock_screen/pin_field.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';

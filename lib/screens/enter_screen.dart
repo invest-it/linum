@@ -14,7 +14,6 @@ import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/providers/size_guide_provider.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/enter_screen/add_amount_dialog.dart';
 import 'package:linum/widgets/enter_screen/delete_entry_dialog.dart';
 import 'package:linum/widgets/enter_screen/enter_screen_list_view.dart';

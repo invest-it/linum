@@ -16,7 +16,6 @@ import 'package:linum/providers/onboarding_screen_provider.dart';
 import 'package:linum/providers/size_guide_provider.dart';
 import 'package:linum/utilities/frontend/country_flag_generator.dart';
 import 'package:linum/utilities/frontend/silent_scroll.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/onboarding/login_screen.dart';
 import 'package:linum/widgets/onboarding/page_indicator.dart';
 import 'package:linum/widgets/onboarding/register_screen.dart';

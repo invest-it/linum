@@ -11,7 +11,6 @@ import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/providers/size_guide_provider.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:provider/provider.dart';
 
 class LogoutForm extends StatefulWidget {

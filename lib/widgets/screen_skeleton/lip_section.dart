@@ -6,7 +6,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:linum/providers/size_guide_provider.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:provider/provider.dart';
 
 class LipSection extends StatelessWidget {

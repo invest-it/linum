@@ -9,7 +9,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/constants/main_theme_data.dart';
 import 'package:linum/constants/ring_colors.dart';
 import 'package:linum/providers/size_guide_provider.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/lock_screen/pin_field.dart';
 import 'package:provider/provider.dart';
 

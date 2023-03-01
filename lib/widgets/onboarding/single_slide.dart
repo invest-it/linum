@@ -10,7 +10,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linum/models/onboarding_slide_data.dart';
 import 'package:linum/providers/size_guide_provider.dart';
 import 'package:linum/utilities/backend/url_handler.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:provider/provider.dart';
 
 class SingleSlide extends StatefulWidget {

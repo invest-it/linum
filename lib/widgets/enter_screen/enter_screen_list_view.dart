@@ -17,7 +17,6 @@ import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/providers/size_guide_provider.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/enter_screen/currency_list_view.dart';
 import 'package:linum/widgets/enter_screen/enter_screen_list_tile.dart';
 import 'package:linum/widgets/enter_screen/expense_category_list_view.dart';
