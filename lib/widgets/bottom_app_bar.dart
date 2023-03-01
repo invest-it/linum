@@ -5,7 +5,9 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:linum/providers/size_guide_provider.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:provider/provider.dart';
 
 class BottomAppBarItem {
   final IconData iconData;
@@ -31,7 +33,7 @@ class FABBottomAppBar extends StatefulWidget {
   });
   final List<BottomAppBarItem> items;
   final String centerItemText;
-  final double height = proportionateScreenHeight(64);
+  final double notproportionateHeight = 64;
   final double minHeight = 64.0;
   final double iconSize = 26;
   final Color backgroundColor;
@@ -46,13 +48,16 @@ class FABBottomAppBar extends StatefulWidget {
 class FABBottomAppBarState extends State<FABBottomAppBar> {
   @override
   Widget build(BuildContext context) {
+    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
+
     final List<Widget> items = List.generate(widget.items.length, (int index) {
       return _buildTabItem(
         item: widget.items[index],
         index: index,
+        sizeGuideProvider: sizeGuideProvider,
       );
     });
-    items.insert(items.length >> 1, _buildMiddleTabItem());
+    items.insert(items.length >> 1, _buildMiddleTabItem(sizeGuideProvider));
 
     return BottomAppBar(
       shape: widget.notchedShape,
@@ -64,10 +69,11 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
     );
   }
 
-  Widget _buildMiddleTabItem() {
+  Widget _buildMiddleTabItem(SizeGuideProvider sizeGuideProvider) {
     return Expanded(
       child: SizedBox(
-        height: widget.height,
+        height: sizeGuideProvider
+            .proportionateScreenHeight(widget.notproportionateHeight),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -83,14 +89,15 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
     );
   }
 
-  Widget _buildTabItem({
-    required BottomAppBarItem item,
-    required int index,
-  }) {
+  Widget _buildTabItem(
+      {required BottomAppBarItem item,
+      required int index,
+      required SizeGuideProvider sizeGuideProvider}) {
     final Color color = item.selected ? widget.selectedColor : widget.color;
     return Expanded(
       child: Container(
-        height: widget.height,
+        height: sizeGuideProvider
+            .proportionateScreenHeight(widget.notproportionateHeight),
         constraints: BoxConstraints(minHeight: widget.minHeight),
         child: Material(
           type: MaterialType.transparency,

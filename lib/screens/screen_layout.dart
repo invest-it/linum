@@ -17,6 +17,7 @@ import 'package:linum/navigation/screen_builders.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
+import 'package:linum/providers/size_guide_provider.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/bottom_app_bar.dart';
 import 'package:provider/provider.dart';
@@ -68,13 +69,15 @@ class _ScreenLayoutState extends State<ScreenLayout>
         Provider.of<AccountSettingsProvider>(context);
 
     final firestore.CollectionReference balance =
-      firestore.FirebaseFirestore.instance.collection('balance');
+        firestore.FirebaseFirestore.instance.collection('balance');
+
+    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
 
     // ignore: unused_local_variable
     final Widget loadingIndicator = Container(
       color: Colors.grey[300],
-      width: proportionateScreenWidth(70.0),
-      height: proportionateScreenWidth(70.0),
+      width: sizeGuideProvider.proportionateScreenWidth(70.0),
+      height: sizeGuideProvider.proportionateScreenWidth(70.0),
       child: const Center(
         child: CircularProgressIndicator(),
       ),
@@ -89,7 +92,8 @@ class _ScreenLayoutState extends State<ScreenLayout>
           stream: balance.snapshots(),
           builder: (ctx, AsyncSnapshot<firestore.QuerySnapshot> snapshot) {
             //returns the page at the current index, or at the lock screen index if a) the PIN lock is active AND b) there is a code for the email used for login stored in sharedPreferences AND c) the pin code has not been recalled before
-            return screens[widget.currentRoute]!; // TODO: Check if this can be kept
+            return screens[
+                widget.currentRoute]!; // TODO: Check if this can be kept
           },
         ),
       ),
@@ -98,14 +102,16 @@ class _ScreenLayoutState extends State<ScreenLayout>
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           final enterScreenSettings = EnterScreenPageSettings.withSettings(
-            category: accountSettingsProvider.settings['StandardCategoryExpense'] as String?,
-            secondaryCategory: accountSettingsProvider.settings['StandardCategoryIncome'] as String?,
+            category: accountSettingsProvider
+                .settings['StandardCategoryExpense'] as String?,
+            secondaryCategory: accountSettingsProvider
+                .settings['StandardCategoryIncome'] as String?,
             currency: accountSettingsProvider.getStandardCurrency(),
           );
 
           Get.find<MainRouterDelegate>().pushRoute(
-              MainRoute.enter,
-              settings: enterScreenSettings,
+            MainRoute.enter,
+            settings: enterScreenSettings,
           );
 
           /*Navigator.push(
@@ -181,7 +187,6 @@ class _ScreenLayoutState extends State<ScreenLayout>
       ),
     );
   }
-
 
   Future<void> createRandomData(BuildContext context) async {
     final BalanceDataProvider balanceDataProvider =

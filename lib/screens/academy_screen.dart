@@ -8,10 +8,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linum/navigation/get_delegate.dart';
+import 'package:linum/providers/pin_code_provider.dart';
+import 'package:linum/providers/size_guide_provider.dart';
 import 'package:linum/utilities/backend/url_handler.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/screen_skeleton/app_bar_action.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
+import 'package:provider/provider.dart';
 
 /// Page Index: 4
 class AcademyScreen extends StatelessWidget {
@@ -19,6 +22,7 @@ class AcademyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
 
     return ScreenSkeleton(
       head: 'Academy',
@@ -33,8 +37,8 @@ class AcademyScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              height:
-                  proportionateScreenHeightFraction(ScreenFraction.onequarter),
+              height: sizeGuideProvider
+                  .proportionateScreenHeightFraction(ScreenFraction.onequarter),
               child: SvgPicture.asset('assets/svg/video-files.svg'),
             ),
             Padding(

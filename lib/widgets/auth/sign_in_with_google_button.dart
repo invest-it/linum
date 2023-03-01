@@ -6,7 +6,9 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/providers/size_guide_provider.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:provider/provider.dart';
 
 class SignInWithGoogleButton extends StatelessWidget {
   const SignInWithGoogleButton({
@@ -18,12 +20,13 @@ class SignInWithGoogleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
         backgroundColor: Colors.white,
         minimumSize: Size(
           double.infinity,
-          proportionateScreenHeight(40),
+          sizeGuideProvider.proportionateScreenHeight(40),
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),

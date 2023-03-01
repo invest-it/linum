@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
+import 'package:linum/providers/size_guide_provider.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:linum/widgets/auth/forgot_password.dart';
@@ -50,6 +51,9 @@ class _LoginFormState extends State<LoginForm> {
 
     final AuthenticationService auth =
         Provider.of<AuthenticationService>(context);
+
+    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
+
     final UserAlert userAlert = UserAlert(context: context);
 
     void logIn(String mail, String pass) {
@@ -107,7 +111,8 @@ class _LoginFormState extends State<LoginForm> {
                         autocorrect: false,
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: tr('onboarding_screen.login-email-hintlabel'),
+                          hintText:
+                              tr('onboarding_screen.login-email-hintlabel'),
                           hintStyle: Theme.of(context)
                               .textTheme
                               .bodyText1
@@ -119,7 +124,8 @@ class _LoginFormState extends State<LoginForm> {
                               : null,
                         ),
                         onTap: () {
-                          onboardingScreenProvider.setPageState(OnboardingPageState.login);
+                          onboardingScreenProvider
+                              .setPageState(OnboardingPageState.login);
                         },
                       ),
                     ),
@@ -139,9 +145,11 @@ class _LoginFormState extends State<LoginForm> {
                         //    logIn(_mailController!.text, _passController.text),
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: tr('onboarding_screen.login-password-hintlabel'),
+                          hintText:
+                              tr('onboarding_screen.login-password-hintlabel'),
                           errorText: _passValidate
-                              ? tr('onboarding_screen.login-password-errorlabel')
+                              ? tr(
+                                  'onboarding_screen.login-password-errorlabel')
                               : null,
                           hintStyle: Theme.of(context)
                               .textTheme
@@ -156,7 +164,7 @@ class _LoginFormState extends State<LoginForm> {
                 ),
               ),
               SizedBox(
-                height: proportionateScreenHeight(32),
+                height: sizeGuideProvider.proportionateScreenHeight(32),
               ),
               // Container(
               //   height: 50,
@@ -195,24 +203,24 @@ class _LoginFormState extends State<LoginForm> {
                 },
               ),
               SizedBox(
-                height: proportionateScreenHeight(8),
+                height: sizeGuideProvider.proportionateScreenHeight(8),
               ),
               ForgotPasswordButton(ProviderKey.onboarding),
               SizedBox(
-                height: proportionateScreenHeight(8),
+                height: sizeGuideProvider.proportionateScreenHeight(8),
               ),
               SignInWithGoogleButton(
                 onPressed: auth.signInWithGoogle,
               ),
               SizedBox(
-                height: proportionateScreenHeight(8),
+                height: sizeGuideProvider.proportionateScreenHeight(8),
               ),
               if (Platform.isIOS) ...[
                 // Works only on iOS at the moment (according to Google)
                 SignInWithAppleButton(
                   onPressed: auth.signInWithApple,
                   text: tr('onboarding_screen.apple-button'),
-                  height: proportionateScreenHeight(40),
+                  height: sizeGuideProvider.proportionateScreenHeight(40),
                 ),
               ],
             ],

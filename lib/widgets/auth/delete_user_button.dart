@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/models/dialog_action.dart';
 import 'package:linum/providers/authentication_service.dart';
+import 'package:linum/providers/size_guide_provider.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,8 @@ class DeleteUserButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final AuthenticationService authenticationService =
         Provider.of<AuthenticationService>(context);
+
+    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
 
     final UserAlert userAlert = UserAlert(context: context);
 
@@ -50,7 +53,7 @@ class DeleteUserButton extends StatelessWidget {
           shadowColor: Theme.of(context).colorScheme.onBackground,
           minimumSize: Size(
             double.infinity,
-            proportionateScreenHeight(48),
+            sizeGuideProvider.proportionateScreenHeight(48),
           ),
           backgroundColor: Theme.of(context).colorScheme.background,
           side: BorderSide(

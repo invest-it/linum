@@ -13,6 +13,7 @@ import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
+import 'package:linum/providers/size_guide_provider.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/enter_screen/add_amount_dialog.dart';
 import 'package:linum/widgets/enter_screen/delete_entry_dialog.dart';
@@ -37,6 +38,9 @@ class _EnterScreenState extends State<EnterScreen> {
   Widget build(BuildContext context) {
     final EnterScreenProvider enterScreenProvider =
         Provider.of<EnterScreenProvider>(context);
+
+    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
+
     // final BalanceDataProvider balanceDataProvider =
     //     Provider.of<BalanceDataProvider>(context);
 
@@ -105,8 +109,10 @@ class _EnterScreenState extends State<EnterScreen> {
                                 style: TextButton.styleFrom(
                                   textStyle: Theme.of(context).textTheme.button,
                                   fixedSize: Size(
-                                    proportionateScreenWidth(300),
-                                    proportionateScreenHeight(50),
+                                    sizeGuideProvider
+                                        .proportionateScreenWidth(300),
+                                    sizeGuideProvider
+                                        .proportionateScreenHeight(50),
                                   ),
                                 ),
                                 onPressed: () {
@@ -163,8 +169,10 @@ class _EnterScreenState extends State<EnterScreen> {
                                     Theme.of(context).colorScheme.background,
                                 disabledForegroundColor: Colors.white,
                                 fixedSize: Size(
-                                  proportionateScreenWidth(300),
-                                  proportionateScreenHeight(40),
+                                  sizeGuideProvider
+                                      .proportionateScreenWidth(300),
+                                  sizeGuideProvider
+                                      .proportionateScreenHeight(40),
                                 ),
                               ),
                               onPressed: () {

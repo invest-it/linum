@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
+import 'package:linum/providers/size_guide_provider.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
@@ -27,6 +28,9 @@ class ForgotPasswordButton extends StatelessWidget {
 
     final AuthenticationService authenticationService =
         Provider.of<AuthenticationService>(context, listen: false);
+
+    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
+
     final UserAlert userAlert = UserAlert(context: context);
 
     void forgotPWactionLip() {
@@ -92,7 +96,8 @@ class ForgotPasswordButton extends StatelessWidget {
                               },
                               decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: tr('onboarding_screen.login-email-hintlabel'),
+                                hintText: tr(
+                                    'onboarding_screen.login-email-hintlabel'),
                                 hintStyle: Theme.of(context)
                                     .textTheme
                                     .bodyText1
@@ -108,10 +113,11 @@ class ForgotPasswordButton extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: proportionateScreenHeight(32),
+                      height: sizeGuideProvider.proportionateScreenHeight(32),
                     ),
                     GradientButton(
-                      increaseHeightBy: proportionateScreenHeight(16),
+                      increaseHeightBy:
+                          sizeGuideProvider.proportionateScreenHeight(16),
                       // Logged Out onPressed
                       callback: () {
                         authenticationService.resetPassword(
@@ -153,7 +159,8 @@ class ForgotPasswordButton extends StatelessWidget {
             ],
           ),
           actionLipStatus: ActionLipStatus.onviewport,
-          actionLipTitle: tr('action_lip.forgot-password.logged-out.label-title'),
+          actionLipTitle:
+              tr('action_lip.forgot-password.logged-out.label-title'),
         );
       }
       // lip if the user has already authenticated themself
@@ -219,7 +226,8 @@ class ForgotPasswordButton extends StatelessWidget {
                               },
                               decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: tr('onboarding_screen.login-password-hintlabel'),
+                                hintText: tr(
+                                    'onboarding_screen.login-password-hintlabel'),
                                 hintStyle: Theme.of(context)
                                     .textTheme
                                     .bodyText1
@@ -235,10 +243,11 @@ class ForgotPasswordButton extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: proportionateScreenHeight(32),
+                      height: sizeGuideProvider.proportionateScreenHeight(32),
                     ),
                     GradientButton(
-                      increaseHeightBy: proportionateScreenHeight(16),
+                      increaseHeightBy:
+                          sizeGuideProvider.proportionateScreenHeight(16),
                       //Logged in onPressed
                       callback: () => {
                         authenticationService.updatePassword(
@@ -280,7 +289,8 @@ class ForgotPasswordButton extends StatelessWidget {
             ],
           ),
           actionLipStatus: ActionLipStatus.onviewport,
-          actionLipTitle: tr('action_lip.forgot-password.logged-in.label-title'),
+          actionLipTitle:
+              tr('action_lip.forgot-password.logged-in.label-title'),
         );
       }
     }
@@ -293,7 +303,7 @@ class ForgotPasswordButton extends StatelessWidget {
         shadowColor: Theme.of(context).colorScheme.onBackground,
         minimumSize: Size(
           double.infinity,
-          proportionateScreenHeight(48),
+          sizeGuideProvider.proportionateScreenHeight(48),
         ),
         backgroundColor: Theme.of(context).colorScheme.background,
         side: BorderSide(

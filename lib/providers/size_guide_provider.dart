@@ -178,6 +178,11 @@ class SizeGuideProvider extends ChangeNotifier {
       );
     };
   }
+
+  /// Call when you know data has changed (or you worry it might have)
+  void update() {
+    notifyListeners();
+  }
 }
 
 enum ScreenFraction {
