@@ -23,7 +23,8 @@ class BodySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
+    final sizeGuideProvider =
+        Provider.of<SizeGuideProvider>(context, listen: false);
     return isInverted
         ? Expanded(
             // TODO look at this

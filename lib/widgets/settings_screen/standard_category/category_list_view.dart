@@ -42,7 +42,8 @@ class CategoryListView<T extends Enum> extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
+    final sizeGuideProvider =
+        Provider.of<SizeGuideProvider>(context, listen: false);
     return Column(
       children: [
         Padding(

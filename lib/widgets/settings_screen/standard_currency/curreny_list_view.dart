@@ -19,7 +19,8 @@ class CurrencyListView extends StatelessWidget {
   Widget build(BuildContext context) {
     final settings = Provider.of<AccountSettingsProvider>(context);
     final actionLipStatus = Provider.of<ActionLipStatusProvider>(context);
-    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
+    final sizeGuideProvider =
+        Provider.of<SizeGuideProvider>(context, listen: false);
     return Column(
       children: [
         Padding(

@@ -26,7 +26,8 @@ class LipSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
+    final sizeGuideProvider =
+        Provider.of<SizeGuideProvider>(context, listen: false);
     return isInverted
         ? Stack(
             children: [

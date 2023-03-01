@@ -33,7 +33,8 @@ class ToggleButtonElement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
+    final sizeGuideProvider =
+        Provider.of<SizeGuideProvider>(context, listen: false);
     return SizedBox(
       width: fixedWidth,
       child: Padding(

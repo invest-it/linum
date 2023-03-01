@@ -21,7 +21,8 @@ class HomeScreenCard extends StatelessWidget {
 
   @override
   ScreenCardSkeleton build(BuildContext context) {
-    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
+    final sizeGuideProvider =
+        Provider.of<SizeGuideProvider>(context, listen: false);
     return ScreenCardSkeleton(
       cardWidth: sizeGuideProvider.proportionateScreenWidth(345),
       cardHeight: sizeGuideProvider.proportionateScreenHeight(196),

@@ -22,7 +22,8 @@ class TimeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
+    final sizeGuideProvider =
+        Provider.of<SizeGuideProvider>(context, listen: false);
     return SizedBox(
       width: double.infinity,
       height: sizeGuideProvider.proportionateScreenHeight(32),

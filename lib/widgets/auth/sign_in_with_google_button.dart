@@ -20,7 +20,8 @@ class SignInWithGoogleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
+    final sizeGuideProvider =
+        Provider.of<SizeGuideProvider>(context, listen: false);
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
         backgroundColor: Colors.white,

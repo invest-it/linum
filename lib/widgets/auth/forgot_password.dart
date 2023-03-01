@@ -29,7 +29,8 @@ class ForgotPasswordButton extends StatelessWidget {
     final AuthenticationService authenticationService =
         Provider.of<AuthenticationService>(context, listen: false);
 
-    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
+    final sizeGuideProvider =
+        Provider.of<SizeGuideProvider>(context, listen: false);
 
     final UserAlert userAlert = UserAlert(context: context);
 

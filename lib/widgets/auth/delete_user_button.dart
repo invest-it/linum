@@ -15,7 +15,8 @@ class DeleteUserButton extends StatelessWidget {
     final AuthenticationService authenticationService =
         Provider.of<AuthenticationService>(context);
 
-    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
+    final sizeGuideProvider =
+        Provider.of<SizeGuideProvider>(context, listen: false);
 
     final UserAlert userAlert = UserAlert(context: context);
 

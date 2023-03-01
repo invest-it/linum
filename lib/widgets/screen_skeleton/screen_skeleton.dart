@@ -123,7 +123,8 @@ class ScreenSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     final ActionLipStatusProvider actionLipStatusProvider =
         Provider.of<ActionLipStatusProvider>(context, listen: false);
-    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
+    final sizeGuideProvider =
+        Provider.of<SizeGuideProvider>(context, listen: false);
     if (providerKey != null &&
         !actionLipStatusProvider.isActionStatusInitialized(providerKey!)) {
       actionLipStatusProvider.setActionLipStatusSilently(
