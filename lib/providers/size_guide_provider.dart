@@ -3,7 +3,9 @@ import 'package:linum/types/change_notifier_provider_builder.dart';
 import 'package:provider/provider.dart';
 
 class SizeGuideProvider extends ChangeNotifier {
-  late MediaQueryData _mediaQueryData;
+  late BuildContext _context;
+
+  MediaQueryData get _mediaQueryData => MediaQuery.of(_context);
 
   static const double referenceScreenWidth = 375.0;
   static const double referenceScreenHeight = 812.0;
@@ -15,7 +17,7 @@ class SizeGuideProvider extends ChangeNotifier {
   double get keyboardHeight => _mediaQueryData.viewInsets.bottom;
 
   SizeGuideProvider(BuildContext context) {
-    _mediaQueryData = MediaQuery.of(context);
+    _context = context;
   }
 
   bool isKeyboardOpen(BuildContext context) {
