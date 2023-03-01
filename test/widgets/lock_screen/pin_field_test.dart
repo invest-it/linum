@@ -8,8 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/constants/main_theme_data.dart';
 import 'package:linum/constants/ring_colors.dart';
+import 'package:linum/providers/size_guide_provider.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/lock_screen/pin_field.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   group('PinField', () {
@@ -19,13 +21,11 @@ void main() {
         MaterialApp(
           theme: MainThemeData.lightTheme,
           home: Scaffold(
-            body: Builder(
-              builder: (BuildContext context) {
-                SizeGuide.init(context);
-                return const PinField(1, 0, RingColors.green, key: key);
-              },
-            ),
-          ),
+              body: MultiProvider(providers: [
+            ChangeNotifierProvider<SizeGuideProvider>(
+              create: (ctx) => SizeGuideProvider(ctx),
+            )
+          ], child: const PinField(1, 0, RingColors.green, key: key))),
         ),
       );
       final Finder ring = find.byKey(key);
@@ -62,12 +62,11 @@ void main() {
         MaterialApp(
           theme: MainThemeData.lightTheme,
           home: Scaffold(
-            body: Builder(
-              builder: (BuildContext context) {
-                SizeGuide.init(context);
-                return const PinField(1, 2, RingColors.green, key: key);
-              },
-            ),
+            body: MultiProvider(providers: [
+              ChangeNotifierProvider<SizeGuideProvider>(
+                create: (ctx) => SizeGuideProvider(ctx),
+              )
+            ], child: const PinField(1, 2, RingColors.green, key: key)),
           ),
         ),
       );

@@ -16,6 +16,7 @@ import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
+import 'package:linum/providers/size_guide_provider.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/enter_screen/currency_list_view.dart';
 import 'package:linum/widgets/enter_screen/enter_screen_list_tile.dart';
@@ -27,13 +28,10 @@ import 'package:provider/provider.dart';
 
 class EnterScreenListView extends StatefulWidget {
   @override
-  _EnterScreenListViewState createState() =>
-      _EnterScreenListViewState();
+  _EnterScreenListViewState createState() => _EnterScreenListViewState();
 }
 
-class _EnterScreenListViewState
-    extends State<EnterScreenListView> {
-
+class _EnterScreenListViewState extends State<EnterScreenListView> {
   DateTime selectedDate = DateTime.now();
   final firstDate = DateTime(2000);
   final lastDate = DateTime(DateTime.now().year + 5, 12);
@@ -62,9 +60,9 @@ class _EnterScreenListViewState
         Provider.of<ActionLipStatusProvider>(context);
     final EnterScreenProvider enterScreenProvider =
         Provider.of<EnterScreenProvider>(context);
-
+    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
     final repeatConfig =
-      repeatConfigurations[enterScreenProvider.repeatDurationEnum];
+        repeatConfigurations[enterScreenProvider.repeatDurationEnum];
     final currency = standardCurrencies[enterScreenProvider.currency];
 
     final String langCode = context.locale.languageCode;
@@ -76,10 +74,10 @@ class _EnterScreenListViewState
         child: Column(
           children: [
             SizedBox(
-              height: proportionateScreenHeight(50),
+              height: sizeGuideProvider.proportionateScreenHeight(50),
             ),
             SizedBox(
-              width: proportionateScreenWidth(281),
+              width: sizeGuideProvider.proportionateScreenWidth(281),
               child: TextField(
                 maxLength: 32,
                 controller: myController,
@@ -102,7 +100,7 @@ class _EnterScreenListViewState
               ),
             ),
             SizedBox(
-              width: proportionateScreenWidth(300),
+              width: sizeGuideProvider.proportionateScreenWidth(300),
               child: ListView(
                 shrinkWrap: true,
                 padding: const EdgeInsets.all(8),
@@ -112,16 +110,17 @@ class _EnterScreenListViewState
                     EnterScreenListTile(
                       onTap: () {
                         _openActionLip(
-                            title: 'enter_screen_attribute_category'.tr(),
-                            listView:
+                          title: 'enter_screen_attribute_category'.tr(),
+                          listView:
                               _chooseCategoryListView(enterScreenProvider),
+                          sizeGuideProvider: sizeGuideProvider,
                         );
                       },
                       icon: _chooseCategoryIcon(enterScreenProvider),
                       label: 'enter_screen_attribute_category'.tr(),
                       currentSelection: _chooseCategoryText(
-                          enterScreenProvider,
-                          accountSettingsProvider,
+                        enterScreenProvider,
+                        accountSettingsProvider,
                       ),
                     ),
                     EnterScreenListTile(
@@ -130,27 +129,29 @@ class _EnterScreenListViewState
                       },
                       icon: const Icon(Icons.event),
                       label: 'enter_screen_attribute_date'.tr(),
-                      currentSelection: formatter
-                          .format(enterScreenProvider.selectedDate),
+                      currentSelection:
+                          formatter.format(enterScreenProvider.selectedDate),
                     ),
                     EnterScreenListTile(
                       onTap: () {
                         _openActionLip(
                           title: 'enter_screen_attribute_currency'.tr(),
                           listView: const CurrencyListView(),
+                          sizeGuideProvider: sizeGuideProvider,
                         );
                       },
                       icon: const Icon(Icons.currency_exchange_outlined),
                       label: 'enter_screen_attribute_currency'.tr(),
                       currentSelection: currency != null
-                        ? "${currency.label.tr()} (${currency.symbol})"
-                        : "currency.error.not-found",
+                          ? "${currency.label.tr()} (${currency.symbol})"
+                          : "currency.error.not-found",
                     ),
                     EnterScreenListTile(
                       onTap: () {
                         _openActionLip(
                           title: 'enter_screen_attribute_repeat'.tr(),
                           listView: const RepeatCategoryListView(),
+                          sizeGuideProvider: sizeGuideProvider,
                         );
                       },
                       icon: Icon(repeatConfig!.entryCategory.icon),
@@ -171,9 +172,10 @@ class _EnterScreenListViewState
   void _openActionLip({
     required String title,
     required Widget listView,
+    required SizeGuideProvider sizeGuideProvider,
   }) {
     final provider =
-      Provider.of<ActionLipStatusProvider>(context, listen: false);
+        Provider.of<ActionLipStatusProvider>(context, listen: false);
 
     FocusManager.instance.primaryFocus?.unfocus();
     provider.setActionLip(
@@ -182,7 +184,7 @@ class _EnterScreenListViewState
       actionLipTitle: title,
       actionLipBody: SingleChildScrollView(
         child: SizedBox(
-          height: proportionateScreenHeight(419),
+          height: sizeGuideProvider.proportionateScreenHeight(419),
           child: listView,
         ),
       ),
@@ -215,17 +217,17 @@ class _EnterScreenListViewState
     if (enterScreenProvider.isExpenses) {
       if (enterScreenProvider.category == "") {
         return tr(
-            standardExpenseCategories[StandardCategoryExpense.none]!.label,
+          standardExpenseCategories[StandardCategoryExpense.none]!.label,
         );
       }
-        return tr(
-          standardExpenseCategories[enterScreenProvider.category]?.label ??
-              'chosen expense',
-        );
+      return tr(
+        standardExpenseCategories[enterScreenProvider.category]?.label ??
+            'chosen expense',
+      );
     } else {
       if (enterScreenProvider.category == "") {
         return tr(
-            standardIncomeCategories[StandardCategoryIncome.none]!.label,
+          standardIncomeCategories[StandardCategoryIncome.none]!.label,
         );
       }
       return tr(

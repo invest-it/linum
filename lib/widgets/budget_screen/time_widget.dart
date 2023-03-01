@@ -6,7 +6,9 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/providers/size_guide_provider.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:provider/provider.dart';
 
 class TimeWidget extends StatelessWidget {
   const TimeWidget({
@@ -20,9 +22,10 @@ class TimeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
     return SizedBox(
       width: double.infinity,
-      height: proportionateScreenHeight(32),
+      height: sizeGuideProvider.proportionateScreenHeight(32),
       child: Align(
         alignment: Alignment.centerLeft,
         child: Text(

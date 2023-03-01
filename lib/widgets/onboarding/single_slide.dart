@@ -8,8 +8,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linum/models/onboarding_slide_data.dart';
+import 'package:linum/providers/size_guide_provider.dart';
 import 'package:linum/utilities/backend/url_handler.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:provider/provider.dart';
 
 class SingleSlide extends StatefulWidget {
   const SingleSlide({super.key, required this.slide});
@@ -23,13 +25,14 @@ class SingleSlide extends StatefulWidget {
 class _SingleSlideState extends State<SingleSlide> {
   @override
   Widget build(BuildContext context) {
+    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
     return Column(
       children: [
         SizedBox(
           width: double.infinity,
           child: Padding(
             padding: EdgeInsets.only(
-              top: proportionateScreenHeight(24),
+              top: sizeGuideProvider.proportionateScreenHeight(24),
             ),
             child: CupertinoButton(
               child: Text(
@@ -73,7 +76,7 @@ class _SingleSlideState extends State<SingleSlide> {
                 padding: EdgeInsets.zero,
               ),
         SizedBox(
-          height: proportionateScreenHeight(230),
+          height: sizeGuideProvider.proportionateScreenHeight(230),
         )
       ],
     );
