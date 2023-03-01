@@ -13,9 +13,12 @@ import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
 class ActionLip extends StatefulWidget {
-  const ActionLip(this.providerKey);
+  ActionLip(this.providerKey);
 
   final ProviderKey providerKey;
+
+  ActionLipStatus? oldStatus;
+
   @override
   State<ActionLip> createState() => _ActionLipState(providerKey);
 }
@@ -33,35 +36,10 @@ class _ActionLipState extends State<ActionLip> {
 
     final status = provider.getActionLipStatus(providerKey);
 
-    // log('Status when ActionLip was built:' + actionLipStatus.toString());
-    switch (status) {
-      case ActionLipStatus.hidden:
-        // _lipYOffset = realScreenHeight();
-        sizeGuideProvider.update();
-        break;
-      case ActionLipStatus.onviewport:
-        // setState(() {
-        // log('The offset of the actionLip is currently' +
-        // _lipYOffset.toString());
-        // SizeGuide.keyboardIsOpened
-        // ? log('Because the keyboard is opened, ')
-        // : log('Because the keyboard is not opened,');
-        // log('the offset has been reduced by ' +
-        // (SizeGuide.keyboardHeight / 2).toString());
-        sizeGuideProvider.update();
-        // _lipYOffset = sizeGuideProvider.isKeyboardOpen(context)
-        //     ? sizeGuideProvider.proportionateScreenHeightFraction(ScreenFraction.twofifths) -
-        //         (sizeGuideProvider.keyboardHeight / 2)
-        //     : sizeGuideProvider.proportionateScreenHeightFraction(ScreenFraction.twofifths);
-        // });
-        break;
-      case ActionLipStatus.disabled:
-        throw ArgumentError(
-          'If the actionLipStatus is set to DISABLED, the ActionLip class must not be invoked.',
-          'actionLipStatus',
-        );
+    if (widget.oldStatus != null && widget.oldStatus != status) {
+      sizeGuideProvider.update();
     }
-
+    widget.oldStatus = status;
     return AnimatedContainer(
       curve: Curves.fastLinearToSlowEaseIn,
       duration: const Duration(milliseconds: 1000),
