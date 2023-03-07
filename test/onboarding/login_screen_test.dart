@@ -69,5 +69,15 @@ void main() {
       expect(find.byType(ClipRRect), findsNWidgets(2));
       expect(find.byType(TextField), findsNWidgets(2));
     });
+
+    testWidgets('on OnboardingPageState', (WidgetTester tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: baseMultiProvider,
+          ),
+        ),
+      );
+    });
   });
 }
