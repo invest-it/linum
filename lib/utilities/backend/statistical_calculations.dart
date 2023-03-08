@@ -136,6 +136,25 @@ class StatisticalCalculations {
         baseData: _currentSerialGeneratedData,
       );
 
+  List<Transaction> get _tillBeginningOfMonthData => getDataUsingFilter(
+        Filters.newerThan(
+          firestore.Timestamp.fromDate(_algorithmProvider.currentShownMonth),
+        ),
+        baseData: _allData,
+      );
+  List<Transaction> get _tillEndOfMonthData => getDataUsingFilter(
+        Filters.newerThan(
+          firestore.Timestamp.fromDate(
+            DateTime(
+              _algorithmProvider.currentShownMonth.year,
+              _algorithmProvider.currentShownMonth.month + 1,
+              -1,
+            ),
+          ),
+        ),
+        baseData: _allData,
+      );
+
   List<SingleMonthStatistic> getBundledDataPerMonth({
     bool Function(dynamic)? additionalFilter,
   }) {
@@ -281,6 +300,14 @@ class StatisticalCalculations {
 
   num get sumSerialCosts {
     return _getSumFrom(_currentSerialGeneratedCostData);
+  }
+
+  num get tillBeginningOfMonthSumBalance {
+    return _getSumFrom(_tillBeginningOfMonthData);
+  }
+
+  num get tillEndOfMonthSumBalance {
+    return _getSumFrom(_tillEndOfMonthData);
   }
 
   int get countSerialIncomes {
