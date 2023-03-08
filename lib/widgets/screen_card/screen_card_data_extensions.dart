@@ -17,6 +17,8 @@ extension ScreenCardDataExtensions on BalanceDataProvider {
         countSerialIncomes: statData.countSerialIncomes,
         countSerialCosts: statData.countSerialCosts,
         allTimeSumBalance: statData.allTimeSumBalance,
+        tillBeginningOfMonthSumBalance: statData.tillBeginningOfMonthSumBalance,
+        tillEndOfMonthSumBalance: statData.tillEndOfMonthSumBalance,
       );
     });
   }

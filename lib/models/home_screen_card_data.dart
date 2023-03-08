@@ -24,6 +24,9 @@ class HomeScreenCardData {
   final int countSerialIncomes;
   final int countSerialCosts;
 
+  final num tillBeginningOfMonthSumBalance;
+  final num tillEndOfMonthSumBalance;
+
   const HomeScreenCardData({
     this.mtdBalance = 0,
     this.mtdExpenses = 0,
@@ -36,5 +39,7 @@ class HomeScreenCardData {
     this.allTimeSumBalance = 0,
     this.countSerialIncomes = 0,
     this.countSerialCosts = 0,
+    this.tillBeginningOfMonthSumBalance = 0,
+    this.tillEndOfMonthSumBalance = 0,
   });
 }
