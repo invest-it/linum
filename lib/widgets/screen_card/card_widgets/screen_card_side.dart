@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ScreenCardSide extends StatelessWidget {
-  Widget content;
-  double cardWidth;
-  double cardHeight;
-  ScreenCardSide({
+  final Widget content;
+  final double cardWidth;
+  final double cardHeight;
+  const ScreenCardSide({
     super.key,
     required this.content,
     required this.cardWidth,
