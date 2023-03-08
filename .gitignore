@@ -73,4 +73,5 @@ firebase_options.dart
 firebase_app_id_file.json
 
 # Mocks for Testing
-*.mocks.dart
+# TODO ignore mocks again
+#*.mocks.dart
