@@ -230,7 +230,12 @@
         "label-expenses": "Expenditure",
         "label-income": "Revenue",
         "label-total-balance": "Balance",
-        "label-total-balance-sub": "until today"
+        "label-total-balance-sub": "until today",
+        "label-monthly-planner": "Monthly planner",
+        "label-mtd-balance": "MTD balance",
+        "label-contracts": "± Contracts",
+        "label-eom-projected-balance": "EOM balance",
+        "label-account-position-month": "Account balance changes this month"
     },
     "listview": {
         "dismissible": {

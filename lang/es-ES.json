@@ -226,7 +226,12 @@
         "label-expenses": "Gasto",
         "label-income": "Ingresos",
         "label-total-balance": "Saldo",
-        "label-total-balance-sub": "hasta hoy"
+        "label-total-balance-sub": "hasta hoy",
+        "label-monthly-planner": "Agenda mensual",
+        "label-mtd-balance": "Balance hasta la fecha",
+        "label-contracts": "± Contratos",
+        "label-eom-projected-balance": "Balance final",
+        "label-account-position-month": "Saldo de la cuenta de principio a fin de mes"
     },
     "listview": {
         "dismissible": {

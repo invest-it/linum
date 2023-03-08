@@ -230,7 +230,12 @@
         "label-expenses": "Dépenses",
         "label-income": "Recettes",
         "label-total-balance": "Bilan",
-        "label-total-balance-sub": "jusqu'à aujourd'hui"
+        "label-total-balance-sub": "jusqu'à aujourd'hui",
+        "label-monthly-planner": "Agenda mensuel",
+        "label-mtd-balance": "Bilan jusqu'à présent",
+        "label-contracts": "± contrats",
+        "label-eom-projected-balance": "Bilan final",
+        "label-account-position-month": "Solde du compte du début à la fin du mois"
     },
     "listview": {
         "dismissible": {

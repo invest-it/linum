@@ -230,7 +230,12 @@
         "label-expenses": "Uitgaven",
         "label-income": "Inkomsten",
         "label-total-balance": "Saldo",
-        "label-total-balance-sub": "tot vandaag"
+        "label-total-balance-sub": "tot vandaag",
+        "label-monthly-planner": "Planner",
+        "label-mtd-balance": "Balans tot nu toe",
+        "label-contracts": "± Contracten",
+        "label-eom-projected-balance": "Eindbalans",
+        "label-account-position-month": "Saldo begin tot eind van de maand"
     },
     "listview": {
         "dismissible": {

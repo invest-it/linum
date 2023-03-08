@@ -230,7 +230,12 @@
         "label-expenses": "Ausgaben",
         "label-income": "Einnahmen",
         "label-total-balance": "Kontostand",
-        "label-total-balance-sub": "bis Heute"
+        "label-total-balance-sub": "bis Heute",
+        "label-monthly-planner": "Monatsplaner",
+        "label-mtd-balance": "Bilanz bisher",
+        "label-contracts": "± Verträge",
+        "label-eom-projected-balance": "Endbilanz",
+        "label-account-position-month": "Kontostand Monatsanfang bis -Ende"
     },
     "listview": {
         "dismissible": {
