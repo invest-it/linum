@@ -1,22 +1,28 @@
 //  Action Lip - A Lip that replaced the ModalBottomSheet Functionality. An ActionLip can be triggered on any screen, supposed that the providerKey is unique.
 //
+//  Code was Spaghetti before the SizeGuide remake. Code is Spaghetti after the SizeGuide remake.
+//
 //  Author: NightmindOfficial
 //  Co-Author: SoTBurst
 //  (Refactored)
 
 import 'package:flutter/material.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/providers/size_guide_provider.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
 // ignore_for_file: deprecated_member_use
 //TODO DEPRECATED
 
+// ignore: must_be_immutable
 class ActionLip extends StatefulWidget {
-  const ActionLip(this.providerKey);
+  ActionLip(this.providerKey);
 
   final ProviderKey providerKey;
+
+  ActionLipStatus? oldStatus;
+
   @override
   State<ActionLip> createState() => _ActionLipState(providerKey);
 }
@@ -25,38 +31,27 @@ class _ActionLipState extends State<ActionLip> {
   _ActionLipState(this.providerKey);
 
   final ProviderKey providerKey;
-  double _lipYOffset = realScreenHeight();
 
   @override
   Widget build(BuildContext context) {
+    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
     final ActionLipStatusProvider provider =
         Provider.of<ActionLipStatusProvider>(context);
 
-    switch (provider.getActionLipStatus(providerKey)) {
-      case ActionLipStatus.hidden:
-        setState(() {
-          _lipYOffset = realScreenHeight();
-        });
-        break;
-      case ActionLipStatus.onviewport:
-        setState(() {
-          _lipYOffset = SizeGuide.isKeyboardOpen(context)
-              ? proportionateScreenHeightFraction(ScreenFraction.twofifths) -
-                  (SizeGuide.keyboardHeight / 2)
-              : proportionateScreenHeightFraction(ScreenFraction.twofifths);
-        });
-        break;
-      case ActionLipStatus.disabled:
-        throw ArgumentError(
-          'If the actionLipStatus is set to DISABLED, the ActionLip class must not be invoked.',
-          'actionLipStatus',
-        );
-    }
+    final status = provider.getActionLipStatus(providerKey);
 
+    if (widget.oldStatus != null && widget.oldStatus != status) {
+      sizeGuideProvider.update();
+    }
+    widget.oldStatus = status;
     return AnimatedContainer(
       curve: Curves.fastLinearToSlowEaseIn,
       duration: const Duration(milliseconds: 1000),
-      transform: Matrix4.translationValues(0, _lipYOffset, 1),
+      transform: Matrix4.translationValues(
+        0,
+        _calculateYOffset(sizeGuideProvider, status),
+        1,
+      ),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.background,
         borderRadius: const BorderRadius.only(
@@ -72,7 +67,8 @@ class _ActionLipState extends State<ActionLip> {
       ),
       child: SizedBox(
         width: double.infinity,
-        height: proportionateScreenHeightFraction(ScreenFraction.threefifths),
+        height: sizeGuideProvider
+            .proportionateScreenHeightFraction(ScreenFraction.threefifths),
         child: Column(
           children: [
             AppBar(
@@ -104,5 +100,28 @@ class _ActionLipState extends State<ActionLip> {
         ),
       ),
     );
+  }
+
+  double _calculateYOffset(
+    SizeGuideProvider sizeGuideProvider,
+    ActionLipStatus status,
+  ) {
+    switch (status) {
+      case ActionLipStatus.hidden:
+        return sizeGuideProvider.realScreenHeight();
+      case ActionLipStatus.onviewport:
+        return sizeGuideProvider.isKeyboardOpen(context)
+            ? sizeGuideProvider.proportionateScreenHeightFraction(
+                  ScreenFraction.twofifths,
+                ) -
+                (sizeGuideProvider.keyboardHeight / 2)
+            : sizeGuideProvider
+                .proportionateScreenHeightFraction(ScreenFraction.twofifths);
+      case ActionLipStatus.disabled:
+        throw ArgumentError(
+          'If the actionLipStatus is set to DISABLED, the ActionLip class must not be invoked.',
+          'actionLipStatus',
+        );
+    }
   }
 }

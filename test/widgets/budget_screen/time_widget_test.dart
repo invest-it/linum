@@ -6,8 +6,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/providers/size_guide_provider.dart';
 import 'package:linum/widgets/budget_screen/time_widget.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   group("TimeWidget", () {
@@ -15,14 +16,16 @@ void main() {
         (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          home: Builder(
-            builder: (context) {
-              SizeGuide.init(context);
-              return const TimeWidget(
-                displayValue: "Test text",
-                isTranslated: true,
-              );
-            },
+          home: MultiProvider(
+            providers: [
+              ChangeNotifierProvider<SizeGuideProvider>(
+                create: (ctx) => SizeGuideProvider(ctx),
+              )
+            ],
+            child: const TimeWidget(
+              displayValue: "Test text",
+              isTranslated: true,
+            ),
           ),
         ),
       );

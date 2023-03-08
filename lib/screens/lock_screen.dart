@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/models/lock_screen_action.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/pin_code_provider.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/providers/size_guide_provider.dart';
 import 'package:linum/widgets/lock_screen/numeric_field.dart';
 import 'package:linum/widgets/lock_screen/pin_field.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
@@ -46,6 +46,8 @@ class _LockScreenState extends State<LockScreen> {
     //final ScreenIndexProvider sip = Provider.of<ScreenIndexProvider>(context);
     final LockScreenAction screenIntent = pinCodeProvider.recallPINLockIntent();
 
+    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
+
     //TODO check if we need this or not
     // ignore: unused_local_variable
     final void Function(int) addDigit = pinCodeProvider.addDigit;
@@ -67,7 +69,7 @@ class _LockScreenState extends State<LockScreen> {
                 Padding(
                   padding: EdgeInsets.only(
                     top: 4.0,
-                    bottom: proportionateScreenHeightFraction(
+                    bottom: sizeGuideProvider.proportionateScreenHeightFraction(
                       ScreenFraction.quantile,
                     ),
                   ),

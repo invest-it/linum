@@ -16,7 +16,7 @@ import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/providers/size_guide_provider.dart';
 import 'package:linum/widgets/enter_screen/currency_list_view.dart';
 import 'package:linum/widgets/enter_screen/enter_screen_list_tile.dart';
 import 'package:linum/widgets/enter_screen/expense_category_list_view.dart';
@@ -62,7 +62,7 @@ class _EnterScreenListViewState extends State<EnterScreenListView> {
         Provider.of<ActionLipStatusProvider>(context);
     final EnterScreenProvider enterScreenProvider =
         Provider.of<EnterScreenProvider>(context);
-
+    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
     final repeatConfig =
         repeatConfigurations[enterScreenProvider.repeatDurationEnum];
     final currency = standardCurrencies[enterScreenProvider.currency];
@@ -76,10 +76,10 @@ class _EnterScreenListViewState extends State<EnterScreenListView> {
         child: Column(
           children: [
             SizedBox(
-              height: proportionateScreenHeight(50),
+              height: sizeGuideProvider.proportionateScreenHeight(50),
             ),
             SizedBox(
-              width: proportionateScreenWidth(281),
+              width: sizeGuideProvider.proportionateScreenWidth(281),
               child: TextField(
                 maxLength: 32,
                 controller: myController,
@@ -102,7 +102,7 @@ class _EnterScreenListViewState extends State<EnterScreenListView> {
               ),
             ),
             SizedBox(
-              width: proportionateScreenWidth(300),
+              width: sizeGuideProvider.proportionateScreenWidth(300),
               child: ListView(
                 shrinkWrap: true,
                 padding: const EdgeInsets.all(8),
@@ -115,6 +115,7 @@ class _EnterScreenListViewState extends State<EnterScreenListView> {
                           title: 'enter_screen_attribute_category'.tr(),
                           listView:
                               _chooseCategoryListView(enterScreenProvider),
+                          sizeGuideProvider: sizeGuideProvider,
                         );
                       },
                       icon: _chooseCategoryIcon(enterScreenProvider),
@@ -138,6 +139,7 @@ class _EnterScreenListViewState extends State<EnterScreenListView> {
                         _openActionLip(
                           title: 'enter_screen_attribute_currency'.tr(),
                           listView: const CurrencyListView(),
+                          sizeGuideProvider: sizeGuideProvider,
                         );
                       },
                       icon: const Icon(Icons.currency_exchange_outlined),
@@ -151,6 +153,7 @@ class _EnterScreenListViewState extends State<EnterScreenListView> {
                         _openActionLip(
                           title: 'enter_screen_attribute_repeat'.tr(),
                           listView: const RepeatCategoryListView(),
+                          sizeGuideProvider: sizeGuideProvider,
                         );
                       },
                       icon: Icon(repeatConfig!.entryCategory.icon),
@@ -171,6 +174,7 @@ class _EnterScreenListViewState extends State<EnterScreenListView> {
   void _openActionLip({
     required String title,
     required Widget listView,
+    required SizeGuideProvider sizeGuideProvider,
   }) {
     final provider =
         Provider.of<ActionLipStatusProvider>(context, listen: false);
@@ -182,7 +186,7 @@ class _EnterScreenListViewState extends State<EnterScreenListView> {
       actionLipTitle: title,
       actionLipBody: SingleChildScrollView(
         child: SizedBox(
-          height: proportionateScreenHeight(419),
+          height: sizeGuideProvider.proportionateScreenHeight(419),
           child: listView,
         ),
       ),

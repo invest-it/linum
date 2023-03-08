@@ -6,7 +6,8 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/providers/size_guide_provider.dart';
+import 'package:provider/provider.dart';
 
 // ignore_for_file: deprecated_member_use
 //TODO DEPRECATED
@@ -21,12 +22,14 @@ class SignInWithGoogleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sizeGuideProvider =
+        Provider.of<SizeGuideProvider>(context, listen: false);
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
         backgroundColor: Colors.white,
         minimumSize: Size(
           double.infinity,
-          proportionateScreenHeight(40),
+          sizeGuideProvider.proportionateScreenHeight(40),
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),

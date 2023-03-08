@@ -6,7 +6,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/providers/size_guide_provider.dart';
 import 'package:linum/widgets/auth/register_form.dart';
 import 'package:provider/provider.dart';
 
@@ -19,11 +19,12 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   double _registerYOffset = 0;
-  double windowWidth = realScreenWidth();
-  double windowHeight = realScreenHeight();
+  // double windowWidth = realScreenWidth();
+  // double windowHeight = realScreenHeight();
 
   @override
   Widget build(BuildContext context) {
+    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
     final OnboardingScreenProvider onboardingScreenProvider =
         Provider.of<OnboardingScreenProvider>(
       context,
@@ -31,16 +32,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     switch (onboardingScreenProvider.pageState) {
       case OnboardingPageState.none:
-        _registerYOffset = windowHeight;
+        _registerYOffset = sizeGuideProvider.realScreenHeight();
         break;
       case OnboardingPageState.login:
-        _registerYOffset = windowHeight;
+        _registerYOffset = sizeGuideProvider.realScreenHeight();
         break;
       case OnboardingPageState.register:
-        _registerYOffset = SizeGuide.isKeyboardOpen(context)
-            ? proportionateScreenHeightFraction(ScreenFraction.twofifths) -
-                (SizeGuide.keyboardHeight / 2)
-            : proportionateScreenHeightFraction(ScreenFraction.twofifths);
+        _registerYOffset = sizeGuideProvider.isKeyboardOpen(context)
+            ? sizeGuideProvider.proportionateScreenHeightFraction(
+                  ScreenFraction.twofifths,
+                ) -
+                (sizeGuideProvider.keyboardHeight / 2)
+            : sizeGuideProvider
+                .proportionateScreenHeightFraction(ScreenFraction.twofifths);
     }
 
     return GestureDetector(
