@@ -104,7 +104,6 @@ class HomeScreenCardFront extends StatelessWidget {
                       return const LoadingSpinner();
                     }
 
-                    //TODO As soon as the HSC Front will get its rework by @NightmindOfficial, the balance label will appear bigger again.
                     return FittedBox(
                       fit: BoxFit.scaleDown,
                       child: StyledAmount(
