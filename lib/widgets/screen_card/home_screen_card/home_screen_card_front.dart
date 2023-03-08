@@ -20,6 +20,9 @@ import 'package:linum/widgets/screen_card/screen_card_data_extensions.dart';
 import 'package:linum/widgets/styled_amount.dart';
 import 'package:provider/provider.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 class HomeScreenCardFront extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

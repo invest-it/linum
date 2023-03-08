@@ -7,6 +7,9 @@
 import 'package:flutter/material.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 class LipSection extends StatelessWidget {
   final String lipTitle;
   final bool isInverted;

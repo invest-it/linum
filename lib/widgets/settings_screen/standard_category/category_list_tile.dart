@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/models/entry_category.dart';
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
 
 class CategoryListTile extends StatelessWidget {
   const CategoryListTile({

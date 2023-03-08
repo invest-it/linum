@@ -4,6 +4,9 @@
 //  Co-Author: damattl
 //  (Refactored)
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

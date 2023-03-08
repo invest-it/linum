@@ -25,15 +25,15 @@ import 'package:linum/widgets/enter_screen/repeat_category_list_view.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 class EnterScreenListView extends StatefulWidget {
   @override
-  _EnterScreenListViewState createState() =>
-      _EnterScreenListViewState();
+  _EnterScreenListViewState createState() => _EnterScreenListViewState();
 }
 
-class _EnterScreenListViewState
-    extends State<EnterScreenListView> {
-
+class _EnterScreenListViewState extends State<EnterScreenListView> {
   DateTime selectedDate = DateTime.now();
   final firstDate = DateTime(2000);
   final lastDate = DateTime(DateTime.now().year + 5, 12);
@@ -64,7 +64,7 @@ class _EnterScreenListViewState
         Provider.of<EnterScreenProvider>(context);
 
     final repeatConfig =
-      repeatConfigurations[enterScreenProvider.repeatDurationEnum];
+        repeatConfigurations[enterScreenProvider.repeatDurationEnum];
     final currency = standardCurrencies[enterScreenProvider.currency];
 
     final String langCode = context.locale.languageCode;
@@ -112,16 +112,16 @@ class _EnterScreenListViewState
                     EnterScreenListTile(
                       onTap: () {
                         _openActionLip(
-                            title: 'enter_screen_attribute_category'.tr(),
-                            listView:
+                          title: 'enter_screen_attribute_category'.tr(),
+                          listView:
                               _chooseCategoryListView(enterScreenProvider),
                         );
                       },
                       icon: _chooseCategoryIcon(enterScreenProvider),
                       label: 'enter_screen_attribute_category'.tr(),
                       currentSelection: _chooseCategoryText(
-                          enterScreenProvider,
-                          accountSettingsProvider,
+                        enterScreenProvider,
+                        accountSettingsProvider,
                       ),
                     ),
                     EnterScreenListTile(
@@ -130,8 +130,8 @@ class _EnterScreenListViewState
                       },
                       icon: const Icon(Icons.event),
                       label: 'enter_screen_attribute_date'.tr(),
-                      currentSelection: formatter
-                          .format(enterScreenProvider.selectedDate),
+                      currentSelection:
+                          formatter.format(enterScreenProvider.selectedDate),
                     ),
                     EnterScreenListTile(
                       onTap: () {
@@ -143,8 +143,8 @@ class _EnterScreenListViewState
                       icon: const Icon(Icons.currency_exchange_outlined),
                       label: 'enter_screen_attribute_currency'.tr(),
                       currentSelection: currency != null
-                        ? "${currency.label.tr()} (${currency.symbol})"
-                        : "currency.error.not-found",
+                          ? "${currency.label.tr()} (${currency.symbol})"
+                          : "currency.error.not-found",
                     ),
                     EnterScreenListTile(
                       onTap: () {
@@ -173,7 +173,7 @@ class _EnterScreenListViewState
     required Widget listView,
   }) {
     final provider =
-      Provider.of<ActionLipStatusProvider>(context, listen: false);
+        Provider.of<ActionLipStatusProvider>(context, listen: false);
 
     FocusManager.instance.primaryFocus?.unfocus();
     provider.setActionLip(
@@ -215,17 +215,17 @@ class _EnterScreenListViewState
     if (enterScreenProvider.isExpenses) {
       if (enterScreenProvider.category == "") {
         return tr(
-            standardExpenseCategories[StandardCategoryExpense.none]!.label,
+          standardExpenseCategories[StandardCategoryExpense.none]!.label,
         );
       }
-        return tr(
-          standardExpenseCategories[enterScreenProvider.category]?.label ??
-              'chosen expense',
-        );
+      return tr(
+        standardExpenseCategories[enterScreenProvider.category]?.label ??
+            'chosen expense',
+      );
     } else {
       if (enterScreenProvider.category == "") {
         return tr(
-            standardIncomeCategories[StandardCategoryIncome.none]!.label,
+          standardIncomeCategories[StandardCategoryIncome.none]!.label,
         );
       }
       return tr(

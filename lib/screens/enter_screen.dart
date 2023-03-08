@@ -2,8 +2,6 @@
 //
 //  Author: SoTBurst (thebluebaronx before the grand overhaul)
 //  Co-Author: NightmindOfficial, thebluebaronx
-/// NO PAGE INDEX (This screen is not part of the default route and needs to be pushed onto the Navigator)
-import 'dart:developer' as dev;
 import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +21,9 @@ import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:linum/widgets/top_bar_action_item.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
+
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
 
 class EnterScreen extends StatefulWidget {
   const EnterScreen({

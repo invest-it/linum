@@ -2,8 +2,6 @@
 //  NOTE: THIS SCREEN IS GOING TO BE REPLACED BY A NEW NAVIGATION SYSTEM SOON. //TODO @NightmindOfficial change this description once this has been performed.
 //  Author: thebluebaronx
 //  Co-Author: SoTBurst, NightmindOfficial, damattl
-/// NO PAGE INDEX (This Screen is always invoked)
-import 'dart:developer' as dev;
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart' as firestore;

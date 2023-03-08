@@ -19,6 +19,9 @@ import 'package:linum/widgets/auth/sign_in_with_google_button.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 class LoginForm extends StatefulWidget {
   @override
   State<LoginForm> createState() => _LoginFormState();
@@ -107,7 +110,8 @@ class _LoginFormState extends State<LoginForm> {
                         autocorrect: false,
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: tr('onboarding_screen.login-email-hintlabel'),
+                          hintText:
+                              tr('onboarding_screen.login-email-hintlabel'),
                           hintStyle: Theme.of(context)
                               .textTheme
                               .bodyText1
@@ -119,7 +123,8 @@ class _LoginFormState extends State<LoginForm> {
                               : null,
                         ),
                         onTap: () {
-                          onboardingScreenProvider.setPageState(OnboardingPageState.login);
+                          onboardingScreenProvider
+                              .setPageState(OnboardingPageState.login);
                         },
                       ),
                     ),
@@ -139,9 +144,12 @@ class _LoginFormState extends State<LoginForm> {
                         //    logIn(_mailController!.text, _passController.text),
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: tr('onboarding_screen.login-password-hintlabel'),
+                          hintText:
+                              tr('onboarding_screen.login-password-hintlabel'),
                           errorText: _passValidate
-                              ? tr('onboarding_screen.login-password-errorlabel')
+                              ? tr(
+                                  'onboarding_screen.login-password-errorlabel',
+                                )
                               : null,
                           hintStyle: Theme.of(context)
                               .textTheme

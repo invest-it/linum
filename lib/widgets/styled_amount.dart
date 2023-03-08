@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:linum/utilities/frontend/currency_formatter.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 class StyledAmount extends StatelessWidget {
   final String symbol;
   final TextAlign txtAlign;

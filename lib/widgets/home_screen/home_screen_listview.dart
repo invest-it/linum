@@ -27,6 +27,9 @@ import 'package:linum/widgets/enter_screen/delete_entry_dialog.dart';
 import 'package:linum/widgets/home_screen/transaction_amount_display.dart';
 import 'package:provider/provider.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 class HomeScreenListView implements BalanceDataListView {
   late ListView _listview;
 
@@ -121,7 +124,9 @@ class HomeScreenListView implements BalanceDataListView {
 
     final settings = Provider.of<AccountSettingsProvider>(context);
     final amountFormatter = TransactionAmountFormatter(
-        context.locale, settings.getStandardCurrency(),);
+      context.locale,
+      settings.getStandardCurrency(),
+    );
     // remember last used index in the list
     int currentIndex = 0;
     DateTime? currentTime;
@@ -504,9 +509,10 @@ class HomeScreenListView implements BalanceDataListView {
     final RepeatDurationType repeatDurationType =
         serialTransaction.repeatDurationType;
     final settings = Provider.of<AccountSettingsProvider>(context);
-    final formattedAmount = CurrencyFormatter(context.locale,
-            symbol: settings.getStandardCurrency().name,)
-        .format(serialTransaction.amount.abs());
+    final formattedAmount = CurrencyFormatter(
+      context.locale,
+      symbol: settings.getStandardCurrency().name,
+    ).format(serialTransaction.amount.abs());
 
     switch (repeatDurationType) {
       case RepeatDurationType.seconds:

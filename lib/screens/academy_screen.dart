@@ -13,13 +13,15 @@ import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/screen_skeleton/app_bar_action.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 /// Page Index: 4
 class AcademyScreen extends StatelessWidget {
   const AcademyScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     return ScreenSkeleton(
       head: 'Academy',
       leadingAction: (BuildContext context) => AppBarAction.fromParameters(

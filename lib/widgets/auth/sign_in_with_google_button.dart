@@ -8,6 +8,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 class SignInWithGoogleButton extends StatelessWidget {
   const SignInWithGoogleButton({
     super.key,

@@ -6,6 +6,8 @@ import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:provider/provider.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
 class DeleteUserButton extends StatelessWidget {
   const DeleteUserButton({super.key});
 

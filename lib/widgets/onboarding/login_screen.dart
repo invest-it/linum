@@ -11,6 +11,9 @@ import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/auth/login_form.dart';
 import 'package:provider/provider.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -42,7 +45,8 @@ class _LoginScreenState extends State<LoginScreen> {
         break;
       case OnboardingPageState.login:
         _loginYOffset = SizeGuide.isKeyboardOpen(context)
-            ? proportionateScreenHeightFraction(ScreenFraction.twofifths) - (SizeGuide.keyboardHeight / 2)
+            ? proportionateScreenHeightFraction(ScreenFraction.twofifths) -
+                (SizeGuide.keyboardHeight / 2)
             : proportionateScreenHeightFraction(ScreenFraction.twofifths);
 
         _loginXOffset = 0;
@@ -52,7 +56,8 @@ class _LoginScreenState extends State<LoginScreen> {
       case OnboardingPageState.register:
         _loginYOffset = SizeGuide.isKeyboardOpen(context)
             ? proportionateScreenHeightFraction(ScreenFraction.twofifths) -
-                (SizeGuide.keyboardHeight / 2) - 32
+                (SizeGuide.keyboardHeight / 2) -
+                32
             : proportionateScreenHeightFraction(ScreenFraction.twofifths) - 32;
         _loginXOffset = 20;
         _loginWidth = windowWidth - 40;
@@ -158,7 +163,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 child: GestureDetector(
                   onTap: () {
-                    onboardingScreenProvider.setPageState(OnboardingPageState.register);
+                    onboardingScreenProvider
+                        .setPageState(OnboardingPageState.register);
                   },
                   child: Container(
                     width: double.infinity,

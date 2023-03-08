@@ -13,6 +13,9 @@ import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:provider/provider.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 class LogoutForm extends StatefulWidget {
   @override
   State<LogoutForm> createState() => _LogoutFormState();
@@ -41,7 +44,8 @@ class _LogoutFormState extends State<LogoutForm> {
           increaseHeightBy: proportionateScreenHeight(16),
           callback: () => auth.signOut().then((_) {
             getRouterDelegate().rebuild();
-            Provider.of<PinCodeProvider>(context, listen: false).resetOnLogout();
+            Provider.of<PinCodeProvider>(context, listen: false)
+                .resetOnLogout();
           }),
           gradient: LinearGradient(
             colors: [

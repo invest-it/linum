@@ -10,6 +10,9 @@ import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/utilities/frontend/country_flag_generator.dart';
 import 'package:linum/widgets/settings_screen/toggle_button_element.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 class LanguageSelector extends StatelessWidget {
   const LanguageSelector({
     super.key,

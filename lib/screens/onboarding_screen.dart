@@ -24,6 +24,9 @@ import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
 
@@ -90,10 +93,12 @@ class _OnboardingScreenState extends State<OnboardingPage> {
           );
         });
         final String langString = countryFlagsToCountryCode[value] ?? "en";
-        context.setLocale(Locale(
-          langString,
-          langString != "en" ? langString.toUpperCase() : "US",
-        ),);
+        context.setLocale(
+          Locale(
+            langString,
+            langString != "en" ? langString.toUpperCase() : "US",
+          ),
+        );
 
         Provider.of<AuthenticationService>(
           context,
@@ -206,7 +211,8 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                           ),
                     ),
                     onPressed: () => {
-                      onboardingScreenProvider.setPageState(OnboardingPageState.login),
+                      onboardingScreenProvider
+                          .setPageState(OnboardingPageState.login),
                     },
                   ),
                 ],

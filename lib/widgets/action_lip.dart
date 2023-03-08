@@ -10,6 +10,9 @@ import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 class ActionLip extends StatefulWidget {
   const ActionLip(this.providerKey);
 

@@ -11,6 +11,9 @@ import 'package:linum/models/onboarding_slide_data.dart';
 import 'package:linum/utilities/backend/url_handler.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 class SingleSlide extends StatefulWidget {
   const SingleSlide({super.key, required this.slide});
 
