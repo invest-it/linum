@@ -73,8 +73,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
       textController!.text = formatter.format(enterScreenProvider.amount);
       textController!.selection = TextSelection.fromPosition(
         TextPosition(
-          offset: textController!.text.length -
-              (formatter.amountBeforeSymbol() ? 2 : 0),
+          offset: textController!.text.length - formatter.calculateOffset(),
         ),
       );
     }
@@ -163,7 +162,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                         textController!.selection = TextSelection.fromPosition(
                           TextPosition(
                             offset: textController!.text.length -
-                                (formatter.amountBeforeSymbol() ? 2 : 0),
+                                formatter.calculateOffset(),
                           ),
                         )
                       },
@@ -175,7 +174,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                               TextSelection.fromPosition(
                             TextPosition(
                               offset: textController!.text.length -
-                                  (formatter.amountBeforeSymbol() ? 2 : 0),
+                                  formatter.calculateOffset(),
                             ),
                           );
                         });
