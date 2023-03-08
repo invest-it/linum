@@ -23,8 +23,7 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
   MainRouterDelegate() : navigatorKey = GlobalKey<NavigatorState>();
 
   Page? _replacedRoute;
-  final _pageStack = <Page> [];
-
+  final _pageStack = <Page>[];
 
   final Map<String, void Function()> _onPopListeners = {};
   void Function()? _onPopOverwrite;
@@ -42,6 +41,7 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
   void addOnPopListener(String name, void Function() onPop) {
     _onPopListeners[name] = onPop;
   }
+
   void removeOnPopListener(String name) {
     _onPopListeners.remove(name);
   }
@@ -134,7 +134,7 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
   /// TODO: Discuss if this is the wanted behaviour
   @override
   Future<bool> popRoute() async {
-    dev.log("Stack: ${_pageStack.toString()}");
+    dev.log("Stack: $_pageStack");
 
     if (_onPopOverwrite != null) {
       _onPopOverwrite!.call();
