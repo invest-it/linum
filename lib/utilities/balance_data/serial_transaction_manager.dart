@@ -114,8 +114,7 @@ class SerialTransactionManager {
     firestore.Timestamp? checkedEndTime;
     firestore.Timestamp? checkedNewTime;
 
-    for (final serialTransaction
-        in data.serialTransactions) {
+    for (final serialTransaction in data.serialTransactions) {
       if (serialTransaction.id == id) {
         if (amount != serialTransaction.amount) {
           checkedAmount = amount;
@@ -213,31 +212,33 @@ class SerialTransactionManager {
           id: id,
           time: time!,
           changed: ChangedTransaction(
-              amount: checkedAmount,
-              category: checkedCategory,
-              currency: checkedCurrency,
-              name: checkedName,
-              note: checkedNote,
-              time: checkedNewTime,
+            amount: checkedAmount,
+            category: checkedCategory,
+            currency: checkedCurrency,
+            name: checkedName,
+            note: checkedNote,
+            time: checkedNewTime,
           ),
         );
     }
   }
 
- static bool removeSerialTransactionFromData({
+  static bool removeSerialTransactionFromData({
     required String id,
     required BalanceDocument data,
     required SerialTransactionChangeType removeType,
     firestore.Timestamp? time,
   }) {
     // conditions
-    if (removeType == SerialTransactionChangeType.thisAndAllBefore && time == null) {
+    if (removeType == SerialTransactionChangeType.thisAndAllBefore &&
+        time == null) {
       dev.log(
         "removeType == RepeatableChangeType.thisAndAllBefore => time != null",
       );
       return false;
     }
-    if (removeType == SerialTransactionChangeType.thisAndAllAfter && time == null) {
+    if (removeType == SerialTransactionChangeType.thisAndAllAfter &&
+        time == null) {
       dev.log(
         "removeType == RepeatableChangeType.thisAndAllAfter => time != null",
       );
@@ -276,11 +277,13 @@ class SerialTransactionManager {
   static void addAllSerialTransactionsToTransactionsLocally(
     List<SerialTransaction> serialTransactions,
     List<Transaction> transactions,
+    DateTime tillDate,
   ) {
     for (final serialTransaction in serialTransactions) {
       addSerialTransactionsToTransactionsLocally(
         serialTransaction,
         transactions,
+        tillDate,
       );
     }
   }
@@ -289,39 +292,37 @@ class SerialTransactionManager {
   static void addSerialTransactionsToTransactionsLocally(
     SerialTransaction serialTransaction,
     List<Transaction> transaction,
+    DateTime tillDate,
   ) {
-    DateTime currentTime =
-        serialTransaction.initialTime.toDate();
-
-    const Duration futureDuration = Duration(days: 365);
+    DateTime currentTime = serialTransaction.initialTime.toDate();
 
     // while we are before 1 years after today / before endTime
-    while ((serialTransaction.endTime != null)
-        // !isbefore => currentime = endtime = true
-        ? !serialTransaction.endTime!.toDate().isBefore(currentTime)
-        : DateTime.now().add(futureDuration).isAfter(currentTime)) {
+    while ((serialTransaction.endTime == null ||
+            !serialTransaction.endTime!.toDate().isBefore(currentTime)) &&
+        !tillDate.isBefore(currentTime)) {
       // if "changed" -> "this firestore.Timestamp" -> deleted exist AND it is true, dont add this balance
-      if (serialTransaction.changed == null
-          || serialTransaction.changed![currentTime] == null
-          || serialTransaction.changed![currentTime]!.deleted == null
-          || !serialTransaction.changed![currentTime]!.deleted!) {
+      if (serialTransaction.changed == null ||
+          serialTransaction.changed![currentTime] == null ||
+          serialTransaction.changed![currentTime]!.deleted == null ||
+          !serialTransaction.changed![currentTime]!.deleted!) {
         transaction.add(
-            Transaction(
-              amount: serialTransaction.changed?[currentTime]?.amount
-                  ?? serialTransaction.amount,
-              category: serialTransaction.changed?[currentTime]?.category ??
-                  serialTransaction.category,
-              currency: serialTransaction.changed?[currentTime]?.currency ??
-                  serialTransaction.currency,
-              name: serialTransaction.changed?[currentTime]?.name ??
-                  serialTransaction.name,
-              time: serialTransaction.changed?[currentTime]?.time ??
-                  firestore.Timestamp.fromDate(currentTime),
-              repeatId: serialTransaction.id,
-              id: const Uuid().v4(),
-              formerTime: (serialTransaction.changed?[currentTime]?.time != null)
-                  ? firestore.Timestamp.fromDate(currentTime) : null,
-            ),
+          Transaction(
+            amount: serialTransaction.changed?[currentTime]?.amount ??
+                serialTransaction.amount,
+            category: serialTransaction.changed?[currentTime]?.category ??
+                serialTransaction.category,
+            currency: serialTransaction.changed?[currentTime]?.currency ??
+                serialTransaction.currency,
+            name: serialTransaction.changed?[currentTime]?.name ??
+                serialTransaction.name,
+            time: serialTransaction.changed?[currentTime]?.time ??
+                firestore.Timestamp.fromDate(currentTime),
+            repeatId: serialTransaction.id,
+            id: const Uuid().v4(),
+            formerTime: (serialTransaction.changed?[currentTime]?.time != null)
+                ? firestore.Timestamp.fromDate(currentTime)
+                : null,
+          ),
         );
       }
       currentTime = calculateOneTimeStep(
