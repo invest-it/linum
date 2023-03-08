@@ -27,6 +27,12 @@ class HomeScreenCardBack extends StatelessWidget {
     final DateFormat dateFormat = DateFormat("MMM ''yy", langCode);
     final DateTime now = DateTime.now();
 
+    bool checkPastMonth() {
+      return !DateTime(now.year, now.month).isAfter(
+        algorithmProvider.currentShownMonth,
+      );
+    }
+
     final settings = Provider.of<AccountSettingsProvider>(context);
     final screenCardProvider =
         Provider.of<ScreenCardProvider>(context, listen: false);
@@ -139,97 +145,104 @@ class HomeScreenCardBack extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Flexible(
-                                        flex: 6,
-                                        child: Column(
-                                          children: [
-                                            Text(
-                                              tr("home_screen_card.label-mtd-balance")
-                                                  .toUpperCase(),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .overline,
-                                            ),
-                                            Expanded(
-                                              child: FittedBox(
-                                                fit: BoxFit.scaleDown,
-                                                child: StyledAmount(
-                                                  snapshot.data?.mtdBalance ??
-                                                      0.00,
-                                                  context.locale,
-                                                  settings
-                                                      .getStandardCurrency()
-                                                      .symbol,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Flexible(
-                                        flex: 6,
-                                        child: Column(
-                                          children: [
-                                            FittedBox(
-                                              fit: BoxFit.fitWidth,
-                                              child: Text(
-                                                tr("home_screen_card.label-contracts")
+                                      if (checkPastMonth())
+                                        Flexible(
+                                          flex: 6,
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                tr("home_screen_card.label-mtd-balance")
                                                     .toUpperCase(),
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .overline,
-                                                textAlign: TextAlign.center,
                                               ),
-                                            ),
-                                            Expanded(
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Flexible(
-                                                    child: FittedBox(
-                                                      child: StyledAmount(
-                                                        snapshot.data
-                                                                ?.eomFutureSerialIncome ??
-                                                            0.00,
-                                                        context.locale,
-                                                        settings
-                                                            .getStandardCurrency()
-                                                            .symbol,
-                                                        fontSize: StyledFontSize
-                                                            .compact,
-                                                        fontPrefix:
-                                                            StyledFontPrefix
-                                                                .alwaysPositive,
-                                                      ),
-                                                    ),
+                                              Expanded(
+                                                child: FittedBox(
+                                                  fit: BoxFit.scaleDown,
+                                                  child: StyledAmount(
+                                                    snapshot.data?.mtdBalance ??
+                                                        0.00,
+                                                    context.locale,
+                                                    settings
+                                                        .getStandardCurrency()
+                                                        .symbol,
                                                   ),
-                                                  Flexible(
-                                                    child: FittedBox(
-                                                      child: StyledAmount(
-                                                        snapshot.data
-                                                                ?.eomFutureSerialExpenses ??
-                                                            0.00,
-                                                        context.locale,
-                                                        settings
-                                                            .getStandardCurrency()
-                                                            .symbol,
-                                                        fontPrefix:
-                                                            StyledFontPrefix
-                                                                .alwaysNegative,
-                                                        fontSize: StyledFontSize
-                                                            .compact,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      ),
+                                      if (checkPastMonth())
+                                        Flexible(
+                                          flex: 6,
+                                          child: Column(
+                                            children: [
+                                              FittedBox(
+                                                fit: BoxFit.fitWidth,
+                                                child: Text(
+                                                  tr("home_screen_card.label-contracts")
+                                                      .toUpperCase(),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .overline,
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Flexible(
+                                                      child: FittedBox(
+                                                        child: StyledAmount(
+                                                          snapshot.data
+                                                                  ?.eomFutureSerialIncome ??
+                                                              0.00,
+                                                          context.locale,
+                                                          settings
+                                                              .getStandardCurrency()
+                                                              .symbol,
+                                                          fontSize:
+                                                              StyledFontSize
+                                                                  .compact,
+                                                          fontPrefix:
+                                                              StyledFontPrefix
+                                                                  .alwaysPositive,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Flexible(
+                                                      child: FittedBox(
+                                                        child: StyledAmount(
+                                                          snapshot.data
+                                                                  ?.eomFutureSerialExpenses ??
+                                                              0.00,
+                                                          context.locale,
+                                                          settings
+                                                              .getStandardCurrency()
+                                                              .symbol,
+                                                          fontPrefix:
+                                                              StyledFontPrefix
+                                                                  .alwaysNegative,
+                                                          fontSize:
+                                                              StyledFontSize
+                                                                  .compact,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       Flexible(
                                         flex: 6,
+                                        fit: checkPastMonth()
+                                            ? FlexFit.loose
+                                            : FlexFit.tight,
                                         child: Column(
                                           children: [
                                             Text(
