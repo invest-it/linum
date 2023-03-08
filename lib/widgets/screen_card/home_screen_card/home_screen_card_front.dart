@@ -105,10 +105,14 @@ class HomeScreenCardFront extends StatelessWidget {
                     }
 
                     //TODO As soon as the HSC Front will get its rework by @NightmindOfficial, the balance label will appear bigger again.
-                    return StyledAmount(
-                      snapshot.data?.mtdBalance ?? 0.00,
-                      context.locale,
-                      settings.getStandardCurrency().symbol,
+                    return FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: StyledAmount(
+                        snapshot.data?.mtdBalance ?? 0.00,
+                        context.locale,
+                        settings.getStandardCurrency().symbol,
+                        fontSize: StyledFontSize.maximize,
+                      ),
                     );
                   },
                 ),
