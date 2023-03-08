@@ -5,6 +5,7 @@ class StyledAmount extends StatelessWidget {
   final String symbol;
   final TextAlign txtAlign;
   final StyledFontSize fontSize;
+  final StyledFontPrefix fontPrefix;
   late final bool _euroMode;
   late final bool _isNegative;
   late final num value;
@@ -16,11 +17,28 @@ class StyledAmount extends StatelessWidget {
     this.symbol, {
     this.fontSize = StyledFontSize.standard,
     this.txtAlign = TextAlign.center,
-    bool alwaysNegative = false,
+    this.fontPrefix = StyledFontPrefix.none,
   }) {
     _formatted = CurrencyFormatter(locale, symbol: symbol).format(value);
     _euroMode = CurrencyFormatter(locale, symbol: symbol).amountBeforeSymbol();
-    _isNegative = alwaysNegative || value < 0;
+    _isNegative =
+        (fontPrefix == StyledFontPrefix.alwaysNegative) || (value < 0);
+  }
+
+  /// Helper Method to inject a "+" or "-" sign into the styled amount. However, the minus prefix is only inserted in the edge case should [value] equal zero, as in any other case, it will already have a minus prefix.
+  TextSpan _buildZeroPrefix(TextStyle? posTextTheme, TextStyle? negTextTheme) {
+    assert(value >= 0);
+    if (fontPrefix == StyledFontPrefix.alwaysNegative && value == 0) {
+      return TextSpan(
+        text: '-',
+        style: negTextTheme,
+      );
+    } else {
+      return TextSpan(
+        text: '+',
+        style: posTextTheme,
+      );
+    }
   }
 
   @override
@@ -82,8 +100,8 @@ class StyledAmount extends StatelessWidget {
           maxLines: 1,
           text: TextSpan(
             children: [
-              if (_isNegative && value == 0)
-                TextSpan(text: '-', style: normalFontThemeNeg),
+              if (fontPrefix != StyledFontPrefix.none && value >= 0)
+                _buildZeroPrefix(normalFontTheme, normalFontThemeNeg),
               TextSpan(
                 text: expMatch?.group(1) ?? "??",
                 style: _isNegative ? normalFontThemeNeg : normalFontTheme,
@@ -111,8 +129,8 @@ class StyledAmount extends StatelessWidget {
               text: symbol,
               style: _isNegative ? normalFontThemeNeg : normalFontTheme,
             ),
-            if (_isNegative && value == 0)
-              TextSpan(text: '-', style: normalFontThemeNeg),
+            if (fontPrefix != StyledFontPrefix.none && value >= 0)
+              _buildZeroPrefix(normalFontTheme, normalFontThemeNeg),
             TextSpan(
               text: expMatch?.group(1) ?? "??",
               style: _isNegative ? normalFontThemeNeg : normalFontTheme,
@@ -132,4 +150,10 @@ enum StyledFontSize {
   standard,
   compact,
   maximize,
+}
+
+enum StyledFontPrefix {
+  none,
+  alwaysNegative,
+  alwaysPositive,
 }

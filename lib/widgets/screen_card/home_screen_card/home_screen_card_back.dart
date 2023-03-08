@@ -59,12 +59,15 @@ class HomeScreenCardBack extends StatelessWidget {
             Column(
               children: [
                 //Card Header
-                Text(
-                  textAlign: TextAlign.center,
-                  "Monatsplaner | ${dateFormat.format(algorithmProvider.currentShownMonth)}", //TODO @NightmindOfficial translate!
-                  style: MediaQuery.of(context).size.height < 650
-                      ? Theme.of(context).textTheme.headline5
-                      : Theme.of(context).textTheme.headline4,
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: Text(
+                    textAlign: TextAlign.center,
+                    "Monatsplaner | ${dateFormat.format(algorithmProvider.currentShownMonth)}", //TODO @NightmindOfficial translate!
+                    style: MediaQuery.of(context).size.height < 650
+                        ? Theme.of(context).textTheme.headline5
+                        : Theme.of(context).textTheme.headline4,
+                  ),
                 ),
 
                 //Card Content
@@ -157,35 +160,50 @@ class HomeScreenCardBack extends StatelessWidget {
                                                   textAlign: TextAlign.center,
                                                 ),
                                               ),
-                                              Flexible(
-                                                child: FittedBox(
-                                                  child: StyledAmount(
-                                                    snapshot.data
-                                                            ?.eomFutureSerialIncome ??
-                                                        0.00,
-                                                    context.locale,
-                                                    settings
-                                                        .getStandardCurrency()
-                                                        .symbol,
-                                                    fontSize:
-                                                        StyledFontSize.compact,
-                                                  ),
-                                                ),
-                                              ),
-                                              Flexible(
-                                                child: FittedBox(
-                                                  child: StyledAmount(
-                                                    snapshot.data
-                                                            ?.eomFutureSerialExpenses ??
-                                                        0.00,
-                                                    context.locale,
-                                                    settings
-                                                        .getStandardCurrency()
-                                                        .symbol,
-                                                    alwaysNegative: true,
-                                                    fontSize:
-                                                        StyledFontSize.compact,
-                                                  ),
+                                              Expanded(
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Flexible(
+                                                      child: FittedBox(
+                                                        child: StyledAmount(
+                                                          snapshot.data
+                                                                  ?.eomFutureSerialIncome ??
+                                                              0.00,
+                                                          context.locale,
+                                                          settings
+                                                              .getStandardCurrency()
+                                                              .symbol,
+                                                          fontSize:
+                                                              StyledFontSize
+                                                                  .compact,
+                                                          fontPrefix:
+                                                              StyledFontPrefix
+                                                                  .alwaysPositive,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Flexible(
+                                                      child: FittedBox(
+                                                        child: StyledAmount(
+                                                          snapshot.data
+                                                                  ?.eomFutureSerialExpenses ??
+                                                              0.00,
+                                                          context.locale,
+                                                          settings
+                                                              .getStandardCurrency()
+                                                              .symbol,
+                                                          fontPrefix:
+                                                              StyledFontPrefix
+                                                                  .alwaysNegative,
+                                                          fontSize:
+                                                              StyledFontSize
+                                                                  .compact,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
                                             ],
@@ -248,47 +266,49 @@ class HomeScreenCardBack extends StatelessWidget {
                                               .overline,
                                         ),
                                         Expanded(
-                                            child: ColoredBox(
-                                                color: Colors.deepPurple,
-                                                child: Row(
-                                                  children: [
-                                                    Flexible(
-                                                      child: FittedBox(
-                                                        fit: BoxFit.scaleDown,
-                                                        child: StyledAmount(
-                                                          snapshot.data
-                                                                  ?.allTimeSumBalance ??
-                                                              0.00,
-                                                          context.locale,
-                                                          settings
-                                                              .getStandardCurrency()
-                                                              .symbol,
-                                                        ),
-                                                      ),
+                                          child: ColoredBox(
+                                            //TODO REMOVE BEFORE FLIGHT
+                                            color: Colors.transparent,
+                                            child: Row(
+                                              children: [
+                                                Flexible(
+                                                  child: FittedBox(
+                                                    fit: BoxFit.scaleDown,
+                                                    child: StyledAmount(
+                                                      snapshot.data
+                                                              ?.tillBeginningOfMonthSumBalance ??
+                                                          0.00,
+                                                      context.locale,
+                                                      settings
+                                                          .getStandardCurrency()
+                                                          .symbol,
                                                     ),
-                                                    IconButton(
-                                                      onPressed: () => {},
-                                                      icon: const Icon(
-                                                        Icons
-                                                            .navigate_next_rounded,
-                                                      ),
+                                                  ),
+                                                ),
+                                                const IconButton(
+                                                  onPressed: null,
+                                                  icon: Icon(
+                                                    Icons.navigate_next_rounded,
+                                                  ),
+                                                ),
+                                                Flexible(
+                                                  child: FittedBox(
+                                                    fit: BoxFit.scaleDown,
+                                                    child: StyledAmount(
+                                                      snapshot.data
+                                                              ?.tillEndOfMonthSumBalance ??
+                                                          0.00,
+                                                      context.locale,
+                                                      settings
+                                                          .getStandardCurrency()
+                                                          .symbol,
                                                     ),
-                                                    Flexible(
-                                                      child: FittedBox(
-                                                        fit: BoxFit.scaleDown,
-                                                        child: StyledAmount(
-                                                          snapshot.data
-                                                                  ?.allTimeSumBalance ??
-                                                              0.00,
-                                                          context.locale,
-                                                          settings
-                                                              .getStandardCurrency()
-                                                              .symbol,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ))),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
