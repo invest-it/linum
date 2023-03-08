@@ -9,10 +9,9 @@ class StyledAmount extends StatelessWidget {
   final TextAlign txtAlign;
   final StyledFontSize fontSize;
   final StyledFontPrefix fontPrefix;
-  late final bool _euroMode;
+  final num value;
   late final bool _isNegative;
-  late final num value;
-  late final String _formatted;
+  late final CurrencyFormatter _formatter;
 
   StyledAmount(
     this.value,
@@ -22,8 +21,7 @@ class StyledAmount extends StatelessWidget {
     this.txtAlign = TextAlign.center,
     this.fontPrefix = StyledFontPrefix.none,
   }) {
-    _formatted = CurrencyFormatter(locale, symbol: symbol).format(value);
-    _euroMode = CurrencyFormatter(locale, symbol: symbol).amountBeforeSymbol();
+    _formatter = CurrencyFormatter(locale, symbol: symbol);
     _isNegative =
         (fontPrefix == StyledFontPrefix.alwaysNegative) || (value < 0);
   }
@@ -47,7 +45,7 @@ class StyledAmount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final RegExp exp = RegExp('(-?[0-9]+)([,.](?:[0-9]+))');
-    final expMatch = exp.firstMatch(_formatted);
+    final expMatch = exp.firstMatch(_formatter.format(value));
 
     TextStyle? normalFontTheme;
     TextStyle? smallFontTheme;
@@ -95,7 +93,7 @@ class StyledAmount extends StatelessWidget {
         break;
     }
 
-    if (_euroMode) {
+    if (_formatter.amountBeforeSymbol()) {
       //Euro Case
       return Align(
         child: RichText(
