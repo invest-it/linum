@@ -22,7 +22,7 @@ class BottomAppBarItem {
 }
 
 class FABBottomAppBar extends StatefulWidget {
-  FABBottomAppBar({
+  const FABBottomAppBar({
     required this.items,
     required this.centerItemText,
     required this.backgroundColor,
@@ -32,9 +32,9 @@ class FABBottomAppBar extends StatefulWidget {
   });
   final List<BottomAppBarItem> items;
   final String centerItemText;
-  final double notproportionateHeight = 64;
-  final double minHeight = 64.0;
-  final double iconSize = 26;
+  double get notproportionateHeight => 64;
+  double get minHeight => 64.0;
+  double get iconSize => 26;
   final Color backgroundColor;
   final Color color;
   final Color selectedColor;
@@ -88,10 +88,11 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
     );
   }
 
-  Widget _buildTabItem(
-      {required BottomAppBarItem item,
-      required int index,
-      required SizeGuideProvider sizeGuideProvider}) {
+  Widget _buildTabItem({
+    required BottomAppBarItem item,
+    required int index,
+    required SizeGuideProvider sizeGuideProvider,
+  }) {
     final Color color = item.selected ? widget.selectedColor : widget.color;
     return Expanded(
       child: Container(

@@ -100,8 +100,8 @@ class ForgotPasswordButton extends StatelessWidget {
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: tr(
-                                    'onboarding_screen.login-email-hintlabel'),
-
+                                  'onboarding_screen.login-email-hintlabel',
+                                ),
                                 hintStyle: Theme.of(context)
                                     .textTheme
                                     .bodyText1
@@ -231,7 +231,8 @@ class ForgotPasswordButton extends StatelessWidget {
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: tr(
-                                    'onboarding_screen.login-password-hintlabel'),
+                                  'onboarding_screen.login-password-hintlabel',
+                                ),
                                 hintStyle: Theme.of(context)
                                     .textTheme
                                     .bodyText1

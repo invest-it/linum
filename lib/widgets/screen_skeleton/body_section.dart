@@ -56,7 +56,8 @@ class BodySection extends StatelessWidget {
               padding: hasScreenCard
                   ? EdgeInsets.only(
                       top:
-                          sizeGuideProvider.proportionateScreenHeight(196 - 25))
+                          sizeGuideProvider.proportionateScreenHeight(196 - 25),
+                    )
                   : EdgeInsets.zero,
               child: body,
             ),

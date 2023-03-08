@@ -30,7 +30,8 @@ class CurrencyListView extends StatelessWidget {
             children: [
               SizedBox(
                 height: sizeGuideProvider.proportionateScreenHeightFraction(
-                    ScreenFraction.twofifths),
+                  ScreenFraction.twofifths,
+                ),
                 child: ListView.builder(
                   shrinkWrap: true,
                   itemCount: enumItemCount,

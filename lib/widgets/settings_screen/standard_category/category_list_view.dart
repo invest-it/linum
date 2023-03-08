@@ -24,18 +24,22 @@ class CategoryListView<T extends Enum> extends StatelessWidget {
       enumItemCount = StandardCategoryExpense.values.length;
       standardCategory = (int index) =>
           standardExpenseCategories[StandardCategoryExpense.values[index]];
-      itemIsSelected = (int index) => StandardCategoryExpense.values[index]
-          .equals(accountSettingsProvider.settings["StandardCategoryExpense"]
-              as String?);
+      itemIsSelected =
+          (int index) => StandardCategoryExpense.values[index].equals(
+                accountSettingsProvider.settings["StandardCategoryExpense"]
+                    as String?,
+              );
       enumStr = (int index) => StandardCategoryExpense.values[index].toString();
     }
     if (T == StandardCategoryIncome) {
       enumItemCount = StandardCategoryIncome.values.length;
       standardCategory = (int index) =>
           standardIncomeCategories[StandardCategoryIncome.values[index]];
-      itemIsSelected = (int index) => StandardCategoryIncome.values[index]
-          .equals(accountSettingsProvider.settings["StandardCategoryIncome"]
-              as String?);
+      itemIsSelected =
+          (int index) => StandardCategoryIncome.values[index].equals(
+                accountSettingsProvider.settings["StandardCategoryIncome"]
+                    as String?,
+              );
       enumStr = (int index) => StandardCategoryIncome.values[index].toString();
     }
   }
@@ -53,7 +57,8 @@ class CategoryListView<T extends Enum> extends StatelessWidget {
             children: [
               SizedBox(
                 height: sizeGuideProvider.proportionateScreenHeightFraction(
-                    ScreenFraction.twofifths),
+                  ScreenFraction.twofifths,
+                ),
                 child: ListView.builder(
                   shrinkWrap: true,
                   itemCount: enumItemCount,

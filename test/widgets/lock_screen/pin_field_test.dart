@@ -20,11 +20,15 @@ void main() {
         MaterialApp(
           theme: MainThemeData.lightTheme,
           home: Scaffold(
-              body: MultiProvider(providers: [
-            ChangeNotifierProvider<SizeGuideProvider>(
-              create: (ctx) => SizeGuideProvider(ctx),
-            )
-          ], child: const PinField(1, 0, RingColors.green, key: key))),
+            body: MultiProvider(
+              providers: [
+                ChangeNotifierProvider<SizeGuideProvider>(
+                  create: (ctx) => SizeGuideProvider(ctx),
+                )
+              ],
+              child: const PinField(1, 0, RingColors.green, key: key),
+            ),
+          ),
         ),
       );
       final Finder ring = find.byKey(key);
@@ -61,11 +65,14 @@ void main() {
         MaterialApp(
           theme: MainThemeData.lightTheme,
           home: Scaffold(
-            body: MultiProvider(providers: [
-              ChangeNotifierProvider<SizeGuideProvider>(
-                create: (ctx) => SizeGuideProvider(ctx),
-              )
-            ], child: const PinField(1, 2, RingColors.green, key: key)),
+            body: MultiProvider(
+              providers: [
+                ChangeNotifierProvider<SizeGuideProvider>(
+                  create: (ctx) => SizeGuideProvider(ctx),
+                )
+              ],
+              child: const PinField(1, 2, RingColors.green, key: key),
+            ),
           ),
         ),
       );

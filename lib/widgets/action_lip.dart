@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 // ignore_for_file: deprecated_member_use
 //TODO DEPRECATED
 
+// ignore: must_be_immutable
 class ActionLip extends StatefulWidget {
   ActionLip(this.providerKey);
 
@@ -39,7 +40,6 @@ class _ActionLipState extends State<ActionLip> {
 
     final status = provider.getActionLipStatus(providerKey);
 
-
     if (widget.oldStatus != null && widget.oldStatus != status) {
       sizeGuideProvider.update();
     }
@@ -48,7 +48,10 @@ class _ActionLipState extends State<ActionLip> {
       curve: Curves.fastLinearToSlowEaseIn,
       duration: const Duration(milliseconds: 1000),
       transform: Matrix4.translationValues(
-          0, _calculateYOffset(sizeGuideProvider, status), 1),
+        0,
+        _calculateYOffset(sizeGuideProvider, status),
+        1,
+      ),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.background,
         borderRadius: const BorderRadius.only(
@@ -100,14 +103,17 @@ class _ActionLipState extends State<ActionLip> {
   }
 
   double _calculateYOffset(
-      SizeGuideProvider sizeGuideProvider, ActionLipStatus status) {
+    SizeGuideProvider sizeGuideProvider,
+    ActionLipStatus status,
+  ) {
     switch (status) {
       case ActionLipStatus.hidden:
         return sizeGuideProvider.realScreenHeight();
       case ActionLipStatus.onviewport:
         return sizeGuideProvider.isKeyboardOpen(context)
             ? sizeGuideProvider.proportionateScreenHeightFraction(
-                    ScreenFraction.twofifths) -
+                  ScreenFraction.twofifths,
+                ) -
                 (sizeGuideProvider.keyboardHeight / 2)
             : sizeGuideProvider
                 .proportionateScreenHeightFraction(ScreenFraction.twofifths);

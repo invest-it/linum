@@ -9,9 +9,11 @@ import 'package:provider/provider.dart';
 class SignInSignUpButton extends StatelessWidget {
   final Function() callback;
   final String text;
-  const SignInSignUpButton(
-      {super.key, required this.text, required this.callback});
-
+  const SignInSignUpButton({
+    super.key,
+    required this.text,
+    required this.callback,
+  });
 
   @override
   Widget build(BuildContext context) {

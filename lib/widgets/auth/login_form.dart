@@ -151,9 +151,8 @@ class _LoginFormState extends State<LoginForm> {
                               tr('onboarding_screen.login-password-hintlabel'),
                           errorText: _passValidate
                               ? tr(
-
-                                  'onboarding_screen.login-password-errorlabel')
-
+                                  'onboarding_screen.login-password-errorlabel',
+                                )
                               : null,
                           hintStyle: Theme.of(context)
                               .textTheme
