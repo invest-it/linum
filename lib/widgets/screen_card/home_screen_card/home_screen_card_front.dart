@@ -28,6 +28,7 @@ class HomeScreenCardFront extends StatelessWidget {
 
     final String langCode = context.locale.languageCode;
     final DateFormat dateFormat = DateFormat('MMMM yyyy', langCode);
+    final DateTime now = DateTime.now();
 
     final settings = Provider.of<AccountSettingsProvider>(context);
     final screenCardProvider =
@@ -41,105 +42,132 @@ class HomeScreenCardFront extends StatelessWidget {
       onLongPress: () {
         goToCurrentTime(algorithmProvider);
       },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      child: Stack(
         children: [
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Spacer(),
-                  Center(
-                    child: Text(
-                      // HEADLINE
-                      dateFormat.format(
-                        algorithmProvider.currentShownMonth,
-                      ),
-                      style: MediaQuery.of(context).size.height < 650
-                          ? Theme.of(context).textTheme.headline5
-                          : Theme.of(context).textTheme.headline3,
-                    ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: (algorithmProvider.currentShownMonth !=
+                    DateTime(now.year, now.month))
+                ? IconButton(
+                    constraints: const BoxConstraints(),
+                    padding: const EdgeInsets.all(18.0),
+                    icon: const Icon(Icons.event_repeat_rounded),
+                    onPressed: () {
+                      goToCurrentTime(algorithmProvider);
+                    },
+                  )
+                : IconButton(
+                    constraints: const BoxConstraints(),
+                    padding: const EdgeInsets.all(18.0),
+                    icon: const Icon(Icons.error),
+                    color: Theme.of(context).colorScheme.onSurface.withAlpha(0),
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onPressed: () {},
                   ),
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.topRight,
-                      child: IconButton(
-                        padding: const EdgeInsets.only(right: 16),
-                        constraints: const BoxConstraints(),
-                        onPressed: () {
-                          screenCardProvider.controller!.toggleCard();
-                        },
-                        icon: const Icon(
-                          Icons.flip_camera_android_rounded,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Spacer(),
+                      Center(
+                        child: Text(
+                          // HEADLINE
+                          dateFormat.format(
+                            algorithmProvider.currentShownMonth,
+                          ),
+                          style: MediaQuery.of(context).size.height < 650
+                              ? Theme.of(context).textTheme.headline5
+                              : Theme.of(context).textTheme.headline3,
                         ),
                       ),
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: IconButton(
+                            padding: const EdgeInsets.only(right: 16),
+                            constraints: const BoxConstraints(),
+                            onPressed: () {
+                              screenCardProvider.controller!.toggleCard();
+                            },
+                            icon: const Icon(
+                              Icons.flip_camera_android_rounded,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    //SUBHEADLINE
+                    tr('home_screen_card.label-current-balance'),
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                ],
+              ),
+              Row(
+                // MiddleRow
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      goBackInTime(algorithmProvider);
+                    },
+                    icon: const Icon(Icons.arrow_back_ios_new_rounded),
+                  ),
+                  Expanded(
+                    child: StreamBuilder<HomeScreenCardData>(
+                      stream: balanceDataProvider.getHomeScreenCardData(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.none ||
+                            snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                          return const LoadingSpinner();
+                        }
+
+                        return FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: StyledAmount(
+                            snapshot.data?.mtdBalance ?? 0.00,
+                            context.locale,
+                            settings.getStandardCurrency().symbol,
+                            fontSize: StyledFontSize.maximize,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      goForwardInTime(algorithmProvider);
+                    },
+                    icon: const Icon(
+                      Icons.arrow_forward_ios_rounded,
                     ),
                   ),
                 ],
               ),
-              Text(
-                //SUBHEADLINE
-                tr('home_screen_card.label-current-balance'),
-                style: Theme.of(context).textTheme.headline5,
-              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: HomeScreenCardRow(
+                  data: balanceDataProvider.getHomeScreenCardData(),
+                  upwardArrow: HomeScreenCardAvatar.withArrow(
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    arrow: Preset.arrowUp,
+                  ),
+                  downwardArrow: HomeScreenCardAvatar.withArrow(
+                    backgroundColor: Theme.of(context).colorScheme.error,
+                    arrow: Preset.arrowDown,
+                  ),
+                ),
+              )
             ],
           ),
-          Row(
-            // MiddleRow
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                onPressed: () {
-                  goBackInTime(algorithmProvider);
-                },
-                icon: const Icon(Icons.arrow_back_ios_new_rounded),
-              ),
-              Expanded(
-                child: StreamBuilder<HomeScreenCardData>(
-                  stream: balanceDataProvider.getHomeScreenCardData(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.none ||
-                        snapshot.connectionState == ConnectionState.waiting) {
-                      return const LoadingSpinner();
-                    }
-
-                    return FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: StyledAmount(
-                        snapshot.data?.mtdBalance ?? 0.00,
-                        context.locale,
-                        settings.getStandardCurrency().symbol,
-                        fontSize: StyledFontSize.maximize,
-                      ),
-                    );
-                  },
-                ),
-              ),
-              IconButton(
-                onPressed: () {
-                  goForwardInTime(algorithmProvider);
-                },
-                icon: const Icon(
-                  Icons.arrow_forward_ios_rounded,
-                ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: HomeScreenCardRow(
-              data: balanceDataProvider.getHomeScreenCardData(),
-              upwardArrow: HomeScreenCardAvatar.withArrow(
-                backgroundColor: Theme.of(context).colorScheme.primary,
-                arrow: Preset.arrowUp,
-              ),
-              downwardArrow: HomeScreenCardAvatar.withArrow(
-                backgroundColor: Theme.of(context).colorScheme.error,
-                arrow: Preset.arrowDown,
-              ),
-            ),
-          )
         ],
       ),
     );

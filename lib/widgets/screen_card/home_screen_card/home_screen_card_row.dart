@@ -27,29 +27,6 @@ class HomeScreenCardRow extends StatelessWidget {
     required this.downwardArrow,
   });
 
-  IconButton _buildGoToCurrentDateIcon(BuildContext context) {
-    final AlgorithmProvider algorithmProvider =
-        Provider.of<AlgorithmProvider>(context);
-    final DateTime now = DateTime.now();
-
-    return (algorithmProvider.currentShownMonth !=
-            DateTime(now.year, now.month))
-        ? IconButton(
-            icon: const Icon(Icons.today_rounded),
-            color: Theme.of(context).colorScheme.onSurface.withAlpha(64),
-            onPressed: () {
-              goToCurrentTime(algorithmProvider);
-            },
-          )
-        : IconButton(
-            icon: const Icon(Icons.error),
-            color: Theme.of(context).colorScheme.onSurface.withAlpha(0),
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            onPressed: () {},
-          );
-  }
-
   Expanded _buildIncomeExpensesInfo(
     BuildContext context, {
     bool isIncome = false,
@@ -58,17 +35,22 @@ class HomeScreenCardRow extends StatelessWidget {
     return Expanded(
       flex: 10,
       child: Row(
-        mainAxisAlignment: isIncome ? MainAxisAlignment.start : MainAxisAlignment.end,
+        mainAxisAlignment:
+            isIncome ? MainAxisAlignment.start : MainAxisAlignment.end,
         children: [
-          if (isIncome) ...[upwardArrow, SizedBox(width: proportionateScreenWidth(10))],
+          if (isIncome) ...[
+            upwardArrow,
+            SizedBox(width: proportionateScreenWidth(10))
+          ],
           Column(
             crossAxisAlignment:
                 isIncome ? CrossAxisAlignment.start : CrossAxisAlignment.end,
             children: [
               Text(
-                tr(isIncome
-                    ? 'home_screen_card.label-income'
-                    : 'home_screen_card.label-expenses',
+                tr(
+                  isIncome
+                      ? 'home_screen_card.label-income'
+                      : 'home_screen_card.label-expenses',
                 ),
                 style: Theme.of(context)
                     .textTheme
@@ -90,8 +72,10 @@ class HomeScreenCardRow extends StatelessWidget {
                     );
                   }
                   return Text(
-                    CurrencyFormatter(context.locale, symbol: settings.getStandardCurrency().symbol)
-                        .format(isIncome
+                    CurrencyFormatter(context.locale,
+                            symbol: settings.getStandardCurrency().symbol)
+                        .format(
+                      isIncome
                           ? snapshot.data?.mtdIncome ?? 0
                           : snapshot.data?.mtdExpenses ?? 0,
                     ),
@@ -105,7 +89,10 @@ class HomeScreenCardRow extends StatelessWidget {
               ),
             ],
           ),
-          if (!isIncome) ...[SizedBox(width: proportionateScreenWidth(10)), downwardArrow],
+          if (!isIncome) ...[
+            SizedBox(width: proportionateScreenWidth(10)),
+            downwardArrow
+          ],
         ],
       ),
     );
@@ -117,11 +104,10 @@ class HomeScreenCardRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _buildIncomeExpensesInfo(context, isIncome: true),
-        Expanded(
+        const Expanded(
           flex: 3,
           child: FittedBox(
             fit: BoxFit.scaleDown,
-            child: _buildGoToCurrentDateIcon(context),
           ),
         ),
         _buildIncomeExpensesInfo(context)
