@@ -113,7 +113,7 @@ class HomeScreenCardBack extends StatelessWidget {
                                         fit: FlexFit.tight,
                                         child: ColoredBox(
                                           //TODO REMOVE BEFORE FLIGHT
-                                          color: Colors.teal,
+                                          color: Colors.transparent,
                                           child: Column(
                                             children: [
                                               Text(
@@ -144,7 +144,7 @@ class HomeScreenCardBack extends StatelessWidget {
                                         fit: FlexFit.tight,
                                         child: ColoredBox(
                                           //TODO REMOVE BEFORE FLIGHT
-                                          color: Colors.lightBlueAccent,
+                                          color: Colors.transparent,
                                           child: Column(
                                             children: [
                                               FittedBox(
@@ -167,6 +167,8 @@ class HomeScreenCardBack extends StatelessWidget {
                                                     settings
                                                         .getStandardCurrency()
                                                         .symbol,
+                                                    fontSize:
+                                                        StyledFontSize.compact,
                                                   ),
                                                 ),
                                               ),
@@ -175,11 +177,14 @@ class HomeScreenCardBack extends StatelessWidget {
                                                   child: StyledAmount(
                                                     snapshot.data
                                                             ?.eomFutureSerialExpenses ??
-                                                        -0.00,
+                                                        0.00,
                                                     context.locale,
                                                     settings
                                                         .getStandardCurrency()
                                                         .symbol,
+                                                    alwaysNegative: true,
+                                                    fontSize:
+                                                        StyledFontSize.compact,
                                                   ),
                                                 ),
                                               ),
@@ -192,7 +197,7 @@ class HomeScreenCardBack extends StatelessWidget {
                                         fit: FlexFit.tight,
                                         child: ColoredBox(
                                           //TODO REMOVE BEFORE FLIGHT
-                                          color: Colors.lightGreenAccent,
+                                          color: Colors.transparent,
                                           child: Column(
                                             children: [
                                               Text(
@@ -225,27 +230,67 @@ class HomeScreenCardBack extends StatelessWidget {
                                 //LOWER PART
                                 Expanded(
                                   flex: 4,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      Text(
-                                        "Gesamtkontostand".toUpperCase(),
-                                        textAlign: TextAlign.center,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .overline,
-                                      ),
-                                      FittedBox(
-                                        fit: BoxFit.scaleDown,
-                                        child: StyledAmount(
-                                          snapshot.data?.allTimeSumBalance ??
-                                              0.00,
-                                          context.locale,
-                                          settings.getStandardCurrency().symbol,
+                                  child: ColoredBox(
+                                    color: Colors
+                                        .transparent, //TODO REMOVE BEFORE FLIGHT
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        Text(
+                                          "Kontostand Monatsanfang bis -ende"
+                                              .toUpperCase(),
+                                          textAlign: TextAlign.center,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .overline,
                                         ),
-                                      ),
-                                    ],
+                                        Expanded(
+                                            child: ColoredBox(
+                                                color: Colors.deepPurple,
+                                                child: Row(
+                                                  children: [
+                                                    Flexible(
+                                                      child: FittedBox(
+                                                        fit: BoxFit.scaleDown,
+                                                        child: StyledAmount(
+                                                          snapshot.data
+                                                                  ?.allTimeSumBalance ??
+                                                              0.00,
+                                                          context.locale,
+                                                          settings
+                                                              .getStandardCurrency()
+                                                              .symbol,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    IconButton(
+                                                      onPressed: () => {},
+                                                      icon: const Icon(
+                                                        Icons
+                                                            .navigate_next_rounded,
+                                                      ),
+                                                    ),
+                                                    Flexible(
+                                                      child: FittedBox(
+                                                        fit: BoxFit.scaleDown,
+                                                        child: StyledAmount(
+                                                          snapshot.data
+                                                                  ?.allTimeSumBalance ??
+                                                              0.00,
+                                                          context.locale,
+                                                          settings
+                                                              .getStandardCurrency()
+                                                              .symbol,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ))),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],
