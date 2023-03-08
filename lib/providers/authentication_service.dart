@@ -4,7 +4,6 @@
 //  Co-Author: NightmindOfficial, damattl
 //  (Refactored)
 
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,6 +14,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:linum/types/buildable_provider.dart';
 import 'package:linum/types/change_notifier_provider_builder.dart';
 import 'package:linum/utilities/backend/cryptography.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -25,9 +25,12 @@ class AuthenticationService extends ChangeNotifier
     implements BuildableProvider {
   /// The FirebaseAuth Object of the Project
   final FirebaseAuth _firebaseAuth;
+  late Logger logger;
 
   /// Constructor
   AuthenticationService(this._firebaseAuth, BuildContext context) {
+    logger = Logger();
+
     updateLanguageCode(context);
   }
 
@@ -44,10 +47,13 @@ class AuthenticationService extends ChangeNotifier
   Future<void> signIn(
     String email,
     String password, {
-    void Function(String) onComplete = log,
-    void Function(String) onError = log,
+    void Function(String)? onComplete,
+    void Function(String)? onError,
     void Function()? onNotVerified,
   }) async {
+    onComplete ??= logger.i;
+    onError ??= logger.e;
+
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
@@ -64,11 +70,11 @@ class AuthenticationService extends ChangeNotifier
         if (onNotVerified != null) {
           onNotVerified();
         } else {
-          log("Your mail is not verified.");
+          logger.i("Your mail is not verified.");
         }
       }
     } on FirebaseAuthException catch (e) {
-      log(e.message.toString());
+      logger.e(e.message);
       onError("auth.${e.code}");
     }
   }
@@ -77,10 +83,13 @@ class AuthenticationService extends ChangeNotifier
   Future<void> signUp(
     String email,
     String password, {
-    void Function(String) onComplete = log,
-    void Function(String) onError = log,
+    void Function(String)? onComplete,
+    void Function(String)? onError,
     required void Function() onNotVerified,
   }) async {
+    onComplete ??= logger.i;
+    onError ??= logger.e;
+
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
@@ -97,15 +106,17 @@ class AuthenticationService extends ChangeNotifier
         onNotVerified();
       }
     } on FirebaseAuthException catch (e) {
-      log(e.message.toString());
+      logger.e(e.message);
       onError("auth.${e.code}");
     }
   }
 
   Future<void> signInWithGoogle({
-    void Function(String) onComplete = log,
-    void Function(String) onError = log,
+    void Function(String)? onComplete,
+    void Function(String)? onError,
   }) async {
+    onComplete ??= logger.i;
+    onError ??= logger.e;
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
     final GoogleSignInAuthentication? googleAuth =
         await googleUser?.authentication;
@@ -121,15 +132,17 @@ class AuthenticationService extends ChangeNotifier
       notifyListeners();
       onComplete("Successfully signed in to Firebase");
     } on FirebaseAuthException catch (e) {
-      log(e.message.toString());
+      logger.e(e.message);
       onError("auth.${e.code}");
     }
   }
 
   Future<void> signInWithApple({
-    void Function(String) onComplete = log,
-    void Function(String) onError = log,
+    void Function(String)? onComplete,
+    void Function(String)? onError,
   }) async {
+    onComplete ??= logger.i;
+    onError ??= logger.e;
     final rawNonce = generateNonce();
     final nonce = sha256ofString(rawNonce);
 
@@ -151,11 +164,11 @@ class AuthenticationService extends ChangeNotifier
       notifyListeners();
       onComplete("Successfully signed in to Firebase");
     } on FirebaseAuthException catch (e) {
-      log(e.message.toString());
+      logger.e(e.message);
       onError("auth.${e.code}");
     } on SignInWithAppleAuthorizationException catch (e) {
       if (e.code == AuthorizationErrorCode.canceled) {
-        log("Sign in with Apple was aborted");
+        logger.w("Sign in with Apple was aborted");
       } else {
         rethrow;
       }
@@ -213,9 +226,11 @@ class AuthenticationService extends ChangeNotifier
   /// tells firebase that user wants to change its password to [newPassword]
   Future<void> updatePassword(
     String newPassword, {
-    void Function(String) onComplete = log,
-    void Function(String) onError = log,
+    void Function(String)? onComplete,
+    void Function(String)? onError,
   }) async {
+    onComplete ??= logger.i;
+    onError ??= logger.e;
     try {
       if (_firebaseAuth.currentUser != null) {
         await _firebaseAuth.currentUser!.updatePassword(newPassword);
@@ -235,8 +250,9 @@ class AuthenticationService extends ChangeNotifier
   /// tells firebase that [email] wants to verify itself
   Future<void> sendVerificationEmail(
     String email, {
-    void Function(String) onError = log,
+    void Function(String)? onError,
   }) async {
+    onError ??= logger.e;
     try {
       if (_firebaseAuth.currentUser != null) {
         await _firebaseAuth.currentUser!.sendEmailVerification();
@@ -244,7 +260,7 @@ class AuthenticationService extends ChangeNotifier
         onError("auth.not-logged-in-to-verify");
         return;
       }
-      log("Successfully send Verification Mail request to Firebase");
+      logger.i("Successfully send Verification Mail request to Firebase");
     } on FirebaseAuthException catch (e) {
       onError("auth.${e.code}");
     }
@@ -253,9 +269,11 @@ class AuthenticationService extends ChangeNotifier
   /// tells firebase that [email] wants to reset the password
   Future<void> resetPassword(
     String email, {
-    void Function(String) onComplete = log,
-    void Function(String) onError = log,
+    void Function(String)? onComplete,
+    void Function(String)? onError,
   }) async {
+    onComplete ??= logger.i;
+    onError ??= logger.e;
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
       onComplete("alertdialog.reset-password.message");
@@ -265,9 +283,11 @@ class AuthenticationService extends ChangeNotifier
   }
 
   Future<void> signOut({
-    void Function(String) onComplete = log,
-    void Function(String) onError = log,
+    void Function(String)? onComplete,
+    void Function(String)? onError,
   }) async {
+    onComplete ??= logger.i;
+    onError ??= logger.e;
     try {
       final isSignedInWithGoogle = await GoogleSignIn().isSignedIn();
       if (isSignedInWithGoogle) {
@@ -282,9 +302,11 @@ class AuthenticationService extends ChangeNotifier
   }
 
   Future<void> deleteUserAccount({
-    void Function(String) onComplete = log,
-    void Function(String) onError = log,
+    void Function(String)? onComplete,
+    void Function(String)? onError,
   }) async {
+    onComplete ??= logger.i;
+    onError ??= logger.e;
     try {
       await _firebaseAuth.currentUser?.delete();
       notifyListeners();
@@ -313,12 +335,15 @@ class AuthenticationService extends ChangeNotifier
   }
 
   static ChangeNotifierProviderBuilder builder() {
-    return (BuildContext context, {bool testing = false,}) {
+    return (
+      BuildContext context, {
+      bool testing = false,
+    }) {
       return ChangeNotifierProvider<AuthenticationService>(
         key: const Key("AuthenticationChangeNotifierProvider"),
         create: (_) {
           final AuthenticationService auth =
-          AuthenticationService(FirebaseAuth.instance, context);
+              AuthenticationService(FirebaseAuth.instance, context);
           if (testing) {
             auth.signOut();
             while (auth.isLoggedIn) {

@@ -2,10 +2,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 void showAddAmountAlertDialog(
-    BuildContext context,
-    EnterScreenProvider enterScreenProvider,
-    ) {
+  BuildContext context,
+  EnterScreenProvider enterScreenProvider,
+) {
   showDialog(
     context: context,
     builder: (context) {

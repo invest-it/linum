@@ -19,7 +19,7 @@ class StatisticalCalculations {
   late List<Transaction> _allData;
 
   /// the data that should be processed
-  late List<SerialTransaction> _allSerialData;
+  late List<SerialTransaction> _currentSerialData;
 
   final String standardCurrencyName;
 
@@ -53,9 +53,9 @@ class StatisticalCalculations {
           .add(data[i].copyWith()); // copy data so there is no change in data
     }
 
-    _allSerialData = [];
+    _currentSerialData = [];
     for (int i = 0; i < serialData.length; i++) {
-      _allSerialData.add(
+      _currentSerialData.add(
         serialData[i].copyWith(),
       ); // copy data so there is no change in data
     }
@@ -97,8 +97,8 @@ class StatisticalCalculations {
         baseData: _allTimeData,
       );
 
-  // All means all inside the filter. AllTime means ALL ALL
-  List<Transaction> get _allSerialGeneratedData => getDataUsingFilter(
+  // current means all inside the filter. AllTime means ALL
+  List<Transaction> get _currentSerialGeneratedData => getDataUsingFilter(
         (t) {
           if (t is Transaction) {
             return t.repeatId == null;
@@ -108,16 +108,17 @@ class StatisticalCalculations {
           );
           return true;
         },
+        baseData: _currentData,
       );
 
-  List<Transaction> get _allSerialGeneratedIncomeData => getDataUsingFilter(
+  List<Transaction> get _currentSerialGeneratedIncomeData => getDataUsingFilter(
         Filters.amountAtMost(0),
-        baseData: _allSerialGeneratedData,
+        baseData: _currentSerialGeneratedData,
       );
 
-  List<Transaction> get _allSerialGeneratedCostData => getDataUsingFilter(
+  List<Transaction> get _currentSerialGeneratedCostData => getDataUsingFilter(
         Filters.amountMoreThan(0),
-        baseData: _allSerialGeneratedData,
+        baseData: _currentSerialGeneratedData,
       );
 
   List<Transaction> get _futureSerialGeneratedIncomeData => getDataUsingFilter(
@@ -132,7 +133,26 @@ class StatisticalCalculations {
 
   List<Transaction> get _futureSerialGeneratedData => getDataUsingFilter(
         Filters.olderThan(firestore.Timestamp.now()),
-        baseData: _allSerialGeneratedData,
+        baseData: _currentSerialGeneratedData,
+      );
+
+  List<Transaction> get _tillBeginningOfMonthData => getDataUsingFilter(
+        Filters.newerThan(
+          firestore.Timestamp.fromDate(_algorithmProvider.currentShownMonth),
+        ),
+        baseData: _allData,
+      );
+  List<Transaction> get _tillEndOfMonthData => getDataUsingFilter(
+        Filters.newerThan(
+          firestore.Timestamp.fromDate(
+            DateTime(
+              _algorithmProvider.currentShownMonth.year,
+              _algorithmProvider.currentShownMonth.month + 1,
+              -1,
+            ),
+          ),
+        ),
+        baseData: _allData,
       );
 
   List<SingleMonthStatistic> getBundledDataPerMonth({
@@ -249,8 +269,12 @@ class StatisticalCalculations {
     for (final transaction in data) {
       if (transaction.currency == standardCurrencyName) {
         sum += transaction.amount;
-      } else if (transaction.rateInfo != null) { // Normally this is always true
-        sum += convertCurrencyAmountWithExchangeRate(transaction.amount, transaction.rateInfo!);
+      } else if (transaction.rateInfo != null) {
+        // Normally this is always true
+        sum += convertCurrencyAmountWithExchangeRate(
+          transaction.amount,
+          transaction.rateInfo!,
+        );
       }
     }
     return sum;
@@ -260,7 +284,7 @@ class StatisticalCalculations {
     return data.isNotEmpty ? _getSumFrom(data) / data.length : 0;
   }
 
-  num get serialTransactionCount => _allSerialData.length;
+  num get serialTransactionCount => _currentSerialData.length;
 
   num get sumFutureSerialCosts {
     return _getSumFrom(_futureSerialGeneratedCostData);
@@ -271,11 +295,27 @@ class StatisticalCalculations {
   }
 
   num get sumSerialIncomes {
-    return _getSumFrom(_allSerialGeneratedIncomeData);
+    return _getSumFrom(_currentSerialGeneratedIncomeData);
   }
 
   num get sumSerialCosts {
-    return _getSumFrom(_allSerialGeneratedCostData);
+    return _getSumFrom(_currentSerialGeneratedCostData);
+  }
+
+  num get tillBeginningOfMonthSumBalance {
+    return _getSumFrom(_tillBeginningOfMonthData);
+  }
+
+  num get tillEndOfMonthSumBalance {
+    return _getSumFrom(_tillEndOfMonthData);
+  }
+
+  int get countSerialIncomes {
+    return _currentSerialGeneratedIncomeData.length;
+  }
+
+  int get countSerialCosts {
+    return _currentSerialGeneratedCostData.length;
   }
 
   /// baseData is the data used as base. return will always be a subset of baseData

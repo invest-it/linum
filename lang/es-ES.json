@@ -30,6 +30,12 @@
         }
     },
     "alertdialog": {
+        "delete-account": {
+            "action": "Sí, eliminar cuenta",
+            "cancel": "Cancelar",
+            "message": "Esta acción no tiene marcha atrás.",
+            "title": "¿De verdad quieres borrar tu cuenta?"
+        },
         "error": {
             "action-standard": "Okay",
             "message-standard": "Se ha producido un error desconocido.",
@@ -76,11 +82,6 @@
             "action": "Okay",
             "message": "Su contraseña ha sido actualizada.",
             "title": "¡Listo!"
-        },
-        "delete-account": {
-            "title": "¿Quieres eliminar la cuenta de forma segura?",
-            "cancel": "No",
-            "action": "Sí"
         }
     },
     "auth": {
@@ -135,6 +136,38 @@
         "button-filter": "Filtro",
         "label-all-transactions": "Todas las transacciones"
     },
+    "currency": {
+        "error": {
+            "not-found": "No se admite la moneda"
+        },
+        "name": {
+            "aud": "Dólar australiano",
+            "blr": "Real brasileño",
+            "cad": "Dólar canadiense",
+            "chf": "Franco suizo",
+            "cny": "Yuan chino",
+            "czk": "Corona checa",
+            "dkk": "Corona danesa",
+            "eur": "Euro",
+            "gbp": "Libra esterlina",
+            "idr": "Rupia indonesia",
+            "ils": "Shekel",
+            "inr": "Rupia india",
+            "isk": "Corona islandesa",
+            "jpy": "Yen",
+            "krw": "El won surcoreano",
+            "mxn": "Peso mexicano",
+            "myr": "Ringgit malayo",
+            "nok": "Corona noruega",
+            "nzd": "Dólar neozelandés",
+            "pln": "Złoty",
+            "sek": "Corona sueca",
+            "thb": "Baht",
+            "tyr": "Lira turca",
+            "usd": "Dólar estadounidense",
+            "zar": "Rand sudafricano"
+        }
+    },
     "enter_screen": {
         "add-amount": {
             "dialog-label-title": "Ok!",
@@ -159,14 +192,14 @@
         "expenses-textfield-title": "¿Qué has comprado?",
         "income-textfield-title": "¿Cómo se llaman estos ingresos?",
         "label-repeat-30days": "Mensualmente",
+        "label-repeat-annually": "Anual",
         "label-repeat-daily": "Diario",
         "label-repeat-freeselect": "Seleccione libremente",
         "label-repeat-monthly": "A principios de mes",
         "label-repeat-none": "No repitas",
-        "label-repeat-weekly": "Semanal",
         "label-repeat-quarterly": "Cada tres meses",
         "label-repeat-semiannually": "Semestral",
-        "label-repeat-annually": "Anual",
+        "label-repeat-weekly": "Semanal",
         "title": {
             "add": "Nueva entrada",
             "edit": "Editar entrada"
@@ -177,14 +210,15 @@
     "enter_screen_attribute_account_from": "De la cuenta",
     "enter_screen_attribute_account_to": "A la cuenta",
     "enter_screen_attribute_category": "Categorías",
+    "enter_screen_attribute_currency": "Moneda",
     "enter_screen_attribute_date": "Fecha",
     "enter_screen_attribute_repeat": "Repita",
     "home_screen": {
-        "button-show-more": "Más",
         "button-show-all": "Todo",
+        "button-show-more": "Más",
         "free-text": "Gratis",
-        "label-recent-transactions": "Transacciones recientes",
-        "label-active-serialcontracts": "Contratos de este mes"
+        "label-active-serialcontracts": "Contratos de este mes",
+        "label-recent-transactions": "Transacciones recientes"
     },
     "home_screen_card": {
         "home-screen-card-toast": "Deslice el dedo hacia la izquierda y hacia la derecha para ver los meses anteriores o los próximos. Mantenga pulsado para volver al mes actual.",
@@ -192,24 +226,29 @@
         "label-expenses": "Gasto",
         "label-income": "Ingresos",
         "label-total-balance": "Saldo",
-        "label-total-balance-sub": "hasta hoy"
+        "label-total-balance-sub": "hasta hoy",
+        "label-monthly-planner": "Agenda mensual",
+        "label-mtd-balance": "Balance hasta la fecha",
+        "label-contracts": "± Contratos",
+        "label-eom-projected-balance": "Balance final",
+        "label-account-position-month": "Saldo de la cuenta de principio a fin de mes"
     },
     "listview": {
         "dismissible": {
             "label-delete": "Borrar"
         },
+        "label-days": "días",
+        "label-error-translation": "Falta la traducción",
+        "label-every": "Cada",
         "label-future": "Reservas previstas",
         "label-lastweek": "Última semana",
+        "label-months": "meses",
         "label-no-entries": "- No se han encontrado entradas -",
         "label-thismonth": "Este mes",
         "label-today": "Hoy",
-        "label-yesterday": "Ayer",
-        "label-error-translation": "Falta la traducción",
-        "label-every": "Cada",
-        "label-days": "días",
         "label-weeks": "semanas",
-        "label-months": "meses",
-        "label-years": "años"
+        "label-years": "años",
+        "label-yesterday": "Ayer"
     },
     "lock_screen": {
         "change": {
@@ -336,44 +375,11 @@
         },
         "standards-selector-none": "Sin categoría",
         "system-settings": {
+            "button-delete-user": "Eliminar cuenta",
             "button-forgot-password": "Cambiar contraseña",
-            "button-delete-user": "Eliminar usuario",
             "button-forgot-password-tooltip": "Puede solicitar un restablecimiento de la contraseña aquí si ha olvidado su antigua contraseña.",
             "button-signout": "Firmar la salida",
             "label-title": "Su cuenta"
         }
-    },
-    "currency": {
-        "error": {
-            "not-found": "No se admite la moneda"
-        },
-        "name": {
-            "eur": "Euro",
-            "gbp": "Libra esterlina",
-            "jpy": "Yen",
-            "usd": "Dólar estadounidense",
-            "cny": "Yuan chino",
-            "chf": "Franco suizo",
-            "aud": "Dólar australiano",
-            "cad": "Dólar canadiense",
-            "nzd": "Dólar neozelandés",
-            "sek": "Corona sueca",
-            "nok": "Corona noruega",
-            "myr": "Ringgit malayo",
-            "pln": "Złoty",
-            "czk": "Corona checa",
-            "krw": "El won surcoreano",
-            "dkk": "Corona danesa",
-            "isk": "Corona islandesa",
-            "tyr": "Lira turca",
-            "zar": "Rand sudafricano",
-            "mxn": "Peso mexicano",
-            "inr": "Rupia india",
-            "idr": "Rupia indonesia",
-            "thb": "Baht",
-            "ils": "Shekel",
-            "blr": "Real brasileño"
-        }
-    },
-    "enter_screen_attribute_currency": "Moneda"
+    }
 }

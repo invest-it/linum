@@ -10,6 +10,9 @@ import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 class ActionLip extends StatefulWidget {
   const ActionLip(this.providerKey);
 
@@ -29,7 +32,6 @@ class _ActionLipState extends State<ActionLip> {
     final ActionLipStatusProvider provider =
         Provider.of<ActionLipStatusProvider>(context);
 
-    // log('Status when ActionLip was built:' + actionLipStatus.toString());
     switch (provider.getActionLipStatus(providerKey)) {
       case ActionLipStatus.hidden:
         setState(() {
@@ -38,13 +40,6 @@ class _ActionLipState extends State<ActionLip> {
         break;
       case ActionLipStatus.onviewport:
         setState(() {
-          // log('The offset of the actionLip is currently' +
-          // _lipYOffset.toString());
-          // SizeGuide.keyboardIsOpened
-          // ? log('Because the keyboard is opened, ')
-          // : log('Because the keyboard is not opened,');
-          // log('the offset has been reduced by ' +
-          // (SizeGuide.keyboardHeight / 2).toString());
           _lipYOffset = SizeGuide.isKeyboardOpen(context)
               ? proportionateScreenHeightFraction(ScreenFraction.twofifths) -
                   (SizeGuide.keyboardHeight / 2)

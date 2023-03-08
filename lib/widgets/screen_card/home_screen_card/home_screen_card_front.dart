@@ -11,14 +11,17 @@ import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/screen_card_provider.dart';
-import 'package:linum/utilities/frontend/currency_formatter.dart';
 import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
 import 'package:linum/widgets/loading_spinner.dart';
 import 'package:linum/widgets/screen_card/card_widgets/home_screen_card_avatar.dart';
 import 'package:linum/widgets/screen_card/home_screen_card/home_screen_card_row.dart';
 import 'package:linum/widgets/screen_card/home_screen_functions.dart';
 import 'package:linum/widgets/screen_card/screen_card_data_extensions.dart';
+import 'package:linum/widgets/styled_amount.dart';
 import 'package:provider/provider.dart';
+
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
 
 class HomeScreenCardFront extends StatelessWidget {
   @override
@@ -28,19 +31,45 @@ class HomeScreenCardFront extends StatelessWidget {
 
     final String langCode = context.locale.languageCode;
     final DateFormat dateFormat = DateFormat('MMMM yyyy', langCode);
+    final DateTime now = DateTime.now();
 
     final settings = Provider.of<AccountSettingsProvider>(context);
-    final screenCardProvider = Provider.of<ScreenCardProvider>(context, listen: false);
+    final screenCardProvider =
+        Provider.of<ScreenCardProvider>(context, listen: false);
     final balanceDataProvider = Provider.of<BalanceDataProvider>(context);
 
     return GestureDetector(
-          onHorizontalDragEnd: (DragEndDetails details) =>
-              onHorizontalDragEnd(details, context),
-          onTap: () => onFlipCardTap(context, screenCardProvider.controller!),
-          onLongPress: () {
-            goToCurrentTime(algorithmProvider);
-          },
-          child: Column(
+      onHorizontalDragEnd: (DragEndDetails details) =>
+          onHorizontalDragEnd(details, context),
+      onTap: () => onFlipCardTap(context, screenCardProvider.controller!),
+      onLongPress: () {
+        goToCurrentTime(algorithmProvider);
+      },
+      child: Stack(
+        children: [
+          Align(
+            alignment: Alignment.topLeft,
+            child: (algorithmProvider.currentShownMonth !=
+                    DateTime(now.year, now.month))
+                ? IconButton(
+                    constraints: const BoxConstraints(),
+                    padding: const EdgeInsets.all(18.0),
+                    icon: const Icon(Icons.event_repeat_rounded),
+                    onPressed: () {
+                      goToCurrentTime(algorithmProvider);
+                    },
+                  )
+                : IconButton(
+                    constraints: const BoxConstraints(),
+                    padding: const EdgeInsets.all(18.0),
+                    icon: const Icon(Icons.error),
+                    color: Theme.of(context).colorScheme.onSurface.withAlpha(0),
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onPressed: () {},
+                  ),
+          ),
+          Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Column(
@@ -99,30 +128,18 @@ class HomeScreenCardFront extends StatelessWidget {
                       stream: balanceDataProvider.getHomeScreenCardData(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.none ||
-                            snapshot.connectionState == ConnectionState.waiting) {
+                            snapshot.connectionState ==
+                                ConnectionState.waiting) {
                           return const LoadingSpinner();
                         }
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.baseline,
-                          textBaseline: TextBaseline.alphabetic,
-                          children: CurrencyFormatter(
+
+                        return FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: StyledAmount(
+                            snapshot.data?.mtdBalance ?? 0.00,
                             context.locale,
-                            symbol: settings.getStandardCurrency().symbol,
-                          ).formatWithWidgets(
-                            snapshot.data?.mtdBalance ?? 0,
-                            (amount) => Flexible(
-                              child: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: Text(
-                                  amount,
-                                  style: getBalanceTextStyle(context, snapshot.data?.mtdBalance ?? 0),
-                                ),
-                              ),
-                            ), (symbol) => Text(
-                            symbol,
-                            style: Theme.of(context).textTheme.bodyText1,
-                          ),
+                            settings.getStandardCurrency().symbol,
+                            fontSize: StyledFontSize.maximize,
                           ),
                         );
                       },
@@ -154,6 +171,8 @@ class HomeScreenCardFront extends StatelessWidget {
               )
             ],
           ),
-        );
+        ],
+      ),
+    );
   }
 }

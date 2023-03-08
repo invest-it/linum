@@ -14,6 +14,9 @@ import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 class ForgotPasswordButton extends StatelessWidget {
   ForgotPasswordButton(this.providerKey);
 
@@ -92,7 +95,9 @@ class ForgotPasswordButton extends StatelessWidget {
                               },
                               decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: tr('onboarding_screen.login-email-hintlabel'),
+                                hintText: tr(
+                                  'onboarding_screen.login-email-hintlabel',
+                                ),
                                 hintStyle: Theme.of(context)
                                     .textTheme
                                     .bodyText1
@@ -153,7 +158,8 @@ class ForgotPasswordButton extends StatelessWidget {
             ],
           ),
           actionLipStatus: ActionLipStatus.onviewport,
-          actionLipTitle: tr('action_lip.forgot-password.logged-out.label-title'),
+          actionLipTitle:
+              tr('action_lip.forgot-password.logged-out.label-title'),
         );
       }
       // lip if the user has already authenticated themself
@@ -219,7 +225,9 @@ class ForgotPasswordButton extends StatelessWidget {
                               },
                               decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: tr('onboarding_screen.login-password-hintlabel'),
+                                hintText: tr(
+                                  'onboarding_screen.login-password-hintlabel',
+                                ),
                                 hintStyle: Theme.of(context)
                                     .textTheme
                                     .bodyText1
@@ -280,7 +288,8 @@ class ForgotPasswordButton extends StatelessWidget {
             ],
           ),
           actionLipStatus: ActionLipStatus.onviewport,
-          actionLipTitle: tr('action_lip.forgot-password.logged-in.label-title'),
+          actionLipTitle:
+              tr('action_lip.forgot-password.logged-in.label-title'),
         );
       }
     }

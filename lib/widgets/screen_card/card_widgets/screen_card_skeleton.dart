@@ -13,16 +13,12 @@ import 'package:provider/provider.dart';
 class ScreenCardSkeleton extends StatefulWidget {
   final Widget frontSide;
   final Widget? backSide;
-  final double cardWidth;
-  final double cardHeight;
   final FlipCardController? flipCardController;
 
   const ScreenCardSkeleton({
     super.key,
     required this.frontSide,
     this.backSide,
-    required this.cardWidth,
-    required this.cardHeight,
     this.flipCardController,
   });
 
@@ -48,46 +44,13 @@ class _ScreenCardSkeletonState<TData> extends State<ScreenCardSkeleton> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ScreenCardProvider>(
       create: (_) => ScreenCardProvider(controller: _flipCardController),
-      child: Column(
-        children: [
-          DecoratedBox(
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Theme.of(context).colorScheme.onSurface.withAlpha(64),
-                  blurRadius: 16.0,
-                  spreadRadius: 1.0,
-                  offset: const Offset(0, 4),
-                )
-              ],
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: Material(
-                child: Container(
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/images/cubes.png"),
-                      // opacity: 0.99,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  width: widget.cardWidth, //345 old value
-                  height: widget.cardHeight, //196 old value
-                  // color: Colors.grey[100],
-                  child: widget.backSide == null
-                      ? widget.frontSide
-                      : FlipCard(
-                          controller: _flipCardController,
-                          front: widget.frontSide,
-                          back: widget.backSide!,
-                        ),
-                ),
-              ),
-            ),
+      child: widget.backSide == null
+          ? widget.frontSide
+          : FlipCard(
+            controller: _flipCardController,
+            front: widget.frontSide,
+            back: widget.backSide!,
           ),
-        ],
-      ),
     );
   }
 }

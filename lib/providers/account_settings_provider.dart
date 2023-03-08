@@ -5,7 +5,6 @@
 //  (Refactored by damattl)
 
 import 'dart:async';
-import 'dart:developer' as dev;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -17,8 +16,8 @@ import 'package:linum/models/currency.dart';
 import 'package:linum/models/entry_category.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/types/change_notifier_provider_builder.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
-
 
 class AccountSettingsProvider extends ChangeNotifier {
   DocumentReference<Map<String, dynamic>>? _settings;
@@ -27,6 +26,8 @@ class AccountSettingsProvider extends ChangeNotifier {
 
   /// The uid of the user
   late String _uid;
+
+  late final Logger logger;
 
   Map<String, dynamic> lastGrabbedData = {};
 
@@ -53,6 +54,7 @@ class AccountSettingsProvider extends ChangeNotifier {
     final String? currency = settings["StandardCurrency"] as String?;
     return standardCurrencies[currency] ?? standardCurrencies["EUR"]!;
   }
+
   Future<void> setStandardCurrency(Currency currency) async {
     final isInMap = standardCurrencies[currency.name] != null;
     if (!isInMap) {
@@ -65,6 +67,8 @@ class AccountSettingsProvider extends ChangeNotifier {
   }
 
   AccountSettingsProvider(BuildContext context) {
+    logger = Logger();
+
     _uid = Provider.of<AuthenticationService>(context, listen: false).uid;
 
     if (_uid != "") {
@@ -76,7 +80,7 @@ class AccountSettingsProvider extends ChangeNotifier {
 
   void updateAuth(AuthenticationService auth, BuildContext context) {
     if (_uid != auth.uid) {
-      dev.log("this still works");
+      logger.d("updateAuth still works");
       _uid = auth.uid;
       if (_uid == "") {
         if (settingsListener != null) {
@@ -105,7 +109,7 @@ class AccountSettingsProvider extends ChangeNotifier {
       return;
     }
     if (_settings == null) {
-      dev.log("Auto update could not be set up. _settings == null");
+      logger.v("Auto update could not be set up. _settings == null");
       return;
     }
     if (!(await _settings!.get()).exists) {
@@ -130,7 +134,7 @@ class AccountSettingsProvider extends ChangeNotifier {
         notifyListeners();
       },
       onError: (error, stackTrace) {
-        dev.log("i am evil $error and this is my path $stackTrace");
+        logger.e(error.toString());
       },
     );
   }
@@ -153,7 +157,7 @@ class AccountSettingsProvider extends ChangeNotifier {
         context.setLocale(context.fallbackLocale!);
       }
     } catch (e) {
-      dev.log("known life cycle error ");
+      logger.v("known life cycle error ");
     }
   }
 
@@ -163,11 +167,11 @@ class AccountSettingsProvider extends ChangeNotifier {
 
   Future<bool> updateSettings(Map<String, dynamic> settings) async {
     if (_settings == null) {
-      dev.log("Settings could not be set. _settings == null");
+      logger.v("Settings could not be set. _settings == null");
       return false;
     }
 
-    dev.log("updateSettings called");
+    logger.v("updateSettings called");
 
     _settings!.update(settings);
 
@@ -182,7 +186,8 @@ class AccountSettingsProvider extends ChangeNotifier {
 
   static ChangeNotifierProviderBuilder builder() {
     return (BuildContext context, {bool testing = false}) {
-      return ChangeNotifierProxyProvider<AuthenticationService, AccountSettingsProvider>(
+      return ChangeNotifierProxyProvider<AuthenticationService,
+          AccountSettingsProvider>(
         create: (ctx) {
           return AccountSettingsProvider(ctx);
         },
@@ -197,5 +202,4 @@ class AccountSettingsProvider extends ChangeNotifier {
       );
     };
   }
-
 }

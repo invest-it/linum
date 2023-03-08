@@ -8,6 +8,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/providers/pin_code_provider.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 class PinSwitch extends StatelessWidget {
   const PinSwitch({
     super.key,

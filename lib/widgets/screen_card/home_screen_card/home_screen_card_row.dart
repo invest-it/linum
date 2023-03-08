@@ -8,12 +8,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/models/home_screen_card_data.dart';
 import 'package:linum/providers/account_settings_provider.dart';
-import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/utilities/frontend/currency_formatter.dart';
-import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
 import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/screen_card/card_widgets/home_screen_card_avatar.dart';
 import 'package:provider/provider.dart';
+
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
 
 class HomeScreenCardRow extends StatelessWidget {
   final Stream<HomeScreenCardData>? data;
@@ -27,29 +28,6 @@ class HomeScreenCardRow extends StatelessWidget {
     required this.downwardArrow,
   });
 
-  IconButton _buildGoToCurrentDateIcon(BuildContext context) {
-    final AlgorithmProvider algorithmProvider =
-        Provider.of<AlgorithmProvider>(context);
-    final DateTime now = DateTime.now();
-
-    return (algorithmProvider.currentShownMonth !=
-            DateTime(now.year, now.month))
-        ? IconButton(
-            icon: const Icon(Icons.today_rounded),
-            color: Theme.of(context).colorScheme.onSurface.withAlpha(64),
-            onPressed: () {
-              goToCurrentTime(algorithmProvider);
-            },
-          )
-        : IconButton(
-            icon: const Icon(Icons.error),
-            color: Theme.of(context).colorScheme.onSurface.withAlpha(0),
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            onPressed: () {},
-          );
-  }
-
   Expanded _buildIncomeExpensesInfo(
     BuildContext context, {
     bool isIncome = false,
@@ -58,17 +36,22 @@ class HomeScreenCardRow extends StatelessWidget {
     return Expanded(
       flex: 10,
       child: Row(
-        mainAxisAlignment: isIncome ? MainAxisAlignment.start : MainAxisAlignment.end,
+        mainAxisAlignment:
+            isIncome ? MainAxisAlignment.start : MainAxisAlignment.end,
         children: [
-          if (isIncome) ...[upwardArrow, SizedBox(width: proportionateScreenWidth(10))],
+          if (isIncome) ...[
+            upwardArrow,
+            SizedBox(width: proportionateScreenWidth(10))
+          ],
           Column(
             crossAxisAlignment:
                 isIncome ? CrossAxisAlignment.start : CrossAxisAlignment.end,
             children: [
               Text(
-                tr(isIncome
-                    ? 'home_screen_card.label-income'
-                    : 'home_screen_card.label-expenses',
+                tr(
+                  isIncome
+                      ? 'home_screen_card.label-income'
+                      : 'home_screen_card.label-expenses',
                 ),
                 style: Theme.of(context)
                     .textTheme
@@ -90,8 +73,11 @@ class HomeScreenCardRow extends StatelessWidget {
                     );
                   }
                   return Text(
-                    CurrencyFormatter(context.locale, symbol: settings.getStandardCurrency().symbol)
-                        .format(isIncome
+                    CurrencyFormatter(
+                      context.locale,
+                      symbol: settings.getStandardCurrency().symbol,
+                    ).format(
+                      isIncome
                           ? snapshot.data?.mtdIncome ?? 0
                           : snapshot.data?.mtdExpenses ?? 0,
                     ),
@@ -105,7 +91,10 @@ class HomeScreenCardRow extends StatelessWidget {
               ),
             ],
           ),
-          if (!isIncome) ...[SizedBox(width: proportionateScreenWidth(10)), downwardArrow],
+          if (!isIncome) ...[
+            SizedBox(width: proportionateScreenWidth(10)),
+            downwardArrow
+          ],
         ],
       ),
     );
@@ -117,11 +106,10 @@ class HomeScreenCardRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _buildIncomeExpensesInfo(context, isIncome: true),
-        Expanded(
+        const Expanded(
           flex: 3,
           child: FittedBox(
             fit: BoxFit.scaleDown,
-            child: _buildGoToCurrentDateIcon(context),
           ),
         ),
         _buildIncomeExpensesInfo(context)

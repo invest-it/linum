@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:linum/models/transaction.dart';
 import 'package:linum/utilities/frontend/transaction_amount_formatter.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 class TransactionAmountDisplay extends StatelessWidget {
   final Transaction transaction;
   final TransactionAmountFormatter formatter;
@@ -16,9 +19,9 @@ class TransactionAmountDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return transaction.amount == 0
         ? Text(
-          tr('home_screen.free-text'),
-          style: Theme.of(context).textTheme.bodyLarge,
-        )
+            tr('home_screen.free-text'),
+            style: Theme.of(context).textTheme.bodyLarge,
+          )
         : buildRow(context);
   }
 
@@ -27,25 +30,25 @@ class TransactionAmountDisplay extends StatelessWidget {
       formatter.format(transaction),
       style: transaction.amount <= 0
           ? Theme.of(context).textTheme.bodyText1?.copyWith(
-        color: Theme.of(context).colorScheme.error,
-      ) : Theme.of(context).textTheme.bodyText1?.copyWith(
-        color: Theme.of(context).colorScheme.onSurface,
-      ),
+                color: Theme.of(context).colorScheme.error,
+              )
+          : Theme.of(context).textTheme.bodyText1?.copyWith(
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
     );
 
-    var rowChildren = <Widget>[
-      defaultText
-    ];
+    var rowChildren = <Widget>[defaultText];
 
     if (transaction.currency != formatter.standardCurrency.name) {
       final convertedText = Text(
         formatter.format(transaction, showConverted: true),
         style: transaction.amount <= 0
             ? Theme.of(context).textTheme.caption?.copyWith(
-          color: Theme.of(context).colorScheme.error,
-        ) : Theme.of(context).textTheme.caption?.copyWith(
-          color: Theme.of(context).colorScheme.onSurface,
-        ),
+                  color: Theme.of(context).colorScheme.error,
+                )
+            : Theme.of(context).textTheme.caption?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
       );
       rowChildren = [
         defaultText,
