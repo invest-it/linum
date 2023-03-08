@@ -29,7 +29,6 @@ class _ActionLipState extends State<ActionLip> {
     final ActionLipStatusProvider provider =
         Provider.of<ActionLipStatusProvider>(context);
 
-    // log('Status when ActionLip was built:' + actionLipStatus.toString());
     switch (provider.getActionLipStatus(providerKey)) {
       case ActionLipStatus.hidden:
         setState(() {
@@ -38,13 +37,6 @@ class _ActionLipState extends State<ActionLip> {
         break;
       case ActionLipStatus.onviewport:
         setState(() {
-          // log('The offset of the actionLip is currently' +
-          // _lipYOffset.toString());
-          // SizeGuide.keyboardIsOpened
-          // ? log('Because the keyboard is opened, ')
-          // : log('Because the keyboard is not opened,');
-          // log('the offset has been reduced by ' +
-          // (SizeGuide.keyboardHeight / 2).toString());
           _lipYOffset = SizeGuide.isKeyboardOpen(context)
               ? proportionateScreenHeightFraction(ScreenFraction.twofifths) -
                   (SizeGuide.keyboardHeight / 2)

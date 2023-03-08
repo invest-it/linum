@@ -21,6 +21,7 @@ import 'package:linum/widgets/enter_screen/enter_screen_top_input_field.dart';
 import 'package:linum/widgets/enter_screen/update_entry_dialog.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:linum/widgets/top_bar_action_item.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 class EnterScreen extends StatefulWidget {
@@ -33,6 +34,11 @@ class EnterScreen extends StatefulWidget {
 }
 
 class _EnterScreenState extends State<EnterScreen> {
+  late final Logger logger;
+  _EnterScreenState() {
+    logger = Logger();
+  }
+
   @override
   Widget build(BuildContext context) {
     final EnterScreenProvider enterScreenProvider =
@@ -175,7 +181,7 @@ class _EnterScreenState extends State<EnterScreen> {
                                     context,
                                     enterScreenProvider,
                                   );
-                                  dev.log(
+                                  logger.e(
                                     "amount was to low: ${enterScreenProvider.amountToDisplay()}",
                                   );
                                   return;

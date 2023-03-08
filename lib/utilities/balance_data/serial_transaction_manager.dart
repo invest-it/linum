@@ -4,8 +4,6 @@
 //  Co-Author: n/a
 //  (refactored)
 
-import 'dart:developer' as dev;
-
 import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:linum/constants/repeat_duration_type_enum.dart';
 import 'package:linum/constants/serial_transaction_change_type_enum.dart';
@@ -17,9 +15,12 @@ import 'package:linum/utilities/backend/date_time_calculation_functions.dart';
 import 'package:linum/utilities/backend/repeated_balance_help_functions.dart';
 import 'package:linum/utilities/balance_data/serial_transaction_remover.dart';
 import 'package:linum/utilities/balance_data/serial_transaction_updater.dart';
+import 'package:logger/logger.dart';
 import 'package:uuid/uuid.dart';
 
 class SerialTransactionManager {
+  static final Logger logger = Logger();
+
   /// add a repeated Balance and upload it (the stream will automatically show it in the app again)
   static bool addSerialTransactionToData(
     SerialTransaction serialTransaction,
@@ -27,11 +28,11 @@ class SerialTransactionManager {
   ) {
     // conditions
     if (serialTransaction.category == "") {
-      dev.log("repeatBalanceData.category must be != '' ");
+      logger.e("repeatBalanceData.category must be != '' ");
       return false;
     }
     if (serialTransaction.currency == "") {
-      dev.log("repeatBalanceData.currency must be != '' ");
+      logger.e("repeatBalanceData.currency must be != '' ");
       return false;
     }
 
@@ -59,16 +60,16 @@ class SerialTransactionManager {
   }) {
     // conditions
     if (id == "") {
-      dev.log("no id provided");
+      logger.e("no id provided");
       return false;
     }
     if (changeType == SerialTransactionChangeType.thisAndAllBefore) {
       if (time == null) {
-        dev.log("RepeatableChangeType.thisAndAllBefore => time != null");
+        logger.e("RepeatableChangeType.thisAndAllBefore => time != null");
         return false;
       }
       if (resetEndTime) {
-        dev.log(
+        logger.e(
           "resetEndTime, endTime are no available for RepeatableChangeType.thisAndAllBefore",
         );
         return false;
@@ -76,11 +77,11 @@ class SerialTransactionManager {
     }
     if (changeType == SerialTransactionChangeType.thisAndAllAfter) {
       if (time == null) {
-        dev.log("RepeatableChangeType.thisAndAllAfter => time != null");
+        logger.e("RepeatableChangeType.thisAndAllAfter => time != null");
         return false;
       }
       if (initialTime != null) {
-        dev.log(
+        logger.e(
           "initialTime is no available for RepeatableChangeType.thisAndAllAfter",
         );
         return false;
@@ -88,16 +89,16 @@ class SerialTransactionManager {
     }
     if (changeType == SerialTransactionChangeType.onlyThisOne) {
       if (time == null) {
-        dev.log("RepeatableChangeType.onlyThisOne => time != null");
+        logger.e("RepeatableChangeType.onlyThisOne => time != null");
         return false;
       }
     }
     if (category == "") {
-      dev.log("category must be != '' ");
+      logger.e("category must be != '' ");
       return false;
     }
     if (currency == "") {
-      dev.log("currency must be != '' ");
+      logger.e("currency must be != '' ");
       return false;
     }
 
@@ -232,20 +233,21 @@ class SerialTransactionManager {
     // conditions
     if (removeType == SerialTransactionChangeType.thisAndAllBefore &&
         time == null) {
-      dev.log(
+      logger.e(
         "removeType == RepeatableChangeType.thisAndAllBefore => time != null",
       );
       return false;
     }
     if (removeType == SerialTransactionChangeType.thisAndAllAfter &&
         time == null) {
-      dev.log(
+      logger.e(
         "removeType == RepeatableChangeType.thisAndAllAfter => time != null",
       );
       return false;
     }
     if (removeType == SerialTransactionChangeType.onlyThisOne && time == null) {
-      dev.log("removeType == RepeatableChangeType.onlyThisOne => time != null");
+      logger
+          .e("removeType == RepeatableChangeType.onlyThisOne => time != null");
       return false;
     }
 

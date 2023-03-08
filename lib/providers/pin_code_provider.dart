@@ -49,11 +49,7 @@ class PinCodeProvider extends ChangeNotifier {
 
   Future<void> initializeIsPINSet() async {
     _pinSet = await _isPinSet();
-    // dev.log(
-    //   _pinActive
-    //       ? "PIN lock is active for $_lastEmail"
-    //       : "PIN lock is NOT ACTIVE for $_lastEmail",
-    // );
+
     _pinSetStillLoading = false;
 
     //Set Session to Safe if there is no PIN lock
@@ -150,14 +146,9 @@ class PinCodeProvider extends ChangeNotifier {
   /// Stores a new value for the PIN on the device
   Future<void> _storePIN(String code) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    log(_lastEmail ?? "No mail found"); // TODO: Remove
-    log(code);
+
     prefs.setString('${_lastEmail!}.code', code);
-    // dev.log(
-    //   prefs.getString('${_lastEmail!}.code') ??
-    //       "ERROR: No String stored in prefs!!!",
-    // );
-    // dev.log("PIN HAS BEEN STORED!");
+
     _sessionIsSafe = true;
   }
 
@@ -284,7 +275,7 @@ class PinCodeProvider extends ChangeNotifier {
   void addDigit(int digit) {
     if (_code.length < 4) {
       _code = _code + digit.toString();
-      // log(_code);
+
       _pinSlot++;
       _ringColor = RingColors.green;
       //if code # is complete, check if it is correct
@@ -333,7 +324,7 @@ class PinCodeProvider extends ChangeNotifier {
   void removeLastDigit() {
     if (_code.isNotEmpty) {
       _code = _code.substring(0, _code.length - 1);
-      // log(_code);
+
       _pinSlot--;
       notifyListeners();
     }
@@ -343,7 +334,7 @@ class PinCodeProvider extends ChangeNotifier {
   Future<void> _checkCode(String inputCode) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String pin = prefs.getString('${_lastEmail!}.code') ?? 'ERROR';
-    // dev.log("pin:$_pin");
+
     if (pin == inputCode) {
       _correctCode();
     } else {
@@ -381,10 +372,6 @@ class PinCodeProvider extends ChangeNotifier {
     if (_pinSet) {
       _sessionIsSafe = false;
       notifyListeners();
-    } else {
-      // dev.log(
-      //   "No PIN code is active, therefore the session will not be reset.",
-      // );
     }
   }
 
@@ -397,9 +384,11 @@ class PinCodeProvider extends ChangeNotifier {
   bool get pinSetStillLoading => _pinSetStillLoading;
   bool get lastEmailStillLoading => _lastEmailStillLoading;
 
-
   static ChangeNotifierProviderBuilder builder() {
-    return (BuildContext context, {bool testing = false,}) {
+    return (
+      BuildContext context, {
+      bool testing = false,
+    }) {
       return ChangeNotifierProxyProvider<AuthenticationService,
           PinCodeProvider>(
         create: (context) => PinCodeProvider(context),

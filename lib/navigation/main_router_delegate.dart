@@ -3,8 +3,6 @@
 //  Author: damattl
 //
 
-import 'dart:developer' as dev;
-
 import 'package:flutter/material.dart';
 import 'package:linum/loading_scaffold.dart';
 import 'package:linum/navigation/main_routes.dart';
@@ -14,13 +12,19 @@ import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/screens/onboarding_screen.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 class MainRouterDelegate extends RouterDelegate<MainRoute>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<MainRoute> {
   @override
-  final GlobalKey<NavigatorState> navigatorKey;
-  MainRouterDelegate() : navigatorKey = GlobalKey<NavigatorState>();
+  late final GlobalKey<NavigatorState> navigatorKey;
+  late final Logger logger;
+
+  MainRouterDelegate() {
+    navigatorKey = GlobalKey<NavigatorState>();
+    logger = Logger();
+  }
 
   Page? _replacedRoute;
   final _pageStack = <Page>[];
@@ -123,7 +127,7 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
   }
 
   bool _onPopPage(Route route, dynamic result) {
-    dev.log("Route: $route");
+    logger.i("Route: $route");
     if (!route.didPop(result)) return false;
     popRoute();
     return true;
@@ -134,7 +138,7 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
   /// TODO: Discuss if this is the wanted behaviour
   @override
   Future<bool> popRoute() async {
-    dev.log("Stack: $_pageStack");
+    logger.i("Stack: $_pageStack");
 
     if (_onPopOverwrite != null) {
       _onPopOverwrite!.call();

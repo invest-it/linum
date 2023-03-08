@@ -4,8 +4,6 @@
 //  Co-Author: n/a //TODO @SoTBurst this is also rather a critical file that might need more trained people
 //  tored)
 
-import 'dart:developer' as dev;
-
 import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:flutter/material.dart';
 import 'package:linum/constants/repeat_duration_type_enum.dart';
@@ -22,6 +20,7 @@ import 'package:linum/utilities/balance_data/balance_data_stream_builder.dart';
 import 'package:linum/utilities/balance_data/serial_transaction_manager.dart';
 import 'package:linum/utilities/balance_data/transaction_manager.dart';
 import 'package:linum/widgets/abstract/balance_data_list_view.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 /// Provides the balance data from the database using the uid.
@@ -32,6 +31,8 @@ class BalanceDataProvider extends ChangeNotifier {
   /// The uid of the user
   late String _uid;
 
+  late final Logger logger;
+
   late AlgorithmProvider _algorithmProvider;
   late ExchangeRateProvider _exchangeRateProvider;
   late BalanceDataStreamBuilder _streamBuilder;
@@ -41,8 +42,10 @@ class BalanceDataProvider extends ChangeNotifier {
   BalanceDataProvider(BuildContext context) {
     _uid = Provider.of<AuthenticationService>(context, listen: false).uid;
     _algorithmProvider = Provider.of<AlgorithmProvider>(context, listen: false);
-    _exchangeRateProvider = Provider.of<ExchangeRateProvider>(context, listen: false);
-    _streamBuilder = BalanceDataStreamBuilder(_algorithmProvider, _exchangeRateProvider);
+    _exchangeRateProvider =
+        Provider.of<ExchangeRateProvider>(context, listen: false);
+    _streamBuilder =
+        BalanceDataStreamBuilder(_algorithmProvider, _exchangeRateProvider);
     asynConstructor();
   }
 
@@ -65,7 +68,7 @@ class BalanceDataProvider extends ChangeNotifier {
       }
       if (docs == null) {
         //docs = await _createDoc();
-        dev.log("error getting doc id");
+        logger.e("error getting doc id");
         return;
       }
       if (docs.isEmpty) {
@@ -83,13 +86,13 @@ class BalanceDataProvider extends ChangeNotifier {
           .doc(docs[0] as String);
       notifyListeners();
     } else {
-      dev.log("no data found in documentToUser");
+      logger.wtf("no data found in documentToUser");
     }
   }
 
   /// Creates Document if it doesn't exist
   Future<List<dynamic>> _createDoc() async {
-    dev.log("creating document");
+    logger.i("creating document");
     final firestore.DocumentSnapshot<Map<String, dynamic>> doc = await firestore
         .FirebaseFirestore.instance
         .collection('balance')
@@ -164,7 +167,7 @@ class BalanceDataProvider extends ChangeNotifier {
       return true;
     }
 
-    dev.log("couldn't add single balance");
+    logger.e("couldn't add single balance");
     return false;
   }
 
@@ -229,7 +232,7 @@ class BalanceDataProvider extends ChangeNotifier {
       return true;
     }
 
-    dev.log("couldn't remove single balance");
+    logger.e("couldn't remove single balance");
     return false;
   }
 
@@ -241,7 +244,7 @@ class BalanceDataProvider extends ChangeNotifier {
   Future<BalanceDocument?> _getData() async {
     // check connection
     if (_balance == null) {
-      dev.log("_balance is null");
+      logger.e("_balance is null");
       return null;
     }
 
@@ -252,7 +255,7 @@ class BalanceDataProvider extends ChangeNotifier {
 
     // check if data exists
     if (data == null) {
-      dev.log("Corrupted User Document");
+      logger.e("Corrupted User Document");
       return null;
     }
 
@@ -406,7 +409,7 @@ class BalanceDataProvider extends ChangeNotifier {
   /// upload one setting as map
   Future<void> uploadSettings(Map<String, dynamic> settings) async {
     if (_balance == null) {
-      dev.log("_balance is null");
+      logger.e("_balance is null");
     }
     final snapshot = await _balance!.get();
     final data = snapshot.data();
@@ -417,13 +420,12 @@ class BalanceDataProvider extends ChangeNotifier {
   /// get settings as map
   Future<Map<String, dynamic>> getSettings() async {
     if (_balance == null) {
-      dev.log("_balance is null");
+      logger.e("_balance is null");
     }
     final snapshot = await _balance!.get(); // TODO: WILD
     final data = snapshot.data();
     return data!.settings;
   }
-
 
   static ChangeNotifierProviderBuilder builder() {
     return (BuildContext context, {bool testing = false}) {
@@ -446,6 +448,5 @@ class BalanceDataProvider extends ChangeNotifier {
       );
     };
   }
-
 }
 // TODO: Refactor
