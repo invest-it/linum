@@ -51,6 +51,9 @@ jobs:
     
     - name: Set up Dart Pub
       run: dart pub get
+
+    - name: Generate mock files for testing
+      run: flutter pub run build_runner build
     
     - name: Analyze Flutter Code
       run: flutter analyze
