@@ -21,6 +21,8 @@ import 'package:linum/widgets/screen_skeleton/app_bar_action.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
 /// Page Index: 0
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -30,7 +32,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   late FlipCardController? _flipCardController;
 
   @override
@@ -87,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
         AppBarAction.fromPreset(DefaultAction.settings),
       ],
       screenCard: HomeScreenCard(
-          controller: _flipCardController!,
+        controller: _flipCardController!,
       ),
       body: Stack(
         children: [

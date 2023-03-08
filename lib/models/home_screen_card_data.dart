@@ -15,8 +15,17 @@ class HomeScreenCardData {
       eomFutureSerialIncome; //End of Month outstanding serial income items (sum)
   final num
       eomFutureSerialExpenses; //End of Month outstanding serial expense items (sum)
+
   final num eomSerialIncome; //End of Month serial income items (sum)
   final num eomSerialExpenses; //End of Month serial expense items (sum)
+
+  final num allTimeSumBalance;
+
+  final int countSerialIncomes;
+  final int countSerialCosts;
+
+  final num tillBeginningOfMonthSumBalance;
+  final num tillEndOfMonthSumBalance;
 
   const HomeScreenCardData({
     this.mtdBalance = 0,
@@ -27,5 +36,10 @@ class HomeScreenCardData {
     this.eomFutureSerialExpenses = 0,
     this.eomSerialIncome = 0,
     this.eomSerialExpenses = 0,
+    this.allTimeSumBalance = 0,
+    this.countSerialIncomes = 0,
+    this.countSerialCosts = 0,
+    this.tillBeginningOfMonthSumBalance = 0,
+    this.tillEndOfMonthSumBalance = 0,
   });
 }

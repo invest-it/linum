@@ -30,6 +30,12 @@
         }
     },
     "alertdialog": {
+        "delete-account": {
+            "action": "Yes, delete account",
+            "cancel": "Cancel",
+            "message": "This action cannot be reversed!",
+            "title": "Do you really want to delete your account?"
+        },
         "error": {
             "action-standard": "Okay",
             "message-standard": "An unknown error occurred.",
@@ -76,11 +82,6 @@
             "action": "Okay",
             "message": "Your password has been updated.",
             "title": "Done!"
-        },
-        "delete-account": {
-            "title": "Are you sure?",
-            "cancel": "No",
-            "action": "Yes"
         }
     },
     "auth": {
@@ -135,6 +136,38 @@
         "button-filter": "Filter",
         "label-all-transactions": "All Transactions"
     },
+    "currency": {
+        "error": {
+            "not-found": "Currency is not supported"
+        },
+        "name": {
+            "aud": "Australian dollar",
+            "blr": "Brazilian Real",
+            "cad": "Canadian dollar",
+            "chf": "Swiss Franc",
+            "cny": "Chinese Yuan",
+            "czk": "Czech crown",
+            "dkk": "Danish krone",
+            "eur": "Euro",
+            "gbp": "Pound sterling",
+            "idr": "Indonesian Rupiah",
+            "ils": "Shekel",
+            "inr": "Indian rupee",
+            "isk": "Icelandic krona",
+            "jpy": "Yen",
+            "krw": "South Korean won",
+            "mxn": "Mexican peso",
+            "myr": "Malaysian Ringgit",
+            "nok": "Norwegian Krone",
+            "nzd": "New Zealand dollar",
+            "pln": "Złoty",
+            "sek": "Swedish krona",
+            "thb": "Baht",
+            "tyr": "Turkish lira",
+            "usd": "US Dollar",
+            "zar": "South African Rand"
+        }
+    },
     "enter_screen": {
         "add-amount": {
             "dialog-label-title": "Okay!",
@@ -163,14 +196,14 @@
         "expenses-textfield-title": "What did you purchase?",
         "income-textfield-title": "How is this income called?",
         "label-repeat-30days": "Monthly",
+        "label-repeat-annually": "Annual",
         "label-repeat-daily": "Daily",
         "label-repeat-freeselect": "Custom",
         "label-repeat-monthly": "Beginning of the month",
         "label-repeat-none": "Don't repeat",
-        "label-repeat-weekly": "Weekly",
         "label-repeat-quarterly": "Every three months",
         "label-repeat-semiannually": "Semi-Annual",
-        "label-repeat-annually": "Annual",
+        "label-repeat-weekly": "Weekly",
         "title": {
             "add": "New Entry",
             "edit": "Edit Entry"
@@ -181,14 +214,15 @@
     "enter_screen_attribute_account_from": "From Account",
     "enter_screen_attribute_account_to": "To Account",
     "enter_screen_attribute_category": "Categorie",
+    "enter_screen_attribute_currency": "Currency",
     "enter_screen_attribute_date": "Date",
     "enter_screen_attribute_repeat": "Repeat",
     "home_screen": {
-        "button-show-more": "More",
         "button-show-all": "All",
+        "button-show-more": "More",
         "free-text": "Free",
-        "label-recent-transactions": "Recent transactions",
-        "label-active-serialcontracts": "Contracts this month"
+        "label-active-serialcontracts": "Contracts this month",
+        "label-recent-transactions": "Recent transactions"
     },
     "home_screen_card": {
         "home-screen-card-toast": "Swipe left and right to view previous or upcoming months. Press and hold to return to the current month.",
@@ -196,24 +230,29 @@
         "label-expenses": "Expenditure",
         "label-income": "Revenue",
         "label-total-balance": "Balance",
-        "label-total-balance-sub": "until today"
+        "label-total-balance-sub": "until today",
+        "label-monthly-planner": "Monthly planner",
+        "label-mtd-balance": "MTD balance",
+        "label-contracts": "± Contracts",
+        "label-eom-projected-balance": "EOM balance",
+        "label-account-position-month": "Account balance changes this month"
     },
     "listview": {
         "dismissible": {
             "label-delete": "Delete"
         },
+        "label-days": "days",
+        "label-error-translation": "Translation missing",
+        "label-every": "Every",
         "label-future": "Planned bookings",
         "label-lastweek": "Last Week",
+        "label-months": "months",
         "label-no-entries": "- No Entries found -",
         "label-thismonth": "This month",
         "label-today": "Today",
-        "label-yesterday": "Yesterday",
-        "label-error-translation": "Translation missing",
-        "label-every": "Every",
-        "label-days": "days",
         "label-weeks": "weeks",
-        "label-months": "months",
-        "label-years": "years"
+        "label-years": "years",
+        "label-yesterday": "Yesterday"
     },
     "lock_screen": {
         "change": {
@@ -340,44 +379,11 @@
         },
         "standards-selector-none": "Uncategorized",
         "system-settings": {
+            "button-delete-user": "Delete account",
             "button-forgot-password": "Change Password",
-            "button-delete-user": "Delete User",
             "button-forgot-password-tooltip": "You can request a password reset here if you forgot your old password.",
             "button-signout": "Sign out",
             "label-title": "Your account"
         }
-    },
-    "currency": {
-        "error": {
-            "not-found": "Currency is not supported"
-        },
-        "name": {
-            "eur": "Euro",
-            "gbp": "Pound sterling",
-            "jpy": "Yen",
-            "usd": "US Dollar",
-            "cny": "Chinese Yuan",
-            "chf": "Swiss Franc",
-            "aud": "Australian dollar",
-            "cad": "Canadian dollar",
-            "nzd": "New Zealand dollar",
-            "sek": "Swedish krona",
-            "nok": "Norwegian Krone",
-            "myr": "Malaysian Ringgit",
-            "pln": "Złoty",
-            "czk": "Czech crown",
-            "krw": "South Korean won",
-            "dkk": "Danish krone",
-            "isk": "Icelandic krona",
-            "tyr": "Turkish lira",
-            "zar": "South African Rand",
-            "mxn": "Mexican peso",
-            "inr": "Indian rupee",
-            "idr": "Indonesian Rupiah",
-            "thb": "Baht",
-            "ils": "Shekel",
-            "blr": "Brazilian Real"
-        }
-    },
-    "enter_screen_attribute_currency": "Currency"
+    }
 }

@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:linum/models/currency.dart';
 import 'package:linum/widgets/text_icon.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 class CurrencyListTile extends StatelessWidget {
   const CurrencyListTile({
     super.key,

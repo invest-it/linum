@@ -11,6 +11,9 @@ import 'package:linum/providers/size_guide_provider.dart';
 import 'package:linum/widgets/auth/login_form.dart';
 import 'package:provider/provider.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -49,13 +52,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 ) -
                 (sizeGuideProvider.keyboardHeight / 2)
             : sizeGuideProvider
-                .proportionateScreenHeightFraction(ScreenFraction.twofifths);
+
 
         _loginXOffset = 0;
         _loginWidth = sizeGuideProvider.realScreenWidth();
         _loginOpacity = 1;
         break;
       case OnboardingPageState.register:
+
         _loginYOffset = sizeGuideProvider.isKeyboardOpen(context)
             ? sizeGuideProvider.proportionateScreenHeightFraction(
                   ScreenFraction.twofifths,
@@ -66,6 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ScreenFraction.twofifths,
                 ) -
                 32;
+
         _loginXOffset = 20;
         _loginWidth = sizeGuideProvider.realScreenWidth() - 40;
         _loginOpacity = 0.80;

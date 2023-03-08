@@ -60,3 +60,9 @@ This budget tracker is designed to teach young people how to keep track of spend
 * Navigation on older devices has been adjusted to avoid display errors.
 * The app now runs much more stable due to internal testing
 * Fixed a bug where logging in was temporarily not possible.
+
+
+
+## 1.2 Changes (preliminary, will be moved soon)
+
++ New feature: Monthly planner

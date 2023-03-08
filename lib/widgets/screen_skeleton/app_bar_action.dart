@@ -4,25 +4,26 @@
 //  Co-Author: SoTBurst
 //
 
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/navigation/main_routes.dart';
+import 'package:logger/logger.dart';
 
 abstract class AppBarAction {
+  static Logger logger = Logger();
+
   static final Map<DefaultAction, Widget Function(BuildContext)>
       _defaultActionButtons = {
     DefaultAction.notification: (BuildContext context) {
       return AppBarAction.fromParameters(
         icon: Icons.notifications,
-        ontap: () => log('Notification feature is not implemented yet.'),
+        ontap: () => logger.i('Notification feature is not implemented yet.'),
       );
     },
     DefaultAction.filter: (BuildContext context) {
       return AppBarAction.fromParameters(
         icon: Icons.filter_list_alt,
-        ontap: () => log('Filter feature is not implemented yet.'),
+        ontap: () => logger.i('Filter feature is not implemented yet.'),
       );
     },
     DefaultAction.academy: (BuildContext context) {

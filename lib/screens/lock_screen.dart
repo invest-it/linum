@@ -15,6 +15,9 @@ import 'package:linum/widgets/lock_screen/pin_field.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 /// Page Index: 5
 class LockScreen extends StatefulWidget {
   @override

@@ -3,11 +3,15 @@ import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:linum/providers/size_guide_provider.dart';
 import 'package:provider/provider.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 class SignInSignUpButton extends StatelessWidget {
   final Function() callback;
   final String text;
   const SignInSignUpButton(
       {super.key, required this.text, required this.callback});
+
 
   @override
   Widget build(BuildContext context) {

@@ -4,21 +4,22 @@
 //  Co-Author: n/a
 //  (refactored)
 
-import 'dart:developer' as dev;
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:linum/models/balance_document.dart';
 import 'package:linum/models/changed_transaction.dart';
 import 'package:linum/types/date_time_map.dart';
+import 'package:logger/logger.dart';
 
 class SerialTransactionRemover {
+  static final Logger logger = Logger();
+
   static bool removeAll(BalanceDocument data, String id) {
     final int length = data.serialTransactions.length;
     data.serialTransactions.removeWhere((element) {
       return element.id == id;
     });
     if (length == data.serialTransactions.length) {
-      dev.log("The repeatable balance wasn't found"); // ???
+      logger.e("The repeatable balance wasn't found"); // ???
       return false;
     }
     return true;
@@ -29,34 +30,34 @@ class SerialTransactionRemover {
     String id,
     Timestamp time,
   ) {
-    final index = data.serialTransactions.indexWhere((serial) => serial.id == id);
+    final index =
+        data.serialTransactions.indexWhere((serial) => serial.id == id);
     if (index == -1) {
       return false;
     }
     final serialTransaction = data.serialTransactions[index];
 
-
     // if not month => seconds
     var newInitialTime = Timestamp.fromDate(
       time.toDate().add(
-        Duration(
-          seconds: serialTransaction.repeatDuration,
-        ),
-      ),
+            Duration(
+              seconds: serialTransaction.repeatDuration,
+            ),
+          ),
     );
 
     if (serialTransaction.repeatDurationType.name.toUpperCase() == "MONTHS") {
       newInitialTime = Timestamp.fromDate(
         DateTime(
           time.toDate().year,
-          time.toDate().month +
-              serialTransaction.repeatDuration,
+          time.toDate().month + serialTransaction.repeatDuration,
           time.toDate().day,
         ),
       );
     }
 
-    data.serialTransactions[index] = serialTransaction.copyWith(initialTime: newInitialTime);
+    data.serialTransactions[index] =
+        serialTransaction.copyWith(initialTime: newInitialTime);
 
     return true;
   }
@@ -66,7 +67,8 @@ class SerialTransactionRemover {
     String id,
     Timestamp time,
   ) {
-    final index = data.serialTransactions.indexWhere((serial) => serial.id == id);
+    final index =
+        data.serialTransactions.indexWhere((serial) => serial.id == id);
     if (index == -1) {
       return false;
     }
@@ -75,10 +77,10 @@ class SerialTransactionRemover {
     // if not month => seconds
     var newEndTime = Timestamp.fromDate(
       time.toDate().subtract(
-        Duration(
-          seconds: serialTransaction.repeatDuration,
-        ),
-      ),
+            Duration(
+              seconds: serialTransaction.repeatDuration,
+            ),
+          ),
     );
 
     if (serialTransaction.repeatDurationType.name.toUpperCase() == "MONTHS") {
@@ -90,7 +92,8 @@ class SerialTransactionRemover {
         ),
       );
     }
-    data.serialTransactions[index] = serialTransaction.copyWith(endTime: newEndTime);
+    data.serialTransactions[index] =
+        serialTransaction.copyWith(endTime: newEndTime);
     return true;
   }
 
@@ -99,7 +102,8 @@ class SerialTransactionRemover {
     String id,
     Timestamp time,
   ) {
-    final index = data.serialTransactions.indexWhere((serial) => serial.id == id);
+    final index =
+        data.serialTransactions.indexWhere((serial) => serial.id == id);
     if (index == -1) {
       return false;
     }
@@ -107,12 +111,12 @@ class SerialTransactionRemover {
 
     final changed = serialTransaction.changed ?? DateTimeMap();
 
-
     changed.addAll({
       time.millisecondsSinceEpoch.toString(): ChangedTransaction(deleted: true)
     });
 
-    data.serialTransactions[index] = serialTransaction.copyWith(changed: changed);
+    data.serialTransactions[index] =
+        serialTransaction.copyWith(changed: changed);
 
     return true;
   }

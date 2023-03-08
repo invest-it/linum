@@ -13,6 +13,9 @@ import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/providers/size_guide_provider.dart';
 import 'package:provider/provider.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 class LogoutForm extends StatefulWidget {
   @override
   State<LogoutForm> createState() => _LogoutFormState();

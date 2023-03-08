@@ -24,6 +24,9 @@ import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
 

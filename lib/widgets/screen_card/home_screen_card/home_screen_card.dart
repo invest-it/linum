@@ -8,7 +8,12 @@
 import 'dart:developer' as dev;
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
+
 import 'package:linum/providers/size_guide_provider.dart';
+
+import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/widgets/screen_card/card_widgets/screen_card_side.dart';
+
 import 'package:linum/widgets/screen_card/card_widgets/screen_card_skeleton.dart';
 import 'package:linum/widgets/screen_card/home_screen_card/home_screen_card_back.dart';
 import 'package:linum/widgets/screen_card/home_screen_card/home_screen_card_front.dart';
@@ -27,6 +32,7 @@ class HomeScreenCard extends StatelessWidget {
       cardHeight: sizeGuideProvider.proportionateScreenHeight(196),
       frontSide: HomeScreenCardFront(),
       backSide: HomeScreenCardBack(),
+
       flipCardController: controller,
     );
   }

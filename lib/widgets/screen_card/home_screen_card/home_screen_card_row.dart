@@ -12,8 +12,14 @@ import 'package:linum/providers/algorithm_provider.dart';
 import 'package:linum/providers/size_guide_provider.dart';
 import 'package:linum/utilities/frontend/currency_formatter.dart';
 import 'package:linum/utilities/frontend/homescreen_card_time_warp.dart';
+import 'package:linum/utilities/frontend/currency_formatter.dart';
+import 'package:linum/utilities/frontend/size_guide.dart';
+
 import 'package:linum/widgets/screen_card/card_widgets/home_screen_card_avatar.dart';
 import 'package:provider/provider.dart';
+
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
 
 class HomeScreenCardRow extends StatelessWidget {
   final Stream<HomeScreenCardData>? data;
@@ -26,29 +32,6 @@ class HomeScreenCardRow extends StatelessWidget {
     required this.upwardArrow,
     required this.downwardArrow,
   });
-
-  IconButton _buildGoToCurrentDateIcon(BuildContext context) {
-    final AlgorithmProvider algorithmProvider =
-        Provider.of<AlgorithmProvider>(context);
-    final DateTime now = DateTime.now();
-
-    return (algorithmProvider.currentShownMonth !=
-            DateTime(now.year, now.month))
-        ? IconButton(
-            icon: const Icon(Icons.today_rounded),
-            color: Theme.of(context).colorScheme.onSurface.withAlpha(64),
-            onPressed: () {
-              goToCurrentTime(algorithmProvider);
-            },
-          )
-        : IconButton(
-            icon: const Icon(Icons.error),
-            color: Theme.of(context).colorScheme.onSurface.withAlpha(0),
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            onPressed: () {},
-          );
-  }
 
   Expanded _buildIncomeExpensesInfo(
     BuildContext context,
@@ -65,6 +48,7 @@ class HomeScreenCardRow extends StatelessWidget {
           if (isIncome) ...[
             upwardArrow,
             SizedBox(width: sizeGuideProvider.proportionateScreenWidth(10))
+
           ],
           Column(
             crossAxisAlignment:
@@ -99,6 +83,7 @@ class HomeScreenCardRow extends StatelessWidget {
                     CurrencyFormatter(context.locale,
                             symbol: settings.getStandardCurrency().symbol)
                         .format(
+
                       isIncome
                           ? snapshot.data?.mtdIncome ?? 0
                           : snapshot.data?.mtdExpenses ?? 0,
@@ -115,6 +100,7 @@ class HomeScreenCardRow extends StatelessWidget {
           ),
           if (!isIncome) ...[
             SizedBox(width: sizeGuideProvider.proportionateScreenWidth(10)),
+
             downwardArrow
           ],
         ],
@@ -131,10 +117,10 @@ class HomeScreenCardRow extends StatelessWidget {
       children: [
         _buildIncomeExpensesInfo(context, sizeGuideProvider, isIncome: true),
         Expanded(
+
           flex: 3,
           child: FittedBox(
             fit: BoxFit.scaleDown,
-            child: _buildGoToCurrentDateIcon(context),
           ),
         ),
         _buildIncomeExpensesInfo(context, sizeGuideProvider)

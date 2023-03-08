@@ -14,6 +14,9 @@ import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 class ForgotPasswordButton extends StatelessWidget {
   ForgotPasswordButton(this.providerKey);
 
@@ -98,6 +101,7 @@ class ForgotPasswordButton extends StatelessWidget {
                                 border: InputBorder.none,
                                 hintText: tr(
                                     'onboarding_screen.login-email-hintlabel'),
+
                                 hintStyle: Theme.of(context)
                                     .textTheme
                                     .bodyText1

@@ -9,6 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:linum/providers/size_guide_provider.dart';
 import 'package:provider/provider.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 class SignInWithGoogleButton extends StatelessWidget {
   const SignInWithGoogleButton({
     super.key,

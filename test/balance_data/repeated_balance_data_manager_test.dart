@@ -4,7 +4,6 @@
 //  Co-Author: n/a
 //
 
-import 'dart:developer' as dev;
 import 'dart:math' as math;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -808,7 +807,6 @@ void main() {
 
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
-          dev.log("$i");
           // Arrange (Initialization)
 
           final data = generateRandomData();

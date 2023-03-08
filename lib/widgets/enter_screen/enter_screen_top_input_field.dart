@@ -18,6 +18,9 @@ import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:linum/widgets/text_container.dart';
 import 'package:provider/provider.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 class EnterScreenTopInputField extends StatefulWidget {
   const EnterScreenTopInputField({
     super.key,

@@ -12,6 +12,9 @@ import 'package:linum/providers/size_guide_provider.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 class ActionLip extends StatefulWidget {
   ActionLip(this.providerKey);
 
@@ -35,6 +38,7 @@ class _ActionLipState extends State<ActionLip> {
         Provider.of<ActionLipStatusProvider>(context);
 
     final status = provider.getActionLipStatus(providerKey);
+
 
     if (widget.oldStatus != null && widget.oldStatus != status) {
       sizeGuideProvider.update();

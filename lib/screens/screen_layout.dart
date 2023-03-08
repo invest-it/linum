@@ -2,8 +2,6 @@
 //  NOTE: THIS SCREEN IS GOING TO BE REPLACED BY A NEW NAVIGATION SYSTEM SOON. //TODO @NightmindOfficial change this description once this has been performed.
 //  Author: thebluebaronx
 //  Co-Author: SoTBurst, NightmindOfficial, damattl
-/// NO PAGE INDEX (This Screen is always invoked)
-import 'dart:developer' as dev;
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
@@ -19,6 +17,7 @@ import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/providers/size_guide_provider.dart';
 import 'package:linum/widgets/bottom_app_bar.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 class ScreenLayout extends StatefulWidget {
@@ -32,6 +31,11 @@ class ScreenLayout extends StatefulWidget {
 
 class _ScreenLayoutState extends State<ScreenLayout>
     with WidgetsBindingObserver {
+  late final Logger logger;
+  _ScreenLayoutState() {
+    logger = Logger();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -69,8 +73,8 @@ class _ScreenLayoutState extends State<ScreenLayout>
 
     final firestore.CollectionReference balance =
         firestore.FirebaseFirestore.instance.collection('balance');
-
     final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
+
 
     // ignore: unused_local_variable
     final Widget loadingIndicator = Container(
@@ -205,7 +209,7 @@ class _ScreenLayoutState extends State<ScreenLayout>
           time: time,
         ),
       );
-      dev.log("$i. Hochgeladen");
+      logger.v("$i. Hochgeladen");
       await Future.delayed(const Duration(milliseconds: 200));
     }
   }

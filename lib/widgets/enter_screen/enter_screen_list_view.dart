@@ -25,6 +25,9 @@ import 'package:linum/widgets/enter_screen/repeat_category_list_view.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
+// ignore_for_file: deprecated_member_use
+//TODO DEPRECATED
+
 class EnterScreenListView extends StatefulWidget {
   @override
   _EnterScreenListViewState createState() => _EnterScreenListViewState();

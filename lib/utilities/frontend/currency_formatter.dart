@@ -5,17 +5,32 @@ class CurrencyFormatter {
   final String symbol;
   late final NumberFormat _formatter;
   CurrencyFormatter(Locale locale, {this.symbol = "€"}) {
-    _formatter = NumberFormat("#0.00", locale.toString());
+    if (amountBeforeSymbol()) {
+      _formatter = NumberFormat.currency(
+        locale: locale.toString(),
+        symbol: symbol,
+        customPattern: "#0.00",
+      );
+    } else {
+      _formatter = NumberFormat.currency(
+          locale: locale.toString(),
+          symbol: symbol,
+          customPattern: "#0.00",
+      );
+    }
   }
 
 
   String format(num value) {
     final numberPart = _formatter.format(value);
-    if (symbol == "€") {
-      return "$numberPart $symbol";
-    } else { // $, £
-      return "$symbol $numberPart";
+    if (amountBeforeSymbol()) {
+      return "$numberPart$symbol";
+    } else {
+      return "$symbol$numberPart";
     }
+
+
+
   }
 
   bool amountBeforeSymbol() {
@@ -26,22 +41,4 @@ class CurrencyFormatter {
     }
   }
 
-  List<Widget> formatWithWidgets(
-      num value,
-      Widget Function(String amount) amountDisplayBuilder,
-      Widget Function(String symbol) symbolDisplayBuilder,
-  ) {
-    if (symbol == "€") {
-      return [
-        amountDisplayBuilder(_formatter.format(value)),
-        symbolDisplayBuilder(symbol),
-      ];
-    } else {
-      return [
-        symbolDisplayBuilder(symbol),
-        amountDisplayBuilder(_formatter.format(value)),
-      ];
-    }
-
-  }
 }
