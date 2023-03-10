@@ -31,7 +31,7 @@ class BalanceDataProvider extends ChangeNotifier {
   /// The uid of the user
   late String _uid;
 
-  late final Logger logger;
+  final Logger logger = Logger();
 
   late AlgorithmProvider _algorithmProvider;
   late ExchangeRateProvider _exchangeRateProvider;
@@ -46,11 +46,11 @@ class BalanceDataProvider extends ChangeNotifier {
         Provider.of<ExchangeRateProvider>(context, listen: false);
     _streamBuilder =
         BalanceDataStreamBuilder(_algorithmProvider, _exchangeRateProvider);
-    asynConstructor();
+    asyncConstructor();
   }
 
   /// Async part of the constructor (so notifyListeners will be used after loading)
-  Future<void> asynConstructor() async {
+  Future<void> asyncConstructor() async {
     if (_uid == "") {
       return;
     }
@@ -127,7 +127,7 @@ class BalanceDataProvider extends ChangeNotifier {
   void updateAuth(AuthenticationService? auth) {
     if (auth != null && auth.uid != _uid) {
       _uid = auth.uid;
-      asynConstructor();
+      asyncConstructor();
     }
   }
 
