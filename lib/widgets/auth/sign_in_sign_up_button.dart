@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
-import 'package:linum/providers/size_guide_provider.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:provider/provider.dart';
 
 // ignore_for_file: deprecated_member_use
@@ -17,10 +17,8 @@ class SignInSignUpButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sizeGuideProvider =
-        Provider.of<SizeGuideProvider>(context, listen: false);
     return GradientButton(
-      increaseHeightBy: sizeGuideProvider.proportionateScreenHeight(16),
+      increaseHeightBy: context.proportionateScreenHeight(16),
       callback: callback,
       gradient: LinearGradient(
         colors: [

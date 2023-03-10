@@ -1,9 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/constants/screen_fraction_enum.dart';
 import 'package:linum/constants/standard_currencies.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
-import 'package:linum/providers/size_guide_provider.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:linum/widgets/text_icon.dart';
 import 'package:provider/provider.dart';
@@ -18,8 +19,6 @@ class CurrencyListView extends StatelessWidget {
   Widget build(BuildContext context) {
     final settings = Provider.of<AccountSettingsProvider>(context);
     final actionLipStatus = Provider.of<ActionLipStatusProvider>(context);
-    final sizeGuideProvider =
-        Provider.of<SizeGuideProvider>(context, listen: false);
     return Column(
       children: [
         Padding(
@@ -29,7 +28,7 @@ class CurrencyListView extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(
-                height: sizeGuideProvider.proportionateScreenHeightFraction(
+                height: context.proportionateScreenHeightFraction(
                   ScreenFraction.twofifths,
                 ),
                 child: ListView.builder(

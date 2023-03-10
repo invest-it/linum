@@ -11,7 +11,7 @@ import 'package:linum/constants/standard_currencies.dart';
 import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
-import 'package:linum/providers/size_guide_provider.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/utilities/frontend/currency_formatter.dart';
 import 'package:linum/widgets/screen_skeleton/app_bar_action.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
@@ -54,7 +54,6 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
         Provider.of<EnterScreenProvider>(context);
     final ActionLipStatusProvider actionLipStatusProvider =
         Provider.of<ActionLipStatusProvider>(context);
-    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
     final currency = standardCurrencies[enterScreenProvider.currency];
     final formatter = CurrencyFormatter(
       context.locale,
@@ -98,7 +97,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
           ),
           child: Container(
             alignment: Alignment.bottomCenter,
-            width: sizeGuideProvider.proportionateScreenWidth(375),
+            width: context.proportionateScreenWidth(375),
             height: MediaQuery.of(context).size.height < 650
                 ? 180
                 : 190, //proportionateScreenHeight(200), //180
@@ -185,7 +184,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                     ),
                   ),
                   SizedBox(
-                    width: sizeGuideProvider.proportionateScreenWidth(282),
+                    width: context.proportionateScreenWidth(282),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       //mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -196,7 +195,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                           },
                           child: SizedBox(
                             width:
-                                sizeGuideProvider.proportionateScreenWidth(94),
+                                context.proportionateScreenWidth(94),
                             child: enterScreenProvider.isExpenses
                                 ? TextContainer(
                                     //context: context,
@@ -225,7 +224,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                           },
                           child: SizedBox(
                             width:
-                                sizeGuideProvider.proportionateScreenWidth(94),
+                                context.proportionateScreenWidth(94),
                             child: enterScreenProvider.isIncome
                                 ? TextContainer(
                                     //context: context,

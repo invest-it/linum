@@ -10,7 +10,7 @@ import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/pin_code_provider.dart';
-import 'package:linum/providers/size_guide_provider.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:provider/provider.dart';
 
 // ignore_for_file: deprecated_member_use
@@ -27,13 +27,11 @@ class _LogoutFormState extends State<LogoutForm> {
     final AuthenticationService auth =
         Provider.of<AuthenticationService>(context);
 
-    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
-
     return Column(
       children: [
         Padding(
           padding: EdgeInsets.symmetric(
-            vertical: sizeGuideProvider.proportionateScreenHeight(16),
+            vertical: context.proportionateScreenHeight(16),
           ),
           child: Text(
             tr('logout_form.label-current-email') + auth.userEmail,
@@ -43,7 +41,7 @@ class _LogoutFormState extends State<LogoutForm> {
         ),
         GradientButton(
           key: const Key("logoutButton"),
-          increaseHeightBy: sizeGuideProvider.proportionateScreenHeight(16),
+          increaseHeightBy: context.proportionateScreenHeight(16),
           callback: () => auth.signOut().then((_) {
             getRouterDelegate().rebuild();
             Provider.of<PinCodeProvider>(context, listen: false)
@@ -64,7 +62,7 @@ class _LogoutFormState extends State<LogoutForm> {
           ),
         ),
         SizedBox(
-          height: sizeGuideProvider.proportionateScreenHeight(8),
+          height: context.proportionateScreenHeight(8),
         ),
       ],
     );

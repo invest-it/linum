@@ -5,7 +5,7 @@
 //  Refactored: none
 
 import 'package:flutter/material.dart';
-import 'package:linum/providers/size_guide_provider.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:provider/provider.dart';
 
 class ToggleButtonElement extends StatelessWidget {
@@ -32,15 +32,13 @@ class ToggleButtonElement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sizeGuideProvider =
-        Provider.of<SizeGuideProvider>(context, listen: false);
     return SizedBox(
       width: fixedWidth,
       child: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: sizeGuideProvider
+          horizontal: context
               .proportionateScreenWidth(_horizontalNotProportionatePadding),
-          vertical: sizeGuideProvider
+          vertical: context
               .proportionateScreenHeight(_verticalNotProportionatePadding),
         ),
         child: Center(

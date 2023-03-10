@@ -5,7 +5,8 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:linum/providers/size_guide_provider.dart';
+import 'package:linum/constants/screen_fraction_enum.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:provider/provider.dart';
 
 // ignore_for_file: deprecated_member_use
@@ -28,23 +29,21 @@ class LipSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sizeGuideProvider =
-        Provider.of<SizeGuideProvider>(context, listen: false);
     return isInverted
         ? Stack(
             children: [
               ClipRRect(
                 child: Container(
                   alignment: Alignment.bottomCenter,
-                  width: sizeGuideProvider
+                  width: context
                       .proportionateScreenWidthFraction(ScreenFraction.full),
-                  height: sizeGuideProvider.proportionateScreenHeight(164),
+                  height: context.proportionateScreenHeight(164),
                   color: Theme.of(context).colorScheme.primary,
                   child: Baseline(
                     baselineType: TextBaseline.alphabetic,
                     baseline: hasScreenCard
-                        ? sizeGuideProvider.proportionateScreenHeight(144)
-                        : sizeGuideProvider.proportionateScreenHeight(164) - 8,
+                        ? context.proportionateScreenHeight(144)
+                        : context.proportionateScreenHeight(164) - 8,
                     child: Text(
                       lipTitle,
                       textAlign: TextAlign.center,
@@ -81,13 +80,13 @@ class LipSection extends StatelessWidget {
                 ),
                 child: Container(
                   alignment: Alignment.bottomCenter,
-                  width: sizeGuideProvider.proportionateScreenWidth(375),
-                  height: sizeGuideProvider.proportionateScreenHeight(164),
+                  width: context.proportionateScreenWidth(375),
+                  height: context.proportionateScreenHeight(164),
                   color: Theme.of(context).colorScheme.primary,
                   child: Baseline(
                     baselineType: TextBaseline.alphabetic,
                     baseline:
-                        sizeGuideProvider.proportionateScreenHeight(164) - 12,
+                        context.proportionateScreenHeight(164) - 12,
                     child: Text(
                       lipTitle,
                       textAlign: TextAlign.center,

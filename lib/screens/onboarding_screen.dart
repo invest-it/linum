@@ -13,7 +13,7 @@ import 'package:linum/models/onboarding_slide_data.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
-import 'package:linum/providers/size_guide_provider.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/utilities/frontend/country_flag_generator.dart';
 import 'package:linum/utilities/frontend/silent_scroll.dart';
 import 'package:linum/widgets/onboarding/login_screen.dart';
@@ -115,8 +115,6 @@ class _OnboardingScreenState extends State<OnboardingPage> {
       context,
     );
 
-    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
-
     return ScreenSkeleton(
       head: '', // will not be displayed anyways
       contentOverride: true,
@@ -172,7 +170,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                     currentSlide: _currentPage,
                   ),
                   SizedBox(
-                    height: sizeGuideProvider.proportionateScreenHeight(32),
+                    height: context.proportionateScreenHeight(32),
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 32),
@@ -190,7 +188,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                           ],
                         ),
                         elevation: 0,
-                        increaseHeightBy: sizeGuideProvider
+                        increaseHeightBy: context
                             .proportionateScreenHeight(56 - 24),
                         increaseWidthBy: double.infinity,
                         shape: RoundedRectangleBorder(
@@ -204,7 +202,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                     ),
                   ),
                   SizedBox(
-                    height: sizeGuideProvider.proportionateScreenHeight(10),
+                    height: context.proportionateScreenHeight(10),
                   ),
                   CupertinoButton(
                     child: Text(

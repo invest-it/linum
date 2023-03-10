@@ -1,12 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/constants/screen_fraction_enum.dart';
 import 'package:linum/constants/settings_enums.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/models/entry_category.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
-import 'package:linum/providers/size_guide_provider.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
@@ -45,8 +46,6 @@ class CategoryListView<T extends Enum> extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    final sizeGuideProvider =
-        Provider.of<SizeGuideProvider>(context, listen: false);
     return Column(
       children: [
         Padding(
@@ -56,7 +55,7 @@ class CategoryListView<T extends Enum> extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(
-                height: sizeGuideProvider.proportionateScreenHeightFraction(
+                height: context.proportionateScreenHeightFraction(
                   ScreenFraction.twofifths,
                 ),
                 child: ListView.builder(

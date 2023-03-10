@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
-import 'package:linum/providers/size_guide_provider.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
@@ -30,9 +30,6 @@ class ForgotPasswordButton extends StatelessWidget {
 
     final AuthenticationService authenticationService =
         Provider.of<AuthenticationService>(context, listen: false);
-
-    final sizeGuideProvider =
-        Provider.of<SizeGuideProvider>(context, listen: false);
 
     final UserAlert userAlert = UserAlert(context: context);
 
@@ -117,11 +114,11 @@ class ForgotPasswordButton extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: sizeGuideProvider.proportionateScreenHeight(32),
+                      height: context.proportionateScreenHeight(32),
                     ),
                     GradientButton(
                       increaseHeightBy:
-                          sizeGuideProvider.proportionateScreenHeight(16),
+                          context.proportionateScreenHeight(16),
                       // Logged Out onPressed
                       callback: () {
                         authenticationService.resetPassword(
@@ -248,11 +245,11 @@ class ForgotPasswordButton extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: sizeGuideProvider.proportionateScreenHeight(32),
+                      height: context.proportionateScreenHeight(32),
                     ),
                     GradientButton(
                       increaseHeightBy:
-                          sizeGuideProvider.proportionateScreenHeight(16),
+                          context.proportionateScreenHeight(16),
                       //Logged in onPressed
                       callback: () => {
                         authenticationService.updatePassword(
@@ -308,7 +305,7 @@ class ForgotPasswordButton extends StatelessWidget {
         shadowColor: Theme.of(context).colorScheme.onBackground,
         minimumSize: Size(
           double.infinity,
-          sizeGuideProvider.proportionateScreenHeight(48),
+          context.proportionateScreenHeight(48),
         ),
         backgroundColor: Theme.of(context).colorScheme.background,
         side: BorderSide(

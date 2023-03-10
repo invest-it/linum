@@ -15,7 +15,7 @@ import 'package:linum/navigation/screen_builders.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
-import 'package:linum/providers/size_guide_provider.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/widgets/bottom_app_bar.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
@@ -73,14 +73,13 @@ class _ScreenLayoutState extends State<ScreenLayout>
 
     final firestore.CollectionReference balance =
         firestore.FirebaseFirestore.instance.collection('balance');
-    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
 
 
     // ignore: unused_local_variable
     final Widget loadingIndicator = Container(
       color: Colors.grey[300],
-      width: sizeGuideProvider.proportionateScreenWidth(70.0),
-      height: sizeGuideProvider.proportionateScreenWidth(70.0),
+      width: context.proportionateScreenWidth(70.0),
+      height: context.proportionateScreenWidth(70.0),
       child: const Center(
         child: CircularProgressIndicator(),
       ),

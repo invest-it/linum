@@ -11,7 +11,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
-import 'package:linum/providers/size_guide_provider.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/utilities/backend/url_handler.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:linum/widgets/auth/sign_in_sign_up_button.dart';
@@ -49,8 +49,6 @@ class _RegisterFormState extends State<RegisterForm> {
 
     final AuthenticationService auth =
         Provider.of<AuthenticationService>(context);
-
-    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
 
     final UserAlert userAlert = UserAlert(context: context);
 
@@ -183,7 +181,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 ),
               ),
               SizedBox(
-                height: sizeGuideProvider.proportionateScreenHeight(16),
+                height: context.proportionateScreenHeight(16),
               ),
               // Container(
               //   height: 50,
@@ -221,13 +219,13 @@ class _RegisterFormState extends State<RegisterForm> {
                 },
               ),
               SizedBox(
-                height: sizeGuideProvider.proportionateScreenHeight(12),
+                height: context.proportionateScreenHeight(12),
               ),
               SignInWithGoogleButton(
                 onPressed: auth.signInWithGoogle,
               ),
               SizedBox(
-                height: sizeGuideProvider.proportionateScreenHeight(6),
+                height: context.proportionateScreenHeight(6),
               ),
               if (Platform.isIOS) ...[
                 // Works only on iOS at the moment (according to Google)
@@ -237,7 +235,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 )
               ],
               SizedBox(
-                height: sizeGuideProvider.proportionateScreenHeight(32),
+                height: context.proportionateScreenHeight(32),
               ),
               RichText(
                 text: TextSpan(

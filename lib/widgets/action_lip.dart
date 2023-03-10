@@ -7,8 +7,10 @@
 //  (Refactored)
 
 import 'package:flutter/material.dart';
+import 'package:linum/constants/screen_fraction_enum.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
-import 'package:linum/providers/size_guide_provider.dart';
+import 'package:linum/utilities/frontend/media_query_accessors.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
@@ -17,11 +19,9 @@ import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class ActionLip extends StatefulWidget {
-  ActionLip(this.providerKey);
+  const ActionLip(this.providerKey);
 
   final ProviderKey providerKey;
-
-  ActionLipStatus? oldStatus;
 
   @override
   State<ActionLip> createState() => _ActionLipState(providerKey);
@@ -34,22 +34,17 @@ class _ActionLipState extends State<ActionLip> {
 
   @override
   Widget build(BuildContext context) {
-    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
     final ActionLipStatusProvider provider =
         Provider.of<ActionLipStatusProvider>(context);
 
     final status = provider.getActionLipStatus(providerKey);
 
-    if (widget.oldStatus != null && widget.oldStatus != status) {
-      sizeGuideProvider.update();
-    }
-    widget.oldStatus = status;
     return AnimatedContainer(
       curve: Curves.fastLinearToSlowEaseIn,
       duration: const Duration(milliseconds: 1000),
       transform: Matrix4.translationValues(
         0,
-        _calculateYOffset(sizeGuideProvider, status),
+        _calculateYOffset(status),
         1,
       ),
       decoration: BoxDecoration(
@@ -67,7 +62,7 @@ class _ActionLipState extends State<ActionLip> {
       ),
       child: SizedBox(
         width: double.infinity,
-        height: sizeGuideProvider
+        height: context
             .proportionateScreenHeightFraction(ScreenFraction.threefifths),
         child: Column(
           children: [
@@ -103,19 +98,18 @@ class _ActionLipState extends State<ActionLip> {
   }
 
   double _calculateYOffset(
-    SizeGuideProvider sizeGuideProvider,
     ActionLipStatus status,
   ) {
     switch (status) {
       case ActionLipStatus.hidden:
-        return sizeGuideProvider.realScreenHeight();
+        return useScreenHeight(context);
       case ActionLipStatus.onviewport:
-        return sizeGuideProvider.isKeyboardOpen(context)
-            ? sizeGuideProvider.proportionateScreenHeightFraction(
+        return context.isKeyboardOpen()
+            ? context.proportionateScreenHeightFraction(
                   ScreenFraction.twofifths,
                 ) -
-                (sizeGuideProvider.keyboardHeight / 2)
-            : sizeGuideProvider
+                (useKeyBoardHeight(context) / 2)
+            : context
                 .proportionateScreenHeightFraction(ScreenFraction.twofifths);
       case ActionLipStatus.disabled:
         throw ArgumentError(

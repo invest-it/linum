@@ -1,27 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:linum/types/change_notifier_provider_builder.dart';
-import 'package:provider/provider.dart';
+import 'package:linum/constants/layout_reference.dart';
+import 'package:linum/constants/screen_fraction_enum.dart';
+import 'package:linum/utilities/frontend/media_query_accessors.dart';
 
-class SizeGuideProvider extends ChangeNotifier {
-  late BuildContext _context;
 
-  MediaQueryData get _mediaQueryData => MediaQuery.of(_context);
-
-  static const double referenceScreenWidth = 375.0;
-  static const double referenceScreenHeight = 812.0;
-
-  double get screenWidth => _mediaQueryData.size.width;
-  double get screenHeight => _mediaQueryData.size.height;
-  Orientation get orientation => _mediaQueryData.orientation;
-
-  double get keyboardHeight => _mediaQueryData.viewInsets.bottom;
-
-  SizeGuideProvider(BuildContext context) {
-    _context = context;
-  }
-
-  bool isKeyboardOpen(BuildContext context) {
-    return MediaQuery.of(context).viewInsets.bottom != 0.0;
+extension LayoutHelpers on BuildContext {
+  bool isKeyboardOpen() {
+    return useKeyBoardHeight(this) != 0.0;
   }
 
 // Get the proportionate height as per screen size
@@ -45,20 +30,16 @@ class SizeGuideProvider extends ChangeNotifier {
 // width: proportionateScreenWidthFraction(ScreenFraction.TWOTHIRDS),
 
   double proportionateScreenHeight(double inputHeight) {
-    const double referenceScreenHeight =
-        SizeGuideProvider.referenceScreenHeight;
     // In Figma, we use 375 x 812 as the Design Canvas.
     // That's equivalent to an iPhone 11 Pro / iPhone X.
 
     // When using Screen Sizes from now on, call this function and hand over the
     // sizes as declared in the Figma Mockup. This way, the sizes will scale correctly
     // on EVERY device.
-    return (inputHeight / referenceScreenHeight) * screenHeight;
+    return (inputHeight / LayoutReference.screenHeight) * useScreenHeight(this);
   }
 
   double proportionateScreenHeightFraction(ScreenFraction inputFraction) {
-    const double referenceScreenHeight =
-        SizeGuideProvider.referenceScreenHeight;
     double scalingFactor;
 
     switch (inputFraction) {
@@ -100,12 +81,11 @@ class SizeGuideProvider extends ChangeNotifier {
         break;
     }
 
-    return ((scalingFactor * referenceScreenHeight) / referenceScreenHeight) *
-        screenHeight;
+    return ((scalingFactor * LayoutReference.screenHeight) / LayoutReference.screenHeight) *
+        useScreenHeight(this);
   }
 
   double proportionateScreenWidthFraction(ScreenFraction inputFraction) {
-    const double referenceScreenWidth = SizeGuideProvider.referenceScreenWidth;
     double scalingFactor;
 
     switch (inputFraction) {
@@ -147,80 +127,18 @@ class SizeGuideProvider extends ChangeNotifier {
         break;
     }
 
-    return ((scalingFactor * referenceScreenWidth) / referenceScreenWidth) *
-        screenWidth;
+    return ((scalingFactor * LayoutReference.screenWidth) / LayoutReference.screenWidth) *
+        useScreenWidth(this);
   }
 
   double proportionateScreenWidth(double inputWidth) {
-    const double referenceScreenWidth = SizeGuideProvider.referenceScreenWidth;
     // In Figma, we use 375 x 812 as the Design Canvas.
     // That's equivalent to an iPhone 11 Pro / iPhone X.
 
     // When using Screen Sizes from now on, call this function and hand over the
     // sizes as declared in the Figma Mockup. This way, the sizes will scale correctly
     // on EVERY device.
-    return (inputWidth / referenceScreenWidth) * screenWidth;
-  }
-
-// TODO: redundant
-  double realScreenHeight() {
-    return screenHeight;
-  }
-
-// TODO: redundant
-  double realScreenWidth() {
-    return screenWidth;
-  }
-
-  static ChangeNotifierProviderBuilder builder() {
-    return (BuildContext context, {bool testing = false}) {
-      return ChangeNotifierProvider<SizeGuideProvider>(
-        create: (ctx) => SizeGuideProvider(ctx),
-        lazy: false,
-      );
-    };
-  }
-
-  /// Call when you know data has changed (or you worry it might have)
-  void update() {
-    notifyListeners();
+    return (inputWidth / LayoutReference.screenWidth) * useScreenWidth(this);
   }
 }
 
-enum ScreenFraction {
-  ///100
-  full,
-
-  ///80%
-  fourfiths,
-
-  ///75%
-  threequearters,
-
-  ///67%
-  twothirds,
-
-  ///60%
-  threefifths,
-
-  ///50%
-  half,
-
-  ///40%
-  twofifths,
-
-  ///33%
-  onethird,
-
-  ///25%
-  onequarter,
-
-  ///20%
-  onefifth,
-
-  ///10%
-  onetenth,
-
-  ///1%
-  quantile,
-}

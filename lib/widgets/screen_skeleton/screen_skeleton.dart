@@ -4,9 +4,11 @@
 //  Co-Author: SoTBurst
 //  (No Refactoring pls)
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
-import 'package:linum/providers/size_guide_provider.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/widgets/action_lip.dart';
 import 'package:linum/widgets/screen_skeleton/body_section.dart';
 import 'package:linum/widgets/screen_skeleton/lip_section.dart';
@@ -122,8 +124,7 @@ class ScreenSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     final ActionLipStatusProvider actionLipStatusProvider =
         Provider.of<ActionLipStatusProvider>(context, listen: false);
-    final sizeGuideProvider =
-        Provider.of<SizeGuideProvider>(context, listen: false);
+
     if (providerKey != null &&
         !actionLipStatusProvider.isActionStatusInitialized(providerKey!)) {
       actionLipStatusProvider.setActionLipStatusSilently(
@@ -161,7 +162,7 @@ class ScreenSkeleton extends StatelessWidget {
           ),
           screenCard != null
               ? Positioned(
-                  top: sizeGuideProvider.proportionateScreenHeight(164 - 25),
+                  top: context.proportionateScreenHeight(164 - 25),
                   left: 0,
                   right: 0,
                   child: screenCard!,

@@ -17,7 +17,7 @@ import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/exchange_rate_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
-import 'package:linum/providers/size_guide_provider.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/utilities/frontend/multi_provider_builder.dart';
 
 class ApplicationServices extends StatelessWidget {
@@ -51,7 +51,6 @@ class ApplicationServices extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           return MultiProviderBuilder(context: context, child: router)
               .setKey("MainMultiProvider")
-              .useProvider(SizeGuideProvider.builder())
               .useProvider(AuthenticationService.builder())
               .useProvider(AccountSettingsProvider.builder())
               .useProvider(AlgorithmProvider.builder())

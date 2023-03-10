@@ -9,7 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
-import 'package:linum/providers/size_guide_provider.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/widgets/auth/login_form.dart';
 import 'package:linum/widgets/onboarding/login_screen.dart';
 import 'package:mockito/annotations.dart';
@@ -17,14 +17,12 @@ import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 
 @GenerateNiceMocks([MockSpec<OnboardingScreenProvider>()])
-@GenerateNiceMocks([MockSpec<SizeGuideProvider>()])
 @GenerateNiceMocks([MockSpec<AuthenticationService>()])
 import 'login_screen_test.mocks.dart';
 
 void main() {
   group('LoginScreen', () {
     late MockOnboardingScreenProvider mockOnboardingScreenProvider;
-    late MockSizeGuideProvider mockSizeGuideProvider;
     late MockAuthenticationService mockAuthenticationService;
     late MultiProvider baseMultiProvider;
 
@@ -33,17 +31,12 @@ void main() {
       when(mockOnboardingScreenProvider.pageState)
           .thenReturn(OnboardingPageState.none);
 
-      mockSizeGuideProvider = MockSizeGuideProvider();
-
       mockAuthenticationService = MockAuthenticationService();
 
       baseMultiProvider = MultiProvider(
         providers: [
           ChangeNotifierProvider<OnboardingScreenProvider>(
             create: (_) => mockOnboardingScreenProvider,
-          ),
-          ChangeNotifierProvider<SizeGuideProvider>(
-            create: (_) => mockSizeGuideProvider,
           ),
           ChangeNotifierProvider<AuthenticationService>(
             create: (_) => mockAuthenticationService,

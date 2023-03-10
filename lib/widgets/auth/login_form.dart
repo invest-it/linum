@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
-import 'package:linum/providers/size_guide_provider.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:linum/widgets/auth/forgot_password.dart';
 import 'package:linum/widgets/auth/sign_in_sign_up_button.dart';
@@ -53,8 +53,6 @@ class _LoginFormState extends State<LoginForm> {
 
     final AuthenticationService auth =
         Provider.of<AuthenticationService>(context);
-
-    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
 
     final UserAlert userAlert = UserAlert(context: context);
 
@@ -167,7 +165,7 @@ class _LoginFormState extends State<LoginForm> {
                 ),
               ),
               SizedBox(
-                height: sizeGuideProvider.proportionateScreenHeight(32),
+                height: context.proportionateScreenHeight(32),
               ),
               // Container(
               //   height: 50,
@@ -206,24 +204,24 @@ class _LoginFormState extends State<LoginForm> {
                 },
               ),
               SizedBox(
-                height: sizeGuideProvider.proportionateScreenHeight(8),
+                height: context.proportionateScreenHeight(8),
               ),
               ForgotPasswordButton(ProviderKey.onboarding),
               SizedBox(
-                height: sizeGuideProvider.proportionateScreenHeight(8),
+                height: context.proportionateScreenHeight(8),
               ),
               SignInWithGoogleButton(
                 onPressed: auth.signInWithGoogle,
               ),
               SizedBox(
-                height: sizeGuideProvider.proportionateScreenHeight(8),
+                height: context.proportionateScreenHeight(8),
               ),
               if (Platform.isIOS) ...[
                 // Works only on iOS at the moment (according to Google)
                 SignInWithAppleButton(
                   onPressed: auth.signInWithApple,
                   text: tr('onboarding_screen.apple-button'),
-                  height: sizeGuideProvider.proportionateScreenHeight(40),
+                  height: context.proportionateScreenHeight(40),
                 ),
               ],
             ],

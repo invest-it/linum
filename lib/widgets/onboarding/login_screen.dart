@@ -9,8 +9,10 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/constants/screen_fraction_enum.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
-import 'package:linum/providers/size_guide_provider.dart';
+import 'package:linum/utilities/frontend/media_query_accessors.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/widgets/auth/login_form.dart';
 import 'package:provider/provider.dart';
 
@@ -36,41 +38,40 @@ class _LoginScreenState extends State<LoginScreen> {
         Provider.of<OnboardingScreenProvider>(
       context,
     );
-    final sizeGuideProvider = Provider.of<SizeGuideProvider>(context);
 
     switch (onboardingScreenProvider.pageState) {
       case OnboardingPageState.none:
-        _loginYOffset = sizeGuideProvider.realScreenWidth();
+        _loginYOffset = useScreenWidth(context);
         _loginXOffset = 0;
-        _loginWidth = sizeGuideProvider.realScreenHeight();
+        _loginWidth = useScreenHeight(context);
         _loginOpacity = 1;
         break;
       case OnboardingPageState.login:
-        _loginYOffset = sizeGuideProvider.isKeyboardOpen(context)
-            ? sizeGuideProvider.proportionateScreenHeightFraction(
+        _loginYOffset = context.isKeyboardOpen()
+            ? context.proportionateScreenHeightFraction(
                   ScreenFraction.twofifths,
                 ) -
-                (sizeGuideProvider.keyboardHeight / 2)
-            : sizeGuideProvider
+                (useKeyBoardHeight(context) / 2)
+            : context
                 .proportionateScreenHeightFraction(ScreenFraction.twofifths);
 
         _loginXOffset = 0;
-        _loginWidth = sizeGuideProvider.realScreenWidth();
+        _loginWidth = useScreenWidth(context);
         _loginOpacity = 1;
         break;
       case OnboardingPageState.register:
-        _loginYOffset = sizeGuideProvider.isKeyboardOpen(context)
-            ? sizeGuideProvider.proportionateScreenHeightFraction(
+        _loginYOffset = context.isKeyboardOpen()
+            ? context.proportionateScreenHeightFraction(
                   ScreenFraction.twofifths,
                 ) -
-                (sizeGuideProvider.keyboardHeight / 2) -
+                (useKeyBoardHeight(context) / 2) -
                 32
-            : sizeGuideProvider.proportionateScreenHeightFraction(
+            : context.proportionateScreenHeightFraction(
                   ScreenFraction.twofifths,
                 ) -
                 32;
         _loginXOffset = 20;
-        _loginWidth = sizeGuideProvider.realScreenWidth() - 40;
+        _loginWidth = useScreenWidth(context) - 40;
         _loginOpacity = 0.80;
     }
 
@@ -160,9 +161,9 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             Positioned(
               left: 0,
-              bottom: sizeGuideProvider.isKeyboardOpen(context)
+              bottom: context.isKeyboardOpen()
                   ? 0
-                  : sizeGuideProvider.proportionateScreenHeightFraction(
+                  : context.proportionateScreenHeightFraction(
                       ScreenFraction.twofifths,
                     ),
               right: 0,
@@ -178,7 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   child: Container(
                     width: double.infinity,
-                    height: sizeGuideProvider.proportionateScreenHeight(42),
+                    height: context.proportionateScreenHeight(42),
                     color: Theme.of(context).colorScheme.primary,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,

@@ -6,7 +6,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:linum/providers/size_guide_provider.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/widgets/budget_screen/time_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -15,17 +15,10 @@ void main() {
     testWidgets("should display given text in capslock",
         (WidgetTester tester) async {
       await tester.pumpWidget(
-        MaterialApp(
-          home: MultiProvider(
-            providers: [
-              ChangeNotifierProvider<SizeGuideProvider>(
-                create: (ctx) => SizeGuideProvider(ctx),
-              )
-            ],
-            child: const TimeWidget(
+        const MaterialApp(
+          home: TimeWidget(
               displayValue: "Test text",
               isTranslated: true,
-            ),
           ),
         ),
       );

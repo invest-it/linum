@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/constants/main_theme_data.dart';
 import 'package:linum/constants/ring_colors.dart';
-import 'package:linum/providers/size_guide_provider.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/widgets/lock_screen/pin_field.dart';
 import 'package:provider/provider.dart';
 
@@ -19,15 +19,8 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           theme: MainThemeData.lightTheme,
-          home: Scaffold(
-            body: MultiProvider(
-              providers: [
-                ChangeNotifierProvider<SizeGuideProvider>(
-                  create: (ctx) => SizeGuideProvider(ctx),
-                )
-              ],
-              child: const PinField(1, 0, RingColors.green, key: key),
-            ),
+          home: const Scaffold(
+            body: PinField(1, 0, RingColors.green, key: key),
           ),
         ),
       );
@@ -64,15 +57,8 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           theme: MainThemeData.lightTheme,
-          home: Scaffold(
-            body: MultiProvider(
-              providers: [
-                ChangeNotifierProvider<SizeGuideProvider>(
-                  create: (ctx) => SizeGuideProvider(ctx),
-                )
-              ],
-              child: const PinField(1, 2, RingColors.green, key: key),
-            ),
+          home: const Scaffold(
+            body: PinField(1, 2, RingColors.green, key: key),
           ),
         ),
       );
