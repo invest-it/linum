@@ -8,7 +8,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/models/home_screen_card_data.dart';
 import 'package:linum/providers/account_settings_provider.dart';
-import 'package:linum/providers/size_guide_provider.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/utilities/frontend/currency_formatter.dart';
 
 import 'package:linum/widgets/screen_card/card_widgets/home_screen_card_avatar.dart';
@@ -30,8 +30,7 @@ class HomeScreenCardRow extends StatelessWidget {
   });
 
   Expanded _buildIncomeExpensesInfo(
-    BuildContext context,
-    SizeGuideProvider sizeGuideProvider, {
+    BuildContext context, {
     bool isIncome = false,
   }) {
     final settings = Provider.of<AccountSettingsProvider>(context);
@@ -43,7 +42,7 @@ class HomeScreenCardRow extends StatelessWidget {
         children: [
           if (isIncome) ...[
             upwardArrow,
-            SizedBox(width: sizeGuideProvider.proportionateScreenWidth(10))
+            SizedBox(width: context.proportionateScreenWidth(10))
           ],
           Column(
             crossAxisAlignment:
@@ -94,7 +93,7 @@ class HomeScreenCardRow extends StatelessWidget {
             ],
           ),
           if (!isIncome) ...[
-            SizedBox(width: sizeGuideProvider.proportionateScreenWidth(10)),
+            SizedBox(width: context.proportionateScreenWidth(10)),
             downwardArrow
           ],
         ],
@@ -104,19 +103,17 @@ class HomeScreenCardRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sizeGuideProvider =
-        Provider.of<SizeGuideProvider>(context, listen: false);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _buildIncomeExpensesInfo(context, sizeGuideProvider, isIncome: true),
+        _buildIncomeExpensesInfo(context, isIncome: true),
         const Expanded(
           flex: 3,
           child: FittedBox(
             fit: BoxFit.scaleDown,
           ),
         ),
-        _buildIncomeExpensesInfo(context, sizeGuideProvider)
+        _buildIncomeExpensesInfo(context)
       ],
     );
   }

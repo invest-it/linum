@@ -27,7 +27,7 @@ class HomeScreenCardFront extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AlgorithmProvider algorithmProvider =
-        Provider.of<AlgorithmProvider>(context);
+    Provider.of<AlgorithmProvider>(context);
 
     final String langCode = context.locale.languageCode;
     final DateFormat dateFormat = DateFormat('MMMM yyyy', langCode);
@@ -35,7 +35,7 @@ class HomeScreenCardFront extends StatelessWidget {
 
     final settings = Provider.of<AccountSettingsProvider>(context);
     final screenCardProvider =
-        Provider.of<ScreenCardProvider>(context, listen: false);
+    Provider.of<ScreenCardProvider>(context, listen: false);
     final balanceDataProvider = Provider.of<BalanceDataProvider>(context);
 
     return GestureDetector(
@@ -50,24 +50,24 @@ class HomeScreenCardFront extends StatelessWidget {
           Align(
             alignment: Alignment.topLeft,
             child: (algorithmProvider.currentShownMonth !=
-                    DateTime(now.year, now.month))
+                DateTime(now.year, now.month))
                 ? IconButton(
-                    constraints: const BoxConstraints(),
-                    padding: const EdgeInsets.all(18.0),
-                    icon: const Icon(Icons.event_repeat_rounded),
-                    onPressed: () {
-                      goToCurrentTime(algorithmProvider);
-                    },
-                  )
+              constraints: const BoxConstraints(),
+              padding: const EdgeInsets.all(18.0),
+              icon: const Icon(Icons.event_repeat_rounded),
+              onPressed: () {
+                goToCurrentTime(algorithmProvider);
+              },
+            )
                 : IconButton(
-                    constraints: const BoxConstraints(),
-                    padding: const EdgeInsets.all(18.0),
-                    icon: const Icon(Icons.error),
-                    color: Theme.of(context).colorScheme.onSurface.withAlpha(0),
-                    splashColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onPressed: () {},
-                  ),
+              constraints: const BoxConstraints(),
+              padding: const EdgeInsets.all(18.0),
+              icon: const Icon(Icons.error),
+              color: Theme.of(context).colorScheme.onSurface.withAlpha(0),
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onPressed: () {},
+            ),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
