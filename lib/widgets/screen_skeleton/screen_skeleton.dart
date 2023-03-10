@@ -4,7 +4,6 @@
 //  Co-Author: SoTBurst
 //  (No Refactoring pls)
 
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';

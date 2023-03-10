@@ -6,7 +6,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:linum/utilities/frontend/layout_helpers.dart';
-import 'package:provider/provider.dart';
 
 class BodySection extends StatelessWidget {
   final Widget body;

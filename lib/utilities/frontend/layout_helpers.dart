@@ -141,4 +141,3 @@ extension LayoutHelpers on BuildContext {
     return (inputWidth / LayoutReference.screenWidth) * useScreenWidth(this);
   }
 }
-

@@ -9,11 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linum/constants/screen_fraction_enum.dart';
 import 'package:linum/navigation/get_delegate.dart';
-import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/utilities/backend/url_handler.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/widgets/screen_skeleton/app_bar_action.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
-import 'package:provider/provider.dart';
 
 // ignore_for_file: deprecated_member_use
 //TODO DEPRECATED

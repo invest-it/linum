@@ -9,7 +9,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
-import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/widgets/auth/login_form.dart';
 import 'package:linum/widgets/onboarding/login_screen.dart';
 import 'package:mockito/annotations.dart';

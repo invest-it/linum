@@ -7,8 +7,8 @@
 import 'package:flutter/material.dart';
 import 'package:linum/constants/screen_fraction_enum.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
-import 'package:linum/utilities/frontend/media_query_accessors.dart';
 import 'package:linum/utilities/frontend/layout_helpers.dart';
+import 'package:linum/utilities/frontend/media_query_accessors.dart';
 import 'package:linum/widgets/auth/register_form.dart';
 import 'package:provider/provider.dart';
 

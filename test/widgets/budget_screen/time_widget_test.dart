@@ -6,9 +6,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/widgets/budget_screen/time_widget.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   group("TimeWidget", () {

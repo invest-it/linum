@@ -11,7 +11,6 @@ import 'package:firebase_auth/firebase_auth.dart' as _i8;
 import 'package:flutter/material.dart' as _i5;
 import 'package:linum/providers/authentication_service.dart' as _i6;
 import 'package:linum/providers/onboarding_screen_provider.dart' as _i2;
-import 'package:linum/utilities/frontend/layout_helpers.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint

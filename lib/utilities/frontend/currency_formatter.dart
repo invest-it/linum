@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-const int CURRENT_SYMBOL_OFFSET = 1;
+const int _currentSymbolOffset = 1;
 
 class CurrencyFormatter {
   final String symbol;
@@ -34,7 +34,7 @@ class CurrencyFormatter {
 
   int calculateOffset() {
     if (amountBeforeSymbol()) {
-      return CURRENT_SYMBOL_OFFSET;
+      return _currentSymbolOffset;
     } else {
       return 0;
     }

@@ -9,7 +9,6 @@ import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
-import 'package:provider/provider.dart';
 
 class CategoryListView<T extends Enum> extends StatelessWidget {
   final ActionLipStatusProvider actionLipStatusProvider;

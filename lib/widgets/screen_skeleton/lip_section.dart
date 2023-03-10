@@ -7,7 +7,6 @@
 import 'package:flutter/material.dart';
 import 'package:linum/constants/screen_fraction_enum.dart';
 import 'package:linum/utilities/frontend/layout_helpers.dart';
-import 'package:provider/provider.dart';
 
 // ignore_for_file: deprecated_member_use
 //TODO DEPRECATED

@@ -8,9 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/constants/main_theme_data.dart';
 import 'package:linum/constants/ring_colors.dart';
-import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/widgets/lock_screen/pin_field.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   group('PinField', () {
