@@ -1,0 +1,15 @@
+changelog:
+  categories:
+    - title: New Features
+      labels:
+        - feature
+    - title: Improvements
+      labels:
+        - improvement
+    - title: Bug fixes
+      labels:
+        - fix
+    - title: Breaking Changes
+      labels:
+        - breaking
+

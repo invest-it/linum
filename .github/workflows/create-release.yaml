@@ -1,0 +1,28 @@
+name: Post Release
+
+on:
+  pull_request:
+    types: [ closed ]
+    branches: [ release ]
+  workflow_dispatch:
+
+jobs:
+  reset-changelog:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Get current Version
+        uses: actions/checkout@v3
+        run: |
+          VERSION_WITH_BUILD=$(grep version: ./pubspec.yaml | cut -d " " -f 2)
+          VERSION=$(echo "$VERSION_WITH_BUILD" | cut -d "+" -f 1)
+      - name: Create release
+        uses: ncipollo/release-action@v1
+        with:
+          generateReleaseNotes: true
+          tag: v"$VERSION"
+
+
+
+
