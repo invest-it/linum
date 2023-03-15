@@ -14,8 +14,8 @@ import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
 import 'package:linum/utilities/frontend/country_flag_generator.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/utilities/frontend/silent_scroll.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
 import 'package:linum/widgets/onboarding/login_screen.dart';
 import 'package:linum/widgets/onboarding/page_indicator.dart';
 import 'package:linum/widgets/onboarding/register_screen.dart';
@@ -170,7 +170,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                     currentSlide: _currentPage,
                   ),
                   SizedBox(
-                    height: proportionateScreenHeight(32),
+                    height: context.proportionateScreenHeight(32),
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 32),
@@ -188,7 +188,8 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                           ],
                         ),
                         elevation: 0,
-                        increaseHeightBy: proportionateScreenHeight(56 - 24),
+                        increaseHeightBy: context
+                            .proportionateScreenHeight(56 - 24),
                         increaseWidthBy: double.infinity,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
@@ -201,7 +202,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                     ),
                   ),
                   SizedBox(
-                    height: proportionateScreenHeight(10),
+                    height: context.proportionateScreenHeight(10),
                   ),
                   CupertinoButton(
                     child: Text(

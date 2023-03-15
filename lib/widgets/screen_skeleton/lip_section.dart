@@ -5,7 +5,8 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/constants/screen_fraction_enum.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 
 // ignore_for_file: deprecated_member_use
 //TODO DEPRECATED
@@ -33,14 +34,15 @@ class LipSection extends StatelessWidget {
               ClipRRect(
                 child: Container(
                   alignment: Alignment.bottomCenter,
-                  width: proportionateScreenWidthFraction(ScreenFraction.full),
-                  height: proportionateScreenHeight(164),
+                  width: context
+                      .proportionateScreenWidthFraction(ScreenFraction.full),
+                  height: context.proportionateScreenHeight(164),
                   color: Theme.of(context).colorScheme.primary,
                   child: Baseline(
                     baselineType: TextBaseline.alphabetic,
                     baseline: hasScreenCard
-                        ? proportionateScreenHeight(144)
-                        : proportionateScreenHeight(164) - 8,
+                        ? context.proportionateScreenHeight(144)
+                        : context.proportionateScreenHeight(164) - 8,
                     child: Text(
                       lipTitle,
                       textAlign: TextAlign.center,
@@ -77,12 +79,13 @@ class LipSection extends StatelessWidget {
                 ),
                 child: Container(
                   alignment: Alignment.bottomCenter,
-                  width: proportionateScreenWidth(375),
-                  height: proportionateScreenHeight(164),
+                  width: context.proportionateScreenWidth(375),
+                  height: context.proportionateScreenHeight(164),
                   color: Theme.of(context).colorScheme.primary,
                   child: Baseline(
                     baselineType: TextBaseline.alphabetic,
-                    baseline: proportionateScreenHeight(164) - 12,
+                    baseline:
+                        context.proportionateScreenHeight(164) - 12,
                     child: Text(
                       lipTitle,
                       textAlign: TextAlign.center,

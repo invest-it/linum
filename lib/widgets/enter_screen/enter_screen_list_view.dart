@@ -16,7 +16,7 @@ import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/widgets/enter_screen/currency_list_view.dart';
 import 'package:linum/widgets/enter_screen/enter_screen_list_tile.dart';
 import 'package:linum/widgets/enter_screen/expense_category_list_view.dart';
@@ -62,7 +62,6 @@ class _EnterScreenListViewState extends State<EnterScreenListView> {
         Provider.of<ActionLipStatusProvider>(context);
     final EnterScreenProvider enterScreenProvider =
         Provider.of<EnterScreenProvider>(context);
-
     final repeatConfig =
         repeatConfigurations[enterScreenProvider.repeatDurationEnum];
     final currency = standardCurrencies[enterScreenProvider.currency];
@@ -76,10 +75,10 @@ class _EnterScreenListViewState extends State<EnterScreenListView> {
         child: Column(
           children: [
             SizedBox(
-              height: proportionateScreenHeight(50),
+              height: context.proportionateScreenHeight(50),
             ),
             SizedBox(
-              width: proportionateScreenWidth(281),
+              width: context.proportionateScreenWidth(281),
               child: TextField(
                 maxLength: 32,
                 controller: myController,
@@ -102,7 +101,7 @@ class _EnterScreenListViewState extends State<EnterScreenListView> {
               ),
             ),
             SizedBox(
-              width: proportionateScreenWidth(300),
+              width: context.proportionateScreenWidth(300),
               child: ListView(
                 shrinkWrap: true,
                 padding: const EdgeInsets.all(8),
@@ -182,7 +181,7 @@ class _EnterScreenListViewState extends State<EnterScreenListView> {
       actionLipTitle: title,
       actionLipBody: SingleChildScrollView(
         child: SizedBox(
-          height: proportionateScreenHeight(419),
+          height: context.proportionateScreenHeight(419),
           child: listView,
         ),
       ),

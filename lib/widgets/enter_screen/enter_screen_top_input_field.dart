@@ -12,7 +12,7 @@ import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/enter_screen_provider.dart';
 import 'package:linum/utilities/frontend/currency_formatter.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/widgets/screen_skeleton/app_bar_action.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:linum/widgets/text_container.dart';
@@ -73,8 +73,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
       textController!.text = formatter.format(enterScreenProvider.amount);
       textController!.selection = TextSelection.fromPosition(
         TextPosition(
-          offset: textController!.text.length -
-              (formatter.amountBeforeSymbol() ? 2 : 0),
+          offset: textController!.text.length - formatter.calculateOffset(),
         ),
       );
     }
@@ -98,7 +97,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
           ),
           child: Container(
             alignment: Alignment.bottomCenter,
-            width: proportionateScreenWidth(375),
+            width: context.proportionateScreenWidth(375),
             height: MediaQuery.of(context).size.height < 650
                 ? 180
                 : 190, //proportionateScreenHeight(200), //180
@@ -163,7 +162,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                         textController!.selection = TextSelection.fromPosition(
                           TextPosition(
                             offset: textController!.text.length -
-                                (formatter.amountBeforeSymbol() ? 2 : 0),
+                                formatter.calculateOffset(),
                           ),
                         )
                       },
@@ -175,7 +174,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                               TextSelection.fromPosition(
                             TextPosition(
                               offset: textController!.text.length -
-                                  (formatter.amountBeforeSymbol() ? 2 : 0),
+                                  formatter.calculateOffset(),
                             ),
                           );
                         });
@@ -185,7 +184,7 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                     ),
                   ),
                   SizedBox(
-                    width: proportionateScreenWidth(282),
+                    width: context.proportionateScreenWidth(282),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       //mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -195,7 +194,8 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                             enterScreenProvider.setExpense();
                           },
                           child: SizedBox(
-                            width: proportionateScreenWidth(94),
+                            width:
+                                context.proportionateScreenWidth(94),
                             child: enterScreenProvider.isExpenses
                                 ? TextContainer(
                                     //context: context,
@@ -223,7 +223,8 @@ class _EnterScreenTopInputFieldState extends State<EnterScreenTopInputField> {
                             enterScreenProvider.setIncome();
                           },
                           child: SizedBox(
-                            width: proportionateScreenWidth(94),
+                            width:
+                                context.proportionateScreenWidth(94),
                             child: enterScreenProvider.isIncome
                                 ? TextContainer(
                                     //context: context,

@@ -12,7 +12,6 @@ on:
     branches: [ release ]
   workflow_dispatch:
 
-
 env:
   FLUTTER_CHANNEL: 'stable' # 'stable', 'beta', or 'master', default to: 'stable'
   FLUTTER_VERSION: '3.3.10'

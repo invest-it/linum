@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/models/dialog_action.dart';
 import 'package:linum/providers/authentication_service.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/utilities/frontend/user_alert.dart';
 import 'package:provider/provider.dart';
 
@@ -55,7 +55,7 @@ class DeleteUserButton extends StatelessWidget {
           shadowColor: Theme.of(context).colorScheme.onBackground,
           minimumSize: Size(
             double.infinity,
-            proportionateScreenHeight(48),
+            context.proportionateScreenHeight(48),
           ),
           backgroundColor: Theme.of(context).colorScheme.background,
           side: BorderSide(

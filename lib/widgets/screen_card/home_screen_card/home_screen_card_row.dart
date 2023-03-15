@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/models/home_screen_card_data.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/utilities/frontend/currency_formatter.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/widgets/screen_card/card_widgets/home_screen_card_avatar.dart';
 import 'package:provider/provider.dart';
 
@@ -41,7 +41,7 @@ class HomeScreenCardRow extends StatelessWidget {
         children: [
           if (isIncome) ...[
             upwardArrow,
-            SizedBox(width: proportionateScreenWidth(10))
+            SizedBox(width: context.proportionateScreenWidth(10))
           ],
           Column(
             crossAxisAlignment:
@@ -92,7 +92,7 @@ class HomeScreenCardRow extends StatelessWidget {
             ],
           ),
           if (!isIncome) ...[
-            SizedBox(width: proportionateScreenWidth(10)),
+            SizedBox(width: context.proportionateScreenWidth(10)),
             downwardArrow
           ],
         ],

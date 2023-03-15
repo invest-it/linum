@@ -5,7 +5,7 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 
 class BottomAppBarItem {
   final IconData iconData;
@@ -21,7 +21,7 @@ class BottomAppBarItem {
 }
 
 class FABBottomAppBar extends StatefulWidget {
-  FABBottomAppBar({
+  const FABBottomAppBar({
     required this.items,
     required this.centerItemText,
     required this.backgroundColor,
@@ -31,9 +31,9 @@ class FABBottomAppBar extends StatefulWidget {
   });
   final List<BottomAppBarItem> items;
   final String centerItemText;
-  final double height = proportionateScreenHeight(64);
-  final double minHeight = 64.0;
-  final double iconSize = 26;
+  double get notproportionateHeight => 64;
+  double get minHeight => 64.0;
+  double get iconSize => 26;
   final Color backgroundColor;
   final Color color;
   final Color selectedColor;
@@ -67,7 +67,8 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
   Widget _buildMiddleTabItem() {
     return Expanded(
       child: SizedBox(
-        height: widget.height,
+        height: context
+            .proportionateScreenHeight(widget.notproportionateHeight),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -90,7 +91,8 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
     final Color color = item.selected ? widget.selectedColor : widget.color;
     return Expanded(
       child: Container(
-        height: widget.height,
+        height: context
+            .proportionateScreenHeight(widget.notproportionateHeight),
         constraints: BoxConstraints(minHeight: widget.minHeight),
         child: Material(
           type: MaterialType.transparency,

@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linum/models/onboarding_slide_data.dart';
 import 'package:linum/utilities/backend/url_handler.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 
 // ignore_for_file: deprecated_member_use
 //TODO DEPRECATED
@@ -32,7 +32,7 @@ class _SingleSlideState extends State<SingleSlide> {
           width: double.infinity,
           child: Padding(
             padding: EdgeInsets.only(
-              top: proportionateScreenHeight(24),
+              top: context.proportionateScreenHeight(24),
             ),
             child: CupertinoButton(
               child: Text(
@@ -76,7 +76,7 @@ class _SingleSlideState extends State<SingleSlide> {
                 padding: EdgeInsets.zero,
               ),
         SizedBox(
-          height: proportionateScreenHeight(230),
+          height: context.proportionateScreenHeight(230),
         )
       ],
     );

@@ -7,9 +7,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:linum/constants/screen_fraction_enum.dart';
 import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/utilities/backend/url_handler.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/widgets/screen_skeleton/app_bar_action.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 
@@ -22,6 +23,7 @@ class AcademyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return ScreenSkeleton(
       head: 'Academy',
       leadingAction: (BuildContext context) => AppBarAction.fromParameters(
@@ -35,8 +37,8 @@ class AcademyScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              height:
-                  proportionateScreenHeightFraction(ScreenFraction.onequarter),
+              height: context
+                  .proportionateScreenHeightFraction(ScreenFraction.onequarter),
               child: SvgPicture.asset('assets/svg/video-files.svg'),
             ),
             Padding(
