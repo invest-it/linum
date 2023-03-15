@@ -1,47 +1,28 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/constants/screen_fraction_enum.dart';
-import 'package:linum/constants/settings_enums.dart';
-import 'package:linum/constants/standard_expense_categories.dart';
-import 'package:linum/constants/standard_income_categories.dart';
-import 'package:linum/models/entry_category.dart';
+import 'package:linum/models/category.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 
-class CategoryListView<T extends Enum> extends StatelessWidget {
+class CategoryListView extends StatelessWidget {
   final ActionLipStatusProvider actionLipStatusProvider;
   final AccountSettingsProvider accountSettingsProvider;
+  final List<Category> categories;
+  final String settingsKey;
+  late final bool Function(Category category) isSelected;
 
-  late final int enumItemCount;
-  late final EntryCategory? Function(int indexBuilder) standardCategory;
-  late final bool Function(int indexBuilder) itemIsSelected;
-  late final String Function(int indexBuilder) enumStr;
 
-  CategoryListView(this.accountSettingsProvider, this.actionLipStatusProvider) {
-    if (T == StandardCategoryExpense) {
-      enumItemCount = StandardCategoryExpense.values.length;
-      standardCategory = (int index) =>
-          standardExpenseCategories[StandardCategoryExpense.values[index]];
-      itemIsSelected =
-          (int index) => StandardCategoryExpense.values[index].equals(
-                accountSettingsProvider.settings["StandardCategoryExpense"]
-                    as String?,
-              );
-      enumStr = (int index) => StandardCategoryExpense.values[index].toString();
-    }
-    if (T == StandardCategoryIncome) {
-      enumItemCount = StandardCategoryIncome.values.length;
-      standardCategory = (int index) =>
-          standardIncomeCategories[StandardCategoryIncome.values[index]];
-      itemIsSelected =
-          (int index) => StandardCategoryIncome.values[index].equals(
-                accountSettingsProvider.settings["StandardCategoryIncome"]
-                    as String?,
-              );
-      enumStr = (int index) => StandardCategoryIncome.values[index].toString();
-    }
+  CategoryListView(
+      this.accountSettingsProvider,
+      this.actionLipStatusProvider, {
+        required this.categories,
+        required this.settingsKey,
+  }) {
+    isSelected = (category) =>
+        category.id ==  accountSettingsProvider.settings[settingsKey];
   }
   @override
   Widget build(BuildContext context) {
@@ -59,20 +40,20 @@ class CategoryListView<T extends Enum> extends StatelessWidget {
                 ),
                 child: ListView.builder(
                   shrinkWrap: true,
-                  itemCount: enumItemCount,
+                  itemCount: categories.length,
                   itemBuilder: (BuildContext context, int index) {
+                    final category = categories[index];
+
                     return ListTile(
                       //leading: Icon(widget.categories[index].icon),
-                      leading: Icon(standardCategory(index)?.icon),
+                      leading: Icon(category.icon),
                       title: Text(
-                        tr(standardCategory(index)?.label ?? "Category"),
+                        tr(category.label),
                       ),
-                      selected: itemIsSelected(index),
+                      selected: isSelected(categories[index]),
                       onTap: () {
-                        final List<String> stringArr =
-                            enumStr(index).split(".");
                         accountSettingsProvider.updateSettings({
-                          stringArr[0]: stringArr[1],
+                          settingsKey: category.id,
                         });
                         actionLipStatusProvider.setActionLipStatus(
                           providerKey: ProviderKey.settings,

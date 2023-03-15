@@ -86,7 +86,7 @@ class EnterScreenProvider with ChangeNotifier {
     return EnterScreenProvider(
       id: transaction.id,
       amount: transaction.amount,
-      category: transaction.category,
+      category: transaction.category ?? "",
       currency: transaction.currency,
       name: transaction.name,
       selectedDate: transaction.time.toDate(),

@@ -4,34 +4,6 @@
 //  Co-Author: damattl
 //  (Refactored)
 
-enum StandardCategoryIncome {
-  none,
-  income,
-  allowance,
-  sideJob,
-  investments,
-  childSupport,
-  interest,
-  miscellaneous;
-
-  bool equals(String? valueStr) {
-    return "StandardCategoryIncome.${valueStr ?? "None"}" == toString();
-  }
-}
-
-enum StandardCategoryExpense {
-  none,
-  food,
-  freeTime,
-  house,
-  lifestyle,
-  car,
-  miscellaneous;
-
-  bool equals(String? valueStr) {
-    return "StandardCategoryExpense.${valueStr ?? "None"}" == toString();
-  }
-}
 
 enum StandardAccount {
   none,

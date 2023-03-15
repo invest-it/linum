@@ -208,7 +208,26 @@
             "add": "Neuer Eintrag",
             "edit": "Eintrag bearbeiten"
         },
-        "transaction-textfield-title": "Wie heißt diese Transaktion?"
+        "transaction-textfield-title": "Wie heißt diese Transaktion?",
+        "input_flag": {
+            "category": "Kategorie",
+            "repeat_info": "Wiederholung",
+            "date": "Datum"
+        },
+        "date": {
+            "monday": "Montag",
+            "tuesday": "Dienstag",
+            "wednesday": "Mittwoch",
+            "thursday": "Donnerstag",
+            "friday": "Freitag",
+            "saturday": "Samstag",
+            "sunday": "Sonntag"
+        },
+        "special_date": {
+            "yesterday": "Gestern",
+            "tomorrow": "Morgen",
+            "today": "Heute"
+        }
     },
     "enter_screen_attribute_account": "Account",
     "enter_screen_attribute_account_from": "Von Account",

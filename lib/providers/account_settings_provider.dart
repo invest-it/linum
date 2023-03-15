@@ -9,11 +9,10 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/constants/standard_categories.dart';
 import 'package:linum/constants/standard_currencies.dart';
-import 'package:linum/constants/standard_expense_categories.dart';
-import 'package:linum/constants/standard_income_categories.dart';
+import 'package:linum/models/category.dart';
 import 'package:linum/models/currency.dart';
-import 'package:linum/models/entry_category.dart';
 import 'package:linum/providers/authentication_service.dart';
 import 'package:linum/types/change_notifier_provider_builder.dart';
 import 'package:logger/logger.dart';
@@ -31,7 +30,7 @@ class AccountSettingsProvider extends ChangeNotifier {
 
   Map<String, dynamic> lastGrabbedData = {};
 
-  EntryCategory? getIncomeEntryCategory() {
+  Category? getIncomeEntryCategory() {
     final String categoryId =
         settings["StandardCategoryIncome"] as String? ?? "None";
 
@@ -40,13 +39,13 @@ class AccountSettingsProvider extends ChangeNotifier {
       StandardCategoryIncome.values,
       categoryId ?? defaultId,
     ); */
-    return standardIncomeCategories[categoryId];
+    return standardCategories[categoryId];
   }
 
-  EntryCategory? getExpenseEntryCategory() {
+  Category? getExpenseEntryCategory() {
     final String categoryId =
         settings["StandardCategoryExpense"] as String? ?? "None";
-    final EntryCategory? catExp = standardExpenseCategories[categoryId];
+    final Category? catExp = standardCategories[categoryId];
     return catExp;
   }
 

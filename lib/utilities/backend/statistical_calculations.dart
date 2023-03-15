@@ -336,7 +336,10 @@ class StatisticalCalculations {
     final Set<String> result = {};
 
     for (final transaction in data) {
-      result.add(transaction.category);
+      if (transaction.category == null) {
+        continue;
+      }
+      result.add(transaction.category!);
     }
 
     return result.toList();

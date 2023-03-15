@@ -169,6 +169,25 @@
         }
     },
     "enter_screen": {
+        "input_flag": {
+            "category": "Kategorie",
+            "repeat_info": "Wiederholung",
+            "date": "Datum"
+        },
+        "date": {
+            "monday": "Montag",
+            "tuesday": "Dienstag",
+            "wednesday": "Mittwoch",
+            "thursday": "Donnerstag",
+            "friday": "Freitag",
+            "saturday": "Samstag",
+            "sunday": "Sonntag"
+        },
+        "special_date": {
+            "yesterday": "Gestern",
+            "tomorrow": "Morgen",
+            "today": "Heute"
+        },
         "add-amount": {
             "dialog-label-title": "Okay!",
             "dialog-label-title-expenses": "Bitte füge einen Betrag zu deiner Ausgabe hinzu!",

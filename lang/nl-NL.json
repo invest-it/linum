@@ -208,7 +208,26 @@
             "add": "Nieuw item",
             "edit": "Bewerk item"
         },
-        "transaction-textfield-title": "Hoe wordt deze transactie genoemd?"
+        "transaction-textfield-title": "Hoe wordt deze transactie genoemd?",
+        "input_flag": {
+            "category": "Categorie",
+            "repeat_info": "Herhaling",
+            "date": "Datum"
+        },
+        "date": {
+            "monday": "Maandag",
+            "tuesday": "Dinsdag",
+            "wednesday": "Woensdag",
+            "thursday": "Donderdag",
+            "friday": "Vrijdag",
+            "saturday": "Zaterdag",
+            "sunday": "Zondag"
+        },
+        "special_date": {
+            "yesterday": "Gisteren",
+            "tomorrow": "Morgen",
+            "today": "Vandaag"
+        }
     },
     "enter_screen_attribute_account": "Account",
     "enter_screen_attribute_account_from": "Van Account",

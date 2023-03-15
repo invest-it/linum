@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/models/entry_category.dart';
+import 'package:linum/models/category.dart';
+import 'package:linum/utilities/frontend/translate_catogory.dart';
 // ignore_for_file: deprecated_member_use
 //TODO DEPRECATED
 
@@ -15,7 +16,7 @@ class CategoryListTile extends StatelessWidget {
   });
   final String labelTitle;
   final String defaultLabel;
-  final EntryCategory? category;
+  final Category? category;
   final IconData trailingIcon;
   final Color trailingIconColor;
 
@@ -25,7 +26,7 @@ class CategoryListTile extends StatelessWidget {
       title: Text(
         labelTitle +
             // Translates the value from firebase
-            tr(category?.label ?? defaultLabel),
+            translateCategory(category),
         style: Theme.of(context).textTheme.bodyText1,
       ),
       trailing: Icon(

@@ -8,7 +8,7 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
-import 'package:linum/navigation/enter_screen_page.dart';
+import 'package:linum/enter_screen/enter_screen_page.dart';
 import 'package:linum/navigation/route_configuration.dart';
 import 'package:linum/screens/filter_screen.dart';
 import 'package:linum/screens/lock_screen.dart';

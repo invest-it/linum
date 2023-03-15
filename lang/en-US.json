@@ -208,7 +208,26 @@
             "add": "New Entry",
             "edit": "Edit Entry"
         },
-        "transaction-textfield-title": "How is this transaction called?"
+        "transaction-textfield-title": "How is this transaction called?",
+        "input_flag": {
+            "category": "Category",
+            "repeat_info": "Repetition",
+            "date": "Date"
+        },
+        "date": {
+            "monday": "Monday",
+            "tuesday": "Tuesday",
+            "wednesday": "Wednesday",
+            "thursday": "Thursday",
+            "friday": "Friday",
+            "saturday": "Saturday",
+            "sunday": "Sunday"
+        },
+        "special_date": {
+            "yesterday": "Yesterday",
+            "tomorrow": "Tomorrow",
+            "today": "Today"
+        }
     },
     "enter_screen_attribute_account": "Account",
     "enter_screen_attribute_account_from": "From Account",

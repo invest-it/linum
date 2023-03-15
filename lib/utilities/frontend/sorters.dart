@@ -50,18 +50,12 @@ class Sorters {
     return (a["amount"] as num).compareTo(b["amount"] as num);
   }
 
-  static int categoryAlphabetically(dynamic a, dynamic b) {
-    if (a is Transaction && b is Transaction) {
-      return (a.category).compareTo(b.category);
-    }
-    return (a["category"] as String).compareTo(b["category"] as String);
+  static int categoryAlphabetically(Transaction a, Transaction b) {
+    return (a.category ?? "").compareTo(b.category ?? "");
   }
 
-  static int categoryAlphabeticallyReversed(dynamic b, dynamic a) {
-    if (a is Transaction && b is Transaction) {
-      return (a.category).compareTo(b.category);
-    }
-    return (a["category"] as String).compareTo(b["category"] as String);
+  static int categoryAlphabeticallyReversed(Transaction a, Transaction b) {
+    return (a.category ?? "").compareTo(b.category ?? "");
   }
 
   static int nameAlphabetically(dynamic a, dynamic b) {
