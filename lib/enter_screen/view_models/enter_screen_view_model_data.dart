@@ -16,15 +16,17 @@ class EnterScreenViewModelData {
   Category? _category;
   String? _date;
   RepeatConfiguration? _repeatConfiguration;
+  final bool withExistingData;
 
   EnterScreenViewModelData(
     this.onUpdate, {
-    num? amount,
-    String? name,
-    Currency? currency,
-    Category? category,
-    String? date,
-    RepeatConfiguration? repeatConfiguration,
+      num? amount,
+      String? name,
+      Currency? currency,
+      Category? category,
+      String? date,
+      RepeatConfiguration? repeatConfiguration,
+      this.withExistingData = false,
   })  : _amount = amount,
         _name = name,
         _currency = currency,
@@ -90,7 +92,7 @@ class EnterScreenViewModelData {
     var didSetDate = false;
     var didSetRepeatInfo = false;
 
-    for (var element in input.parsedInputs) {
+    for (final element in input.parsedInputs) {
       switch (element.item1) {
         case InputFlag.category:
           _category = standardCategories[element.item2];
@@ -125,4 +127,6 @@ class EnterScreenViewModelData {
 
     onUpdate();
   }
+
+
 }

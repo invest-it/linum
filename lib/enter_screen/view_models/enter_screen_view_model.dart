@@ -34,6 +34,7 @@ class EnterScreenViewModel extends ChangeNotifier {
     Transaction? transaction,
     SerialTransaction? serialTransaction, // TODO: Implement those
   }) {
+    print(transaction);
     _transactionId = transaction?.id;
     _onSave = onSave;
 
@@ -46,12 +47,15 @@ class EnterScreenViewModel extends ChangeNotifier {
 
     data = EnterScreenViewModelData(
       notifyListeners,
+      withExistingData: transaction != null || serialTransaction != null,
       name: transaction?.name,
       amount: transaction?.amount,
       currency: standardCurrencies[transaction?.currency],
       date: transaction?.time.toDate().toIso8601String(),
       category: standardCategories[transaction?.category],
     );
+
+    print(data.amount);
     // No _selectedRepeatInfo for transactions
   }
 

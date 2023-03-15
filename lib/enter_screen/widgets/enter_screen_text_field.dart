@@ -5,6 +5,7 @@ import 'package:linum/enter_screen/models/enter_screen_input.dart';
 import 'package:linum/enter_screen/models/suggestion.dart';
 import 'package:linum/enter_screen/utils/example_string_builder.dart';
 import 'package:linum/enter_screen/utils/input_parser.dart';
+import 'package:linum/enter_screen/utils/string_from_existing_data.dart';
 import 'package:linum/enter_screen/utils/suggestions/insert_suggestion.dart';
 import 'package:linum/enter_screen/utils/suggestions/make_suggestions.dart';
 import 'package:linum/enter_screen/view_models/enter_screen_view_model.dart';
@@ -38,6 +39,13 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
     super.initState();
     _controller = TextEditingController();
     _viewModel = Provider.of<EnterScreenViewModel>(context, listen: false);
+    if (_viewModel.data.withExistingData) {
+      final text = generateStringFromExistingData(_viewModel.data);
+      final parsed = parse(text);
+      exampleStringBuilder.rebuild(parsed);
+      _controller.text = text;
+      exampleStringBuilder.rebuild(parsed);
+    }
   }
 
   @override
