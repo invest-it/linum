@@ -8,6 +8,7 @@ import 'package:linum/enter_screen/view_models/enter_screen_view_model_data.dart
 import 'package:linum/models/category.dart';
 import 'package:linum/models/currency.dart';
 import 'package:linum/models/repeat_configuration.dart';
+import 'package:linum/models/serial_transaction.dart';
 import 'package:linum/models/transaction.dart';
 
 typedef OnSaveCallback = void Function({Transaction? transaction});
@@ -31,6 +32,7 @@ class EnterScreenViewModel extends ChangeNotifier {
     BuildContext context, {
     OnSaveCallback onSave = _onSaveDefault,
     Transaction? transaction,
+    SerialTransaction? serialTransaction, // TODO: Implement those
   }) {
     _transactionId = transaction?.id;
     _onSave = onSave;
@@ -64,6 +66,16 @@ class EnterScreenViewModel extends ChangeNotifier {
     return EnterScreenViewModel._(
       context,
       transaction: transaction,
+    );
+  }
+
+  factory EnterScreenViewModel.fromSerialTransaction(
+      BuildContext context,
+      SerialTransaction serialTransaction,
+  ) {
+    return EnterScreenViewModel._(
+      context,
+      serialTransaction: serialTransaction,
     );
   }
 

@@ -2,13 +2,12 @@ import 'package:badges/badges.dart' as badge;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/constants/standard_categories.dart';
+import 'package:linum/enter_screen/enter_screen.dart';
 import 'package:linum/models/transaction.dart';
-import 'package:linum/enter_screen/enter_screen_page.dart';
 import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/utilities/frontend/transaction_amount_formatter.dart';
 import 'package:linum/utilities/frontend/translate_catogory.dart';
-import 'package:linum/widgets/enter_screen/delete_entry_dialog.dart';
 import 'package:linum/widgets/home_screen/transaction_amount_display.dart';
 
 class TransactionTile extends StatelessWidget {
@@ -31,9 +30,11 @@ class TransactionTile extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        getRouterDelegate().pushRoute(
-          MainRoute.enter,
-          settings: EnterScreenPageSettings.withTransaction(transaction),
+        showModalBottomSheet(
+          context: context,
+          builder: (BuildContext context) {
+            return EnterScreen(transaction: transaction);
+          },
         );
       },
       child: Dismissible(
@@ -69,11 +70,11 @@ class TransactionTile extends StatelessWidget {
           DismissDirection.endToStart: 0.5,
         },
         confirmDismiss: (DismissDirection direction) async {
-          return generateDeleteDialogFromTransaction(
+          /*return generateDeleteDialogFromTransaction(
             context,
             // balanceDataProvider,
             transaction,
-          );
+          ); */
         },
         child: ListTile(
           leading: badge.Badge(

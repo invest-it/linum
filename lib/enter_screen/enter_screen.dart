@@ -3,10 +3,19 @@ import 'package:linum/enter_screen/view_models/enter_screen_view_model.dart';
 import 'package:linum/enter_screen/widgets/enter_screen_button.dart';
 import 'package:linum/enter_screen/widgets/enter_screen_text_field.dart';
 import 'package:linum/enter_screen/widgets/quick_tag_menu.dart';
+import 'package:linum/models/serial_transaction.dart';
+import 'package:linum/models/transaction.dart';
 import 'package:provider/provider.dart';
 
 class EnterScreen extends StatelessWidget {
-  const EnterScreen({super.key});
+  final Transaction? transaction;
+  final SerialTransaction? serialTransaction;
+  const EnterScreen({
+    super.key,
+    this.transaction,
+    this.serialTransaction,
+  });
+
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +30,12 @@ class EnterScreen extends StatelessWidget {
         children: <Widget>[
           ChangeNotifierProvider(
             create: (context) {
+              if (transaction != null) {
+                return EnterScreenViewModel.fromTransaction(context, transaction!);
+              }
+              if (serialTransaction != null) {
+                return EnterScreenViewModel.fromSerialTransaction(context, serialTransaction!);
+              }
               return EnterScreenViewModel.empty(context);
             },
             child: Column(

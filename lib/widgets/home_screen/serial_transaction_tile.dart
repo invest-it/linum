@@ -2,10 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/constants/repeat_duration_type_enum.dart';
 import 'package:linum/constants/standard_categories.dart';
+import 'package:linum/enter_screen/enter_screen.dart';
 import 'package:linum/models/serial_transaction.dart';
-import 'package:linum/enter_screen/enter_screen_page.dart';
-import 'package:linum/navigation/get_delegate.dart';
-import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/utilities/frontend/currency_formatter.dart';
 import 'package:linum/utilities/frontend/translate_catogory.dart';
@@ -64,11 +62,11 @@ class SerialTransactionTile extends StatelessWidget {
             color: Theme.of(context).colorScheme.secondary,
           ),
           onPressed: () => {
-            getRouterDelegate().pushRoute(
-              MainRoute.enter,
-              settings: EnterScreenPageSettings.withSerialTransaction(
-                serialTransaction,
-              ),
+            showModalBottomSheet(
+              context: context,
+              builder: (BuildContext context) {
+                return EnterScreen(serialTransaction: serialTransaction);
+              },
             ),
           },
         ),

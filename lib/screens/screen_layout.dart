@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:linum/enter_screen/enter_screen.dart';
 import 'package:linum/models/transaction.dart';
-import 'package:linum/enter_screen/enter_screen_page.dart';
 import 'package:linum/navigation/main_router_delegate.dart';
 import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/navigation/screen_builders.dart';
@@ -19,7 +18,6 @@ import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/widgets/bottom_app_bar.dart';
-import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
@@ -106,17 +104,6 @@ class _ScreenLayoutState extends State<ScreenLayout>
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          final ActionLipStatusProvider actionLipStatusProvider =
-          Provider.of<ActionLipStatusProvider>(context, listen: false);
-
-          final enterScreenSettings = EnterScreenPageSettings.withSettings(
-            category: accountSettingsProvider
-                .settings['StandardCategoryExpense'] as String?,
-            secondaryCategory: accountSettingsProvider
-                .settings['StandardCategoryIncome'] as String?,
-            currency: accountSettingsProvider.getStandardCurrency(),
-          );
-
           showModalBottomSheet(
               context: context,
               builder: (BuildContext context) {
