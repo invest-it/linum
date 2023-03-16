@@ -61,27 +61,34 @@ class EnterScreenViewModel extends ChangeNotifier {
     // No _selectedRepeatInfo for transactions
   }
 
-  factory EnterScreenViewModel.empty(BuildContext context) {
-    return EnterScreenViewModel._(context);
+  factory EnterScreenViewModel.empty(
+      BuildContext context, {
+      required OnSaveCallback onSave,
+  }){
+    return EnterScreenViewModel._(context, onSave: onSave);
   }
 
   factory EnterScreenViewModel.fromTransaction(
-    BuildContext context,
-    Transaction transaction,
-  ) {
+      BuildContext context, {
+      required Transaction transaction,
+      required OnSaveCallback onSave,
+  }) {
     return EnterScreenViewModel._(
       context,
       transaction: transaction,
+      onSave: onSave,
     );
   }
 
   factory EnterScreenViewModel.fromSerialTransaction(
-      BuildContext context,
-      SerialTransaction serialTransaction,
-  ) {
+      BuildContext context, {
+      required SerialTransaction serialTransaction,
+      required OnSaveCallback onSave,
+  }) {
     return EnterScreenViewModel._(
       context,
       serialTransaction: serialTransaction,
+      onSave: onSave,
     );
   }
 
@@ -98,12 +105,14 @@ class EnterScreenViewModel extends ChangeNotifier {
     if (data.repeatConfiguration != null
         && data.repeatConfiguration?.interval != RepeatInterval.none) {
       final serialTransaction = SerialTransaction(
+          id: _transactionId,
           amount: data.amount ?? defaultAmount,
           category: data.category?.id ?? defaultCategory?.id,
           currency: data.currency?.name ?? defaultCurrency.name,
           name: data.name ?? defaultName,
           initialTime: firestore.Timestamp.fromDate(DateTime.parse(data.date ?? defaultDate)),
           repeatDuration: data.repeatConfiguration!.duration!,
+          repeatDurationType: data.repeatConfiguration!.durationType!,
           // This is not null because only RepeatInterval.none holds a null duration value
       );
       _onSave(serialTransaction: serialTransaction);

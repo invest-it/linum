@@ -5,6 +5,7 @@ import 'package:linum/enter_screen/widgets/enter_screen_text_field.dart';
 import 'package:linum/enter_screen/widgets/quick_tag_menu.dart';
 import 'package:linum/models/serial_transaction.dart';
 import 'package:linum/models/transaction.dart';
+import 'package:linum/providers/balance_data_provider.dart';
 import 'package:provider/provider.dart';
 
 class EnterScreen extends StatelessWidget {
@@ -19,11 +20,14 @@ class EnterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final balanceDataProvider = Provider.of<BalanceDataProvider>(context, listen: false);
+
+
     return Container(
       height: 250,
       padding: const EdgeInsets.symmetric(vertical: 25),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.black),
+        border: Border.all(),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -31,12 +35,46 @@ class EnterScreen extends StatelessWidget {
           ChangeNotifierProvider(
             create: (context) {
               if (transaction != null) {
-                return EnterScreenViewModel.fromTransaction(context, transaction!);
+                return EnterScreenViewModel.fromTransaction(
+                  context,
+                  transaction: transaction!,
+                  onSave: ({
+                      Transaction? transaction,
+                      SerialTransaction? serialTransaction,
+                  }) {
+                      if (transaction != null) {
+                        balanceDataProvider.updateTransaction(transaction);
+                      } else if (serialTransaction != null) {
+                        // TODO
+                      }
+                  },
+                );
               }
               if (serialTransaction != null) {
-                return EnterScreenViewModel.fromSerialTransaction(context, serialTransaction!);
+                return EnterScreenViewModel.fromSerialTransaction(
+                    context,
+                    serialTransaction: serialTransaction!,
+                    onSave: ({
+                      Transaction? transaction,
+                      SerialTransaction? serialTransaction,
+                    }) {
+                        // TODO
+                    },
+                );
               }
-              return EnterScreenViewModel.empty(context);
+              return EnterScreenViewModel.empty(
+                  context,
+                  onSave: ({
+                    Transaction? transaction,
+                    SerialTransaction? serialTransaction,
+                  }) {
+                    if (transaction != null) {
+                      balanceDataProvider.addTransaction(transaction);
+                    } else if (serialTransaction != null) {
+                      balanceDataProvider.addSerialTransaction(serialTransaction);
+                    }
+                  },
+              );
             },
             child: Column(
               children: [
@@ -69,4 +107,3 @@ class EnterScreen extends StatelessWidget {
   }
 }
 
-// TODO: Implement saving functionality
