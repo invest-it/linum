@@ -712,9 +712,9 @@ void main() {
 
           var oldSerialTransaction = data.serialTransactions[idIndex];
 
-          final num oldAmount = oldSerialTransaction.amount;
-          final String oldCategory = oldSerialTransaction.category;
-          final String oldName = oldSerialTransaction.name;
+          final oldAmount = oldSerialTransaction.amount;
+          final oldCategory = oldSerialTransaction.category;
+          final oldName = oldSerialTransaction.name;
 
           final int oldRepeatDuration = oldSerialTransaction.repeatDuration;
 
@@ -883,9 +883,9 @@ void main() {
 
           var oldSerialTransaction = data.serialTransactions[idIndex];
 
-          final num oldAmount = oldSerialTransaction.amount;
-          final String oldCategory = oldSerialTransaction.category;
-          final String oldName = oldSerialTransaction.name;
+          final oldAmount = oldSerialTransaction.amount;
+          final oldCategory = oldSerialTransaction.category;
+          final oldName = oldSerialTransaction.name;
 
           final int oldRepeatDuration = oldSerialTransaction.repeatDuration;
 

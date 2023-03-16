@@ -9,6 +9,7 @@ import 'package:linum/enter_screen/utils/string_from_existing_data.dart';
 import 'package:linum/enter_screen/utils/suggestions/insert_suggestion.dart';
 import 'package:linum/enter_screen/utils/suggestions/make_suggestions.dart';
 import 'package:linum/enter_screen/view_models/enter_screen_view_model.dart';
+import 'package:linum/enter_screen/view_models/enter_screen_view_model_data.dart';
 import 'package:linum/enter_screen/widgets/suggestion_list.dart';
 import 'package:provider/provider.dart';
 
@@ -32,7 +33,8 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
       defaultName: "Name",
       defaultCategory: "Keine",
       defaultDate: parsableDateMap[ParsableDate.today]!,
-      defaultRepeatInfo: "Keine");
+      defaultRepeatInfo: "Keine",
+  );
 
   @override
   void initState() {
@@ -76,7 +78,7 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
       suggestions = makeSuggestions(text, cursor);
       _rebuildSuggestionList();
     });
-    _viewModel.data.setFromInput(parsed);
+    _viewModel.update(EnterScreenViewModelData.fromInput(parsed));
   }
 
   void _onSuggestionSelection(

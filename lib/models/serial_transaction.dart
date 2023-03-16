@@ -12,7 +12,7 @@ import 'package:uuid/uuid.dart';
 
 class SerialTransaction {
   final num amount;
-  final String category;
+  final String? category;
   final String currency;
   final String id;
   final String name;
@@ -25,7 +25,7 @@ class SerialTransaction {
 
   SerialTransaction({
     required this.amount,
-    required this.category,
+    this.category,
     required this.currency,
     String? id,
     required this.name,

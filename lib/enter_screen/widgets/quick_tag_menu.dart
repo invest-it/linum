@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/enter_screen/utils/date_formatter.dart';
 import 'package:linum/enter_screen/view_models/enter_screen_view_model.dart';
 import 'package:linum/enter_screen/widgets/tag_selector_button.dart';
+import 'package:linum/utilities/frontend/translate_catogory.dart';
 import 'package:provider/provider.dart';
 
 class QuickTagColors {
@@ -37,30 +38,35 @@ class _QuickTagMenuState extends State<QuickTagMenu> {
   final formatter = const DateFormatter();
 
   List<Widget> _buildButtons(EnterScreenViewModel viewModel) {
+    final currency = viewModel.data.currency ?? viewModel.defaultCurrency;
+    final category = viewModel.data.category ?? viewModel.defaultCategory;
+    final repeatConfiguration =
+        viewModel.data.repeatConfiguration ?? viewModel.defaultRepeatConfiguration;
     return [
       TagSelectorButton(
-        title: tr(formatter.format(viewModel.date) ?? ""), // TODO: Translate
+        title: tr(
+          formatter
+            .format(viewModel.data.date ?? viewModel.defaultDate)
+            ?? "",
+        ), // TODO: Translate
         symbol: "",
         onTap: () => {print("Select Date")},
         textColor: widget.colors.date,
       ),
       TagSelectorButton(
-        title: tr(viewModel.currency.label),
-        symbol: viewModel.currency.symbol,
+        title: tr(currency.label),
+        symbol: currency.symbol,
         onTap: () => {print("Select Currency")},
         textColor: widget.colors.currency,
       ),
       TagSelectorButton(
-        title: tr(
-          viewModel.category?.label ??
-              "settings_screen.standards-selector-none",
-        ),
+        title: translateCategory(category),
         symbol: "",
         onTap: () => {print("Select Category")},
         textColor: widget.colors.category,
       ),
       TagSelectorButton(
-        title: tr(viewModel.repeatInfo.label),
+        title: tr(repeatConfiguration.label),
         symbol: "",
         onTap: () => {print("Select RepeatInfo")},
         textColor: widget.colors.repeatInfo,

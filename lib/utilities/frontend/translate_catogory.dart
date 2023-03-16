@@ -23,13 +23,7 @@ String translateCategoryId(
 String translateCategory(
     Category? category,
 ) {
-
-  if (category == null) {
-    return tr(
-      "settings_screen.standards-selector-none",
-    );
-  }
   return tr(
-    category.label,
+    category?.label ?? "settings_screen.standards-selector-none",
   );
 }

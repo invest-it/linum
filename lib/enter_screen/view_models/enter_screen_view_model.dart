@@ -11,22 +11,28 @@ import 'package:linum/models/repeat_configuration.dart';
 import 'package:linum/models/serial_transaction.dart';
 import 'package:linum/models/transaction.dart';
 
-typedef OnSaveCallback = void Function({Transaction? transaction});
+typedef OnSaveCallback = void Function({
+  Transaction? transaction,
+  SerialTransaction? serialTransaction,
+});
 // TODO: Add SerialTransaction
-void _onSaveDefault({Transaction? transaction}) {}
+void _onSaveDefault({
+  Transaction? transaction,
+  SerialTransaction? serialTransaction,
+}) {}
 
 class EnterScreenViewModel extends ChangeNotifier {
   late String? _transactionId;
   late OnSaveCallback _onSave;
 
-  late final EnterScreenViewModelData data;
+  late EnterScreenViewModelData _data;
 
-  late num _defaultAmount;
-  late String _defaultName;
-  late Currency _defaultCurrency;
-  late Category? _defaultCategory;
-  late String _defaultDate;
-  late RepeatConfiguration _defaultRepeatInfo;
+  late num defaultAmount;
+  late String defaultName;
+  late Currency defaultCurrency;
+  late Category? defaultCategory;
+  late String defaultDate;
+  late RepeatConfiguration defaultRepeatConfiguration;
 
   EnterScreenViewModel._(
     BuildContext context, {
@@ -34,19 +40,17 @@ class EnterScreenViewModel extends ChangeNotifier {
     Transaction? transaction,
     SerialTransaction? serialTransaction, // TODO: Implement those
   }) {
-    print(transaction);
     _transactionId = transaction?.id;
     _onSave = onSave;
 
-    _defaultName = "";
-    _defaultAmount = 0;
-    _defaultCurrency = standardCurrencies["EUR"]!;
-    _defaultDate = DateTime.now().toIso8601String();
-    _defaultCategory = null;
-    _defaultRepeatInfo = repeatConfigurations[RepeatInterval.none]!;
+    defaultName = "";
+    defaultAmount = 0;
+    defaultCurrency = standardCurrencies["EUR"]!;
+    defaultDate = DateTime.now().toIso8601String();
+    defaultCategory = null;
+    defaultRepeatConfiguration = repeatConfigurations[RepeatInterval.daily]!;
 
-    data = EnterScreenViewModelData(
-      notifyListeners,
+    _data = EnterScreenViewModelData(
       withExistingData: transaction != null || serialTransaction != null,
       name: transaction?.name,
       amount: transaction?.amount,
@@ -54,8 +58,6 @@ class EnterScreenViewModel extends ChangeNotifier {
       date: transaction?.time.toDate().toIso8601String(),
       category: standardCategories[transaction?.category],
     );
-
-    print(data.amount);
     // No _selectedRepeatInfo for transactions
   }
 
@@ -83,26 +85,38 @@ class EnterScreenViewModel extends ChangeNotifier {
     );
   }
 
-  num get amount => data.amount ?? _defaultAmount;
-  String get name => data.name ?? _defaultName;
-  Currency get currency => data.currency ?? _defaultCurrency;
-  Category? get category => data.category ?? _defaultCategory;
-  String get date => data.date ?? _defaultDate;
-  RepeatConfiguration get repeatInfo =>
-      data.repeatConfiguration ?? _defaultRepeatInfo;
+  EnterScreenViewModelData get data => _data;
+
+  void update(EnterScreenViewModelData data, {bool notify = false}) {
+    _data = data;
+    if (notify) {
+      notifyListeners();
+    }
+  }
 
   void save() {
-    if (repeatInfo.interval != RepeatInterval.none) {
+    if (data.repeatConfiguration != null
+        && data.repeatConfiguration?.interval != RepeatInterval.none) {
+      final serialTransaction = SerialTransaction(
+          amount: data.amount ?? defaultAmount,
+          category: data.category?.id ?? defaultCategory?.id,
+          currency: data.currency?.name ?? defaultCurrency.name,
+          name: data.name ?? defaultName,
+          initialTime: firestore.Timestamp.fromDate(DateTime.parse(data.date ?? defaultDate)),
+          repeatDuration: data.repeatConfiguration!.duration!,
+          // This is not null because only RepeatInterval.none holds a null duration value
+      );
+      _onSave(serialTransaction: serialTransaction);
       return;
     }
 
     final transaction = Transaction(
       id: _transactionId,
-      amount: amount,
-      currency: currency.name,
-      name: name,
-      time: firestore.Timestamp.fromDate(DateTime.parse(date)),
-      category: category?.id,
+      amount: data.amount ?? defaultAmount,
+      currency: data.currency?.name ?? defaultCurrency.name,
+      name: data.name ?? defaultName,
+      time: firestore.Timestamp.fromDate(DateTime.parse(data.date ?? defaultDate)),
+      category: data.category?.id ?? defaultCategory?.id,
     );
 
     _onSave(transaction: transaction);
