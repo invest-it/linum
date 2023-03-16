@@ -11,6 +11,7 @@ import 'package:linum/enter_screen/utils/suggestions/make_suggestions.dart';
 import 'package:linum/enter_screen/view_models/enter_screen_view_model.dart';
 import 'package:linum/enter_screen/view_models/enter_screen_view_model_data.dart';
 import 'package:linum/enter_screen/widgets/suggestion_list.dart';
+import 'package:linum/utilities/frontend/media_query_accessors.dart';
 import 'package:provider/provider.dart';
 
 class EnterScreenTextField extends StatefulWidget {
@@ -101,10 +102,8 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
     Offset position,
   ) {
     return OverlayEntry(builder: (context) {
-      print(position.dy);
-      print(size);
       return Positioned(
-        bottom: position.dy - (size.height * 5.2), // TODO: Still a bit fishy
+        bottom: useScreenHeight(context) - position.dy, 
         left: position.dx,
         width: size.width,
         child: Material(
@@ -123,7 +122,7 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
     return Stack(
       children: [
         Positioned(
-            top: 15,
+            top: 13,
             child: Flex(
               direction: Axis.horizontal,
               children: [
@@ -142,8 +141,12 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
                   ),
                 ),
               ],
-            )),
+            ),
+        ),
         TextField(
+          style: const TextStyle(
+            fontSize: 16,
+          ),
           key: _key,
           controller: _controller,
           onChanged: (text) {
