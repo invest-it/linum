@@ -21,13 +21,13 @@ class TagSelectorButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(width: 1, color: const Color(0xFFd2d2d2)),
+          border: Border.all(color: const Color(0xFFd2d2d2)),
           borderRadius: const BorderRadius.all(Radius.circular(5)),
         ),
         padding: const EdgeInsets.symmetric(vertical: 2.5, horizontal: 5),
         child: Row(mainAxisSize: MainAxisSize.min, children: [
           Padding(
-            padding: EdgeInsets.only(right: (symbol != "" ? 5 : 0)),
+            padding: EdgeInsets.only(right: symbol != "" ? 5 : 0),
             child: Text(
               symbol,
               style: TextStyle(color: textColor),
@@ -35,9 +35,10 @@ class TagSelectorButton extends StatelessWidget {
           ),
           Text(
             title,
-            style: TextStyle(color: textColor, fontSize: 12),
+            style: TextStyle(color: textColor, fontSize: 14),
           ),
-        ]),
+        ],
+        ),
       ),
     );
   }

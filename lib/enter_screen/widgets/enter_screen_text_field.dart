@@ -103,7 +103,7 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
   ) {
     return OverlayEntry(builder: (context) {
       return Positioned(
-        bottom: useScreenHeight(context) - position.dy, 
+        bottom: useScreenHeight(context) - position.dy,
         left: position.dx,
         width: size.width,
         child: Material(

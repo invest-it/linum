@@ -90,6 +90,7 @@ class EnterScreen extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(40, 20, 40, 10),
                   child: Flex(
                     direction: Axis.horizontal,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: const [
                       Expanded(
                         child: QuickTagMenu(),

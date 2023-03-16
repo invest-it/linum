@@ -21,14 +21,15 @@ class QuickTagColors {
 
 class QuickTagMenu extends StatefulWidget {
   final QuickTagColors colors;
-  const QuickTagMenu(
-      {super.key,
-      this.colors = const QuickTagColors(
-        date: Color(0xFF88b6e1),
-        category: Color(0xFFEE9645),
-        currency: Color(0xFF97BC4E),
-        repeatInfo: Color(0xFFDA7B7B),
-      )});
+  const QuickTagMenu({
+    super.key,
+    this.colors = const QuickTagColors(
+      date: Color(0xFF88b6e1),
+      category: Color(0xFFEE9645),
+      currency: Color(0xFF97BC4E),
+      repeatInfo: Color(0xFFDA7B7B),
+    ),
+  });
 
   @override
   State<QuickTagMenu> createState() => _QuickTagMenuState();
