@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/enter_screen/utils/date_formatter.dart';
 import 'package:linum/enter_screen/view_models/enter_screen_view_model.dart';
 import 'package:linum/enter_screen/widgets/tag_selector_button.dart';
-import 'package:linum/utilities/frontend/translate_catogory.dart';
+import 'package:linum/utilities/frontend/translate_category.dart';
 import 'package:provider/provider.dart';
 
 class QuickTagColors {

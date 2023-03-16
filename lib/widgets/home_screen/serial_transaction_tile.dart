@@ -6,7 +6,7 @@ import 'package:linum/enter_screen/enter_screen.dart';
 import 'package:linum/models/serial_transaction.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/utilities/frontend/currency_formatter.dart';
-import 'package:linum/utilities/frontend/translate_catogory.dart';
+import 'package:linum/utilities/frontend/translate_category.dart';
 import 'package:provider/provider.dart';
 
 class SerialTransactionTile extends StatelessWidget {

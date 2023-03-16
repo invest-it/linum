@@ -7,7 +7,7 @@ import 'package:linum/models/transaction.dart';
 import 'package:linum/navigation/get_delegate.dart';
 import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/utilities/frontend/transaction_amount_formatter.dart';
-import 'package:linum/utilities/frontend/translate_catogory.dart';
+import 'package:linum/utilities/frontend/translate_category.dart';
 import 'package:linum/widgets/home_screen/transaction_amount_display.dart';
 
 class TransactionTile extends StatelessWidget {

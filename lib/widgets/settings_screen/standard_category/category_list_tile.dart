@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/models/category.dart';
-import 'package:linum/utilities/frontend/translate_catogory.dart';
+import 'package:linum/utilities/frontend/translate_category.dart';
 // ignore_for_file: deprecated_member_use
 //TODO DEPRECATED
 
