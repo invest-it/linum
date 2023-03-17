@@ -13,7 +13,6 @@ import 'package:linum/navigation/main_router_delegate.dart';
 import 'package:linum/navigation/main_routes.dart';
 import 'package:linum/navigation/screen_builders.dart';
 import 'package:linum/providers/account_settings_provider.dart';
-import 'package:linum/providers/action_lip_status_provider.dart';
 import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/utilities/frontend/layout_helpers.dart';

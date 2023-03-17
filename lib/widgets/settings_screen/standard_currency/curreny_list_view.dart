@@ -19,49 +19,38 @@ class CurrencyListView extends StatelessWidget {
   Widget build(BuildContext context) {
     final settings = Provider.of<AccountSettingsProvider>(context);
     final actionLipStatus = Provider.of<ActionLipStatusProvider>(context);
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 24.0,
-          ),
-          child: Column(
-            children: [
-              SizedBox(
-                height: context.proportionateScreenHeightFraction(
-                  ScreenFraction.twofifths,
-                ),
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: enumItemCount,
-                  itemBuilder: (BuildContext context, int index) {
-                    final currency = currencies[index];
-                    return ListTile(
-                      leading: TextIcon(
-                        currency.name,
-                        selected: currency.name ==
-                            settings.getStandardCurrency().name,
-                      ),
-                      selected:
-                          currency.name == settings.getStandardCurrency().name,
-                      title: Text(
-                        "${tr(currency.label)} (${currency.symbol})",
-                      ),
-                      onTap: () {
-                        settings.setStandardCurrency(currencies[index]);
-                        actionLipStatus.setActionLipStatus(
-                          providerKey: ProviderKey.settings,
-                          status: ActionLipStatus.hidden,
-                        );
-                      },
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
+    return Expanded(
+      child: ListView.builder(
+        padding: EdgeInsets.only(
+          left: 24.0,
+          right: 24.0,
+          bottom: context.proportionateScreenHeightFraction(ScreenFraction.onefifth),
         ),
-      ],
+        shrinkWrap: true,
+        itemCount: enumItemCount,
+        itemBuilder: (BuildContext context, int index) {
+          final currency = currencies[index];
+          return ListTile(
+            leading: TextIcon(
+              currency.name,
+              selected: currency.name ==
+                  settings.getStandardCurrency().name,
+            ),
+            selected:
+                currency.name == settings.getStandardCurrency().name,
+            title: Text(
+              "${tr(currency.label)} (${currency.symbol})",
+            ),
+            onTap: () {
+              settings.setStandardCurrency(currencies[index]);
+              actionLipStatus.setActionLipStatus(
+                providerKey: ProviderKey.settings,
+                status: ActionLipStatus.hidden,
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

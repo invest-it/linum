@@ -26,48 +26,37 @@ class CategoryListView extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 24.0,
-          ),
-          child: Column(
-            children: [
-              SizedBox(
-                height: context.proportionateScreenHeightFraction(
-                  ScreenFraction.twofifths,
-                ),
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: categories.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final category = categories[index];
-
-                    return ListTile(
-                      //leading: Icon(widget.categories[index].icon),
-                      leading: Icon(category.icon),
-                      title: Text(
-                        tr(category.label),
-                      ),
-                      selected: isSelected(categories[index]),
-                      onTap: () {
-                        accountSettingsProvider.updateSettings({
-                          settingsKey: category.id,
-                        });
-                        actionLipStatusProvider.setActionLipStatus(
-                          providerKey: ProviderKey.settings,
-                          status: ActionLipStatus.hidden,
-                        );
-                      },
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
+    return Expanded(
+      child: ListView.builder(
+        padding: EdgeInsets.only(
+          left: 24.0,
+          right: 24.0,
+          bottom: context.proportionateScreenHeightFraction(ScreenFraction.onefifth),
         ),
-      ],
+        shrinkWrap: true,
+        itemCount: categories.length,
+        itemBuilder: (BuildContext context, int index) {
+          final category = categories[index];
+
+          return ListTile(
+            //leading: Icon(widget.categories[index].icon),
+            leading: Icon(category.icon),
+            title: Text(
+              tr(category.label),
+            ),
+            selected: isSelected(categories[index]),
+            onTap: () {
+              accountSettingsProvider.updateSettings({
+                settingsKey: category.id,
+              });
+              actionLipStatusProvider.setActionLipStatus(
+                providerKey: ProviderKey.settings,
+                status: ActionLipStatus.hidden,
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }
