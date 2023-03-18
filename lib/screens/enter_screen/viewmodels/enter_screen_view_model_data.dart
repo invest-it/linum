@@ -27,6 +27,24 @@ class EnterScreenViewModelData {
     this.withExistingData = false,
   });
 
+  EnterScreenViewModelData copyWith({
+    num? amount,
+    String? name,
+    Currency? currency,
+    Category? category,
+    String? date,
+    RepeatConfiguration? repeatConfiguration,
+  }) {
+    return EnterScreenViewModelData(
+      amount: amount ?? this.amount,
+      name: name ?? this.name,
+      currency: currency ?? this.currency,
+      category: category ?? this.category,
+      date: date ?? this.date,
+      repeatConfiguration: repeatConfiguration ?? this.repeatConfiguration,
+    );
+  }
+
   factory EnterScreenViewModelData.fromInput(EnterScreenInput input) {
     final amount = input.amount;
     final name = input.name;

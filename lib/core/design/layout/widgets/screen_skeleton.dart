@@ -95,7 +95,7 @@ class ScreenSkeleton extends StatelessWidget {
   final Widget Function(BuildContext)? leadingAction;
   final List<Widget Function(BuildContext)>? actions;
   final ScreenKey? screenKey;
-  ActionLipStatus initialActionLipStatus;
+  ActionLipVisibility initialActionLipStatus;
   late final Widget _initialActionLipBody;
 
   ScreenSkeleton({
@@ -104,7 +104,7 @@ class ScreenSkeleton extends StatelessWidget {
     this.contentOverride = false,
     this.isInverted = false,
     this.screenCard,
-    this.initialActionLipStatus = ActionLipStatus.hidden,
+    this.initialActionLipStatus = ActionLipVisibility.hidden,
     this.screenKey,
     Widget? initialActionLipBody,
     this.actions,
@@ -116,7 +116,7 @@ class ScreenSkeleton extends StatelessWidget {
       _initialActionLipBody = initialActionLipBody;
     }
     if (screenKey == null) {
-      initialActionLipStatus = ActionLipStatus.disabled;
+      initialActionLipStatus = ActionLipVisibility.disabled;
     }
   }
 
@@ -195,7 +195,7 @@ class ScreenSkeleton extends StatelessWidget {
   }
 }
 
-enum ActionLipStatus {
+enum ActionLipVisibility {
   hidden,
   onviewport,
   disabled,

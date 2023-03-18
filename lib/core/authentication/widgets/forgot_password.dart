@@ -140,7 +140,7 @@ class ForgotPasswordButton extends StatelessWidget {
                             );
                             actionLipStatusProvider.setActionLipStatus(
                               screenKey: ScreenKey.onboarding,
-                              status: ActionLipStatus.hidden,
+                              status: ActionLipVisibility.hidden,
                             );
                             FocusManager.instance.primaryFocus?.unfocus();
                           },
@@ -167,7 +167,7 @@ class ForgotPasswordButton extends StatelessWidget {
               )
             ],
           ),
-          actionLipStatus: ActionLipStatus.onviewport,
+          actionLipStatus: ActionLipVisibility.onviewport,
           actionLipTitle:
               tr('action_lip.forgot-password.logged-out.label-title'),
         );
@@ -281,7 +281,7 @@ class ForgotPasswordButton extends StatelessWidget {
                             );
                             actionLipStatusProvider.setActionLipStatus(
                               screenKey: ScreenKey.settings,
-                              status: ActionLipStatus.hidden,
+                              status: ActionLipVisibility.hidden,
                             );
                             FocusManager.instance.primaryFocus?.unfocus();
                           },
@@ -308,7 +308,7 @@ class ForgotPasswordButton extends StatelessWidget {
               )
             ],
           ),
-          actionLipStatus: ActionLipStatus.onviewport,
+          actionLipStatus: ActionLipVisibility.onviewport,
           actionLipTitle:
               tr('action_lip.forgot-password.logged-in.label-title'),
         );

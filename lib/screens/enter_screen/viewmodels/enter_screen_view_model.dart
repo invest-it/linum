@@ -1,15 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:flutter/material.dart';
+import 'package:linum/core/account/services/account_settings_service.dart';
 import 'package:linum/core/balance/models/serial_transaction.dart';
 import 'package:linum/core/balance/models/transaction.dart';
 import 'package:linum/core/categories/constants/standard_categories.dart';
 import 'package:linum/core/categories/models/category.dart';
+import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
+import 'package:linum/core/design/layout/utils/layout_helpers.dart';
+import 'package:linum/core/design/layout/utils/media_query_accessors.dart';
 import 'package:linum/core/repeating/constants/standard_repeat_configs.dart';
 import 'package:linum/core/repeating/enums/repeat_interval.dart';
 import 'package:linum/core/repeating/models/repeat_configuration.dart';
 import 'package:linum/features/currencies/constants/standard_currencies.dart';
 import 'package:linum/features/currencies/models/currency.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model_data.dart';
+import 'package:provider/provider.dart';
 
 typedef OnSaveCallback = void Function({
   Transaction? transaction,
@@ -34,6 +39,21 @@ class EnterScreenViewModel extends ChangeNotifier {
   late String defaultDate;
   late RepeatConfiguration defaultRepeatConfiguration;
 
+  bool _isBottomSheetOpened = false;
+  bool get isBottomSheetOpened => _isBottomSheetOpened;
+  set isBottomSheetOpened(bool value) {
+    _isBottomSheetOpened = value;
+    notifyListeners();
+  }
+
+  double calculateMaxHeight(BuildContext context) {
+    if (_isBottomSheetOpened) {
+      return context.proportionateScreenHeightFraction(ScreenFraction.threefifths);
+    }
+    return 250 + useKeyBoardHeight(context);
+
+  }
+
   OverlayEntry? _currentOverlay;
   OverlayEntry? get currentOverlay => _currentOverlay;
   void setOverlayEntry(OverlayEntry? overlayEntry) {
@@ -47,13 +67,15 @@ class EnterScreenViewModel extends ChangeNotifier {
     Transaction? transaction,
     SerialTransaction? serialTransaction, // TODO: Implement those
   }) {
+    final accountSettingsService
+      = Provider.of<AccountSettingsService>(context, listen: false);
+
     _transactionId = transaction?.id;
-    print(_transactionId);
     _onSave = onSave;
 
     defaultName = "";
     defaultAmount = 0;
-    defaultCurrency = standardCurrencies["EUR"]!;
+    defaultCurrency = accountSettingsService.getStandardCurrency();
     defaultDate = DateTime.now().toIso8601String();
     defaultCategory = null;
     defaultRepeatConfiguration = repeatConfigurations[RepeatInterval.daily]!;

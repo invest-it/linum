@@ -1,8 +1,17 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/common/components/action_lip/viewmodels/action_lip_viewmodel.dart';
+import 'package:linum/core/account/services/account_settings_service.dart';
+import 'package:linum/core/categories/constants/standard_categories.dart';
 import 'package:linum/core/categories/utils/translate_category.dart';
+
 import 'package:linum/screens/enter_screen/utils/date_formatter.dart';
+import 'package:linum/screens/enter_screen/utils/show_enter_screen_menu.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model.dart';
+import 'package:linum/screens/enter_screen/widgets/category_list_view.dart';
+import 'package:linum/screens/enter_screen/widgets/currency_list_view.dart';
 import 'package:linum/screens/enter_screen/widgets/tag_selector_button.dart';
 import 'package:provider/provider.dart';
 
@@ -43,6 +52,7 @@ class _QuickTagMenuState extends State<QuickTagMenu> {
     final category = viewModel.data.category ?? viewModel.defaultCategory;
     final repeatConfiguration =
         viewModel.data.repeatConfiguration ?? viewModel.defaultRepeatConfiguration;
+
     return [
       TagSelectorButton(
         title: tr(
@@ -57,15 +67,27 @@ class _QuickTagMenuState extends State<QuickTagMenu> {
       TagSelectorButton(
         title: tr(currency.label),
         symbol: currency.symbol,
-        onTap: () => {
-
+        onTap: () {
+          showEnterScreenMenu(
+            context,
+            title: "Currencies",
+            content: CurrencyListView(),
+          );
         },
         textColor: widget.colors.currency,
       ),
       TagSelectorButton(
         title: translateCategory(category),
         symbol: "",
-        onTap: () => {print("Select Category")},
+        onTap: () {
+          showEnterScreenMenu(
+            context,
+            title: "Categories",
+            content: CategoryListView(
+              categories: standardCategories.values.toList(),
+            ),
+          );
+        },
         textColor: widget.colors.category,
       ),
       TagSelectorButton(

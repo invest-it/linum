@@ -80,7 +80,7 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
       suggestions = makeSuggestions(text, cursor);
       _rebuildSuggestionList();
     });
-    _viewModel.update(EnterScreenViewModelData.fromInput(parsed));
+    _viewModel.update(EnterScreenViewModelData.fromInput(parsed), notify: true);
   }
 
   void _onSuggestionSelection(

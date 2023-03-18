@@ -36,7 +36,6 @@ class LinumApp extends StatelessWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-
       home: ApplicationServices(
         store: store,
         router: Router(

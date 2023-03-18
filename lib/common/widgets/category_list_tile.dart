@@ -8,33 +8,35 @@ class CategoryListTile extends StatelessWidget {
   const CategoryListTile({
     super.key,
     required this.category,
-    required this.labelTitle,
-    required this.defaultLabel,
-    required this.trailingIconColor,
-    required this.trailingIcon,
+    this.labelTitle,
+    this.trailingIconColor,
+    this.trailingIcon,
+    this.onTap,
+    this.selected = false,
   });
-  final String labelTitle;
-  final String defaultLabel;
+  final String? labelTitle;
   final Category? category;
-  final IconData trailingIcon;
-  final Color trailingIconColor;
+  final IconData? trailingIcon;
+  final Color? trailingIconColor;
+  final void Function()? onTap;
+  final bool selected;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
-        labelTitle +
-            // Translates the value from firebase
-            translateCategory(category),
+        "${labelTitle ?? ""}${translateCategory(category)}",
         style: Theme.of(context).textTheme.bodyText1,
       ),
-      trailing: Icon(
+      trailing: trailingIcon != null ? Icon(
         trailingIcon,
         color: trailingIconColor,
-      ),
+      ) : null,
       leading: Icon(
         category?.icon ?? Icons.error,
       ),
+      onTap: onTap,
+      selected: selected,
     );
   }
 }

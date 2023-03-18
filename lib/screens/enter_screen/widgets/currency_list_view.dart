@@ -1,25 +1,21 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/common/components/action_lip/viewmodels/action_lip_viewmodel.dart';
 import 'package:linum/common/widgets/currency_list_tile.dart';
-import 'package:linum/common/widgets/text_icon.dart';
-import 'package:linum/core/account/services/account_settings_service.dart';
 import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
-import 'package:linum/core/design/layout/enums/screen_key.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
-import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
 import 'package:linum/features/currencies/constants/standard_currencies.dart';
+import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model.dart';
 import 'package:provider/provider.dart';
 
 class CurrencyListView extends StatelessWidget {
   final currencies = standardCurrencies.values.toList();
 
-  CurrencyListView();
+  CurrencyListView({super.key});
+
 
   @override
   Widget build(BuildContext context) {
-    final settings = Provider.of<AccountSettingsService>(context);
-    final actionLipStatus = Provider.of<ActionLipViewModel>(context);
+    final viewModel = Provider.of<EnterScreenViewModel>(context, listen: false);
+
     return Expanded(
       child: ListView.builder(
         padding: EdgeInsets.only(
@@ -33,13 +29,11 @@ class CurrencyListView extends StatelessWidget {
           final currency = currencies[index];
           return CurrencyListTile(
             currency: currency,
-            selected: currency.name == settings.getStandardCurrency().name,
+            selected:
+              currency.name == viewModel.data.currency?.name,
             onTap: () {
-              settings.setStandardCurrency(currencies[index]);
-              actionLipStatus.setActionLipStatus(
-                screenKey: ScreenKey.settings,
-                status: ActionLipVisibility.hidden,
-              );
+              viewModel.update(viewModel.data.copyWith(currency: currency));
+              Navigator.of(context).pop();
             },
           );
         },

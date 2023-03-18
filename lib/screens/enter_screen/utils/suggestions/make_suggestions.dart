@@ -17,9 +17,21 @@ Map<String, Suggestion> makeSuggestions(String text, int cursor) {
     final suggestions = suggestFlags(parsed.item2);
     if (suggestions.isNotEmpty) {
       return suggestions;
-    } else {
-      return suggestCategory(parsed.item2);
     }
+
+    final categorySuggestions = suggestCategory(parsed.item2);
+    if (categorySuggestions.isNotEmpty) {
+      return categorySuggestions;
+    }
+    final dateSuggestions = suggestDate(parsed.item2);
+    if (dateSuggestions.isNotEmpty) {
+      return dateSuggestions;
+    }
+    final repeatSuggestions = suggestRepeatInfo(parsed.item2);
+    if (repeatSuggestions.isNotEmpty) {
+      return repeatSuggestions;
+    }
+    return {};
   }
 
   switch (parsed.item1) {

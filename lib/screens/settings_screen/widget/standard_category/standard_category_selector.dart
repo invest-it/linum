@@ -11,7 +11,7 @@ import 'package:linum/core/account/services/account_settings_service.dart';
 import 'package:linum/core/categories/constants/standard_categories.dart';
 import 'package:linum/core/design/layout/enums/screen_key.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
-import 'package:linum/screens/settings_screen/widget/standard_category/category_list_tile.dart';
+import 'package:linum/common/widgets/category_list_tile.dart';
 import 'package:linum/screens/settings_screen/widget/standard_category/category_list_view.dart';
 import 'package:provider/provider.dart';
 
@@ -35,19 +35,16 @@ class _StandardCategorySelectorState extends State<StandardCategorySelector> {
           onTap: () {
             actionLipStatusProvider.setActionLip(
               screenKey: ScreenKey.settings,
-              actionLipStatus: ActionLipStatus.onviewport,
+              actionLipStatus: ActionLipVisibility.onviewport,
               actionLipTitle:
                   tr('action_lip.standard-category.income.label-title'),
               actionLipBody: CategoryListView(
-                accountSettingsProvider,
-                actionLipStatusProvider,
                 categories: standardCategories.values.where((category) => category.isIncome).toList(),
                 settingsKey: "StandardCategoryIncome",
               ),
             );
           },
           child: CategoryListTile(
-            defaultLabel: "ChosenStandardIncome",
             labelTitle:
                 tr('settings_screen.standard-income-selector.label-title'),
             category: accountSettingsProvider.getIncomeEntryCategory(),
@@ -59,19 +56,16 @@ class _StandardCategorySelectorState extends State<StandardCategorySelector> {
           onTap: () {
             actionLipStatusProvider.setActionLip(
               screenKey: ScreenKey.settings,
-              actionLipStatus: ActionLipStatus.onviewport,
+              actionLipStatus: ActionLipVisibility.onviewport,
               actionLipTitle:
                   tr('action_lip.standard-category.expenses.label-title'),
               actionLipBody: CategoryListView(
-                accountSettingsProvider,
-                actionLipStatusProvider,
                 categories: standardCategories.values.where((category) => !category.isIncome).toList(),
                 settingsKey: "StandardCategoryExpense",
               ),
             );
           },
           child: CategoryListTile(
-            defaultLabel: "ChosenStandardExpense",
             labelTitle:
                 tr('settings_screen.standard-expense-selector.label-title'),
             category: accountSettingsProvider.getExpenseEntryCategory(),

@@ -10,13 +10,13 @@ import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
 import 'package:linum/core/navigation/get_delegate.dart';
 
 class ActionLipViewModel extends ChangeNotifier {
-  final Map<ScreenKey, ActionLipStatus> _actionLipMap = {};
+  final Map<ScreenKey, ActionLipVisibility> _actionLipMap = {};
   final Map<ScreenKey, Widget> _actionBodyMap = {};
   final Map<ScreenKey, String> _actionTitleMap = {};
 
   void setActionLipStatus({
     required ScreenKey screenKey,
-    required ActionLipStatus status,
+    required ActionLipVisibility status,
   }) {
     setActionLipStatusSilently(
       screenKey: screenKey,
@@ -27,9 +27,9 @@ class ActionLipViewModel extends ChangeNotifier {
 
   void setActionLipStatusSilently({
     required ScreenKey screenKey,
-    required ActionLipStatus status,
+    required ActionLipVisibility status,
   }) {
-    if (status != ActionLipStatus.onviewport) {
+    if (status != ActionLipVisibility.onviewport) {
       getRouterDelegate().setOnPopOverwrite(null);
     }
     _actionLipMap[screenKey] = status;
@@ -39,7 +39,7 @@ class ActionLipViewModel extends ChangeNotifier {
     required ScreenKey screenKey,
     required Widget actionLipBody,
     String? actionLipTitle,
-    ActionLipStatus? actionLipStatus,
+    ActionLipVisibility? actionLipStatus,
   }) {
     setActionLipSilently(
       screenKey: screenKey,
@@ -47,11 +47,11 @@ class ActionLipViewModel extends ChangeNotifier {
       actionLipStatus: actionLipStatus,
       actionLipTitle: actionLipTitle,
     );
-    if (actionLipStatus == ActionLipStatus.onviewport) {
+    if (actionLipStatus == ActionLipVisibility.onviewport) {
       getRouterDelegate().setOnPopOverwrite(() {
         setActionLipStatus(
           screenKey: screenKey,
-          status: ActionLipStatus.hidden,
+          status: ActionLipVisibility.hidden,
         );
       });
     }
@@ -62,7 +62,7 @@ class ActionLipViewModel extends ChangeNotifier {
     required ScreenKey screenKey,
     required Widget actionLipBody,
     String? actionLipTitle,
-    ActionLipStatus? actionLipStatus,
+    ActionLipVisibility? actionLipStatus,
   }) {
     _actionBodyMap[screenKey] = actionLipBody;
     if (actionLipStatus != null) {
@@ -92,8 +92,8 @@ class ActionLipViewModel extends ChangeNotifier {
     return _actionTitleMap[screenKey] ?? "Wrong key";
   }
 
-  ActionLipStatus getActionLipStatus(ScreenKey screenKey) {
-    return _actionLipMap[screenKey] ?? ActionLipStatus.disabled;
+  ActionLipVisibility getActionLipStatus(ScreenKey screenKey) {
+    return _actionLipMap[screenKey] ?? ActionLipVisibility.disabled;
   }
 
   bool isActionStatusInitialized(ScreenKey screenKey) {

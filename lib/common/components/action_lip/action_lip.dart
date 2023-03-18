@@ -82,7 +82,7 @@ class _ActionLipState extends State<ActionLip> {
                     FocusManager.instance.primaryFocus?.unfocus();
                     provider.setActionLipStatus(
                       screenKey: screenKey,
-                      status: ActionLipStatus.hidden,
+                      status: ActionLipVisibility.hidden,
                     );
                   },
                 ),
@@ -99,12 +99,12 @@ class _ActionLipState extends State<ActionLip> {
   }
 
   double _calculateYOffset(
-    ActionLipStatus status,
+    ActionLipVisibility status,
   ) {
     switch (status) {
-      case ActionLipStatus.hidden:
+      case ActionLipVisibility.hidden:
         return useScreenHeight(context);
-      case ActionLipStatus.onviewport:
+      case ActionLipVisibility.onviewport:
         return context.isKeyboardOpen()
             ? context.proportionateScreenHeightFraction(
                   ScreenFraction.twofifths,
@@ -112,7 +112,7 @@ class _ActionLipState extends State<ActionLip> {
                 (useKeyBoardHeight(context) / 2)
             : context
                 .proportionateScreenHeightFraction(ScreenFraction.twofifths);
-      case ActionLipStatus.disabled:
+      case ActionLipVisibility.disabled:
         throw ArgumentError(
           'If the actionLipStatus is set to DISABLED, the ActionLip class must not be invoked.',
           'actionLipStatus',
