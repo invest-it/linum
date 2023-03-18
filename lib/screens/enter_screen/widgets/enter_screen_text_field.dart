@@ -26,7 +26,7 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
   late TextEditingController _controller;
   late EnterScreenViewModel _viewModel;
   final GlobalKey _key = LabeledGlobalKey("text_field");
-  OverlayEntry? _overlayEntry;
+
   Map<String, Suggestion> suggestions = {};
   final exampleStringBuilder = ExampleStringBuilder(
       defaultAmount: 0.00,
@@ -58,18 +58,19 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
   }
 
   void _rebuildSuggestionList() {
-    _overlayEntry?.remove();
-    _overlayEntry = null;
     final keyContext = _key.currentContext;
     if (keyContext == null) {
       return;
     }
-    final renderBox = keyContext.findRenderObject() as RenderBox;
-    final size = renderBox.size;
-    final position = renderBox.localToGlobal(Offset.zero);
+    final renderBox = keyContext.findRenderObject() as RenderBox?;
+    final size = renderBox?.size;
+    final position = renderBox?.localToGlobal(Offset.zero);
+    if (size == null || position == null) {
+      return;
+    }
 
-    _overlayEntry = _overlayEntryBuilder(context, size, position);
-    Overlay.of(context).insert(_overlayEntry!);
+    _viewModel.setOverlayEntry(_overlayEntryBuilder(context, size, position));
+    Overlay.of(context).insert(_viewModel.currentOverlay!);
   }
 
   void _onChange(String text, int cursor) {

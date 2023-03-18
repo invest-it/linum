@@ -34,6 +34,13 @@ class EnterScreenViewModel extends ChangeNotifier {
   late String defaultDate;
   late RepeatConfiguration defaultRepeatConfiguration;
 
+  OverlayEntry? _currentOverlay;
+  OverlayEntry? get currentOverlay => _currentOverlay;
+  void setOverlayEntry(OverlayEntry? overlayEntry) {
+    _currentOverlay?.remove();
+    _currentOverlay = overlayEntry;
+  }
+
   EnterScreenViewModel._(
     BuildContext context, {
     OnSaveCallback onSave = _onSaveDefault,
@@ -129,5 +136,11 @@ class EnterScreenViewModel extends ChangeNotifier {
     );
 
     _onSave(transaction: transaction);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _currentOverlay?.remove();
   }
 }

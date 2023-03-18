@@ -16,6 +16,7 @@ import 'package:linum/core/navigation/main_router_delegate.dart';
 import 'package:linum/core/navigation/main_routes.dart';
 import 'package:linum/core/navigation/screen_routes.dart';
 import 'package:linum/screens/enter_screen/enter_screen.dart';
+import 'package:linum/screens/enter_screen/utils/show_enter_screen.dart';
 import 'package:linum/screens/lock_screen/services/pin_code_service.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
@@ -98,12 +99,7 @@ class _ScreenLayoutState extends State<ScreenLayout>
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showModalBottomSheet(
-              context: context,
-              builder: (BuildContext context) {
-                return const EnterScreen();
-              },
-          );
+          showEnterScreen(context);
         },
         elevation: 2.0,
         backgroundColor: Theme.of(context).colorScheme.secondary,

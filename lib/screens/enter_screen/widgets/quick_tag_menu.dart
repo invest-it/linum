@@ -57,7 +57,9 @@ class _QuickTagMenuState extends State<QuickTagMenu> {
       TagSelectorButton(
         title: tr(currency.label),
         symbol: currency.symbol,
-        onTap: () => {print("Select Currency")},
+        onTap: () => {
+
+        },
         textColor: widget.colors.currency,
       ),
       TagSelectorButton(

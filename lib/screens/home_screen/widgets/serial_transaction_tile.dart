@@ -7,6 +7,7 @@ import 'package:linum/core/categories/constants/standard_categories.dart';
 import 'package:linum/core/categories/utils/translate_category.dart';
 import 'package:linum/core/repeating/enums/repeat_duration_type_enum.dart';
 import 'package:linum/screens/enter_screen/enter_screen.dart';
+import 'package:linum/screens/enter_screen/utils/show_enter_screen.dart';
 import 'package:provider/provider.dart';
 
 class SerialTransactionTile extends StatelessWidget {
@@ -62,12 +63,7 @@ class SerialTransactionTile extends StatelessWidget {
             color: Theme.of(context).colorScheme.secondary,
           ),
           onPressed: () => {
-            showModalBottomSheet(
-              context: context,
-              builder: (BuildContext context) {
-                return EnterScreen(serialTransaction: serialTransaction);
-              },
-            ),
+            showEnterScreen(context, serialTransaction: serialTransaction)
           },
         ),
       ),

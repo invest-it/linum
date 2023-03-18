@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/core/balance/models/serial_transaction.dart';
 import 'package:linum/core/balance/models/transaction.dart';
 import 'package:linum/core/balance/services/balance_data_service.dart';
+import 'package:linum/core/design/layout/utils/media_query_accessors.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model.dart';
 import 'package:linum/screens/enter_screen/widgets/enter_screen_button.dart';
 import 'package:linum/screens/enter_screen/widgets/enter_screen_text_field.dart';
@@ -24,8 +25,11 @@ class EnterScreen extends StatelessWidget {
 
 
     return Container(
-      height: 250,
-      padding: const EdgeInsets.symmetric(vertical: 25),
+      height: 250 + useKeyBoardHeight(context),
+      padding: EdgeInsets.only(
+        top: 25,
+        bottom: 25 + useKeyBoardHeight(context),
+      ),
       decoration: BoxDecoration(
         border: Border.all(),
       ),
