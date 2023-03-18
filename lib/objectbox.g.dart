@@ -14,7 +14,7 @@ import 'package:objectbox/internal.dart'; // generated code can access "internal
 import 'package:objectbox/objectbox.dart';
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
-import 'models/exchange_rates_for_date.dart';
+import 'features/currencies/models/exchange_rates_for_date.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 

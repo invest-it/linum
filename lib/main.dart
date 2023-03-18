@@ -8,7 +8,7 @@ import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:linum/app.dart';
-import 'package:linum/constants/supported_locales.dart';
+import 'package:linum/common/constants/supported_locales.dart';
 import 'package:linum/objectbox.g.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

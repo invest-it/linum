@@ -8,10 +8,10 @@ import 'dart:math' as math;
 
 import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:flutter_test/flutter_test.dart';
-import 'package:linum/models/transaction.dart';
-import 'package:linum/providers/algorithm_provider.dart';
-import 'package:linum/utilities/backend/statistical_calculations.dart';
-import 'package:linum/utilities/frontend/filters.dart';
+import 'package:linum/common/utils/filters.dart';
+import 'package:linum/core/balance/models/transaction.dart';
+import 'package:linum/core/balance/services/algorithm_service.dart';
+import 'package:linum/core/balance/utils/statistical_calculations.dart';
 import 'package:uuid/uuid.dart';
 
 final Transaction baseTransaction = Transaction(
@@ -79,7 +79,7 @@ void main() {
             data: emptyData,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -100,7 +100,7 @@ void main() {
             data: exampleData1,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -121,7 +121,7 @@ void main() {
             data: exampleData2,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -142,7 +142,7 @@ void main() {
             data: exampleData3,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -163,7 +163,7 @@ void main() {
             data: exampleData4,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -184,7 +184,7 @@ void main() {
             data: exampleData5,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -209,7 +209,7 @@ void main() {
               data: randomData,
               serialData: [],
               standardCurrencyName: "EUR",
-              algorithmProvider: AlgorithmProvider()
+              algorithmProvider: AlgorithmService()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
                 ),
@@ -236,7 +236,7 @@ void main() {
             data: emptyData,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -257,7 +257,7 @@ void main() {
             data: exampleData1,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -278,7 +278,7 @@ void main() {
             data: exampleData2,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -299,7 +299,7 @@ void main() {
             data: exampleData3,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -320,7 +320,7 @@ void main() {
             data: exampleData4,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -341,7 +341,7 @@ void main() {
             data: exampleData5,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -366,7 +366,7 @@ void main() {
               data: randomData,
               serialData: [],
               standardCurrencyName: "EUR",
-              algorithmProvider: AlgorithmProvider()
+              algorithmProvider: AlgorithmService()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
                 ),
@@ -396,7 +396,7 @@ void main() {
             data: emptyData,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -417,7 +417,7 @@ void main() {
             data: exampleData1,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -438,7 +438,7 @@ void main() {
             data: exampleData2,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -459,7 +459,7 @@ void main() {
             data: exampleData3,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -480,7 +480,7 @@ void main() {
             data: exampleData4,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -501,7 +501,7 @@ void main() {
             data: exampleData5,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -526,7 +526,7 @@ void main() {
               data: randomData,
               serialData: [],
               standardCurrencyName: "EUR",
-              algorithmProvider: AlgorithmProvider()
+              algorithmProvider: AlgorithmService()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
                 ),
@@ -554,7 +554,7 @@ void main() {
             data: emptyData,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -575,7 +575,7 @@ void main() {
             data: exampleData1,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -596,7 +596,7 @@ void main() {
             data: exampleData2,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -617,7 +617,7 @@ void main() {
             data: exampleData3,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -638,7 +638,7 @@ void main() {
             data: exampleData4,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -659,7 +659,7 @@ void main() {
             data: exampleData5,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -684,7 +684,7 @@ void main() {
               data: randomData,
               serialData: [],
               standardCurrencyName: "EUR",
-              algorithmProvider: AlgorithmProvider()
+              algorithmProvider: AlgorithmService()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
                 ),
@@ -720,7 +720,7 @@ void main() {
             data: emptyData,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -741,7 +741,7 @@ void main() {
             data: exampleData1,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -762,7 +762,7 @@ void main() {
             data: exampleData2,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -783,7 +783,7 @@ void main() {
             data: exampleData3,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -804,7 +804,7 @@ void main() {
             data: exampleData4,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -825,7 +825,7 @@ void main() {
             data: exampleData5,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -850,7 +850,7 @@ void main() {
               data: randomData,
               serialData: [],
               standardCurrencyName: "EUR",
-              algorithmProvider: AlgorithmProvider()
+              algorithmProvider: AlgorithmService()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
                 ),
@@ -879,7 +879,7 @@ void main() {
             data: emptyData,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -900,7 +900,7 @@ void main() {
             data: exampleData1,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -921,7 +921,7 @@ void main() {
             data: exampleData2,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -942,7 +942,7 @@ void main() {
             data: exampleData3,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -963,7 +963,7 @@ void main() {
             data: exampleData4,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -984,7 +984,7 @@ void main() {
             data: exampleData5,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmProvider()
+            algorithmProvider: AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
               ),
@@ -1009,7 +1009,7 @@ void main() {
               data: randomData,
               serialData: [],
               standardCurrencyName: "EUR",
-              algorithmProvider: AlgorithmProvider()
+              algorithmProvider: AlgorithmService()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
                 ),

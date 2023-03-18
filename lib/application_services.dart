@@ -7,17 +7,17 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/auth/firebase_options.dart';
-import 'package:linum/loading_scaffold.dart';
+import 'package:linum/core/design/layout/loading_scaffold.dart';
+import 'package:linum/firebase/firebase_options.dart';
 import 'package:linum/objectbox.g.dart';
-import 'package:linum/providers/account_settings_provider.dart';
-import 'package:linum/providers/action_lip_status_provider.dart';
-import 'package:linum/providers/algorithm_provider.dart';
-import 'package:linum/providers/authentication_service.dart';
-import 'package:linum/providers/balance_data_provider.dart';
-import 'package:linum/providers/exchange_rate_provider.dart';
-import 'package:linum/providers/pin_code_provider.dart';
-import 'package:linum/utilities/frontend/multi_provider_builder.dart';
+import 'package:linum/providers/account_settings_service_provider.dart';
+import 'package:linum/providers/action_lip_viewmodel_provider.dart';
+import 'package:linum/providers/algorithm_service_provider.dart';
+import 'package:linum/providers/authentication_service_provider.dart';
+import 'package:linum/providers/balance_data_service_provider.dart';
+import 'package:linum/providers/exchange_rate_service_provider.dart';
+import 'package:linum/providers/pin_code_service_provider.dart';
+import 'package:provider/provider.dart';
 
 class ApplicationServices extends StatelessWidget {
   final Router router;
@@ -48,16 +48,20 @@ class ApplicationServices extends StatelessWidget {
           buildErrorScaffold(context);
         }
         if (snapshot.connectionState == ConnectionState.done) {
-          return MultiProviderBuilder(context: context, child: router)
-              .setKey("MainMultiProvider")
-              .useProvider(AuthenticationService.builder())
-              .useProvider(AccountSettingsProvider.builder())
-              .useProvider(AlgorithmProvider.builder())
-              .useProvider(ExchangeRateProvider.builder(store))
-              .useProvider(BalanceDataProvider.builder())
-              .useProvider(ActionLipStatusProvider.builder())
-              .useProvider(PinCodeProvider.builder())
-              .build();
+          return MultiProvider(
+            key: const Key("MainMultiProvider"),
+            providers: [
+              const AuthenticationServiceProvider(),
+              const AccountSettingsServiceProvider(),
+              const AlgorithmServiceProvider(),
+              ExchangeRateServiceProvider(store: store),
+              const BalanceDataServiceProvider(),
+              const ActionLipViewModelProvider(),
+              const PinCodeServiceProvider(),
+            ],
+            child: router,
+
+          );
         }
         return const LoadingScaffold();
       },

@@ -9,8 +9,8 @@ import 'dart:ui' as _i3;
 
 import 'package:firebase_auth/firebase_auth.dart' as _i8;
 import 'package:flutter/material.dart' as _i5;
-import 'package:linum/providers/authentication_service.dart' as _i6;
-import 'package:linum/providers/onboarding_screen_provider.dart' as _i2;
+import 'package:linum/core/authentication/services/authentication_service.dart' as _i6;
+import 'package:linum/screens/onboarding_screen/viewmodels/onboarding_screen_viewmodel.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -28,7 +28,7 @@ import 'package:mockito/mockito.dart' as _i1;
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockOnboardingScreenProvider extends _i1.Mock
-    implements _i2.OnboardingScreenProvider {
+    implements _i2.OnboardingScreenViewModel {
   @override
   bool get hasPageChanged => (super.noSuchMethod(
         Invocation.getter(#hasPageChanged),

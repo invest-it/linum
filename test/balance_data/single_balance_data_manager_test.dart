@@ -7,9 +7,9 @@
 import 'dart:math' as math;
 import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:flutter_test/flutter_test.dart';
-import 'package:linum/models/balance_document.dart';
-import 'package:linum/models/transaction.dart';
-import 'package:linum/utilities/balance_data/transaction_manager.dart';
+import 'package:linum/core/balance/models/balance_document.dart';
+import 'package:linum/core/balance/models/transaction.dart';
+import 'package:linum/core/balance/utils/transaction_manager.dart';
 import 'package:uuid/uuid.dart';
 
 void main() {
