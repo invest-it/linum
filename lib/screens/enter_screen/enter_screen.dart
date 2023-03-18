@@ -45,12 +45,13 @@ class EnterScreen extends StatelessWidget {
                   onSave: ({
                       Transaction? transaction,
                       SerialTransaction? serialTransaction,
-                  }) {
-                      if (transaction != null) {
-                        balanceDataProvider.updateTransaction(transaction);
-                      } else if (serialTransaction != null) {
-                        // TODO
-                      }
+                  }) async {
+                    if (transaction != null) {
+                      balanceDataProvider.updateTransaction(transaction);
+                    } else if (serialTransaction != null) {
+                      // TODO
+                    }
+                    Navigator.pop(context);
                   },
                 );
               }
@@ -77,6 +78,7 @@ class EnterScreen extends StatelessWidget {
                     } else if (serialTransaction != null) {
                       balanceDataProvider.addSerialTransaction(serialTransaction);
                     }
+                    Navigator.pop(context);
                   },
               );
             },

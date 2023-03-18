@@ -48,6 +48,7 @@ class EnterScreenViewModel extends ChangeNotifier {
     SerialTransaction? serialTransaction, // TODO: Implement those
   }) {
     _transactionId = transaction?.id;
+    print(_transactionId);
     _onSave = onSave;
 
     defaultName = "";
@@ -134,7 +135,7 @@ class EnterScreenViewModel extends ChangeNotifier {
       time: firestore.Timestamp.fromDate(DateTime.parse(data.date ?? defaultDate)),
       category: data.category?.id ?? defaultCategory?.id,
     );
-
+    print(transaction.id);
     _onSave(transaction: transaction);
   }
 
