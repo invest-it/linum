@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:flutter/material.dart';
+import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/core/account/services/account_settings_service.dart';
 import 'package:linum/core/balance/models/serial_transaction.dart';
 import 'package:linum/core/balance/models/transaction.dart';
@@ -13,6 +14,7 @@ import 'package:linum/core/repeating/enums/repeat_interval.dart';
 import 'package:linum/core/repeating/models/repeat_configuration.dart';
 import 'package:linum/features/currencies/constants/standard_currencies.dart';
 import 'package:linum/features/currencies/models/currency.dart';
+import 'package:linum/screens/enter_screen/utils/get_entry_type.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model_data.dart';
 import 'package:provider/provider.dart';
 
@@ -39,6 +41,13 @@ class EnterScreenViewModel extends ChangeNotifier {
   late String defaultDate;
   late RepeatConfiguration defaultRepeatConfiguration;
 
+  EntryType _entryType = EntryType.unknown;
+  EntryType get entryType => _entryType;
+  set entryType(EntryType value) {
+    _entryType = value;
+    notifyListeners();
+  }
+
   bool _isBottomSheetOpened = false;
   bool get isBottomSheetOpened => _isBottomSheetOpened;
   set isBottomSheetOpened(bool value) {
@@ -49,6 +58,9 @@ class EnterScreenViewModel extends ChangeNotifier {
   double calculateMaxHeight(BuildContext context) {
     if (_isBottomSheetOpened) {
       return context.proportionateScreenHeightFraction(ScreenFraction.threefifths);
+    }
+    if (_entryType == EntryType.unknown) {
+      return 160;
     }
     return 250 + useKeyBoardHeight(context);
 
@@ -72,6 +84,11 @@ class EnterScreenViewModel extends ChangeNotifier {
 
     _transactionId = transaction?.id;
     _onSave = onSave;
+
+    _entryType = getEntryType(
+        transaction: transaction,
+        serialTransaction: serialTransaction,
+    );
 
     defaultName = "";
     defaultAmount = 0;

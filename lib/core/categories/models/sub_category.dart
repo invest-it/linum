@@ -1,3 +1,4 @@
+import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/core/categories/models/category.dart';
 
 class SubCategory extends Category {
@@ -7,6 +8,6 @@ class SubCategory extends Category {
     required this.parentId,
     required super.id,
     required super.label,
-    super.isIncome = false,
+    super.entryType = EntryType.expense,
   });
 }

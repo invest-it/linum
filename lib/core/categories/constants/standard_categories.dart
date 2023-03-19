@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/core/categories/models/category.dart';
 
 const standardCategories = <String, Category>{
@@ -6,37 +7,37 @@ const standardCategories = <String, Category>{
     label: "settings_screen.standard-income-selector.salary",
     id: "income",
     icon: Icons.work_rounded,
-    isIncome: true,
+    entryType: EntryType.income,
   ),
   "allowance": Category(
     label: "settings_screen.standard-income-selector.allowance",
     id: "allowance",
     icon: Icons.savings_rounded,
-    isIncome: true,
+    entryType: EntryType.income,
   ),
   "sidejob": Category(
     label: "settings_screen.standard-income-selector.sidejob",
     id: "sidejob",
     icon: Icons.add_business_rounded,
-    isIncome: true,
+    entryType: EntryType.income,
   ),
   "investments": Category(
     label: "settings_screen.standard-income-selector.investments",
     id: "investments",
     icon: Icons.auto_graph_rounded,
-    isIncome: true,
+    entryType: EntryType.income,
   ),
   "childsupport": Category(
       label: "settings_screen.standard-income-selector.childsupport",
       id: "childsupport",
       icon: Icons.family_restroom_rounded,
-      isIncome: true,
+      entryType: EntryType.income,
   ),
   "interest": Category(
       label: "settings_screen.standard-income-selector.interest",
       id: "interest",
       icon: Icons.attach_money_rounded,
-      isIncome: true,
+      entryType: EntryType.income,
   ),
   "food": Category(
     label: "settings_screen.standard-expense-selector.food",
@@ -67,7 +68,7 @@ const standardCategories = <String, Category>{
     label: "settings_screen.standard-income-selector.misc",
     id: "misc-income",
     icon: Icons.inventory_2,
-    isIncome: true,
+    entryType: EntryType.income,
   ),
   "misc-expense": Category(
     label: "settings_screen.standard-expense-selector.misc",

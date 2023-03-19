@@ -1,4 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/common/enums/entry_type.dart';
+import 'package:linum/core/account/services/account_settings_service.dart';
+import 'package:linum/core/categories/utils/translate_category.dart';
 import 'package:linum/core/design/layout/utils/media_query_accessors.dart';
 import 'package:linum/screens/enter_screen/constants/parsable_date_map.dart';
 import 'package:linum/screens/enter_screen/enums/parsable_date.dart';
@@ -23,29 +27,40 @@ class EnterScreenTextField extends StatefulWidget {
 }
 
 class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
+
   late TextEditingController _controller;
   late EnterScreenViewModel _viewModel;
   final GlobalKey _key = LabeledGlobalKey("text_field");
+  late final ExampleStringBuilder exampleStringBuilder;
 
   Map<String, Suggestion> suggestions = {};
-  final exampleStringBuilder = ExampleStringBuilder(
-      defaultAmount: 0.00,
-      defaultCurrency: "EUR",
-      defaultName: "Name",
-      defaultCategory: "Keine",
-      defaultDate: parsableDateMap[ParsableDate.today]!,
-      defaultRepeatInfo: "Keine",
-  );
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
     _viewModel = Provider.of<EnterScreenViewModel>(context, listen: false);
+
+    final accountSettingsService
+      = Provider.of<AccountSettingsService>(context, listen: false);
+
+    final defaultCategory = _viewModel.entryType == EntryType.expense
+        ? accountSettingsService.getExpenseEntryCategory()
+        : accountSettingsService.getIncomeEntryCategory();
+
+
+    exampleStringBuilder = ExampleStringBuilder(
+      defaultAmount: 0.00,
+      defaultCurrency: accountSettingsService.getStandardCurrency().name,
+      defaultName: "Name",
+      defaultCategory: translateCategory(defaultCategory),
+      defaultDate: parsableDateMap[ParsableDate.today]!,
+      defaultRepeatInfo: "Keine",
+    );
+
     if (_viewModel.data.withExistingData) {
       final text = generateStringFromExistingData(_viewModel.data);
       final parsed = parse(text);
-      exampleStringBuilder.rebuild(parsed);
       _controller.text = text;
       exampleStringBuilder.rebuild(parsed);
     }

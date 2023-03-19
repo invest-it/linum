@@ -7,6 +7,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/components/action_lip/viewmodels/action_lip_viewmodel.dart';
+import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/core/account/services/account_settings_service.dart';
 import 'package:linum/core/categories/constants/standard_categories.dart';
 import 'package:linum/core/design/layout/enums/screen_key.dart';
@@ -39,7 +40,9 @@ class _StandardCategorySelectorState extends State<StandardCategorySelector> {
               actionLipTitle:
                   tr('action_lip.standard-category.income.label-title'),
               actionLipBody: CategoryListView(
-                categories: standardCategories.values.where((category) => category.isIncome).toList(),
+                categories: standardCategories.values
+                    .where((category) => category.entryType == EntryType.income)
+                    .toList(),
                 settingsKey: "StandardCategoryIncome",
               ),
             );
@@ -60,7 +63,9 @@ class _StandardCategorySelectorState extends State<StandardCategorySelector> {
               actionLipTitle:
                   tr('action_lip.standard-category.expenses.label-title'),
               actionLipBody: CategoryListView(
-                categories: standardCategories.values.where((category) => !category.isIncome).toList(),
+                categories: standardCategories.values
+                    .where((category) => category.entryType == EntryType.expense)
+                    .toList(),
                 settingsKey: "StandardCategoryExpense",
               ),
             );
