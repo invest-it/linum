@@ -29,7 +29,7 @@ EnterScreenInput parse(String? input) {
   final splits = splitInput(input);
 
   final amount = splits[0];
-  final result = parseAmount(amount, input);
+  final result = parseBaseInfo(amount, input);
 
   for (var i = 1; i < splits.length; i++) {
     final parsed = interpretTag(splits[i]);

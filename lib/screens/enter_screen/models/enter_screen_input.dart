@@ -9,11 +9,18 @@ class EnterScreenInput {
   final String? name;
   final parsedInputs = <Tuple2<InputFlag, String>>[];
 
+  final Tuple2<int, int>? amountIndices;
+  final Tuple2<int, int>? currencyIndices;
+  final Tuple2<int, int>? nameIndices;
+
   EnterScreenInput(
     this.raw, {
     this.amount,
     this.name,
     this.currency,
+    this.amountIndices,
+    this.currencyIndices,
+    this.nameIndices,
   });
 
   bool get hasAmount => amount != null;

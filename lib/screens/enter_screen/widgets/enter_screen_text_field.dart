@@ -8,6 +8,7 @@ import 'package:linum/screens/enter_screen/constants/parsable_date_map.dart';
 import 'package:linum/screens/enter_screen/enums/parsable_date.dart';
 import 'package:linum/screens/enter_screen/models/enter_screen_input.dart';
 import 'package:linum/screens/enter_screen/models/suggestion.dart';
+import 'package:linum/screens/enter_screen/utils/enter_screen_text_editing_controller.dart';
 import 'package:linum/screens/enter_screen/utils/example_string_builder.dart';
 import 'package:linum/screens/enter_screen/utils/input_parser.dart';
 import 'package:linum/screens/enter_screen/utils/string_from_existing_data.dart';
@@ -144,7 +145,7 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
     return Stack(
       children: [
         Positioned(
-            top: 13,
+            top: 14,
             child: Flex(
               direction: Axis.horizontal,
               children: [
@@ -166,6 +167,9 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
             ),
         ),
         TextField(
+          decoration: const InputDecoration(
+            border: InputBorder.none,
+          ),
           style: const TextStyle(
             fontSize: 16,
           ),
