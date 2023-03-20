@@ -11,6 +11,9 @@ Map<String, Suggestion> makeSuggestions(String text, int cursor, {
   bool Function(ParsableDate date)? dateFilter,
   bool Function(RepeatInterval repeatInterval)? repeatFilter,
 }) {
+  if (cursor < 0) {
+    return {};
+  }
   final textBefore = text.substring(0, cursor).split('#');
   // final textAfter = text.substring(cursor, text.length).split('#');
   if (textBefore.length == 1) {

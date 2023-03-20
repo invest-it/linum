@@ -29,17 +29,14 @@ class EnterScreenTextField extends StatefulWidget {
 
 class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
 
-  late TextEditingController _controller;
+  late EnterScreenTextEditingController _controller;
   late EnterScreenViewModel _viewModel;
   final GlobalKey _key = LabeledGlobalKey("text_field");
-  late final ExampleStringBuilder exampleStringBuilder;
-
-  Map<String, Suggestion> suggestions = {};
 
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController();
+
     _viewModel = Provider.of<EnterScreenViewModel>(context, listen: false);
 
     final accountSettingsService
@@ -50,21 +47,33 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
         : accountSettingsService.getIncomeEntryCategory();
 
 
-    exampleStringBuilder = ExampleStringBuilder(
-      defaultAmount: 0.00,
-      defaultCurrency: accountSettingsService.getStandardCurrency().name,
-      defaultName: "Name",
-      defaultCategory: translateCategory(defaultCategory),
-      defaultDate: parsableDateMap[ParsableDate.today]!,
-      defaultRepeatInfo: "Keine",
+    _controller = EnterScreenTextEditingController(
+        exampleStringBuilder: ExampleStringBuilder(
+          defaultAmount: 0.00,
+          defaultCurrency: accountSettingsService.getStandardCurrency().name,
+          defaultName: "Name",
+          defaultCategory: translateCategory(defaultCategory),
+          defaultDate: parsableDateMap[ParsableDate.today]!,
+          defaultRepeatInfo: "Keine",
+        ),
     );
+
 
     if (_viewModel.data.withExistingData) {
       final text = generateStringFromExistingData(_viewModel.data);
-      final parsed = parse(text);
       _controller.text = text;
-      exampleStringBuilder.rebuild(parsed);
     }
+
+    _controller.addListener(() {
+      if (_controller.parsed == null) {
+        return;
+      }
+      _rebuildSuggestionList();
+      _viewModel.update(
+          EnterScreenViewModelData.fromInput(_controller.parsed!),
+          notify: true,
+      );
+    });
   }
 
   @override
@@ -89,22 +98,6 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
     Overlay.of(context).insert(_viewModel.currentOverlay!);
   }
 
-  void _onChange(String text, int cursor) {
-    final parsed = parse(text);
-    exampleStringBuilder.rebuild(parsed);
-    setState(() {
-      suggestions = makeSuggestions(
-          text,
-          cursor,
-          categoryFilter: (category)
-            => category.entryType == _viewModel.entryType,
-        // TODO: Migh cause problems with Unknown
-      );
-      _rebuildSuggestionList();
-    });
-    _viewModel.update(EnterScreenViewModelData.fromInput(parsed), notify: true);
-  }
-
   void _onSuggestionSelection(
     Suggestion suggestion,
     Suggestion? parentSuggestion,
@@ -116,7 +109,6 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
       parentSuggestion: parentSuggestion,
     );
     _controller.value = value;
-    _onChange(value.text, value.selection.base.offset);
   }
 
   OverlayEntry _overlayEntryBuilder(
@@ -132,7 +124,7 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
         child: Material(
           borderRadius: const BorderRadius.all(Radius.circular(5)),
           child: SuggestionList(
-            suggestions: suggestions,
+            suggestions: _controller.suggestions,
             onSelection: _onSuggestionSelection,
           ),
         ),
@@ -144,40 +136,16 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Positioned(
-            top: 14,
-            child: Flex(
-              direction: Axis.horizontal,
-              children: [
-                Text(
-                  exampleStringBuilder.value.item1,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.transparent,
-                  ),
-                ),
-                Text(
-                  exampleStringBuilder.value.item2,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.black26,
-                  ),
-                ),
-              ],
-            ),
-        ),
         TextField(
           decoration: const InputDecoration(
             border: InputBorder.none,
+            isDense: true,
           ),
           style: const TextStyle(
             fontSize: 16,
           ),
           key: _key,
           controller: _controller,
-          onChanged: (text) {
-            _onChange(text, _controller.selection.base.offset);
-          },
         )
       ],
     );
