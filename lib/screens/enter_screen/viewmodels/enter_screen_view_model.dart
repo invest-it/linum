@@ -6,15 +6,13 @@ import 'package:linum/core/balance/models/serial_transaction.dart';
 import 'package:linum/core/balance/models/transaction.dart';
 import 'package:linum/core/balance/services/balance_data_service.dart';
 import 'package:linum/core/categories/constants/standard_categories.dart';
-import 'package:linum/core/categories/models/category.dart';
 import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/core/design/layout/utils/media_query_accessors.dart';
 import 'package:linum/core/repeating/constants/standard_repeat_configs.dart';
 import 'package:linum/core/repeating/enums/repeat_interval.dart';
-import 'package:linum/core/repeating/models/repeat_configuration.dart';
 import 'package:linum/features/currencies/constants/standard_currencies.dart';
-import 'package:linum/features/currencies/models/currency.dart';
+import 'package:linum/screens/enter_screen/models/default_values.dart';
 import 'package:linum/screens/enter_screen/utils/get_entry_type.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model_data.dart';
 import 'package:provider/provider.dart';
@@ -23,22 +21,29 @@ typedef OnSaveCallback = void Function({
   Transaction? transaction,
   SerialTransaction? serialTransaction,
 });
+typedef OnDeleteCallback = void Function({
+  Transaction? transaction,
+  SerialTransaction? serialTransaction,
+});
 // TODO: Add SerialTransaction
 void _onSaveDefault({
   Transaction? transaction,
   SerialTransaction? serialTransaction,
 }) {}
+void _onDeleteDefault({
+  Transaction? transaction,
+  SerialTransaction? serialTransaction,
+}) {}
 
 class EnterScreenViewModel extends ChangeNotifier {
-  late String? _transactionId;
-  late OnSaveCallback _onSave;
+  late Transaction? _initialTransaction;
+  late SerialTransaction? _initialSerialTransaction;
 
-  late num defaultAmount;
-  late String defaultName;
-  late Currency defaultCurrency;
-  late Category? defaultCategory;
-  late String defaultDate;
-  late RepeatConfiguration defaultRepeatConfiguration;
+
+  late OnSaveCallback _onSave;
+  late OnDeleteCallback _onDelete;
+
+  late DefaultValues defaultData;
 
   late EnterScreenViewModelData _data;
   EnterScreenViewModelData get data => _data;
@@ -67,6 +72,7 @@ class EnterScreenViewModel extends ChangeNotifier {
   EnterScreenViewModel._(
     BuildContext context, {
     OnSaveCallback onSave = _onSaveDefault,
+    OnDeleteCallback onDelete = _onDeleteDefault,
     Transaction? transaction,
     SerialTransaction? serialTransaction, // TODO: Implement those
   }) {
@@ -75,20 +81,25 @@ class EnterScreenViewModel extends ChangeNotifier {
     final balanceDataService
       = Provider.of<BalanceDataService>(context, listen: false);
 
-    _transactionId = transaction?.id;
+    _initialTransaction = transaction;
+    _initialSerialTransaction = serialTransaction;
+
     _onSave = onSave;
+    _onDelete = onDelete;
 
     _entryType = getEntryType(
         transaction: transaction,
         serialTransaction: serialTransaction,
     );
 
-    defaultName = "";
-    defaultAmount = 0;
-    defaultCurrency = accountSettingsService.getStandardCurrency();
-    defaultDate = DateTime.now().toIso8601String();
-    defaultCategory = null;
-    defaultRepeatConfiguration = repeatConfigurations[RepeatInterval.none]!;
+    defaultData = DefaultValues(
+      name: "",
+      amount: 0,
+      currency: accountSettingsService.getStandardCurrency(),
+      date: DateTime.now().toIso8601String(),
+      category: null,
+      repeatConfiguration: repeatConfigurations[RepeatInterval.none]!,
+    );
 
     _data = EnterScreenViewModelData(
       withExistingData: transaction != null || serialTransaction != null,
@@ -106,18 +117,23 @@ class EnterScreenViewModel extends ChangeNotifier {
       BuildContext context, {
       required OnSaveCallback onSave,
   }){
-    return EnterScreenViewModel._(context, onSave: onSave);
+    return EnterScreenViewModel._(
+      context,
+      onSave: onSave,
+    );
   }
 
   factory EnterScreenViewModel.fromTransaction(
       BuildContext context, {
       required Transaction transaction,
       required OnSaveCallback onSave,
+      required OnDeleteCallback onDelete,
   }) {
     return EnterScreenViewModel._(
       context,
       transaction: transaction,
       onSave: onSave,
+      onDelete: onDelete,
     );
   }
 
@@ -125,11 +141,13 @@ class EnterScreenViewModel extends ChangeNotifier {
       BuildContext context, {
       required SerialTransaction serialTransaction,
       required OnSaveCallback onSave,
+      required OnDeleteCallback onDelete,
   }) {
     return EnterScreenViewModel._(
       context,
       serialTransaction: serialTransaction,
       onSave: onSave,
+      onDelete: onDelete,
     );
   }
 
@@ -154,18 +172,20 @@ class EnterScreenViewModel extends ChangeNotifier {
 
   void save() {
     final amount = _entryType == EntryType.expense
-        ? -(data.amount ?? defaultAmount)
-        : (data.amount ?? defaultAmount);
+        ? -(data.amount ?? defaultData.amount)
+        : (data.amount ?? defaultData.amount);
 
     if (data.repeatConfiguration != null
         && data.repeatConfiguration?.interval != RepeatInterval.none) {
       final serialTransaction = SerialTransaction(
-          id: _transactionId,
+          id: _initialSerialTransaction?.id,
           amount: amount,
-          category: data.category?.id ?? defaultCategory?.id,
-          currency: data.currency?.name ?? defaultCurrency.name,
-          name: data.name ?? defaultName,
-          initialTime: firestore.Timestamp.fromDate(DateTime.parse(data.date ?? defaultDate)),
+          category: data.category?.id ?? defaultData.category?.id,
+          currency: data.currency?.name ?? defaultData.currency.name,
+          name: data.name ?? defaultData.name,
+          initialTime: firestore.Timestamp.fromDate(
+              DateTime.parse(data.date ?? defaultData.date),
+          ),
           repeatDuration: data.repeatConfiguration!.duration!,
           repeatDurationType: data.repeatConfiguration!.durationType!,
           // This is not null because only RepeatInterval.none holds a null duration value
@@ -175,15 +195,24 @@ class EnterScreenViewModel extends ChangeNotifier {
     }
 
     final transaction = Transaction(
-      id: _transactionId,
+      id: _initialTransaction?.id,
       amount: amount,
-      currency: data.currency?.name ?? defaultCurrency.name,
-      name: data.name ?? defaultName,
-      time: firestore.Timestamp.fromDate(DateTime.parse(data.date ?? defaultDate)),
-      category: data.category?.id ?? defaultCategory?.id,
+      currency: data.currency?.name ?? defaultData.currency.name,
+      name: data.name ?? defaultData.name,
+      time: firestore.Timestamp.fromDate(
+          DateTime.parse(data.date ?? defaultData.date),
+      ),
+      category: data.category?.id ?? defaultData.category?.id,
     );
 
     _onSave(transaction: transaction);
+  }
+
+  void delete() {
+    _onDelete(
+      transaction: _initialTransaction,
+      serialTransaction: _initialSerialTransaction,
+    );
   }
 
   @override

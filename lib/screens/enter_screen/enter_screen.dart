@@ -32,11 +32,22 @@ class EnterScreen extends StatelessWidget {
             context,
             transaction: transaction!,
             onSave: ({
-                Transaction? transaction,
-                SerialTransaction? serialTransaction,
+              Transaction? transaction,
+              SerialTransaction? serialTransaction,
             }) async {
               if (transaction != null) {
                 balanceDataProvider.updateTransaction(transaction);
+              } else if (serialTransaction != null) {
+                // TODO
+              }
+              Navigator.pop(context);
+            },
+            onDelete: ({
+              Transaction? transaction,
+              SerialTransaction? serialTransaction,
+            }) {
+              if (transaction != null) {
+                balanceDataProvider.removeTransaction(transaction);
               } else if (serialTransaction != null) {
                 // TODO
               }
@@ -46,29 +57,36 @@ class EnterScreen extends StatelessWidget {
         }
         if (serialTransaction != null) {
           return EnterScreenViewModel.fromSerialTransaction(
-              context,
-              serialTransaction: serialTransaction!,
-              onSave: ({
-                Transaction? transaction,
-                SerialTransaction? serialTransaction,
-              }) {
-                  // TODO
-              },
-          );
-        }
-        return EnterScreenViewModel.empty(
             context,
+            serialTransaction: serialTransaction!,
             onSave: ({
               Transaction? transaction,
               SerialTransaction? serialTransaction,
             }) {
-              if (transaction != null) {
-                balanceDataProvider.addTransaction(transaction);
-              } else if (serialTransaction != null) {
-                balanceDataProvider.addSerialTransaction(serialTransaction);
-              }
-              Navigator.pop(context);
+                // TODO
             },
+            onDelete: ({
+              Transaction? transaction,
+              SerialTransaction? serialTransaction,
+            }) {
+
+            },
+          );
+        }
+        return EnterScreenViewModel.empty(
+          context,
+          onSave: ({
+            Transaction? transaction,
+            SerialTransaction? serialTransaction,
+          }) {
+            if (transaction != null) {
+              balanceDataProvider.addTransaction(transaction);
+            } else if (serialTransaction != null) {
+              balanceDataProvider.addSerialTransaction(serialTransaction);
+            }
+            Navigator.pop(context);
+          },
+
         );
       },
       child: const EnterScreenLayout(),

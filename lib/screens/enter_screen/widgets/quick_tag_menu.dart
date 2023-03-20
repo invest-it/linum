@@ -44,16 +44,16 @@ class _QuickTagMenuState extends State<QuickTagMenu> {
   final formatter = const DateFormatter();
 
   List<Widget> _buildButtons(EnterScreenViewModel viewModel) {
-    final currency = viewModel.data.currency ?? viewModel.defaultCurrency;
-    final category = viewModel.data.category ?? viewModel.defaultCategory;
+    final currency = viewModel.data.currency ?? viewModel.defaultData.currency;
+    final category = viewModel.data.category ?? viewModel.defaultData.category;
     final repeatConfiguration =
-        viewModel.data.repeatConfiguration ?? viewModel.defaultRepeatConfiguration;
+        viewModel.data.repeatConfiguration ?? viewModel.defaultData.repeatConfiguration;
 
     return [
       TagSelectorButton(
         title: tr(
           formatter
-            .format(viewModel.data.date ?? viewModel.defaultDate)
+            .format(viewModel.data.date ?? viewModel.defaultData.date)
             ?? "",
         ), // TODO: Translate
         symbol: "",
