@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:linum/core/categories/constants/standard_categories.dart';
+import 'package:linum/core/categories/models/category.dart';
 import 'package:linum/core/repeating/constants/standard_repeat_configs.dart';
 import 'package:linum/screens/enter_screen/constants/input_flag_map.dart';
 import 'package:linum/screens/enter_screen/constants/parsable_date_map.dart';
@@ -26,10 +27,16 @@ Map<String, Suggestion> suggestFlags(String text) {
   return suggestions;
 }
 
-Map<String, Suggestion> suggestCategory(String text) {
+Map<String, Suggestion> suggestCategory(String text, {
+  bool Function(Category category)? filter,
+}) {
   final Map<String, Suggestion> suggestions = {};
   final lowercase = text.toLowerCase();
+
   for (final entry in standardCategories.entries) {
+    if (filter != null && !filter(entry.value)) {
+      continue;
+    }
     String? valueSubstr;
     final translatedLabel = entry.value.label.tr().toLowerCase();
     if (translatedLabel.length > text.length) {

@@ -1,9 +1,5 @@
-import 'dart:io';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/common/components/action_lip/viewmodels/action_lip_viewmodel.dart';
-import 'package:linum/core/account/services/account_settings_service.dart';
 import 'package:linum/core/categories/constants/standard_categories.dart';
 import 'package:linum/core/categories/utils/translate_category.dart';
 
@@ -84,7 +80,9 @@ class _QuickTagMenuState extends State<QuickTagMenu> {
             context,
             title: "Categories",
             content: CategoryListView(
-              categories: standardCategories.values.toList(),
+              categories: standardCategories.values
+                  .where((element) => element.entryType == viewModel.entryType)
+                  .toList(),
             ),
           );
         },

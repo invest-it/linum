@@ -1,16 +1,19 @@
+import 'package:linum/core/categories/models/category.dart';
 import 'package:linum/screens/enter_screen/enums/input_flag.dart';
 import 'package:linum/screens/enter_screen/models/suggestion.dart';
 import 'package:linum/screens/enter_screen/utils/input_parser.dart';
 import 'package:linum/screens/enter_screen/utils/suggestions/suggestion_functions.dart';
 
-Map<String, Suggestion> makeSuggestions(String text, int cursor) {
+Map<String, Suggestion> makeSuggestions(String text, int cursor, {
+  bool Function(Category category)? categoryFilter,
+}) {
   final textBefore = text.substring(0, cursor).split('#');
-  final textAfter = text.substring(cursor, text.length).split('#');
+  // final textAfter = text.substring(cursor, text.length).split('#');
   if (textBefore.length == 1) {
     return {};
   }
   final preCursorText = textBefore[textBefore.length - 1];
-  final cursorText = preCursorText + textAfter[0];
+  // final cursorText = preCursorText + textAfter[0];
 
   final parsed = parseTag(preCursorText);
   if (parsed.item1 == null) {
@@ -19,7 +22,10 @@ Map<String, Suggestion> makeSuggestions(String text, int cursor) {
       return suggestions;
     }
 
-    final categorySuggestions = suggestCategory(parsed.item2);
+    final categorySuggestions = suggestCategory(
+      parsed.item2,
+      filter: categoryFilter,
+    );
     if (categorySuggestions.isNotEmpty) {
       return categorySuggestions;
     }
@@ -36,7 +42,7 @@ Map<String, Suggestion> makeSuggestions(String text, int cursor) {
 
   switch (parsed.item1) {
     case InputFlag.category:
-      return suggestCategory(parsed.item2);
+      return suggestCategory(parsed.item2, filter: categoryFilter);
     case InputFlag.date:
       return suggestDate(parsed.item2);
     case InputFlag.repeatInfo:

@@ -92,7 +92,13 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
     final parsed = parse(text);
     exampleStringBuilder.rebuild(parsed);
     setState(() {
-      suggestions = makeSuggestions(text, cursor);
+      suggestions = makeSuggestions(
+          text,
+          cursor,
+          categoryFilter: (category)
+            => category.entryType == _viewModel.entryType,
+        // TODO: Migh cause problems with Unknown
+      );
       _rebuildSuggestionList();
     });
     _viewModel.update(EnterScreenViewModelData.fromInput(parsed), notify: true);
