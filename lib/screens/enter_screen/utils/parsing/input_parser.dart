@@ -1,8 +1,8 @@
 import 'package:linum/screens/enter_screen/constants/input_flag_map.dart';
 import 'package:linum/screens/enter_screen/enums/input_flag.dart';
 import 'package:linum/screens/enter_screen/models/enter_screen_input.dart';
-import 'package:linum/screens/enter_screen/utils/amount_parsing.dart';
-import 'package:linum/screens/enter_screen/utils/parser_functions.dart';
+import 'package:linum/screens/enter_screen/utils/parsing/amount_parsing.dart';
+import 'package:linum/screens/enter_screen/utils/parsing/parser_functions.dart';
 import 'package:tuple/tuple.dart';
 
 List<String> splitInput(String input) {

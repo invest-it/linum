@@ -4,6 +4,7 @@ import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/core/account/services/account_settings_service.dart';
 import 'package:linum/core/balance/models/serial_transaction.dart';
 import 'package:linum/core/balance/models/transaction.dart';
+import 'package:linum/core/balance/services/balance_data_service.dart';
 import 'package:linum/core/categories/constants/standard_categories.dart';
 import 'package:linum/core/categories/models/category.dart';
 import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
@@ -32,14 +33,15 @@ class EnterScreenViewModel extends ChangeNotifier {
   late String? _transactionId;
   late OnSaveCallback _onSave;
 
-  late EnterScreenViewModelData _data;
-
   late num defaultAmount;
   late String defaultName;
   late Currency defaultCurrency;
   late Category? defaultCategory;
   late String defaultDate;
   late RepeatConfiguration defaultRepeatConfiguration;
+
+  late EnterScreenViewModelData _data;
+  EnterScreenViewModelData get data => _data;
 
   EntryType _entryType = EntryType.unknown;
   EntryType get entryType => _entryType;
@@ -53,17 +55,6 @@ class EnterScreenViewModel extends ChangeNotifier {
   set isBottomSheetOpened(bool value) {
     _isBottomSheetOpened = value;
     notifyListeners();
-  }
-
-  double calculateMaxHeight(BuildContext context) {
-    if (_isBottomSheetOpened) {
-      return context.proportionateScreenHeightFraction(ScreenFraction.threefifths);
-    }
-    if (_entryType == EntryType.unknown) {
-      return 160;
-    }
-    return 250 + useKeyBoardHeight(context);
-
   }
 
   OverlayEntry? _currentOverlay;
@@ -81,6 +72,8 @@ class EnterScreenViewModel extends ChangeNotifier {
   }) {
     final accountSettingsService
       = Provider.of<AccountSettingsService>(context, listen: false);
+    final balanceDataService
+      = Provider.of<BalanceDataService>(context, listen: false);
 
     _transactionId = transaction?.id;
     _onSave = onSave;
@@ -95,7 +88,7 @@ class EnterScreenViewModel extends ChangeNotifier {
     defaultCurrency = accountSettingsService.getStandardCurrency();
     defaultDate = DateTime.now().toIso8601String();
     defaultCategory = null;
-    defaultRepeatConfiguration = repeatConfigurations[RepeatInterval.daily]!;
+    defaultRepeatConfiguration = repeatConfigurations[RepeatInterval.none]!;
 
     _data = EnterScreenViewModelData(
       withExistingData: transaction != null || serialTransaction != null,
@@ -104,6 +97,7 @@ class EnterScreenViewModel extends ChangeNotifier {
       currency: standardCurrencies[transaction?.currency],
       date: transaction?.time.toDate().toIso8601String(),
       category: standardCategories[transaction?.category],
+      // TODO: Implement RepeatInterval functionality
     );
     // No _selectedRepeatInfo for transactions
   }
@@ -139,7 +133,17 @@ class EnterScreenViewModel extends ChangeNotifier {
     );
   }
 
-  EnterScreenViewModelData get data => _data;
+
+
+  double calculateMaxHeight(BuildContext context) {
+    if (_isBottomSheetOpened) {
+      return context.proportionateScreenHeightFraction(ScreenFraction.threefifths);
+    }
+    if (_entryType == EntryType.unknown) {
+      return 160;
+    }
+    return 250 + useKeyBoardHeight(context);
+  }
 
   void update(EnterScreenViewModelData data, {bool notify = false}) {
     _data = data;
@@ -149,11 +153,15 @@ class EnterScreenViewModel extends ChangeNotifier {
   }
 
   void save() {
+    final amount = _entryType == EntryType.expense
+        ? -(data.amount ?? defaultAmount)
+        : (data.amount ?? defaultAmount);
+
     if (data.repeatConfiguration != null
         && data.repeatConfiguration?.interval != RepeatInterval.none) {
       final serialTransaction = SerialTransaction(
           id: _transactionId,
-          amount: data.amount ?? defaultAmount,
+          amount: amount,
           category: data.category?.id ?? defaultCategory?.id,
           currency: data.currency?.name ?? defaultCurrency.name,
           name: data.name ?? defaultName,
@@ -168,13 +176,13 @@ class EnterScreenViewModel extends ChangeNotifier {
 
     final transaction = Transaction(
       id: _transactionId,
-      amount: data.amount ?? defaultAmount,
+      amount: amount,
       currency: data.currency?.name ?? defaultCurrency.name,
       name: data.name ?? defaultName,
       time: firestore.Timestamp.fromDate(DateTime.parse(data.date ?? defaultDate)),
       category: data.category?.id ?? defaultCategory?.id,
     );
-    print(transaction.id);
+
     _onSave(transaction: transaction);
   }
 

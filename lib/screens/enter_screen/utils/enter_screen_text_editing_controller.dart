@@ -1,12 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/core/categories/models/category.dart';
-import 'package:linum/core/repeating/enums/repeat_interval.dart';
 import 'package:linum/screens/enter_screen/models/enter_screen_input.dart';
 import 'package:linum/screens/enter_screen/models/suggestion.dart';
 import 'package:linum/screens/enter_screen/models/suggestion_filters.dart';
 import 'package:linum/screens/enter_screen/utils/example_string_builder.dart';
-import 'package:linum/screens/enter_screen/utils/input_parser.dart';
+import 'package:linum/screens/enter_screen/utils/parsing/input_parser.dart';
 import 'package:linum/screens/enter_screen/utils/suggestions/make_suggestions.dart';
 
 const exampleStringStyle = TextStyle(
@@ -25,19 +22,6 @@ class EnterScreenTextEditingController extends TextEditingController {
     this.suggestionFilters,
   });
 
-  /// This property can be set from a listener added to this
-  /// [TextEditingController]; however, one should not also set [selection]
-  /// in a separate statement. To change both the [text] and the [selection]
-  /// change the controller's [value].
-  @override
-  set text(String newText) {
-    value = value.copyWith(
-      text: newText,
-      selection: const TextSelection.collapsed(offset: -1),
-      composing: TextRange.empty,
-    );
-
-  }
 
   Map<String, Suggestion> _suggestions = {};
   Map<String, Suggestion> get suggestions => _suggestions;
@@ -71,20 +55,6 @@ class EnterScreenTextEditingController extends TextEditingController {
       _onChange(newValue.text, newValue.selection.base.offset);
     }
     super.value = newValue;
-  }
-
-  /// If the new selection is of non-zero length, or is outside the composing
-  /// range, the composing range is cleared.
-  @override
-  set selection(TextSelection newSelection) {
-    if (!isSelectionWithinTextBounds(newSelection)) {
-      throw FlutterError('invalid text selection: $newSelection');
-    }
-    final TextRange newComposing =
-    newSelection.isCollapsed && _isSelectionWithinComposingRange(newSelection)
-        ? value.composing
-        : TextRange.empty;
-    value = value.copyWith(selection: newSelection, composing: newComposing);
   }
 
   @override

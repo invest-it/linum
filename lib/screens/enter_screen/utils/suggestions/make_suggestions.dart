@@ -3,7 +3,7 @@ import 'package:linum/core/repeating/enums/repeat_interval.dart';
 import 'package:linum/screens/enter_screen/enums/input_flag.dart';
 import 'package:linum/screens/enter_screen/enums/parsable_date.dart';
 import 'package:linum/screens/enter_screen/models/suggestion.dart';
-import 'package:linum/screens/enter_screen/utils/input_parser.dart';
+import 'package:linum/screens/enter_screen/utils/parsing/input_parser.dart';
 import 'package:linum/screens/enter_screen/utils/suggestions/suggestion_functions.dart';
 
 Map<String, Suggestion> makeSuggestions(String text, int cursor, {

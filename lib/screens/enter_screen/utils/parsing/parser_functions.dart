@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:linum/core/categories/constants/standard_categories.dart';
 import 'package:linum/screens/enter_screen/enums/input_flag.dart';
 import 'package:linum/screens/enter_screen/enums/parsable_date.dart';
-import 'package:linum/screens/enter_screen/utils/date_parsing.dart';
+import 'package:linum/screens/enter_screen/utils/parsing/date_parsing.dart';
 import 'package:linum/screens/enter_screen/utils/supported_dates.dart';
 import 'package:linum/screens/enter_screen/utils/supported_repeat_configs.dart';
 import 'package:tuple/tuple.dart';

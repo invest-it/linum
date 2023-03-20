@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/core/account/services/account_settings_service.dart';
@@ -8,12 +7,11 @@ import 'package:linum/screens/enter_screen/constants/parsable_date_map.dart';
 import 'package:linum/screens/enter_screen/enums/parsable_date.dart';
 import 'package:linum/screens/enter_screen/models/enter_screen_input.dart';
 import 'package:linum/screens/enter_screen/models/suggestion.dart';
+import 'package:linum/screens/enter_screen/models/suggestion_filters.dart';
 import 'package:linum/screens/enter_screen/utils/enter_screen_text_editing_controller.dart';
 import 'package:linum/screens/enter_screen/utils/example_string_builder.dart';
-import 'package:linum/screens/enter_screen/utils/input_parser.dart';
 import 'package:linum/screens/enter_screen/utils/string_from_existing_data.dart';
 import 'package:linum/screens/enter_screen/utils/suggestions/insert_suggestion.dart';
-import 'package:linum/screens/enter_screen/utils/suggestions/make_suggestions.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model_data.dart';
 import 'package:linum/screens/enter_screen/widgets/suggestion_list.dart';
@@ -48,14 +46,17 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
 
 
     _controller = EnterScreenTextEditingController(
-        exampleStringBuilder: ExampleStringBuilder(
-          defaultAmount: 0.00,
-          defaultCurrency: accountSettingsService.getStandardCurrency().name,
-          defaultName: "Name",
-          defaultCategory: translateCategory(defaultCategory),
-          defaultDate: parsableDateMap[ParsableDate.today]!,
-          defaultRepeatInfo: "Keine",
-        ),
+      exampleStringBuilder: ExampleStringBuilder(
+        defaultAmount: 0.00,
+        defaultCurrency: accountSettingsService.getStandardCurrency().name,
+        defaultName: "Name",
+        defaultCategory: translateCategory(defaultCategory),
+        defaultDate: parsableDateMap[ParsableDate.today]!,
+        defaultRepeatInfo: "Keine",
+      ),
+      suggestionFilters: SuggestionFilters(
+        categoryFilter: (category) => category.entryType == _viewModel.entryType,
+      ),
     );
 
 
