@@ -5,6 +5,7 @@ enum RepeatInterval {
   monthly,
   quarterly,
   semianually,
-  anually;
+  anually,
+  custom,
 }
 // TODO: Move

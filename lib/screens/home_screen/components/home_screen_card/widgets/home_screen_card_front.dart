@@ -49,7 +49,7 @@ class HomeScreenCardFront extends StatelessWidget {
         children: [
           Align(
             alignment: Alignment.topLeft,
-            child: (algorithmProvider.currentShownMonth !=
+            child: (algorithmProvider.state.shownMonth !=
                 DateTime(now.year, now.month))
                 ? IconButton(
               constraints: const BoxConstraints(),
@@ -82,7 +82,7 @@ class HomeScreenCardFront extends StatelessWidget {
                         child: Text(
                           // HEADLINE
                           dateFormat.format(
-                            algorithmProvider.currentShownMonth,
+                            algorithmProvider.state.shownMonth,
                           ),
                           style: MediaQuery.of(context).size.height < 650
                               ? Theme.of(context).textTheme.headline5

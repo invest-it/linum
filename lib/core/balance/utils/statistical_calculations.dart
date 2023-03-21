@@ -6,6 +6,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:linum/common/utils/filters.dart';
+import 'package:linum/core/balance/models/algorithm_state.dart';
 import 'package:linum/core/balance/models/serial_transaction.dart';
 import 'package:linum/core/balance/models/single_month_statistic.dart';
 import 'package:linum/core/balance/models/transaction.dart';
@@ -25,7 +26,7 @@ class StatisticalCalculations {
 
   /// the data that should be processed for monthly calculations
   List<Transaction> get _currentData =>
-      getDataUsingFilter(_algorithmProvider.currentFilter);
+      getDataUsingFilter(_algorithms.filter);
 
   List<Transaction> get _currentTillNowData => getDataUsingFilter(
         Filters.newerThan(firestore.Timestamp.now()),
@@ -35,7 +36,7 @@ class StatisticalCalculations {
   List<Transaction> get _allTimeData =>
       getDataUsingFilter(Filters.newerThan(firestore.Timestamp.now()));
 
-  late AlgorithmService _algorithmProvider;
+  late AlgorithmState _algorithms;
 
   late Logger log;
 
@@ -44,7 +45,7 @@ class StatisticalCalculations {
     required List<Transaction> data,
     required List<SerialTransaction> serialData,
     required this.standardCurrencyName,
-    required AlgorithmService algorithmProvider,
+    required AlgorithmState algorithms,
   }) {
     _allData = [];
 
@@ -60,7 +61,7 @@ class StatisticalCalculations {
       ); // copy data so there is no change in data
     }
 
-    _algorithmProvider = algorithmProvider;
+    _algorithms = algorithms;
 
     log = Logger();
   }
@@ -138,7 +139,7 @@ class StatisticalCalculations {
 
   List<Transaction> get _tillBeginningOfMonthData => getDataUsingFilter(
         Filters.newerThan(
-          firestore.Timestamp.fromDate(_algorithmProvider.currentShownMonth),
+          firestore.Timestamp.fromDate(_algorithms.shownMonth),
         ),
         baseData: _allData,
       );
@@ -146,8 +147,8 @@ class StatisticalCalculations {
         Filters.newerThan(
           firestore.Timestamp.fromDate(
             DateTime(
-              _algorithmProvider.currentShownMonth.year,
-              _algorithmProvider.currentShownMonth.month + 1,
+              _algorithms.shownMonth.year,
+              _algorithms.shownMonth.month + 1,
               -1,
             ),
           ),

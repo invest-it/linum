@@ -30,7 +30,7 @@ class BudgetScreen extends StatelessWidget {
     final AlgorithmService algorithmProvider =
         Provider.of<AlgorithmService>(context);
 
-    if (algorithmProvider.currentFilter != Filters.noFilter) {
+    if (algorithmProvider.state.filter != Filters.noFilter) {
       algorithmProvider.setCurrentFilterAlgorithm(Filters.noFilter);
     }
     return ScreenSkeleton(

@@ -79,10 +79,10 @@ void main() {
             data: emptyData,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedSum = 0;
 
@@ -100,10 +100,10 @@ void main() {
             data: exampleData1,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedSum = 81;
 
@@ -121,10 +121,10 @@ void main() {
             data: exampleData2,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedSum = -5.5;
 
@@ -142,10 +142,10 @@ void main() {
             data: exampleData3,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedSum = 44;
 
@@ -163,10 +163,10 @@ void main() {
             data: exampleData4,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedSum = 0;
 
@@ -184,10 +184,10 @@ void main() {
             data: exampleData5,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedSum = 0;
 
@@ -209,10 +209,10 @@ void main() {
               data: randomData,
               serialData: [],
               standardCurrencyName: "EUR",
-              algorithmProvider: AlgorithmService()
+              algorithms: (AlgorithmService()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
-                ),
+                )).state,
             );
             num expectedSum = 0;
             for (int i = 0; i < randomData.length; i++) {
@@ -236,10 +236,10 @@ void main() {
             data: emptyData,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedAverage = 0;
 
@@ -257,10 +257,10 @@ void main() {
             data: exampleData1,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedAverage = 20.25;
 
@@ -278,10 +278,10 @@ void main() {
             data: exampleData2,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedAverage = -1.375;
 
@@ -299,10 +299,10 @@ void main() {
             data: exampleData3,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedAverage = 5.5;
 
@@ -320,10 +320,10 @@ void main() {
             data: exampleData4,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedAverage = 0;
 
@@ -341,10 +341,10 @@ void main() {
             data: exampleData5,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedAverage = 0;
 
@@ -366,10 +366,10 @@ void main() {
               data: randomData,
               serialData: [],
               standardCurrencyName: "EUR",
-              algorithmProvider: AlgorithmService()
+              algorithms: (AlgorithmService()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
-                ),
+                )).state,
             );
             num expectedAverage = 0;
             for (int i = 0; i < randomData.length; i++) {
@@ -396,10 +396,10 @@ void main() {
             data: emptyData,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedSum = 0;
 
@@ -417,10 +417,10 @@ void main() {
             data: exampleData1,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedSum = 81;
 
@@ -438,10 +438,10 @@ void main() {
             data: exampleData2,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedSum = 0;
 
@@ -459,10 +459,10 @@ void main() {
             data: exampleData3,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedSum = 49.5;
 
@@ -480,10 +480,10 @@ void main() {
             data: exampleData4,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedSum = 49.5;
 
@@ -501,10 +501,10 @@ void main() {
             data: exampleData5,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedSum = 0;
 
@@ -526,10 +526,10 @@ void main() {
               data: randomData,
               serialData: [],
               standardCurrencyName: "EUR",
-              algorithmProvider: AlgorithmService()
+              algorithms: (AlgorithmService()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
-                ),
+                )).state,
             );
             num expectedSum = 0;
             for (int i = 0; i < randomData.length; i++) {
@@ -554,10 +554,10 @@ void main() {
             data: emptyData,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedAverage = 0;
 
@@ -575,10 +575,10 @@ void main() {
             data: exampleData1,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedAverage = 20.25;
 
@@ -596,10 +596,10 @@ void main() {
             data: exampleData2,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedAverage = 0;
 
@@ -617,10 +617,10 @@ void main() {
             data: exampleData3,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedAverage = 12.375;
 
@@ -638,10 +638,10 @@ void main() {
             data: exampleData4,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedAverage = 12.375;
 
@@ -659,10 +659,10 @@ void main() {
             data: exampleData5,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedAverage = 0;
 
@@ -684,10 +684,10 @@ void main() {
               data: randomData,
               serialData: [],
               standardCurrencyName: "EUR",
-              algorithmProvider: AlgorithmService()
+              algorithms: (AlgorithmService()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
-                ),
+                )).state,
             );
             num expectedAverage = 0;
             int incomes = 0;
@@ -720,10 +720,10 @@ void main() {
             data: emptyData,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedSum = 0;
 
@@ -741,10 +741,10 @@ void main() {
             data: exampleData1,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedSum = 0;
 
@@ -762,10 +762,10 @@ void main() {
             data: exampleData2,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedSum = -5.5;
 
@@ -783,10 +783,10 @@ void main() {
             data: exampleData3,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedSum = -5.5;
 
@@ -804,10 +804,10 @@ void main() {
             data: exampleData4,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedSum = -49.5;
 
@@ -825,10 +825,10 @@ void main() {
             data: exampleData5,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedSum = 0;
 
@@ -850,10 +850,10 @@ void main() {
               data: randomData,
               serialData: [],
               standardCurrencyName: "EUR",
-              algorithmProvider: AlgorithmService()
+              algorithms: (AlgorithmService()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
-                ),
+                )).state,
             );
             num expectedSum = 0;
             for (int i = 0; i < randomData.length; i++) {
@@ -879,10 +879,10 @@ void main() {
             data: emptyData,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedAverage = 0;
 
@@ -900,10 +900,10 @@ void main() {
             data: exampleData1,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedAverage = 0;
 
@@ -921,10 +921,10 @@ void main() {
             data: exampleData2,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedAverage = -1.375;
 
@@ -942,10 +942,10 @@ void main() {
             data: exampleData3,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedAverage = -1.375;
 
@@ -963,10 +963,10 @@ void main() {
             data: exampleData4,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedAverage = -8.25;
 
@@ -984,10 +984,10 @@ void main() {
             data: exampleData5,
             serialData: [],
             standardCurrencyName: "EUR",
-            algorithmProvider: AlgorithmService()
+            algorithms: (AlgorithmService()
               ..setCurrentFilterAlgorithm(
                 Filters.noFilter,
-              ),
+              )).state,
           );
           const num expectedAverage = 0;
 
@@ -1009,10 +1009,10 @@ void main() {
               data: randomData,
               serialData: [],
               standardCurrencyName: "EUR",
-              algorithmProvider: AlgorithmService()
+              algorithms: (AlgorithmService()
                 ..setCurrentFilterAlgorithm(
                   Filters.noFilter,
-                ),
+                )).state,
             );
             num expectedAverage = 0;
             int costs = 0;

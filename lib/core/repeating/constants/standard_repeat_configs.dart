@@ -52,6 +52,13 @@ final repeatConfigurations = <RepeatInterval, RepeatConfiguration>{
     icon: Icons.calendar_month_rounded,
     duration: 12,
     durationType: RepeatDurationType.months,
+  ),
+  RepeatInterval.custom: const RepeatConfiguration(
+    interval: RepeatInterval.custom,
+    label: 'enter_screen.label-repeat-custom',
+    icon: Icons.build_rounded,
+    duration: null,
+    durationType: null,
   )
 
   // TODO implement custom range picker

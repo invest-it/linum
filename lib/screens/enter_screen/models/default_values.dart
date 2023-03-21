@@ -6,7 +6,8 @@ class DefaultValues{
   final num amount;
   final String name;
   final Currency currency;
-  final Category? category;
+  final Category? expenseCategory;
+  final Category? incomeCategory;
   final String date;
   final RepeatConfiguration repeatConfiguration;
   
@@ -14,8 +15,10 @@ class DefaultValues{
     required this.amount,
     required this.name,
     required this.currency,
-    required this.category,
+    required this.expenseCategory,
+    required this.incomeCategory,
     required this.date,
     required this.repeatConfiguration,
   });
+
 }

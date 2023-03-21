@@ -24,7 +24,7 @@ import 'package:provider/provider.dart';
 class HomeScreenCardBack extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final AlgorithmService algorithmProvider =
+    final AlgorithmService algorithmService =
         Provider.of<AlgorithmService>(context);
     final String langCode = context.locale.languageCode;
     final DateFormat dateFormat = DateFormat("MMM ''yy", langCode);
@@ -32,7 +32,7 @@ class HomeScreenCardBack extends StatelessWidget {
 
     bool checkPastMonth() {
       return !DateTime(now.year, now.month).isAfter(
-        algorithmProvider.currentShownMonth,
+        algorithmService.state.shownMonth,
       );
     }
 
@@ -47,20 +47,20 @@ class HomeScreenCardBack extends StatelessWidget {
         onTap: () => onFlipCardTap(context, screenCardProvider.controller!),
         onHorizontalDragEnd: (DragEndDetails details) =>
             onHorizontalDragEnd(details, context),
-        onLongPress: () => goToCurrentTime(algorithmProvider),
+        onLongPress: () => goToCurrentTime(algorithmService),
         child: Stack(
           children: [
             //Go back to current month button
             Align(
               alignment: Alignment.topLeft,
-              child: (algorithmProvider.currentShownMonth !=
+              child: (algorithmService.state.shownMonth !=
                       DateTime(now.year, now.month))
                   ? IconButton(
                       constraints: const BoxConstraints(),
                       padding: const EdgeInsets.all(4.0),
                       icon: const Icon(Icons.event_repeat_rounded),
                       onPressed: () {
-                        goToCurrentTime(algorithmProvider);
+                        goToCurrentTime(algorithmService);
                       },
                     )
                   : IconButton(
@@ -98,7 +98,7 @@ class HomeScreenCardBack extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     textAlign: TextAlign.center,
-                    "${tr("home_screen_card.label-monthly-planner")} | ${dateFormat.format(algorithmProvider.currentShownMonth)}",
+                    "${tr("home_screen_card.label-monthly-planner")} | ${dateFormat.format(algorithmService.state.shownMonth)}",
                     style: MediaQuery.of(context).size.height < 650
                         ? Theme.of(context).textTheme.headline5
                         : Theme.of(context).textTheme.headline4,
@@ -118,7 +118,7 @@ class HomeScreenCardBack extends StatelessWidget {
                           IconButton(
                             visualDensity: VisualDensity.compact,
                             onPressed: () {
-                              goBackInTime(algorithmProvider);
+                              goBackInTime(algorithmService);
                             },
                             icon: const Icon(Icons.arrow_back_ios_new_rounded),
                           ),
@@ -347,7 +347,7 @@ class HomeScreenCardBack extends StatelessWidget {
                           IconButton(
                             visualDensity: VisualDensity.compact,
                             onPressed: () {
-                              goForwardInTime(algorithmProvider);
+                              goForwardInTime(algorithmService);
                             },
                             icon: const Icon(Icons.arrow_forward_ios_rounded),
                           ),

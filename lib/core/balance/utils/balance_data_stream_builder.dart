@@ -8,7 +8,10 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:flutter/widgets.dart';
+import 'package:linum/common/types/filter_function.dart';
+import 'package:linum/common/types/sorter_function.dart';
 import 'package:linum/common/widgets/loading_spinner.dart';
+import 'package:linum/core/balance/models/algorithm_state.dart';
 import 'package:linum/core/balance/models/balance_document.dart';
 import 'package:linum/core/balance/models/serial_transaction.dart';
 import 'package:linum/core/balance/models/transaction.dart';
@@ -17,47 +20,47 @@ import 'package:linum/core/balance/utils/date_time_extension.dart';
 import 'package:linum/core/balance/utils/serial_transaction_manager.dart';
 import 'package:linum/core/balance/utils/statistical_calculations.dart';
 import 'package:linum/core/balance/widgets/balance_data_list_view.dart';
+import 'package:linum/features/currencies/models/currency.dart';
 import 'package:linum/features/currencies/services/exchange_rate_service.dart';
 import 'package:logger/logger.dart';
 import 'package:tuple/tuple.dart';
 
 class BalanceDataStreamBuilder {
-  final AlgorithmService algorithmProvider;
-  final ExchangeRateService exchangeRateProvider;
-
-  final logger = Logger();
-
-  BalanceDataStreamBuilder(this.algorithmProvider, this.exchangeRateProvider);
-
   /// Returns a StreamBuilder that builds the ListView from the document-datastream
-  StreamBuilder fillListViewWithData({
+  static StreamBuilder fillListViewWithData({
     required BalanceDataListView listView,
     required BuildContext context,
     required Stream<firestore.DocumentSnapshot<BalanceDocument>>? dataStream,
+    required AlgorithmState algorithms,
+    required ExchangeRateService exchangeRateService,
     bool isSerial = false,
   }) {
     final processedStream = dataStream
         ?.asyncMap<Tuple2<List<Transaction>, List<SerialTransaction>>>(
             (snapshot) async {
       if (!isSerial) {
-        final preparedData = await _prepareData(snapshot);
+        final preparedData = await _prepareData(
+            snapshot,
+            algorithms,
+            exchangeRateService,
+        );
         final transactions = preparedData.item1;
 
         // Future there could be an sort algorithm provider
         // (and possibly also a filter algorithm provided)
-        transactions.removeWhere(algorithmProvider.currentFilter);
-        transactions.sort(algorithmProvider.currentSorter);
+        transactions.removeWhere(algorithms.filter);
+        transactions.sort(algorithms.sorter);
 
         return Tuple2(transactions, preparedData.item2);
       } else {
         // TODO: Prepare Data once
         final data = await _prepareData(
-          snapshot,
+          snapshot, algorithms, exchangeRateService,
         );
         final transactions = data.item1;
         final serialTransactions = data.item2;
 
-        transactions.removeWhere(algorithmProvider.currentFilter);
+        transactions.removeWhere(algorithms.filter);
         transactions.removeWhere((transaction) {
           return transaction.repeatId == null;
         });
@@ -95,7 +98,7 @@ class BalanceDataStreamBuilder {
             [],
             context: context,
           );
-          logger.e("ERROR LOADING");
+          Logger().e("ERROR LOADING");
           return listView.listview;
         } else {
           if (!isSerial) {
@@ -115,18 +118,20 @@ class BalanceDataStreamBuilder {
     );
   }
 
-  Stream<StatisticalCalculations>? getStatisticCalculations({
+  static Stream<StatisticalCalculations>? getStatisticCalculations({
     required Stream<firestore.DocumentSnapshot<BalanceDocument>>? dataStream,
+    required AlgorithmState algorithms,
+    required ExchangeRateService exchangeRateService,
   }) {
     return dataStream?.asyncMap<StatisticalCalculations>((snapshot) async {
       final preparedData = await _prepareData(
-        snapshot,
+        snapshot, algorithms, exchangeRateService,
       );
       return StatisticalCalculations(
         data: preparedData.item1,
         serialData: preparedData.item2,
-        standardCurrencyName: exchangeRateProvider.standardCurrency.name,
-        algorithmProvider: algorithmProvider,
+        standardCurrencyName: exchangeRateService.standardCurrency.name,
+        algorithms: algorithms,
       );
     });
   }
@@ -137,8 +142,10 @@ class BalanceDataStreamBuilder {
   /// use the current _algorithmProvider filter
   /// (will still be used after filter on firebase, because of repeated balanced)
   /// may be moved into the data generation function
-  Future<Tuple2<List<Transaction>, List<SerialTransaction>>> _prepareData(
-    firestore.DocumentSnapshot<BalanceDocument> snapshot,
+  static Future<Tuple2<List<Transaction>, List<SerialTransaction>>> _prepareData(
+      firestore.DocumentSnapshot<BalanceDocument> snapshot,
+      AlgorithmState algorithms,
+      ExchangeRateService exchangeRateService,
   ) async {
     final data = snapshot.data(); // TODO: Model for Document
 
@@ -165,16 +172,16 @@ class BalanceDataStreamBuilder {
       transactions,
       DateTime.now().returnLaterDate(
         DateTime(
-          algorithmProvider.currentShownMonth.year,
-          algorithmProvider.currentShownMonth.month + 1,
+          algorithms.shownMonth.year,
+          algorithms.shownMonth.month + 1,
         ),
       ),
     );
 
     try {
-      await exchangeRateProvider.addExchangeRatesToTransactions(transactions);
+      await exchangeRateService.addExchangeRatesToTransactions(transactions);
     } catch (e) {
-      logger.e(e);
+      Logger().e(e);
     }
     return Tuple2(transactions, serialTransactions);
   }

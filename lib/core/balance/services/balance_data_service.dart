@@ -32,19 +32,17 @@ class BalanceDataService extends ChangeNotifier {
 
   final Logger logger = Logger();
 
-  late AlgorithmService _algorithmProvider;
-  late ExchangeRateService _exchangeRateProvider;
-  late BalanceDataStreamBuilder _streamBuilder;
+  late AlgorithmService _algorithmService;
+  late ExchangeRateService _exchangeRateService;
   // Manager
 
   /// Creates the BalanceDataProvider. Inparticular it sets [_balance] correctly
   BalanceDataService(BuildContext context) {
     _uid = Provider.of<AuthenticationService>(context, listen: false).uid;
-    _algorithmProvider = Provider.of<AlgorithmService>(context, listen: false);
-    _exchangeRateProvider =
+    _algorithmService = Provider.of<AlgorithmService>(context, listen: false);
+    _exchangeRateService =
         Provider.of<ExchangeRateService>(context, listen: false);
-    _streamBuilder =
-        BalanceDataStreamBuilder(_algorithmProvider, _exchangeRateProvider);
+
     asyncConstructor();
   }
 
@@ -130,21 +128,21 @@ class BalanceDataService extends ChangeNotifier {
     }
   }
 
-  /// update [_algorithmProvider] if it is new. redo the document connections
+  /// update [_algorithmService] if it is new. redo the document connections
   void updateAlgorithmProvider(AlgorithmService? algorithm) {
     if (algorithm != null &&
-        (_algorithmProvider != algorithm ||
-            _algorithmProvider.balanceNeedsNotice)) {
-      _algorithmProvider = algorithm;
-      _algorithmProvider.balanceDataNotice();
+        (_algorithmService != algorithm ||
+            _algorithmService.balanceNeedsNotice)) {
+      _algorithmService = algorithm;
+      _algorithmService.balanceDataNotice();
       // notifyListeners(); // Called during update,
       // which already notifies its listeners
     }
   }
 
-  /// update [_exchangeRateProvider].
+  /// update [_exchangeRateService].
   void updateExchangeRateProvider(ExchangeRateService provider) {
-    _exchangeRateProvider = provider;
+    _exchangeRateService = provider;
   }
 
   /// Get the document-datastream. Maybe in the future it might be a public function
@@ -259,6 +257,15 @@ class BalanceDataService extends ChangeNotifier {
     }
 
     return data;
+  }
+
+
+  Future<SerialTransaction?> searchSerialTransactionById(String id) async {
+    final data = await _getData();
+    if (data == null) {
+      return null;
+    }
+    return data.serialTransactions.firstWhere((element) => element.id == id);
   }
 
   /// add a repeated Balance and upload it (the stream will automatically show it in the app again)
@@ -380,10 +387,12 @@ class BalanceDataService extends ChangeNotifier {
     BalanceDataListView listView, {
     required BuildContext context,
   }) {
-    return _streamBuilder.fillListViewWithData(
+    return BalanceDataStreamBuilder.fillListViewWithData(
       listView: listView,
       context: context,
       dataStream: _dataStream,
+      algorithms: _algorithmService.state,
+      exchangeRateService: _exchangeRateService,
     );
   }
 
@@ -391,16 +400,22 @@ class BalanceDataService extends ChangeNotifier {
     BalanceDataListView blistview, {
     required BuildContext context,
   }) {
-    return _streamBuilder.fillListViewWithData(
+    return BalanceDataStreamBuilder.fillListViewWithData(
       listView: blistview,
       context: context,
       dataStream: _dataStream,
+      algorithms: _algorithmService.state,
+      exchangeRateService: _exchangeRateService,
       isSerial: true,
     );
   }
 
   Stream<StatisticalCalculations>? getStatisticalCalculations() {
-    return _streamBuilder.getStatisticCalculations(dataStream: _dataStream);
+    return BalanceDataStreamBuilder.getStatisticCalculations(
+      dataStream: _dataStream,
+      algorithms: _algorithmService.state,
+      exchangeRateService: _exchangeRateService,
+    );
   }
 
   // Settings

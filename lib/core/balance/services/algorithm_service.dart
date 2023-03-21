@@ -7,27 +7,25 @@
 // ignore_for_file: avoid_dynamic_calls
 
 import 'package:flutter/material.dart';
+import 'package:linum/common/types/filter_function.dart';
+import 'package:linum/common/types/sorter_function.dart';
 import 'package:linum/common/utils/filters.dart';
 import 'package:linum/common/utils/in_between_timestamps.dart';
 import 'package:linum/common/utils/sorters.dart';
+import 'package:linum/core/balance/models/algorithm_state.dart';
 
 /// gives sort algorithm (later it will probably also have filter algorithm) and
 /// all algorithm will have an active version instead of being static
 /// so it is possible to have dynamic sort and filter algorithm
 class AlgorithmService extends ChangeNotifier {
-  late int Function(dynamic, dynamic) _currentSorter;
-
-  late bool Function(dynamic) _currentFilter;
-
-  bool Function(dynamic) get currentFilter => _currentFilter;
-
-  int Function(dynamic, dynamic) get currentSorter => _currentSorter;
-
-  late DateTime _currentShownMonth;
-
   int _balanceDataUnnoticedChanges = 0;
 
-  DateTime get currentShownMonth => _currentShownMonth;
+  late AlgorithmState _state;
+  AlgorithmState get state => _state;
+  set state(AlgorithmState newState)  {
+    _state = newState;
+    notifyListeners();
+  }
 
   @override
   void notifyListeners() {
@@ -36,44 +34,51 @@ class AlgorithmService extends ChangeNotifier {
   }
 
   void setCurrentShownMonth(DateTime inputMonth, {bool notify = false}) {
-    _currentShownMonth = DateTime(inputMonth.year, inputMonth.month);
+    _state = _state.copyWith(
+        shownMonth: DateTime(inputMonth.year, inputMonth.month),
+    );
     _updateToCurrentShownMonth(notify: notify);
   }
 
   void resetCurrentShownMonth({bool notify = false}) {
-    _currentShownMonth = DateTime(DateTime.now().year, DateTime.now().month);
+    _state = _state.copyWith(
+      shownMonth: DateTime(DateTime.now().year, DateTime.now().month),
+    );
     _updateToCurrentShownMonth(notify: notify);
   }
 
   void nextMonth({bool notify = false}) {
-    _currentShownMonth =
-        DateTime(_currentShownMonth.year, _currentShownMonth.month + 1);
+    _state = _state.copyWith(
+      shownMonth: DateTime(_state.shownMonth.year, _state.shownMonth.month + 1),
+    );
     _updateToCurrentShownMonth(notify: notify);
   }
 
   void previousMonth({bool notify = false}) {
-    _currentShownMonth =
-        DateTime(_currentShownMonth.year, _currentShownMonth.month - 1);
-
+    _state = _state.copyWith(
+      shownMonth: DateTime(_state.shownMonth.year, _state.shownMonth.month - 1),
+    );
     _updateToCurrentShownMonth(notify: notify);
   }
 
   AlgorithmService() {
-    resetCurrentShownMonth();
-    _currentSorter = Sorters.timeNewToOld;
-    _currentFilter = Filters.inBetween(timestampsFromNow());
+    _state = AlgorithmState(
+        sorter: Sorters.timeNewToOld,
+        filter: Filters.inBetween(timestampsFromNow()),
+        shownMonth: DateTime(DateTime.now().year, DateTime.now().month),
+    );
   }
 
   void setCurrentSortAlgorithm(int Function(dynamic, dynamic) sorter,
       {bool notify = false,}) {
-    _currentSorter = sorter;
+    _state = _state.copyWith(sorter: sorter);
     if (notify) {
       notifyListeners();
     }
   }
 
   void setCurrentFilterAlgorithm(bool Function(dynamic) filter, {bool notify = false}) {
-    _currentFilter = filter;
+    _state = _state.copyWith(filter: filter);
     if (notify) {
       notifyListeners();
     }
@@ -93,15 +98,15 @@ class AlgorithmService extends ChangeNotifier {
   // TODO: Refactor the rest of the file
 
   void _updateToCurrentShownMonth({bool notify = false}) {
-    if (currentShownMonth.month == DateTime.now().month &&
-        currentShownMonth.year == DateTime.now().year) {
+    if (state.shownMonth.month == DateTime.now().month &&
+        state.shownMonth.year == DateTime.now().year) {
       setCurrentFilterAlgorithm(
         Filters.inBetween(timestampsFromNow()),
         notify: notify,
       );
     } else {
       setCurrentFilterAlgorithm(
-        Filters.inBetween(timestampsFromCurrentShownDate(currentShownMonth)),
+        Filters.inBetween(timestampsFromCurrentShownDate(state.shownMonth)),
         notify: notify,
       );
     }

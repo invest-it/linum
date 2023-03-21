@@ -13,62 +13,68 @@ class EnterScreenTypeSelector extends StatelessWidget {
     final viewModel = Provider.of<EnterScreenViewModel>(context, listen: false);
     return Column(
       children: [
-        Container(
-          width: double.infinity,
-          alignment: Alignment.center,
+        Padding(
           padding: const EdgeInsets.symmetric(vertical: 12),
-          decoration: const BoxDecoration(
-            color: Color.fromRGBO(0, 0, 0, 0.1),
-          ),
           child: Text(
-            "Choose Entry Type",
+            "Choose the type of your transaction".toUpperCase(),
             style: Theme.of(context).textTheme.titleSmall,
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              FilledButton.icon(
-                onPressed: () {
-                  viewModel.entryType = EntryType.expense;
-                },
-                style: FilledButton.styleFrom(
-                  fixedSize: Size(
-                      context.proportionateScreenWidthFraction(ScreenFraction.twofifths),
-                      20,
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 40),
+          child: IntrinsicHeight(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: GestureDetector(
+                    onTap: () => viewModel.entryType = EntryType.expense,
+                    child: Column(
+                      children: [
+                        const Icon(
+                          Icons.arrow_circle_down_rounded,
+                          color: Colors.redAccent,
+                          size: 60,
+                        ),
+                        Text(
+                          "Expense",
+                          style: Theme.of(context).textTheme.labelLarge
+                              ?.copyWith(color: Colors.black),
+
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                icon: const Icon(
-                  Icons.south_east,
-                  color: Colors.red,
+                VerticalDivider(
+                  width: context.proportionateScreenWidthFraction(ScreenFraction.onefifth),
+                  thickness: 1.0,
+                  color: Colors.grey,
                 ),
-                label: Text("Expense", style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.white)),
-              ),
-              const SizedBox(
-                width: 30,
-              ),
-              FilledButton.icon(
-                onPressed: () {
-                  viewModel.entryType = EntryType.income;
-                },
-                style: FilledButton.styleFrom(
-                  fixedSize: Size(
-                    context.proportionateScreenWidthFraction(ScreenFraction.twofifths),
-                    20,
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: GestureDetector(
+                    onTap: () => viewModel.entryType = EntryType.income,
+                    child: Column(
+                      children: [
+                        Icon(
+                          Icons.arrow_circle_up_rounded,
+                          color: Theme.of(context).colorScheme.primary,
+                          size: 60,
+                        ),
+                        Text(
+                          "Income",
+                          style: Theme.of(context).textTheme.labelLarge
+                              ?.copyWith(color: Colors.black),
+
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                icon: const Icon(
-                  Icons.north_east,
-                  color: Colors.green,
-                ),
-                label: Text(
-                    "Income",
-                    style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.white),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],
