@@ -24,7 +24,7 @@ class TagSelectorButton extends StatelessWidget {
           border: Border.all(color: const Color(0xFFd2d2d2)),
           borderRadius: const BorderRadius.all(Radius.circular(5)),
         ),
-        padding: const EdgeInsets.symmetric(vertical: 2.5, horizontal: 5),
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
         child: Row(mainAxisSize: MainAxisSize.min, children: [
           Padding(
             padding: EdgeInsets.only(right: symbol != "" ? 5 : 0),

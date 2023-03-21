@@ -16,39 +16,38 @@ class EnterScreenForm extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            width: double.infinity,
-            alignment: Alignment.centerRight,
-            padding: const EdgeInsets.symmetric(
-              horizontal: 40,
-            ),
-            child: GestureDetector(
-              onTap: () {
-                viewModel.delete();
-              },
-              child: const Icon(
-                Icons.delete_outline_rounded,
-                color: Colors.red,
-              ),
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(bottom: 25),
+            margin: const EdgeInsets.only(bottom: 12),
             padding: const EdgeInsets.symmetric(
               horizontal: 40,
               vertical: 10,
             ),
             child: const EnterScreenTextField(),
           ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+            child: QuickTagMenu(),
+          ),
           Container(
             padding: const EdgeInsets.fromLTRB(40, 20, 40, 10),
             child: Flex(
               direction: Axis.horizontal,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Expanded(
-                  child: QuickTagMenu(),
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: () => viewModel.delete(),
+                  child: Container(
+                    padding: const EdgeInsets.all(15),
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      color: Colors.redAccent,
+                    ),
+                    child: const Icon(
+                      Icons.delete_outline_rounded,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
-                SizedBox(width: 24),
                 EnterScreenButton()
               ],
             ),

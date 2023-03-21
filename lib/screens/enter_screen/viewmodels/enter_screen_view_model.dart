@@ -160,7 +160,7 @@ class EnterScreenViewModel extends ChangeNotifier {
     if (_entryType == EntryType.unknown) {
       return 160;
     }
-    return 250 + useKeyBoardHeight(context);
+    return 300 + useKeyBoardHeight(context);
   }
 
   void update(EnterScreenViewModelData data, {bool notify = false}) {
