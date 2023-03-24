@@ -11,6 +11,7 @@ void showEnterScreen(
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
+    backgroundColor: Colors.transparent,
     builder: (BuildContext context) {
       return EnterScreen(
         transaction: transaction,

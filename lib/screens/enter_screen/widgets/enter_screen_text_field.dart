@@ -12,8 +12,9 @@ import 'package:linum/screens/enter_screen/utils/enter_screen_text_editing_contr
 import 'package:linum/screens/enter_screen/utils/example_string_builder.dart';
 import 'package:linum/screens/enter_screen/utils/string_from_existing_data.dart';
 import 'package:linum/screens/enter_screen/utils/suggestions/insert_suggestion.dart';
+import 'package:linum/screens/enter_screen/viewmodels/enter_screen_form_view_model.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model.dart';
-import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model_data.dart';
+import 'package:linum/screens/enter_screen/models/enter_screen_data.dart';
 import 'package:linum/screens/enter_screen/widgets/suggestion_list.dart';
 import 'package:provider/provider.dart';
 
@@ -28,19 +29,19 @@ class EnterScreenTextField extends StatefulWidget {
 class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
 
   late EnterScreenTextEditingController _controller;
-  late EnterScreenViewModel _viewModel;
+  late EnterScreenFormViewModel _formViewModel;
   final GlobalKey _key = LabeledGlobalKey("text_field");
 
   @override
   void initState() {
     super.initState();
 
-    _viewModel = Provider.of<EnterScreenViewModel>(context, listen: false);
+    _formViewModel = Provider.of<EnterScreenFormViewModel>(context, listen: false);
 
     final accountSettingsService
       = Provider.of<AccountSettingsService>(context, listen: false);
 
-    final defaultCategory = _viewModel.entryType == EntryType.expense
+    final defaultCategory = _formViewModel.entryType == EntryType.expense
         ? accountSettingsService.getExpenseEntryCategory()
         : accountSettingsService.getIncomeEntryCategory();
 
@@ -55,13 +56,13 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
         defaultRepeatInfo: "Keine",
       ),
       suggestionFilters: SuggestionFilters(
-        categoryFilter: (category) => category.entryType == _viewModel.entryType,
+        categoryFilter: (category) => category.entryType == _formViewModel.entryType,
       ),
     );
 
 
-    if (_viewModel.data.withExistingData) {
-      final text = generateStringFromExistingData(_viewModel.data);
+    if (_formViewModel.withExistingData) {
+      final text = generateStringFromExistingData(_formViewModel.data);
       _controller.text = text;
     }
 
@@ -70,10 +71,7 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
         return;
       }
       _rebuildSuggestionList();
-      _viewModel.update(
-          EnterScreenViewModelData.fromInput(_controller.parsed!),
-          notify: true,
-      );
+      _formViewModel.data = EnterScreenData.fromInput(_controller.parsed!);
     });
   }
 
@@ -95,8 +93,8 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
       return;
     }
 
-    _viewModel.setOverlayEntry(_overlayEntryBuilder(context, size, position));
-    Overlay.of(context).insert(_viewModel.currentOverlay!);
+    _formViewModel.setOverlayEntry(_overlayEntryBuilder(context, size, position));
+    Overlay.of(context).insert(_formViewModel.currentOverlay!);
   }
 
   void _onSuggestionSelection(

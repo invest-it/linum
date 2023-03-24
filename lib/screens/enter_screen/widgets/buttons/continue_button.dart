@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:linum/core/balance/models/serial_transaction.dart';
+import 'package:linum/core/balance/services/balance_data_service.dart';
+import 'package:linum/screens/enter_screen/viewmodels/enter_screen_form_view_model.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -6,24 +9,41 @@ import 'package:provider/provider.dart';
 class EnterScreenContinueButton extends StatelessWidget {
   const EnterScreenContinueButton({super.key});
 
+  Widget _buttonUI(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(5)),
+        color: Theme.of(context).colorScheme.primary,
+      ),
+      child: const Icon(
+        Icons.arrow_forward_sharp,
+        color: Colors.white,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Consumer<EnterScreenViewModel>(builder: (context, viewModel, _) {
-      // TODO: Can currently be implemented with Provider.of
-      return GestureDetector(
-        onTap: () => viewModel.next(),
-        child: Container(
-          padding: const EdgeInsets.all(15),
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(5)),
-            color: Theme.of(context).colorScheme.primary,
+    final viewModel = context.read<EnterScreenViewModel>();
+
+
+    return FutureBuilder<SerialTransaction?>(
+      future: viewModel.getParentSerialTransaction(context),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return _buttonUI(context);
+        }
+        final formViewModel = context.read<EnterScreenFormViewModel>();
+        return GestureDetector(
+          onTap: () => viewModel.next(
+            formViewModel.data,
+            formViewModel.defaultValues,
+            snapshot.data,
           ),
-          child: const Icon(
-            Icons.arrow_forward_sharp,
-            color: Colors.white,
-          ),
-        ),
-      );
-    },);
+          child: _buttonUI(context),
+        );
+      },
+    );
   }
 }

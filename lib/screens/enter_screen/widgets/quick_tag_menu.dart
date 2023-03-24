@@ -5,10 +5,11 @@ import 'package:linum/core/categories/constants/standard_categories.dart';
 import 'package:linum/core/categories/utils/translate_category.dart';
 import 'package:linum/screens/enter_screen/utils/date_formatter.dart';
 import 'package:linum/screens/enter_screen/utils/show_enter_screen_menu.dart';
+import 'package:linum/screens/enter_screen/viewmodels/enter_screen_form_view_model.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model.dart';
 import 'package:linum/screens/enter_screen/widgets/buttons/tag_selector_button.dart';
-import 'package:linum/screens/enter_screen/widgets/category_list_view.dart';
-import 'package:linum/screens/enter_screen/widgets/currency_list_view.dart';
+import 'package:linum/screens/enter_screen/widgets/views/category_list_view.dart';
+import 'package:linum/screens/enter_screen/widgets/views/currency_list_view.dart';
 import 'package:provider/provider.dart';
 
 class QuickTagColors {
@@ -43,21 +44,21 @@ class QuickTagMenu extends StatefulWidget {
 class _QuickTagMenuState extends State<QuickTagMenu> {
   final formatter = const DateFormatter();
 
-  List<Widget> _buildButtons(EnterScreenViewModel viewModel) {
-    final currency = viewModel.data.currency ?? viewModel.defaultData.currency;
-    final category = viewModel.data.category
-        ?? (viewModel.entryType == EntryType.expense
-            ? viewModel.defaultData.expenseCategory
-            : viewModel.defaultData.incomeCategory
+  List<Widget> _buildButtons(EnterScreenFormViewModel formViewModel) {
+    final currency = formViewModel.data.currency ?? formViewModel.defaultValues.currency;
+    final category = formViewModel.data.category
+        ?? (formViewModel.entryType == EntryType.expense
+            ? formViewModel.defaultValues.expenseCategory
+            : formViewModel.defaultValues.incomeCategory
         );
     final repeatConfiguration =
-        viewModel.data.repeatConfiguration ?? viewModel.defaultData.repeatConfiguration;
+        formViewModel.data.repeatConfiguration ?? formViewModel.defaultValues.repeatConfiguration;
 
     return [
       TagSelectorButton(
         title: tr(
           formatter
-            .format(viewModel.data.date ?? viewModel.defaultData.date)
+            .format(formViewModel.data.date ?? formViewModel.defaultValues.date)
             ?? "",
         ), // TODO: Translate
         symbol: "",
@@ -85,7 +86,7 @@ class _QuickTagMenuState extends State<QuickTagMenu> {
             title: "Categories",
             content: CategoryListView(
               categories: standardCategories.values
-                  .where((element) => element.entryType == viewModel.entryType)
+                  .where((element) => element.entryType == formViewModel.entryType)
                   .toList(),
             ),
           );
@@ -107,15 +108,15 @@ class _QuickTagMenuState extends State<QuickTagMenu> {
       direction: Axis.horizontal,
       children: [
         Expanded(
-          child: Consumer<EnterScreenViewModel>(builder: (
+          child: Consumer<EnterScreenFormViewModel>(builder: (
             context,
-            viewModel,
+            formViewModel,
             _,
           ) {
             return Wrap(
               spacing: 5,
               runSpacing: 5,
-              children: _buildButtons(viewModel),
+              children: _buildButtons(formViewModel),
             );
           },),
         ),

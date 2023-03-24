@@ -149,7 +149,7 @@ void main() {
 
         final int expectedLength = data.serialTransactions.length;
 
-        for (final removeType in SerialTransactionChangeType.values) {
+        for (final removeType in SerialTransactionChangeMode.values) {
           // Act (Execution)
           final bool result =
               SerialTransactionManager.removeSerialTransactionFromData(
@@ -174,8 +174,8 @@ void main() {
 
         final int expectedLength = data.serialTransactions.length;
 
-        const SerialTransactionChangeType removeType =
-            SerialTransactionChangeType.thisAndAllBefore;
+        const SerialTransactionChangeMode removeType =
+            SerialTransactionChangeMode.thisAndAllBefore;
 
         // Act (Execution)
         final bool result =
@@ -199,8 +199,8 @@ void main() {
 
         final int expectedLength = data.serialTransactions.length;
 
-        const SerialTransactionChangeType removeType =
-            SerialTransactionChangeType.thisAndAllAfter;
+        const SerialTransactionChangeMode removeType =
+            SerialTransactionChangeMode.thisAndAllAfter;
 
         // Act (Execution)
         final bool result =
@@ -224,8 +224,8 @@ void main() {
 
         final int expectedLength = data.serialTransactions.length;
 
-        const SerialTransactionChangeType removeType =
-            SerialTransactionChangeType.onlyThisOne;
+        const SerialTransactionChangeMode removeType =
+            SerialTransactionChangeMode.onlyThisOne;
 
         // Act (Execution)
         final bool result =
@@ -258,7 +258,7 @@ void main() {
               SerialTransactionManager.removeSerialTransactionFromData(
             id: id,
             data: data,
-            removeType: SerialTransactionChangeType.all,
+            removeType: SerialTransactionChangeMode.all,
           );
 
           // Assert (Observation)
@@ -297,7 +297,7 @@ void main() {
               SerialTransactionManager.removeSerialTransactionFromData(
             id: id,
             data: data,
-            removeType: SerialTransactionChangeType.thisAndAllBefore,
+            removeType: SerialTransactionChangeMode.thisAndAllBefore,
             time: time,
           );
 
@@ -342,7 +342,7 @@ void main() {
               SerialTransactionManager.removeSerialTransactionFromData(
             id: id,
             data: data,
-            removeType: SerialTransactionChangeType.thisAndAllAfter,
+            removeType: SerialTransactionChangeMode.thisAndAllAfter,
             time: time,
           );
 
@@ -393,7 +393,7 @@ void main() {
               SerialTransactionManager.removeSerialTransactionFromData(
             id: id,
             data: data,
-            removeType: SerialTransactionChangeType.onlyThisOne,
+            removeType: SerialTransactionChangeMode.onlyThisOne,
             time: time,
           );
 
@@ -417,7 +417,7 @@ void main() {
 
         const String id = "Impossible id";
 
-        for (final changeType in SerialTransactionChangeType.values) {
+        for (final changeType in SerialTransactionChangeMode.values) {
           // Act (Execution)
           final bool result =
               SerialTransactionManager.updateSerialTransactionInData(
@@ -438,7 +438,7 @@ void main() {
 
         const String id = "";
 
-        for (final changeType in SerialTransactionChangeType.values) {
+        for (final changeType in SerialTransactionChangeMode.values) {
           // Act (Execution)
           final bool result =
               SerialTransactionManager.updateSerialTransactionInData(
@@ -461,7 +461,7 @@ void main() {
         final int idIndex = rand.nextInt(data.serialTransactions.length);
         final String id = data.serialTransactions[idIndex].id;
 
-        for (final changeType in SerialTransactionChangeType.values) {
+        for (final changeType in SerialTransactionChangeMode.values) {
           // Act (Execution)
           final bool result =
               SerialTransactionManager.updateSerialTransactionInData(
@@ -484,7 +484,7 @@ void main() {
         final int idIndex = rand.nextInt(data.serialTransactions.length);
         final String id = data.serialTransactions[idIndex].id;
 
-        for (final changeType in SerialTransactionChangeType.values) {
+        for (final changeType in SerialTransactionChangeMode.values) {
           // Act (Execution)
           final bool result =
               SerialTransactionManager.updateSerialTransactionInData(
@@ -508,8 +508,8 @@ void main() {
         final int idIndex = rand.nextInt(data.serialTransactions.length);
         final String id = data.serialTransactions[idIndex].id;
 
-        const SerialTransactionChangeType changeType =
-            SerialTransactionChangeType.thisAndAllBefore;
+        const SerialTransactionChangeMode changeType =
+            SerialTransactionChangeMode.thisAndAllBefore;
         // Act (Execution)
         final bool result =
             SerialTransactionManager.updateSerialTransactionInData(
@@ -532,8 +532,8 @@ void main() {
         final int idIndex = rand.nextInt(data.serialTransactions.length);
         final String id = data.serialTransactions[idIndex].id;
 
-        const SerialTransactionChangeType changeType =
-            SerialTransactionChangeType.thisAndAllAfter;
+        const SerialTransactionChangeMode changeType =
+            SerialTransactionChangeMode.thisAndAllAfter;
         // Act (Execution)
         final bool result =
             SerialTransactionManager.updateSerialTransactionInData(
@@ -556,8 +556,8 @@ void main() {
         final int idIndex = rand.nextInt(data.serialTransactions.length);
         final String id = data.serialTransactions[idIndex].id;
 
-        const SerialTransactionChangeType changeType =
-            SerialTransactionChangeType.onlyThisOne;
+        const SerialTransactionChangeMode changeType =
+            SerialTransactionChangeMode.onlyThisOne;
         // Act (Execution)
         final bool result =
             SerialTransactionManager.updateSerialTransactionInData(
@@ -612,7 +612,7 @@ void main() {
               SerialTransactionManager.updateSerialTransactionInData(
             id: id,
             data: data,
-            changeType: SerialTransactionChangeType.all,
+            changeType: SerialTransactionChangeMode.all,
             amount: amount,
             category: "food",
             name: "New Name $i",
@@ -671,7 +671,7 @@ void main() {
               SerialTransactionManager.updateSerialTransactionInData(
             id: id,
             data: data,
-            changeType: SerialTransactionChangeType.all,
+            changeType: SerialTransactionChangeMode.all,
             newTime: newTime,
             time: formerInitialTime,
           );
@@ -750,7 +750,7 @@ void main() {
               SerialTransactionManager.updateSerialTransactionInData(
             id: oldId,
             data: data,
-            changeType: SerialTransactionChangeType.thisAndAllBefore,
+            changeType: SerialTransactionChangeMode.thisAndAllBefore,
             amount: newAmount,
             category: "food",
             name: "New Name $i",
@@ -848,7 +848,7 @@ void main() {
               SerialTransactionManager.updateSerialTransactionInData(
             id: oldId,
             data: data,
-            changeType: SerialTransactionChangeType.thisAndAllBefore,
+            changeType: SerialTransactionChangeMode.thisAndAllBefore,
             time: time,
             newTime: newTime,
           );
@@ -921,7 +921,7 @@ void main() {
               SerialTransactionManager.updateSerialTransactionInData(
             id: oldId,
             data: data,
-            changeType: SerialTransactionChangeType.thisAndAllAfter,
+            changeType: SerialTransactionChangeMode.thisAndAllAfter,
             amount: newAmount,
             category: "food",
             name: "New Name $i",
@@ -1023,7 +1023,7 @@ void main() {
               SerialTransactionManager.updateSerialTransactionInData(
             id: oldId,
             data: data,
-            changeType: SerialTransactionChangeType.thisAndAllAfter,
+            changeType: SerialTransactionChangeMode.thisAndAllAfter,
             time: time,
             newTime: newTime,
           );
@@ -1082,7 +1082,7 @@ void main() {
               SerialTransactionManager.updateSerialTransactionInData(
             id: id,
             data: data,
-            changeType: SerialTransactionChangeType.onlyThisOne,
+            changeType: SerialTransactionChangeMode.onlyThisOne,
             amount: newAmount,
             category: "food",
             currency: "USD",

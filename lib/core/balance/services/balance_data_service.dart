@@ -292,22 +292,14 @@ class BalanceDataService extends ChangeNotifier {
 
   /// update a repeated balance
   /// specify time if changeType != RepeatableChangeType.all
-  /// resetEndTime, endTime are no available for RepeatableChangeType.thisAndAllBefore
+  /// resetEndTime, endTime are not available for RepeatableChangeType.thisAndAllBefore
   /// RepeatableChangeType.thisAndAllBefore and RepeatableChangeType.thisAndAllAfter will split the repeated balance to 2
   Future<bool> updateSerialTransaction({
-    required String id,
-    required SerialTransactionChangeType changeType,
-    num? amount,
-    String? category,
-    String? currency,
-    String? name,
-    firestore.Timestamp? initialTime,
-    int? repeatDuration,
-    RepeatDurationType? repeatDurationType,
-    firestore.Timestamp? endTime,
-    bool resetEndTime = false,
-    firestore.Timestamp? time,
-    firestore.Timestamp? newTime,
+    required SerialTransaction serialTransaction,
+    required SerialTransactionChangeMode changeType,
+    bool resetEndDate = false,
+    firestore.Timestamp? oldDate,
+    firestore.Timestamp? newDate,
   }) async {
     // get Data
     final data = await _getData();
@@ -317,20 +309,20 @@ class BalanceDataService extends ChangeNotifier {
 
     // update and upload
     if (SerialTransactionManager.updateSerialTransactionInData(
-      id: id,
+      id: serialTransaction.id,
       changeType: changeType,
       data: data,
-      amount: amount,
-      category: category,
-      currency: currency,
-      name: name,
-      initialTime: initialTime,
-      repeatDuration: repeatDuration,
-      repeatDurationType: repeatDurationType,
-      endTime: endTime,
-      resetEndTime: resetEndTime,
-      time: time,
-      newTime: newTime,
+      amount: serialTransaction.amount,
+      category: serialTransaction.category,
+      currency: serialTransaction.currency,
+      name: serialTransaction.name,
+      initialTime: serialTransaction.initialTime,
+      repeatDuration: serialTransaction.repeatDuration,
+      repeatDurationType: serialTransaction.repeatDurationType,
+      endTime: serialTransaction.endTime,
+      resetEndTime: resetEndDate,
+      time: oldDate,
+      newTime: newDate,
     )) {
       await _balance!.set(data);
       return true;
@@ -344,7 +336,7 @@ class BalanceDataService extends ChangeNotifier {
   /// [time] is required if you want to use RemoveType.allBefore or RemoveType.allAfter
   Future<bool> removeSerialTransactionUsingId({
     required String id,
-    required SerialTransactionChangeType removeType,
+    required SerialTransactionChangeMode removeType,
     firestore.Timestamp? time,
   }) async {
     // get Data
@@ -370,7 +362,7 @@ class BalanceDataService extends ChangeNotifier {
   /// it is an alias for removeRepeatedBalanceUsingId with that serialTransaction.id
   Future<bool> removeSerialTransaction({
     required SerialTransaction serialTransaction,
-    required SerialTransactionChangeType removeType,
+    required SerialTransactionChangeMode removeType,
     firestore.Timestamp? time,
   }) async {
     return removeSerialTransactionUsingId(

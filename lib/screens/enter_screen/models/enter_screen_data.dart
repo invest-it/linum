@@ -8,26 +8,24 @@ import 'package:linum/features/currencies/models/currency.dart';
 import 'package:linum/screens/enter_screen/enums/input_flag.dart';
 import 'package:linum/screens/enter_screen/models/enter_screen_input.dart';
 
-class EnterScreenViewModelData {
+class EnterScreenData {
   final num? amount;
   final String? name;
   final Currency? currency;
   final Category? category;
   final String? date;
   final RepeatConfiguration? repeatConfiguration;
-  final bool withExistingData;
 
-  const EnterScreenViewModelData({
+  const EnterScreenData({
     this.amount,
     this.name,
     this.currency,
     this.category,
     this.date,
     this.repeatConfiguration,
-    this.withExistingData = false,
   });
 
-  EnterScreenViewModelData copyWith({
+  EnterScreenData copyWith({
     num? amount,
     String? name,
     Currency? currency,
@@ -35,7 +33,7 @@ class EnterScreenViewModelData {
     String? date,
     RepeatConfiguration? repeatConfiguration,
   }) {
-    return EnterScreenViewModelData(
+    return EnterScreenData(
       amount: amount ?? this.amount,
       name: name ?? this.name,
       currency: currency ?? this.currency,
@@ -45,7 +43,7 @@ class EnterScreenViewModelData {
     );
   }
 
-  factory EnterScreenViewModelData.fromInput(EnterScreenInput input) {
+  factory EnterScreenData.fromInput(EnterScreenInput input) {
     final amount = input.amount;
     final name = input.name;
     final currency = standardCurrencies[input.currency];
@@ -74,7 +72,7 @@ class EnterScreenViewModelData {
       }
     }
 
-    return EnterScreenViewModelData(
+    return EnterScreenData(
         amount: amount,
         name: name,
         currency: currency,

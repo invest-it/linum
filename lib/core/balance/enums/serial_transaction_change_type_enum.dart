@@ -4,7 +4,7 @@
 //  Co-Author: n/a
 //
 
-enum SerialTransactionChangeType {
+enum SerialTransactionChangeMode {
   all,
   thisAndAllBefore,
   thisAndAllAfter,

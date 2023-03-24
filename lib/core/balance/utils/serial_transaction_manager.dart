@@ -41,7 +41,7 @@ class SerialTransactionManager {
   }
 
   static bool updateSerialTransactionInData({
-    required SerialTransactionChangeType changeType,
+    required SerialTransactionChangeMode changeType,
     required String id,
     required BalanceDocument data,
     num? amount,
@@ -63,7 +63,7 @@ class SerialTransactionManager {
       logger.e("no id provided");
       return false;
     }
-    if (changeType == SerialTransactionChangeType.thisAndAllBefore) {
+    if (changeType == SerialTransactionChangeMode.thisAndAllBefore) {
       if (time == null) {
         logger.e("RepeatableChangeType.thisAndAllBefore => time != null");
         return false;
@@ -75,7 +75,7 @@ class SerialTransactionManager {
         return false;
       }
     }
-    if (changeType == SerialTransactionChangeType.thisAndAllAfter) {
+    if (changeType == SerialTransactionChangeMode.thisAndAllAfter) {
       if (time == null) {
         logger.e("RepeatableChangeType.thisAndAllAfter => time != null");
         return false;
@@ -87,7 +87,7 @@ class SerialTransactionManager {
         return false;
       }
     }
-    if (changeType == SerialTransactionChangeType.onlyThisOne) {
+    if (changeType == SerialTransactionChangeMode.onlyThisOne) {
       if (time == null) {
         logger.e("RepeatableChangeType.onlyThisOne => time != null");
         return false;
@@ -153,7 +153,7 @@ class SerialTransactionManager {
     }
 
     switch (changeType) {
-      case SerialTransactionChangeType.all:
+      case SerialTransactionChangeMode.all:
         return SerialTransactionUpdater.updateAll(
           amount: checkedAmount,
           category: checkedCategory,
@@ -171,7 +171,7 @@ class SerialTransactionManager {
           resetEndTime: resetEndTime,
           time: time,
         );
-      case SerialTransactionChangeType.thisAndAllBefore:
+      case SerialTransactionChangeMode.thisAndAllBefore:
         return SerialTransactionUpdater.updateThisAndAllBefore(
           amount: checkedAmount,
           category: checkedCategory,
@@ -189,7 +189,7 @@ class SerialTransactionManager {
           resetEndTime: resetEndTime,
           time: time!,
         );
-      case SerialTransactionChangeType.thisAndAllAfter:
+      case SerialTransactionChangeMode.thisAndAllAfter:
         return SerialTransactionUpdater.updateThisAndAllAfter(
           amount: checkedAmount,
           category: checkedCategory,
@@ -207,7 +207,7 @@ class SerialTransactionManager {
           time: time!,
         );
 
-      case SerialTransactionChangeType.onlyThisOne:
+      case SerialTransactionChangeMode.onlyThisOne:
         return SerialTransactionUpdater.updateOnlyThisOne(
           data: data,
           id: id,
@@ -227,47 +227,47 @@ class SerialTransactionManager {
   static bool removeSerialTransactionFromData({
     required String id,
     required BalanceDocument data,
-    required SerialTransactionChangeType removeType,
+    required SerialTransactionChangeMode removeType,
     firestore.Timestamp? time,
   }) {
     // conditions
-    if (removeType == SerialTransactionChangeType.thisAndAllBefore &&
+    if (removeType == SerialTransactionChangeMode.thisAndAllBefore &&
         time == null) {
       logger.e(
         "removeType == RepeatableChangeType.thisAndAllBefore => time != null",
       );
       return false;
     }
-    if (removeType == SerialTransactionChangeType.thisAndAllAfter &&
+    if (removeType == SerialTransactionChangeMode.thisAndAllAfter &&
         time == null) {
       logger.e(
         "removeType == RepeatableChangeType.thisAndAllAfter => time != null",
       );
       return false;
     }
-    if (removeType == SerialTransactionChangeType.onlyThisOne && time == null) {
+    if (removeType == SerialTransactionChangeMode.onlyThisOne && time == null) {
       logger
           .e("removeType == RepeatableChangeType.onlyThisOne => time != null");
       return false;
     }
 
     switch (removeType) {
-      case SerialTransactionChangeType.all:
+      case SerialTransactionChangeMode.all:
         return SerialTransactionRemover.removeAll(data, id);
-      case SerialTransactionChangeType.thisAndAllBefore:
+      case SerialTransactionChangeMode.thisAndAllBefore:
         return SerialTransactionRemover.removeThisAndAllBefore(
           data,
           id,
           time!,
         );
-      case SerialTransactionChangeType.thisAndAllAfter:
+      case SerialTransactionChangeMode.thisAndAllAfter:
         final value = SerialTransactionRemover.removeThisAndAllAfter(
           data,
           id,
           time!,
         );
         return value;
-      case SerialTransactionChangeType.onlyThisOne:
+      case SerialTransactionChangeMode.onlyThisOne:
         return SerialTransactionRemover.removeOnlyThisOne(data, id, time!);
     }
   }

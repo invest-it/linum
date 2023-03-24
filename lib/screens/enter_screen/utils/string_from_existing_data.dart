@@ -2,9 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:linum/screens/enter_screen/constants/suggestion_defaults.dart';
 import 'package:linum/screens/enter_screen/enums/input_flag.dart';
 import 'package:linum/screens/enter_screen/utils/date_formatter.dart';
-import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model_data.dart';
+import 'package:linum/screens/enter_screen/models/enter_screen_data.dart';
 
-String generateStringFromExistingData(EnterScreenViewModelData data) {
+String generateStringFromExistingData(EnterScreenData data) {
   const dFormatter = DateFormatter();
   var base = "${data.amount} ${data.currency?.name ?? "EUR"}";
   if (data.name != null || data.name != "") {

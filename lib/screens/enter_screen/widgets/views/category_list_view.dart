@@ -3,7 +3,7 @@ import 'package:linum/common/widgets/category_list_tile.dart';
 import 'package:linum/core/categories/models/category.dart';
 import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
-import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model.dart';
+import 'package:linum/screens/enter_screen/viewmodels/enter_screen_form_view_model.dart';
 import 'package:provider/provider.dart';
 
 class CategoryListView extends StatelessWidget {
@@ -13,7 +13,7 @@ class CategoryListView extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    final viewModel = Provider.of<EnterScreenViewModel>(context, listen: false);
+    final formViewModel = Provider.of<EnterScreenFormViewModel>(context, listen: false);
     
     return Expanded(
       child: ListView.builder(
@@ -29,9 +29,9 @@ class CategoryListView extends StatelessWidget {
 
           return CategoryListTile(
             category: category,
-            selected: viewModel.data.category?.id == category.id,
+            selected: formViewModel.data.category?.id == category.id,
             onTap: () {
-              viewModel.update(viewModel.data.copyWith(category: category));
+              formViewModel.data = formViewModel.data.copyWith(category: category);
               Navigator.of(context).pop();
             },
           );
