@@ -15,7 +15,7 @@ class DeleteUserButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AuthenticationService authenticationService =
-        Provider.of<AuthenticationService>(context);
+        context.watch<AuthenticationService>();
 
     return Padding(
       padding: const EdgeInsets.symmetric(

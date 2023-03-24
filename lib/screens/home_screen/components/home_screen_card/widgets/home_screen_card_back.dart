@@ -25,7 +25,7 @@ class HomeScreenCardBack extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AlgorithmService algorithmService =
-        Provider.of<AlgorithmService>(context);
+        context.watch<AlgorithmService>();
     final String langCode = context.locale.languageCode;
     final DateFormat dateFormat = DateFormat("MMM ''yy", langCode);
     final DateTime now = DateTime.now();
@@ -36,10 +36,10 @@ class HomeScreenCardBack extends StatelessWidget {
       );
     }
 
-    final settings = Provider.of<AccountSettingsService>(context);
+    final settings = context.watch<AccountSettingsService>();
     final screenCardProvider =
-        Provider.of<ScreenCardViewModel>(context, listen: false);
-    final balanceDataProvider = Provider.of<BalanceDataService>(context);
+        context.read<ScreenCardViewModel>();
+    final balanceDataProvider = context.watch<BalanceDataService>();
 
     return Padding(
       padding: const EdgeInsets.all(8.0),

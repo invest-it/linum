@@ -52,7 +52,7 @@ class _ScreenLayoutState extends State<ScreenLayout>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     final PinCodeService pinCodeProvider =
-        Provider.of<PinCodeService>(context, listen: false);
+        context.read<PinCodeService>();
     super.didChangeAppLifecycleState(state);
 
     if (state == AppLifecycleState.inactive ||
@@ -145,7 +145,7 @@ class _ScreenLayoutState extends State<ScreenLayout>
 
   Future<void> createRandomData(BuildContext context) async {
     final BalanceDataService balanceDataProvider =
-        Provider.of<BalanceDataService>(context, listen: false);
+        context.read<BalanceDataService>();
     const List<String> categories = ["food", "clothing", "computer games"];
     final Random rand = Random();
     for (int i = 0; i < 365 * 5 * 4; i++) {

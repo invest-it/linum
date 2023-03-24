@@ -27,10 +27,10 @@ class ForgotPasswordButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ActionLipViewModel actionLipStatusProvider =
-        Provider.of<ActionLipViewModel>(context, listen: false);
+        context.read<ActionLipViewModel>();
 
     final AuthenticationService authenticationService =
-        Provider.of<AuthenticationService>(context, listen: false);
+        context.read<AuthenticationService>();
 
     void forgotPasswordActionLip() {
       // lip if the user is not logged in

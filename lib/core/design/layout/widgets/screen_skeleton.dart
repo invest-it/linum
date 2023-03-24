@@ -123,7 +123,7 @@ class ScreenSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ActionLipViewModel actionLipStatusProvider =
-        Provider.of<ActionLipViewModel>(context, listen: false);
+        context.read<ActionLipViewModel>();
 
     if (screenKey != null &&
         !actionLipStatusProvider.isActionStatusInitialized(screenKey!)) {

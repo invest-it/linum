@@ -36,9 +36,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final AccountSettingsService accountSettingsProvider =
-        Provider.of<AccountSettingsService>(context);
+        context.watch<AccountSettingsService>();
     final PinCodeService pinCodeProvider =
-        Provider.of<PinCodeService>(context);
+        context.watch<PinCodeService>();
     return ScreenSkeleton(
       head: 'Account',
       screenKey: ScreenKey.settings,

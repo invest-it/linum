@@ -41,10 +41,10 @@ class _LockScreenState extends State<LockScreen> {
   @override
   Widget build(BuildContext context) {
     final AuthenticationService auth =
-        Provider.of<AuthenticationService>(context);
+        context.watch<AuthenticationService>();
     final PinCodeService pinCodeService =
-        Provider.of<PinCodeService>(context);
-    //final ScreenIndexProvider sip = Provider.of<ScreenIndexProvider>(context);
+        context.watch<PinCodeService>();
+    //final ScreenIndexProvider sip = context.watch<ScreenIndexProvider>();
     final LockScreenAction screenIntent = pinCodeService.recallPINLockIntent(context);
 
     //TODO check if we need this or not

@@ -38,10 +38,10 @@ class BalanceDataService extends ChangeNotifier {
 
   /// Creates the BalanceDataProvider. Inparticular it sets [_balance] correctly
   BalanceDataService(BuildContext context) {
-    _uid = Provider.of<AuthenticationService>(context, listen: false).uid;
-    _algorithmService = Provider.of<AlgorithmService>(context, listen: false);
+    _uid = context.read<AuthenticationService>().uid;
+    _algorithmService = context.read<AlgorithmService>();
     _exchangeRateService =
-        Provider.of<ExchangeRateService>(context, listen: false);
+        context.read<ExchangeRateService>();
 
     asyncConstructor();
   }

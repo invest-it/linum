@@ -76,7 +76,7 @@ class SerialTransactionTile extends StatelessWidget {
     final int duration = serialTransaction.repeatDuration;
     final RepeatDurationType repeatDurationType =
         serialTransaction.repeatDurationType;
-    final settings = Provider.of<AccountSettingsService>(context);
+    final settings = context.watch<AccountSettingsService>();
     final formattedAmount = CurrencyFormatter(
       context.locale,
       symbol: settings.getStandardCurrency().name,

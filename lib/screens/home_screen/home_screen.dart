@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void resetAlgorithmProvider() {
     final AlgorithmService algorithmProvider =
-        Provider.of<AlgorithmService>(context);
+        context.watch<AlgorithmService>();
 
     if (algorithmProvider.state.filter == Filters.noFilter) {
       algorithmProvider.resetCurrentShownMonth();
@@ -57,14 +57,14 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final BalanceDataService balanceDataProvider =
-        Provider.of<BalanceDataService>(context);
+        context.watch<BalanceDataService>();
 
     final PinCodeService pinCodeProvider =
-        Provider.of<PinCodeService>(context);
+        context.watch<PinCodeService>();
 
     resetAlgorithmProvider();
     // AlgorithmProvider algorithmProvider =
-    //     Provider.of<AlgorithmProvider>(context, listen: false);
+    //     context.read<AlgorithmProvider>();
 
     // if (!algorithmProvider.currentFilter(
     //     {"time": Timestamp.fromDate(DateTime.now().add(Duration(days: 1)))})) {

@@ -12,7 +12,7 @@ class EntryTypeSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = Provider.of<EnterScreenViewModel>(context, listen: false);
+    final viewModel = context.read<EnterScreenViewModel>();
     return EnterScreenScaffold(
       bodyHeight: 200,
       body: Column(

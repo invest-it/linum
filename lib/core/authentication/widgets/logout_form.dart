@@ -25,7 +25,7 @@ class _LogoutFormState extends State<LogoutForm> {
   @override
   Widget build(BuildContext context) {
     final AuthenticationService auth =
-        Provider.of<AuthenticationService>(context);
+        context.watch<AuthenticationService>();
 
     return Column(
       children: [
@@ -44,7 +44,7 @@ class _LogoutFormState extends State<LogoutForm> {
           increaseHeightBy: context.proportionateScreenHeight(16),
           callback: () => auth.signOut().then((_) {
             getRouterDelegate().rebuild();
-            Provider.of<PinCodeService>(context, listen: false)
+            context.read<PinCodeService>()
                 .resetOnLogout();
           }),
           gradient: LinearGradient(

@@ -16,8 +16,8 @@ class CurrencyListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final settings = Provider.of<AccountSettingsService>(context);
-    final actionLipStatus = Provider.of<ActionLipViewModel>(context);
+    final settings = context.watch<AccountSettingsService>();
+    final actionLipStatus = context.watch<ActionLipViewModel>();
     return Expanded(
       child: ListView.builder(
         padding: EdgeInsets.only(

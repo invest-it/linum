@@ -26,7 +26,7 @@ void goToCurrentTime(AlgorithmService algorithmProvider) {
 void onHorizontalDragEnd(DragEndDetails details, BuildContext context) {
   // Note: Sensitivity is integer used when you don't want to mess up vertical drag
   final algorithmProvider =
-      Provider.of<AlgorithmService>(context, listen: false);
+      context.read<AlgorithmService>();
   const int sensitivity = 1;
   if (details.primaryVelocity! > sensitivity) {
     //Right Swipe, going back in time

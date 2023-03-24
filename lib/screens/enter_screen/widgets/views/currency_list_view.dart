@@ -14,7 +14,7 @@ class CurrencyListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formViewModel = Provider.of<EnterScreenFormViewModel>(context, listen: false);
+    final formViewModel = context.read<EnterScreenFormViewModel>();
 
     return Expanded(
       child: ColoredBox(

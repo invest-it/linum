@@ -20,9 +20,9 @@ class _StandardCurrencySelectorState extends State<StandardCurrencySelector> {
   @override
   Widget build(BuildContext context) {
     final ActionLipViewModel actionLipStatusProvider =
-        Provider.of<ActionLipViewModel>(context);
+        context.watch<ActionLipViewModel>();
     final accountSettingsProvider =
-        Provider.of<AccountSettingsService>(context);
+        context.watch<AccountSettingsService>();
 
     final currentCurrency = accountSettingsProvider.getStandardCurrency();
 

@@ -89,7 +89,7 @@ Widget wrapWithBanner(Widget child) {
   @override
   Widget build(BuildContext context) {
     final AuthenticationService auth =
-        Provider.of<AuthenticationService>(context);
+        context.watch<AuthenticationService>();
     if (auth.isLoggedIn) {
       return LayoutScreen(key: key);
     } else {

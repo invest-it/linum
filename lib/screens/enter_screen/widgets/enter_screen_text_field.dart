@@ -36,10 +36,10 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
   void initState() {
     super.initState();
 
-    _formViewModel = Provider.of<EnterScreenFormViewModel>(context, listen: false);
+    _formViewModel = context.read<EnterScreenFormViewModel>();
 
     final accountSettingsService
-      = Provider.of<AccountSettingsService>(context, listen: false);
+      = context.read<AccountSettingsService>();
 
     final defaultCategory = _formViewModel.entryType == EntryType.expense
         ? accountSettingsService.getExpenseEntryCategory()

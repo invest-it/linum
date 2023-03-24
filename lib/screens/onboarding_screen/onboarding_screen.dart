@@ -111,7 +111,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     final OnboardingScreenViewModel viewModel =
-      Provider.of<OnboardingScreenViewModel>(context, listen: false);
+      context.read<OnboardingScreenViewModel>();
 
     return ScreenSkeleton(
       head: '', // will not be displayed anyways

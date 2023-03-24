@@ -67,7 +67,7 @@ class EnterScreenFormViewModel extends ChangeNotifier {
     }
 
     final accountSettingsService
-      = Provider.of<AccountSettingsService>(context, listen: false);
+      = context.read<AccountSettingsService>();
     defaultValues = DefaultValues(
       name: "",
       amount: 0,

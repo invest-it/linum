@@ -14,7 +14,7 @@ class EnterScreenFlow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = Provider.of<EnterScreenViewModel>(context);
+    final viewModel = context.watch<EnterScreenViewModel>();
 
     switch(viewModel.viewState) {
       case EnterScreenViewState.selectEntryType:

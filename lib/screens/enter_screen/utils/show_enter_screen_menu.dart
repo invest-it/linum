@@ -8,7 +8,7 @@ void showEnterScreenMenu(
       required String title,
       required Widget content,
 }) {
-  final viewModel = Provider.of<EnterScreenViewModel>(context, listen: false);
+  final viewModel = context.read<EnterScreenViewModel>();
   final controller = showBottomSheet(context: context, builder: (context) {
     return EnterScreenMenu(title: title, content: content);
   },);

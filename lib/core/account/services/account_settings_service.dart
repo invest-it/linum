@@ -67,7 +67,7 @@ class AccountSettingsService extends ChangeNotifier {
   AccountSettingsService(BuildContext context) {
     logger = Logger();
 
-    _uid = Provider.of<AuthenticationService>(context, listen: false).uid;
+    _uid = context.read<AuthenticationService>().uid;
 
     if (_uid != "") {
       _settings =
@@ -127,7 +127,7 @@ class AccountSettingsService extends ChangeNotifier {
           setToDeviceLocale(context);
         }
 
-        Provider.of<AuthenticationService>(context, listen: false)
+        context.read<AuthenticationService>()
             .updateLanguageCode(context);
         notifyListeners();
       },

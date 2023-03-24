@@ -21,7 +21,7 @@ class EnterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final balanceDataProvider = Provider.of<BalanceDataService>(context, listen: false);
+    final balanceDataProvider = context.read<BalanceDataService>();
 
     initSupportedDates();
     initSupportedRepeatIntervals();

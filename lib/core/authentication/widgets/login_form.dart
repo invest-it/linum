@@ -38,7 +38,7 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     final OnboardingScreenViewModel onboardingScreenProvider =
-        Provider.of<OnboardingScreenViewModel>(context);
+        context.watch<OnboardingScreenViewModel>();
 
     if (onboardingScreenProvider.pageState == OnboardingPageState.login &&
         onboardingScreenProvider.hasPageChanged) {
@@ -52,7 +52,7 @@ class _LoginFormState extends State<LoginForm> {
         TextEditingController(text: onboardingScreenProvider.mailInput);
 
     final AuthenticationService auth =
-        Provider.of<AuthenticationService>(context);
+        context.watch<AuthenticationService>();
 
     void logIn(String mail, String pass) {
       auth.signIn(

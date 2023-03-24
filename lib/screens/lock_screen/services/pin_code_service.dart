@@ -70,7 +70,7 @@ class PinCodeService extends ChangeNotifier {
     _initializeLastEmail();
     initializeIsPINSet();
 
-    _auth = Provider.of<AuthenticationService>(context, listen: false);
+    _auth = context.read<AuthenticationService>();
 
     _context = context;
   }

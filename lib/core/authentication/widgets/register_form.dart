@@ -37,7 +37,7 @@ class _RegisterFormState extends State<RegisterForm> {
   @override
   Widget build(BuildContext context) {
     final OnboardingScreenViewModel onboardingScreenProvider =
-        Provider.of<OnboardingScreenViewModel>(context);
+        context.watch<OnboardingScreenViewModel>();
 
     if (onboardingScreenProvider.pageState == OnboardingPageState.register &&
         onboardingScreenProvider.hasPageChanged) {
@@ -48,7 +48,7 @@ class _RegisterFormState extends State<RegisterForm> {
     }
 
     final AuthenticationService auth =
-        Provider.of<AuthenticationService>(context);
+        context.watch<AuthenticationService>();
 
     void signUp(String mail, String pass) {
       auth.signUp(

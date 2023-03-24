@@ -21,9 +21,9 @@ class CategoryListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final accountSettingsService
-      = Provider.of<AccountSettingsService>(context, listen: false);
+      = context.read<AccountSettingsService>();
     final actionLipViewModel
-      = Provider.of<ActionLipViewModel>(context, listen: false);
+      = context.read<ActionLipViewModel>();
 
     return Expanded(
       child: ListView.builder(

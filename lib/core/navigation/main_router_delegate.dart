@@ -75,7 +75,7 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
 
   List<Page> _buildPageStackAuthorized(BuildContext context) {
     final PinCodeService pinCodeProvider =
-        Provider.of<PinCodeService>(context);
+        context.watch<PinCodeService>();
     if (_pageStack.isEmpty) {
       _pageStack.add(mainRoutes.pageFromRoute(MainRoute.home));
     }
@@ -88,7 +88,7 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
 
   List<Page> _buildPageStack(BuildContext context) {
     final AuthenticationService auth =
-        Provider.of<AuthenticationService>(context);
+        context.watch<AuthenticationService>();
     if (auth.isLoggedIn) {
       return _buildPageStackAuthorized(context);
     } else {
@@ -110,7 +110,7 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
   @override
   Widget build(BuildContext context) {
     final pinCodeProvider =
-        Provider.of<PinCodeService>(context, listen: false);
+        context.read<PinCodeService>();
     if (pinCodeProvider.pinSetStillLoading) {
       return FutureBuilder(
         future: pinCodeProvider.initializeIsPINSet(),

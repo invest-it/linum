@@ -17,7 +17,7 @@ class ExchangeRateService extends ChangeNotifier {
   late AccountSettingsService _settings;
   ExchangeRateService(BuildContext context, this._store) {
     _repository = ExchangeRateRepository(_store);
-    _settings = Provider.of<AccountSettingsService>(context, listen: false);
+    _settings = context.read<AccountSettingsService>();
 
 
   }

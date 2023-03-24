@@ -114,7 +114,7 @@ class HomeScreenListView implements BalanceDataListView {
     final DateFormat monthFormatter = DateFormat('MMMM', langCode);
     final DateFormat monthAndYearFormatter = DateFormat('MMMM yyyy', langCode);
 
-    final settings = Provider.of<AccountSettingsService>(context);
+    final settings = context.watch<AccountSettingsService>();
     final amountFormatter = TransactionAmountFormatter(
       context.locale,
       settings.getStandardCurrency(),

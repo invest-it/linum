@@ -36,7 +36,7 @@ class _ActionLipState extends State<ActionLip> {
   @override
   Widget build(BuildContext context) {
     final ActionLipViewModel provider =
-        Provider.of<ActionLipViewModel>(context);
+        context.watch<ActionLipViewModel>();
 
     final status = provider.getActionLipStatus(screenKey);
 

@@ -25,10 +25,10 @@ class BudgetScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final BalanceDataService balanceDataProvider =
-        Provider.of<BalanceDataService>(context);
+        context.watch<BalanceDataService>();
 
     final AlgorithmService algorithmProvider =
-        Provider.of<AlgorithmService>(context);
+        context.watch<AlgorithmService>();
 
     if (algorithmProvider.state.filter != Filters.noFilter) {
       algorithmProvider.setCurrentFilterAlgorithm(Filters.noFilter);

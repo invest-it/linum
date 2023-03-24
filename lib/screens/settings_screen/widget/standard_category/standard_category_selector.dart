@@ -27,9 +27,9 @@ class _StandardCategorySelectorState extends State<StandardCategorySelector> {
   @override
   Widget build(BuildContext context) {
     final AccountSettingsService accountSettingsProvider =
-        Provider.of<AccountSettingsService>(context);
+        context.watch<AccountSettingsService>();
     final ActionLipViewModel actionLipStatusProvider =
-        Provider.of<ActionLipViewModel>(context);
+        context.watch<ActionLipViewModel>();
     return Column(
       children: [
         GestureDetector(

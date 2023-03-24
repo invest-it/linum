@@ -27,16 +27,16 @@ class HomeScreenCardFront extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AlgorithmService algorithmProvider =
-    Provider.of<AlgorithmService>(context);
+    context.watch<AlgorithmService>();
 
     final String langCode = context.locale.languageCode;
     final DateFormat dateFormat = DateFormat('MMMM yyyy', langCode);
     final DateTime now = DateTime.now();
 
-    final settings = Provider.of<AccountSettingsService>(context);
+    final settings = context.watch<AccountSettingsService>();
     final screenCardProvider =
-    Provider.of<ScreenCardViewModel>(context, listen: false);
-    final balanceDataProvider = Provider.of<BalanceDataService>(context);
+    context.read<ScreenCardViewModel>();
+    final balanceDataProvider = context.watch<BalanceDataService>();
 
     return GestureDetector(
       onHorizontalDragEnd: (DragEndDetails details) =>

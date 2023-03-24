@@ -32,7 +32,7 @@ class HomeScreenCardRow extends StatelessWidget {
     BuildContext context, {
     bool isIncome = false,
   }) {
-    final settings = Provider.of<AccountSettingsService>(context);
+    final settings = context.watch<AccountSettingsService>();
     return Expanded(
       flex: 10,
       child: Row(
