@@ -46,7 +46,7 @@ class EnterScreenActions {
         category: category?.id,
         currency: data.currency?.name ?? defaultData.currency.name,
         name: data.name ?? defaultData.name,
-        initialTime: firestore.Timestamp.fromDate(
+        startDate: firestore.Timestamp.fromDate(
           DateTime.parse(data.date ?? defaultData.date),
         ),
         repeatDuration: data.repeatConfiguration!.duration!,
@@ -62,7 +62,7 @@ class EnterScreenActions {
       amount: amount,
       currency: data.currency?.name ?? defaultData.currency.name,
       name: data.name ?? defaultData.name,
-      time: firestore.Timestamp.fromDate(
+      date: firestore.Timestamp.fromDate(
         DateTime.parse(data.date ?? defaultData.date),
       ),
       category: category?.id,

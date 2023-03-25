@@ -63,7 +63,7 @@ class AlgorithmService extends ChangeNotifier {
 
   AlgorithmService() {
     _state = AlgorithmState(
-        sorter: Sorters.timeNewToOld,
+        sorter: Sorters.dateNewToOld,
         filter: Filters.inBetween(timestampsFromNow()),
         shownMonth: DateTime(DateTime.now().year, DateTime.now().month),
     );

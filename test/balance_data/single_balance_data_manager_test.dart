@@ -22,7 +22,7 @@ void main() {
           category: "",
           currency: "EUR",
           name: "",
-          time: firestore.Timestamp.fromDate(DateTime.now()),
+          date: firestore.Timestamp.fromDate(DateTime.now()),
         );
 
 
@@ -46,7 +46,7 @@ void main() {
           category: "none",
           currency: "",
           name: "",
-          time: firestore.Timestamp.fromDate(DateTime.now()),
+          date: firestore.Timestamp.fromDate(DateTime.now()),
         );
 
 
@@ -86,7 +86,7 @@ void main() {
             category: "none",
             currency: "EUR",
             name: "Item Nr $i",
-            time: time,
+            date: time,
           );
 
           // Act (Execution)
@@ -106,7 +106,7 @@ void main() {
             "Item Nr $i",
           );
           expect(
-            data.transactions.last.time,
+            data.transactions.last.date,
             time,
           );
         }
@@ -252,7 +252,7 @@ void main() {
             category: "allowance",
             currency: "EUR",
             name: "New Name",
-            time: firestore.Timestamp.fromMillisecondsSinceEpoch(1648000000000),
+            date: firestore.Timestamp.fromMillisecondsSinceEpoch(1648000000000),
           );
 
           // Assert (Observation)
@@ -263,7 +263,7 @@ void main() {
           expect(data.transactions[idIndex].currency, "EUR");
           expect(data.transactions[idIndex].name, "New Name");
           expect(
-            data.transactions[idIndex].time,
+            data.transactions[idIndex].date,
             firestore.Timestamp.fromMillisecondsSinceEpoch(1648000000000),
           );
         }
@@ -294,7 +294,7 @@ BalanceDocument generateRandomData({
           category: "none",
           currency: "EUR",
           name: "Item Nr $i",
-          time: time,
+          date: time,
           id: const Uuid().v4(),
       ),
     );

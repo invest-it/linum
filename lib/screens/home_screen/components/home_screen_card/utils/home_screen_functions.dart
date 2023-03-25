@@ -28,7 +28,7 @@ TextStyle? getBalanceTextStyle(BuildContext context, num balance) {
 
 // TODO: Perhaps build this file as class that gets inherited
 
-void onFlipCardTap(BuildContext context, FlipCardController controller) {
+void onFlipCardTap(FlipCardController controller) {
   controller.hint(
     duration: const Duration(
       milliseconds: 100,

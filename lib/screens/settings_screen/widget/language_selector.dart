@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/common/utils/country_flag_generator.dart';
 import 'package:linum/core/account/services/account_settings_service.dart';
 import 'package:linum/screens/settings_screen/widget/toggle_button_element.dart';
+import 'package:provider/provider.dart';
 
 // ignore_for_file: deprecated_member_use
 //TODO DEPRECATED
@@ -16,13 +17,12 @@ import 'package:linum/screens/settings_screen/widget/toggle_button_element.dart'
 class LanguageSelector extends StatelessWidget {
   const LanguageSelector({
     super.key,
-    required this.accountSettingsProvider,
   });
-
-  final AccountSettingsService accountSettingsProvider;
 
   @override
   Widget build(BuildContext context) {
+    final accountSettingsService = context.watch<AccountSettingsService>();
+
     return Column(
       children: [
         SwitchListTile(
@@ -30,11 +30,11 @@ class LanguageSelector extends StatelessWidget {
             'settings_screen.language-settings.label-systemlang',
             style: Theme.of(context).textTheme.bodyText1,
           ).tr(),
-          value: accountSettingsProvider.settings['systemLanguage'] as bool? ??
+          value: accountSettingsService.settings['systemLanguage'] as bool? ??
               true,
           activeColor: Theme.of(context).colorScheme.primary,
           onChanged: (bool value) {
-            accountSettingsProvider.updateSettings({'systemLanguage': value});
+            accountSettingsService.updateSettings({'systemLanguage': value});
           },
         ),
         Flex(
@@ -42,14 +42,14 @@ class LanguageSelector extends StatelessWidget {
           children: [
             ToggleButtons(
               isSelected: [
-                accountSettingsProvider.settings['languageCode'] == 'de-DE',
-                accountSettingsProvider.settings['languageCode'] == 'en-US',
-                accountSettingsProvider.settings['languageCode'] == 'nl-NL',
-                accountSettingsProvider.settings['languageCode'] == 'es-ES',
-                accountSettingsProvider.settings['languageCode'] == 'fr-FR'
+                accountSettingsService.settings['languageCode'] == 'de-DE',
+                accountSettingsService.settings['languageCode'] == 'en-US',
+                accountSettingsService.settings['languageCode'] == 'nl-NL',
+                accountSettingsService.settings['languageCode'] == 'es-ES',
+                accountSettingsService.settings['languageCode'] == 'fr-FR'
               ],
               onPressed:
-                  accountSettingsProvider.settings['systemLanguage'] == false
+                  accountSettingsService.settings['systemLanguage'] == false
                       ? (int index) {
                           String langSelector;
                           switch (index) {
@@ -71,7 +71,7 @@ class LanguageSelector extends StatelessWidget {
                             default:
                               langSelector = 'en-US';
                           }
-                          accountSettingsProvider.updateSettings(
+                          accountSettingsService.updateSettings(
                             {'languageCode': langSelector},
                           );
                         }

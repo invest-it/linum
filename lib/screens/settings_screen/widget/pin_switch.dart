@@ -7,6 +7,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/screens/lock_screen/services/pin_code_service.dart';
+import 'package:provider/provider.dart';
 
 // ignore_for_file: deprecated_member_use
 //TODO DEPRECATED
@@ -14,13 +15,11 @@ import 'package:linum/screens/lock_screen/services/pin_code_service.dart';
 class PinSwitch extends StatelessWidget {
   const PinSwitch({
     super.key,
-    required this.pinCodeProvider,
   });
-
-  final PinCodeService pinCodeProvider;
-
+  
   @override
   Widget build(BuildContext context) {
+    final pinCodeService = context.watch<PinCodeService>();
     return Column(
       children: [
         SwitchListTile(
@@ -29,15 +28,15 @@ class PinSwitch extends StatelessWidget {
             tr("settings_screen.pin-lock.switch-label"),
             style: Theme.of(context).textTheme.bodyText1,
           ),
-          value: pinCodeProvider.pinSet,
+          value: pinCodeService.pinSet,
           activeColor: Theme.of(context).colorScheme.primaryContainer,
-          onChanged: pinCodeProvider.pinSetStillLoading
+          onChanged: pinCodeService.pinSetStillLoading
               ? null
               : (_) {
-                  pinCodeProvider.togglePINLock();
+                  pinCodeService.togglePINLock();
                 },
         ),
-        if (pinCodeProvider.pinSet)
+        if (pinCodeService.pinSet)
           ListTile(
             key: const Key("pinChangeSwitch"),
             dense: true,
@@ -47,7 +46,7 @@ class PinSwitch extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyText1,
             ),
             onTap: () {
-              pinCodeProvider.triggerPINChange();
+              pinCodeService.triggerPINChange();
             },
           ),
       ],

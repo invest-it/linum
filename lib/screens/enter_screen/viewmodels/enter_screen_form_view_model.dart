@@ -55,7 +55,7 @@ class EnterScreenFormViewModel extends ChangeNotifier {
       name: trx?.name,
       amount: trx?.amount,
       currency: standardCurrencies[trx?.currency],
-      date: trx?.time.toDate().toIso8601String(),
+      date: trx?.date.toDate().toIso8601String(),
       category: standardCategories[trx?.category],
     );
 

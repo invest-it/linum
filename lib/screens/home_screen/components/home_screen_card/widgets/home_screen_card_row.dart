@@ -10,6 +10,7 @@ import 'package:linum/common/components/screen_card/widgets/home_screen_card_ava
 import 'package:linum/common/utils/currency_formatter.dart';
 import 'package:linum/core/account/services/account_settings_service.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
+import 'package:linum/features/currencies/models/currency.dart';
 import 'package:linum/screens/home_screen/components/home_screen_card/models/home_screen_card_data.dart';
 import 'package:provider/provider.dart';
 
@@ -32,7 +33,6 @@ class HomeScreenCardRow extends StatelessWidget {
     BuildContext context, {
     bool isIncome = false,
   }) {
-    final settings = context.watch<AccountSettingsService>();
     return Expanded(
       flex: 10,
       child: Row(
@@ -72,20 +72,25 @@ class HomeScreenCardRow extends StatelessWidget {
                       ),
                     );
                   }
-                  return Text(
-                    CurrencyFormatter(
-                      context.locale,
-                      symbol: settings.getStandardCurrency().symbol,
-                    ).format(
-                      isIncome
-                          ? snapshot.data?.mtdIncome ?? 0
-                          : snapshot.data?.mtdExpenses ?? 0,
-                    ),
-                    style: TextStyle(
-                      color: Colors.grey[700],
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
+                  return Selector<AccountSettingsService, Currency>(
+                    selector: (_, settings) => settings.getStandardCurrency() ,
+                    builder: (context, standardCurrency, _) {
+                      return Text(
+                        CurrencyFormatter(
+                          context.locale,
+                          symbol: standardCurrency.symbol,
+                        ).format(
+                          isIncome
+                              ? snapshot.data?.mtdIncome ?? 0
+                              : snapshot.data?.mtdExpenses ?? 0,
+                        ),
+                        style: TextStyle(
+                          color: Colors.grey[700],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
+                      );
+                    },
                   );
                 },
               ),

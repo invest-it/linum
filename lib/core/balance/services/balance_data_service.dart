@@ -17,7 +17,6 @@ import 'package:linum/core/balance/utils/serial_transaction_manager.dart';
 import 'package:linum/core/balance/utils/statistical_calculations.dart';
 import 'package:linum/core/balance/utils/transaction_manager.dart';
 import 'package:linum/core/balance/widgets/balance_data_list_view.dart';
-import 'package:linum/core/repeating/enums/repeat_duration_type_enum.dart';
 import 'package:linum/features/currencies/services/exchange_rate_service.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
@@ -129,11 +128,11 @@ class BalanceDataService extends ChangeNotifier {
   }
 
   /// update [_algorithmService] if it is new. redo the document connections
-  void updateAlgorithmProvider(AlgorithmService? algorithm) {
-    if (algorithm != null &&
-        (_algorithmService != algorithm ||
+  void updateAlgorithmProvider(AlgorithmService? algorithmService) {
+    if (algorithmService != null &&
+        (_algorithmService != algorithmService ||
             _algorithmService.balanceNeedsNotice)) {
-      _algorithmService = algorithm;
+      _algorithmService = algorithmService;
       _algorithmService.balanceDataNotice();
       // notifyListeners(); // Called during update,
       // which already notifies its listeners
@@ -141,8 +140,8 @@ class BalanceDataService extends ChangeNotifier {
   }
 
   /// update [_exchangeRateService].
-  void updateExchangeRateProvider(ExchangeRateService provider) {
-    _exchangeRateService = provider;
+  void updateExchangeRateProvider(ExchangeRateService exchangeRateService) {
+    _exchangeRateService = exchangeRateService;
   }
 
   /// Get the document-datastream. Maybe in the future it might be a public function
@@ -175,7 +174,7 @@ class BalanceDataService extends ChangeNotifier {
     String? category,
     String? currency,
     String? name,
-    firestore.Timestamp? time,
+    firestore.Timestamp? date,
   }) async {
     // get Data
     final data = await _getData();
@@ -191,7 +190,7 @@ class BalanceDataService extends ChangeNotifier {
       category: category,
       currency: currency,
       name: name,
-      time: time,
+      date: date,
     )) {
       await _balance!.set(data);
       return true;
@@ -211,7 +210,7 @@ class BalanceDataService extends ChangeNotifier {
       category: transaction.category,
       currency: transaction.currency,
       name: transaction.name,
-      time: transaction.time,
+      date: transaction.date,
     );
   }
 
@@ -292,7 +291,7 @@ class BalanceDataService extends ChangeNotifier {
 
   /// update a repeated balance
   /// specify time if changeType != RepeatableChangeType.all
-  /// resetEndTime, endTime are not available for RepeatableChangeType.thisAndAllBefore
+  /// resetEndTime, endDate are not available for RepeatableChangeType.thisAndAllBefore
   /// RepeatableChangeType.thisAndAllBefore and RepeatableChangeType.thisAndAllAfter will split the repeated balance to 2
   Future<bool> updateSerialTransaction({
     required SerialTransaction serialTransaction,
@@ -316,13 +315,13 @@ class BalanceDataService extends ChangeNotifier {
       category: serialTransaction.category,
       currency: serialTransaction.currency,
       name: serialTransaction.name,
-      initialTime: serialTransaction.initialTime,
+      startDate: serialTransaction.startDate,
       repeatDuration: serialTransaction.repeatDuration,
       repeatDurationType: serialTransaction.repeatDurationType,
-      endTime: serialTransaction.endTime,
-      resetEndTime: resetEndDate,
-      time: oldDate,
-      newTime: newDate,
+      endDate: serialTransaction.endDate,
+      resetEndDate: resetEndDate,
+      oldDate: oldDate,
+      newDate: newDate,
     )) {
       await _balance!.set(data);
       return true;
@@ -333,11 +332,11 @@ class BalanceDataService extends ChangeNotifier {
 
   /// [id] is the id of the repeatedBalance
   /// [removeType] decides what data should be removed from the balanceData. RemoveType.none should only be used for repeatedData with endDate
-  /// [time] is required if you want to use RemoveType.allBefore or RemoveType.allAfter
+  /// [date] is required if you want to use RemoveType.allBefore or RemoveType.allAfter
   Future<bool> removeSerialTransactionUsingId({
     required String id,
     required SerialTransactionChangeMode removeType,
-    firestore.Timestamp? time,
+    firestore.Timestamp? date,
   }) async {
     // get Data
     final data = await _getData();
@@ -350,7 +349,7 @@ class BalanceDataService extends ChangeNotifier {
       id: id,
       data: data,
       removeType: removeType,
-      time: time,
+      date: date,
     )) {
       await _balance!.set(data);
       return true;
@@ -363,12 +362,12 @@ class BalanceDataService extends ChangeNotifier {
   Future<bool> removeSerialTransaction({
     required SerialTransaction serialTransaction,
     required SerialTransactionChangeMode removeType,
-    firestore.Timestamp? time,
+    firestore.Timestamp? date,
   }) async {
     return removeSerialTransactionUsingId(
       id: serialTransaction.id,
       removeType: removeType,
-      time: time,
+      date: date,
     );
   }
 

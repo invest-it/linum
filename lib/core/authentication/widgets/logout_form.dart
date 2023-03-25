@@ -24,29 +24,32 @@ class LogoutForm extends StatefulWidget {
 class _LogoutFormState extends State<LogoutForm> {
   @override
   Widget build(BuildContext context) {
-    final AuthenticationService auth =
-        context.watch<AuthenticationService>();
-
     return Column(
       children: [
         Padding(
           padding: EdgeInsets.symmetric(
             vertical: context.proportionateScreenHeight(16),
           ),
-          child: Text(
-            tr('logout_form.label-current-email') + auth.userEmail,
-            style: Theme.of(context).textTheme.bodyText1,
-            textAlign: TextAlign.center,
+          child: Consumer<AuthenticationService>(
+            builder: (context, authService, _) {
+              return Text(
+                tr('logout_form.label-current-email') + authService.userEmail,
+                style: Theme.of(context).textTheme.bodyText1,
+                textAlign: TextAlign.center,
+              );
+            },
           ),
         ),
         GradientButton(
           key: const Key("logoutButton"),
           increaseHeightBy: context.proportionateScreenHeight(16),
-          callback: () => auth.signOut().then((_) {
-            getRouterDelegate().rebuild();
-            context.read<PinCodeService>()
-                .resetOnLogout();
-          }),
+          callback: () => context.read<AuthenticationService>()
+              .signOut()
+              .then((_) {
+                getRouterDelegate().rebuild();
+                context.read<PinCodeService>()
+                    .resetOnLogout();
+              }),
           gradient: LinearGradient(
             colors: [
               Theme.of(context).colorScheme.primary,

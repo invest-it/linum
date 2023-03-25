@@ -56,7 +56,7 @@ class TransactionManager {
     bool? deleteNote,
     String? name,
     String? note,
-    firestore.Timestamp? time,
+    firestore.Timestamp? date,
   }) {
     // conditions
     if (id == "") {
@@ -87,7 +87,7 @@ class TransactionManager {
       name: name ?? transaction.name,
       note:
           (deleteNote != null && deleteNote) ? null : note ?? transaction.note,
-      time: time ?? transaction.time,
+      date: date ?? transaction.date,
     );
 
     data.transactions[transactionIndex] = updatedTransaction;

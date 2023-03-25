@@ -65,22 +65,22 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
     ];
   }
 
-  List<Page> _buildPinCodeStack(PinCodeService pinCodeProvider) {
+  List<Page> _buildPinCodeStack(PinCodeService pinCodeService) {
     final pinCodeStack = <Page>[
       mainRoutes.pageFromRoute(MainRoute.lock),
     ];
-    pinCodeProvider.setRecallIntent();
+    pinCodeService.setRecallIntent();
     return List.of(pinCodeStack);
   }
 
   List<Page> _buildPageStackAuthorized(BuildContext context) {
-    final PinCodeService pinCodeProvider =
+    final PinCodeService pinCodeService =
         context.watch<PinCodeService>();
     if (_pageStack.isEmpty) {
       _pageStack.add(mainRoutes.pageFromRoute(MainRoute.home));
     }
-    if (pinCodeProvider.pinSet && !pinCodeProvider.sessionIsSafe) {
-      return _buildPinCodeStack(pinCodeProvider);
+    if (pinCodeService.pinSet && !pinCodeService.sessionIsSafe) {
+      return _buildPinCodeStack(pinCodeService);
     }
 
     return List.of(_pageStack);

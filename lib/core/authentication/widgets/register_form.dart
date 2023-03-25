@@ -36,22 +36,19 @@ class _RegisterFormState extends State<RegisterForm> {
 
   @override
   Widget build(BuildContext context) {
-    final OnboardingScreenViewModel onboardingScreenProvider =
+    final OnboardingScreenViewModel viewModel =
         context.watch<OnboardingScreenViewModel>();
 
-    if (onboardingScreenProvider.pageState == OnboardingPageState.register &&
-        onboardingScreenProvider.hasPageChanged) {
+    if (viewModel.pageState == OnboardingPageState.register &&
+        viewModel.hasPageChanged) {
       _mailController.clear();
       _passController.clear();
       _mailValidate = false;
       _passValidate = false;
     }
 
-    final AuthenticationService auth =
-        context.watch<AuthenticationService>();
-
     void signUp(String mail, String pass) {
-      auth.signUp(
+      context.read<AuthenticationService>().signUp(
         mail.trim(),
         pass,
         onError: (String message) {
@@ -69,12 +66,12 @@ class _RegisterFormState extends State<RegisterForm> {
             title: tr("alertdialog.signup-verification.title"),
             actionTitle: tr("alertdialog.signup-verification.action"),
           );
-          onboardingScreenProvider.setEmailLoginInputSilently(mail);
+          viewModel.setEmailLoginInputSilently(mail);
           _mailController.clear();
           _passController.clear();
           _mailValidate = false;
           _passValidate = false;
-          onboardingScreenProvider.setPageState(OnboardingPageState.login);
+          viewModel.setPageState(OnboardingPageState.login);
         },
       );
     }
@@ -221,7 +218,8 @@ class _RegisterFormState extends State<RegisterForm> {
                 height: context.proportionateScreenHeight(12),
               ),
               SignInWithGoogleButton(
-                onPressed: auth.signInWithGoogle,
+                onPressed: context.read<AuthenticationService>()
+                    .signInWithGoogle,
               ),
               SizedBox(
                 height: context.proportionateScreenHeight(6),
@@ -229,7 +227,8 @@ class _RegisterFormState extends State<RegisterForm> {
               if (Platform.isIOS) ...[
                 // Works only on iOS at the moment (according to Google)
                 SignInWithAppleButton(
-                  onPressed: auth.signInWithApple,
+                  onPressed: context.read<AuthenticationService>()
+                      .signInWithApple,
                   text: tr('onboarding_screen.apple-button'),
                 )
               ],

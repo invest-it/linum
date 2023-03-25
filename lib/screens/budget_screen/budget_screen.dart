@@ -24,14 +24,11 @@ class BudgetScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final BalanceDataService balanceDataProvider =
-        context.watch<BalanceDataService>();
-
-    final AlgorithmService algorithmProvider =
+    final AlgorithmService algorithmService =
         context.watch<AlgorithmService>();
 
-    if (algorithmProvider.state.filter != Filters.noFilter) {
-      algorithmProvider.setCurrentFilterAlgorithm(Filters.noFilter);
+    if (algorithmService.state.filter != Filters.noFilter) {
+      algorithmService.setCurrentFilterAlgorithm(Filters.noFilter);
     }
     return ScreenSkeleton(
       head: 'Budget',
@@ -68,10 +65,14 @@ class BudgetScreen extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
               child: ScrollConfiguration(
                 behavior: SilentScroll(),
-                child: balanceDataProvider.fillListViewWithData(
-                  HomeScreenListView(),
-                  context: context,
-                ),
+                child: Consumer<BalanceDataService>(
+                  builder: (context, balanceDataService, _) {
+                    return balanceDataService.fillListViewWithData(
+                      HomeScreenListView(),
+                      context: context,
+                    );
+                  },
+                )
               ),
             ),
           ),

@@ -159,7 +159,7 @@ class TransactionTile extends StatelessWidget {
           subtitle: Text(
             formatter
                 .format(
-              transaction.time.toDate(),
+              transaction.date.toDate(),
             )
                 .toUpperCase(),
             style: isFutureItem

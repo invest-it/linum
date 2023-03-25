@@ -8,7 +8,7 @@ class ChangedTransaction {
   String? currency;
   String? name;
   String? note;
-  Timestamp? time;
+  Timestamp? date;
   bool? deleted;
 
   ChangedTransaction({
@@ -17,7 +17,7 @@ class ChangedTransaction {
     this.currency,
     this.name,
     this.note,
-    this.time,
+    this.date,
     this.deleted,
   });
 
@@ -28,7 +28,7 @@ class ChangedTransaction {
       currency: map['currency'] as String?,
       name: map['name'] as String?,
       note: map['note'] as String?,
-      time: map['time'] as Timestamp?,
+      date: map['time'] as Timestamp?,
       deleted: map['deleted'] as bool?,
     );
   }
@@ -40,7 +40,7 @@ class ChangedTransaction {
       'currency': currency,
       'name': name,
       'note': note,
-      'time': time,
+      'time': date,
       'deleted': deleted,
     };
   }

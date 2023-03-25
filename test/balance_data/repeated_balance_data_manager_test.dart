@@ -27,7 +27,7 @@ void main() {
           category: "",
           currency: "EUR",
           name: "",
-          initialTime: Timestamp.fromDate(DateTime.now()),
+          startDate: Timestamp.fromDate(DateTime.now()),
           repeatDuration: 60 * 60 * 24 * 3,
         );
 
@@ -51,7 +51,7 @@ void main() {
           category: "none",
           currency: "",
           name: "",
-          initialTime: Timestamp.fromDate(DateTime.now()),
+          startDate: Timestamp.fromDate(DateTime.now()),
           repeatDuration: 60 * 60 * 24 * 3,
         );
 
@@ -77,7 +77,7 @@ void main() {
         for (int i = 0; i < max; i++) {
           // Arrange (Initialization)
           final num amount = rand.nextInt(100000) / 100.0;
-          final Timestamp time = Timestamp.fromDate(
+          final Timestamp date = Timestamp.fromDate(
             DateTime.now().subtract(const Duration(days: 365 * 4)).add(
                   Duration(
                     days: rand.nextInt(365 * 4 * 2),
@@ -93,7 +93,7 @@ void main() {
             category: "none",
             currency: "EUR",
             name: "Item Nr $i",
-            initialTime: time,
+            startDate: date,
             repeatDuration: repeatDuration,
             repeatDurationType: repeatDurationType,
           );
@@ -124,8 +124,8 @@ void main() {
             "Item Nr $i",
           );
           expect(
-            data.serialTransactions.last.initialTime,
-            time,
+            data.serialTransactions.last.startDate,
+            date,
           );
           expect(
             data.serialTransactions.last.repeatDuration,
@@ -156,7 +156,7 @@ void main() {
             id: id,
             data: data,
             removeType: removeType,
-            time: Timestamp.now(),
+            date: Timestamp.now(),
           );
 
           // Assert (Observation)
@@ -280,9 +280,9 @@ void main() {
           final String id = data.serialTransactions[idIndex].id;
 
           final DateTime initialTime =
-              (data.serialTransactions[idIndex].initialTime).toDate();
+              (data.serialTransactions[idIndex].startDate).toDate();
 
-          final Timestamp time = Timestamp.fromDate(
+          final Timestamp date = Timestamp.fromDate(
             calculateOneTimeStep(
               data.serialTransactions[idIndex].repeatDuration,
               initialTime,
@@ -298,14 +298,14 @@ void main() {
             id: id,
             data: data,
             removeType: SerialTransactionChangeMode.thisAndAllBefore,
-            time: time,
+            date: date,
           );
 
           // Assert (Observation)
           expect(result, true);
           expect(data.serialTransactions.length, expectedLength);
           expect(
-            (data.serialTransactions[idIndex].initialTime)
+            (data.serialTransactions[idIndex].startDate)
                 .toDate()
                 .isAfter(initialTime),
             true,
@@ -325,11 +325,11 @@ void main() {
           final int idIndex = rand.nextInt(expectedLength);
           final String id = data.serialTransactions[idIndex].id;
 
-          final Timestamp? endTime = data.serialTransactions[idIndex].endTime;
+          final Timestamp? endTime = data.serialTransactions[idIndex].endDate;
           final DateTime initialTime =
-              data.serialTransactions[idIndex].initialTime.toDate();
+              data.serialTransactions[idIndex].startDate.toDate();
 
-          final Timestamp time = Timestamp.fromDate(
+          final Timestamp date = Timestamp.fromDate(
             calculateOneTimeStep(
               data.serialTransactions[idIndex].repeatDuration,
               initialTime,
@@ -343,7 +343,7 @@ void main() {
             id: id,
             data: data,
             removeType: SerialTransactionChangeMode.thisAndAllAfter,
-            time: time,
+            date: date,
           );
 
           // Assert (Observation)
@@ -351,14 +351,14 @@ void main() {
           expect(data.serialTransactions.length, expectedLength);
           if (endTime != null) {
             expect(
-              data.serialTransactions[idIndex].endTime!
+              data.serialTransactions[idIndex].endDate!
                   .toDate()
                   .isBefore(endTime.toDate()),
               true,
             );
           } else {
             expect(
-              data.serialTransactions[idIndex].endTime != null,
+              data.serialTransactions[idIndex].endDate != null,
               true,
             );
           }
@@ -378,9 +378,9 @@ void main() {
           final String id = data.serialTransactions[idIndex].id;
 
           final DateTime initialTime =
-              (data.serialTransactions[idIndex].initialTime).toDate();
+              (data.serialTransactions[idIndex].startDate).toDate();
 
-          final Timestamp time = Timestamp.fromDate(
+          final Timestamp date = Timestamp.fromDate(
             calculateOneTimeStep(
               data.serialTransactions[idIndex].repeatDuration,
               initialTime,
@@ -394,7 +394,7 @@ void main() {
             id: id,
             data: data,
             removeType: SerialTransactionChangeMode.onlyThisOne,
-            time: time,
+            date: date,
           );
 
           // Assert (Observation)
@@ -616,11 +616,11 @@ void main() {
             amount: amount,
             category: "food",
             name: "New Name $i",
-            initialTime: initialTime,
+            startDate: initialTime,
             repeatDuration: repeatDuration,
             repeatDurationType: repeatDurationType,
-            endTime: endTime,
-            resetEndTime: endTime == null,
+            endDate: endTime,
+            resetEndDate: endTime == null,
           );
 
           serialTransaction = data.serialTransactions[idIndex];
@@ -631,13 +631,13 @@ void main() {
           expect(serialTransaction.amount, amount);
           expect(serialTransaction.category, "food");
           expect(serialTransaction.name, "New Name $i");
-          expect(serialTransaction.initialTime, initialTime);
+          expect(serialTransaction.startDate, initialTime);
           expect(serialTransaction.repeatDuration, repeatDuration);
           expect(
             serialTransaction.repeatDurationType,
             repeatDurationType,
           );
-          expect(serialTransaction.endTime, endTime);
+          expect(serialTransaction.endDate, endTime);
         }
       });
 
@@ -662,9 +662,9 @@ void main() {
                   ),
                 ),
           );
-          final Timestamp formerInitialTime = serialTransaction.initialTime;
+          final Timestamp formerInitialTime = serialTransaction.startDate;
 
-          final Timestamp? formerEndTime = serialTransaction.endTime;
+          final Timestamp? formerEndTime = serialTransaction.endDate;
 
           // Act (Execution)
           final bool result =
@@ -672,8 +672,8 @@ void main() {
             id: id,
             data: data,
             changeType: SerialTransactionChangeMode.all,
-            newTime: newTime,
-            time: formerInitialTime,
+            newDate: newTime,
+            oldDate: formerInitialTime,
           );
 
           serialTransaction = data.serialTransactions[idIndex];
@@ -682,10 +682,10 @@ void main() {
           expect(result, true);
           expect(data.serialTransactions.length, expectedLength);
           if (formerEndTime == null) {
-            expect(serialTransaction.endTime, null);
+            expect(serialTransaction.endDate, null);
           } else {
             expect(
-              (serialTransaction.endTime!).toDate(),
+              (serialTransaction.endDate!).toDate(),
               formerEndTime.toDate().subtract(
                     formerInitialTime.toDate().difference(
                           newTime.toDate(),
@@ -693,7 +693,7 @@ void main() {
                   ),
             );
           }
-          expect(serialTransaction.initialTime, newTime);
+          expect(serialTransaction.startDate, newTime);
         }
       });
 
@@ -720,9 +720,9 @@ void main() {
 
           final oldRepeatDurationType = oldSerialTransaction.repeatDurationType;
 
-          final Timestamp? oldEndTime = oldSerialTransaction.endTime;
+          final Timestamp? oldEndTime = oldSerialTransaction.endDate;
 
-          final Timestamp oldInitialTime = oldSerialTransaction.initialTime;
+          final Timestamp oldInitialTime = oldSerialTransaction.startDate;
 
           num newAmount = rand.nextInt(100000) / 100.0;
           newAmount = -1 * math.pow(newAmount, 2);
@@ -754,10 +754,10 @@ void main() {
             amount: newAmount,
             category: "food",
             name: "New Name $i",
-            initialTime: newInitialTime,
+            startDate: newInitialTime,
             repeatDuration: newRepeatDuration,
             repeatDurationType: newRepeatDurationType,
-            time: time,
+            oldDate: time,
           );
 
           final newSerialTransaction = data.serialTransactions.last;
@@ -772,7 +772,7 @@ void main() {
           expect(oldSerialTransaction.name, oldName);
           // the old repeated balance has been moved one time step after this.time
           expect(
-            oldSerialTransaction.initialTime,
+            oldSerialTransaction.startDate,
             Timestamp.fromDate(
               calculateOneTimeStep(
                 data.serialTransactions[idIndex].repeatDuration,
@@ -787,13 +787,13 @@ void main() {
             oldSerialTransaction.repeatDurationType,
             oldRepeatDurationType,
           );
-          expect(oldSerialTransaction.endTime, oldEndTime);
+          expect(oldSerialTransaction.endDate, oldEndTime);
           // new repeated balance
           expect(newSerialTransaction.amount, newAmount);
           expect(newSerialTransaction.category, "food");
           expect(newSerialTransaction.name, "New Name $i");
           // the new repeated balance has the old initialTime
-          expect(newSerialTransaction.initialTime, newInitialTime);
+          expect(newSerialTransaction.startDate, newInitialTime);
           expect(newSerialTransaction.repeatDuration, newRepeatDuration);
           expect(
             newSerialTransaction.repeatDurationType,
@@ -816,8 +816,8 @@ void main() {
 
           var oldSerialTransaction = data.serialTransactions[idIndex];
 
-          final Timestamp? oldEndTime = oldSerialTransaction.endTime;
-          Timestamp oldInitialTime = oldSerialTransaction.initialTime;
+          final Timestamp? oldEndTime = oldSerialTransaction.endDate;
+          Timestamp oldInitialTime = oldSerialTransaction.startDate;
 
           final Timestamp time = oldInitialTime;
 
@@ -849,8 +849,8 @@ void main() {
             id: oldId,
             data: data,
             changeType: SerialTransactionChangeMode.thisAndAllBefore,
-            time: time,
-            newTime: newTime,
+            oldDate: time,
+            newDate: newTime,
           );
 
           final newSerialTransaction = data.serialTransactions.last;
@@ -860,11 +860,11 @@ void main() {
           expect(result, true);
           expect(data.serialTransactions.length, expectedLength);
           // old repeated balance
-          expect(oldSerialTransaction.endTime, oldEndTime);
-          expect(oldSerialTransaction.initialTime, newInitialTime);
+          expect(oldSerialTransaction.endDate, oldEndTime);
+          expect(oldSerialTransaction.startDate, newInitialTime);
           // new repeated balance
-          expect(newSerialTransaction.endTime, newEndTime);
-          expect(newSerialTransaction.initialTime, oldInitialTime);
+          expect(newSerialTransaction.endDate, newEndTime);
+          expect(newSerialTransaction.startDate, oldInitialTime);
         }
       });
 
@@ -891,7 +891,7 @@ void main() {
 
           final oldRepeatDurationType = oldSerialTransaction.repeatDurationType;
 
-          final Timestamp oldInitialTime = oldSerialTransaction.initialTime;
+          final Timestamp oldInitialTime = oldSerialTransaction.startDate;
 
           num newAmount = rand.nextInt(100000) / 100.0;
           newAmount = -1 * math.pow(newAmount, 2);
@@ -927,9 +927,9 @@ void main() {
             name: "New Name $i",
             repeatDuration: newRepeatDuration,
             repeatDurationType: newRepeatDurationType,
-            time: time,
-            endTime: newEndTime,
-            resetEndTime: newEndTime == null,
+            oldDate: time,
+            endDate: newEndTime,
+            resetEndDate: newEndTime == null,
           );
 
           final newSerialTransaction = data.serialTransactions.last;
@@ -942,7 +942,7 @@ void main() {
           expect(oldSerialTransaction.category, oldCategory);
           expect(oldSerialTransaction.name, oldName);
           // the old repeated balance has been moved one time step after this.time
-          expect(oldSerialTransaction.initialTime, oldInitialTime);
+          expect(oldSerialTransaction.startDate, oldInitialTime);
 
           expect(oldSerialTransaction.repeatDuration, oldRepeatDuration);
           expect(
@@ -950,7 +950,7 @@ void main() {
             oldRepeatDurationType,
           );
           expect(
-            oldSerialTransaction.endTime,
+            oldSerialTransaction.endDate,
             Timestamp.fromDate(
               calculateOneTimeStepBackwards(
                 data.serialTransactions[idIndex].repeatDuration,
@@ -965,7 +965,7 @@ void main() {
           expect(newSerialTransaction.category, "food");
           expect(newSerialTransaction.name, "New Name $i");
           // the new repeated balance has the old initialTime
-          expect(newSerialTransaction.initialTime, time);
+          expect(newSerialTransaction.startDate, time);
           expect(newSerialTransaction.repeatDuration, newRepeatDuration);
           expect(
             newSerialTransaction.repeatDurationType,
@@ -988,8 +988,8 @@ void main() {
 
           var oldSerialTransaction = data.serialTransactions[idIndex];
 
-          Timestamp? oldEndTime = oldSerialTransaction.endTime;
-          final Timestamp oldInitialTime = oldSerialTransaction.initialTime;
+          Timestamp? oldEndTime = oldSerialTransaction.endDate;
+          final Timestamp oldInitialTime = oldSerialTransaction.startDate;
 
           final Timestamp time = oldInitialTime;
 
@@ -1024,8 +1024,8 @@ void main() {
             id: oldId,
             data: data,
             changeType: SerialTransactionChangeMode.thisAndAllAfter,
-            time: time,
-            newTime: newTime,
+            oldDate: time,
+            newDate: newTime,
           );
 
           final newSerialTransaction = data.serialTransactions.last;
@@ -1035,11 +1035,11 @@ void main() {
           expect(result, true);
           expect(data.serialTransactions.length, expectedLength);
           // old repeated balance
-          expect(oldSerialTransaction.endTime, newEndTime);
-          expect(oldSerialTransaction.initialTime, oldInitialTime);
+          expect(oldSerialTransaction.endDate, newEndTime);
+          expect(oldSerialTransaction.startDate, oldInitialTime);
           // new repeated balance
-          expect(newSerialTransaction.endTime, oldEndTime);
-          expect(newSerialTransaction.initialTime, newInitialTime);
+          expect(newSerialTransaction.endDate, oldEndTime);
+          expect(newSerialTransaction.startDate, newInitialTime);
         }
       });
 
@@ -1058,7 +1058,7 @@ void main() {
 
           var serialTransaction = data.serialTransactions[idIndex];
 
-          final Timestamp initialTime = serialTransaction.initialTime;
+          final Timestamp initialTime = serialTransaction.startDate;
 
           num newAmount = rand.nextInt(100000) / 100.0;
           newAmount = -1 * math.pow(newAmount, 2);
@@ -1087,8 +1087,8 @@ void main() {
             category: "food",
             currency: "USD",
             name: "New Name $i",
-            time: time,
-            newTime: newTime,
+            oldDate: time,
+            newDate: newTime,
           );
 
           serialTransaction = data.serialTransactions[idIndex];
@@ -1241,8 +1241,8 @@ BalanceDocument generateRandomData({
         currency: "EUR",
         name: "Item Nr $i",
         id: const Uuid().v4(),
-        initialTime: time,
-        endTime: endTime,
+        startDate: time,
+        endDate: endTime,
         repeatDuration: repeatDuration,
         repeatDurationType: repeatDurationType,
       ),

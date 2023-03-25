@@ -1,4 +1,4 @@
-//  Single Balance Data - Model for defining information used by a card that is NOT a copy of an original repeated transaction ("Single Transacton").
+ //  Single Balance Data - Model for defining information used by a card that is NOT a copy of an original repeated transaction ("Single Transacton").
 //
 //  Author: SoTBurst
 //  Co-Author: n/a //TODO @SoTBurst might be useful to train more people on this
@@ -16,8 +16,8 @@ class Transaction {
   final String name;
   final String? note;
   final String? repeatId;
-  final Timestamp time;
-  final Timestamp? formerTime; // strictly for changed repeatables
+  final Timestamp date;
+  final Timestamp? formerDate; // strictly for changed repeatables
   ExchangeRateInfo? rateInfo;
 
   Transaction({
@@ -28,8 +28,8 @@ class Transaction {
     required this.name,
     this.note,
     this.repeatId,
-    required this.time,
-    this.formerTime,
+    required this.date,
+    this.formerDate,
     this.rateInfo,
   })  : id = id ?? const Uuid().v4();
 
@@ -41,8 +41,8 @@ class Transaction {
     String? name,
     String? note,
     String? repeatId,
-    Timestamp? time,
-    Timestamp? formerTime,
+    Timestamp? date,
+    Timestamp? formerDate,
   }) {
     return Transaction(
       amount: amount ?? this.amount,
@@ -52,8 +52,8 @@ class Transaction {
       name: name ?? this.name,
       note: note ?? this.note,
       repeatId: repeatId ?? this.repeatId,
-      time: time ?? this.time,
-      formerTime: formerTime ?? this.formerTime,
+      date: date ?? this.date,
+      formerDate: formerDate ?? this.formerDate,
       rateInfo: rateInfo,
     );
   }
@@ -67,8 +67,8 @@ class Transaction {
       'name': name,
       'note': note,
       'repeatId': repeatId,
-      'time': time,
-      'formerTime': formerTime,
+      'time': date,
+      'formerTime': formerDate,
     };
   }
 
@@ -81,14 +81,14 @@ class Transaction {
       name: map['name'] as String,
       note: map['note'] as String?,
       repeatId: map['repeatId'] as String?,
-      time: map['time'] as Timestamp,
-      formerTime: map['formerTime'] as Timestamp?,
+      date: map['time'] as Timestamp,
+      formerDate: map['formerTime'] as Timestamp?,
     );
   }
 
   @override
   String toString() {
-    return 'Transaction(amount: $amount, category: $category, currency: $currency, id: $id, name: $name, note: $note, repeatId: $repeatId, time: $time, formerTime: $formerTime)';
+    return 'Transaction(amount: $amount, category: $category, currency: $currency, id: $id, name: $name, note: $note, repeatId: $repeatId, time: $date, formerTime: $formerDate)';
   }
 
   @override
@@ -103,8 +103,8 @@ class Transaction {
         other.name == name &&
         other.note == note &&
         other.repeatId == repeatId &&
-        other.time == time &&
-        other.formerTime == formerTime;
+        other.date == date &&
+        other.formerDate == formerDate;
   }
 
   @override
@@ -116,8 +116,8 @@ class Transaction {
         name.hashCode ^
         note.hashCode ^
         repeatId.hashCode ^
-        time.hashCode ^
-        formerTime.hashCode;
+        date.hashCode ^
+        formerDate.hashCode;
   }
 
 }

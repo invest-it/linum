@@ -40,8 +40,6 @@ class _LockScreenState extends State<LockScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final AuthenticationService auth =
-        context.watch<AuthenticationService>();
     final PinCodeService pinCodeService =
         context.watch<PinCodeService>();
     //final ScreenIndexProvider sip = context.watch<ScreenIndexProvider>();
@@ -72,11 +70,15 @@ class _LockScreenState extends State<LockScreen> {
                       ScreenFraction.quantile,
                     ),
                   ),
-                  child: Text(
-                    auth.userEmail.isNotEmpty
-                        ? auth.userEmail
-                        : pinCodeService.lastEmail,
-                    style: Theme.of(context).textTheme.headline5,
+                  child: Consumer<AuthenticationService>(
+                    builder: (context, authService, _) {
+                      return Text(
+                        authService.userEmail.isNotEmpty
+                            ? authService.userEmail
+                            : pinCodeService.lastEmail,
+                        style: Theme.of(context).textTheme.headline5,
+                      );
+                    },
                   ),
                 ),
               ],

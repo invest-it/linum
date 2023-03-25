@@ -21,6 +21,8 @@ import 'package:provider/provider.dart';
 // ignore_for_file: deprecated_member_use
 //TODO DEPRECATED
 
+//TODO: WTF OTIS, WHY IS THIS SO FREAKING LARGE?
+
 class HomeScreenCardBack extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -36,15 +38,15 @@ class HomeScreenCardBack extends StatelessWidget {
       );
     }
 
-    final settings = context.watch<AccountSettingsService>();
-    final screenCardProvider =
-        context.read<ScreenCardViewModel>();
-    final balanceDataProvider = context.watch<BalanceDataService>();
+    final accountSettingsService = context.watch<AccountSettingsService>();
+    final balanceDataService = context.watch<BalanceDataService>();
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
-        onTap: () => onFlipCardTap(context, screenCardProvider.controller!),
+        onTap: () => onFlipCardTap(
+            context.read<ScreenCardViewModel>().controller!,
+        ),
         onHorizontalDragEnd: (DragEndDetails details) =>
             onHorizontalDragEnd(details, context),
         onLongPress: () => goToCurrentTime(algorithmService),
@@ -82,7 +84,7 @@ class HomeScreenCardBack extends StatelessWidget {
                 constraints: const BoxConstraints(),
                 padding: const EdgeInsets.all(4.0),
                 onPressed: () {
-                  screenCardProvider.controller?.toggleCard();
+                  context.read<ScreenCardViewModel>().controller?.toggleCard();
                 },
                 icon: const Icon(
                   Icons.flip_camera_android_rounded,
@@ -129,7 +131,7 @@ class HomeScreenCardBack extends StatelessWidget {
                       Expanded(
                         //STREAM INSERT
                         child: StreamBuilder<HomeScreenCardData>(
-                          stream: balanceDataProvider.getHomeScreenCardData(),
+                          stream: balanceDataService.getHomeScreenCardData(),
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                     ConnectionState.none ||
@@ -167,7 +169,7 @@ class HomeScreenCardBack extends StatelessWidget {
                                                     value: snapshot.data?.mtdBalance ??
                                                         0.00,
                                                     locale: context.locale,
-                                                    symbol: settings
+                                                    symbol: accountSettingsService
                                                         .getStandardCurrency()
                                                         .symbol,
                                                   ),
@@ -204,7 +206,7 @@ class HomeScreenCardBack extends StatelessWidget {
                                                                   ?.eomFutureSerialIncome ??
                                                               0.00,
                                                           locale: context.locale,
-                                                          symbol: settings
+                                                          symbol: accountSettingsService
                                                               .getStandardCurrency()
                                                               .symbol,
                                                           fontSize:
@@ -223,7 +225,7 @@ class HomeScreenCardBack extends StatelessWidget {
                                                                   ?.eomFutureSerialExpenses ??
                                                               0.00,
                                                           locale: context.locale,
-                                                          symbol: settings
+                                                          symbol: accountSettingsService
                                                               .getStandardCurrency()
                                                               .symbol,
                                                           fontPrefix:
@@ -262,7 +264,7 @@ class HomeScreenCardBack extends StatelessWidget {
                                                   value: snapshot.data?.eomBalance ??
                                                       0.00,
                                                   locale: context.locale,
-                                                  symbol: settings
+                                                  symbol: accountSettingsService
                                                       .getStandardCurrency()
                                                       .symbol,
                                                 ),
@@ -302,7 +304,7 @@ class HomeScreenCardBack extends StatelessWidget {
                                                           ?.tillBeginningOfMonthSumBalance ??
                                                       0.00,
                                                   locale: context.locale,
-                                                  symbol: settings
+                                                  symbol: accountSettingsService
                                                       .getStandardCurrency()
                                                       .symbol,
                                                 ),
@@ -322,7 +324,7 @@ class HomeScreenCardBack extends StatelessWidget {
                                                           ?.tillEndOfMonthSumBalance ??
                                                       0.00,
                                                   locale: context.locale,
-                                                  symbol: settings
+                                                  symbol: accountSettingsService
                                                       .getStandardCurrency()
                                                       .symbol,
                                                 ),

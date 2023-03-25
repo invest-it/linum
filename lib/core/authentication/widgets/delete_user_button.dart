@@ -14,9 +14,6 @@ class DeleteUserButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AuthenticationService authenticationService =
-        context.watch<AuthenticationService>();
-
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 8.0,
@@ -37,7 +34,7 @@ class DeleteUserButton extends StatelessWidget {
                 actionTitle: tr("alertdialog.delete-account.action"),
                 dialogPurpose: DialogPurpose.danger,
                 function: () {
-                  authenticationService.deleteUserAccount(
+                  context.read<AuthenticationService>().deleteUserAccount(
                     onError: (message) => showAlertDialog(
                       context,
                       message: message,

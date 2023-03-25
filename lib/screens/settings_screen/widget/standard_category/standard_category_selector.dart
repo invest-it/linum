@@ -11,6 +11,7 @@ import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/common/widgets/category_list_tile.dart';
 import 'package:linum/core/account/services/account_settings_service.dart';
 import 'package:linum/core/categories/constants/standard_categories.dart';
+import 'package:linum/core/categories/models/category.dart';
 import 'package:linum/core/design/layout/enums/screen_key.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
 import 'package:linum/screens/settings_screen/widget/standard_category/category_list_view.dart';
@@ -26,15 +27,11 @@ class StandardCategorySelector extends StatefulWidget {
 class _StandardCategorySelectorState extends State<StandardCategorySelector> {
   @override
   Widget build(BuildContext context) {
-    final AccountSettingsService accountSettingsProvider =
-        context.watch<AccountSettingsService>();
-    final ActionLipViewModel actionLipStatusProvider =
-        context.watch<ActionLipViewModel>();
     return Column(
       children: [
         GestureDetector(
           onTap: () {
-            actionLipStatusProvider.setActionLip(
+            context.read<ActionLipViewModel>().setActionLip(
               screenKey: ScreenKey.settings,
               actionLipStatus: ActionLipVisibility.onviewport,
               actionLipTitle:
@@ -47,17 +44,22 @@ class _StandardCategorySelectorState extends State<StandardCategorySelector> {
               ),
             );
           },
-          child: CategoryListTile(
-            labelTitle:
-                tr('settings_screen.standard-income-selector.label-title'),
-            category: accountSettingsProvider.getIncomeEntryCategory(),
-            trailingIcon: Icons.north_east,
-            trailingIconColor: Colors.green,
+          child: Selector<AccountSettingsService, Category?>(
+            selector: (_, settings) => settings.getIncomeEntryCategory(),
+            builder: (context, category, _) {
+              return CategoryListTile(
+                labelTitle:
+                    tr('settings_screen.standard-income-selector.label-title'),
+                category: category,
+                trailingIcon: Icons.north_east,
+                trailingIconColor: Colors.green,
+              );
+            },
           ),
         ),
         GestureDetector(
           onTap: () {
-            actionLipStatusProvider.setActionLip(
+            context.read<ActionLipViewModel>().setActionLip(
               screenKey: ScreenKey.settings,
               actionLipStatus: ActionLipVisibility.onviewport,
               actionLipTitle:
@@ -70,12 +72,17 @@ class _StandardCategorySelectorState extends State<StandardCategorySelector> {
               ),
             );
           },
-          child: CategoryListTile(
-            labelTitle:
-                tr('settings_screen.standard-expense-selector.label-title'),
-            category: accountSettingsProvider.getExpenseEntryCategory(),
-            trailingIcon: Icons.south_east,
-            trailingIconColor: Colors.red,
+          child: Selector<AccountSettingsService, Category?>(
+            selector: (_, settings) => settings.getExpenseEntryCategory(),
+            builder: (context, category, _) {
+              return CategoryListTile(
+                labelTitle:
+                    tr('settings_screen.standard-expense-selector.label-title'),
+                category: category,
+                trailingIcon: Icons.south_east,
+                trailingIconColor: Colors.red,
+              );
+            },
           ),
         ),
       ],

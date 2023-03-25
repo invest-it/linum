@@ -8,19 +8,19 @@ import 'package:flutter/material.dart';
 import 'package:linum/core/balance/services/algorithm_service.dart';
 import 'package:provider/provider.dart';
 
-void goBackInTime(AlgorithmService algorithmProvider) {
+void goBackInTime(AlgorithmService algorithmService) {
   // Right Swipe, going back in time
-  algorithmProvider.previousMonth(notify: true);
+  algorithmService.previousMonth(notify: true);
 }
 
-void goForwardInTime(AlgorithmService algorithmProvider) {
+void goForwardInTime(AlgorithmService algorithmService) {
   //Left Swipe, going forward in time
-  algorithmProvider.nextMonth(notify: true);
+  algorithmService.nextMonth(notify: true);
 }
 
-void goToCurrentTime(AlgorithmService algorithmProvider) {
+void goToCurrentTime(AlgorithmService algorithmService) {
   // Reset to current month
-  algorithmProvider.resetCurrentShownMonth(notify: true);
+  algorithmService.resetCurrentShownMonth(notify: true);
 }
 
 void onHorizontalDragEnd(DragEndDetails details, BuildContext context) {

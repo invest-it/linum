@@ -35,10 +35,6 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
-    final AccountSettingsService accountSettingsProvider =
-        context.watch<AccountSettingsService>();
-    final PinCodeService pinCodeProvider =
-        context.watch<PinCodeService>();
     return ScreenSkeleton(
       head: 'Account',
       screenKey: ScreenKey.settings,
@@ -65,7 +61,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               'settings_screen.pin-lock.label-title',
               tooltipMessage: 'settings_screen.pin-lock.label-tooltip',
             ),
-            PinSwitch(pinCodeProvider: pinCodeProvider),
+            PinSwitch(),
             const ListDivider(),
 
             const ListHeader('settings_screen.standard-currency.label-title'),
@@ -76,7 +72,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             const ListHeader(
               'settings_screen.language-settings.label-title',
             ),
-            LanguageSelector(accountSettingsProvider: accountSettingsProvider),
+            const LanguageSelector(),
             const ListDivider(),
 
             /// YOUR ACCOUNT

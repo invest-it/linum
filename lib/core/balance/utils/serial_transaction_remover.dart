@@ -28,7 +28,7 @@ class SerialTransactionRemover {
   static bool removeThisAndAllBefore(
     BalanceDocument data,
     String id,
-    Timestamp time,
+    Timestamp date,
   ) {
     final index =
         data.serialTransactions.indexWhere((serial) => serial.id == id);
@@ -38,8 +38,8 @@ class SerialTransactionRemover {
     final serialTransaction = data.serialTransactions[index];
 
     // if not month => seconds
-    var newInitialTime = Timestamp.fromDate(
-      time.toDate().add(
+    var newInitialDate = Timestamp.fromDate(
+      date.toDate().add(
             Duration(
               seconds: serialTransaction.repeatDuration,
             ),
@@ -47,17 +47,17 @@ class SerialTransactionRemover {
     );
 
     if (serialTransaction.repeatDurationType.name.toUpperCase() == "MONTHS") {
-      newInitialTime = Timestamp.fromDate(
+      newInitialDate = Timestamp.fromDate(
         DateTime(
-          time.toDate().year,
-          time.toDate().month + serialTransaction.repeatDuration,
-          time.toDate().day,
+          date.toDate().year,
+          date.toDate().month + serialTransaction.repeatDuration,
+          date.toDate().day,
         ),
       );
     }
 
     data.serialTransactions[index] =
-        serialTransaction.copyWith(initialTime: newInitialTime);
+        serialTransaction.copyWith(startDate: newInitialDate);
 
     return true;
   }
@@ -65,7 +65,7 @@ class SerialTransactionRemover {
   static bool removeThisAndAllAfter(
     BalanceDocument data,
     String id,
-    Timestamp time,
+    Timestamp date,
   ) {
     final index =
         data.serialTransactions.indexWhere((serial) => serial.id == id);
@@ -76,7 +76,7 @@ class SerialTransactionRemover {
 
     // if not month => seconds
     var newEndTime = Timestamp.fromDate(
-      time.toDate().subtract(
+      date.toDate().subtract(
             Duration(
               seconds: serialTransaction.repeatDuration,
             ),
@@ -86,21 +86,21 @@ class SerialTransactionRemover {
     if (serialTransaction.repeatDurationType.name.toUpperCase() == "MONTHS") {
       newEndTime = Timestamp.fromDate(
         DateTime(
-          time.toDate().year,
-          time.toDate().month - serialTransaction.repeatDuration,
-          time.toDate().day,
+          date.toDate().year,
+          date.toDate().month - serialTransaction.repeatDuration,
+          date.toDate().day,
         ),
       );
     }
     data.serialTransactions[index] =
-        serialTransaction.copyWith(endTime: newEndTime);
+        serialTransaction.copyWith(endDate: newEndTime);
     return true;
   }
 
   static bool removeOnlyThisOne(
     BalanceDocument data,
     String id,
-    Timestamp time,
+    Timestamp date,
   ) {
     final index =
         data.serialTransactions.indexWhere((serial) => serial.id == id);
@@ -112,7 +112,7 @@ class SerialTransactionRemover {
     final changed = serialTransaction.changed ?? DateTimeMap();
 
     changed.addAll({
-      time.millisecondsSinceEpoch.toString(): ChangedTransaction(deleted: true)
+      date.millisecondsSinceEpoch.toString(): ChangedTransaction(deleted: true)
     });
 
     data.serialTransactions[index] =

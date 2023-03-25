@@ -41,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void resetAlgorithmProvider() {
+    // TODO: read how the Widget is re-rendered here
     final AlgorithmService algorithmProvider =
         context.watch<AlgorithmService>();
 
@@ -56,9 +57,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final BalanceDataService balanceDataProvider =
-        context.watch<BalanceDataService>();
-
     final PinCodeService pinCodeProvider =
         context.watch<PinCodeService>();
 
@@ -154,15 +152,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                   child: ScrollConfiguration(
                     behavior: SilentScroll(),
-                    child: showRepeatables
-                        ? balanceDataProvider.fillListViewWithRepeatables(
+                    child: Consumer<BalanceDataService>(
+                      builder: (context, balanceDataService, _) {
+                        if (showRepeatables) {
+                          return balanceDataService.fillListViewWithRepeatables(
                             HomeScreenListView(),
                             context: context,
-                          )
-                        : balanceDataProvider.fillListViewWithData(
-                            HomeScreenListView(),
-                            context: context,
-                          ),
+                          );
+                        }
+                        return balanceDataService.fillListViewWithData(
+                          HomeScreenListView(),
+                          context: context,
+                        );
+                      },
+                    )
                   ),
                 ),
               ),

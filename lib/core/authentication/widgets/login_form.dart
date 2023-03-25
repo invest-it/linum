@@ -37,11 +37,11 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    final OnboardingScreenViewModel onboardingScreenProvider =
+    final OnboardingScreenViewModel viewModel =
         context.watch<OnboardingScreenViewModel>();
 
-    if (onboardingScreenProvider.pageState == OnboardingPageState.login &&
-        onboardingScreenProvider.hasPageChanged) {
+    if (viewModel.pageState == OnboardingPageState.login &&
+        viewModel.hasPageChanged) {
       _mailController = null;
       _passController.clear();
       _mailValidate = false;
@@ -49,13 +49,10 @@ class _LoginFormState extends State<LoginForm> {
     }
 
     _mailController ??=
-        TextEditingController(text: onboardingScreenProvider.mailInput);
-
-    final AuthenticationService auth =
-        context.watch<AuthenticationService>();
+        TextEditingController(text: viewModel.mailInput);
 
     void logIn(String mail, String pass) {
-      auth.signIn(
+      context.read<AuthenticationService>().signIn(
         mail.trim(),
         pass,
         onError: (message) => showAlertDialog(context, message: message),
@@ -123,7 +120,7 @@ class _LoginFormState extends State<LoginForm> {
                               : null,
                         ),
                         onTap: () {
-                          onboardingScreenProvider
+                          viewModel
                               .setPageState(OnboardingPageState.login);
                         },
                       ),
@@ -210,7 +207,7 @@ class _LoginFormState extends State<LoginForm> {
                 height: context.proportionateScreenHeight(8),
               ),
               SignInWithGoogleButton(
-                onPressed: auth.signInWithGoogle,
+                onPressed: context.read<AuthenticationService>().signInWithGoogle,
               ),
               SizedBox(
                 height: context.proportionateScreenHeight(8),
@@ -218,7 +215,7 @@ class _LoginFormState extends State<LoginForm> {
               if (Platform.isIOS) ...[
                 // Works only on iOS at the moment (according to Google)
                 SignInWithAppleButton(
-                  onPressed: auth.signInWithApple,
+                  onPressed: context.read<AuthenticationService>().signInWithApple,
                   text: tr('onboarding_screen.apple-button'),
                   height: context.proportionateScreenHeight(40),
                 ),

@@ -19,7 +19,7 @@ final Transaction baseTransaction = Transaction(
   category: "None",
   currency: "EUR",
   name: "Test Single Balance Data",
-  time: firestore.Timestamp.fromMillisecondsSinceEpoch(
+  date: firestore.Timestamp.fromMillisecondsSinceEpoch(
     firestore.Timestamp.now().millisecondsSinceEpoch - (3600 * 1000),
   ),
   id: const Uuid().v4(),

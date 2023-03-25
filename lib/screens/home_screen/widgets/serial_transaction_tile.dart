@@ -51,7 +51,7 @@ class SerialTransactionTile extends StatelessWidget {
           style: Theme.of(context).textTheme.bodyText1,
         ),
         subtitle: Text(
-          "${calculateTimeFrequency(context, serialTransaction)} \nSeit ${serialFormatter.format(serialTransaction.initialTime.toDate())}"
+          "${calculateTimeFrequency(context, serialTransaction)} \nSeit ${serialFormatter.format(serialTransaction.startDate.toDate())}"
               .toUpperCase(),
           style: Theme.of(context).textTheme.overline,
         ),

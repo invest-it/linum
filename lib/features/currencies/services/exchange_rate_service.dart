@@ -29,7 +29,7 @@ class ExchangeRateService extends ChangeNotifier {
 
     for (final transaction in transactions) {
 
-      var date = transaction.time.toDate();
+      var date = transaction.date.toDate();
 
       final today = DateTime.now();
       final todaySanitized = DateTime(today.year, today.month, today.day);
@@ -56,7 +56,7 @@ class ExchangeRateService extends ChangeNotifier {
       List<int> sortedKeys,
   ) async {
 
-    final dateTime = transaction.time.toDate();
+    final dateTime = transaction.date.toDate();
     final today = DateTime.now();
     final todaySanitized = DateTime(today.year, today.month, today.day);
     var sanitizedDateTime = DateTime(dateTime.year, dateTime.month, dateTime.day);
@@ -75,7 +75,7 @@ class ExchangeRateService extends ChangeNotifier {
     var exchangeRates = ratesMap[key];
 
     // Still necessary, due to the possibility of missing rates;
-    if ((exchangeRates == null || exchangeRates.rates == null) && transaction.time.toDate().isBefore(DateTime.now())) {
+    if ((exchangeRates == null || exchangeRates.rates == null) && transaction.date.toDate().isBefore(DateTime.now())) {
       exchangeRates = await _repository.getExchangeRatesForDate(sanitizedDateTime);
     }
 
@@ -120,7 +120,7 @@ class ExchangeRateService extends ChangeNotifier {
       final standardCurrencyRate = exchangeRates.rates?[standardCurrency.name];
 
       if (transactionCurrencyRate != null) {
-        final dateTime = transaction.time.toDate();
+        final dateTime = transaction.date.toDate();
         final sanitizedDateTime = DateTime(dateTime.year, dateTime.month, dateTime.day);
         final dateInMs = sanitizedDateTime.millisecondsSinceEpoch;
         transaction.rateInfo = ExchangeRateInfo(

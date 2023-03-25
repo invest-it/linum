@@ -149,7 +149,7 @@ class _ScreenLayoutState extends State<ScreenLayout>
     const List<String> categories = ["food", "clothing", "computer games"];
     final Random rand = Random();
     for (int i = 0; i < 365 * 5 * 4; i++) {
-      final firestore.Timestamp time = firestore.Timestamp.fromDate(
+      final firestore.Timestamp date = firestore.Timestamp.fromDate(
         DateTime.now().subtract(Duration(days: rand.nextInt(365 * 5))),
       );
       balanceDataProvider.addTransaction(
@@ -158,7 +158,7 @@ class _ScreenLayoutState extends State<ScreenLayout>
           category: categories[rand.nextInt(categories.length)],
           currency: "EUR",
           name: "Random Item Number: $i",
-          time: time,
+          date: date,
         ),
       );
       logger.v("$i. Hochgeladen");

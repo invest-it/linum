@@ -16,8 +16,6 @@ class CurrencyListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final settings = context.watch<AccountSettingsService>();
-    final actionLipStatus = context.watch<ActionLipViewModel>();
     return Expanded(
       child: ListView.builder(
         padding: EdgeInsets.only(
@@ -29,14 +27,18 @@ class CurrencyListView extends StatelessWidget {
         itemCount: currencies.length,
         itemBuilder: (BuildContext context, int index) {
           final currency = currencies[index];
-          return CurrencyListTile(
-            currency: currency,
-            selected: currency.name == settings.getStandardCurrency().name,
-            onTap: () {
-              settings.setStandardCurrency(currencies[index]);
-              actionLipStatus.setActionLipStatus(
-                screenKey: ScreenKey.settings,
-                status: ActionLipVisibility.hidden,
+          return Consumer<AccountSettingsService>(
+            builder: (context, settings, _) {
+              return CurrencyListTile(
+                currency: currency,
+                selected: currency.name == settings.getStandardCurrency().name,
+                onTap: () {
+                  settings.setStandardCurrency(currencies[index]);
+                  context.read<ActionLipViewModel>().setActionLipStatus(
+                    screenKey: ScreenKey.settings,
+                    status: ActionLipVisibility.hidden,
+                  );
+                },
               );
             },
           );

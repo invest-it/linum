@@ -18,8 +18,8 @@ class SerialTransaction {
   final String name;
   final String? note;
   final DateTimeMap<String, ChangedTransaction>? changed;
-  final Timestamp initialTime;
-  final Timestamp? endTime;
+  final Timestamp startDate;
+  final Timestamp? endDate;
   final int repeatDuration;
   final RepeatDurationType repeatDurationType;
 
@@ -31,8 +31,8 @@ class SerialTransaction {
     required this.name,
     this.note,
     this.changed,
-    required this.initialTime,
-    this.endTime,
+    required this.startDate,
+    this.endDate,
     required this.repeatDuration,
     this.repeatDurationType = RepeatDurationType.seconds,
   })  : id = id ?? const Uuid().v4();
@@ -46,8 +46,8 @@ class SerialTransaction {
     String? note,
     DateTimeMap<String, ChangedTransaction>? changed,
     String? repeatId,
-    Timestamp? initialTime,
-    Timestamp? endTime,
+    Timestamp? startDate,
+    Timestamp? endDate,
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
   }) {
@@ -59,8 +59,8 @@ class SerialTransaction {
       name: name ?? this.name,
       note: note ?? this.note,
       changed: changed ?? this.changed,
-      initialTime: initialTime ?? this.initialTime,
-      endTime: endTime ?? this.endTime,
+      startDate: startDate ?? this.startDate,
+      endDate: endDate ?? this.endDate,
       repeatDuration: repeatDuration ?? this.repeatDuration,
       repeatDurationType: repeatDurationType ?? this.repeatDurationType,
     );
@@ -75,8 +75,8 @@ class SerialTransaction {
       'name': name,
       'note': note,
       'changed': changed?.map((key, value) => MapEntry(key, value.toMap())), // TODO: Check if this should be removed when building a map
-      'initialTime': initialTime,
-      'endTime': endTime,
+      'initialTime': startDate,
+      'endTime': endDate,
       'repeatDuration': repeatDuration,
       'repeatDurationType': repeatDurationType.name,
     };
@@ -97,8 +97,8 @@ class SerialTransaction {
       name: map['name'] as String,
       note: map['note'] as String?,
       changed: changed, // TODO: Might not work
-      initialTime: map['initialTime'] as Timestamp,
-      endTime: map['endTime'] as Timestamp?,
+      startDate: map['initialTime'] as Timestamp,
+      endDate: map['endTime'] as Timestamp?,
       repeatDuration: map['repeatDuration'] as int,
       repeatDurationType:  repeatDurationTypeFromString(map['repeatDurationType'] as String) ??
           RepeatDurationType.seconds,
@@ -107,7 +107,7 @@ class SerialTransaction {
 
   @override
   String toString() {
-    return 'RepeatBalanceData(amount: $amount, category: $category, currency: $currency, id: $id, name: $name, note: $note, changed: $changed, initialTime: $initialTime, endTime: $endTime, repeatDuration: $repeatDuration, repeatDurationType: $repeatDurationType)';
+    return 'RepeatBalanceData(amount: $amount, category: $category, currency: $currency, id: $id, name: $name, note: $note, changed: $changed, initialTime: $startDate, endTime: $endDate, repeatDuration: $repeatDuration, repeatDurationType: $repeatDurationType)';
   }
 
   @override
@@ -122,8 +122,8 @@ class SerialTransaction {
         other.name == name &&
         other.note == note &&
         other.changed == changed &&
-        other.initialTime == initialTime &&
-        other.endTime == endTime &&
+        other.startDate == startDate &&
+        other.endDate == endDate &&
         other.repeatDuration == repeatDuration &&
         other.repeatDurationType == repeatDurationType;
   }
@@ -137,8 +137,8 @@ class SerialTransaction {
         name.hashCode ^
         note.hashCode ^
         changed.hashCode ^
-        initialTime.hashCode ^
-        endTime.hashCode ^
+        startDate.hashCode ^
+        endDate.hashCode ^
         repeatDuration.hashCode ^
         repeatDurationType.hashCode;
   }

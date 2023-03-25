@@ -16,7 +16,7 @@ bool isMonthly(SerialTransaction serialTransaction) {
 void removeUnusedChangedAttributes(
   SerialTransaction serialTransaction,
 ) {
-  if (serialTransaction.changed == null || serialTransaction.endTime == null) {
+  if (serialTransaction.changed == null || serialTransaction.endDate == null) {
     return;
   }
   final List<String> keysToRemove = <String>[];
@@ -24,12 +24,12 @@ void removeUnusedChangedAttributes(
     if (!DateTime.fromMillisecondsSinceEpoch(
           (num.tryParse(timeStampString) as int?) ?? 0,
         ).isBefore(
-          serialTransaction.initialTime.toDate(),
+          serialTransaction.startDate.toDate(),
         ) &&
         !DateTime.fromMillisecondsSinceEpoch(
           (num.tryParse(timeStampString) as int?) ?? 0,
         ).isAfter(
-          serialTransaction.endTime!.toDate(),
+          serialTransaction.endDate!.toDate(),
         )) {
       keysToRemove.add(timeStampString);
     }
@@ -48,9 +48,9 @@ firestore.Timestamp? changeThisAndAllAfterEndTimeHelpFunction(
   if (checkedEndTime != null) {
     return checkedEndTime;
   }
-  if (oldSerialTransaction.endTime != null) {
+  if (oldSerialTransaction.endDate != null) {
     return firestore.Timestamp.fromDate(
-      oldSerialTransaction.endTime!
+      oldSerialTransaction.endDate!
           .toDate()
           .subtract(timeDifference),
     );

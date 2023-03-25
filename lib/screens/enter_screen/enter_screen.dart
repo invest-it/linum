@@ -44,8 +44,8 @@ class EnterScreen extends StatelessWidget {
                   balanceDataProvider.updateSerialTransaction(
                     serialTransaction: serialTransaction,
                     changeType: changeMode,
-                    oldDate: this.transaction?.formerTime ?? this.transaction?.time,
-                    newDate: serialTransaction.initialTime,
+                    oldDate: this.transaction?.formerDate ?? this.transaction?.date,
+                    newDate: serialTransaction.startDate,
                   );
                 }
                 Navigator.pop(context);

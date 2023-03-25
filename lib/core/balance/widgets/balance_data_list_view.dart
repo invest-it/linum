@@ -22,7 +22,7 @@ abstract class BalanceDataListView {
   ///   category: <String>
   ///   currency: <String> (from the currency list in the converter collection)
   ///   name: <String>
-  ///   time: <Timestamp>
+  ///   date: <Timestamp>
   /// }
   void setTransactions(
     List<Transaction> transactions, {

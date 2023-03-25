@@ -50,13 +50,13 @@ class SerialTransactionManager {
     String? name,
     String? note,
     bool? deleteNote,
-    firestore.Timestamp? initialTime,
+    firestore.Timestamp? startDate,
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
-    firestore.Timestamp? endTime,
-    bool resetEndTime = false,
-    firestore.Timestamp? time,
-    firestore.Timestamp? newTime,
+    firestore.Timestamp? endDate,
+    bool resetEndDate = false,
+    firestore.Timestamp? oldDate,
+    firestore.Timestamp? newDate,
   }) {
     // conditions
     if (id == "") {
@@ -64,32 +64,32 @@ class SerialTransactionManager {
       return false;
     }
     if (changeType == SerialTransactionChangeMode.thisAndAllBefore) {
-      if (time == null) {
-        logger.e("RepeatableChangeType.thisAndAllBefore => time != null");
+      if (oldDate == null) {
+        logger.e("RepeatableChangeType.thisAndAllBefore => date != null");
         return false;
       }
-      if (resetEndTime) {
+      if (resetEndDate) {
         logger.e(
-          "resetEndTime, endTime are no available for RepeatableChangeType.thisAndAllBefore",
+          "resetEndTime, endDate are no available for RepeatableChangeType.thisAndAllBefore",
         );
         return false;
       }
     }
     if (changeType == SerialTransactionChangeMode.thisAndAllAfter) {
-      if (time == null) {
-        logger.e("RepeatableChangeType.thisAndAllAfter => time != null");
+      if (oldDate == null) {
+        logger.e("RepeatableChangeType.thisAndAllAfter => date != null");
         return false;
       }
-      if (initialTime != null) {
+      if (startDate != null) {
         logger.e(
-          "initialTime is no available for RepeatableChangeType.thisAndAllAfter",
+          "startDate is no available for RepeatableChangeType.thisAndAllAfter",
         );
         return false;
       }
     }
     if (changeType == SerialTransactionChangeMode.onlyThisOne) {
-      if (time == null) {
-        logger.e("RepeatableChangeType.onlyThisOne => time != null");
+      if (oldDate == null) {
+        logger.e("RepeatableChangeType.onlyThisOne => date != null");
         return false;
       }
     }
@@ -113,7 +113,7 @@ class SerialTransactionManager {
     int? checkedRepeatDuration;
     RepeatDurationType? checkedRepeatDurationType;
     firestore.Timestamp? checkedEndTime;
-    firestore.Timestamp? checkedNewTime;
+    firestore.Timestamp? checkedNewDate;
 
     for (final serialTransaction in data.serialTransactions) {
       if (serialTransaction.id == id) {
@@ -132,8 +132,8 @@ class SerialTransactionManager {
         if (note != serialTransaction.note) {
           checkedNote = note;
         }
-        if (initialTime != serialTransaction.initialTime) {
-          checkedInitialTime = initialTime;
+        if (startDate != serialTransaction.startDate) {
+          checkedInitialTime = startDate;
         }
         if (repeatDuration != serialTransaction.repeatDuration) {
           checkedRepeatDuration = repeatDuration;
@@ -141,11 +141,11 @@ class SerialTransactionManager {
         if (repeatDurationType != serialTransaction.repeatDurationType) {
           checkedRepeatDurationType = repeatDurationType;
         }
-        if (endTime != serialTransaction.endTime) {
-          checkedEndTime = endTime;
+        if (endDate != serialTransaction.endDate) {
+          checkedEndTime = endDate;
         }
-        if (newTime != time) {
-          checkedNewTime = newTime;
+        if (newDate != oldDate) {
+          checkedNewDate = newDate;
         }
 
         break;
@@ -160,16 +160,16 @@ class SerialTransactionManager {
           currency: checkedCurrency,
           data: data,
           deleteNote: deleteNote,
-          endTime: checkedEndTime,
+          endDate: checkedEndTime,
           id: id,
-          initialTime: checkedInitialTime,
+          startDate: checkedInitialTime,
           name: checkedName,
           note: checkedNote,
-          newTime: checkedNewTime,
+          newDate: checkedNewDate,
           repeatDuration: checkedRepeatDuration,
           repeatDurationType: checkedRepeatDurationType,
-          resetEndTime: resetEndTime,
-          time: time,
+          resetEndDate: resetEndDate,
+          oldDate: oldDate,
         );
       case SerialTransactionChangeMode.thisAndAllBefore:
         return SerialTransactionUpdater.updateThisAndAllBefore(
@@ -178,16 +178,16 @@ class SerialTransactionManager {
           currency: checkedCurrency,
           data: data,
           deleteNote: deleteNote,
-          endTime: checkedEndTime,
+          endDate: checkedEndTime,
           id: id,
-          initialTime: checkedInitialTime,
+          startDate: checkedInitialTime,
           name: checkedName,
           note: checkedNote,
-          newTime: checkedNewTime,
+          newDate: checkedNewDate,
           repeatDuration: checkedRepeatDuration,
           repeatDurationType: checkedRepeatDurationType,
-          resetEndTime: resetEndTime,
-          time: time!,
+          resetEndDate: resetEndDate,
+          oldDate: oldDate!,
         );
       case SerialTransactionChangeMode.thisAndAllAfter:
         return SerialTransactionUpdater.updateThisAndAllAfter(
@@ -196,29 +196,29 @@ class SerialTransactionManager {
           currency: checkedCurrency,
           data: data,
           deleteNote: deleteNote,
-          endTime: checkedEndTime,
+          endDate: checkedEndTime,
           id: id,
-          initialTime: checkedInitialTime,
+          startDate: checkedInitialTime,
           name: checkedName,
-          newTime: checkedNewTime,
+          newDate: checkedNewDate,
           repeatDuration: checkedRepeatDuration,
           repeatDurationType: checkedRepeatDurationType,
-          resetEndTime: resetEndTime,
-          time: time!,
+          resetEndDate: resetEndDate,
+          oldDate: oldDate!,
         );
 
       case SerialTransactionChangeMode.onlyThisOne:
         return SerialTransactionUpdater.updateOnlyThisOne(
           data: data,
           id: id,
-          time: time!,
+          date: oldDate!,
           changed: ChangedTransaction(
             amount: checkedAmount,
             category: checkedCategory,
             currency: checkedCurrency,
             name: checkedName,
             note: checkedNote,
-            time: checkedNewTime,
+            date: checkedNewDate,
           ),
         );
     }
@@ -228,26 +228,26 @@ class SerialTransactionManager {
     required String id,
     required BalanceDocument data,
     required SerialTransactionChangeMode removeType,
-    firestore.Timestamp? time,
+    firestore.Timestamp? date,
   }) {
     // conditions
     if (removeType == SerialTransactionChangeMode.thisAndAllBefore &&
-        time == null) {
+        date == null) {
       logger.e(
-        "removeType == RepeatableChangeType.thisAndAllBefore => time != null",
+        "removeType == RepeatableChangeType.thisAndAllBefore => date != null",
       );
       return false;
     }
     if (removeType == SerialTransactionChangeMode.thisAndAllAfter &&
-        time == null) {
+        date == null) {
       logger.e(
-        "removeType == RepeatableChangeType.thisAndAllAfter => time != null",
+        "removeType == RepeatableChangeType.thisAndAllAfter => date != null",
       );
       return false;
     }
-    if (removeType == SerialTransactionChangeMode.onlyThisOne && time == null) {
+    if (removeType == SerialTransactionChangeMode.onlyThisOne && date == null) {
       logger
-          .e("removeType == RepeatableChangeType.onlyThisOne => time != null");
+          .e("removeType == RepeatableChangeType.onlyThisOne => date != null");
       return false;
     }
 
@@ -258,17 +258,17 @@ class SerialTransactionManager {
         return SerialTransactionRemover.removeThisAndAllBefore(
           data,
           id,
-          time!,
+          date!,
         );
       case SerialTransactionChangeMode.thisAndAllAfter:
         final value = SerialTransactionRemover.removeThisAndAllAfter(
           data,
           id,
-          time!,
+          date!,
         );
         return value;
       case SerialTransactionChangeMode.onlyThisOne:
-        return SerialTransactionRemover.removeOnlyThisOne(data, id, time!);
+        return SerialTransactionRemover.removeOnlyThisOne(data, id, date!);
     }
   }
 
@@ -296,11 +296,11 @@ class SerialTransactionManager {
     List<Transaction> transaction,
     DateTime tillDate,
   ) {
-    DateTime currentTime = serialTransaction.initialTime.toDate();
+    DateTime currentTime = serialTransaction.startDate.toDate();
 
-    // while we are before 1 years after today / before endTime
-    while ((serialTransaction.endTime == null ||
-            !serialTransaction.endTime!.toDate().isBefore(currentTime)) &&
+    // while we are before 1 years after today / before endDate
+    while ((serialTransaction.endDate == null ||
+            !serialTransaction.endDate!.toDate().isBefore(currentTime)) &&
         !tillDate.isBefore(currentTime)) {
       // if "changed" -> "this firestore.Timestamp" -> deleted exist AND it is true, dont add this balance
       if (serialTransaction.changed == null ||
@@ -317,11 +317,11 @@ class SerialTransactionManager {
                 serialTransaction.currency,
             name: serialTransaction.changed?[currentTime]?.name ??
                 serialTransaction.name,
-            time: serialTransaction.changed?[currentTime]?.time ??
+            date: serialTransaction.changed?[currentTime]?.date ??
                 firestore.Timestamp.fromDate(currentTime),
             repeatId: serialTransaction.id,
             id: const Uuid().v4(),
-            formerTime: (serialTransaction.changed?[currentTime]?.time != null)
+            formerDate: (serialTransaction.changed?[currentTime]?.date != null)
                 ? firestore.Timestamp.fromDate(currentTime)
                 : null,
           ),
@@ -332,7 +332,7 @@ class SerialTransactionManager {
         currentTime,
         // is it a month or second duration type
         monthly: isMonthly(serialTransaction),
-        dayOfTheMonth: serialTransaction.initialTime.toDate().day,
+        dayOfTheMonth: serialTransaction.startDate.toDate().day,
       );
     }
   }

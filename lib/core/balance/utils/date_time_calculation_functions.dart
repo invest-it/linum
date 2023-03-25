@@ -7,49 +7,49 @@
 /// calculate next time step and decide for that if you need monthly steps or seconds as stepsize
 DateTime calculateOneTimeStep(
   int stepsize,
-  DateTime currentTime, {
+  DateTime currentDate, {
   required bool monthly,
   int? dayOfTheMonth,
 }) {
-  late DateTime newCurrentTime;
+  late DateTime newCurrentDate;
   if (!monthly) {
-    newCurrentTime = currentTime.add(
+    newCurrentDate = currentDate.add(
       Duration(
         seconds: stepsize,
       ),
     );
   } else {
-    newCurrentTime = monthlyStepCalculator(
-      currentTime.year,
-      currentTime.month + stepsize,
-      dayOfTheMonth ?? currentTime.day,
+    newCurrentDate = monthlyStepCalculator(
+      currentDate.year,
+      currentDate.month + stepsize,
+      dayOfTheMonth ?? currentDate.day,
     );
   }
-  return newCurrentTime;
+  return newCurrentDate;
 }
 
 /// the counterpart to calculateOneTimeStep
 DateTime calculateOneTimeStepBackwards(
   int stepsize,
-  DateTime currentTime, {
+  DateTime currentDate, {
   required bool monthly,
   int? dayOfTheMonth,
 }) {
-  late DateTime newCurrentTime;
+  late DateTime newCurrentDate;
   if (!monthly) {
-    newCurrentTime = currentTime.subtract(
+    newCurrentDate = currentDate.subtract(
       Duration(
         seconds: stepsize,
       ),
     );
   } else {
-    newCurrentTime = monthlyStepCalculator(
-      currentTime.year,
-      currentTime.month - stepsize,
-      dayOfTheMonth ?? currentTime.day,
+    newCurrentDate = monthlyStepCalculator(
+      currentDate.year,
+      currentDate.month - stepsize,
+      dayOfTheMonth ?? currentDate.day,
     );
   }
-  return newCurrentTime;
+  return newCurrentDate;
 }
 
 /// avoid errors with 29th 30th and 31th

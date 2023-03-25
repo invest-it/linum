@@ -14,6 +14,7 @@ import 'package:linum/core/balance/models/serial_transaction.dart';
 import 'package:linum/core/balance/models/transaction.dart';
 import 'package:linum/core/balance/utils/transaction_amount_formatter.dart';
 import 'package:linum/core/balance/widgets/balance_data_list_view.dart';
+import 'package:linum/features/currencies/models/currency.dart';
 import 'package:linum/screens/budget_screen/widgets/time_widget.dart';
 import 'package:linum/screens/home_screen/widgets/serial_transaction_tile.dart';
 import 'package:linum/screens/home_screen/widgets/transaction_tile.dart';
@@ -114,10 +115,10 @@ class HomeScreenListView implements BalanceDataListView {
     final DateFormat monthFormatter = DateFormat('MMMM', langCode);
     final DateFormat monthAndYearFormatter = DateFormat('MMMM yyyy', langCode);
 
-    final settings = context.watch<AccountSettingsService>();
+
     final amountFormatter = TransactionAmountFormatter(
       context.locale,
-      settings.getStandardCurrency(),
+      context.watch<AccountSettingsService>().getStandardCurrency(),
     );
     // remember last used index in the list
     int currentIndex = 0;
@@ -130,7 +131,7 @@ class HomeScreenListView implements BalanceDataListView {
       list.add(const TimeWidget(displayValue: "listview.label-no-entries"));
     } else {
       for (final Transaction transaction in transactions) {
-        final DateTime date = transaction.time.toDate();
+        final DateTime date = transaction.date.toDate();
         final bool isFutureItem = date.isAfter(
           DateTime(
             DateTime.now().year,
