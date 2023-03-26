@@ -32,6 +32,7 @@ class _StandardCategorySelectorState extends State<StandardCategorySelector> {
         GestureDetector(
           onTap: () {
             context.read<ActionLipViewModel>().setActionLip(
+              context: context,
               screenKey: ScreenKey.settings,
               actionLipStatus: ActionLipVisibility.onviewport,
               actionLipTitle:
@@ -60,6 +61,7 @@ class _StandardCategorySelectorState extends State<StandardCategorySelector> {
         GestureDetector(
           onTap: () {
             context.read<ActionLipViewModel>().setActionLip(
+              context: context,
               screenKey: ScreenKey.settings,
               actionLipStatus: ActionLipVisibility.onviewport,
               actionLipTitle:

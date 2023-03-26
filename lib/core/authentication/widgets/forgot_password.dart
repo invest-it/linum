@@ -36,6 +36,7 @@ class ForgotPasswordButton extends StatelessWidget {
       // lip if the user is not logged in
       if (!authenticationService.isLoggedIn) {
         actionLipStatusProvider.setActionLip(
+          context: context,
           screenKey: screenKey,
           actionLipBody: Column(
             children: [
@@ -139,6 +140,7 @@ class ForgotPasswordButton extends StatelessWidget {
                               actionTitle: "alertdialog.reset-password.action",
                             );
                             actionLipStatusProvider.setActionLipStatus(
+                              context: context,
                               screenKey: ScreenKey.onboarding,
                               status: ActionLipVisibility.hidden,
                             );
@@ -175,6 +177,7 @@ class ForgotPasswordButton extends StatelessWidget {
       // lip if the user has already authenticated themself
       else {
         actionLipStatusProvider.setActionLip(
+          context: context,
           screenKey: screenKey,
           actionLipBody: Column(
             children: [
@@ -280,6 +283,7 @@ class ForgotPasswordButton extends StatelessWidget {
                               actionTitle: "alertdialog.update-password.action",
                             );
                             actionLipStatusProvider.setActionLipStatus(
+                              context: context,
                               screenKey: ScreenKey.settings,
                               status: ActionLipVisibility.hidden,
                             );

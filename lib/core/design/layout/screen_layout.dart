@@ -6,16 +6,14 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:linum/core/balance/models/transaction.dart';
 import 'package:linum/core/balance/services/balance_data_service.dart';
 import 'package:linum/core/design/layout/enums/screen_key.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/core/design/layout/widgets/bottom_app_bar.dart';
-import 'package:linum/core/navigation/main_router_delegate.dart';
+import 'package:linum/core/navigation/get_delegate.dart';
 import 'package:linum/core/navigation/main_routes.dart';
 import 'package:linum/core/navigation/screen_routes.dart';
-import 'package:linum/screens/enter_screen/enter_screen.dart';
 import 'package:linum/screens/enter_screen/utils/show_enter_screen.dart';
 import 'package:linum/screens/lock_screen/services/pin_code_service.dart';
 import 'package:logger/logger.dart';
@@ -72,6 +70,8 @@ class _ScreenLayoutState extends State<ScreenLayout>
     final firestore.CollectionReference balance =
         firestore.FirebaseFirestore.instance.collection('balance');
 
+    final routerDelegate = context.getMainRouterDelegate();
+
 
     // ignore: unused_local_variable
     final Widget loadingIndicator = Container(
@@ -83,7 +83,6 @@ class _ScreenLayoutState extends State<ScreenLayout>
       ),
     );
 
-    final router = Get.find<MainRouterDelegate>();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -111,25 +110,25 @@ class _ScreenLayoutState extends State<ScreenLayout>
             iconData: Icons.home,
             text: 'Home',
             selected: widget.currentScreen == ScreenKey.home,
-            onTap: () => router.replaceLastRoute(MainRoute.home),
+            onTap: () => routerDelegate.replaceLastRoute(MainRoute.home),
           ),
           BottomAppBarItem(
             iconData: Icons.savings_rounded,
             text: 'Budget',
             selected: widget.currentScreen == ScreenKey.budget,
-            onTap: () => router.replaceLastRoute(MainRoute.budget),
+            onTap: () => routerDelegate.replaceLastRoute(MainRoute.budget),
           ),
           BottomAppBarItem(
             iconData: Icons.bar_chart_rounded,
             text: 'Stats',
             selected: widget.currentScreen == ScreenKey.stats,
-            onTap: () => router.replaceLastRoute(MainRoute.stats),
+            onTap: () => routerDelegate.replaceLastRoute(MainRoute.stats),
           ),
           BottomAppBarItem(
             iconData: Icons.person,
             text: 'Account',
             selected: widget.currentScreen == ScreenKey.settings,
-            onTap: () => router.replaceLastRoute(MainRoute.settings),
+            onTap: () => routerDelegate.replaceLastRoute(MainRoute.settings),
           ),
         ],
         backgroundColor: Theme.of(context).colorScheme.primary,

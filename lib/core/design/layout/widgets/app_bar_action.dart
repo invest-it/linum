@@ -29,7 +29,7 @@ abstract class AppBarAction {
     DefaultAction.academy: (BuildContext context) {
       return AppBarAction.fromParameters(
         icon: Icons.video_library_rounded,
-        ontap: () => getRouterDelegate().pushRoute(
+        ontap: () => context.getMainRouterDelegate().pushRoute(
           MainRoute.academy,
         ), // TODO: Find out why app closes on back-navigation
       );
@@ -37,7 +37,7 @@ abstract class AppBarAction {
     DefaultAction.settings: (BuildContext context) {
       return AppBarAction.fromParameters(
         icon: Icons.settings_rounded,
-        ontap: () => getRouterDelegate().replaceLastRoute(
+        ontap: () => context.getMainRouterDelegate().replaceLastRoute(
           MainRoute.settings,
           rememberReplacedRoute: true,
         ),

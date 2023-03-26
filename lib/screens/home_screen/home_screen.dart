@@ -132,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     TextButton(
                       onPressed: () {
-                        getRouterDelegate().pushRoute(MainRoute.filter);
+                        context.getMainRouterDelegate().pushRoute(MainRoute.filter);
                       },
                       child: Text(
                         showRepeatables

@@ -25,6 +25,7 @@ class _StandardCurrencySelectorState extends State<StandardCurrencySelector> {
         GestureDetector(
           onTap: () {
             context.read<ActionLipViewModel>().setActionLip(
+              context: context,
               screenKey: ScreenKey.settings,
               actionLipStatus: ActionLipVisibility.onviewport,
               actionLipTitle: tr('action_lip.standard-currency.label-title'),

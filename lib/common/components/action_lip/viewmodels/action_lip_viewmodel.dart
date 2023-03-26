@@ -15,10 +15,12 @@ class ActionLipViewModel extends ChangeNotifier {
   final Map<ScreenKey, String> _actionTitleMap = {};
 
   void setActionLipStatus({
+    required BuildContext context,
     required ScreenKey screenKey,
     required ActionLipVisibility status,
   }) {
     setActionLipStatusSilently(
+      context: context,
       screenKey: screenKey,
       status: status,
     );
@@ -26,16 +28,18 @@ class ActionLipViewModel extends ChangeNotifier {
   }
 
   void setActionLipStatusSilently({
+    required BuildContext context,
     required ScreenKey screenKey,
     required ActionLipVisibility status,
   }) {
     if (status != ActionLipVisibility.onviewport) {
-      getRouterDelegate().setOnPopOverwrite(null);
+      context.getMainRouterDelegate().setOnPopOverwrite(null);
     }
     _actionLipMap[screenKey] = status;
   }
 
   void setActionLip({
+    required BuildContext context,
     required ScreenKey screenKey,
     required Widget actionLipBody,
     String? actionLipTitle,
@@ -48,8 +52,9 @@ class ActionLipViewModel extends ChangeNotifier {
       actionLipTitle: actionLipTitle,
     );
     if (actionLipStatus == ActionLipVisibility.onviewport) {
-      getRouterDelegate().setOnPopOverwrite(() {
+      context.getMainRouterDelegate().setOnPopOverwrite(() {
         setActionLipStatus(
+          context: context,
           screenKey: screenKey,
           status: ActionLipVisibility.hidden,
         );

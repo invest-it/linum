@@ -35,6 +35,7 @@ class CurrencyListView extends StatelessWidget {
                 onTap: () {
                   settings.setStandardCurrency(currencies[index]);
                   context.read<ActionLipViewModel>().setActionLipStatus(
+                    context: context,
                     screenKey: ScreenKey.settings,
                     status: ActionLipVisibility.hidden,
                   );

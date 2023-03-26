@@ -6,12 +6,13 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:linum/application_services.dart';
 import 'package:linum/core/design/theme/constants/main_theme_data.dart';
 import 'package:linum/core/navigation/main_route_information_parser.dart';
 import 'package:linum/core/navigation/main_router_delegate.dart';
 import 'package:linum/objectbox.g.dart';
+
+import 'core/navigation/main_routes.dart';
 
 class LinumApp extends StatelessWidget {
   final bool? testing;
@@ -26,7 +27,7 @@ class LinumApp extends StatelessWidget {
     } else {
       return app;
     } */
-    final MainRouterDelegate routerDelegate = Get.put(MainRouterDelegate());
+    final MainRouterDelegate routerDelegate = MainRouterDelegate();
     final MainRouteInformationParser routeInformationParser = MainRouteInformationParser();
 
     return MaterialApp(
@@ -38,7 +39,7 @@ class LinumApp extends StatelessWidget {
       locale: context.locale,
       home: ApplicationServices(
         store: store,
-        router: Router(
+        router: Router<MainRoute>(
           routerDelegate: routerDelegate,
           routeInformationParser: routeInformationParser,
           backButtonDispatcher: RootBackButtonDispatcher(),

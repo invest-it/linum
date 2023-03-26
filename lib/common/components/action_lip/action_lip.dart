@@ -79,6 +79,7 @@ class _ActionLipState extends State<ActionLip> {
                       onPressed: () {
                         FocusManager.instance.primaryFocus?.unfocus();
                         viewModel.setActionLipStatus(
+                          context: context,
                           screenKey: screenKey,
                           status: ActionLipVisibility.hidden,
                         );

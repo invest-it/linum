@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/core/balance/models/serial_transaction.dart';
 import 'package:linum/core/balance/models/transaction.dart';
@@ -12,7 +11,7 @@ EntryType getEntryType({
     if (transaction.amount.isNegative) {
       return EntryType.expense;
     }
-    if (transaction.amount.isGreaterThan(0)) {
+    if (transaction.amount > 0) {
       return EntryType.income;
     }
     final category = standardCategories[transaction.category];
@@ -22,7 +21,8 @@ EntryType getEntryType({
     if (serialTransaction.amount.isNegative) {
       return EntryType.expense;
     }
-    if (serialTransaction.amount.isGreaterThan(0)) {
+
+    if (serialTransaction.amount > 0) {
       return EntryType.income;
     }
     final category = standardCategories[serialTransaction.category];

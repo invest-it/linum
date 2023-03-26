@@ -128,6 +128,7 @@ class ScreenSkeleton extends StatelessWidget {
     if (screenKey != null &&
         !actionLipStatusProvider.isActionStatusInitialized(screenKey!)) {
       actionLipStatusProvider.setActionLipStatusSilently(
+        context: context,
         screenKey: screenKey!,
         status: initialActionLipStatus,
       );

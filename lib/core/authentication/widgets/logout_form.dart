@@ -46,7 +46,7 @@ class _LogoutFormState extends State<LogoutForm> {
           callback: () => context.read<AuthenticationService>()
               .signOut()
               .then((_) {
-                getRouterDelegate().rebuild();
+                context.getMainRouterDelegate().rebuild();
                 context.read<PinCodeService>()
                     .resetOnLogout();
               }),

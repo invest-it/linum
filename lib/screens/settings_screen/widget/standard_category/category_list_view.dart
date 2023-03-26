@@ -45,6 +45,7 @@ class CategoryListView extends StatelessWidget {
                 settingsKey: category.id,
               });
               actionLipViewModel.setActionLipStatus(
+                context: context,
                 screenKey: ScreenKey.settings,
                 status: ActionLipVisibility.hidden,
               );

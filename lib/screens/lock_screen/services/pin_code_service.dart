@@ -11,7 +11,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
 import 'package:linum/common/components/dialogs/dialog_action.dart';
 import 'package:linum/common/components/dialogs/show_action_dialog.dart';
 import 'package:linum/core/authentication/services/authentication_service.dart';
@@ -88,7 +87,7 @@ class PinCodeService extends ChangeNotifier {
       _pinSet = true;
       //Force the user to initialize their PIN number every time the PIN is (re-)activated.
       _setPINLockIntent(intent: PINLockIntent.initialize);
-      getRouterDelegate().pushRoute(MainRoute.lock);
+      _context.getMainRouterDelegate().pushRoute(MainRoute.lock);
     } else {
       _pinSet = false; // TODO: Re-Enter pin?
       _removePIN();
@@ -125,7 +124,7 @@ class PinCodeService extends ChangeNotifier {
   /// Toggles a PIN change request
   void triggerPINChange() {
     _setPINLockIntent(intent: PINLockIntent.change);
-    Get.find<MainRouterDelegate>().pushRoute(MainRoute.lock);
+    _context.getMainRouterDelegate().pushRoute(MainRoute.lock);
   }
 
   /*
@@ -182,7 +181,7 @@ class PinCodeService extends ChangeNotifier {
                     _removePIN();
                     _pinSet = false;
                     Navigator.of(_context, rootNavigator: true).pop();
-                    getRouterDelegate().popRoute();
+                    _context.getMainRouterDelegate().popRoute();
                   },
                   popDialog: true, // TODO: What does this thing do even?
                 ),
@@ -214,7 +213,7 @@ class PinCodeService extends ChangeNotifier {
                   function: () {
                     _emptyCode();
                     Navigator.of(_context, rootNavigator: true).pop();
-                    getRouterDelegate().popRoute();
+                    _context.getMainRouterDelegate().popRoute();
                     // Navigator.of(_context).pop();
                   },
                 ),
@@ -249,7 +248,7 @@ class PinCodeService extends ChangeNotifier {
                     _pinSet = false;
                     _removePIN();
                     _auth.signOut().then((_) {
-                      getRouterDelegate().rebuild();
+                      _context.getMainRouterDelegate().rebuild();
                     });
                   },
                 ),
@@ -291,7 +290,7 @@ class PinCodeService extends ChangeNotifier {
             } else {
               toastFromTranslationKey("lock_screen.errors.last-mail-missing");
             }
-            getRouterDelegate().popRoute();
+            _context.getMainRouterDelegate().popRoute();
             _emptyCode();
             break;
           case PINLockIntent.change:
@@ -302,7 +301,7 @@ class PinCodeService extends ChangeNotifier {
               toastFromTranslationKey("lock_screen.errors.last-mail-missing");
             }
 
-            getRouterDelegate().popRoute();
+            _context.getMainRouterDelegate().popRoute();
             _emptyCode();
             break;
           case PINLockIntent.recall:

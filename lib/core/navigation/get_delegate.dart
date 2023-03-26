@@ -5,11 +5,13 @@
 //
 //
 
-import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:linum/core/navigation/main_router_delegate.dart';
+import 'package:linum/core/navigation/main_routes.dart';
 
 /// Finds an Instance of the MainRouterDelegate.
-/// Should only be called after GetX Initialization in app.dart
-MainRouterDelegate getRouterDelegate() {
-  return Get.find<MainRouterDelegate>();
+extension MainRouterDelegateAccessor on BuildContext {
+  MainRouterDelegate getMainRouterDelegate() {
+    return Router.of<MainRoute>(this).routerDelegate as MainRouterDelegate;
+  }
 }
