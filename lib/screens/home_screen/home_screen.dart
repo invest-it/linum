@@ -152,20 +152,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                   child: ScrollConfiguration(
                     behavior: SilentScroll(),
-                    child: Consumer<BalanceDataService>(
-                      builder: (context, balanceDataService, _) {
-                        if (showRepeatables) {
-                          return balanceDataService.fillListViewWithRepeatables(
-                            HomeScreenListView(),
-                            context: context,
-                          );
-                        }
-                        return balanceDataService.fillListViewWithData(
-                          HomeScreenListView(),
-                          context: context,
-                        );
-                      },
-                    )
+                    child: HomeScreenListView(
+                      showSerialTransactions: showRepeatables,
+                    ),
                   ),
                 ),
               ),

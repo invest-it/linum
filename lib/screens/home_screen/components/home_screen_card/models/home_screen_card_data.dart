@@ -3,6 +3,8 @@
 // Author: NightmindOfficial
 // Co-Author: n/a
 //
+import 'package:linum/core/balance/utils/statistical_calculations.dart';
+
 class HomeScreenCardData {
   // Front Side
   final num mtdBalance; //Month to date balance
@@ -42,4 +44,22 @@ class HomeScreenCardData {
     this.tillBeginningOfMonthSumBalance = 0,
     this.tillEndOfMonthSumBalance = 0,
   });
+
+  factory HomeScreenCardData.fromStatistics(StatisticalCalculations statData) {
+    return HomeScreenCardData(
+      mtdIncome: statData.tillNowSumIncomes,
+      mtdExpenses: -statData.tillNowSumCosts,
+      mtdBalance: statData.tillNowSumBalance,
+      eomBalance: statData.sumBalance,
+      eomFutureSerialExpenses: statData.sumFutureSerialCosts,
+      eomFutureSerialIncome: statData.sumFutureSerialIncomes,
+      eomSerialExpenses: statData.sumSerialCosts,
+      eomSerialIncome: statData.sumSerialIncomes,
+      countSerialIncomes: statData.countSerialIncomes,
+      countSerialCosts: statData.countSerialCosts,
+      allTimeSumBalance: statData.allTimeSumBalance,
+      tillBeginningOfMonthSumBalance: statData.tillBeginningOfMonthSumBalance,
+      tillEndOfMonthSumBalance: statData.tillEndOfMonthSumBalance,
+    );
+  }
 }

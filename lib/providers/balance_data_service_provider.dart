@@ -13,19 +13,15 @@ class BalanceDataServiceProvider extends SingleChildStatelessWidget {
 
   @override
   Widget build(BuildContext context, {Widget? child}) {
-    return ChangeNotifierProxyProvider3<AuthenticationService,
-        AlgorithmService, ExchangeRateService, BalanceDataService>(
+    return ChangeNotifierProxyProvider<AuthenticationService, BalanceDataService>(
       create: (ctx) {
-        return BalanceDataService(ctx);
+        return BalanceDataService(context.read<AuthenticationService>().uid);
       },
-      update: (ctx, auth, algo, exchange, oldBalance) {
-        if (oldBalance != null) {
-          return oldBalance
-            ..updateAuth(auth)
-            ..updateAlgorithmProvider(algo)
-            ..updateExchangeRateProvider(exchange);
+      update: (ctx, auth, oldBalance) {
+        if (oldBalance != null && oldBalance.userId == auth.uid) {
+          return oldBalance;
         } else {
-          return BalanceDataService(ctx);
+          return BalanceDataService(auth.uid);
         }
       },
       lazy: false,

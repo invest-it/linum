@@ -9,8 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:linum/common/components/screen_card/widgets/home_screen_card_avatar.dart';
 import 'package:linum/common/utils/currency_formatter.dart';
 import 'package:linum/core/account/services/account_settings_service.dart';
+import 'package:linum/core/balance/services/algorithm_service.dart';
+import 'package:linum/core/balance/utils/balance_data_processors.dart';
+import 'package:linum/core/balance/widgets/balance_data_stream_consumer.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/features/currencies/models/currency.dart';
+import 'package:linum/features/currencies/services/exchange_rate_service.dart';
 import 'package:linum/screens/home_screen/components/home_screen_card/models/home_screen_card_data.dart';
 import 'package:provider/provider.dart';
 
@@ -18,13 +22,11 @@ import 'package:provider/provider.dart';
 //TODO DEPRECATED
 
 class HomeScreenCardRow extends StatelessWidget {
-  final Stream<HomeScreenCardData>? data;
   final HomeScreenCardAvatar upwardArrow;
   final HomeScreenCardAvatar downwardArrow;
 
   const HomeScreenCardRow({
     super.key,
-    required this.data,
     required this.upwardArrow,
     required this.downwardArrow,
   });
@@ -58,9 +60,17 @@ class HomeScreenCardRow extends StatelessWidget {
                     .overline!
                     .copyWith(fontSize: 12),
               ),
-              StreamBuilder<HomeScreenCardData>(
-                stream: data,
-                builder: (context, snapshot) {
+              BalanceDataStreamConsumer3<
+                  ExchangeRateService, AlgorithmService, HomeScreenCardData>(
+                transformer: (snapshot, exchangeRateService, algorithmService) async {
+                  final statData = await generateStatistics(
+                    snapshot: snapshot,
+                    algorithms: algorithmService.state,
+                    exchangeRateService: exchangeRateService,
+                  );
+                  return HomeScreenCardData.fromStatistics(statData);
+                },
+                builder: (context, snapshot, _) {
                   if (snapshot.connectionState == ConnectionState.none ||
                       snapshot.connectionState == ConnectionState.waiting) {
                     return Text(

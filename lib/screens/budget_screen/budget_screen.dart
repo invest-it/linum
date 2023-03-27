@@ -65,14 +65,7 @@ class BudgetScreen extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
               child: ScrollConfiguration(
                 behavior: SilentScroll(),
-                child: Consumer<BalanceDataService>(
-                  builder: (context, balanceDataService, _) {
-                    return balanceDataService.fillListViewWithData(
-                      HomeScreenListView(),
-                      context: context,
-                    );
-                  },
-                )
+                child: const HomeScreenListView(),
               ),
             ),
           ),

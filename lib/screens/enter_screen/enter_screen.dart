@@ -43,7 +43,7 @@ class EnterScreen extends StatelessWidget {
                 } else if (serialTransaction != null && changeMode != null) {
                   balanceDataProvider.updateSerialTransaction(
                     serialTransaction: serialTransaction,
-                    changeType: changeMode,
+                    changeMode: changeMode,
                     oldDate: this.transaction?.formerDate ?? this.transaction?.date,
                     newDate: serialTransaction.startDate,
                   );

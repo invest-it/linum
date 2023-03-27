@@ -48,7 +48,7 @@ class EnterScreenViewModel extends ChangeNotifier {
     if (initialTransaction != null && initialTransaction?.repeatId != null) {
       final balanceDataService = context.read<BalanceDataService>();
       _parentSerialTransaction = balanceDataService
-          .searchSerialTransactionById(initialTransaction!.repeatId!);
+          .findSerialTransactionWithId(initialTransaction!.repeatId!);
     }
     return _parentSerialTransaction;
   }

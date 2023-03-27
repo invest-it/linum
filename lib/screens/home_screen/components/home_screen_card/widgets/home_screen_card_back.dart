@@ -6,13 +6,15 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/common/components/screen_card/utils/screen_card_data_extensions.dart';
 import 'package:linum/common/components/screen_card/viewmodels/screen_card_viewmodel.dart';
 import 'package:linum/common/widgets/loading_spinner.dart';
 import 'package:linum/common/widgets/styled_amount.dart';
 import 'package:linum/core/account/services/account_settings_service.dart';
 import 'package:linum/core/balance/services/algorithm_service.dart';
 import 'package:linum/core/balance/services/balance_data_service.dart';
+import 'package:linum/core/balance/utils/balance_data_processors.dart';
+import 'package:linum/core/balance/widgets/balance_data_stream_consumer.dart';
+import 'package:linum/features/currencies/services/exchange_rate_service.dart';
 import 'package:linum/screens/home_screen/components/home_screen_card/models/home_screen_card_data.dart';
 import 'package:linum/screens/home_screen/components/home_screen_card/utils/home_screen_functions.dart';
 import 'package:linum/screens/home_screen/components/home_screen_card/utils/homescreen_card_time_warp.dart';
@@ -130,9 +132,17 @@ class HomeScreenCardBack extends StatelessWidget {
                       //KPI COLUMN
                       Expanded(
                         //STREAM INSERT
-                        child: StreamBuilder<HomeScreenCardData>(
-                          stream: balanceDataService.getHomeScreenCardData(),
-                          builder: (context, snapshot) {
+                        child: BalanceDataStreamConsumer3<
+                            ExchangeRateService, AlgorithmService, HomeScreenCardData>(
+                          transformer: (snapshot, exchangeRateService, algorithmService) async {
+                            final statData = await generateStatistics(
+                              snapshot: snapshot,
+                              algorithms: algorithmService.state,
+                              exchangeRateService: exchangeRateService,
+                            );
+                            return HomeScreenCardData.fromStatistics(statData);
+                          },
+                          builder: (context, snapshot, _) {
                             if (snapshot.connectionState ==
                                     ConnectionState.none ||
                                 snapshot.connectionState ==
