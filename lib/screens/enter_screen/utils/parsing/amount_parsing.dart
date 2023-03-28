@@ -2,7 +2,6 @@ import 'package:collection/collection.dart';
 import 'package:linum/features/currencies/constants/standard_currencies.dart';
 import 'package:linum/screens/enter_screen/models/enter_screen_input.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/get_text_indices.dart';
-import 'package:tuple/tuple.dart';
 
 final amountRegex = RegExp(
   r'([a-zA-Z\p{Sc}]{0,3}) ?([0-9]+[,.]?(?:[0-9]{1,2})?) ?([a-zA-Z\p{Sc}]{0,3})(?: (.{0,140}))?$',

@@ -134,4 +134,3 @@ Future<StatisticalCalculations> generateStatistics({
   );
 
 }
-

@@ -20,7 +20,7 @@ String generateStringFromExistingData(EnterScreenData data) {
   }
   if (data.repeatConfiguration != null) {
     base += " #${flagSuggestionDefaults[InputFlag.repeatInfo]?.tr()}:"
-        "${data.repeatConfiguration!.label?.tr()}";
+        "${data.repeatConfiguration!.label.tr()}";
   }
 
   return base;

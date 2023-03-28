@@ -9,19 +9,16 @@ import 'package:flutter/material.dart';
 import 'package:linum/common/utils/silent_scroll.dart';
 import 'package:linum/common/widgets/list_divider.dart';
 import 'package:linum/common/widgets/list_header.dart';
-import 'package:linum/core/account/services/account_settings_service.dart';
 import 'package:linum/core/authentication/widgets/delete_user_button.dart';
 import 'package:linum/core/authentication/widgets/forgot_password.dart';
 import 'package:linum/core/authentication/widgets/logout_form.dart';
 import 'package:linum/core/design/layout/enums/screen_key.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
-import 'package:linum/screens/lock_screen/services/pin_code_service.dart';
 import 'package:linum/screens/settings_screen/widget/language_selector.dart';
 import 'package:linum/screens/settings_screen/widget/pin_switch.dart';
 import 'package:linum/screens/settings_screen/widget/standard_category/standard_category_selector.dart';
 import 'package:linum/screens/settings_screen/widget/standard_currency/standard_currency_selector.dart';
 import 'package:linum/screens/settings_screen/widget/version_number.dart';
-import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({
@@ -61,7 +58,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               'settings_screen.pin-lock.label-title',
               tooltipMessage: 'settings_screen.pin-lock.label-tooltip',
             ),
-            PinSwitch(),
+            const PinSwitch(),
             const ListDivider(),
 
             const ListHeader('settings_screen.standard-currency.label-title'),

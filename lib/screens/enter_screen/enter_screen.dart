@@ -54,7 +54,6 @@ class EnterScreen extends StatelessWidget {
           create: (context) {
             if (transaction != null) {
               return EnterScreenViewModel.fromTransaction(
-                context,
                 transaction: transaction!,
                 parentalSerialTransaction: snapshot.data,
                 actions: EnterScreenActions(
@@ -92,7 +91,6 @@ class EnterScreen extends StatelessWidget {
             }
             if (serialTransaction != null) {
               return EnterScreenViewModel.fromSerialTransaction(
-                context,
                 serialTransaction: serialTransaction!,
                 actions: EnterScreenActions(
                   onSave: ({
@@ -113,7 +111,6 @@ class EnterScreen extends StatelessWidget {
               );
             }
             return EnterScreenViewModel.empty(
-              context,
               actions: EnterScreenActions(
                 onSave: ({
                   Transaction? transaction,

@@ -6,10 +6,10 @@ import 'package:linum/core/categories/utils/translate_category.dart';
 import 'package:linum/screens/enter_screen/utils/date_formatter.dart';
 import 'package:linum/screens/enter_screen/utils/show_enter_screen_menu.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_form_view_model.dart';
-import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model.dart';
 import 'package:linum/screens/enter_screen/widgets/buttons/tag_selector_button.dart';
 import 'package:linum/screens/enter_screen/widgets/views/category_list_view.dart';
 import 'package:linum/screens/enter_screen/widgets/views/currency_list_view.dart';
+import 'package:linum/screens/enter_screen/widgets/views/repeat_config_list_view.dart';
 import 'package:provider/provider.dart';
 
 class QuickTagColors {
@@ -70,7 +70,7 @@ class _QuickTagMenuState extends State<QuickTagMenu> {
         symbol: currency.symbol,
         onTap: () {
           showEnterScreenMenu(
-            context,
+            context: context,
             title: "Currencies",
             content: CurrencyListView(),
           );
@@ -82,7 +82,7 @@ class _QuickTagMenuState extends State<QuickTagMenu> {
         symbol: "",
         onTap: () {
           showEnterScreenMenu(
-            context,
+            context: context,
             title: "Categories",
             content: CategoryListView(
               categories: standardCategories.values
@@ -96,7 +96,13 @@ class _QuickTagMenuState extends State<QuickTagMenu> {
       TagSelectorButton(
         title: tr(repeatConfiguration.label),
         symbol: "",
-        onTap: () => {print("Select RepeatInfo")},
+        onTap: () {
+          showEnterScreenMenu(
+            context: context,
+            title: "Repeating",
+            content: RepeatConfigListView(),
+          );
+        },
         textColor: widget.colors.repeatInfo,
       ),
     ];

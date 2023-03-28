@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/screens/enter_screen/enums/enter_screen_view_state.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model.dart';
 import 'package:linum/screens/enter_screen/widgets/views/change_mode_selector.dart';

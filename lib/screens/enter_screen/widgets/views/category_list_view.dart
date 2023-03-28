@@ -32,7 +32,7 @@ class CategoryListView extends StatelessWidget {
             selected: formViewModel.data.category?.id == category.id,
             onTap: () {
               formViewModel.data = formViewModel.data.copyWith(category: category);
-              Navigator.of(context).pop();
+              Navigator.pop(context);
             },
           );
         },

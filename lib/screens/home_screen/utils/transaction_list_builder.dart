@@ -23,7 +23,7 @@ List<Widget> generateTransactionList({
   required BuildContext context,
   required List<Transaction> transactions,
   required TransactionAmountFormatter amountFormatter,
-  required DateTime shownMonth
+  required DateTime shownMonth,
 }) {
 
   final String langCode = context.locale.languageCode;

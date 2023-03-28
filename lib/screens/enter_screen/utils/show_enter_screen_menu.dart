@@ -3,8 +3,8 @@ import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model.da
 import 'package:linum/screens/enter_screen/widgets/enter_screen_menu.dart';
 import 'package:provider/provider.dart';
 
-void showEnterScreenMenu(
-    BuildContext context, {
+void showEnterScreenMenu({
+      required BuildContext context,
       required String title,
       required Widget content,
 }) {

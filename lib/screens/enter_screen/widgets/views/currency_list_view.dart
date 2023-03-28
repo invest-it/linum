@@ -17,29 +17,26 @@ class CurrencyListView extends StatelessWidget {
     final formViewModel = context.read<EnterScreenFormViewModel>();
 
     return Expanded(
-      child: ColoredBox(
-        color: Colors.white,
-        child: ListView.builder(
-          padding: EdgeInsets.only(
-            left: 24.0,
-            right: 24.0,
-            bottom: context.proportionateScreenHeightFraction(ScreenFraction.onefifth),
-          ),
-          shrinkWrap: true,
-          itemCount: currencies.length,
-          itemBuilder: (BuildContext context, int index) {
-            final currency = currencies[index];
-            return CurrencyListTile(
-              currency: currency,
-              selected:
-                currency.name == formViewModel.data.currency?.name,
-              onTap: () {
-                formViewModel.data = formViewModel.data.copyWith(currency: currency);
-                Navigator.of(context).pop();
-              },
-            );
-          },
+      child: ListView.builder(
+        padding: EdgeInsets.only(
+          left: 24.0,
+          right: 24.0,
+          bottom: context.proportionateScreenHeightFraction(ScreenFraction.onefifth),
         ),
+        shrinkWrap: true,
+        itemCount: currencies.length,
+        itemBuilder: (BuildContext context, int index) {
+          final currency = currencies[index];
+          return CurrencyListTile(
+            currency: currency,
+            selected:
+              currency.name == formViewModel.data.currency?.name,
+            onTap: () {
+              formViewModel.data = formViewModel.data.copyWith(currency: currency);
+              Navigator.of(context).pop();
+            },
+          );
+        },
       ),
     );
   }

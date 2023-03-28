@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/core/account/services/account_settings_service.dart';
@@ -12,16 +14,26 @@ import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model.da
 import 'package:provider/provider.dart';
 
 class EnterScreenFormViewModel extends ChangeNotifier {
+  late final DefaultValues defaultValues;
   late final bool withExistingData;
   late final EntryType entryType;
+
   late EnterScreenData _data;
+  /// When using context.watch or Consumer / Selector
+  /// you will get notified about changes to data;
   EnterScreenData get data => _data;
   set data(EnterScreenData data) {
     _data = data;
+    _streamController.add(_data);
     notifyListeners();
   }
 
-  late final DefaultValues defaultValues;
+  final _streamController = StreamController<EnterScreenData>();
+  /// In case you can't use context.watch or Consumer / Selector
+  /// stream will provide you with the newest data.
+  late Stream<EnterScreenData> stream = _streamController.stream;
+
+
 
   OverlayEntry? _currentOverlay;
   OverlayEntry? get currentOverlay => _currentOverlay;
@@ -73,6 +85,7 @@ class EnterScreenFormViewModel extends ChangeNotifier {
   @override
   void dispose() {
     super.dispose();
+    _streamController.close();
     _currentOverlay?.remove();
   }
 }

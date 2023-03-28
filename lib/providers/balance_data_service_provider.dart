@@ -1,9 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:linum/core/authentication/services/authentication_service.dart';
-import 'package:linum/core/balance/services/algorithm_service.dart';
 import 'package:linum/core/balance/services/balance_data_service.dart';
-import 'package:linum/features/currencies/services/exchange_rate_service.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 

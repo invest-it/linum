@@ -16,7 +16,6 @@ import 'package:linum/common/components/dialogs/show_action_dialog.dart';
 import 'package:linum/core/authentication/services/authentication_service.dart';
 import 'package:linum/core/design/theme/constants/ring_colors.dart';
 import 'package:linum/core/navigation/get_delegate.dart';
-import 'package:linum/core/navigation/main_router_delegate.dart';
 import 'package:linum/core/navigation/main_routes.dart';
 import 'package:linum/screens/lock_screen/models/lock_screen_action.dart';
 import 'package:provider/provider.dart';

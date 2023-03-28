@@ -7,8 +7,6 @@
 // ignore_for_file: avoid_dynamic_calls
 
 import 'package:flutter/material.dart';
-import 'package:linum/common/types/filter_function.dart';
-import 'package:linum/common/types/sorter_function.dart';
 import 'package:linum/common/utils/filters.dart';
 import 'package:linum/common/utils/in_between_timestamps.dart';
 import 'package:linum/common/utils/sorters.dart';

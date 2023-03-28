@@ -7,6 +7,7 @@ import 'package:linum/core/repeating/constants/standard_repeat_configs.dart';
 import 'package:linum/core/repeating/enums/repeat_interval.dart';
 import 'package:linum/screens/enter_screen/constants/parsable_date_map.dart';
 import 'package:linum/screens/enter_screen/enums/parsable_date.dart';
+import 'package:linum/screens/enter_screen/models/enter_screen_data.dart';
 import 'package:linum/screens/enter_screen/models/enter_screen_input.dart';
 import 'package:linum/screens/enter_screen/models/suggestion.dart';
 import 'package:linum/screens/enter_screen/models/suggestion_filters.dart';
@@ -14,10 +15,7 @@ import 'package:linum/screens/enter_screen/utils/enter_screen_text_editing_contr
 import 'package:linum/screens/enter_screen/utils/example_string_builder.dart';
 import 'package:linum/screens/enter_screen/utils/string_from_existing_data.dart';
 import 'package:linum/screens/enter_screen/utils/suggestions/insert_suggestion.dart';
-import 'package:linum/screens/enter_screen/utils/supported_repeat_configs.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_form_view_model.dart';
-import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model.dart';
-import 'package:linum/screens/enter_screen/models/enter_screen_data.dart';
 import 'package:linum/screens/enter_screen/widgets/suggestion_list.dart';
 import 'package:provider/provider.dart';
 
@@ -75,6 +73,10 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
       }
       _rebuildSuggestionList();
       _formViewModel.data = EnterScreenData.fromInput(_controller.parsed!);
+    });
+    
+    _formViewModel.stream.listen((data) { 
+      _controller.text = generateStringFromExistingData(data);
     });
   }
 

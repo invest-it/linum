@@ -1,11 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/core/balance/models/balance_document.dart';
-import 'package:linum/core/balance/services/algorithm_service.dart';
 import 'package:linum/core/balance/services/balance_data_service.dart';
-import 'package:linum/core/balance/utils/balance_data_processors.dart';
-import 'package:linum/features/currencies/services/exchange_rate_service.dart';
-import 'package:linum/screens/home_screen/components/home_screen_card/models/home_screen_card_data.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
@@ -90,4 +86,3 @@ class BalanceDataStreamConsumer3<S1, S2, T> extends SingleChildStatelessWidget {
     );
   }
 }
-

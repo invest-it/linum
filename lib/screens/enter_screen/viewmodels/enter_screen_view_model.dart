@@ -41,8 +41,7 @@ class EnterScreenViewModel extends ChangeNotifier {
   EnterScreenData? _formResult;
   DefaultValues? _defaultValues;
 
-  EnterScreenViewModel._(
-    BuildContext context, {
+  EnterScreenViewModel._({
       required EnterScreenActions actions,
       this.initialTransaction,
       this.initialSerialTransaction,
@@ -63,23 +62,21 @@ class EnterScreenViewModel extends ChangeNotifier {
   }
 
   factory EnterScreenViewModel.empty(
-      BuildContext context, {
+      {
         required EnterScreenActions actions,
   }) {
     return EnterScreenViewModel._(
-      context,
       actions: actions,
     );
   }
 
   factory EnterScreenViewModel.fromTransaction(
-      BuildContext context, {
+      {
         required Transaction transaction,
         required SerialTransaction? parentalSerialTransaction,
         required EnterScreenActions actions,
   }) {
     return EnterScreenViewModel._(
-      context,
       initialTransaction: transaction,
       parentalSerialTransaction: parentalSerialTransaction,
       actions: actions,
@@ -87,12 +84,11 @@ class EnterScreenViewModel extends ChangeNotifier {
   }
 
   factory EnterScreenViewModel.fromSerialTransaction(
-      BuildContext context, {
+      {
         required SerialTransaction serialTransaction,
         required EnterScreenActions actions,
   }) {
     return EnterScreenViewModel._(
-      context,
       initialSerialTransaction: serialTransaction,
       actions: actions,
     );

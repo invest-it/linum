@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:linum/common/utils/filters.dart';
 import 'package:linum/common/utils/silent_scroll.dart';
 import 'package:linum/core/balance/services/algorithm_service.dart';
-import 'package:linum/core/balance/services/balance_data_service.dart';
 import 'package:linum/core/design/layout/widgets/app_bar_action.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
 import 'package:linum/screens/home_screen/widgets/home_screen_listview.dart';
