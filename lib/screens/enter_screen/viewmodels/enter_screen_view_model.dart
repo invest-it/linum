@@ -8,6 +8,7 @@ import 'package:linum/screens/enter_screen/enums/enter_screen_view_state.dart';
 import 'package:linum/screens/enter_screen/models/default_values.dart';
 import 'package:linum/screens/enter_screen/models/enter_screen_data.dart';
 import 'package:linum/screens/enter_screen/utils/get_entry_type.dart';
+import 'package:logger/logger.dart';
 
 
 class EnterScreenViewModel extends ChangeNotifier {
@@ -94,15 +95,14 @@ class EnterScreenViewModel extends ChangeNotifier {
     );
   }
 
-  void next(
-      EnterScreenData data,
-      DefaultValues defaultValues,
-      SerialTransaction? serialTransaction,
-  ) {
+  void next({
+    required EnterScreenData data,
+    required DefaultValues defaultValues,
+  }) {
     _formResult = data;
+    _defaultValues = defaultValues;
 
-
-    if (serialTransaction == null) {
+    if (parentalSerialTransaction == null) {
       save();
       return;
     }

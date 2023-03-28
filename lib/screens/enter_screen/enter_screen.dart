@@ -9,6 +9,7 @@ import 'package:linum/screens/enter_screen/utils/supported_dates.dart';
 import 'package:linum/screens/enter_screen/utils/supported_repeat_configs.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model.dart';
 import 'package:linum/screens/enter_screen/widgets/enter_screen_flow.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 class EnterScreen extends StatelessWidget {

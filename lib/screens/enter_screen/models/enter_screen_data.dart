@@ -15,6 +15,7 @@ class EnterScreenData {
   final Category? category;
   final String? date;
   final RepeatConfiguration? repeatConfiguration;
+  final bool isParsed;
 
   const EnterScreenData({
     this.amount,
@@ -23,6 +24,7 @@ class EnterScreenData {
     this.category,
     this.date,
     this.repeatConfiguration,
+    this.isParsed = false,
   });
 
   EnterScreenData copyWith({
@@ -32,6 +34,7 @@ class EnterScreenData {
     Category? category,
     String? date,
     RepeatConfiguration? repeatConfiguration,
+    bool? isParsed,
   }) {
     return EnterScreenData(
       amount: amount ?? this.amount,
@@ -40,6 +43,7 @@ class EnterScreenData {
       category: category ?? this.category,
       date: date ?? this.date,
       repeatConfiguration: repeatConfiguration ?? this.repeatConfiguration,
+      isParsed: isParsed ?? this.isParsed,
     );
   }
 
@@ -73,12 +77,13 @@ class EnterScreenData {
     }
 
     return EnterScreenData(
-        amount: amount,
-        name: name,
-        currency: currency,
-        category: category,
-        date: date,
-        repeatConfiguration: repeatConfiguration,
+      amount: amount,
+      name: name,
+      currency: currency,
+      category: category,
+      date: date,
+      repeatConfiguration: repeatConfiguration,
+      isParsed: true,
     );
   }
 }

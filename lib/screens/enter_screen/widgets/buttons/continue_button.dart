@@ -24,14 +24,11 @@ class EnterScreenContinueButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.read<EnterScreenViewModel>();
-
-
     final formViewModel = context.read<EnterScreenFormViewModel>();
     return GestureDetector(
       onTap: () => viewModel.next(
-        formViewModel.data,
-        formViewModel.defaultValues,
-        viewModel.parentalSerialTransaction,
+        data: formViewModel.data,
+        defaultValues: formViewModel.defaultValues,
       ),
       child: _buttonUI(context),
     );

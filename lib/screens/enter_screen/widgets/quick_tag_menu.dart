@@ -53,16 +53,29 @@ class _QuickTagMenuState extends State<QuickTagMenu> {
         );
     final repeatConfiguration =
         formViewModel.data.repeatConfiguration ?? formViewModel.defaultValues.repeatConfiguration;
-
+    final date = formViewModel.data.date ?? formViewModel.defaultValues.date;
+    
     return [
       TagSelectorButton(
         title: tr(
           formatter
-            .format(formViewModel.data.date ?? formViewModel.defaultValues.date)
+            .format(date)
             ?? "",
         ), // TODO: Translate
         symbol: "",
-        onTap: () => {print("Select Date")},
+        onTap: () {
+          final result = showDatePicker(
+              context: context,
+              initialDate: DateTime.parse(date),
+              firstDate: DateTime(2000),
+              lastDate: DateTime(DateTime.now().year + 5, 12),
+          );
+          result.then((value) {
+            formViewModel.data = formViewModel.data.copyWith(
+              date: value?.toIso8601String(),
+            );
+          });
+        },
         textColor: widget.colors.date,
       ),
       TagSelectorButton(

@@ -7,6 +7,7 @@ import 'package:linum/core/repeating/enums/repeat_interval.dart';
 import 'package:linum/screens/enter_screen/models/default_values.dart';
 import 'package:linum/screens/enter_screen/models/enter_screen_data.dart';
 import 'package:linum/screens/enter_screen/types/action_callbacks.dart';
+import 'package:logger/logger.dart';
 
 class EnterScreenActions {
   final OnSaveCallback _onSave;
@@ -28,6 +29,7 @@ class EnterScreenActions {
     if (data == null || defaultData == null) {
       return;
     }
+
     final selectedAmount = data.amount ?? defaultData.amount;
     final amount = entryType == EntryType.expense
         && !selectedAmount.isNegative

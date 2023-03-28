@@ -76,7 +76,9 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
     });
     
     _formViewModel.stream.listen((data) { 
-      _controller.text = generateStringFromExistingData(data);
+      if (!data.isParsed) {
+        _controller.text = generateStringFromExistingData(data);
+      }
     });
   }
 
