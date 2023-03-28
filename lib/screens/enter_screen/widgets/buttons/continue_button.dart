@@ -28,22 +28,14 @@ class EnterScreenContinueButton extends StatelessWidget {
     final viewModel = context.read<EnterScreenViewModel>();
 
 
-    return FutureBuilder<SerialTransaction?>(
-      future: viewModel.getParentSerialTransaction(context),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return _buttonUI(context);
-        }
-        final formViewModel = context.read<EnterScreenFormViewModel>();
-        return GestureDetector(
-          onTap: () => viewModel.next(
-            formViewModel.data,
-            formViewModel.defaultValues,
-            snapshot.data,
-          ),
-          child: _buttonUI(context),
-        );
-      },
+    final formViewModel = context.read<EnterScreenFormViewModel>();
+    return GestureDetector(
+      onTap: () => viewModel.next(
+        formViewModel.data,
+        formViewModel.defaultValues,
+        viewModel.parentalSerialTransaction,
+      ),
+      child: _buttonUI(context),
     );
   }
 }

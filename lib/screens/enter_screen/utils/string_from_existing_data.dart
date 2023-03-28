@@ -18,6 +18,10 @@ String generateStringFromExistingData(EnterScreenData data) {
     base += " #${flagSuggestionDefaults[InputFlag.date]?.tr()}:"
         "${dFormatter.format(data.date!)?.tr()}";
   }
+  if (data.repeatConfiguration != null) {
+    base += " #${flagSuggestionDefaults[InputFlag.repeatInfo]?.tr()}:"
+        "${data.repeatConfiguration!.label?.tr()}";
+  }
 
   return base;
   

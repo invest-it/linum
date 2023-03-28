@@ -11,7 +11,6 @@ import 'package:linum/screens/home_screen/enums/time_widget_date.dart';
 
 // ignore_for_file: deprecated_member_use
 //TODO DEPRECATED
-
 //TODO: RemoveFromBudgetScreen
 
 class TimeWidget extends StatelessWidget {

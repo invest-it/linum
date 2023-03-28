@@ -1,12 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:linum/screens/enter_screen/constants/parsable_date_map.dart';
 import 'package:linum/screens/enter_screen/enums/parsable_date.dart';
+import 'package:logger/logger.dart';
 
 class DateFormatter {
   final String pattern;
   const DateFormatter({this.pattern = "dd.MM.yyyy"});
 
   String? format(String isoStr) {
+    Logger().d(isoStr);
     final date = DateTime.parse(isoStr);
 
     final now = DateTime.now();

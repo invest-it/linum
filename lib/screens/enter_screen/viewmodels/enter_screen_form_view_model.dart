@@ -18,7 +18,6 @@ class EnterScreenFormViewModel extends ChangeNotifier {
   EnterScreenData get data => _data;
   set data(EnterScreenData data) {
     _data = data;
-    print(data);
     notifyListeners();
   }
 
@@ -32,42 +31,30 @@ class EnterScreenFormViewModel extends ChangeNotifier {
   }
 
   EnterScreenFormViewModel(BuildContext context) {
-    final screenViewModel = Provider.of<EnterScreenViewModel>(
-      context,
-      listen: false,
+
+    final screenViewModel = context.read<EnterScreenViewModel>();
+    final transaction = screenViewModel.initialTransaction;
+    final parentalSerialTransaction = screenViewModel.parentalSerialTransaction;
+
+    final repeatInterval = getRepeatInterval(
+      parentalSerialTransaction?.repeatDuration,
+      parentalSerialTransaction?.repeatDurationType,
     );
-
-    final trx = screenViewModel.initialTransaction;
-    screenViewModel.getParentSerialTransaction(context)
-      ?.then((value) {
-        if (value != null) {
-          final repeatInterval = getRepeatInterval(
-            value.repeatDuration, value.repeatDurationType,
-          );
-          data = _data.copyWith(
-            repeatConfiguration: repeatConfigurations[repeatInterval],
-          );
-        }
-      });
-
 
     _data = EnterScreenData(
-      name: trx?.name,
-      amount: trx?.amount,
-      currency: standardCurrencies[trx?.currency],
-      date: trx?.date.toDate().toIso8601String(),
-      category: standardCategories[trx?.category],
+      name: transaction?.name,
+      amount: transaction?.amount,
+      currency: standardCurrencies[transaction?.currency],
+      date: transaction?.date.toDate().toIso8601String(),
+      category: standardCategories[transaction?.category],
+      repeatConfiguration: repeatConfigurations[repeatInterval],
     );
 
-    if (trx == null
-        && trx == null) {
-      withExistingData = false;
-    } else {
-      withExistingData = true;
-    }
+    withExistingData = transaction != null;
 
     final accountSettingsService
       = context.read<AccountSettingsService>();
+
     defaultValues = DefaultValues(
       name: "",
       amount: 0,
@@ -78,7 +65,6 @@ class EnterScreenFormViewModel extends ChangeNotifier {
       repeatConfiguration: repeatConfigurations[RepeatInterval.none]!,
     );
     entryType = screenViewModel.entryType;
-
   }
 
 

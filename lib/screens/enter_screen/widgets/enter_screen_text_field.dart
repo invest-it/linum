@@ -3,6 +3,8 @@ import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/core/account/services/account_settings_service.dart';
 import 'package:linum/core/categories/utils/translate_category.dart';
 import 'package:linum/core/design/layout/utils/media_query_accessors.dart';
+import 'package:linum/core/repeating/constants/standard_repeat_configs.dart';
+import 'package:linum/core/repeating/enums/repeat_interval.dart';
 import 'package:linum/screens/enter_screen/constants/parsable_date_map.dart';
 import 'package:linum/screens/enter_screen/enums/parsable_date.dart';
 import 'package:linum/screens/enter_screen/models/enter_screen_input.dart';
@@ -12,6 +14,7 @@ import 'package:linum/screens/enter_screen/utils/enter_screen_text_editing_contr
 import 'package:linum/screens/enter_screen/utils/example_string_builder.dart';
 import 'package:linum/screens/enter_screen/utils/string_from_existing_data.dart';
 import 'package:linum/screens/enter_screen/utils/suggestions/insert_suggestion.dart';
+import 'package:linum/screens/enter_screen/utils/supported_repeat_configs.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_form_view_model.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model.dart';
 import 'package:linum/screens/enter_screen/models/enter_screen_data.dart';
@@ -53,7 +56,7 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
         defaultName: "Name",
         defaultCategory: translateCategory(defaultCategory),
         defaultDate: parsableDateMap[ParsableDate.today]!,
-        defaultRepeatInfo: "Keine",
+        defaultRepeatInfo: repeatConfigurations[RepeatInterval.none]!.label,
       ),
       suggestionFilters: SuggestionFilters(
         categoryFilter: (category) => category.entryType == _formViewModel.entryType,

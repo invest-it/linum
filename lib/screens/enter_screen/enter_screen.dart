@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linum/common/widgets/loading_spinner.dart';
 import 'package:linum/core/balance/enums/serial_transaction_change_type_enum.dart';
 import 'package:linum/core/balance/models/serial_transaction.dart';
 import 'package:linum/core/balance/models/transaction.dart';
@@ -21,91 +22,117 @@ class EnterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final balanceDataProvider = context.read<BalanceDataService>();
+
 
     initSupportedDates();
     initSupportedRepeatIntervals();
 
-    return ChangeNotifierProvider(
-      create: (context) {
-        if (transaction != null) {
-          return EnterScreenViewModel.fromTransaction(
-            context,
-            transaction: transaction!,
-            actions: EnterScreenActions(
-              onSave: ({
-                Transaction? transaction,
-                SerialTransaction? serialTransaction,
-                SerialTransactionChangeMode? changeMode,
-              }) async {
-                if (transaction != null) {
-                  balanceDataProvider.updateTransaction(transaction);
-                } else if (serialTransaction != null && changeMode != null) {
-                  balanceDataProvider.updateSerialTransaction(
-                    serialTransaction: serialTransaction,
-                    changeMode: changeMode,
-                    oldDate: this.transaction?.formerDate ?? this.transaction?.date,
-                    newDate: serialTransaction.startDate,
-                  );
-                }
-                Navigator.pop(context);
-              },
-              onDelete: ({
-                Transaction? transaction,
-                SerialTransaction? serialTransaction,
-                SerialTransactionChangeMode? changeMode,
-              }) {
-                if (transaction != null) {
-                  balanceDataProvider.removeTransaction(transaction);
-                } else if (serialTransaction != null) {
-                  // TODO
-                }
-                Navigator.pop(context);
-              },
-            ),
-          );
-        }
-        if (serialTransaction != null) {
-          return EnterScreenViewModel.fromSerialTransaction(
-            context,
-            serialTransaction: serialTransaction!,
-            actions: EnterScreenActions(
-              onSave: ({
-                Transaction? transaction,
-                SerialTransaction? serialTransaction,
-                SerialTransactionChangeMode? changeMode,
-              }) {
-                // TODO
-              },
-              onDelete: ({
-                Transaction? transaction,
-                SerialTransaction? serialTransaction,
-                SerialTransactionChangeMode? changeMode,
-              }) {
+    Future<SerialTransaction?> fetchParentSerialTransaction(
+        BalanceDataService balanceDataService,
+        ) async {
 
-              },
-            ),
-          );
+      if (transaction?.repeatId != null) {
+        return balanceDataService.findSerialTransactionWithId(transaction!.repeatId!);
+      }
+      return null;
+    }
+
+    return FutureBuilder<SerialTransaction?>(
+      future: fetchParentSerialTransaction(
+          context.read<BalanceDataService>(),
+      ),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData
+            && snapshot.connectionState == ConnectionState.waiting
+        ) {
+          return const LoadingSpinner();
         }
-        return EnterScreenViewModel.empty(
-          context,
-          actions: EnterScreenActions(
-            onSave: ({
-              Transaction? transaction,
-              SerialTransaction? serialTransaction,
-              SerialTransactionChangeMode? changeMode,
-            }) {
-              if (transaction != null) {
-                balanceDataProvider.addTransaction(transaction);
-              } else if (serialTransaction != null) {
-                balanceDataProvider.addSerialTransaction(serialTransaction);
-              }
-              Navigator.pop(context);
-            },
-          ),
+
+        final balanceDataProvider = context.read<BalanceDataService>();
+
+        return ChangeNotifierProvider(
+          create: (context) {
+            if (transaction != null) {
+              return EnterScreenViewModel.fromTransaction(
+                context,
+                transaction: transaction!,
+                parentalSerialTransaction: snapshot.data,
+                actions: EnterScreenActions(
+                  onSave: ({
+                    Transaction? transaction,
+                    SerialTransaction? serialTransaction,
+                    SerialTransactionChangeMode? changeMode,
+                  }) async {
+                    if (transaction != null) {
+                      balanceDataProvider.updateTransaction(transaction);
+                    } else if (serialTransaction != null && changeMode != null) {
+                      balanceDataProvider.updateSerialTransaction(
+                        serialTransaction: serialTransaction,
+                        changeMode: changeMode,
+                        oldDate: this.transaction?.formerDate ?? this.transaction?.date,
+                        newDate: serialTransaction.startDate,
+                      );
+                    }
+                    Navigator.pop(context);
+                  },
+                  onDelete: ({
+                    Transaction? transaction,
+                    SerialTransaction? serialTransaction,
+                    SerialTransactionChangeMode? changeMode,
+                  }) {
+                    if (transaction != null) {
+                      balanceDataProvider.removeTransaction(transaction);
+                    } else if (serialTransaction != null) {
+                      // TODO
+                    }
+                    Navigator.pop(context);
+                  },
+                ),
+              );
+            }
+            if (serialTransaction != null) {
+              return EnterScreenViewModel.fromSerialTransaction(
+                context,
+                serialTransaction: serialTransaction!,
+                actions: EnterScreenActions(
+                  onSave: ({
+                    Transaction? transaction,
+                    SerialTransaction? serialTransaction,
+                    SerialTransactionChangeMode? changeMode,
+                  }) {
+                    // TODO
+                  },
+                  onDelete: ({
+                    Transaction? transaction,
+                    SerialTransaction? serialTransaction,
+                    SerialTransactionChangeMode? changeMode,
+                  }) {
+
+                  },
+                ),
+              );
+            }
+            return EnterScreenViewModel.empty(
+              context,
+              actions: EnterScreenActions(
+                onSave: ({
+                  Transaction? transaction,
+                  SerialTransaction? serialTransaction,
+                  SerialTransactionChangeMode? changeMode,
+                }) {
+                  if (transaction != null) {
+                    balanceDataProvider.addTransaction(transaction);
+                  } else if (serialTransaction != null) {
+                    balanceDataProvider.addSerialTransaction(serialTransaction);
+                  }
+                  Navigator.pop(context);
+                },
+              ),
+            );
+          },
+          child: const EnterScreenFlow(),
         );
       },
-      child: const EnterScreenFlow(),
     );
   }
 }
