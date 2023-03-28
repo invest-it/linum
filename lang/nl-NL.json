@@ -195,15 +195,6 @@
         },
         "expenses-textfield-title": "Wat heb je gekocht?",
         "income-textfield-title": "Hoe wordt dit inkomen genoemd?",
-        "label-repeat-30days": "Maandelijks",
-        "label-repeat-annually": "Jaarlijks",
-        "label-repeat-daily": "Dagelijks",
-        "label-repeat-freeselect": "Vrij kiezen",
-        "label-repeat-monthly": "Begin van de maand",
-        "label-repeat-none": "Niet herhalen",
-        "label-repeat-quarterly": "Alle 3 maanden",
-        "label-repeat-semiannually": "Halfjaarlijks",
-        "label-repeat-weekly": "Wekelijks",
         "title": {
             "add": "Nieuw item",
             "edit": "Bewerk item"
@@ -227,15 +218,26 @@
             "yesterday": "Gisteren",
             "tomorrow": "Morgen",
             "today": "Vandaag"
+        },
+        "repeat": {
+            "30days": "Maandelijks",
+            "annually": "Jaarlijks",
+            "daily": "Dagelijks",
+            "freeselect": "Selecteer vrij",
+            "monthly": "Aan het begin van de maand",
+            "none": "Niet herhalen",
+            "quarterly": "Elke 3 maanden",
+            "semiannually": "Halfjaarlijks",
+            "weekly": "Wekelijks",
+            "custom": "Aangepaste"
+        },
+        "menu": {
+            "category": "Selecteer categorie",
+            "currency": "Selecteer valuta",
+            "date": "Kies een datum",
+            "repeat-config": "Herhaal"
         }
     },
-    "enter_screen_attribute_account": "Account",
-    "enter_screen_attribute_account_from": "Van Account",
-    "enter_screen_attribute_account_to": "Naar Account",
-    "enter_screen_attribute_category": "Categorie",
-    "enter_screen_attribute_currency": "Valuta",
-    "enter_screen_attribute_date": "Datum",
-    "enter_screen_attribute_repeat": "Herhaal",
     "home_screen": {
         "button-show-all": "Alle",
         "button-show-more": "Meer",

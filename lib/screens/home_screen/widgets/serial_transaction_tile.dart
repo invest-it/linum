@@ -91,7 +91,7 @@ class SerialTransactionTile extends StatelessWidget {
         // If the repeatDuration is on a weekly basis
         if (duration % week == 0) {
           if (duration / week == 1) {
-            return "$formattedAmount ${tr('enter_screen.label-repeat-weekly')}";
+            return "$formattedAmount ${tr('enter_screen.repeat.weekly')}";
           }
           return "${tr('listview.label-every')} ${(duration / day).floor()} ${tr('listview.label-weeks')}";
         }
@@ -99,7 +99,7 @@ class SerialTransactionTile extends StatelessWidget {
         // If the repeatDuration is on a daily basis
         else if (duration % day == 0) {
           if (duration / day == 1) {
-            return "$formattedAmount ${tr('enter_screen.label-repeat-daily')}";
+            return "$formattedAmount ${tr('enter_screen.repeat.daily')}";
           }
           return "${tr('listview.label-every')} ${(duration / day).floor()} ${tr('listview.label-days')}";
         } else {
@@ -111,16 +111,16 @@ class SerialTransactionTile extends StatelessWidget {
       case RepeatDurationType.months:
         if (duration % 12 == 0) {
           if (duration / 12 == 1) {
-            return "$formattedAmount ${tr('enter_screen.label-repeat-annually')}";
+            return "$formattedAmount ${tr('enter_screen.repeat.annually')}";
           }
           return "${tr('listview.label-every')} ${(duration / 12).floor()} ${tr('listview.label-years')}";
         }
         if (duration == 1) {
-          return "$formattedAmount ${tr('enter_screen.label-repeat-30days')}";
+          return "$formattedAmount ${tr('enter_screen.repeat.30days')}";
         } else if (duration == 3) {
-          return "$formattedAmount ${tr('enter_screen.label-repeat-quarterly')}";
+          return "$formattedAmount ${tr('enter_screen.repeat.quarterly')}";
         } else if (duration == 6) {
-          return "$formattedAmount ${tr('enter_screen.label-repeat-semiannually')}";
+          return "$formattedAmount ${tr('enter_screen.repeat.semiannually')}";
         }
         return "${tr('listview.label-every')} ${(duration / 12).floor()} ${tr('listview.label-months')}";
     }

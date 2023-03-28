@@ -71,7 +71,7 @@ class _QuickTagMenuState extends State<QuickTagMenu> {
         onTap: () {
           showEnterScreenMenu(
             context: context,
-            title: "Currencies",
+            title: tr("enter_screen.menu.currency"),
             content: CurrencyListView(),
           );
         },
@@ -83,7 +83,7 @@ class _QuickTagMenuState extends State<QuickTagMenu> {
         onTap: () {
           showEnterScreenMenu(
             context: context,
-            title: "Categories",
+            title: tr("enter_screen.menu.category"),
             content: CategoryListView(
               categories: standardCategories.values
                   .where((element) => element.entryType == formViewModel.entryType)
@@ -99,7 +99,7 @@ class _QuickTagMenuState extends State<QuickTagMenu> {
         onTap: () {
           showEnterScreenMenu(
             context: context,
-            title: "Repeating",
+            title: tr("enter_screen.menu.repeat-config"),
             content: RepeatConfigListView(),
           );
         },

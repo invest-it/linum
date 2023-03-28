@@ -195,15 +195,6 @@
         },
         "expenses-textfield-title": "Qu'avez-vous acheté?",
         "income-textfield-title": "Comment appelle-t-on ce revenu?",
-        "label-repeat-30days": "Mensuel",
-        "label-repeat-annually": "Annuellement",
-        "label-repeat-daily": "Tous les jours",
-        "label-repeat-freeselect": "Choisir librement",
-        "label-repeat-monthly": "Au début du mois",
-        "label-repeat-none": "Ne répétez pas",
-        "label-repeat-quarterly": "Tous les trois mois",
-        "label-repeat-semiannually": "Semestriel",
-        "label-repeat-weekly": "Hebdomadaire",
         "title": {
             "add": "Nouvelle entrée",
             "edit": "Modifier l'entrée"
@@ -227,15 +218,26 @@
             "yesterday": "Hier",
             "tomorrow": "Demain",
             "today": "Aujourd'hui"
+        },
+        "repeat": {
+            "30days": "Mensuel",
+            "annually": "Annuellement",
+            "daily": "Tous les jours",
+            "freeselect": "Choisir librement",
+            "monthly": "Au début du mois",
+            "none": "Ne pas répéter",
+            "quarterly": "Tous les 3 mois",
+            "semiannually": "Semestriel",
+            "weekly": "Hebdomadaire",
+            "custom": "Défini par l'utilisateur"
+        },
+        "menu": {
+            "category": "Choisir une catégorie",
+            "currency": "Sélectionner la devise",
+            "date": "Sélectionner la date",
+            "repeat-config": "Répéter"
         }
     },
-    "enter_screen_attribute_account": "Compte",
-    "enter_screen_attribute_account_from": "Du compte",
-    "enter_screen_attribute_account_to": "Au compte",
-    "enter_screen_attribute_category": "Catégories",
-    "enter_screen_attribute_currency": "Monnaie",
-    "enter_screen_attribute_date": "Date",
-    "enter_screen_attribute_repeat": "Répéter",
     "home_screen": {
         "button-show-all": "Tous les",
         "button-show-more": "Plus",
