@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:linum/screens/enter_screen/constants/suggestion_defaults.dart';
 import 'package:linum/screens/enter_screen/enums/input_flag.dart';
-import 'package:linum/screens/enter_screen/utils/date_formatter.dart';
 import 'package:linum/screens/enter_screen/models/enter_screen_data.dart';
+import 'package:linum/screens/enter_screen/utils/date_formatter.dart';
 
 String generateStringFromExistingData(EnterScreenData data) {
   const dFormatter = DateFormatter();

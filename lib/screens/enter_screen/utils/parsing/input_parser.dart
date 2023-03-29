@@ -3,6 +3,7 @@ import 'package:linum/screens/enter_screen/enums/input_flag.dart';
 import 'package:linum/screens/enter_screen/models/enter_screen_input.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/amount_parsing.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/parser_functions.dart';
+import 'package:logger/logger.dart';
 import 'package:tuple/tuple.dart';
 
 List<String> splitInput(String input) {
@@ -37,9 +38,9 @@ EnterScreenInput parse(String? input) {
       result.parsedInputs.add(parsed);
     }
   }
-  print("${result.name ?? "No name"}: ${result.amount} ${result.currency}");
+  Logger().d("${result.name ?? "No name"}: ${result.amount} ${result.currency}");
   for (final tag in result.parsedInputs) {
-    print(tag);
+    Logger().d(tag);
   }
   return result;
 }

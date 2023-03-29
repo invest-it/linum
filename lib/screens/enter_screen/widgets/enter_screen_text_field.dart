@@ -17,7 +17,6 @@ import 'package:linum/screens/enter_screen/utils/string_from_existing_data.dart'
 import 'package:linum/screens/enter_screen/utils/suggestions/insert_suggestion.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_form_view_model.dart';
 import 'package:linum/screens/enter_screen/widgets/suggestion_list.dart';
-import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 class EnterScreenTextField extends StatefulWidget {

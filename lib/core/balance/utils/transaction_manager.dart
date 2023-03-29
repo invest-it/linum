@@ -71,7 +71,6 @@ class TransactionManager {
       logger.e("currency must be != '' ");
       return false;
     }
-    print(data.transactions);
     final transactionIndex =
         data.transactions.indexWhere((trans) => trans.id == id);
     if (transactionIndex == -1) {
