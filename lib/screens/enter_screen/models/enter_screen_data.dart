@@ -34,7 +34,7 @@ class EnterScreenData {
     Category? category,
     String? date,
     RepeatConfiguration? repeatConfiguration,
-    bool? isParsed,
+    bool isParsed = false,
   }) {
     return EnterScreenData(
       amount: amount ?? this.amount,
@@ -43,7 +43,7 @@ class EnterScreenData {
       category: category ?? this.category,
       date: date ?? this.date,
       repeatConfiguration: repeatConfiguration ?? this.repeatConfiguration,
-      isParsed: isParsed ?? this.isParsed,
+      isParsed: isParsed,
     );
   }
 

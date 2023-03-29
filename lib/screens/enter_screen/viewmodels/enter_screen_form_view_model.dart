@@ -80,8 +80,6 @@ class EnterScreenFormViewModel extends ChangeNotifier {
   }
 
 
-
-
   @override
   void dispose() {
     super.dispose();
