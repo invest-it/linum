@@ -7,8 +7,7 @@ import 'package:linum/core/authentication/services/authentication_service.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:provider/provider.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
+
 class DeleteUserButton extends StatelessWidget {
   const DeleteUserButton({super.key});
 
@@ -70,7 +69,7 @@ class DeleteUserButton extends StatelessWidget {
           tr("settings_screen.system-settings.button-delete-user"),
           style: Theme.of(context)
               .textTheme
-              .button
+              .labelLarge
               ?.copyWith(color: Theme.of(context).colorScheme.error),
         ),
       ),

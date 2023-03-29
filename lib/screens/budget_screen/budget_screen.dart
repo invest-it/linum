@@ -14,8 +14,6 @@ import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
 import 'package:linum/screens/home_screen/widgets/home_screen_listview.dart';
 import 'package:provider/provider.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
 
 /// Page Index: 1
 class BudgetScreen extends StatelessWidget {
@@ -41,7 +39,7 @@ class BudgetScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 15.0),
                 child: Text(
                   tr('budget_screen.label-all-transactions'),
-                  style: Theme.of(context).textTheme.headline5,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ),
               Padding(
@@ -50,7 +48,7 @@ class BudgetScreen extends StatelessWidget {
                   onPressed: () {},
                   child: Text(
                     tr('budget_screen.button-filter').toUpperCase(),
-                    style: Theme.of(context).textTheme.overline?.copyWith(
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
                           color: Theme.of(context).colorScheme.primary,
                           fontSize: 14,
                         ),

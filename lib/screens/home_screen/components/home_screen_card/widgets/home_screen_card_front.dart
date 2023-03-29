@@ -22,8 +22,6 @@ import 'package:linum/screens/home_screen/components/home_screen_card/utils/home
 import 'package:linum/screens/home_screen/components/home_screen_card/widgets/home_screen_card_row.dart';
 import 'package:provider/provider.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
 
 class HomeScreenCardFront extends StatelessWidget {
   @override
@@ -86,8 +84,8 @@ class HomeScreenCardFront extends StatelessWidget {
                             algorithmService.state.shownMonth,
                           ),
                           style: MediaQuery.of(context).size.height < 650
-                              ? Theme.of(context).textTheme.headline5
-                              : Theme.of(context).textTheme.headline3,
+                              ? Theme.of(context).textTheme.headlineSmall
+                              : Theme.of(context).textTheme.displaySmall,
                         ),
                       ),
                       Expanded(
@@ -111,7 +109,7 @@ class HomeScreenCardFront extends StatelessWidget {
                   Text(
                     //SUBHEADLINE
                     tr('home_screen_card.label-current-balance'),
-                    style: Theme.of(context).textTheme.headline5,
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 ],
               ),

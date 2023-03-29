@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
 
 class HomeScreenCardOverlineHeaderRow extends StatelessWidget {
   final List<String> _bodyList;
@@ -29,7 +27,7 @@ class HomeScreenCardOverlineHeaderRow extends StatelessWidget {
                 child: FittedBox(
                   child: Text(
                     _capitalize ? e.toUpperCase() : e,
-                    style: Theme.of(context).textTheme.overline,
+                    style: Theme.of(context).textTheme.labelSmall,
                   ),
                 ),
               ),

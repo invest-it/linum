@@ -39,8 +39,6 @@ class ApplicationServices extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: remove after sure it works: SizeGuide.init(context);
-
     return FutureBuilder(
       future: _initializedApp,
       builder: (innerContext, snapshot) {

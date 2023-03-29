@@ -19,8 +19,6 @@ import 'package:linum/screens/onboarding_screen/viewmodels/onboarding_screen_vie
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
 
 class LoginForm extends StatefulWidget {
   @override
@@ -71,7 +69,7 @@ class _LoginFormState extends State<LoginForm> {
           padding: const EdgeInsets.symmetric(vertical: 12.0),
           child: Text(
             tr('onboarding_screen.login-lip-title'),
-            style: Theme.of(context).textTheme.headline5,
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
         ),
         Padding(
@@ -111,7 +109,7 @@ class _LoginFormState extends State<LoginForm> {
                               tr('onboarding_screen.login-email-hintlabel'),
                           hintStyle: Theme.of(context)
                               .textTheme
-                              .bodyText1
+                              .bodyLarge
                               ?.copyWith(
                                 color: Theme.of(context).colorScheme.secondary,
                               ),
@@ -150,7 +148,7 @@ class _LoginFormState extends State<LoginForm> {
                               : null,
                           hintStyle: Theme.of(context)
                               .textTheme
-                              .bodyText1
+                              .bodyLarge
                               ?.copyWith(
                                 color: Theme.of(context).colorScheme.secondary,
                               ),
@@ -177,7 +175,7 @@ class _LoginFormState extends State<LoginForm> {
               //   child: Center(
               //     child: Text(
               //       'Einloggen',
-              //       style: Theme.of(context).textTheme.button,
+              //       style: Theme.of(context).textTheme.labelLarge,
               //     ),
               //   ),
               // ),

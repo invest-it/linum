@@ -9,17 +9,15 @@ import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
 
 TextStyle? getBalanceTextStyle(BuildContext context, num balance) {
   return MediaQuery.of(context).size.height < 650
-      ? Theme.of(context).textTheme.headline2?.copyWith(
+      ? Theme.of(context).textTheme.displayMedium?.copyWith(
             color: balance < 0
                 ? Theme.of(context).colorScheme.error
                 : const Color(0xFF202020),
           )
-      : Theme.of(context).textTheme.headline1?.copyWith(
+      : Theme.of(context).textTheme.displayLarge?.copyWith(
             color: balance < 0
                 ? Theme.of(context).colorScheme.error
                 : const Color(0xFF505050),

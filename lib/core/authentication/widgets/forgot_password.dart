@@ -15,8 +15,6 @@ import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
 
 class ForgotPasswordButton extends StatelessWidget {
   ForgotPasswordButton(this.screenKey);
@@ -49,7 +47,7 @@ class ForgotPasswordButton extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
                     tr('action_lip.forgot-password.logged-out.label-description'),
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme.of(context).textTheme.bodyLarge,
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -106,7 +104,7 @@ class ForgotPasswordButton extends StatelessWidget {
                                 ),
                                 hintStyle: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(
                                       color: Theme.of(context)
                                           .colorScheme
@@ -161,7 +159,7 @@ class ForgotPasswordButton extends StatelessWidget {
                       ),
                       child: Text(
                         tr('action_lip.forgot-password.logged-out.button-submit'),
-                        style: Theme.of(context).textTheme.button,
+                        style: Theme.of(context).textTheme.labelLarge,
                       ),
                     ),
                   ],
@@ -190,7 +188,7 @@ class ForgotPasswordButton extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
                     tr('action_lip.forgot-password.logged-in.label-description'),
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme.of(context).textTheme.bodyLarge,
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -249,7 +247,7 @@ class ForgotPasswordButton extends StatelessWidget {
                                 ),
                                 hintStyle: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(
                                       color: Theme.of(context)
                                           .colorScheme
@@ -304,7 +302,7 @@ class ForgotPasswordButton extends StatelessWidget {
                       ),
                       child: Text(
                         tr('action_lip.forgot-password.logged-in.button-submit'),
-                        style: Theme.of(context).textTheme.button,
+                        style: Theme.of(context).textTheme.labelLarge,
                       ),
                     ),
                   ],
@@ -344,7 +342,7 @@ class ForgotPasswordButton extends StatelessWidget {
             : tr('onboarding_screen.login-lip-forgot-password-button'),
         style: Theme.of(context)
             .textTheme
-            .button
+            .labelLarge
             ?.copyWith(color: Theme.of(context).colorScheme.onSurface),
       ),
     );

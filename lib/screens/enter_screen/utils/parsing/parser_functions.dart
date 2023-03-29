@@ -38,7 +38,7 @@ String? _dateParser(String input) {
 
   switch (parsableDate) {
     case ParsableDate.today:
-      return today.toIso8601String(); // TODO: Correct format?
+      return today.toIso8601String();
     case ParsableDate.tomorrow:
       return DateTime(today.year, today.month, today.day + 1).toIso8601String();
     case ParsableDate.yesterday:

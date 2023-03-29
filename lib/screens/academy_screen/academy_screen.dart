@@ -14,8 +14,6 @@ import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
 import 'package:linum/core/navigation/get_delegate.dart';
 import 'package:linum/core/navigation/url_handler.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
 
 /// Page Index: 4
 class AcademyScreen extends StatelessWidget {
@@ -46,7 +44,7 @@ class AcademyScreen extends StatelessWidget {
               child: Text(
                 tr('academy_screen.label-title'),
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline3,
+                style: Theme.of(context).textTheme.displaySmall,
               ),
             ),
             Padding(
@@ -54,7 +52,7 @@ class AcademyScreen extends StatelessWidget {
               child: Text(
                 tr('academy_screen.label-description'),
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
             Padding(
@@ -85,7 +83,7 @@ class AcademyScreen extends StatelessWidget {
               child: CupertinoButton(
                 child: Text(
                   tr('onboarding_screen.svg-credit-label'),
-                  style: Theme.of(context).textTheme.caption,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 onPressed: () => {
                   launchURL('https://storyset.com/technology'),

@@ -18,8 +18,6 @@ import 'package:linum/features/currencies/services/exchange_rate_service.dart';
 import 'package:linum/screens/home_screen/components/home_screen_card/models/home_screen_card_data.dart';
 import 'package:provider/provider.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
 
 class HomeScreenCardRow extends StatelessWidget {
   final HomeScreenCardAvatar upwardArrow;
@@ -57,7 +55,7 @@ class HomeScreenCardRow extends StatelessWidget {
                 ),
                 style: Theme.of(context)
                     .textTheme
-                    .overline!
+                    .labelSmall!
                     .copyWith(fontSize: 12),
               ),
               BalanceDataStreamConsumer3<

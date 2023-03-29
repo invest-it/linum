@@ -5,7 +5,13 @@ import 'package:linum/core/balance/services/balance_data_service.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
-
+/// A service Consumer that listens to the BalanceDataService stream property.
+///
+/// Use the [builder] parameter to create the UI that is dependent on the stream
+///
+/// Use the [transformer] parameter to transform the stream.
+///
+/// The stream contains values of type [T]
 class BalanceDataStreamConsumer<T> extends SingleChildStatelessWidget {
   final Widget Function(BuildContext, AsyncSnapshot<T>, Widget?) builder;
   final Future<T> Function(DocumentSnapshot<BalanceDocument>) transformer;
@@ -33,6 +39,14 @@ class BalanceDataStreamConsumer<T> extends SingleChildStatelessWidget {
   }
 }
 
+/// A service Consumer that listens to the BalanceDataService stream property
+/// and to one additionally service of type [S1].
+///
+/// Use the [builder] parameter to create the UI that is dependent on the stream
+///
+/// Use the [transformer] parameter to transform the stream.
+///
+/// The stream contains values of type [T]
 class BalanceDataStreamConsumer2<S1, T> extends SingleChildStatelessWidget {
   final Widget Function(BuildContext, AsyncSnapshot<T>, Widget?) builder;
   final Future<T> Function(DocumentSnapshot<BalanceDocument>, S1) transformer;
@@ -60,6 +74,14 @@ class BalanceDataStreamConsumer2<S1, T> extends SingleChildStatelessWidget {
   }
 }
 
+/// A service Consumer that listens to the BalanceDataService stream property
+/// and to two additionally services of type [S1] and [S2].
+///
+/// Use the [builder] parameter to create the UI that is dependent on the stream
+///
+/// Use the [transformer] parameter to transform the stream.
+///
+/// The stream contains values of type [T]
 class BalanceDataStreamConsumer3<S1, S2, T> extends SingleChildStatelessWidget {
   final Widget Function(BuildContext, AsyncSnapshot<T>, Widget?) builder;
   final Future<T> Function(DocumentSnapshot<BalanceDocument>, S1, S2) transformer;

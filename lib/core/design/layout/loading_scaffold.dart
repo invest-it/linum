@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
+
+
 
 class LoadingScaffold extends StatelessWidget {
   const LoadingScaffold({super.key});
@@ -21,7 +21,7 @@ class LoadingScaffold extends StatelessWidget {
             Text(
               tr("main.label-loading"),
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline5,
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
           ],
         ),

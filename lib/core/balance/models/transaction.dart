@@ -1,7 +1,7 @@
- //  Single Balance Data - Model for defining information used by a card that is NOT a copy of an original repeated transaction ("Single Transacton").
+//  Transaction - Model for defining information used by a card that is NOT a copy of an original repeated transaction ("Single Transacton").
 //
 //  Author: SoTBurst
-//  Co-Author: n/a //TODO @SoTBurst might be useful to train more people on this
+//  Co-Author: damattl
 //
 
 import 'package:cloud_firestore/cloud_firestore.dart';

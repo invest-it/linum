@@ -4,13 +4,13 @@ void _onTap() {}
 
 class TagSelectorButton extends StatelessWidget {
   final String title;
-  final String symbol;
+  final String? symbol;
   final Color textColor;
   final void Function() onTap;
   const TagSelectorButton({
     super.key,
     required this.title,
-    required this.symbol,
+    this.symbol,
     this.textColor = Colors.black,
     this.onTap = _onTap,
   });
@@ -29,7 +29,7 @@ class TagSelectorButton extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(right: symbol != "" ? 5 : 0),
             child: Text(
-              symbol,
+              symbol ?? "",
               style: TextStyle(color: textColor),
             ),
           ),

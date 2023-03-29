@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:linum/common/widgets/text_icon.dart';
 import 'package:linum/features/currencies/models/currency.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
-
 class CurrencyListTile extends StatelessWidget {
   const CurrencyListTile({
     super.key,
@@ -24,7 +21,7 @@ class CurrencyListTile extends StatelessWidget {
     return ListTile(
       title: Text(
         "${tr(currency.label)} (${currency.symbol})",
-        style: Theme.of(context).textTheme.bodyText1,
+        style: Theme.of(context).textTheme.bodyLarge,
       ),
       trailing: displayTrailing ? const Icon(
         Icons.arrow_forward,

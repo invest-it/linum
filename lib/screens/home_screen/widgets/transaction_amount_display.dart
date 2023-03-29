@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:linum/core/balance/models/transaction.dart';
 import 'package:linum/core/balance/utils/transaction_amount_formatter.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
+
+
 
 class TransactionAmountDisplay extends StatelessWidget {
   final Transaction transaction;
@@ -29,10 +29,10 @@ class TransactionAmountDisplay extends StatelessWidget {
     final defaultText = Text(
       formatter.format(transaction),
       style: transaction.amount <= 0
-          ? Theme.of(context).textTheme.bodyText1?.copyWith(
+          ? Theme.of(context).textTheme.bodyLarge?.copyWith(
                 color: Theme.of(context).colorScheme.error,
               )
-          : Theme.of(context).textTheme.bodyText1?.copyWith(
+          : Theme.of(context).textTheme.bodyLarge?.copyWith(
                 color: Theme.of(context).colorScheme.onSurface,
               ),
     );
@@ -43,10 +43,10 @@ class TransactionAmountDisplay extends StatelessWidget {
       final convertedText = Text(
         formatter.format(transaction, showConverted: true),
         style: transaction.amount <= 0
-            ? Theme.of(context).textTheme.caption?.copyWith(
+            ? Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: Theme.of(context).colorScheme.error,
                 )
-            : Theme.of(context).textTheme.caption?.copyWith(
+            : Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
       );

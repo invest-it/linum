@@ -16,7 +16,7 @@ Future<void> showAlertDialog(
       return AlertDialog(
         title: Text(
           title.tr(),
-          style: Theme.of(context).textTheme.headline5,
+          style: Theme.of(context).textTheme.headlineSmall,
         ),
         content: SingleChildScrollView(
           child: ListBody(
@@ -31,7 +31,7 @@ Future<void> showAlertDialog(
               actionTitle.tr(),
               style: Theme.of(context)
                   .textTheme
-                  .bodyText1
+                  .bodyLarge
                   ?.copyWith(color: Theme.of(context).colorScheme.primary),
             ),
             onPressed: () {

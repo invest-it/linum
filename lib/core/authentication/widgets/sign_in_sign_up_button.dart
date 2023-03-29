@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
+
+
 
 class SignInSignUpButton extends StatelessWidget {
   final Function() callback;
@@ -32,7 +32,7 @@ class SignInSignUpButton extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: Theme.of(context).textTheme.button,
+        style: Theme.of(context).textTheme.labelLarge,
       ),
     );
   }

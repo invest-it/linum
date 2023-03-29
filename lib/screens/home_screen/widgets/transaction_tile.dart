@@ -45,7 +45,7 @@ class TransactionTile extends StatelessWidget {
                   children: [
                     Text(
                       tr("listview.dismissible.label-delete"),
-                      style: Theme.of(context).textTheme.button,
+                      style: Theme.of(context).textTheme.labelLarge,
                     ),
                     Icon(
                       Icons.delete,
@@ -105,29 +105,24 @@ class TransactionTile extends StatelessWidget {
             child: CircleAvatar(
               backgroundColor: isFutureItem
                   ? transaction.amount > 0
-                  ? Theme.of(context)
-                  .colorScheme
-                  .tertiary // FUTURE INCOME BACKGROUND
+                  ? Theme.of(context).colorScheme.tertiary
+              // FUTURE INCOME BACKGROUND
                   : Theme.of(context).colorScheme.errorContainer
               // FUTURE EXPENSE BACKGROUND
                   : transaction.amount > 0
-                  ? Theme.of(context)
-                  .colorScheme
-                  .secondary // PRESENT INCOME BACKGROUND
-                  : Theme.of(context)
-                  .colorScheme
-                  .secondary, // PRESENT EXPENSE BACKGROUND
+                  ? Theme.of(context).colorScheme.secondary
+              // PRESENT INCOME BACKGROUND
+                  : Theme.of(context).colorScheme.secondary,
+              // PRESENT EXPENSE BACKGROUND
               child: transaction.amount > 0
                   ? Icon(
                 standardCategories[transaction.category]?.icon ??
                     Icons.error,
                 color: isFutureItem
-                    ? Theme.of(context)
-                    .colorScheme
-                    .onPrimary // FUTURE INCOME ICON
-                    : Theme.of(context)
-                    .colorScheme
-                    .tertiary, // PRESENT INCOME ICON
+                    ? Theme.of(context).colorScheme.onPrimary
+                // FUTURE INCOME ICON
+                    : Theme.of(context).colorScheme.tertiary,
+                // PRESENT INCOME ICON
               )
                   : Icon(
                 standardCategories[transaction.category]?.icon ??
@@ -146,28 +141,24 @@ class TransactionTile extends StatelessWidget {
             transaction.name != ""
                 ? transaction.name
                 : translateCategoryId(
-              transaction.category,
-              isExpense: transaction.amount <= 0,
-            ),
+                    transaction.category,
+                    isExpense: transaction.amount <= 0,
+                  ),
             style: isFutureItem
-                ? Theme.of(context).textTheme.bodyText1!.copyWith(
-              fontStyle: FontStyle.italic,
-              color: Theme.of(context).colorScheme.onSurface,
-            )
-                : Theme.of(context).textTheme.bodyText1,
+                ? Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  fontStyle: FontStyle.italic,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ) : Theme.of(context).textTheme.bodyLarge,
           ),
           subtitle: Text(
-            formatter
-                .format(
+            formatter.format(
               transaction.date.toDate(),
-            )
-                .toUpperCase(),
+            ).toUpperCase(),
             style: isFutureItem
-                ? Theme.of(context).textTheme.overline!.copyWith(
-              fontStyle: FontStyle.italic,
-              color: Theme.of(context).colorScheme.onSurface,
-            )
-                : Theme.of(context).textTheme.overline,
+                ? Theme.of(context).textTheme.labelSmall!.copyWith(
+                  fontStyle: FontStyle.italic,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ) : Theme.of(context).textTheme.labelSmall,
           ),
           trailing: TransactionAmountDisplay(
             transaction: transaction,

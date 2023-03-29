@@ -11,8 +11,8 @@ import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/core/navigation/url_handler.dart';
 import 'package:linum/screens/onboarding_screen/models/onboarding_slide_data.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
+
+
 
 class SingleSlide extends StatefulWidget {
   const SingleSlide({super.key, required this.slide});
@@ -37,7 +37,7 @@ class _SingleSlideState extends State<SingleSlide> {
             child: CupertinoButton(
               child: Text(
                 tr('onboarding_screen.svg-credit-label'),
-                style: Theme.of(context).textTheme.caption,
+                style: Theme.of(context).textTheme.bodySmall,
               ),
               onPressed: () => {
                 launchURL(widget.slide.freepikURL),
@@ -59,7 +59,7 @@ class _SingleSlideState extends State<SingleSlide> {
           child: Text(
             tr(widget.slide.heading),
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline3,
+            style: Theme.of(context).textTheme.displaySmall,
           ),
         ),
         widget.slide.description != null
@@ -69,7 +69,7 @@ class _SingleSlideState extends State<SingleSlide> {
                 child: Text(
                   tr(widget.slide.description!),
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline5,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
               )
             : const Padding(

@@ -24,8 +24,8 @@ import 'package:linum/screens/onboarding_screen/widgets/single_slide.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
+
+
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
@@ -194,7 +194,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                         ),
                         child: Text(
                           tr('onboarding_screen.register-button'),
-                          style: Theme.of(context).textTheme.button,
+                          style: Theme.of(context).textTheme.labelLarge,
                         ),
                       ),
                     ),
@@ -205,7 +205,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                   CupertinoButton(
                     child: Text(
                       tr('onboarding_screen.login-button'),
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                             color: Theme.of(context).colorScheme.onSurface,
                           ),
                     ),

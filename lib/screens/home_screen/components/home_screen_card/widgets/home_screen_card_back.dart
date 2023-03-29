@@ -19,9 +19,6 @@ import 'package:linum/screens/home_screen/components/home_screen_card/utils/home
 import 'package:linum/screens/home_screen/components/home_screen_card/utils/homescreen_card_time_warp.dart';
 import 'package:provider/provider.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
-
 //TODO: WTF OTIS, WHY IS THIS SO FREAKING LARGE?
 
 class HomeScreenCardBack extends StatelessWidget {
@@ -102,8 +99,8 @@ class HomeScreenCardBack extends StatelessWidget {
                     textAlign: TextAlign.center,
                     "${tr("home_screen_card.label-monthly-planner")} | ${dateFormat.format(algorithmService.state.shownMonth)}",
                     style: MediaQuery.of(context).size.height < 650
-                        ? Theme.of(context).textTheme.headline5
-                        : Theme.of(context).textTheme.headline4,
+                        ? Theme.of(context).textTheme.headlineSmall
+                        : Theme.of(context).textTheme.headlineMedium,
                   ),
                 ),
 
@@ -168,7 +165,7 @@ class HomeScreenCardBack extends StatelessWidget {
                                                     .toUpperCase(),
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .overline,
+                                                    .labelSmall,
                                               ),
                                               Expanded(
                                                 child: FittedBox(
@@ -198,7 +195,7 @@ class HomeScreenCardBack extends StatelessWidget {
                                                       .toUpperCase(),
                                                   style: Theme.of(context)
                                                       .textTheme
-                                                      .overline,
+                                                      .labelSmall,
                                                   textAlign: TextAlign.center,
                                                 ),
                                               ),
@@ -263,7 +260,7 @@ class HomeScreenCardBack extends StatelessWidget {
                                                   .toUpperCase(),
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .overline,
+                                                  .labelSmall,
                                             ),
                                             Expanded(
                                               child: FittedBox(
@@ -299,7 +296,7 @@ class HomeScreenCardBack extends StatelessWidget {
                                         textAlign: TextAlign.center,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .overline,
+                                            .labelSmall,
                                       ),
                                       Expanded(
                                         child: Row(

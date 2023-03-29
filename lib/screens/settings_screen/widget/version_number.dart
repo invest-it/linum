@@ -7,8 +7,8 @@
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
+
+
 
 class VersionNumber extends StatefulWidget {
   @override
@@ -43,7 +43,7 @@ class _VersionNumberState extends State<VersionNumber> {
       padding: const EdgeInsets.all(12.0),
       child: Text(
         '${_packageInfo.appName} Version ${_packageInfo.version} (${_packageInfo.buildNumber})',
-        style: Theme.of(context).textTheme.bodyText2?.copyWith(
+        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: Theme.of(context).colorScheme.tertiaryContainer,
               letterSpacing: 0,
             ),

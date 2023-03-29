@@ -9,9 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/screens/home_screen/enums/time_widget_date.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
-//TODO: RemoveFromBudgetScreen
+
 
 class TimeWidget extends StatelessWidget {
   const TimeWidget({
@@ -42,7 +40,7 @@ class TimeWidget extends StatelessWidget {
           isTranslated
               ? usedLabel!.toUpperCase()
               : tr(usedLabel!).toUpperCase(),
-          style: Theme.of(context).textTheme.overline?.copyWith(
+          style: Theme.of(context).textTheme.labelSmall?.copyWith(
                 fontWeight: FontWeight.w700,
               ),
         ),

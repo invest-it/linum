@@ -17,8 +17,8 @@ import 'package:linum/screens/home_screen/widgets/serial_transaction_list_view.d
 import 'package:linum/screens/home_screen/widgets/transaction_list_view.dart';
 import 'package:logger/logger.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
+
+
 
 class HomeScreenListView extends StatelessWidget {
   final bool showSerialTransactions;

@@ -8,8 +8,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
+
+
 
 class SignInWithGoogleButton extends StatelessWidget {
   const SignInWithGoogleButton({
@@ -50,7 +50,7 @@ class SignInWithGoogleButton extends StatelessWidget {
               padding: const EdgeInsets.only(left: 14),
               child: Text(
                 tr('onboarding_screen.google-button'),
-                style: Theme.of(context).textTheme.button?.copyWith(
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
                       fontWeight: FontWeight.w500,
                       color: Theme.of(context).colorScheme.secondary,
                       letterSpacing: -0.41,

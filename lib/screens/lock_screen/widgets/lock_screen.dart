@@ -16,8 +16,8 @@ import 'package:linum/screens/lock_screen/widgets/numeric_field.dart';
 import 'package:linum/screens/lock_screen/widgets/pin_field.dart';
 import 'package:provider/provider.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
+
+
 
 /// Page Index: 5
 class LockScreen extends StatefulWidget {
@@ -45,10 +45,6 @@ class _LockScreenState extends State<LockScreen> {
     //final ScreenIndexProvider sip = context.watch<ScreenIndexProvider>();
     final LockScreenAction screenIntent = pinCodeService.recallPINLockIntent(context);
 
-    //TODO check if we need this or not
-    // ignore: unused_local_variable
-    final void Function(int) addDigit = pinCodeService.addDigit;
-
     return ScreenSkeleton(
       head: 'Linum',
       body: Column(
@@ -61,7 +57,7 @@ class _LockScreenState extends State<LockScreen> {
               children: [
                 Text(
                   tr(screenIntent.screenTitle),
-                  style: Theme.of(context).textTheme.headline3,
+                  style: Theme.of(context).textTheme.displaySmall,
                 ),
                 Padding(
                   padding: EdgeInsets.only(
@@ -76,7 +72,7 @@ class _LockScreenState extends State<LockScreen> {
                         authService.userEmail.isNotEmpty
                             ? authService.userEmail
                             : pinCodeService.lastEmail,
-                        style: Theme.of(context).textTheme.headline5,
+                        style: Theme.of(context).textTheme.headlineSmall,
                       );
                     },
                   ),

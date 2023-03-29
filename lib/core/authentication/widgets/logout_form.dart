@@ -13,8 +13,6 @@ import 'package:linum/core/navigation/get_delegate.dart';
 import 'package:linum/screens/lock_screen/services/pin_code_service.dart';
 import 'package:provider/provider.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
 
 class LogoutForm extends StatefulWidget {
   @override
@@ -34,7 +32,7 @@ class _LogoutFormState extends State<LogoutForm> {
             builder: (context, authService, _) {
               return Text(
                 tr('logout_form.label-current-email') + authService.userEmail,
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyLarge,
                 textAlign: TextAlign.center,
               );
             },
@@ -61,7 +59,7 @@ class _LogoutFormState extends State<LogoutForm> {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           child: Text(
             tr('settings_screen.system-settings.button-signout'),
-            style: Theme.of(context).textTheme.button,
+            style: Theme.of(context).textTheme.labelLarge,
           ),
         ),
         SizedBox(

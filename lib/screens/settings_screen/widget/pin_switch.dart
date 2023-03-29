@@ -9,8 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:linum/screens/lock_screen/services/pin_code_service.dart';
 import 'package:provider/provider.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
+
+
 
 class PinSwitch extends StatelessWidget {
   const PinSwitch({
@@ -26,7 +26,7 @@ class PinSwitch extends StatelessWidget {
           key: const Key("pinActivationSwitch"),
           title: Text(
             tr("settings_screen.pin-lock.switch-label"),
-            style: Theme.of(context).textTheme.bodyText1,
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
           value: pinCodeService.pinSet,
           activeColor: Theme.of(context).colorScheme.primaryContainer,
@@ -43,7 +43,7 @@ class PinSwitch extends StatelessWidget {
             trailing: const Icon(Icons.arrow_forward_ios_rounded),
             title: Text(
               tr("settings_screen.pin-lock.label-change-pin"),
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
             onTap: () {
               pinCodeService.triggerPINChange();

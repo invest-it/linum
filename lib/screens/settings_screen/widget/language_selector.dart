@@ -11,8 +11,8 @@ import 'package:linum/core/account/services/account_settings_service.dart';
 import 'package:linum/screens/settings_screen/widget/toggle_button_element.dart';
 import 'package:provider/provider.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
+
+
 
 class LanguageSelector extends StatelessWidget {
   const LanguageSelector({
@@ -28,7 +28,7 @@ class LanguageSelector extends StatelessWidget {
         SwitchListTile(
           title: Text(
             'settings_screen.language-settings.label-systemlang',
-            style: Theme.of(context).textTheme.bodyText1,
+            style: Theme.of(context).textTheme.bodyLarge,
           ).tr(),
           value: accountSettingsService.settings['systemLanguage'] as bool? ??
               true,

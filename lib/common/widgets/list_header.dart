@@ -7,8 +7,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
 
 class ListHeader extends StatelessWidget {
   final String title;
@@ -21,7 +19,7 @@ class ListHeader extends StatelessWidget {
     if (tooltipMessage == null) {
       return Text(
         tr(title).toUpperCase(),
-        style: Theme.of(context).textTheme.overline,
+        style: Theme.of(context).textTheme.labelSmall,
       );
     } else {
       return Wrap(
@@ -30,7 +28,7 @@ class ListHeader extends StatelessWidget {
         children: [
           Text(
             tr(title).toUpperCase(),
-            style: Theme.of(context).textTheme.overline,
+            style: Theme.of(context).textTheme.labelSmall,
           ),
           Tooltip(
             message: tooltipMessage?.tr(),

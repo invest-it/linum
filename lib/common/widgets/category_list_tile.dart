@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:linum/core/categories/models/category.dart';
 import 'package:linum/core/categories/utils/translate_category.dart';
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
+
 
 class CategoryListTile extends StatelessWidget {
   const CategoryListTile({
@@ -26,7 +25,7 @@ class CategoryListTile extends StatelessWidget {
     return ListTile(
       title: Text(
         "${labelTitle ?? ""}${translateCategory(category)}",
-        style: Theme.of(context).textTheme.bodyText1,
+        style: Theme.of(context).textTheme.bodyLarge,
       ),
       trailing: trailingIcon != null ? Icon(
         trailingIcon,

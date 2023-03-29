@@ -19,8 +19,8 @@ import 'package:linum/screens/onboarding_screen/viewmodels/onboarding_screen_vie
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
+
+
 
 class RegisterForm extends StatefulWidget {
   @override
@@ -82,7 +82,7 @@ class _RegisterFormState extends State<RegisterForm> {
           padding: const EdgeInsets.symmetric(vertical: 12.0),
           child: Text(
             tr('onboarding_screen.register-lip-title').toUpperCase(),
-            style: Theme.of(context).textTheme.headline5,
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
         ),
         Padding(
@@ -122,7 +122,7 @@ class _RegisterFormState extends State<RegisterForm> {
                               tr('onboarding_screen.register-email-hintlabel'),
                           hintStyle: Theme.of(context)
                               .textTheme
-                              .bodyText1
+                              .bodyLarge
                               ?.copyWith(
                                 color: Theme.of(context).colorScheme.secondary,
                               ),
@@ -161,7 +161,7 @@ class _RegisterFormState extends State<RegisterForm> {
                           ),
                           hintStyle: Theme.of(context)
                               .textTheme
-                              .bodyText1
+                              .bodyLarge
                               ?.copyWith(
                                 color: Theme.of(context).colorScheme.secondary,
                               ),
@@ -193,7 +193,7 @@ class _RegisterFormState extends State<RegisterForm> {
               //   child: Center(
               //     child: Text(
               //       'Einloggen',
-              //       style: Theme.of(context).textTheme.button,
+              //       style: Theme.of(context).textTheme.labelLarge,
               //     ),
               //   ),
               // ),
@@ -242,7 +242,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       text: tr(
                         'onboarding_screen.register-privacy.label-leading',
                       ),
-                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.w600,
                             color: Theme.of(context).colorScheme.onSurface,
                           ),
@@ -255,7 +255,7 @@ class _RegisterFormState extends State<RegisterForm> {
                             'https://privacy.linum-app.de',
                           );
                         },
-                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.w600,
                             color: Theme.of(context).colorScheme.primary,
                             decoration: TextDecoration.underline,
@@ -265,7 +265,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       text: tr(
                         'onboarding_screen.register-privacy.label-trailing',
                       ),
-                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.w600,
                             color: Theme.of(context).colorScheme.onSurface,
                           ),
@@ -287,7 +287,7 @@ class _RegisterFormState extends State<RegisterForm> {
               //   child: Text(
               //     AppLocalizations.of(context)!.translate(
               //         'onboarding_screen/login-lip-forgot-password-button'),
-              //     style: Theme.of(context).textTheme.button?.copyWith(
+              //     style: Theme.of(context).textTheme.labelLarge?.copyWith(
               //         color: Theme.of(context).colorScheme.onSurface),
               //   ),
               //   style: OutlinedButton.styleFrom(

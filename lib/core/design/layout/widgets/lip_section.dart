@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
+
+
 
 class LipSection extends StatelessWidget {
   final String lipTitle;
@@ -46,7 +46,7 @@ class LipSection extends StatelessWidget {
                     child: Text(
                       lipTitle,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline6,
+                      style: Theme.of(context).textTheme.titleLarge,
 
                       /// Headlines are considered decorative elements and should therefore not be affected by system accessibility modifications - fixes #47
                       textScaleFactor: 1.0,
@@ -89,7 +89,7 @@ class LipSection extends StatelessWidget {
                     child: Text(
                       lipTitle,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline6,
+                      style: Theme.of(context).textTheme.titleLarge,
                       textScaleFactor: 1.0,
                     ),
                   ),

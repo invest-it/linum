@@ -20,8 +20,8 @@ import 'package:linum/screens/home_screen/widgets/home_screen_listview.dart';
 import 'package:linum/screens/lock_screen/services/pin_code_service.dart';
 import 'package:provider/provider.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
+
+
 /// Page Index: 0
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void resetAlgorithmProvider() {
     // TODO: read how the Widget is re-rendered here
     final AlgorithmService algorithmProvider =
-        context.watch<AlgorithmService>();
+        context.read<AlgorithmService>();
 
     if (algorithmProvider.state.filter == Filters.noFilter) {
       algorithmProvider.resetCurrentShownMonth();
@@ -60,14 +60,6 @@ class _HomeScreenState extends State<HomeScreen> {
         context.watch<PinCodeService>();
 
     resetAlgorithmProvider();
-    // AlgorithmProvider algorithmProvider =
-    //     context.read<AlgorithmProvider>();
-
-    // if (!algorithmProvider.currentFilter(
-    //     {"time": Timestamp.fromDate(DateTime.now().add(Duration(days: 1)))})) {
-    //   algorithmProvider.setCurrentFilterAlgorithm(
-    //       AlgorithmProvider.olderThan(Timestamp.fromDate(DateTime.now())));
-    // }
 
     return ScreenSkeleton(
       head: 'Home',
@@ -116,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                         underline: Container(),
                         elevation: 2,
-                        style: Theme.of(context).textTheme.headline5,
+                        style: Theme.of(context).textTheme.headlineSmall,
                         onChanged: (value) {
                           setState(() {
                             showRepeatables = value! as bool;
@@ -137,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         showRepeatables
                             ? tr('home_screen.button-show-all').toUpperCase()
                             : tr('home_screen.button-show-more').toUpperCase(),
-                        style: Theme.of(context).textTheme.overline?.copyWith(
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
                               color: Theme.of(context).colorScheme.primary,
                               fontSize: 14,
                             ),

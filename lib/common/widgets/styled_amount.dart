@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:linum/common/utils/currency_formatter.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
+
 
 class StyledAmount extends StatelessWidget {
   final String symbol;
@@ -54,41 +53,41 @@ class StyledAmount extends StatelessWidget {
 
     switch (fontSize) {
       case StyledFontSize.standard:
-        normalFontTheme = Theme.of(context).textTheme.headline3;
-        smallFontTheme = Theme.of(context).textTheme.headline4;
+        normalFontTheme = Theme.of(context).textTheme.displaySmall;
+        smallFontTheme = Theme.of(context).textTheme.headlineMedium;
         normalFontThemeNeg = Theme.of(context)
             .textTheme
-            .headline3
+            .displaySmall
             ?.copyWith(color: Theme.of(context).colorScheme.error);
         smallFontThemeNeg = Theme.of(context)
             .textTheme
-            .headline4
+            .headlineMedium
             ?.copyWith(color: Theme.of(context).colorScheme.error);
         break;
       case StyledFontSize.compact:
-        normalFontTheme = Theme.of(context).textTheme.headline4;
-        smallFontTheme = Theme.of(context).textTheme.headline5;
+        normalFontTheme = Theme.of(context).textTheme.headlineMedium;
+        smallFontTheme = Theme.of(context).textTheme.headlineSmall;
         normalFontThemeNeg = Theme.of(context)
             .textTheme
-            .headline4
+            .headlineMedium
             ?.copyWith(color: Theme.of(context).colorScheme.error);
         smallFontThemeNeg = Theme.of(context)
             .textTheme
-            .headline5
+            .headlineSmall
             ?.copyWith(color: Theme.of(context).colorScheme.error);
         break;
       case StyledFontSize.maximize:
-        normalFontTheme = Theme.of(context).textTheme.headline2?.copyWith(
+        normalFontTheme = Theme.of(context).textTheme.displayMedium?.copyWith(
               fontSize: 39.81,
             );
-        smallFontTheme = Theme.of(context).textTheme.headline2;
-        normalFontThemeNeg = Theme.of(context).textTheme.headline2?.copyWith(
+        smallFontTheme = Theme.of(context).textTheme.displayMedium;
+        normalFontThemeNeg = Theme.of(context).textTheme.displayMedium?.copyWith(
               color: Theme.of(context).colorScheme.error,
               fontSize: 39.81,
             );
         smallFontThemeNeg = Theme.of(context)
             .textTheme
-            .headline2
+            .displayMedium
             ?.copyWith(color: Theme.of(context).colorScheme.error);
         break;
     }

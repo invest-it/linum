@@ -4,70 +4,67 @@
 //  Co-Author: damattl
 //  (Refactored)
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
+
+
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MainTextTheme {
   static final TextTheme lightTheme = TextTheme(
-    headline1: GoogleFonts.dmSans(
+    displayLarge: GoogleFonts.dmSans(
       fontSize: 39.81,
       fontWeight: FontWeight.w700,
       letterSpacing: -1.5,
       color: const Color(0xFF303030),
     ),
-    headline2: GoogleFonts.dmSans(
+    displayMedium: GoogleFonts.dmSans(
       fontSize: 33.18,
       fontWeight: FontWeight.w500,
       color: const Color(0xFF303030),
     ),
-    headline3: GoogleFonts.dmSans(
+    displaySmall: GoogleFonts.dmSans(
       fontSize: 27.65,
       fontWeight: FontWeight.w500,
       color: const Color(0xFF303030),
     ),
-    headline4: GoogleFonts.dmSans(
+    headlineMedium: GoogleFonts.dmSans(
       fontSize: 23.04,
       fontWeight: FontWeight.w500,
       letterSpacing: 0.25,
       color: const Color(0xFF303030),
     ),
-    headline5: GoogleFonts.dmSans(
+    headlineSmall: GoogleFonts.dmSans(
       fontSize: 19.2,
       fontWeight: FontWeight.w500,
       color: const Color(0xFF202020),
     ),
 
-    //REPLACEMENT FOUND --> displayMedium
-    headline6: GoogleFonts.dmSans(
+    titleLarge: GoogleFonts.dmSans(
       fontSize: 84,
       letterSpacing: -1.5,
       fontWeight: FontWeight.w700,
       color: const Color(0xFFC1E695),
     ),
-    bodyText1: GoogleFonts.dmSans(
+    bodyLarge: GoogleFonts.dmSans(
       fontSize: 16,
       fontWeight: FontWeight.w500,
       letterSpacing: 0.16,
     ),
-    bodyText2: GoogleFonts.dmSans(
+    bodyMedium: GoogleFonts.dmSans(
       fontSize: 13.33,
       fontWeight: FontWeight.w400,
       letterSpacing: 0.08,
     ),
 
-    //REPLACEMENT FOUND --> labelSmall
-    overline: GoogleFonts.dmSans(
+    labelSmall: GoogleFonts.dmSans(
       fontSize: 10,
       fontWeight: FontWeight.w700,
       letterSpacing: 1.5,
       color: const Color(0xFF505050),
     ),
 
-    //REPLACEMENT FOUND --> labelLarge
-    button: GoogleFonts.dmSans(
+    labelLarge: GoogleFonts.dmSans(
       fontSize: 19.2,
       fontWeight: FontWeight.w500,
       letterSpacing: 0.15,

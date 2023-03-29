@@ -4,7 +4,7 @@
 //  Co-Author: n/a
 //
 
-// ignore_for_file: deprecated_member_use
+
 // TODO DEPRECATED
 
 import 'package:easy_localization/easy_localization.dart';
@@ -142,7 +142,7 @@ class _LoginViewState extends State<LoginView> {
                               tr('onboarding_screen.cta-login'),
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText1
+                                  .bodyLarge
                                   ?.copyWith(
                                     color:
                                         Theme.of(context).colorScheme.onPrimary,
@@ -191,7 +191,7 @@ class _LoginViewState extends State<LoginView> {
                             tr('onboarding_screen.cta-register'),
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1
+                                .bodyLarge
                                 ?.copyWith(
                                   color:
                                       Theme.of(context).colorScheme.onPrimary,

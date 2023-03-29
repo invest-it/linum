@@ -6,8 +6,8 @@
 
 import 'package:flutter/material.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
+
+
 
 class NumericField extends StatelessWidget {
   final int digit;
@@ -31,7 +31,7 @@ class NumericField extends StatelessWidget {
           ),
           child: Text(
             digit.toString(),
-            style: Theme.of(context).textTheme.headline3,
+            style: Theme.of(context).textTheme.displaySmall,
           ),
         ),
       ),

@@ -15,8 +15,6 @@ import 'package:linum/core/design/layout/utils/media_query_accessors.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
 
 // ignore: must_be_immutable
 class ActionLip extends StatefulWidget {
@@ -70,7 +68,7 @@ class _ActionLipState extends State<ActionLip> {
                   automaticallyImplyLeading: false,
                   title: Text(
                     viewModel.getActionLipTitle(screenKey),
-                    style: Theme.of(context).textTheme.headline5,
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   centerTitle: true,
                   actions: [

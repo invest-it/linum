@@ -54,15 +54,14 @@ class _QuickTagMenuState extends State<QuickTagMenu> {
     final repeatConfiguration =
         formViewModel.data.repeatConfiguration ?? formViewModel.defaultValues.repeatConfiguration;
     final date = formViewModel.data.date ?? formViewModel.defaultValues.date;
-    
+
     return [
       TagSelectorButton(
         title: tr(
           formatter
             .format(date)
             ?? "",
-        ), // TODO: Translate
-        symbol: "",
+        ),
         onTap: () {
           final result = showDatePicker(
               context: context,
@@ -92,7 +91,6 @@ class _QuickTagMenuState extends State<QuickTagMenu> {
       ),
       TagSelectorButton(
         title: translateCategory(category),
-        symbol: "",
         onTap: () {
           showEnterScreenMenu(
             context: context,
@@ -108,7 +106,6 @@ class _QuickTagMenuState extends State<QuickTagMenu> {
       ),
       TagSelectorButton(
         title: tr(repeatConfiguration.label),
-        symbol: "",
         onTap: () {
           showEnterScreenMenu(
             context: context,
