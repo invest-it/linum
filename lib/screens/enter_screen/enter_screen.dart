@@ -5,8 +5,6 @@ import 'package:linum/core/balance/models/serial_transaction.dart';
 import 'package:linum/core/balance/models/transaction.dart';
 import 'package:linum/core/balance/services/balance_data_service.dart';
 import 'package:linum/screens/enter_screen/actions/enter_screen_actions.dart';
-import 'package:linum/screens/enter_screen/utils/supported_dates.dart';
-import 'package:linum/screens/enter_screen/utils/supported_repeat_configs.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model.dart';
 import 'package:linum/screens/enter_screen/widgets/enter_screen_flow.dart';
 import 'package:provider/provider.dart';
@@ -22,10 +20,6 @@ class EnterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
-    initSupportedDates();
-    initSupportedRepeatIntervals();
 
     Future<SerialTransaction?> fetchParentSerialTransaction(
         BalanceDataService balanceDataService,

@@ -8,8 +8,7 @@ import 'package:linum/screens/enter_screen/constants/parsable_date_map.dart';
 import 'package:linum/screens/enter_screen/constants/suggestion_defaults.dart';
 import 'package:linum/screens/enter_screen/enums/parsable_date.dart';
 import 'package:linum/screens/enter_screen/models/suggestion.dart';
-import 'package:linum/screens/enter_screen/utils/supported_dates.dart';
-import 'package:linum/screens/enter_screen/utils/supported_repeat_configs.dart';
+import 'package:linum/screens/enter_screen/utils/supported_values.dart';
 
 Map<String, Suggestion> suggestFlags(String text) {
   final Map<String, Suggestion> suggestions = {};
@@ -66,7 +65,7 @@ Map<String, Suggestion> suggestDate(String text, {
   final Map<String, Suggestion> suggestions = {};
   final lowercase = text.toLowerCase();
 
-  for (final entry in supportedDates.entries) {
+  for (final entry in SupportedValues.dates.entries) {
     if (filter != null && !filter(entry.value)) {
       continue;
     }
@@ -92,7 +91,7 @@ Map<String, Suggestion> suggestRepeatInfo(String text, {
   final Map<String, Suggestion> suggestions = {};
   final lowercase = text.toLowerCase();
 
-  for (final entry in supportedRepeatIntervals.entries) {
+  for (final entry in SupportedValues.repeatIntervals.entries) {
     if (filter != null && !filter(entry.value)) {
       continue;
     }

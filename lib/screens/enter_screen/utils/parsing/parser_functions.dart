@@ -3,8 +3,7 @@ import 'package:linum/core/categories/constants/standard_categories.dart';
 import 'package:linum/screens/enter_screen/enums/input_flag.dart';
 import 'package:linum/screens/enter_screen/enums/parsable_date.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/date_parsing.dart';
-import 'package:linum/screens/enter_screen/utils/supported_dates.dart';
-import 'package:linum/screens/enter_screen/utils/supported_repeat_configs.dart';
+import 'package:linum/screens/enter_screen/utils/supported_values.dart';
 import 'package:tuple/tuple.dart';
 
 typedef ParserFunction = String? Function(String input);
@@ -25,7 +24,7 @@ String? _categoryParser(String input) {
 
 String? _repeatInfoParser(String input) {
   final lowercase = input.trim().toLowerCase();
-  final repeatInterval = supportedRepeatIntervals[lowercase];
+  final repeatInterval = SupportedValues.repeatIntervals[lowercase];
 
   return repeatInterval?.name;
 }
@@ -34,7 +33,7 @@ String? _dateParser(String input) {
   final lowercase = input.trim().toLowerCase();
   final today = DateTime.now();
 
-  final parsableDate = supportedDates[lowercase];
+  final parsableDate = SupportedValues.dates[lowercase];
 
   switch (parsableDate) {
     case ParsableDate.today:
