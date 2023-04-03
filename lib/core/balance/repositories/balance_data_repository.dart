@@ -1,11 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
+import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 import 'package:linum/core/balance/models/balance_document.dart';
 import 'package:logger/logger.dart';
 
 class BalanceDataRepository {
   final String _userId;
-  firestore.DocumentReference<BalanceDocument>? _docRef;
-  Future<firestore.DocumentReference<BalanceDocument>> get docRef async {
+   DocumentReference<BalanceDocument>? _docRef;
+  Future <DocumentReference<BalanceDocument>> get docRef async {
     if (_docRef == null) {
       final ref = await getDocumentReference(_userId);
       if (ref == null) {
@@ -17,7 +17,7 @@ class BalanceDataRepository {
     return Future.value(_docRef);
   }
   
-  Stream<firestore.DocumentSnapshot<BalanceDocument>>? get stream {
+  Stream <DocumentSnapshot<BalanceDocument>>? get stream {
     return docRef.asStream().asyncExpand((event) {
 
       event.snapshots().asyncMap((event) => Logger().d(event.data()));
@@ -47,8 +47,8 @@ class BalanceDataRepository {
   /// Creates Document if it doesn't exist
   Future<List<dynamic>> createDoc() async {
     Logger().i("creating document");
-    final firestore.DocumentSnapshot<Map<String, dynamic>> doc = await firestore
-        .FirebaseFirestore.instance
+    final  DocumentSnapshot<Map<String, dynamic>> doc = await
+        FirebaseFirestore.instance
         .collection('balance')
         .doc("documentToUser")
         .get();
@@ -58,14 +58,14 @@ class BalanceDataRepository {
       docDataNullSafe = docData;
     }
 
-    final firestore.DocumentReference<Map<String, dynamic>> ref =
-    await firestore.FirebaseFirestore.instance.collection('balance').add({
+    final  DocumentReference<Map<String, dynamic>> ref =
+    await  FirebaseFirestore.instance.collection('balance').add({
       "balanceData": [],
       "repeatedBalance": [],
       "settings": {},
     });
 
-    await firestore.FirebaseFirestore.instance
+    await  FirebaseFirestore.instance
         .collection('balance')
         .doc("documentToUser")
         .set(
@@ -77,12 +77,12 @@ class BalanceDataRepository {
     return [ref.id];
   }
 
-  Future<firestore.DocumentReference<BalanceDocument>?> getDocumentReference(String userId) async {
+  Future <DocumentReference<BalanceDocument>?> getDocumentReference(String userId) async {
     if (userId == "") {
       return null;
     }
-    final firestore.DocumentSnapshot<Map<String, dynamic>> documentToUser =
-    await firestore.FirebaseFirestore.instance
+    final  DocumentSnapshot<Map<String, dynamic>> documentToUser =
+    await  FirebaseFirestore.instance
         .collection('balance')
         .doc("documentToUser")
         .get();
@@ -103,7 +103,7 @@ class BalanceDataRepository {
         docs = await createDoc();
       }
       // Future support multiple docs per user
-      final doc = firestore.FirebaseFirestore.instance
+      final doc =  FirebaseFirestore.instance
           .collection('balance')
           .withConverter<BalanceDocument>(
         fromFirestore: (snapshot, _) =>

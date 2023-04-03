@@ -7,7 +7,7 @@
 // will be removed when sorters will only be used on SingleBalanceData
 // ignore_for_file: avoid_dynamic_calls
 
-import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
+import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 import 'package:linum/core/balance/models/transaction.dart';
 
 class Sorters {
@@ -76,15 +76,15 @@ class Sorters {
     if (a is Transaction && b is Transaction) {
       return (b.date).compareTo(a.date);
     }
-    return (b["time"] as firestore.Timestamp)
-        .compareTo(a["time"] as firestore.Timestamp);
+    return (b["time"] as Timestamp)
+        .compareTo(a["time"] as Timestamp);
   }
 
   static int dateOldToNew(dynamic b, dynamic a) {
     if (a is Transaction && b is Transaction) {
       return (a.date).compareTo(b.date);
     }
-    return (a["time"] as firestore.Timestamp)
-        .compareTo(b["time"] as firestore.Timestamp);
+    return (a["time"] as Timestamp)
+        .compareTo(b["time"] as Timestamp);
   }
 }

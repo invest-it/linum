@@ -4,7 +4,7 @@
 //  Co-Author: n/a
 //
 
-import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
+import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 import 'package:linum/core/balance/models/serial_transaction.dart';
 
 bool isMonthly(SerialTransaction serialTransaction) {
@@ -40,8 +40,8 @@ void removeUnusedChangedAttributes(
 }
 
 
-firestore.Timestamp? changeThisAndAllAfterEndTimeHelpFunction(
-    firestore.Timestamp? checkedEndTime,
+Timestamp? changeThisAndAllAfterEndTimeHelpFunction(
+    Timestamp? checkedEndTime,
     SerialTransaction oldSerialTransaction,
     Duration timeDifference,
 ) {
@@ -49,7 +49,7 @@ firestore.Timestamp? changeThisAndAllAfterEndTimeHelpFunction(
     return checkedEndTime;
   }
   if (oldSerialTransaction.endDate != null) {
-    return firestore.Timestamp.fromDate(
+    return Timestamp.fromDate(
       oldSerialTransaction.endDate!
           .toDate()
           .subtract(timeDifference),

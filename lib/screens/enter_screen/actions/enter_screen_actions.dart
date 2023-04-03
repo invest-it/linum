@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
+import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/core/balance/enums/serial_transaction_change_type_enum.dart';
 import 'package:linum/core/balance/models/serial_transaction.dart';
@@ -47,7 +47,7 @@ class EnterScreenActions {
         category: category?.id,
         currency: data.currency?.name ?? defaultData.currency.name,
         name: data.name ?? defaultData.name,
-        startDate: firestore.Timestamp.fromDate(
+        startDate:  Timestamp.fromDate(
           DateTime.parse(data.date ?? defaultData.date),
         ),
         repeatDuration: data.repeatConfiguration!.duration!,
@@ -63,7 +63,7 @@ class EnterScreenActions {
       amount: amount,
       currency: data.currency?.name ?? defaultData.currency.name,
       name: data.name ?? defaultData.name,
-      date: firestore.Timestamp.fromDate(
+      date:  Timestamp.fromDate(
         DateTime.parse(data.date ?? defaultData.date),
       ),
       category: category?.id,

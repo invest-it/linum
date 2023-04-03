@@ -4,7 +4,7 @@
 //  Co-Author: n/a
 //  (refactored)
 
-import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
+import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 import 'package:linum/core/balance/models/balance_document.dart';
 import 'package:linum/core/balance/models/transaction.dart';
 import 'package:logger/logger.dart';
@@ -56,7 +56,7 @@ class TransactionManager {
     bool? deleteNote,
     String? name,
     String? note,
-    firestore.Timestamp? date,
+     Timestamp? date,
   }) {
     // conditions
     if (id == "") {

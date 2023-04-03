@@ -6,7 +6,7 @@
 
 import 'dart:math' as math;
 
-import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
+import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/common/utils/filters.dart';
 import 'package:linum/core/balance/models/transaction.dart';
@@ -19,8 +19,8 @@ final Transaction baseTransaction = Transaction(
   category: "None",
   currency: "EUR",
   name: "Test Single Balance Data",
-  date: firestore.Timestamp.fromMillisecondsSinceEpoch(
-    firestore.Timestamp.now().millisecondsSinceEpoch - (3600 * 1000),
+  date: Timestamp.fromMillisecondsSinceEpoch(
+    Timestamp.now().millisecondsSinceEpoch - (3600 * 1000),
   ),
   id: const Uuid().v4(),
 );

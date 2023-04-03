@@ -5,6 +5,8 @@ import 'package:linum/screens/enter_screen/models/suggestion_filters.dart';
 import 'package:linum/screens/enter_screen/utils/example_string_builder.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/input_parser.dart';
 import 'package:linum/screens/enter_screen/utils/suggestions/make_suggestions.dart';
+import 'dart:ui' as ui show Locale, LocaleStringAttribute, ParagraphBuilder, SpellOutStringAttribute, StringAttribute;
+
 
 const exampleStringStyle = TextStyle(
   fontSize: 16,
@@ -57,14 +59,39 @@ class EnterScreenTextEditingController extends TextEditingController {
     super.value = newValue;
   }
 
+
   @override
   TextSpan buildTextSpan({required BuildContext context, TextStyle? style , required bool withComposing}) {
     assert(!value.composing.isValid || !withComposing || value.isComposingRangeValid);
 
+    final splits = text.split(" ");
+    final spans = <InlineSpan>[];
+    for (int i = 0; i < splits.length; i++) {
+      if (splits[i].isEmpty) {
+        continue;
+      }
+      print(selection.base.offset);
+      final customStyle = style?.copyWith(
+        color: Colors.white,
+        backgroundColor: Colors.redAccent,
+      );
+      spans.add(
+          TextSpan(
+            text: splits[i], 
+            style: customStyle,
+          )
+      );
+
+      if (i + 1 != splits.length) {
+        spans.add(
+          TextSpan(style: style, text: " "),
+        );
+      }
+    }
 
     return TextSpan(
       children: [
-        TextSpan(style: style, text: text),
+        ...spans,
         TextSpan(style: exampleStringStyle, text: exampleStringBuilder.value.item2),
       ],
     );
@@ -105,3 +132,4 @@ class EnterScreenTextEditingController extends TextEditingController {
     return selection.start >= value.composing.start && selection.end <= value.composing.end;
   }
 }
+

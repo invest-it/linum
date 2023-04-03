@@ -4,7 +4,7 @@
 //  Co-Author: n/a
 //
 
-import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
+import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 import 'package:linum/common/utils/filters.dart';
 import 'package:linum/core/balance/models/algorithm_state.dart';
 import 'package:linum/core/balance/models/serial_transaction.dart';
@@ -28,12 +28,12 @@ class StatisticalCalculations {
       getDataUsingFilter(_algorithms.filter);
 
   List<Transaction> get _currentTillNowData => getDataUsingFilter(
-        Filters.newerThan(firestore.Timestamp.now()),
+        Filters.newerThan(Timestamp.now()),
         baseData: _currentData,
       );
 
   List<Transaction> get _allTimeData =>
-      getDataUsingFilter(Filters.newerThan(firestore.Timestamp.now()));
+      getDataUsingFilter(Filters.newerThan(Timestamp.now()));
 
   late AlgorithmState _algorithms;
 
@@ -132,19 +132,19 @@ class StatisticalCalculations {
       );
 
   List<Transaction> get _futureSerialGeneratedData => getDataUsingFilter(
-        Filters.olderThan(firestore.Timestamp.now()),
+        Filters.olderThan(Timestamp.now()),
         baseData: _currentSerialGeneratedData,
       );
 
   List<Transaction> get _tillBeginningOfMonthData => getDataUsingFilter(
         Filters.newerThan(
-          firestore.Timestamp.fromDate(_algorithms.shownMonth),
+           Timestamp.fromDate(_algorithms.shownMonth),
         ),
         baseData: _allData,
       );
   List<Transaction> get _tillEndOfMonthData => getDataUsingFilter(
         Filters.newerThan(
-          firestore.Timestamp.fromDate(
+           Timestamp.fromDate(
             DateTime(
               _algorithms.shownMonth.year,
               _algorithms.shownMonth.month + 1,
@@ -167,8 +167,8 @@ class StatisticalCalculations {
       final List<bool Function(dynamic)> filterList = [
         Filters.inBetween(
           Tuple2(
-            firestore.Timestamp.fromDate(startDate),
-            firestore.Timestamp.fromDate(endDate),
+             Timestamp.fromDate(startDate),
+             Timestamp.fromDate(endDate),
           ),
         )
       ];

@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
+import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:linum/core/account/services/account_settings_service.dart';
@@ -126,7 +126,7 @@ class ExchangeRateService extends ChangeNotifier {
         transaction.rateInfo = ExchangeRateInfo(
           num.parse(transactionCurrencyRate),
           num.parse(standardCurrencyRate ?? "1"),
-          firestore.Timestamp.fromMillisecondsSinceEpoch(exchangeRates.date),
+           Timestamp.fromMillisecondsSinceEpoch(exchangeRates.date),
           isOtherDate: dateInMs != exchangeRates.date,
         );
         continue;

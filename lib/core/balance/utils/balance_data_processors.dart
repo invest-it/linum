@@ -6,7 +6,7 @@
 
 // import 'dart:developer';
 
-import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
+import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 import 'package:linum/core/balance/models/algorithm_state.dart';
 import 'package:linum/core/balance/models/balance_document.dart';
 import 'package:linum/core/balance/models/serial_transaction.dart';
@@ -21,7 +21,7 @@ import 'package:tuple/tuple.dart';
 typedef PreparedBalanceData = Tuple2<List<Transaction>, List<SerialTransaction>>;
 
 Future<PreparedBalanceData> prepareData(
-    firestore.DocumentSnapshot<BalanceDocument> snapshot,
+     DocumentSnapshot<BalanceDocument> snapshot,
     AlgorithmState algorithms,
     ExchangeRateService exchangeRateService,
 ) async {
@@ -66,7 +66,7 @@ Future<PreparedBalanceData> prepareData(
 
 Future<Tuple2<List<Transaction>, List<SerialTransaction>>>
   processBalanceData({
-  required firestore.DocumentSnapshot<BalanceDocument> snapshot,
+  required  DocumentSnapshot<BalanceDocument> snapshot,
   required AlgorithmState algorithms,
   required ExchangeRateService exchangeRateService,
   bool isSerial = false,
@@ -119,7 +119,7 @@ Future<Tuple2<List<Transaction>, List<SerialTransaction>>>
 }
 
 Future<StatisticalCalculations> generateStatistics({
-  required firestore.DocumentSnapshot<BalanceDocument> snapshot,
+  required  DocumentSnapshot<BalanceDocument> snapshot,
   required AlgorithmState algorithms,
   required ExchangeRateService exchangeRateService,
 }) async {

@@ -4,7 +4,7 @@
 //  Co-Author: SoTBurst, NightmindOfficial, damattl
 import 'dart:math';
 
-import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
+import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 import 'package:flutter/material.dart';
 import 'package:linum/core/balance/models/transaction.dart';
 import 'package:linum/core/balance/services/balance_data_service.dart';
@@ -67,8 +67,8 @@ class _ScreenLayoutState extends State<ScreenLayout>
 
   @override
   Widget build(BuildContext context) {
-    final firestore.CollectionReference balance =
-        firestore.FirebaseFirestore.instance.collection('balance');
+    final CollectionReference balance =
+        FirebaseFirestore.instance.collection('balance');
 
     final routerDelegate = context.getMainRouterDelegate();
 
@@ -89,7 +89,7 @@ class _ScreenLayoutState extends State<ScreenLayout>
       body: Center(
         child: StreamBuilder(
           stream: balance.snapshots(),
-          builder: (ctx, AsyncSnapshot<firestore.QuerySnapshot> snapshot) {
+          builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
             // returns the page at the current index, or at the lock screen index if a) the PIN lock is active AND b) there is a code for the email used for login stored in sharedPreferences AND c) the pin code has not been recalled before
             return screenRoutes[widget.currentScreen]!;
           },
@@ -148,7 +148,7 @@ class _ScreenLayoutState extends State<ScreenLayout>
     const List<String> categories = ["food", "clothing", "computer games"];
     final Random rand = Random();
     for (int i = 0; i < 365 * 5 * 4; i++) {
-      final firestore.Timestamp date = firestore.Timestamp.fromDate(
+      final Timestamp date = Timestamp.fromDate(
         DateTime.now().subtract(Duration(days: rand.nextInt(365 * 5))),
       );
       balanceDataProvider.addTransaction(

@@ -5,7 +5,7 @@
 //
 
 import 'dart:math' as math;
-import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
+import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/core/balance/models/balance_document.dart';
 import 'package:linum/core/balance/models/transaction.dart';
@@ -22,7 +22,7 @@ void main() {
           category: "",
           currency: "EUR",
           name: "",
-          date: firestore.Timestamp.fromDate(DateTime.now()),
+          date: Timestamp.fromDate(DateTime.now()),
         );
 
 
@@ -46,7 +46,7 @@ void main() {
           category: "none",
           currency: "",
           name: "",
-          date: firestore.Timestamp.fromDate(DateTime.now()),
+          date: Timestamp.fromDate(DateTime.now()),
         );
 
 
@@ -73,7 +73,7 @@ void main() {
         for (int i = 0; i < max; i++) {
           // Arrange (Initialization)
           final num amount = rand.nextInt(100000) / 100.0;
-          final firestore.Timestamp time = firestore.Timestamp.fromDate(
+          final Timestamp time = Timestamp.fromDate(
             DateTime.now().subtract(const Duration(days: 365 * 4)).add(
                   Duration(
                     days: rand.nextInt(365 * 4 * 2),
@@ -252,7 +252,7 @@ void main() {
             category: "allowance",
             currency: "EUR",
             name: "New Name",
-            date: firestore.Timestamp.fromMillisecondsSinceEpoch(1648000000000),
+            date: Timestamp.fromMillisecondsSinceEpoch(1648000000000),
           );
 
           // Assert (Observation)
@@ -264,7 +264,7 @@ void main() {
           expect(data.transactions[idIndex].name, "New Name");
           expect(
             data.transactions[idIndex].date,
-            firestore.Timestamp.fromMillisecondsSinceEpoch(1648000000000),
+            Timestamp.fromMillisecondsSinceEpoch(1648000000000),
           );
         }
       });
@@ -280,7 +280,7 @@ BalanceDocument generateRandomData({
   final int max = rand.nextInt(averageNumberOfEntries * 2) + 1;
   for (int i = 0; i < max; i++) {
     final num amount = rand.nextInt(100000) / 100.0;
-    final firestore.Timestamp time = firestore.Timestamp.fromDate(
+    final Timestamp time = Timestamp.fromDate(
       DateTime.now().subtract(const Duration(days: 365 * 4)).add(
             Duration(
               days: rand.nextInt(365 * 4 * 2),

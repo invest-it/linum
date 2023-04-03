@@ -4,7 +4,7 @@
 //  Co-Author: n/a
 //  (refactored)
 
-import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
+import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 import 'package:linum/core/balance/enums/serial_transaction_change_type_enum.dart';
 import 'package:linum/core/balance/models/balance_document.dart';
 import 'package:linum/core/balance/models/changed_transaction.dart';
@@ -50,13 +50,13 @@ class SerialTransactionManager {
     String? name,
     String? note,
     bool? deleteNote,
-    firestore.Timestamp? startDate,
+     Timestamp? startDate,
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
-    firestore.Timestamp? endDate,
+     Timestamp? endDate,
     bool resetEndDate = false,
-    firestore.Timestamp? oldDate,
-    firestore.Timestamp? newDate,
+     Timestamp? oldDate,
+     Timestamp? newDate,
   }) {
     // conditions
     if (id == "") {
@@ -109,11 +109,11 @@ class SerialTransactionManager {
     String? checkedCurrency;
     String? checkedName;
     String? checkedNote;
-    firestore.Timestamp? checkedInitialTime;
+     Timestamp? checkedInitialTime;
     int? checkedRepeatDuration;
     RepeatDurationType? checkedRepeatDurationType;
-    firestore.Timestamp? checkedEndTime;
-    firestore.Timestamp? checkedNewDate;
+     Timestamp? checkedEndTime;
+     Timestamp? checkedNewDate;
 
     for (final serialTransaction in data.serialTransactions) {
       if (serialTransaction.id == id) {
@@ -228,7 +228,7 @@ class SerialTransactionManager {
     required String id,
     required BalanceDocument data,
     required SerialTransactionChangeMode removeType,
-    firestore.Timestamp? date,
+     Timestamp? date,
   }) {
     // conditions
     if (removeType == SerialTransactionChangeMode.thisAndAllBefore &&
@@ -302,7 +302,7 @@ class SerialTransactionManager {
     while ((serialTransaction.endDate == null ||
             !serialTransaction.endDate!.toDate().isBefore(currentTime)) &&
         !tillDate.isBefore(currentTime)) {
-      // if "changed" -> "this firestore.Timestamp" -> deleted exist AND it is true, dont add this balance
+      // if "changed" -> "this  Timestamp" -> deleted exist AND it is true, dont add this balance
       if (serialTransaction.changed == null ||
           serialTransaction.changed![currentTime] == null ||
           serialTransaction.changed![currentTime]!.deleted == null ||
@@ -318,11 +318,11 @@ class SerialTransactionManager {
             name: serialTransaction.changed?[currentTime]?.name ??
                 serialTransaction.name,
             date: serialTransaction.changed?[currentTime]?.date ??
-                firestore.Timestamp.fromDate(currentTime),
+                 Timestamp.fromDate(currentTime),
             repeatId: serialTransaction.id,
             id: const Uuid().v4(),
             formerDate: (serialTransaction.changed?[currentTime]?.date != null)
-                ? firestore.Timestamp.fromDate(currentTime)
+                ?  Timestamp.fromDate(currentTime)
                 : null,
           ),
         );

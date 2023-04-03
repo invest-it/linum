@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
+import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 import 'package:flutter/cupertino.dart';
 import 'package:linum/core/balance/enums/serial_transaction_change_type_enum.dart';
 import 'package:linum/core/balance/models/balance_document.dart';
@@ -24,7 +24,7 @@ class BalanceDataService extends ChangeNotifier {
 
   late BalanceDataRepository _repository;
 
-  Stream<firestore.DocumentSnapshot<BalanceDocument>>? get stream
+  Stream <DocumentSnapshot<BalanceDocument>>? get stream
     => _repository.stream;
 
   /// add a single Balance and upload it
@@ -51,7 +51,7 @@ class BalanceDataService extends ChangeNotifier {
     String? category,
     String? currency,
     String? name,
-    firestore.Timestamp? date,
+     Timestamp? date,
   }) async {
     return _repository.balanceDocument.asyncMap((data) async {
       if (data == null) {
@@ -142,8 +142,8 @@ class BalanceDataService extends ChangeNotifier {
   Future<bool> updateSerialTransaction({
     required SerialTransaction serialTransaction,
     required SerialTransactionChangeMode changeMode,
-    firestore.Timestamp? oldDate,
-    firestore.Timestamp? newDate,
+     Timestamp? oldDate,
+     Timestamp? newDate,
     bool resetEndDate = false,
   }) async {
     return _repository.balanceDocument.asyncMap((data) async {
@@ -177,7 +177,7 @@ class BalanceDataService extends ChangeNotifier {
   Future<bool> removeSerialTransaction({
     required SerialTransaction serialTransaction,
     required SerialTransactionChangeMode removeType,
-    firestore.Timestamp? date,
+     Timestamp? date,
   }) async {
     return removeSerialTransactionUsingId(
       id: serialTransaction.id,
@@ -189,7 +189,7 @@ class BalanceDataService extends ChangeNotifier {
   Future<bool> removeSerialTransactionUsingId({
     required String id,
     required SerialTransactionChangeMode removeType,
-    firestore.Timestamp? date,
+     Timestamp? date,
   }) async {
     return _repository.balanceDocument.asyncMap((data) async {
       if (data == null) {

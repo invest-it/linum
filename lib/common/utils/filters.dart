@@ -7,7 +7,7 @@
 // will be removed when filters will only be used on SingleBalanceData
 // ignore_for_file: avoid_dynamic_calls
 
-import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
+import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 import 'package:linum/core/balance/models/transaction.dart';
 import 'package:tuple/tuple.dart';
 
@@ -54,18 +54,18 @@ class Filters {
     return false;
   }
 
-  static bool Function(dynamic) newerThan(firestore.Timestamp timestamp) {
+  static bool Function(dynamic) newerThan(Timestamp timestamp) {
     return (dynamic a) =>
         (_mapToTransaction(a).date).compareTo(timestamp) >= 0;
   }
 
-  static bool Function(dynamic) olderThan(firestore.Timestamp timestamp) {
+  static bool Function(dynamic) olderThan(Timestamp timestamp) {
     return (dynamic a) =>
         (_mapToTransaction(a).date).compareTo(timestamp) <= 0;
   }
 
   static bool Function(dynamic) inBetween(
-    Tuple2<firestore.Timestamp, firestore.Timestamp> timestamps,
+    Tuple2 <Timestamp,  Timestamp> timestamps,
   ) {
     return (dynamic a) =>
         (_mapToTransaction(a).date).compareTo(timestamps.item1) <= 0 ||

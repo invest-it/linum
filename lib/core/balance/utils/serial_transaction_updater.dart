@@ -6,7 +6,7 @@
 //
 //  300 ZEILEN PURER HASS
 
-import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
+import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 import 'package:linum/common/utils/date_time_map.dart';
 import 'package:linum/core/balance/models/balance_document.dart';
 import 'package:linum/core/balance/models/changed_transaction.dart';
@@ -24,15 +24,15 @@ class SerialTransactionUpdater {
     String? category,
     String? currency,
     bool? deleteNote,
-    firestore.Timestamp? endDate,
-    firestore.Timestamp? startDate,
+     Timestamp? endDate,
+     Timestamp? startDate,
     String? name,
     String? note,
-    firestore.Timestamp? newDate,
+     Timestamp? newDate,
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
     bool resetEndDate = false,
-    firestore.Timestamp? oldDate,
+     Timestamp? oldDate,
   }) {
     bool isEdited = false;
 
@@ -50,8 +50,8 @@ class SerialTransactionUpdater {
     String? updatedNote;
     DateTimeMap<String, ChangedTransaction>? updatedChanged =
         serialTransaction.changed;
-    firestore.Timestamp? updatedInitialTime;
-    firestore.Timestamp? updatedEndTime;
+     Timestamp? updatedInitialTime;
+     Timestamp? updatedEndTime;
     int? updatedRepeatDuration;
     RepeatDurationType? updatedRepeatDurationType;
 
@@ -80,13 +80,13 @@ class SerialTransactionUpdater {
       updatedInitialTime = startDate;
       isEdited = true;
     } else if (newDate != null && oldDate != null) {
-      updatedInitialTime = firestore.Timestamp.fromDate(
+      updatedInitialTime =  Timestamp.fromDate(
         (serialTransaction.startDate).toDate().subtract(
               oldDate.toDate().difference(newDate.toDate()),
             ),
       );
       if (serialTransaction.endDate != null) {
-        updatedEndTime = firestore.Timestamp.fromDate(
+        updatedEndTime =  Timestamp.fromDate(
           serialTransaction.endDate!.toDate().subtract(
                 oldDate.toDate().difference(newDate.toDate()),
               ),
@@ -174,16 +174,16 @@ class SerialTransactionUpdater {
   static bool updateThisAndAllBefore({
     required BalanceDocument data,
     required String id,
-    required firestore.Timestamp oldDate,
+    required  Timestamp oldDate,
     num? amount,
     String? category,
     String? currency,
     bool? deleteNote,
-    firestore.Timestamp? endDate,
-    firestore.Timestamp? startDate,
+     Timestamp? endDate,
+     Timestamp? startDate,
     String? name,
     String? note,
-    firestore.Timestamp? newDate,
+     Timestamp? newDate,
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
     bool? resetEndDate,
@@ -197,11 +197,11 @@ class SerialTransactionUpdater {
     }
     final oldSerialTransaction = data.serialTransactions[index];
 
-    firestore.Timestamp? updatedInitialTime;
+     Timestamp? updatedInitialTime;
 
     if (oldSerialTransaction.repeatDurationType.name.toUpperCase() ==
         "MONTHS") {
-      updatedInitialTime = firestore.Timestamp.fromDate(
+      updatedInitialTime =  Timestamp.fromDate(
         calculateOneTimeStep(
           oldSerialTransaction.repeatDuration,
           oldDate.toDate(),
@@ -210,7 +210,7 @@ class SerialTransactionUpdater {
         ),
       );
     } else {
-      updatedInitialTime = firestore.Timestamp.fromDate(
+      updatedInitialTime =  Timestamp.fromDate(
         calculateOneTimeStep(
           oldSerialTransaction.repeatDuration,
           oldDate.toDate(),
@@ -227,14 +227,14 @@ class SerialTransactionUpdater {
       currency: currency,
       name: name,
       startDate: startDate ??
-          firestore.Timestamp.fromDate(
+           Timestamp.fromDate(
             oldSerialTransaction.startDate.toDate().subtract(timeDifference),
           ),
       id: const Uuid().v4(),
       repeatDuration: repeatDuration,
       repeatDurationType: repeatDurationType,
       endDate:
-          firestore.Timestamp.fromDate(oldDate.toDate().subtract(timeDifference)),
+           Timestamp.fromDate(oldDate.toDate().subtract(timeDifference)),
       note: (deleteNote ?? false) ? null : note,
     );
 
@@ -255,15 +255,15 @@ class SerialTransactionUpdater {
   static bool updateThisAndAllAfter({
     required BalanceDocument data,
     required String id,
-    required firestore.Timestamp oldDate,
+    required  Timestamp oldDate,
     num? amount,
     String? category,
     String? currency,
     bool? deleteNote,
-    firestore.Timestamp? endDate,
-    firestore.Timestamp? startDate,
+     Timestamp? endDate,
+     Timestamp? startDate,
     String? name,
-    firestore.Timestamp? newDate,
+     Timestamp? newDate,
     String? note,
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
@@ -277,10 +277,10 @@ class SerialTransactionUpdater {
     }
     final oldSerialTransaction = data.serialTransactions[index];
 
-    firestore.Timestamp? updatedEndTime;
+     Timestamp? updatedEndTime;
 
     if (oldSerialTransaction.repeatDurationType.name.toUpperCase() == "MONTHS") {
-      updatedEndTime = firestore.Timestamp.fromDate(
+      updatedEndTime =  Timestamp.fromDate(
         calculateOneTimeStepBackwards(
           oldSerialTransaction.repeatDuration,
           oldDate.toDate(),
@@ -289,7 +289,7 @@ class SerialTransactionUpdater {
         ),
       );
     } else {
-      updatedEndTime = firestore.Timestamp.fromDate(
+      updatedEndTime =  Timestamp.fromDate(
         calculateOneTimeStepBackwards(
           oldSerialTransaction.repeatDuration,
           oldDate.toDate(),
@@ -307,7 +307,7 @@ class SerialTransactionUpdater {
       currency: currency,
       name: name,
       startDate:
-          firestore.Timestamp.fromDate(oldDate.toDate().subtract(timeDifference)),
+           Timestamp.fromDate(oldDate.toDate().subtract(timeDifference)),
       id: const Uuid().v4(),
       repeatDuration: repeatDuration,
       repeatDurationType: repeatDurationType,
@@ -335,7 +335,7 @@ class SerialTransactionUpdater {
   static bool updateOnlyThisOne({
     required BalanceDocument data,
     required String id,
-    required firestore.Timestamp date,
+    required  Timestamp date,
     required ChangedTransaction changed,
   }) {
     final index =

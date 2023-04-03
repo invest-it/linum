@@ -14,7 +14,6 @@ class CategoryListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final formViewModel = context.read<EnterScreenFormViewModel>();
-    
     return Expanded(
       child: ListView.builder(
         padding: EdgeInsets.only(
