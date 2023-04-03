@@ -76,6 +76,10 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
   List<Page> _buildPageStackAuthorized(BuildContext context) {
     final PinCodeService pinCodeService =
         context.watch<PinCodeService>();
+    const designModeEnabled = bool.fromEnvironment("DESIGN_MODE_ENABLED");
+    if (designModeEnabled) {
+      _pageStack.add(mainRoutes.pageFromRoute(MainRoute.sandbox));
+    }
     if (_pageStack.isEmpty) {
       _pageStack.add(mainRoutes.pageFromRoute(MainRoute.home));
     }

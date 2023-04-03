@@ -13,6 +13,8 @@ import 'package:linum/core/design/layout/screen_layout.dart';
 import 'package:linum/core/navigation/route_configuration.dart';
 import 'package:linum/screens/filter_screen/filter_screen.dart';
 import 'package:linum/screens/lock_screen/widgets/lock_screen.dart';
+import 'package:linum/screens/sandbox_screen/sandbox_screen.dart';
+import 'package:uuid/uuid.dart';
 
 enum MainRoute {
   home,
@@ -21,7 +23,8 @@ enum MainRoute {
   settings,
   academy,
   lock,
-  filter
+  filter,
+  sandbox,
 }
 
 final mainRoutes = Map<MainRoute, RouteConfiguration>.of({
@@ -85,6 +88,15 @@ final mainRoutes = Map<MainRoute, RouteConfiguration>.of({
       return MaterialPage(
         child: const FilterScreen(),
         name: MainRoute.filter.toString(),
+      );
+    },
+  ),
+  MainRoute.sandbox: RouteConfiguration(
+    path: "/sandbox${const Uuid().v4()}",
+    builder: <T>(_) {
+      return MaterialPage(
+        child: const SandboxScreen(),
+        name: MainRoute.sandbox.toString(),
       );
     },
   ),

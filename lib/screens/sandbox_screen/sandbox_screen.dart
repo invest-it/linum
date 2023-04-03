@@ -15,22 +15,17 @@ import 'package:linum/core/design/layout/widgets/top_bar_action_item.dart';
 import 'package:linum/screens/enter_screen/enter_screen.dart';
 
 /// Page Index: 2
-class StatisticsScreen extends StatelessWidget {
-  const StatisticsScreen({super.key});
+class SandboxScreen extends StatelessWidget {
+  const SandboxScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ScreenSkeleton(
-      head: 'Stats',
+      head: 'Sandbox',
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TopBarActionItem(
-              buttonIcon: Icons.build,
-              onPressedAction: () => log('message'),
-            ),
-            Text(tr('main.label-wip')),
             EnterScreen(
               transaction: Transaction(
                 name: 'Test',
