@@ -66,7 +66,7 @@ Future<PreparedBalanceData> prepareData(
 
 Future<Tuple2<List<Transaction>, List<SerialTransaction>>>
   processBalanceData({
-  required  DocumentSnapshot<BalanceDocument> snapshot,
+  required DocumentSnapshot<BalanceDocument> snapshot,
   required AlgorithmState algorithms,
   required ExchangeRateService exchangeRateService,
   bool isSerial = false,

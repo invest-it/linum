@@ -91,7 +91,7 @@ class SerialTransaction {
 
     return SerialTransaction(
       amount: map['amount'] as num,
-      category: map['category'] as String,
+      category: map['category'] as String?,
       currency: map['currency'] as String,
       id: map['id'] as String,
       name: map['name'] as String,
@@ -107,7 +107,7 @@ class SerialTransaction {
 
   @override
   String toString() {
-    return 'RepeatBalanceData(amount: $amount, category: $category, currency: $currency, id: $id, name: $name, note: $note, changed: $changed, initialTime: $startDate, endTime: $endDate, repeatDuration: $repeatDuration, repeatDurationType: $repeatDurationType)';
+    return 'RepeatBalanceData(amount: $amount, category: $category, currency: $currency, id: $id, name: $name, note: $note, changed: $changed, startDate: $startDate, endTime: $endDate, repeatDuration: $repeatDuration, repeatDurationType: $repeatDurationType)';
   }
 
   @override

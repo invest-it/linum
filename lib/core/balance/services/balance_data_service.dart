@@ -11,10 +11,6 @@ import 'package:linum/core/balance/utils/serial_transaction_manager.dart';
 import 'package:linum/core/balance/utils/transaction_manager.dart';
 import 'package:logger/logger.dart';
 
-
-
-
-
 class BalanceDataService extends ChangeNotifier {
   BalanceDataService(this.userId) {
     _repository = BalanceDataRepository(userId: userId);

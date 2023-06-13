@@ -115,7 +115,7 @@ class EnterScreenViewModel extends ChangeNotifier {
       defaultData: _defaultValues,
       entryType: _entryType,
       existingId: initialTransaction?.id,
-      existingSerialId: initialSerialTransaction?.id,
+      existingSerialId: initialSerialTransaction?.id ?? parentalSerialTransaction?.id,
     );
   }
 
@@ -131,7 +131,7 @@ class EnterScreenViewModel extends ChangeNotifier {
       entryType: _entryType,
       changeMode: changeMode,
       existingId: initialTransaction?.id,
-      existingSerialId: initialSerialTransaction?.id,
+      existingSerialId: initialSerialTransaction?.id ?? parentalSerialTransaction?.id,
     );
   }
 

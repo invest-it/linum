@@ -75,8 +75,11 @@ class EnterScreen extends StatelessWidget {
                   }) {
                     if (transaction != null) {
                       balanceDataProvider.removeTransaction(transaction);
-                    } else if (serialTransaction != null) {
-                      // TODO
+                    } else if (serialTransaction != null && changeMode != null) {
+                      balanceDataProvider.removeSerialTransaction(
+                          serialTransaction: serialTransaction,
+                          removeType: changeMode,
+                      );
                     }
                     Navigator.pop(context);
                   },

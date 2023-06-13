@@ -75,7 +75,7 @@ class Transaction {
   factory Transaction.fromMap(Map<String, dynamic> map) {
     return Transaction(
       amount: map['amount'] as num,
-      category: map['category'] as String,
+      category: map['category'] as String?,
       currency: map['currency'] as String,
       id: map['id'] as String,
       name: map['name'] as String,
@@ -88,7 +88,7 @@ class Transaction {
 
   @override
   String toString() {
-    return 'Transaction(amount: $amount, category: $category, currency: $currency, id: $id, name: $name, note: $note, repeatId: $repeatId, time: $date, formerTime: $formerDate)';
+    return 'Transaction(amount: $amount, category: $category, currency: $currency, id: $id, name: $name, note: $note, repeatId: $repeatId, time: $date, formerDate: $formerDate)';
   }
 
   @override

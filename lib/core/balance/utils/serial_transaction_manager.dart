@@ -5,6 +5,7 @@
 //  (refactored)
 
 import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
+import 'package:collection/collection.dart';
 import 'package:linum/core/balance/enums/serial_transaction_change_type_enum.dart';
 import 'package:linum/core/balance/models/balance_document.dart';
 import 'package:linum/core/balance/models/changed_transaction.dart';
@@ -93,10 +94,6 @@ class SerialTransactionManager {
         return false;
       }
     }
-    if (category == "") {
-      logger.e("category must be != '' ");
-      return false;
-    }
     if (currency == "") {
       logger.e("currency must be != '' ");
       return false;
@@ -109,54 +106,54 @@ class SerialTransactionManager {
     String? checkedCurrency;
     String? checkedName;
     String? checkedNote;
-     Timestamp? checkedInitialTime;
+    Timestamp? checkedInitialTime;
     int? checkedRepeatDuration;
     RepeatDurationType? checkedRepeatDurationType;
-     Timestamp? checkedEndTime;
-     Timestamp? checkedNewDate;
+    Timestamp? checkedEndTime;
+    Timestamp? checkedNewDate;
 
-    for (final serialTransaction in data.serialTransactions) {
-      if (serialTransaction.id == id) {
-        if (amount != serialTransaction.amount) {
-          checkedAmount = amount;
-        }
-        if (category != serialTransaction.category) {
-          checkedCategory = category;
-        }
-        if (currency != serialTransaction.currency) {
-          checkedCurrency = currency;
-        }
-        if (name != serialTransaction.name) {
-          checkedName = name;
-        }
-        if (note != serialTransaction.note) {
-          checkedNote = note;
-        }
-        if (startDate != serialTransaction.startDate) {
-          checkedInitialTime = startDate;
-        }
-        if (repeatDuration != serialTransaction.repeatDuration) {
-          checkedRepeatDuration = repeatDuration;
-        }
-        if (repeatDurationType != serialTransaction.repeatDurationType) {
-          checkedRepeatDurationType = repeatDurationType;
-        }
-        if (endDate != serialTransaction.endDate) {
-          checkedEndTime = endDate;
-        }
-        if (newDate != oldDate) {
-          checkedNewDate = newDate;
-        }
+    final serialTransaction = data.serialTransactions
+        .firstWhereOrNull((st) => st.id == id);
 
-        break;
+    if (serialTransaction != null) {
+      if (amount != serialTransaction.amount) {
+        checkedAmount = amount;
+      }
+      if (category != serialTransaction.category) {
+        checkedCategory = category;
+      }
+      if (currency != serialTransaction.currency) {
+        checkedCurrency = currency;
+      }
+      if (name != serialTransaction.name) {
+        checkedName = name;
+      }
+      if (note != serialTransaction.note) {
+        checkedNote = note;
+      }
+      if (startDate != serialTransaction.startDate) {
+        checkedInitialTime = startDate;
+      }
+      if (repeatDuration != serialTransaction.repeatDuration) {
+        checkedRepeatDuration = repeatDuration;
+      }
+      if (repeatDurationType != serialTransaction.repeatDurationType) {
+        checkedRepeatDurationType = repeatDurationType;
+      }
+      if (endDate != serialTransaction.endDate) {
+        checkedEndTime = endDate;
+      }
+      if (newDate != oldDate) {
+        checkedNewDate = newDate;
       }
     }
+
 
     switch (changeType) {
       case SerialTransactionChangeMode.all:
         return SerialTransactionUpdater.updateAll(
           amount: checkedAmount,
-          category: checkedCategory,
+          category: checkedCategory, // TODO Null value might be a problem
           currency: checkedCurrency,
           data: data,
           deleteNote: deleteNote,
@@ -174,7 +171,7 @@ class SerialTransactionManager {
       case SerialTransactionChangeMode.thisAndAllBefore:
         return SerialTransactionUpdater.updateThisAndAllBefore(
           amount: checkedAmount,
-          category: checkedCategory,
+          category: checkedCategory, // TODO Null value might be a problem
           currency: checkedCurrency,
           data: data,
           deleteNote: deleteNote,
@@ -192,7 +189,7 @@ class SerialTransactionManager {
       case SerialTransactionChangeMode.thisAndAllAfter:
         return SerialTransactionUpdater.updateThisAndAllAfter(
           amount: checkedAmount,
-          category: checkedCategory,
+          category: checkedCategory, // TODO Null value might be a problem
           currency: checkedCurrency,
           data: data,
           deleteNote: deleteNote,
@@ -214,7 +211,7 @@ class SerialTransactionManager {
           date: oldDate!,
           changed: ChangedTransaction(
             amount: checkedAmount,
-            category: checkedCategory,
+            category: checkedCategory, // TODO Null value might be a problem
             currency: checkedCurrency,
             name: checkedName,
             note: checkedNote,
