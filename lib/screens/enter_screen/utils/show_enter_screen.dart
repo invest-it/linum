@@ -12,12 +12,13 @@ void showEnterScreen(
       transaction: transaction,
       serialTransaction: serialTransaction
   );
-  
+
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
     builder: (BuildContext context) {
+      // Widget ist created outside of the builder to keep the Screens State
       return enterScreen;
     },
   );

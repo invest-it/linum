@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
+import 'package:linum/core/design/layout/utils/media_query_accessors.dart';
 
 class EnterScreenScaffold extends StatelessWidget {
   final Widget body;
@@ -17,11 +18,12 @@ class EnterScreenScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConstrainedBox(
       constraints: BoxConstraints(
-        maxHeight: context.proportionateScreenHeightFraction(ScreenFraction.threefifths),
+        maxHeight: context.proportionateScreenHeightFraction(ScreenFraction.threefifths) + useKeyBoardHeight(context),
       ),
 
       child: Scaffold(
         backgroundColor: Colors.transparent,
+        resizeToAvoidBottomInset: false,
         body: Flex(
           direction: Axis.vertical,
           children: [
