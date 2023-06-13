@@ -4,6 +4,7 @@ import 'package:linum/core/balance/enums/serial_transaction_change_type_enum.dar
 import 'package:linum/core/balance/models/serial_transaction.dart';
 import 'package:linum/core/balance/models/transaction.dart';
 import 'package:linum/core/balance/services/balance_data_service.dart';
+import 'package:linum/core/navigation/get_delegate.dart';
 import 'package:linum/screens/enter_screen/actions/enter_screen_actions.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model.dart';
 import 'package:linum/screens/enter_screen/widgets/enter_screen_flow.dart';
@@ -20,6 +21,7 @@ class EnterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     Future<SerialTransaction?> fetchParentSerialTransaction(
         BalanceDataService balanceDataService,
         ) async {

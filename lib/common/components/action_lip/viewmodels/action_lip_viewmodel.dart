@@ -33,7 +33,7 @@ class ActionLipViewModel extends ChangeNotifier {
     required ActionLipVisibility status,
   }) {
     if (status != ActionLipVisibility.onviewport) {
-      context.getMainRouterDelegate().setOnPopOverwrite(null);
+      context.getMainRouterDelegate().setSingleOnPopOverwrite(null);
     }
     _actionLipMap[screenKey] = status;
   }
@@ -52,7 +52,7 @@ class ActionLipViewModel extends ChangeNotifier {
       actionLipTitle: actionLipTitle,
     );
     if (actionLipStatus == ActionLipVisibility.onviewport) {
-      context.getMainRouterDelegate().setOnPopOverwrite(() {
+      context.getMainRouterDelegate().setSingleOnPopOverwrite(() {
         setActionLipStatus(
           context: context,
           screenKey: screenKey,

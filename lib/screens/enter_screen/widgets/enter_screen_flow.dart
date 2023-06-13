@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linum/core/navigation/get_delegate.dart';
 import 'package:linum/screens/enter_screen/enums/enter_screen_view_state.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model.dart';
 import 'package:linum/screens/enter_screen/widgets/views/change_mode_selector.dart';
@@ -14,6 +15,7 @@ class EnterScreenFlow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<EnterScreenViewModel>();
+
 
     switch(viewModel.viewState) {
       case EnterScreenViewState.selectEntryType:

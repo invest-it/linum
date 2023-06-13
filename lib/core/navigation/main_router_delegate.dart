@@ -30,6 +30,7 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
   final _pageStack = <Page>[];
 
   final Map<String, void Function()> _onPopListeners = {};
+  void Function()? _singleOnPopOverwrite;
   void Function()? _onPopOverwrite;
   /* MaterialPage _createPage(RouteSettings routeSettings) {
     Widget child;
@@ -38,8 +39,20 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
 
     }
   } */
+
+
+  void setSingleOnPopOverwrite(void Function()? onPop) {
+    _singleOnPopOverwrite = onPop;
+  }
+  void removeSingleOnPopOverwrite() {
+    _singleOnPopOverwrite = null;
+  }
+
   void setOnPopOverwrite(void Function()? onPop) {
     _onPopOverwrite = onPop;
+  }
+  void removeOnPopOverwrite() {
+    _onPopOverwrite = null;
   }
 
   void addOnPopListener(String name, void Function() onPop) {
@@ -144,9 +157,14 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
   Future<bool> popRoute() async {
     logger.i("Stack: $_pageStack");
 
+    if (_singleOnPopOverwrite != null) {
+      _singleOnPopOverwrite!.call();
+      _singleOnPopOverwrite = null;
+      return Future.value(true);
+    }
+
     if (_onPopOverwrite != null) {
       _onPopOverwrite!.call();
-      _onPopOverwrite = null;
       return Future.value(true);
     }
 
