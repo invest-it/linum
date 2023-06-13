@@ -8,15 +8,17 @@ void showEnterScreen(
     Transaction? transaction,
     SerialTransaction? serialTransaction,
 }) {
+  final enterScreen = EnterScreen(
+      transaction: transaction,
+      serialTransaction: serialTransaction
+  );
+  
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
     builder: (BuildContext context) {
-      return EnterScreen(
-        transaction: transaction,
-        serialTransaction: serialTransaction,
-      );
+      return enterScreen;
     },
   );
 }

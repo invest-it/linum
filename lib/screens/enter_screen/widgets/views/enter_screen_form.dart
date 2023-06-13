@@ -19,36 +19,39 @@ class EnterScreenForm extends StatelessWidget {
         return EnterScreenFormViewModel(context);
       },
       child: EnterScreenScaffold(
-        bodyHeight: 300 + useKeyBoardHeight(context),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 24),
-          child: Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(bottom: 12),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 40,
-                  vertical: 10,
+        bodyHeight: 310 + useKeyBoardHeight(context),
+        body: ColoredBox(
+          color: Colors.tealAccent,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 24),
+            child: Column(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(bottom: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 40,
+                    vertical: 10,
+                  ),
+                  child: const EnterScreenTextField(),
                 ),
-                child: const EnterScreenTextField(),
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                child: QuickTagMenu(),
-              ),
-              Container(
-                padding: const EdgeInsets.fromLTRB(40, 20, 40, 10),
-                child: Flex(
-                  direction: Axis.horizontal,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    EnterScreenDeleteButton(),
-                    EnterScreenContinueButton()
-                  ],
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                  child: QuickTagMenu(),
                 ),
-              ),
-            ],
+                Container(
+                  padding: const EdgeInsets.fromLTRB(40, 20, 40, 10),
+                  child: const Flex(
+                    direction: Axis.horizontal,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      EnterScreenDeleteButton(),
+                      EnterScreenContinueButton()
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

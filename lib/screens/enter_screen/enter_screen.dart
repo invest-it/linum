@@ -20,7 +20,6 @@ class EnterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     Future<SerialTransaction?> fetchParentSerialTransaction(
         BalanceDataService balanceDataService,
         ) async {
@@ -30,7 +29,6 @@ class EnterScreen extends StatelessWidget {
       }
       return null;
     }
-
     return FutureBuilder<SerialTransaction?>(
       future: fetchParentSerialTransaction(
           context.read<BalanceDataService>(),
