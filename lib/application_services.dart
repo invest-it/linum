@@ -18,7 +18,6 @@ import 'package:linum/providers/balance_data_provider.dart';
 import 'package:linum/providers/exchange_rate_provider.dart';
 import 'package:linum/providers/pin_code_provider.dart';
 import 'package:linum/utilities/frontend/multi_provider_builder.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
 
 class ApplicationServices extends StatelessWidget {
   final Router router;
@@ -26,8 +25,8 @@ class ApplicationServices extends StatelessWidget {
   ApplicationServices({super.key, required this.store, required this.router});
 
   final Future<FirebaseApp> _initializedApp = Firebase.initializeApp(
-      name: "Linum",
-      options: DefaultFirebaseOptions.currentPlatform,
+    name: "Linum",
+    options: DefaultFirebaseOptions.currentPlatform,
   );
 
   Scaffold buildErrorScaffold(BuildContext context) {
@@ -40,7 +39,7 @@ class ApplicationServices extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SizeGuide.init(context);
+    // TODO: remove after sure it works: SizeGuide.init(context);
 
     return FutureBuilder(
       future: _initializedApp,

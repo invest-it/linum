@@ -20,7 +20,7 @@ final standardCurrencies = Map<String, Currency>.unmodifiable({
   "USD": const Currency(
     label: 'currency.name.usd',
     name: 'USD',
-    symbol: 'US\$',
+    symbol: '\$',
   ),
   "CHF": const Currency(
     label: 'currency.name.chf',
@@ -60,12 +60,12 @@ final standardCurrencies = Map<String, Currency>.unmodifiable({
   "NZD": const Currency(
     label: 'currency.name.nzd',
     name: 'NZD',
-    symbol: 'CA\$',
+    symbol: 'NZ\$',
   ),
   "CAD": const Currency(
     label: 'currency.name.cad',
     name: 'CAD',
-    symbol: '\$',
+    symbol: 'C\$',
   ),
   "NOK": const Currency(
     label: 'currency.name.nok',

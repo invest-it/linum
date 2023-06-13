@@ -5,7 +5,8 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/constants/screen_fraction_enum.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 
 class PinField extends StatelessWidget {
   final int index;
@@ -17,11 +18,12 @@ class PinField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(
-        horizontal:
-            proportionateScreenWidthFraction(ScreenFraction.quantile) * 2,
+        horizontal: context
+                .proportionateScreenWidthFraction(ScreenFraction.quantile) *
+            2,
       ),
-      width: proportionateScreenWidth(50),
-      height: proportionateScreenWidth(50),
+      width: context.proportionateScreenWidth(50),
+      height: context.proportionateScreenWidth(50),
       decoration: BoxDecoration(
         color: selectedIndex >= index
             ? Theme.of(context).colorScheme.tertiary

@@ -5,7 +5,7 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 
 class BodySection extends StatelessWidget {
   final Widget body;
@@ -21,6 +21,7 @@ class BodySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return isInverted
         ? Expanded(
             // TODO look at this
@@ -38,7 +39,8 @@ class BodySection extends StatelessWidget {
                   child: Padding(
                     padding: hasScreenCard
                         ? EdgeInsets.only(
-                            top: proportionateScreenHeight(196 - 25),
+                            top: context
+                                .proportionateScreenHeight(196 - 25),
                           )
                         : EdgeInsets.zero,
                     child: body,
@@ -50,7 +52,10 @@ class BodySection extends StatelessWidget {
         : Expanded(
             child: Padding(
               padding: hasScreenCard
-                  ? EdgeInsets.only(top: proportionateScreenHeight(196 - 25))
+                  ? EdgeInsets.only(
+                      top:
+                          context.proportionateScreenHeight(196 - 25),
+                    )
                   : EdgeInsets.zero,
               child: body,
             ),

@@ -4,15 +4,17 @@
 //  Co-Author: n/a
 //
 
+// ignore_for_file: deprecated_member_use
+// TODO DEPRECATED
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/constants/screen_fraction_enum.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
+import 'package:linum/utilities/frontend/media_query_accessors.dart';
 import 'package:linum/widgets/auth/login_form.dart';
 import 'package:provider/provider.dart';
-
-// ignore_for_file: deprecated_member_use
-//TODO DEPRECATED
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -27,8 +29,8 @@ class _LoginScreenState extends State<LoginScreen> {
   double _loginWidth = 0;
 
   double _loginOpacity = 1;
-  double windowWidth = realScreenWidth();
-  double windowHeight = realScreenHeight();
+  // double windowWidth = realScreenWidth();
+  // double windowHeight = realScreenHeight();
 
   @override
   Widget build(BuildContext context) {
@@ -36,31 +38,40 @@ class _LoginScreenState extends State<LoginScreen> {
         Provider.of<OnboardingScreenProvider>(
       context,
     );
+
     switch (onboardingScreenProvider.pageState) {
       case OnboardingPageState.none:
-        _loginYOffset = windowHeight;
+        _loginYOffset = useScreenWidth(context);
         _loginXOffset = 0;
-        _loginWidth = windowWidth;
+        _loginWidth = useScreenHeight(context);
         _loginOpacity = 1;
         break;
       case OnboardingPageState.login:
-        _loginYOffset = SizeGuide.isKeyboardOpen(context)
-            ? proportionateScreenHeightFraction(ScreenFraction.twofifths) -
-                (SizeGuide.keyboardHeight / 2)
-            : proportionateScreenHeightFraction(ScreenFraction.twofifths);
+        _loginYOffset = context.isKeyboardOpen()
+            ? context.proportionateScreenHeightFraction(
+                  ScreenFraction.twofifths,
+                ) -
+                (useKeyBoardHeight(context) / 2)
+            : context
+                .proportionateScreenHeightFraction(ScreenFraction.twofifths);
 
         _loginXOffset = 0;
-        _loginWidth = windowWidth;
+        _loginWidth = useScreenWidth(context);
         _loginOpacity = 1;
         break;
       case OnboardingPageState.register:
-        _loginYOffset = SizeGuide.isKeyboardOpen(context)
-            ? proportionateScreenHeightFraction(ScreenFraction.twofifths) -
-                (SizeGuide.keyboardHeight / 2) -
+        _loginYOffset = context.isKeyboardOpen()
+            ? context.proportionateScreenHeightFraction(
+                  ScreenFraction.twofifths,
+                ) -
+                (useKeyBoardHeight(context) / 2) -
                 32
-            : proportionateScreenHeightFraction(ScreenFraction.twofifths) - 32;
+            : context.proportionateScreenHeightFraction(
+                  ScreenFraction.twofifths,
+                ) -
+                32;
         _loginXOffset = 20;
-        _loginWidth = windowWidth - 40;
+        _loginWidth = useScreenWidth(context) - 40;
         _loginOpacity = 0.80;
     }
 
@@ -150,9 +161,9 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             Positioned(
               left: 0,
-              bottom: SizeGuide.isKeyboardOpen(context)
+              bottom: context.isKeyboardOpen()
                   ? 0
-                  : proportionateScreenHeightFraction(
+                  : context.proportionateScreenHeightFraction(
                       ScreenFraction.twofifths,
                     ),
               right: 0,
@@ -168,7 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   child: Container(
                     width: double.infinity,
-                    height: proportionateScreenHeight(42),
+                    height: context.proportionateScreenHeight(42),
                     color: Theme.of(context).colorScheme.primary,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,

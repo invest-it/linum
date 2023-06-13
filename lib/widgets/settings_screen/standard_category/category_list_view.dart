@@ -1,15 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/constants/screen_fraction_enum.dart';
 import 'package:linum/constants/settings_enums.dart';
 import 'package:linum/constants/standard_expense_categories.dart';
 import 'package:linum/constants/standard_income_categories.dart';
 import 'package:linum/models/entry_category.dart';
 import 'package:linum/providers/account_settings_provider.dart';
 import 'package:linum/providers/action_lip_status_provider.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
 import 'package:linum/widgets/screen_skeleton/screen_skeleton.dart';
-
-
 
 class CategoryListView<T extends Enum> extends StatelessWidget {
   final ActionLipStatusProvider actionLipStatusProvider;
@@ -24,22 +23,24 @@ class CategoryListView<T extends Enum> extends StatelessWidget {
     if (T == StandardCategoryExpense) {
       enumItemCount = StandardCategoryExpense.values.length;
       standardCategory = (int index) =>
-      standardExpenseCategories[StandardCategoryExpense.values[index]];
-      itemIsSelected = (int index) =>
-          StandardCategoryExpense.values[index]
-              .equals(accountSettingsProvider.settings["StandardCategoryExpense"] as String?);
-      enumStr = (int index) =>
-          StandardCategoryExpense.values[index].toString();
+          standardExpenseCategories[StandardCategoryExpense.values[index]];
+      itemIsSelected =
+          (int index) => StandardCategoryExpense.values[index].equals(
+                accountSettingsProvider.settings["StandardCategoryExpense"]
+                    as String?,
+              );
+      enumStr = (int index) => StandardCategoryExpense.values[index].toString();
     }
     if (T == StandardCategoryIncome) {
       enumItemCount = StandardCategoryIncome.values.length;
       standardCategory = (int index) =>
-      standardIncomeCategories[StandardCategoryIncome.values[index]];
-      itemIsSelected = (int index) =>
-          StandardCategoryIncome.values[index]
-              .equals(accountSettingsProvider.settings["StandardCategoryIncome"] as String?);
-      enumStr = (int index) =>
-          StandardCategoryIncome.values[index].toString();
+          standardIncomeCategories[StandardCategoryIncome.values[index]];
+      itemIsSelected =
+          (int index) => StandardCategoryIncome.values[index].equals(
+                accountSettingsProvider.settings["StandardCategoryIncome"]
+                    as String?,
+              );
+      enumStr = (int index) => StandardCategoryIncome.values[index].toString();
     }
   }
   @override
@@ -53,8 +54,9 @@ class CategoryListView<T extends Enum> extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(
-                height:
-                  proportionateScreenHeightFraction(ScreenFraction.twofifths),
+                height: context.proportionateScreenHeightFraction(
+                  ScreenFraction.twofifths,
+                ),
                 child: ListView.builder(
                   shrinkWrap: true,
                   itemCount: enumItemCount,
@@ -67,7 +69,8 @@ class CategoryListView<T extends Enum> extends StatelessWidget {
                       ),
                       selected: itemIsSelected(index),
                       onTap: () {
-                        final List<String> stringArr = enumStr(index).split(".");
+                        final List<String> stringArr =
+                            enumStr(index).split(".");
                         accountSettingsProvider.updateSettings({
                           stringArr[0]: stringArr[1],
                         });
@@ -86,5 +89,4 @@ class CategoryListView<T extends Enum> extends StatelessWidget {
       ],
     );
   }
-
 }

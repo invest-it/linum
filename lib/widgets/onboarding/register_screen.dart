@@ -5,8 +5,10 @@
 //  (Refactored by damattl)
 
 import 'package:flutter/material.dart';
+import 'package:linum/constants/screen_fraction_enum.dart';
 import 'package:linum/providers/onboarding_screen_provider.dart';
-import 'package:linum/utilities/frontend/size_guide.dart';
+import 'package:linum/utilities/frontend/layout_helpers.dart';
+import 'package:linum/utilities/frontend/media_query_accessors.dart';
 import 'package:linum/widgets/auth/register_form.dart';
 import 'package:provider/provider.dart';
 
@@ -19,8 +21,8 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   double _registerYOffset = 0;
-  double windowWidth = realScreenWidth();
-  double windowHeight = realScreenHeight();
+  // double windowWidth = realScreenWidth();
+  // double windowHeight = realScreenHeight();
 
   @override
   Widget build(BuildContext context) {
@@ -31,16 +33,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     switch (onboardingScreenProvider.pageState) {
       case OnboardingPageState.none:
-        _registerYOffset = windowHeight;
+        _registerYOffset = useScreenHeight(context);
         break;
       case OnboardingPageState.login:
-        _registerYOffset = windowHeight;
+        _registerYOffset = useScreenHeight(context);
         break;
       case OnboardingPageState.register:
-        _registerYOffset = SizeGuide.isKeyboardOpen(context)
-            ? proportionateScreenHeightFraction(ScreenFraction.twofifths) -
-                (SizeGuide.keyboardHeight / 2)
-            : proportionateScreenHeightFraction(ScreenFraction.twofifths);
+        _registerYOffset = context.isKeyboardOpen()
+            ? context.proportionateScreenHeightFraction(
+                  ScreenFraction.twofifths,
+                ) -
+                (useKeyBoardHeight(context) / 2)
+            : context
+                .proportionateScreenHeightFraction(ScreenFraction.twofifths);
     }
 
     return GestureDetector(
