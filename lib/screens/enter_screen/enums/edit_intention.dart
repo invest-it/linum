@@ -1,0 +1,4 @@
+enum EditIntention {
+  delete,
+  save,
+}

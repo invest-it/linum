@@ -4,6 +4,7 @@ import 'package:linum/core/balance/enums/serial_transaction_change_type_enum.dar
 import 'package:linum/core/balance/models/serial_transaction.dart';
 import 'package:linum/core/balance/models/transaction.dart';
 import 'package:linum/screens/enter_screen/actions/enter_screen_actions.dart';
+import 'package:linum/screens/enter_screen/enums/edit_intention.dart';
 import 'package:linum/screens/enter_screen/enums/enter_screen_view_state.dart';
 import 'package:linum/screens/enter_screen/models/default_values.dart';
 import 'package:linum/screens/enter_screen/models/enter_screen_data.dart';
@@ -36,6 +37,8 @@ class EnterScreenViewModel extends ChangeNotifier {
     _isBottomSheetOpened = value;
     notifyListeners();
   }
+
+  EditIntention _intention = EditIntention.save;
 
 
   EnterScreenData? _formResult;
@@ -115,7 +118,7 @@ class EnterScreenViewModel extends ChangeNotifier {
       defaultData: _defaultValues,
       entryType: _entryType,
       existingId: initialTransaction?.id,
-      existingSerialId: initialSerialTransaction?.id ?? parentalSerialTransaction?.id,
+      existingSerialId: initialSerialTransaction?.id,
     );
   }
 
@@ -125,20 +128,37 @@ class EnterScreenViewModel extends ChangeNotifier {
   }
 
   void selectChangeModeType(SerialTransactionChangeMode changeMode) {
-    _actions.save(
-      data: _formResult,
-      defaultData: _defaultValues,
-      entryType: _entryType,
-      changeMode: changeMode,
-      existingId: initialTransaction?.id,
-      existingSerialId: initialSerialTransaction?.id ?? parentalSerialTransaction?.id,
-    );
+    switch(_intention) {
+      case EditIntention.save:
+        _actions.save(
+          data: _formResult,
+          defaultData: _defaultValues,
+          entryType: _entryType,
+          changeMode: changeMode,
+          existingId: initialTransaction?.id,
+          existingSerialId: initialSerialTransaction?.id ?? parentalSerialTransaction?.id,
+        );
+        break;
+      case EditIntention.delete:
+        print("Intend to delete");
+        _actions.delete(
+          transaction: initialTransaction,
+          serialTransaction: initialSerialTransaction ?? parentalSerialTransaction,
+          changeMode: changeMode,
+        );
+    }
   }
 
   void delete() {
-    _actions.delete(
-      transaction: initialTransaction,
-      serialTransaction: initialSerialTransaction,
-    );
+    if (parentalSerialTransaction == null) {
+      _actions.delete(
+        transaction: initialTransaction,
+        serialTransaction: initialSerialTransaction,
+      );
+      return;
+    }
+    _intention = EditIntention.delete;
+    viewState = EnterScreenViewState.selectChangeMode;
+
   }
 }

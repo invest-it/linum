@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:linum/core/balance/enums/serial_transaction_change_type_enum.dart';
+import 'package:linum/screens/enter_screen/enums/edit_intention.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model.dart';
 import 'package:linum/screens/enter_screen/widgets/enter_screen_scaffold.dart';
 import 'package:provider/provider.dart';
