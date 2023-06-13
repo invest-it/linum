@@ -18,22 +18,20 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.1.5+16 # TODO: Current TestFlight build is already at 1.1.3+14
 
 environment:
-  sdk: ">=2.17.0 <3.0.0"
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
   badges: ^2.0.2
-  cloud_firestore: ^4.1.0
+  cloud_firestore: ^4.8.0
   code_builder: ^4.1.0
-  collection: ^1.15.0
+  collection: ^1.17.1
   crypto: ^3.0.1
   cupertino_icons: ^1.0.2
   dart_style: ^2.2.3
-  easy_localization: ^3.0.1
+  easy_localization: ^3.0.2
   enum_to_string: ^2.0.1
 
-  firebase_auth: ^4.1.3
-  firebase_core: ^2.3.0
-  firebase_core_web: ^2.0.1
+  firebase_auth: ^4.6.2
   flat_buffers: ^2.0.5
   flip_card: ^0.5.0 # Don't update to 0.6.0
 
@@ -43,23 +41,20 @@ dependencies:
   flutter_spinkit: ^5.1.0
   flutter_svg: ^1.0.0
   fluttertoast: ^8.0.8
-  google_fonts: ^3.0.1
+  google_fonts: ^4.0.4
   google_sign_in: ^5.2.4
   gradient_widgets: ^0.6.0
-  http: ^0.13.5
-  intl: ^0.17.0
   json_annotation: ^4.7.0
   logger: ^1.1.0
   mockito: ^5.3.2
-  objectbox: ^1.6.2
-  objectbox_flutter_libs: ^1.6.2
-  objectbox_generator: ^1.6.2
-  package_info_plus: ^3.0.2
+  objectbox: ^2.1.0
+  objectbox_flutter_libs: ^2.1.0
+  objectbox_generator: ^2.1.0
+  package_info_plus: ^4.0.2
   path: ^1.8.2
   provider: ^6.0.2
   shared_preferences: ^2.0.13
   sign_in_with_apple: ^4.2.0
-  sqflite: ^2.1.0
   tuple: ^2.0.0
   url_launcher: ^6.1.2
   url_launcher_ios: ^6.0.15
