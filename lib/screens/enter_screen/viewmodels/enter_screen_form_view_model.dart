@@ -84,6 +84,7 @@ class EnterScreenFormViewModel extends ChangeNotifier {
   void dispose() {
     super.dispose();
     _streamController.close();
+    print(_currentOverlay);
     _currentOverlay?.remove();
   }
 }

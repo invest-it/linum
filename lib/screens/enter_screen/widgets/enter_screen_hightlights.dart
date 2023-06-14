@@ -1,7 +1,6 @@
 // TODO Work In Progress
 
 import 'package:flutter/material.dart';
-import 'package:linum/core/navigation/screen_routes.dart';
 import 'package:linum/screens/enter_screen/models/enter_screen_input.dart';
 import 'package:linum/screens/enter_screen/utils/enter_screen_text_editing_controller.dart';
 import 'package:linum/screens/enter_screen/widgets/text_highlight.dart';
@@ -10,7 +9,7 @@ class EnterScreenHighlights extends StatefulWidget {
   final EnterScreenTextEditingController _controller;
   final ScrollController textScrollController;
   final ScrollController scrollController = ScrollController();
-  final TextStyle? textStyle;
+  final TextStyle textStyle;
 
   EnterScreenHighlights({
     super.key,
@@ -55,7 +54,7 @@ class _EnterScreenHighlightsState extends State<EnterScreenHighlights> {
           ...highlights.map((highlight) {
             return TextHighlight(
               highlight,
-              baseStyle: widget.textStyle,
+              style: widget.textStyle,
             );
           }).toList()
         ],

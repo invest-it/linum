@@ -6,6 +6,7 @@ import 'package:linum/screens/enter_screen/models/enter_screen_input.dart';
 import 'package:linum/screens/enter_screen/models/suggestion.dart';
 import 'package:linum/screens/enter_screen/models/suggestion_filters.dart';
 import 'package:linum/screens/enter_screen/utils/example_string_builder.dart';
+import 'package:linum/screens/enter_screen/utils/highlights_builder.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/input_parser.dart';
 import 'package:linum/screens/enter_screen/utils/suggestions/make_suggestions.dart';
 
@@ -73,25 +74,13 @@ class EnterScreenTextEditingController extends TextEditingController {
 
 
   void recalculateHighlights(String newText) {
-
-    final amountIndices = _parsed?.amountIndices;
-    if (amountIndices == null) {
+    final parsed = _parsed;
+    if (parsed != null) {
+      final highlights = HighlightsBuilder(newText, parsed).build();
+      _highlightsStreamController.add(highlights);
+    } else {
       _highlightsStreamController.add([]);
-      return;
     }
-    final TextHighlightData highlight = (
-      indices: amountIndices,
-      text: newText.substring(amountIndices.start, amountIndices.end),
-      color: Colors.blue,
-    );
-
-    final TextHighlightData noHighlight = (
-      indices: (start: amountIndices.end - 1, end: newText.length),
-      text: newText.substring(amountIndices.end),
-      color: Colors.white,
-    );
-
-    _highlightsStreamController.add([highlight, noHighlight]);
   }
 
 
