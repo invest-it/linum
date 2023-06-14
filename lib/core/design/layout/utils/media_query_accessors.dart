@@ -13,6 +13,5 @@ Orientation useDeviceOrientation(BuildContext context) {
   return MediaQuery.of(context).orientation;
 }
 double useKeyBoardHeight(BuildContext context) {
-  print(MediaQuery.of(context).viewInsets.bottom);
   return MediaQuery.of(context).viewInsets.bottom;
 }

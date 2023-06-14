@@ -2,16 +2,19 @@ import 'package:collection/collection.dart';
 import 'package:linum/screens/enter_screen/enums/input_flag.dart';
 import 'package:tuple/tuple.dart';
 
+typedef TextIndices = ({int start, int end});
+typedef ParsedInput = ({InputFlag flag, String text});
+
 class EnterScreenInput {
   final String raw;
   final double? amount;
   final String? currency;
   final String? name;
-  final parsedInputs = <Tuple2<InputFlag, String>>[];
+  final parsedInputs = <ParsedInput>[];
 
-  final Tuple2<int, int>? amountIndices;
-  final Tuple2<int, int>? currencyIndices;
-  final Tuple2<int, int>? nameIndices;
+  final TextIndices? amountIndices;
+  final TextIndices? currencyIndices;
+  final TextIndices? nameIndices;
 
   EnterScreenInput(
     this.raw, {
@@ -27,11 +30,11 @@ class EnterScreenInput {
   bool get hasCurrency => currency != null;
   bool get hasName => name != null;
   bool get hasCategory =>
-      parsedInputs.firstWhereOrNull((t) => t.item1 == InputFlag.category) !=
+      parsedInputs.firstWhereOrNull((t) => t.flag == InputFlag.category) !=
       null;
   bool get hasDate =>
-      parsedInputs.firstWhereOrNull((t) => t.item1 == InputFlag.date) != null;
+      parsedInputs.firstWhereOrNull((t) => t.flag == InputFlag.date) != null;
   bool get hasRepeatInfo =>
-      parsedInputs.firstWhereOrNull((t) => t.item1 == InputFlag.category) !=
+      parsedInputs.firstWhereOrNull((t) => t.flag == InputFlag.category) !=
       null;
 }

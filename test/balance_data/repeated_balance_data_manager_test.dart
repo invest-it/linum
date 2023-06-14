@@ -280,7 +280,7 @@ void main() {
           final String id = data.serialTransactions[idIndex].id;
 
           final DateTime initialTime =
-              (data.serialTransactions[idIndex].startDate).toDate();
+              data.serialTransactions[idIndex].startDate.toDate();
 
           final Timestamp date = Timestamp.fromDate(
             calculateOneTimeStep(
@@ -305,7 +305,7 @@ void main() {
           expect(result, true);
           expect(data.serialTransactions.length, expectedLength);
           expect(
-            (data.serialTransactions[idIndex].startDate)
+            data.serialTransactions[idIndex].startDate
                 .toDate()
                 .isAfter(initialTime),
             true,
@@ -378,7 +378,7 @@ void main() {
           final String id = data.serialTransactions[idIndex].id;
 
           final DateTime initialTime =
-              (data.serialTransactions[idIndex].startDate).toDate();
+              data.serialTransactions[idIndex].startDate.toDate();
 
           final Timestamp date = Timestamp.fromDate(
             calculateOneTimeStep(

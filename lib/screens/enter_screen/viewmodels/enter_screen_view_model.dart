@@ -140,7 +140,6 @@ class EnterScreenViewModel extends ChangeNotifier {
         );
         break;
       case EditIntention.delete:
-        print("Intend to delete");
         _actions.delete(
           transaction: initialTransaction,
           serialTransaction: initialSerialTransaction ?? parentalSerialTransaction,

@@ -11,7 +11,7 @@ class SupportedValues {
     "tdy": ParsableDate.today,
     "ydy": ParsableDate.yesterday,
   };
-  static Map<String, ParsableDate> get dates => instance._dates;
+  static Map<String, ParsableDate> get dates => SupportedValues.instance()._dates;
 
   final _repeatIntervals = <String, RepeatInterval>{
     "dly": RepeatInterval.daily,
@@ -20,7 +20,7 @@ class SupportedValues {
     "mnt": RepeatInterval.monthly,
     "mntl": RepeatInterval.monthly,
   };
-  static Map<String, RepeatInterval> get repeatIntervals => instance._repeatIntervals;
+  static Map<String, RepeatInterval> get repeatIntervals => SupportedValues.instance()._repeatIntervals;
 
   void _initDates() {
     for (final entry in parsableDateMap.entries) {
@@ -43,5 +43,7 @@ class SupportedValues {
 
   static SupportedValues? _instance;
 
-  static SupportedValues get instance => _instance ??= SupportedValues._();
+  factory SupportedValues.instance() {
+    return _instance ??= SupportedValues._();
+  }
 }

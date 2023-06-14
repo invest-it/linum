@@ -111,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: Theme.of(context).textTheme.headlineSmall,
                         onChanged: (value) {
                           setState(() {
-                            showRepeatables = value! as bool;
+                            showRepeatables = value!;
                           });
                           if (value == true) {
                             _flipCardController?.turnToBack();

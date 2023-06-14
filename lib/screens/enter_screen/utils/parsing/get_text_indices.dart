@@ -1,6 +1,6 @@
-import 'package:tuple/tuple.dart';
+import 'package:linum/screens/enter_screen/models/enter_screen_input.dart';
 
-Tuple2<int, int>? getTextIndices(
+TextIndices? getTextIndices(
     String? text,
     String raw, {
       int startIndex = 0,
@@ -10,5 +10,5 @@ Tuple2<int, int>? getTextIndices(
       }
       final start = raw.indexOf(text);
       final end = start + text.length;
-      return Tuple2(start + startIndex, end + startIndex);
+      return (start: start + startIndex, end: end + startIndex);
 }

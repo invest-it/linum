@@ -23,28 +23,28 @@ Map<String, Suggestion> makeSuggestions(String text, int cursor, {
   // final cursorText = preCursorText + textAfter[0];
 
   final parsed = parseTag(preCursorText);
-  if (parsed.item1 == null) {
-    final suggestions = suggestFlags(parsed.item2);
+  if (parsed.flag == null) {
+    final suggestions = suggestFlags(parsed.text);
     if (suggestions.isNotEmpty) {
       return suggestions;
     }
 
     final categorySuggestions = suggestCategory(
-      parsed.item2,
+      parsed.text,
       filter: categoryFilter,
     );
     if (categorySuggestions.isNotEmpty) {
       return categorySuggestions;
     }
     final dateSuggestions = suggestDate(
-      parsed.item2,
+      parsed.text,
       filter: dateFilter,
     );
     if (dateSuggestions.isNotEmpty) {
       return dateSuggestions;
     }
     final repeatSuggestions = suggestRepeatInfo(
-      parsed.item2,
+      parsed.text,
       filter: repeatFilter,
     );
     if (repeatSuggestions.isNotEmpty) {
@@ -53,14 +53,16 @@ Map<String, Suggestion> makeSuggestions(String text, int cursor, {
     return {};
   }
 
-  switch (parsed.item1) {
+  switch (parsed.flag) {
     case InputFlag.category:
-      return suggestCategory(parsed.item2, filter: categoryFilter);
+      return suggestCategory(parsed.text, filter: categoryFilter);
     case InputFlag.date:
-      return suggestDate(parsed.item2, filter: dateFilter);
+
+
+      return suggestDate(parsed.text, filter: dateFilter);
     case InputFlag.repeatInfo:
-      return suggestRepeatInfo(parsed.item2, filter: repeatFilter);
+      return suggestRepeatInfo(parsed.text, filter: repeatFilter);
     default:
-      return suggestCategory(parsed.item2, filter: categoryFilter);
+      return suggestCategory(parsed.text, filter: categoryFilter);
   }
 }

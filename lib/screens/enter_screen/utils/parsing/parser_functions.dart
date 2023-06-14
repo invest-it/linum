@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:linum/core/categories/constants/standard_categories.dart';
 import 'package:linum/screens/enter_screen/enums/input_flag.dart';
 import 'package:linum/screens/enter_screen/enums/parsable_date.dart';
+import 'package:linum/screens/enter_screen/models/enter_screen_input.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/date_parsing.dart';
 import 'package:linum/screens/enter_screen/utils/supported_values.dart';
 import 'package:tuple/tuple.dart';
@@ -50,18 +51,18 @@ String? _dateParser(String input) {
   }
 }
 
-Tuple2<InputFlag, String>? findFitting(String input) {
+ParsedInput? findFitting(String input) {
   var result = _categoryParser(input);
   if (result != null) {
-    return Tuple2(InputFlag.category, result);
+    return (flag: InputFlag.category, text: result);
   }
   result = _repeatInfoParser(input);
   if (result != null) {
-    return Tuple2(InputFlag.repeatInfo, result);
+    return (flag: InputFlag.repeatInfo, text: result);
   }
   result = _dateParser(input);
   if (result != null) {
-    return Tuple2(InputFlag.date, result);
+    return (flag: InputFlag.date, text: result);
   }
   return null;
 }

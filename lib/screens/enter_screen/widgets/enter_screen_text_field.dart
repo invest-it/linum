@@ -16,6 +16,7 @@ import 'package:linum/screens/enter_screen/utils/example_string_builder.dart';
 import 'package:linum/screens/enter_screen/utils/string_from_existing_data.dart';
 import 'package:linum/screens/enter_screen/utils/suggestions/insert_suggestion.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_form_view_model.dart';
+import 'package:linum/screens/enter_screen/widgets/enter_screen_hightlights.dart';
 import 'package:linum/screens/enter_screen/widgets/suggestion_list.dart';
 import 'package:provider/provider.dart';
 
@@ -28,10 +29,12 @@ class EnterScreenTextField extends StatefulWidget {
 }
 
 class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
-
+  final ScrollController _scrollController = ScrollController();
   late EnterScreenTextEditingController _controller;
   late EnterScreenFormViewModel _formViewModel;
   final GlobalKey _key = LabeledGlobalKey("text_field");
+
+
 
   @override
   void initState() {
@@ -80,10 +83,12 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
         _controller.text = generateStringFromExistingData(data);
       }
     });
+
   }
 
   @override
   void dispose() {
+    _scrollController.dispose();
     _controller.dispose();
     super.dispose();
   }
@@ -140,19 +145,34 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
 
   @override
   Widget build(BuildContext context) {
+    final baseTextStyle = Theme.of(context).textTheme.titleMedium?.copyWith(
+        fontSize: 16
+    );
+
     return Stack(
       children: [
-        TextField(
-          decoration: const InputDecoration(
+        Container(
+          width: double.maxFinite,
+          margin: const EdgeInsets.only(top: 6.0),
+          child: EnterScreenHighlights(
+            controller: _controller,
+            textScrollController: _scrollController,
+            textStyle: baseTextStyle,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 1.0),
+          child: TextField(
+            decoration: const InputDecoration(
             border: InputBorder.none,
-            isDense: true,
+              isDense: true,
+            ),
+            style: baseTextStyle,
+            key: _key,
+            controller: _controller,
+            scrollController: _scrollController,
           ),
-          style: const TextStyle(
-            fontSize: 16,
-          ),
-          key: _key,
-          controller: _controller,
-        )
+        ),
       ],
     );
   }

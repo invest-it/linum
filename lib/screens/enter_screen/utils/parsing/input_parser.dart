@@ -40,28 +40,28 @@ EnterScreenInput parse(String? input) {
   return result;
 }
 
-Tuple2<InputFlag?, String> parseTag(String tag) {
+({InputFlag? flag, String text}) parseTag(String tag) {
   final splits = tag.split(":");
   if (splits.length > 1) {
     final flag = inputFlagMap[splits[0].toUpperCase()];
     final value = splits[1];
-    return Tuple2(flag, value);
+    return (flag: flag, text: value);
   }
-  return Tuple2(null, splits[0]);
+  return (flag: null, text: splits[0]);
 }
 
-Tuple2<InputFlag, String>? interpretTag(String tag) {
+ParsedInput? interpretTag(String tag) {
   final parsed = parseTag(tag);
-  if (parsed.item1 != null) {
-    final fun = parserFunctions[parsed.item1];
+  if (parsed.flag != null) {
+    final fun = parserFunctions[parsed.flag];
     if (fun != null) {
-      final result = fun(parsed.item2);
+      final result = fun(parsed.text);
       if (result != null) {
-        return Tuple2(parsed.item1!, result);
+        return (flag: parsed.flag!, text: result);
       }
     }
   } else {
-    return findFitting(parsed.item2);
+    return findFitting(parsed.text);
   }
   return null;
 }
