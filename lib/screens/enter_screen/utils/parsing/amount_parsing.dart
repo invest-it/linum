@@ -4,7 +4,7 @@ import 'package:linum/screens/enter_screen/models/enter_screen_input.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/get_text_indices.dart';
 
 final amountRegex = RegExp(
-  r'([a-zA-Z\p{Sc}]{0,3}) ?([0-9]+[,.]?(?:[0-9]{1,2})?) ?([a-zA-Z\p{Sc}]{0,3})(?: (.{0,140}))?$',
+  r'([a-zA-Z\p{Sc}]{0,3}) ?(-?[0-9]+[,.]?(?:[0-9]{1,2})?) ?([a-zA-Z\p{Sc}]{0,3})(?: (.{0,140}))?$',
   unicode: true,
 );
 
@@ -49,7 +49,7 @@ EnterScreenInput parseBaseInfo(String input, String raw) {
 
   currency ??= "EUR";
 
-  final value = double.tryParse(amount.replaceAll(",", ".")) ?? 0;
+  final value = double.tryParse(amount.replaceAll(",", "."))?.abs() ?? 0;
 
   return EnterScreenInput(
       raw,

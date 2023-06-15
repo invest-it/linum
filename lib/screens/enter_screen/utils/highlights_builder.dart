@@ -15,6 +15,7 @@ class HighlightsBuilder {
   HighlightsBuilder(this.newText, this.parsed);
 
   void _addHighlight(TextIndices indices, Color color) {
+
     highlights.add((
       indices: indices,
       text: newText.substring(indices.start, indices.end),

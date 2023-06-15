@@ -30,7 +30,7 @@ class EntryTypeButton extends StatelessWidget {
             Text(
               title,
               style: Theme.of(context).textTheme.labelLarge
-                  ?.copyWith(color: Colors.black),
+                  ?.copyWith(color: Colors.black, fontSize: 16.0),
 
             ),
           ],

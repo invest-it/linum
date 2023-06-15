@@ -21,7 +21,7 @@ class EntryTypeSelector extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 12),
             child: Text(
               "Choose the type of your transaction".toUpperCase(),
-              style: Theme.of(context).textTheme.titleSmall,
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 12.0),
             ),
           ),
           Padding(
