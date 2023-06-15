@@ -62,4 +62,3 @@ class _EnterScreenHighlightsState extends State<EnterScreenHighlights> {
     );
   }
 }
-

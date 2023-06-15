@@ -146,7 +146,7 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
   @override
   Widget build(BuildContext context) {
     final baseTextStyle = Theme.of(context).textTheme.titleMedium!.copyWith(
-        fontSize: 16
+        fontSize: 16,
     );
 
 

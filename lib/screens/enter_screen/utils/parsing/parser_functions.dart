@@ -5,7 +5,6 @@ import 'package:linum/screens/enter_screen/enums/parsable_date.dart';
 import 'package:linum/screens/enter_screen/models/enter_screen_input.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/date_parsing.dart';
 import 'package:linum/screens/enter_screen/utils/supported_values.dart';
-import 'package:tuple/tuple.dart';
 
 typedef ParserFunction = String? Function(String input);
 

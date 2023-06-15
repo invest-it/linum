@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/common/utils/debug.dart';
 import 'package:linum/screens/enter_screen/constants/hightlight_colors.dart';
 import 'package:linum/screens/enter_screen/models/enter_screen_input.dart';
 import 'package:linum/screens/enter_screen/utils/enter_screen_text_editing_controller.dart';
@@ -53,7 +54,7 @@ class HighlightsBuilder {
 
     final List<({int position, TextHighlightData placeholder})> inserts = [];
 
-    print(highlights);
+    debug(highlights);
     for (var i = 0; i < highlights.length - 1; i++) {
       final currentHighlight = highlights[i];
       final nextHighlight = highlights[i + 1];
@@ -74,12 +75,11 @@ class HighlightsBuilder {
 
     for (var i = 0; i < inserts.length; i++) {
       final element = inserts[i];
-      print(element);
-      print(element.placeholder.text.length);
+      debug(element);
+      debug(element.placeholder.text.length);
       highlights.insert(element.position + i, element.placeholder);
     }
 
     return highlights;
   }
 }
-

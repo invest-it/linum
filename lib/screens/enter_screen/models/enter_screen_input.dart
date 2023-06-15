@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:linum/screens/enter_screen/enums/input_flag.dart';
-import 'package:tuple/tuple.dart';
 
 typedef TextIndices = ({int start, int end});
 typedef ParsedInput = ({InputFlag flag, String text});
