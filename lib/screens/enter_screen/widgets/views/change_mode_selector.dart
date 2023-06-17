@@ -34,7 +34,7 @@ class ChangeModeSelector extends StatelessWidget {
             ChangeModeButton(
               label: "Only this one",
               onPressed: () => viewModel
-                  .selectChangeModeType(SerialTransactionChangeMode.onlyThisOne)
+                  .selectChangeModeType(SerialTransactionChangeMode.onlyThisOne),
             ),
             ChangeModeButton(
                 label: "All before",

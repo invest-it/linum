@@ -10,12 +10,16 @@ class EnterScreenHighlights extends StatefulWidget {
   final ScrollController textScrollController;
   final ScrollController scrollController = ScrollController();
   final TextStyle textStyle;
+  final double paddingY;
+  final double paddingX;
 
   EnterScreenHighlights({
     super.key,
     required EnterScreenTextEditingController controller,
     required this.textScrollController,
     required this.textStyle,
+    required this.paddingY,
+    required this.paddingX,
   }) : _controller = controller;
 
   @override
@@ -55,6 +59,8 @@ class _EnterScreenHighlightsState extends State<EnterScreenHighlights> {
             return TextHighlight(
               highlight,
               style: widget.textStyle,
+              paddingX: widget.paddingX,
+              paddingY: widget.paddingY,
             );
           }).toList()
         ],

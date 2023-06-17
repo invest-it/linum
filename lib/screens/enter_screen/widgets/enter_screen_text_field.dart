@@ -159,10 +159,12 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
             controller: _controller,
             textScrollController: _scrollController,
             textStyle: baseTextStyle,
+            paddingY: 2.0,
+            paddingX: 2.0,
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 1.0),
+          padding: const EdgeInsets.symmetric(horizontal: 2.0),
           child: TextField(
             decoration: const InputDecoration(
             border: InputBorder.none,

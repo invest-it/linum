@@ -56,6 +56,7 @@ dependencies:
   package_info_plus: ^4.0.2
   path: ^1.8.2
   provider: ^6.0.2
+  rxdart: ^0.27.7
   shared_preferences: ^2.0.13
   sign_in_with_apple: ^4.2.0
   tuple: ^2.0.0

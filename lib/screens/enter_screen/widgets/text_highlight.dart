@@ -6,7 +6,15 @@ import 'package:linum/screens/enter_screen/utils/enter_screen_text_editing_contr
 class TextHighlight extends StatelessWidget {
   final TextHighlightData highlightData;
   final TextStyle style;
-  const TextHighlight(this.highlightData, {super.key, required this.style});
+  final double paddingY;
+  final double paddingX;
+
+  const TextHighlight(this.highlightData, {
+    super.key,
+    required this.style,
+    required this.paddingX,
+    required this.paddingY,
+  });
 
   Size _textSize(String text, TextStyle style) {
     final TextPainter textPainter = TextPainter(
@@ -18,12 +26,16 @@ class TextHighlight extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (highlightData.color == Colors.white) {
+      final size = _textSize(
+          highlightData.text,
+          style.copyWith(color: Colors.transparent),
+      ).width - (paddingX * 2 + 0.5);
       return Container(
-        width: _textSize(highlightData.text, style.copyWith(color: Colors.transparent)).width - 3.5,
+        width: size > 0.0 ? size : 0.0,
       );
     }
     return Container(
-      padding: const EdgeInsets.all(1.0),
+      padding: EdgeInsets.symmetric(vertical: paddingY, horizontal: paddingX),
       decoration: BoxDecoration(
         color: highlightData.color,
         borderRadius: const BorderRadius.all(Radius.circular(5.0)),

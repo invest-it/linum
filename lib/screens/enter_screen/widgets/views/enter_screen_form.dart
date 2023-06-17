@@ -27,7 +27,7 @@ class EnterScreenForm extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.only(bottom: 12),
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 39,
+                  horizontal: 38,
                   vertical: 10,
                 ),
                 child: const EnterScreenTextField(),

@@ -9,14 +9,10 @@ import 'package:linum/screens/enter_screen/utils/example_string_builder.dart';
 import 'package:linum/screens/enter_screen/utils/highlights_builder.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/input_parser.dart';
 import 'package:linum/screens/enter_screen/utils/suggestions/make_suggestions.dart';
+import 'package:rxdart/rxdart.dart';
 
 typedef TextHighlightData = ({Color color, TextIndices indices, String text});
 
-
-const exampleStringStyle = TextStyle(
-  fontSize: 16,
-  color: Colors.black26,
-);
 
 class EnterScreenTextEditingController extends TextEditingController {
   final ExampleStringBuilder exampleStringBuilder;
@@ -68,18 +64,17 @@ class EnterScreenTextEditingController extends TextEditingController {
     recalculateHighlights(newText);
   }
 
-
-  final _highlightsStreamController = StreamController<List<TextHighlightData>>();
-  Stream<List<TextHighlightData>> get highlightsStream => _highlightsStreamController.stream;
+  final _highlightsBehaviourSubject = BehaviorSubject<List<TextHighlightData>>();
+  Stream<List<TextHighlightData>> get highlightsStream => _highlightsBehaviourSubject.stream;
 
 
   void recalculateHighlights(String newText) {
     final parsed = _parsed;
     if (parsed != null) {
       final highlights = HighlightsBuilder(newText, parsed).build();
-      _highlightsStreamController.add(highlights);
+      _highlightsBehaviourSubject.add(highlights);
     } else {
-      _highlightsStreamController.add([]);
+      _highlightsBehaviourSubject.add([]);
     }
   }
 
@@ -88,12 +83,46 @@ class EnterScreenTextEditingController extends TextEditingController {
   TextSpan buildTextSpan({required BuildContext context, TextStyle? style , required bool withComposing}) {
     assert(!value.composing.isValid || !withComposing || value.isComposingRangeValid);
 
+
+    final highlightTextStyle = style?.copyWith(color: Colors.white);
+    final exampleTextStyle = style?.copyWith(color: Colors.black26);
+    final List<TextSpan> spans = [];
+
+    var counter = 0; // Current position in Text
+    if (_highlightsBehaviourSubject.hasValue) {
+      for (final span in _highlightsBehaviourSubject.value) {
+        // If highlight indices start after current write position add prev chars first
+        if (span.indices.start > counter) {
+          spans.add(
+            TextSpan(
+              style: style,
+              text: text.substring(counter, span.indices.start),
+            ),
+          );
+        }
+        // Add highlighted text with special style (just the font-color)
+        spans.add(
+          TextSpan(style: highlightTextStyle, text: span.text),
+        );
+        // Set the write position at the end of the highlighted text
+        counter = span.indices.end;
+      }
+    }
+
+    // Add the rest of the text, if there is any
+    if (counter < text.length) {
+      spans.add(
+        TextSpan(style: style, text: text.substring(counter)),
+      );
+    }
+
+    // Add the examples
+    spans.add(
+        TextSpan(style: exampleTextStyle, text: exampleStringBuilder.value.item2),
+    );
+
     return TextSpan(
-      children: [
-        // ...buildHighlightedTextSpans(style),
-        TextSpan(style: style, text: text),
-        TextSpan(style: exampleStringStyle, text: exampleStringBuilder.value.item2),
-      ],
+      children: spans,
     );
     // TODO: Might not need composing in this way
     /*
