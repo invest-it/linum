@@ -11,8 +11,12 @@ import 'package:linum/screens/enter_screen/utils/parsing/input_parser.dart';
 import 'package:linum/screens/enter_screen/utils/suggestions/make_suggestions.dart';
 import 'package:rxdart/rxdart.dart';
 
-typedef TextHighlightData = ({Color color, TextIndices indices, String text});
-
+typedef TextHighlightData = ({
+  Color color,
+  TextIndices indices,
+  String text,
+  bool isPlaceholder,
+});
 
 class EnterScreenTextEditingController extends TextEditingController {
   final ExampleStringBuilder exampleStringBuilder;
@@ -51,7 +55,7 @@ class EnterScreenTextEditingController extends TextEditingController {
   }
 
   void _onChange(String newText, int cursor) {
-    final parsed  = parse(newText);
+    final parsed = InputParser().parse(newText);
     exampleStringBuilder.rebuild(parsed);
     _parsed = parsed;
     _suggestions = makeSuggestions(
@@ -91,6 +95,9 @@ class EnterScreenTextEditingController extends TextEditingController {
     var counter = 0; // Current position in Text
     if (_highlightsBehaviourSubject.hasValue) {
       for (final span in _highlightsBehaviourSubject.value) {
+        if (span.isPlaceholder) {
+          continue;
+        }
         // If highlight indices start after current write position add prev chars first
         if (span.indices.start > counter) {
           spans.add(

@@ -1,69 +1,86 @@
-import 'package:linum/screens/enter_screen/constants/input_flag_map.dart';
-import 'package:linum/screens/enter_screen/enums/input_flag.dart';
+
 import 'package:linum/screens/enter_screen/models/enter_screen_input.dart';
-import 'package:linum/screens/enter_screen/utils/parsing/amount_parsing.dart';
+import 'package:linum/screens/enter_screen/models/parsed_input_tag.dart';
+import 'package:linum/screens/enter_screen/utils/parsing/base_input_parser.dart';
+import 'package:linum/screens/enter_screen/utils/parsing/get_text_indices.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/parser_functions.dart';
+import 'package:linum/screens/enter_screen/utils/parsing/tag_parser.dart';
 
-List<String> splitInput(String input) {
-  final splitsByHashtag = input.split("#");
-  final List<String> splits = [];
-  for (final split in splitsByHashtag) {
-    final splitsByAt = split.split("@");
-    if (splitsByAt.length == 1) {
-      splits.add(split);
-      continue;
+final RegExp splitRegex = RegExp("(?=#)|(?=@)");
+final RegExp trimTagRegex = RegExp("(#)|(@)");
+
+class InputParser {
+  EnterScreenInput parse(String? input) {
+    if (input == null || input.isEmpty) {
+      return EnterScreenInput(input ?? "");
     }
-    for (final atSplit in splitsByAt) {
-      splits.add(atSplit);
-    }
-  }
-  return splits;
-}
 
-EnterScreenInput parse(String? input) {
-  if (input == null || input.isEmpty) {
-    return EnterScreenInput(input ?? "");
-  }
+    final splits = _splitInput(input);
 
-  final splits = splitInput(input);
+    final amount = splits[0];
+    final result = NaturalLangParser().parse(amount, input);
 
-  final amount = splits[0];
-  final result = parseBaseInfo(amount, input);
+    for (var i = 0; i < splits.length; i++) {
+      final split = splits[i];
 
-  for (var i = 1; i < splits.length; i++) {
-    final parsed = interpretTag(splits[i]);
-    if (parsed != null) {
-      result.parsedInputs.add(parsed);
-    }
-  }
-  return result;
-}
-
-({InputFlag? flag, String text}) parseTag(String tag) {
-  final splits = tag.split(":");
-  if (splits.length > 1) {
-    final flag = inputFlagMap[splits[0].toUpperCase()];
-    final value = splits[1];
-    return (flag: flag, text: value);
-  }
-  return (flag: null, text: splits[0]);
-}
-
-ParsedInput? interpretTag(String tag) {
-  final parsed = parseTag(tag);
-  if (parsed.flag != null) {
-    final fun = parserFunctions[parsed.flag];
-    if (fun != null) {
-      final result = fun(parsed.text);
-      if (result != null) {
-        return (flag: parsed.flag!, text: result);
+      if (split.startsWith(trimTagRegex)) {
+        final parsed = _interpretTag(splits[i], input);
+        if (parsed != null) {
+          result.parsedInputs.add(parsed);
+        }
       }
+
+
+
     }
-  } else {
-    return findFitting(parsed.text);
+    return result;
   }
-  return null;
+
+  List<String> _splitInput(String input) {
+    final splits = input.split(splitRegex);
+
+    for (var i = 0; i < splits.length; i++) {
+      splits[i] = splits[i].trimRight();
+    }
+    return splits;
+  }
+
+  ParsedInputTag? _interpretTag(String tag, String fullInput) {
+    final trimmedTag = tag.replaceAll(trimTagRegex, "");
+    final parsedTag = TagParser().parse(trimmedTag);
+
+    if (parsedTag.flag != null) {
+      final fun = parserFunctions[parsedTag.flag];
+      if (fun != null) {
+        final result = fun(parsedTag.text);
+        if (result != null) {
+          return ParsedInputTag(
+            flag: parsedTag.flag!,
+            indices: getTextIndices(tag, fullInput),
+            value: result,
+            raw: tag,
+          );
+        }
+      }
+    } else {
+      final guess = findFitting(parsedTag.text);
+      if (guess == null) {
+        return null;
+      }
+      return ParsedInputTag(
+          flag: guess.flag,
+          value: guess.value,
+          raw: tag,
+          indices: getTextIndices(tag, fullInput),
+      );
+    }
+    return null;
+  }
 }
+
+
+
+
 
 
 

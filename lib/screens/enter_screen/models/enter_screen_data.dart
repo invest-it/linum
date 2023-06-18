@@ -59,15 +59,15 @@ class EnterScreenData {
     for (final element in input.parsedInputs) {
       switch (element.flag) {
         case InputFlag.category:
-          category = standardCategories[element.text];
+          category = standardCategories[element.value];
           break;
         case InputFlag.date:
-          date = element.text;
+          date = element.value;
           break;
         case InputFlag.repeatInfo:
           RepeatInterval interval;
           try {
-            interval = RepeatInterval.values.byName(element.text);
+            interval = RepeatInterval.values.byName(element.value);
           } catch (e) {
             interval = RepeatInterval.none;
           }

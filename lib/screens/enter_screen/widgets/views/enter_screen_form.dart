@@ -14,6 +14,8 @@ class EnterScreenForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const highlightPaddingX = 2.0;
+
     return ChangeNotifierProvider<EnterScreenFormViewModel>(
       create: (context) {
         return EnterScreenFormViewModel(context);
@@ -27,10 +29,12 @@ class EnterScreenForm extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.only(bottom: 12),
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 38,
+                  horizontal: 40 - highlightPaddingX,
                   vertical: 10,
                 ),
-                child: const EnterScreenTextField(),
+                child: const EnterScreenTextField(
+                  paddingX: highlightPaddingX,
+                ),
               ),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),

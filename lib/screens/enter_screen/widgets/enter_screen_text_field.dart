@@ -22,7 +22,12 @@ import 'package:provider/provider.dart';
 
 class EnterScreenTextField extends StatefulWidget {
   final void Function(EnterScreenInput input)? onInputChange;
-  const EnterScreenTextField({super.key, this.onInputChange});
+  final double paddingX;
+  const EnterScreenTextField({
+    super.key,
+    required this.paddingX,
+    this.onInputChange,
+  });
 
   @override
   State<EnterScreenTextField> createState() => _EnterScreenTextFieldState();
@@ -146,7 +151,8 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
   @override
   Widget build(BuildContext context) {
     final baseTextStyle = Theme.of(context).textTheme.titleMedium!.copyWith(
-        fontSize: 16,
+      fontSize: 16,
+      letterSpacing: 1.0
     );
 
 
@@ -159,12 +165,12 @@ class _EnterScreenTextFieldState extends State<EnterScreenTextField> {
             controller: _controller,
             textScrollController: _scrollController,
             textStyle: baseTextStyle,
-            paddingY: 2.0,
+            paddingY: widget.paddingX,
             paddingX: 2.0,
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 2.0),
+          padding: EdgeInsets.symmetric(horizontal: widget.paddingX),
           child: TextField(
             decoration: const InputDecoration(
             border: InputBorder.none,

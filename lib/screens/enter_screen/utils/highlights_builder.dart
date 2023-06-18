@@ -20,6 +20,7 @@ class HighlightsBuilder {
       indices: indices,
       text: newText.substring(indices.start, indices.end),
       color: color,
+      isPlaceholder: false,
     ),);
   }
 
@@ -28,6 +29,7 @@ class HighlightsBuilder {
       indices: indices,
       text: newText.substring(indices.start, indices.end),
       color: placeholderColor,
+      isPlaceholder: true,
     );
   }
 
@@ -44,7 +46,14 @@ class HighlightsBuilder {
       _addHighlight(parsed.currencyIndices!, highlightColors.currency);
     }
 
-    // TODO: Implement for parsedElements as well
+    for (final parsedInput in parsed.parsedInputs) {
+      debug(parsedInput);
+      final indices = parsedInput.indices;
+      if (indices == null) {
+        continue;
+      }
+      _addHighlight(indices, Colors.purpleAccent);
+    }
 
     if (highlights.isEmpty) {
       return highlights;

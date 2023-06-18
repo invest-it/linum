@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:linum/core/categories/constants/standard_categories.dart';
 import 'package:linum/screens/enter_screen/enums/input_flag.dart';
 import 'package:linum/screens/enter_screen/enums/parsable_date.dart';
-import 'package:linum/screens/enter_screen/models/enter_screen_input.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/date_parsing.dart';
 import 'package:linum/screens/enter_screen/utils/supported_values.dart';
 
@@ -14,7 +13,7 @@ String? _categoryParser(String input) {
     if (lowercase == entry.key) {
       return entry.key;
     }
-    final label = entry.value.label.tr().toLowerCase(); // TODO: Translate first
+    final label = entry.value.label.tr().toLowerCase();
     if (lowercase == label) {
       return entry.key;
     }
@@ -50,18 +49,27 @@ String? _dateParser(String input) {
   }
 }
 
-ParsedInput? findFitting(String input) {
-  var result = _categoryParser(input);
+({InputFlag flag, String value})? findFitting(String text) {
+  var result = _categoryParser(text);
   if (result != null) {
-    return (flag: InputFlag.category, text: result);
+    return (
+      flag: InputFlag.category,
+      value: result,
+    );
   }
-  result = _repeatInfoParser(input);
+  result = _repeatInfoParser(text);
   if (result != null) {
-    return (flag: InputFlag.repeatInfo, text: result);
+    return (
+      flag: InputFlag.repeatInfo,
+      value: result,
+    );
   }
-  result = _dateParser(input);
+  result = _dateParser(text);
   if (result != null) {
-    return (flag: InputFlag.date, text: result);
+    return (
+      flag: InputFlag.date,
+      value: result,
+    );
   }
   return null;
 }
