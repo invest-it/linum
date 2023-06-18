@@ -1,10 +1,12 @@
 
 import 'package:linum/screens/enter_screen/models/enter_screen_input.dart';
+import 'package:linum/screens/enter_screen/models/parsed_input.dart';
 import 'package:linum/screens/enter_screen/models/parsed_input_tag.dart';
-import 'package:linum/screens/enter_screen/utils/parsing/base_input_parser.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/get_text_indices.dart';
+import 'package:linum/screens/enter_screen/utils/parsing/natural_lang_parser.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/parser_functions.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/tag_parser.dart';
+
 
 final RegExp splitRegex = RegExp("(?=#)|(?=@)");
 final RegExp trimTagRegex = RegExp("(#)|(@)");
@@ -15,25 +17,32 @@ class InputParser {
       return EnterScreenInput(input ?? "");
     }
 
-    final splits = _splitInput(input);
+    final List<ParsedInput> parsedInputs = [];
 
-    final amount = splits[0];
-    final result = NaturalLangParser().parse(amount, input);
+    final splits = _splitInput(input);
 
     for (var i = 0; i < splits.length; i++) {
       final split = splits[i];
 
       if (split.startsWith(trimTagRegex)) {
-        final parsed = _interpretTag(splits[i], input);
-        if (parsed != null) {
-          result.parsedInputs.add(parsed);
+        final parsedTag = _interpretTag(splits[i], input);
+        if (parsedTag != null) {
+          parsedInputs.add(ParsedInput<String>(
+            type: parsedTag.flag.toInputType(),
+            value: parsedTag.value,
+            raw: parsedTag.raw,
+            indices: parsedTag.indices,
+          ),);
         }
+        continue;
       }
-
-
-
+      parsedInputs.addAll(
+          NaturalLangParser().parse(split, input),
+      );
     }
-    return result;
+
+
+    return EnterScreenInput.fromParsedInputs(parsedInputs, input);
   }
 
   List<String> _splitInput(String input) {

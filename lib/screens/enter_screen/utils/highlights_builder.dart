@@ -34,26 +34,30 @@ class HighlightsBuilder {
   }
 
   List<TextHighlightData> build() {
-    if (parsed.amountIndices?.start != parsed.amountIndices?.end) {
-      _addHighlight(parsed.amountIndices!, highlightColors.amount);
+    if (parsed.amount?.indices?.start != parsed.amount?.indices?.end) {
+      _addHighlight(parsed.amount!.indices!, highlightColors.amount);
     }
 
-    if (parsed.nameIndices?.start != parsed.nameIndices?.end) {
-      _addHighlight(parsed.nameIndices!, highlightColors.name);
+    if (parsed.name?.indices?.start != parsed.name?.indices?.end) {
+      _addHighlight(parsed.name!.indices!, highlightColors.name);
     }
 
-    if (parsed.currencyIndices?.start != parsed.currencyIndices?.end) {
-      _addHighlight(parsed.currencyIndices!, highlightColors.currency);
+    if (parsed.currency?.indices?.start != parsed.currency?.indices?.end) {
+      _addHighlight(parsed.currency!.indices!, highlightColors.currency);
     }
 
-    for (final parsedInput in parsed.parsedInputs) {
-      debug(parsedInput);
-      final indices = parsedInput.indices;
-      if (indices == null) {
-        continue;
-      }
-      _addHighlight(indices, Colors.purpleAccent);
+    if (parsed.category?.indices?.start != parsed.category?.indices?.end) {
+      _addHighlight(parsed.category!.indices!, highlightColors.category);
     }
+
+    if (parsed.date?.indices?.start != parsed.date?.indices?.end) {
+      _addHighlight(parsed.date!.indices!, highlightColors.date);
+    }
+
+    if (parsed.repeatInfo?.indices?.start != parsed.repeatInfo?.indices?.end) {
+      _addHighlight(parsed.repeatInfo!.indices!, highlightColors.repeatInfo);
+    }
+
 
     if (highlights.isEmpty) {
       return highlights;

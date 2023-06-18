@@ -5,7 +5,6 @@ import 'package:linum/core/repeating/enums/repeat_interval.dart';
 import 'package:linum/core/repeating/models/repeat_configuration.dart';
 import 'package:linum/features/currencies/constants/standard_currencies.dart';
 import 'package:linum/features/currencies/models/currency.dart';
-import 'package:linum/screens/enter_screen/enums/input_flag.dart';
 import 'package:linum/screens/enter_screen/models/enter_screen_input.dart';
 
 class EnterScreenData {
@@ -48,32 +47,28 @@ class EnterScreenData {
   }
 
   factory EnterScreenData.fromInput(EnterScreenInput input) {
-    final amount = input.amount;
-    final name = input.name;
-    final currency = standardCurrencies[input.currency];
+    final amount = input.amount?.value;
+    final name = input.name?.value;
+    final currency = standardCurrencies[input.currency?.value];
 
     Category? category;
     String? date;
     RepeatConfiguration? repeatConfiguration;
 
-    for (final element in input.parsedInputs) {
-      switch (element.flag) {
-        case InputFlag.category:
-          category = standardCategories[element.value];
-          break;
-        case InputFlag.date:
-          date = element.value;
-          break;
-        case InputFlag.repeatInfo:
-          RepeatInterval interval;
-          try {
-            interval = RepeatInterval.values.byName(element.value);
-          } catch (e) {
-            interval = RepeatInterval.none;
-          }
-          repeatConfiguration = repeatConfigurations[interval];
-          break;
+    if (input.hasCategory) {
+      category = standardCategories[input.category!.value];
+    }
+    if (input.hasDate) {
+      date = input.date!.value;
+    }
+    if (input.hasRepeatInfo) {
+      RepeatInterval interval;
+      try {
+        interval = RepeatInterval.values.byName(input.repeatInfo!.value);
+      } catch (e) {
+        interval = RepeatInterval.none;
       }
+      repeatConfiguration = repeatConfigurations[interval];
     }
 
     return EnterScreenData(
