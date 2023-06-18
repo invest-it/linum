@@ -43,7 +43,6 @@ class EnterScreenFormViewModel extends ChangeNotifier {
   }
 
   EnterScreenFormViewModel(BuildContext context) {
-
     final screenViewModel = context.read<EnterScreenViewModel>();
     final transaction = screenViewModel.initialTransaction;
     final parentalSerialTransaction = screenViewModel.parentalSerialTransaction;
