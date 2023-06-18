@@ -124,9 +124,12 @@ class EnterScreenTextEditingController extends TextEditingController {
     }
 
     // Add the examples
-    spans.add(
+    if (!text.contains(trimTagRegex)) {
+      spans.add(
         TextSpan(style: exampleTextStyle, text: exampleStringBuilder.value.item2),
-    );
+      );
+    }
+
 
     return TextSpan(
       children: spans,
