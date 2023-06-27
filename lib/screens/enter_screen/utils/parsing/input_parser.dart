@@ -31,7 +31,7 @@ class InputParser {
             type: parsedTag.flag.toInputType(),
             value: parsedTag.value,
             raw: parsedTag.raw,
-            indices: parsedTag.indices,
+            indices: parsedTag.indices!,
           ),);
         }
         continue;
@@ -65,9 +65,9 @@ class InputParser {
         if (result != null) {
           return ParsedInputTag(
             flag: parsedTag.flag!,
-            indices: getTextIndices(tag, fullInput),
+            indices: getTextIndices(tag.trimRight(), fullInput),
             value: result,
-            raw: tag,
+            raw: tag.trimRight(),
           );
         }
       }
@@ -79,8 +79,8 @@ class InputParser {
       return ParsedInputTag(
           flag: guess.flag,
           value: guess.value,
-          raw: tag,
-          indices: getTextIndices(tag, fullInput),
+          raw: tag.trimRight(),
+          indices: getTextIndices(tag.trimRight(), fullInput),
       );
     }
     return null;

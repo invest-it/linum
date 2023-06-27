@@ -76,7 +76,9 @@ class SuggestionList extends StatelessWidget {
                     .map((suggestion) => SuggestionListItem(
                           suggestion: suggestion,
                           parentSuggestion: parentSuggestion,
-                          onSelection: onSelection,
+                          onSelection: (child, parent) {
+                            onSelection(child, parent);
+                          },
                         ),)
                     .toList(),
               ),
@@ -85,7 +87,6 @@ class SuggestionList extends StatelessWidget {
         ),
       );
     }
-
     return Container(
       constraints: BoxConstraints(
         maxHeight: maxHeight,

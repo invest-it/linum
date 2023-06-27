@@ -4,7 +4,7 @@ import 'package:linum/screens/enter_screen/models/enter_screen_input.dart';
 
 class ParsedInput<T extends dynamic> {
   final InputType type;
-  final TextIndices? indices;
+  final TextIndices indices;
   final T value;
   final String raw;
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/common/utils/debug.dart';
+import 'package:linum/screens/enter_screen/viewmodels/enter_screen_form_view_model.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +14,8 @@ class EnterScreenEntryTypeSwitch extends StatelessWidget {
 
     return Consumer<EnterScreenViewModel>(
       builder: (context, viewModel, _) {
+        final formViewModel = context.read<EnterScreenFormViewModel>();
+
         return SegmentedButton(
           onSelectionChanged: (selection) {
             debug(selection);
@@ -20,6 +23,7 @@ class EnterScreenEntryTypeSwitch extends StatelessWidget {
               return;
             }
             viewModel.entryType = selection.first;
+            formViewModel.data = formViewModel.data.removeCategory();
           },
           segments: [
             ButtonSegment(

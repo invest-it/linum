@@ -16,7 +16,6 @@ class EnterScreenForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const highlightPaddingX = 2.0;
 
     return ChangeNotifierProxyProvider<EnterScreenViewModel, EnterScreenFormViewModel>(
       create: (context) {
@@ -43,13 +42,11 @@ class EnterScreenForm extends StatelessWidget {
                   Expanded(
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 40 - highlightPaddingX,
+                          horizontal: 40,
                           vertical: 10,
                         ),
 
-                        child: EnterScreenTextField(
-                          paddingX: highlightPaddingX,
-                        ),
+                        child: EnterScreenTextField(),
                       ),
                   ),
                   const Padding(

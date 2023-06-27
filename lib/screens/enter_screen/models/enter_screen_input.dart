@@ -76,6 +76,30 @@ class EnterScreenInput {
   bool get hasCategory => category != null;
   bool get hasDate => date != null;
   bool get hasRepeatInfo => repeatInfo != null;
+
+
+  List<ParsedInput> toList() {
+    final List<ParsedInput> list = [];
+    if (hasAmount) {
+      list.add(amount!);
+    }
+    if (hasCurrency) {
+      list.add(currency!);
+    }
+    if (hasName) {
+      list.add(name!);
+    }
+    if (hasRepeatInfo) {
+      list.add(repeatInfo!);
+    }
+    if (hasCategory) {
+      list.add(category!);
+    }
+    if (hasDate) {
+      list.add(date!);
+    }
+    return list;
+  }
 }
 
 

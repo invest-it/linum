@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:linum/common/enums/entry_type.dart';
+import 'package:linum/common/utils/debug.dart';
 import 'package:linum/core/account/services/account_settings_service.dart';
 import 'package:linum/core/categories/utils/translate_category.dart';
 import 'package:linum/core/design/layout/utils/media_query_accessors.dart';
@@ -10,26 +13,34 @@ import 'package:linum/screens/enter_screen/enums/parsable_date.dart';
 import 'package:linum/screens/enter_screen/models/enter_screen_data.dart';
 import 'package:linum/screens/enter_screen/models/suggestion.dart';
 import 'package:linum/screens/enter_screen/models/suggestion_filters.dart';
-import 'package:linum/screens/enter_screen/utils/enter_screen_text_editing_controller.dart';
 import 'package:linum/screens/enter_screen/utils/example_string_builder.dart';
+import 'package:linum/screens/enter_screen/utils/highlightable_text_editing_controller.dart';
 import 'package:linum/screens/enter_screen/utils/string_from_existing_data.dart';
 import 'package:linum/screens/enter_screen/utils/suggestions/insert_suggestion.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_form_view_model.dart';
 import 'package:linum/screens/enter_screen/widgets/suggestion_list.dart';
 import 'package:provider/provider.dart';
 
+
 class EnterScreenTextFieldViewModel extends ChangeNotifier {
   final ScrollController scrollController = ScrollController();
 
   late final GlobalKey textFieldKey;
   late final BuildContext _context;
-  late EnterScreenTextEditingController textController;
+  late HighlightableTextEditingController textController;
   late EnterScreenFormViewModel _formViewModel;
   late EntryType entryType;
+  late StreamSubscription _streamSubscription;
 
-  EnterScreenTextFieldViewModel(BuildContext context, this.textFieldKey) {
+
+  EnterScreenTextFieldViewModel(
+      BuildContext context, {
+        required this.textFieldKey,
+        String? prevControllerText,
+  }) {
     _context = context;
     _formViewModel = context.read<EnterScreenFormViewModel>();
+
     final accountSettingsService = context.read<AccountSettingsService>();
 
     entryType = _formViewModel.entryType;
@@ -38,7 +49,7 @@ class EnterScreenTextFieldViewModel extends ChangeNotifier {
         ? accountSettingsService.getExpenseEntryCategory()
         : accountSettingsService.getIncomeEntryCategory();
 
-    textController = EnterScreenTextEditingController(
+    textController = HighlightableTextEditingController(
       exampleStringBuilder: ExampleStringBuilder(
         defaultAmount: 0.00,
         defaultCurrency: accountSettingsService.getStandardCurrency().name,
@@ -53,8 +64,18 @@ class EnterScreenTextFieldViewModel extends ChangeNotifier {
     );
 
     if (_formViewModel.withExistingData) {
-      final text = generateStringFromExistingData(_formViewModel.data);
-      textController.text = text;
+      // Needs to be refactored alot
+      if (!_formViewModel.data.isParsed) {
+        final text = StringBuilder()
+            .useEnterScreenData(_formViewModel.data)
+            .build();
+        textController.text = text;
+      }
+
+    }
+
+    if (prevControllerText != null) {
+      textController.text = prevControllerText;
     }
 
     textController.addListener(() {
@@ -65,12 +86,13 @@ class EnterScreenTextFieldViewModel extends ChangeNotifier {
       _formViewModel.data = EnterScreenData.fromInput(textController.parsed!);
     });
 
-    _formViewModel.stream.listen((data) {
+    _streamSubscription = _formViewModel.stream.listen((data) {
       if (!data.isParsed) {
-        textController.text = generateStringFromExistingData(data);
+        textController.text = StringBuilder().useEnterScreenData(data).build();
       }
     });
   }
+
 
   void _rebuildSuggestionList() {
     final keyContext = textFieldKey.currentContext;
@@ -102,7 +124,10 @@ class EnterScreenTextFieldViewModel extends ChangeNotifier {
           borderRadius: const BorderRadius.all(Radius.circular(5)),
           child: SuggestionList(
             suggestions: textController.suggestions,
-            onSelection: _onSuggestionSelection,
+            onSelection: (child, parent) {
+              debug("HELLO ????");
+              _onSuggestionSelection(child, parent);
+            },
           ),
         ),
       );
@@ -122,10 +147,13 @@ class EnterScreenTextFieldViewModel extends ChangeNotifier {
     textController.value = value;
   }
 
+
+
   @override
   void dispose() {
     scrollController.dispose();
     textController.dispose();
+    _streamSubscription.cancel();
     super.dispose();
   }
 }

@@ -46,6 +46,17 @@ class EnterScreenData {
     );
   }
 
+  EnterScreenData removeCategory() {
+    return EnterScreenData(
+      amount: amount,
+      name: name,
+      currency: currency,
+      date: date,
+      repeatConfiguration: repeatConfiguration,
+      isParsed: isParsed,
+    );
+  }
+
   factory EnterScreenData.fromInput(EnterScreenInput input) {
     final amount = input.amount?.value;
     final name = input.name?.value;

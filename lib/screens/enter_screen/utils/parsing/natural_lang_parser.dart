@@ -54,7 +54,7 @@ class NaturalLangParser {
           type: InputType.name,
           value: substr.trim(),
           raw: substr,
-          indices: indices,
+          indices: indices!,
         ),
       );
     }
@@ -75,7 +75,7 @@ class NaturalLangParser {
           type: InputType.amount,
           value: amount,
           raw: substr,
-          indices: indices,
+          indices: indices!,
         ),
       );
     }
@@ -99,7 +99,7 @@ class NaturalLangParser {
           type: InputType.currency,
           value: currency,
           raw: substr,
-          indices: indices,
+          indices: indices!,
         ),
       );
     }

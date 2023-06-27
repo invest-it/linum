@@ -25,8 +25,10 @@ class QuickTagColors {
   });
 }
 
-class QuickTagMenu extends StatefulWidget {
+class QuickTagMenu extends StatelessWidget {
   final QuickTagColors colors;
+  final DateFormatter formatter;
+
   const QuickTagMenu({
     super.key,
     this.colors = const QuickTagColors(
@@ -35,16 +37,12 @@ class QuickTagMenu extends StatefulWidget {
       currency: Color(0xFF97BC4E),
       repeatInfo: Color(0xFFDA7B7B),
     ),
+    this.formatter = const DateFormatter(),
   });
 
-  @override
-  State<QuickTagMenu> createState() => _QuickTagMenuState();
-}
 
-class _QuickTagMenuState extends State<QuickTagMenu> {
-  final formatter = const DateFormatter();
 
-  List<Widget> _buildButtons(EnterScreenFormViewModel formViewModel) {
+  List<Widget> _buildButtons(BuildContext context, EnterScreenFormViewModel formViewModel) {
     final currency = formViewModel.data.currency ?? formViewModel.defaultValues.currency;
     final category = formViewModel.data.category
         ?? (formViewModel.entryType == EntryType.expense
@@ -75,7 +73,7 @@ class _QuickTagMenuState extends State<QuickTagMenu> {
             );
           });
         },
-        textColor: widget.colors.date,
+        textColor: colors.date,
       ),
       TagSelectorButton(
         title: tr(currency.label),
@@ -87,7 +85,7 @@ class _QuickTagMenuState extends State<QuickTagMenu> {
             content: CurrencyListView(),
           );
         },
-        textColor: widget.colors.currency,
+        textColor: colors.currency,
       ),
       TagSelectorButton(
         title: translateCategory(category),
@@ -102,7 +100,7 @@ class _QuickTagMenuState extends State<QuickTagMenu> {
             ),
           );
         },
-        textColor: widget.colors.category,
+        textColor: colors.category,
       ),
       TagSelectorButton(
         title: tr(repeatConfiguration.label),
@@ -113,7 +111,7 @@ class _QuickTagMenuState extends State<QuickTagMenu> {
             content: RepeatConfigListView(),
           );
         },
-        textColor: widget.colors.repeatInfo,
+        textColor: colors.repeatInfo,
       ),
     ];
   }
@@ -124,15 +122,13 @@ class _QuickTagMenuState extends State<QuickTagMenu> {
       direction: Axis.horizontal,
       children: [
         Expanded(
-          child: Consumer<EnterScreenFormViewModel>(builder: (
-            context,
-            formViewModel,
-            _,
-          ) {
+          child: Consumer<EnterScreenFormViewModel>(
+            builder: (context, formViewModel, _,) {
+
             return Wrap(
               spacing: 5,
               runSpacing: 5,
-              children: _buildButtons(formViewModel),
+              children: _buildButtons(context, formViewModel),
             );
           },),
         ),
