@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
 class EnterScreenMenu extends StatelessWidget {
-  final String title;
+  final String? title;
   final Widget content;
-  const EnterScreenMenu({super.key, required this.title, required this.content});
+  const EnterScreenMenu({
+    super.key,
+    required this.title,
+    required this.content
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +22,7 @@ class EnterScreenMenu extends StatelessWidget {
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(vertical: 12),
           child: Text(
-            title,
+            title ?? "", // TODO make field conditional
             style: Theme.of(context).textTheme.headlineSmall,
           ),
         ),

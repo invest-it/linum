@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 void showEnterScreenMenu({
       required BuildContext context,
-      required String title,
+      String? title,
       required Widget content,
 }) {
   final viewModel = context.read<EnterScreenViewModel>();

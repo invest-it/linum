@@ -60,6 +60,7 @@ class QuickTagMenu extends StatelessWidget {
             .format(date)
             ?? "",
         ),
+        icon: Icons.calendar_today_outlined,
         onTap: () {
           final result = showDatePicker(
               context: context,
@@ -89,6 +90,7 @@ class QuickTagMenu extends StatelessWidget {
       ),
       TagSelectorButton(
         title: translateCategory(category),
+        icon: category?.icon,
         onTap: () {
           showEnterScreenMenu(
             context: context,
@@ -104,6 +106,7 @@ class QuickTagMenu extends StatelessWidget {
       ),
       TagSelectorButton(
         title: tr(repeatConfiguration.label),
+        icon: repeatConfiguration.icon,
         onTap: () {
           showEnterScreenMenu(
             context: context,
@@ -113,6 +116,30 @@ class QuickTagMenu extends StatelessWidget {
         },
         textColor: colors.repeatInfo,
       ),
+      TagSelectorButton(
+        title: "Notes",
+        icon: Icons.edit_outlined,
+        onTap: () {
+          showEnterScreenMenu(
+              context: context,
+              title: "Notes",
+              content: const Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: TextField(
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Notizen hier eintragen"
+                      ),
+
+                    ),
+                  ),
+              ),
+          );
+        },
+      )
     ];
   }
 

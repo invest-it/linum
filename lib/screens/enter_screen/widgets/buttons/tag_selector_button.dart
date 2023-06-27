@@ -5,18 +5,47 @@ void _onTap() {}
 class TagSelectorButton extends StatelessWidget {
   final String title;
   final String? symbol;
+  final IconData? icon;
   final Color textColor;
   final void Function() onTap;
   const TagSelectorButton({
     super.key,
     required this.title,
     this.symbol,
+    this.icon,
     this.textColor = Colors.black,
     this.onTap = _onTap,
   });
 
   @override
   Widget build(BuildContext context) {
+    assert(symbol == null || icon == null);
+
+    final List<Widget> iconWidgets = [];
+    if (symbol != null) {
+      iconWidgets.add(
+          Padding(
+            padding: const EdgeInsets.only(right: 5),
+            child: Text(
+              symbol ?? "",
+              style: TextStyle(color: textColor),
+            ),
+          ),
+      );
+    }
+    if (icon != null) {
+      iconWidgets.add(
+        Padding(
+          padding: const EdgeInsets.only(right: 5),
+          child: Icon(
+            icon,
+            size: 14.0,
+            color: textColor,
+          ),
+        ),
+      );
+    }
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -26,13 +55,7 @@ class TagSelectorButton extends StatelessWidget {
         ),
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
         child: Row(mainAxisSize: MainAxisSize.min, children: [
-          Padding(
-            padding: EdgeInsets.only(right: symbol != "" ? 5 : 0),
-            child: Text(
-              symbol ?? "",
-              style: TextStyle(color: textColor),
-            ),
-          ),
+          ...iconWidgets,
           Text(
             title,
             style: TextStyle(color: textColor, fontSize: 14),
