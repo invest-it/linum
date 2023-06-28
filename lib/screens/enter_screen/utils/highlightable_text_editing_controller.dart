@@ -202,6 +202,11 @@ class HighlightableTextEditingController extends TextEditingController {
 
     final text = trueText;
 
+    final highlightStyle = style?.copyWith(color: Colors.white);
+
+    style = style?.copyWith(
+      height: 1.5,
+    );
     final exampleTextStyle = style?.copyWith(color: Colors.black26);
 
     final List<InlineSpan> spans = [];
@@ -219,15 +224,17 @@ class HighlightableTextEditingController extends TextEditingController {
 
       spans.add(
         WidgetSpan(
+
           alignment: PlaceholderAlignment.baseline,
           baseline: TextBaseline.alphabetic,
           child: Container(
+            margin: const EdgeInsets.symmetric(vertical: 2.5),
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(5.0)),
               color: highlightColors[placeholder.match.type.name],
             ),
             padding: const EdgeInsets.symmetric(horizontal: 2.5),
-            child: Text(placeholder.match.raw, style: style?.copyWith(color: Colors.white)),
+            child: Text(placeholder.match.raw, style: highlightStyle),
           ),
         ),
       );

@@ -23,8 +23,6 @@ import 'package:provider/provider.dart';
 
 
 class EnterScreenTextFieldViewModel extends ChangeNotifier {
-  final ScrollController scrollController = ScrollController();
-
   late final GlobalKey textFieldKey;
   late final BuildContext _context;
   late HighlightableTextEditingController textController;
@@ -151,7 +149,6 @@ class EnterScreenTextFieldViewModel extends ChangeNotifier {
 
   @override
   void dispose() {
-    scrollController.dispose();
     textController.dispose();
     _streamSubscription.cancel();
     super.dispose();

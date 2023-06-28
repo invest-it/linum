@@ -31,13 +31,14 @@ class EnterScreenForm extends StatelessWidget {
         return formViewModel;
       },
       child: EnterScreenScaffold(
-        bodyHeight: 350 + useKeyBoardHeight(context),
+        bodyHeight: 400 + useKeyBoardHeight(context),
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 24),
           child: Column(
             children: [
               Flex(
                 direction: Axis.horizontal,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
                       child: Container(
@@ -52,7 +53,7 @@ class EnterScreenForm extends StatelessWidget {
                   const Padding(
                     padding: EdgeInsets.only(
                       right: 55,
-                      top: 10,
+                      top: 18,
                       bottom: 10,
                     ),
                     child: EnterScreenAbortButton(),

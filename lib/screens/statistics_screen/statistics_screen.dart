@@ -31,14 +31,6 @@ class StatisticsScreen extends StatelessWidget {
               onPressedAction: () => log('message'),
             ),
             Text(tr('main.label-wip')),
-            EnterScreen(
-              transaction: Transaction(
-                name: 'Test',
-                amount: 30,
-                currency: 'EUR',
-                date: Timestamp.fromDate(DateTime.now()),
-              ),
-            )
           ],
         ),
       ),

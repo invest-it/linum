@@ -37,7 +37,7 @@ class EnterScreenTextField extends StatelessWidget {
           return EnterScreenTextFieldViewModel(
             context,
             textFieldKey: _key,
-            prevControllerText: textFieldViewModel.textController.text,
+            prevControllerText: textFieldViewModel.textController.trueText,
           );
         }
         return textFieldViewModel;
@@ -51,10 +51,11 @@ class EnterScreenTextField extends StatelessWidget {
                 border: InputBorder.none,
                 isDense: true,
               ),
+              maxLines: null,
+              keyboardType: TextInputType.multiline,
               style: baseTextStyle,
               key: _key,
               controller: textFieldViewModel.textController,
-              scrollController: textFieldViewModel.scrollController,
             ),
           ],
         );
