@@ -16,9 +16,6 @@ class EnterScreenMenu extends StatelessWidget {
       children: [
         Container(
           width: double.infinity,
-          decoration: const BoxDecoration(
-            color: Color.fromRGBO(0, 0, 0, 0.1),
-          ),
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(vertical: 12),
           child: Text(

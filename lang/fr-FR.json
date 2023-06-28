@@ -183,12 +183,8 @@
             "dialog-label-change": "Quelle entrée souhaites-tu modifier?"
         },
         "delete-entry": {
-            "dialog-button-allentries": "Toutes les entrées",
             "dialog-button-cancel": "Annuler",
             "dialog-button-delete": "Supprimer",
-            "dialog-button-fromnow": "Cette entrée et toutes les suivantes",
-            "dialog-button-onlyonce": "Cette entrée",
-            "dialog-button-untilnow": "Cette entrée et toutes les précédentes",
             "dialog-label-delete": "Tu veux vraiment supprimer cette entrée?",
             "dialog-label-deleterep": "Quelle entrée souhaites-tu supprimer?",
             "dialog-label-title": "Confirmer"
@@ -232,10 +228,22 @@
             "custom": "Défini par l'utilisateur"
         },
         "menu": {
-            "category": "Choisir une catégorie",
-            "currency": "Sélectionner la devise",
-            "date": "Sélectionner la date",
-            "repeat-config": "Répéter"
+            "category": "Catégorie",
+            "currency": "Monnaie",
+            "date": "Date",
+            "repeat-config": "Répétition",
+            "notes": "Notes"
+        },
+        "enter-note-hint": "Inscrire des notes ici",
+        "change-mode-selection": {
+            "title": "Modifier les entrées récurrentes",
+            "all": "Toutes les entrées",
+            "this-and-all-after": "Cette entrée et toutes les suivantes",
+            "only-this-one": "Cette entrée",
+            "this-and-all-before": "Cette entrée et toutes les précédentes"
+        },
+        "entry-type-selection": {
+            "title": "Choisis le type de transaction"
         }
     },
     "home_screen": {

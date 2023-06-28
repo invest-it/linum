@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/core/balance/enums/serial_transaction_change_type_enum.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model.dart';
@@ -24,7 +25,7 @@ class ChangeModeSelector extends StatelessWidget {
               width: double.maxFinite,
               padding: const EdgeInsets.only(bottom: 14.0),
               child: Text(
-                "Wiederkehrende Einträge ändern",
+                tr("enter_screen.change-mode-selection.title"),
                 style: Theme.of(context).textTheme.labelMedium?.copyWith(
                   color: Colors.black45,
                 ),
@@ -32,22 +33,22 @@ class ChangeModeSelector extends StatelessWidget {
               ),
             ),
             ChangeModeButton(
-              label: "Only this one",
+              label: tr("enter_screen.change-mode-selection.only-this-one"),
               onPressed: () => viewModel
                   .selectChangeModeType(SerialTransactionChangeMode.onlyThisOne),
             ),
             ChangeModeButton(
-                label: "All before",
+                label: tr("enter_screen.change-mode-selection.this-and-all-before"),
                 onPressed: () => viewModel
                     .selectChangeModeType(SerialTransactionChangeMode.thisAndAllBefore),
             ),
             ChangeModeButton(
-              label: "All afterwards",
+              label: tr("enter_screen.change-mode-selection.this-and-all-after"),
               onPressed: () => viewModel
                   .selectChangeModeType(SerialTransactionChangeMode.thisAndAllAfter),
             ),
             ChangeModeButton(
-              label: "All",
+              label: tr("enter_screen.change-mode-selection.all"),
               onPressed: () => viewModel
                   .selectChangeModeType(SerialTransactionChangeMode.all),
             ),

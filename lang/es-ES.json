@@ -180,11 +180,8 @@
         "button-save-entry": "Guardar entrada",
         "button-transaction-label": "Transacción",
         "delete-entry": {
-            "dialog-button-allentries": "Todas las entradas",
             "dialog-button-cancel": "Cancelar",
             "dialog-button-delete": "Borrar",
-            "dialog-button-fromnow": "Esta entrada y todas las posteriores",
-            "dialog-button-onlyonce": "Esta entrada",
             "dialog-label-delete": "¿Realmente quieres borrar esta entrada?",
             "dialog-label-deleterep": "¿Qué entrada quieres eliminar?",
             "dialog-label-title": "Confirmar"
@@ -228,10 +225,22 @@
             "custom": "A medida"
         },
         "menu": {
-            "category": "Seleccionar categoría",
-            "currency": "Seleccionar moneda",
-            "date": "Seleccione la fecha",
-            "repeat-config": "Repita"
+            "category": "Categoría",
+            "currency": "Moneda",
+            "date": "Fecha",
+            "repeat-config": "Repetición",
+            "notes": "Notas"
+        },
+        "enter-note-hint": "Introduzca aquí las notas",
+        "change-mode-selection": {
+            "title": "Modificar entradas periódicas",
+            "all": "Todas las entradas",
+            "this-and-all-after": "Esta entrada y todas las posteriores",
+            "only-this-one": "Esta entrada",
+            "this-and-all-before": "Esta entrada y todas las anteriores"
+        },
+        "entry-type-selection": {
+            "title": "Seleccione el tipo de transacción"
         }
     },
     "home_screen": {

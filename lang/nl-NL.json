@@ -183,12 +183,8 @@
             "dialog-label-change": "Welk item wilt u veranderen?"
         },
         "delete-entry": {
-            "dialog-button-allentries": "Alle inzendingen",
             "dialog-button-cancel": "Annuleren",
             "dialog-button-delete": "Verwijderen",
-            "dialog-button-fromnow": "Dit bericht en alle volgende",
-            "dialog-button-onlyonce": "Dit bericht",
-            "dialog-button-untilnow": "Dit bericht en alle vorige",
             "dialog-label-delete": "Wil je dit bericht echt verwijderen?",
             "dialog-label-deleterep": "Welk item wilt u verwijderen?",
             "dialog-label-title": "Bevestig"
@@ -232,10 +228,22 @@
             "custom": "Aangepaste"
         },
         "menu": {
-            "category": "Selecteer categorie",
-            "currency": "Selecteer valuta",
-            "date": "Kies een datum",
-            "repeat-config": "Herhaal"
+            "category": "Categorie",
+            "currency": "Valuta",
+            "date": "Datum",
+            "repeat-config": "Herhaling",
+            "notes": "Opmerkingen"
+        },
+        "enter-note-hint": "Voer hier notities in",
+        "change-mode-selection": {
+            "title": "Terugkerende boekingen wijzigen",
+            "all": "Alle inzendingen",
+            "this-and-all-after": "Dit item en alle volgende",
+            "only-this-one": "Dit bericht",
+            "this-and-all-before": "Dit bericht en alle voorgaande"
+        },
+        "entry-type-selection": {
+            "title": "Selecteer het type transactie"
         }
     },
     "home_screen": {

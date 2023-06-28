@@ -104,7 +104,6 @@ class EnterScreenInput {
 
 
 ParsedInput<T>? _castOrNull<T>(ParsedInput parsedInput) {
-  debug(parsedInput.runtimeType);
   if (parsedInput is ParsedInput<T>) {
 
     return parsedInput;

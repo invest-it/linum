@@ -169,6 +169,9 @@
         }
     },
     "enter_screen": {
+        "entry-type-selection":{
+            "title": "Wähle die Art der Transaktion"
+        },
         "input_flag": {
             "category": "Kategorie",
             "repeat_info": "Wiederholung",
@@ -214,22 +217,30 @@
             "dialog-label-change": "Welchen Eintrag möchtest du ändern?"
         },
         "menu": {
-            "category": "Kategorie auswählen",
-            "currency": "Währung auswählen",
-            "date": "Datum auswählen",
-            "repeat-config": "Wiederholen"
+            "category": "Kategorie",
+            "currency": "Währung",
+            "date": "Datum",
+            "repeat-config": "Wiederholung",
+            "notes": "Notizen"
         },
+        "enter-note-hint": "Notizen hier eintragen",
+
         "delete-entry": {
-            "dialog-button-allentries": "Alle Einträge",
             "dialog-button-cancel": "Abbrechen",
             "dialog-button-delete": "Löschen",
-            "dialog-button-fromnow": "Diesen Eintrag und alle folgenden",
-            "dialog-button-onlyonce": "Diesen Eintrag",
-            "dialog-button-untilnow": "Diesen Eintrag und alle vorherigen",
             "dialog-label-delete": "Möchtest du diesen Eintrag wirklich löschen?",
             "dialog-label-deleterep": "Welchen Eintrag möchtest du löschen?",
             "dialog-label-title": "Bestätigen"
         },
+
+        "change-mode-selection":{
+            "title": "Wiederkehrende Einträge ändern",
+            "all": "Alle Einträge",
+            "this-and-all-after": "Diesen Eintrag und alle folgenden",
+            "only-this-one": "Diesen Eintrag",
+            "this-and-all-before": "Diesen Eintrag und alle vorherigen"
+        },
+
         "expenses-textfield-title": "Was hast du gekauft?",
         "income-textfield-title": "Wie heißt dieses Einkommen?",
 

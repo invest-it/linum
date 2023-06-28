@@ -126,7 +126,6 @@ class EnterScreenTextFieldViewModel extends ChangeNotifier {
           child: SuggestionList(
             suggestions: textController.suggestions,
             onSelection: (child, parent) {
-              debug("HELLO ????");
               _onSuggestionSelection(child, parent);
             },
           ),

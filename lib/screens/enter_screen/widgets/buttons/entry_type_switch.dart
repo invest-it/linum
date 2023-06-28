@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/common/utils/debug.dart';
@@ -18,7 +19,6 @@ class EnterScreenEntryTypeSwitch extends StatelessWidget {
 
         return SegmentedButton(
           onSelectionChanged: (selection) {
-            debug(selection);
             if (selection.isEmpty) {
               return;
             }
@@ -30,7 +30,7 @@ class EnterScreenEntryTypeSwitch extends StatelessWidget {
               value: EntryType.expense,
               label: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text("Expense", style: style?.copyWith(
+                child: Text(tr("enter_screen.button-expenses-label"), style: style?.copyWith(
                   color: viewModel.entryType == EntryType.expense
                       ? Colors.red
                       : Colors.black26,
@@ -41,7 +41,7 @@ class EnterScreenEntryTypeSwitch extends StatelessWidget {
               value: EntryType.income,
               label: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: Text("Income", style: style?.copyWith(
+                child: Text(tr("enter_screen.button-income-label"), style: style?.copyWith(
                     color: viewModel.entryType == EntryType.income
                         ? Colors.lightGreen
                         : Colors.black26,

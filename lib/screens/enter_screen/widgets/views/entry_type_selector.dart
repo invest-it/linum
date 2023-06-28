@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
@@ -20,7 +21,7 @@ class EntryTypeSelector extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12),
             child: Text(
-              "Choose the type of your transaction".toUpperCase(),
+              tr("enter_screen.entry-type-selection.title").toUpperCase(),
               style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 12.0),
             ),
           ),
@@ -31,7 +32,7 @@ class EntryTypeSelector extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   EntryTypeButton(
-                      title: "Expense",
+                      title: tr("enter_screen.button-expenses-label"),
                       iconData: Icons.arrow_circle_down_rounded,
                       iconColor: Colors.redAccent,
                       onTap: () => viewModel.selectEntryType(EntryType.expense),
@@ -43,7 +44,7 @@ class EntryTypeSelector extends StatelessWidget {
                       color: Colors.grey,
                   ),
                   EntryTypeButton(
-                      title: "Income",
+                      title: tr("enter_screen.button-income-label"),
                       iconData: Icons.arrow_circle_up_rounded,
                       iconColor: Theme.of(context).colorScheme.primary,
                       onTap: () => viewModel.selectEntryType(EntryType.income),

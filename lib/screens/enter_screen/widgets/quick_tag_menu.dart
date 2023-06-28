@@ -117,21 +117,21 @@ class QuickTagMenu extends StatelessWidget {
         textColor: colors.repeatInfo,
       ),
       TagSelectorButton(
-        title: "Notes",
+        title: tr("enter_screen.menu.notes"),
         icon: Icons.edit_outlined,
         onTap: () {
           showEnterScreenMenu(
               context: context,
-              title: "Notes",
-              content: const Expanded(
+              title: tr("enter_screen.menu.notes"),
+              content: Expanded(
                   child: Padding(
-                    padding: EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.all(20.0),
                     child: TextField(
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: "Notizen hier eintragen",
+                        hintText: tr("enter_screen.enter_note_hint"),
                       ),
 
                     ),

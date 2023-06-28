@@ -183,12 +183,8 @@
             "dialog-label-change": "Which entry do you want to change?"
         },
         "delete-entry": {
-            "dialog-button-allentries": "All entries",
             "dialog-button-cancel": "Cancel",
             "dialog-button-delete": "Delete",
-            "dialog-button-fromnow": "This entry and all subsequent",
-            "dialog-button-onlyonce": "This entry",
-            "dialog-button-untilnow": "This entry and all previous",
             "dialog-label-delete": "Do you really want to delete this entry?",
             "dialog-label-deleterep": "Which entry do you want to delete?",
             "dialog-label-title": "Confirm"
@@ -232,10 +228,22 @@
             "custom": "Custom"
         },
         "menu": {
-            "category": "Select category",
-            "currency": "Select currency",
-            "date": "Select date",
-            "repeat-config": "Repeat"
+            "category": "Category",
+            "currency": "Currency",
+            "date": "Date",
+            "repeat-config": "Repetition",
+            "notes": "Notes"
+        },
+        "enter-note-hint": "Enter notes here",
+        "change-mode-selection": {
+            "title": "Change recurring entries",
+            "all": "All entries",
+            "this-and-all-after": "This entry and all subsequent",
+            "only-this-one": "This entry",
+            "this-and-all-before": "This entry and all previous"
+        },
+        "entry-type-selection": {
+            "title": "Select the type of transaction"
         }
     },
     "home_screen": {
