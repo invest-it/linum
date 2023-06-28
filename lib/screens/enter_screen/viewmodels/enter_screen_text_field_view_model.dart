@@ -66,6 +66,7 @@ class EnterScreenTextFieldViewModel extends ChangeNotifier {
     if (_formViewModel.withExistingData) {
       // Needs to be refactored alot
       if (!_formViewModel.data.isParsed) {
+
         final text = StringBuilder()
             .useEnterScreenData(_formViewModel.data)
             .build();

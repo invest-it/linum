@@ -131,7 +131,7 @@ class QuickTagMenu extends StatelessWidget {
                       maxLines: null,
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: "Notizen hier eintragen"
+                        hintText: "Notizen hier eintragen",
                       ),
 
                     ),
@@ -146,6 +146,7 @@ class QuickTagMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Flex(
+      crossAxisAlignment: CrossAxisAlignment.start,
       direction: Axis.horizontal,
       children: [
         Expanded(

@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:linum/core/repeating/enums/repeat_interval.dart';
 import 'package:linum/screens/enter_screen/constants/suggestion_defaults.dart';
 import 'package:linum/screens/enter_screen/enums/input_flag.dart';
 import 'package:linum/screens/enter_screen/models/enter_screen_data.dart';
@@ -37,7 +38,7 @@ class StringBuilder {
       _date = "#${flagSuggestionDefaults[InputFlag.date]?.tr()}:"
               "${_dateFormatter.format(data.date!)?.tr()}";
     }
-    if (data.repeatConfiguration != null) {
+    if (data.repeatConfiguration != null && data.repeatConfiguration?.interval != RepeatInterval.none) {
       _repeatInfo = "#${flagSuggestionDefaults[InputFlag.repeatInfo]?.tr()}:"
                     "${data.repeatConfiguration!.label.tr()}";
     }

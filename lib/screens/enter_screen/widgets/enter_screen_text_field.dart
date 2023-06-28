@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linum/common/utils/debug.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_form_view_model.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_text_field_view_model.dart';
 import 'package:provider/provider.dart';
@@ -32,6 +33,7 @@ class EnterScreenTextField extends StatelessWidget {
           );
         }
         if (formViewModel.entryType != textFieldViewModel.entryType) {
+          debug("'${textFieldViewModel.textController.text}'");
           return EnterScreenTextFieldViewModel(
             context,
             textFieldKey: _key,

@@ -17,4 +17,15 @@ class RepeatConfiguration {
     required this.duration,
     required this.durationType,
   });
+
+  @override
+  String toString() {
+    return 'RepeatConfiguration{'
+        'interval: $interval, '
+        'label: $label, '
+        'icon: $icon, '
+        'duration: $duration, '
+        'durationType: $durationType'
+        '}';
+  }
 }

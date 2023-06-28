@@ -6,7 +6,7 @@ class EnterScreenMenu extends StatelessWidget {
   const EnterScreenMenu({
     super.key,
     required this.title,
-    required this.content
+    required this.content,
   });
 
   @override

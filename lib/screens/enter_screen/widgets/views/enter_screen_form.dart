@@ -31,7 +31,7 @@ class EnterScreenForm extends StatelessWidget {
         return formViewModel;
       },
       child: EnterScreenScaffold(
-        bodyHeight: 310 + useKeyBoardHeight(context),
+        bodyHeight: 350 + useKeyBoardHeight(context),
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 24),
           child: Column(
@@ -59,9 +59,11 @@ class EnterScreenForm extends StatelessWidget {
                   ),
                 ],
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                child: QuickTagMenu(),
+              const Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                  child: QuickTagMenu(),
+                ),
               ),
               Container(
                 padding: const EdgeInsets.fromLTRB(40, 20, 40, 10),

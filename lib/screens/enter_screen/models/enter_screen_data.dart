@@ -92,4 +92,17 @@ class EnterScreenData {
       isParsed: true,
     );
   }
+
+  @override
+  String toString() {
+    return 'EnterScreenData{'
+        'amount: $amount, '
+        'name: $name, '
+        'currency: $currency, '
+        'category: $category, '
+        'date: $date, '
+        'repeatConfiguration: $repeatConfiguration, '
+        'isParsed: $isParsed'
+        '}';
+  }
 }
