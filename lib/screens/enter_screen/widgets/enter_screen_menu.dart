@@ -11,20 +11,26 @@ class EnterScreenMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flex(
-      direction: Axis.vertical,
-      children: [
-        Container(
-          width: double.infinity,
-          alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          child: Text(
-            title ?? "", // TODO make field conditional
-            style: Theme.of(context).textTheme.headlineSmall,
+    return Container(
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(16.0)),
+      ),
+      child: Flex(
+        direction: Axis.vertical,
+        children: [
+          Container(
+            width: double.infinity,
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(vertical: 32.0),
+            child: Text(
+              title ?? "", // TODO make field conditional
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
           ),
-        ),
-        content,
-      ],
+          content,
+        ],
+      ),
     );
   }
 }

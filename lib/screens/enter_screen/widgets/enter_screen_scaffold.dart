@@ -33,9 +33,12 @@ class EnterScreenScaffold extends StatelessWidget {
               ),
             ),
             Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(16.0)),
+              ),
               height: bodyHeight,
               width: bodyWidth,
-              color: Colors.white,
               child: body,
             ),
           ],
