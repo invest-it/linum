@@ -32,7 +32,7 @@ class EntryTypeSelectionView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   EntryTypeButton(
-                      title: tr("enter_screen.button-expenses-label"),
+                      title: tr("enter_screen.button.expenses-label"),
                       iconData: Icons.arrow_circle_down_rounded,
                       iconColor: Theme.of(context).colorScheme.error,
                       onTap: () => viewModel.selectEntryType(EntryType.expense),
@@ -44,7 +44,7 @@ class EntryTypeSelectionView extends StatelessWidget {
                       color: Colors.grey,
                   ),
                   EntryTypeButton(
-                      title: tr("enter_screen.button-income-label"),
+                      title: tr("enter_screen.button.income-label"),
                       iconData: Icons.arrow_circle_up_rounded,
                       iconColor: Theme.of(context).colorScheme.primary,
                       onTap: () => viewModel.selectEntryType(EntryType.income),

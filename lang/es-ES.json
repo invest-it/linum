@@ -174,11 +174,6 @@
             "dialog-label-title-expenses": "¡Por favor, añada una cantidad a su gasto!",
             "dialog-label-title-income": "Por favor, añada una cantidad a sus ingresos."
         },
-        "button-delete-entry": "Borrar entrada",
-        "button-expenses-label": "Gastos",
-        "button-income-label": "Ingresos",
-        "button-save-entry": "Guardar entrada",
-        "button-transaction-label": "Transacción",
         "delete-entry": {
             "dialog-button-cancel": "Cancelar",
             "dialog-button-delete": "Borrar",
@@ -241,6 +236,12 @@
         },
         "entry-type-selection": {
             "title": "Seleccione el tipo de transacción"
+        },
+        "button": {
+            "expenses-label": "Salida",
+            "income-label": "Entrada",
+            "save-note": "Guardar nota",
+            "close": "Cerrar"
         }
     },
     "home_screen": {

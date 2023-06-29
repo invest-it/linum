@@ -174,11 +174,6 @@
             "dialog-label-title-expenses": "Voeg een bedrag toe aan uw uitgave!",
             "dialog-label-title-income": "Voeg een bedrag toe aan uw inkomen!"
         },
-        "button-delete-entry": "Item verwijderen",
-        "button-expenses-label": "Uitgaven",
-        "button-income-label": "Inkomen",
-        "button-save-entry": "Item opslaan",
-        "button-transaction-label": "Transaction",
         "change-entry": {
             "dialog-label-change": "Welk item wilt u veranderen?"
         },
@@ -244,6 +239,12 @@
         },
         "entry-type-selection": {
             "title": "Selecteer het type transactie"
+        },
+        "button": {
+            "expenses-label": "Uitgang",
+            "income-label": "Inlaat",
+            "save-note": "Notitie opslaan",
+            "close": "Sluit"
         }
     },
     "home_screen": {

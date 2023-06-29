@@ -174,11 +174,6 @@
             "dialog-label-title-expenses": "Veuillez ajouter un montant à votre dépense!",
             "dialog-label-title-income": "Veuillez ajouter un montant à votre revenu!"
         },
-        "button-delete-entry": "Supprimer l'entrée",
-        "button-expenses-label": "Dépenses",
-        "button-income-label": "Revenu",
-        "button-save-entry": "Sauvegarder l'entrée",
-        "button-transaction-label": "Transaction",
         "change-entry": {
             "dialog-label-change": "Quelle entrée souhaites-tu modifier?"
         },
@@ -244,6 +239,12 @@
         },
         "entry-type-selection": {
             "title": "Choisis le type de transaction"
+        },
+        "button": {
+            "expenses-label": "Édition",
+            "income-label": "Prise",
+            "save-note": "Enregistrer la note",
+            "close": "Fermer"
         }
     },
     "home_screen": {

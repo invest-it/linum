@@ -174,11 +174,6 @@
             "dialog-label-title-expenses": "Please add an amount to your expense!",
             "dialog-label-title-income": "Please add an amount to your income!"
         },
-        "button-delete-entry": "Delete entry",
-        "button-expenses-label": "Expense",
-        "button-income-label": "Income",
-        "button-save-entry": "Save entry",
-        "button-transaction-label": "Transaction",
         "change-entry": {
             "dialog-label-change": "Which entry do you want to change?"
         },
@@ -244,6 +239,12 @@
         },
         "entry-type-selection": {
             "title": "Select the type of transaction"
+        },
+        "button": {
+            "expenses-label": "Expense",
+            "income-label": "Income",
+            "save-note": "Save note",
+            "close": "Close"
         }
     },
     "home_screen": {

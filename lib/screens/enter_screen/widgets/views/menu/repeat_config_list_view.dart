@@ -4,6 +4,7 @@ import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/core/repeating/constants/standard_repeat_configs.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_form_view_model.dart';
+import 'package:linum/screens/enter_screen/widgets/buttons/linum_close_button.dart';
 import 'package:provider/provider.dart';
 
 class RepeatConfigListView extends StatelessWidget {
@@ -15,31 +16,38 @@ class RepeatConfigListView extends StatelessWidget {
     final formViewModel = context.read<EnterScreenFormViewModel>();
 
     return Expanded(
-      child: ListView.builder(
-        padding: EdgeInsets.only(
-          left: 24.0,
-          right: 24.0,
-          bottom: context.proportionateScreenHeightFraction(ScreenFraction.onefifth),
-        ),
-        itemCount: repeatConfigs.length,
-        itemBuilder: (context, index) {
-          final repeatConfig = repeatConfigs[index];
-          return ListTile(
-            title: Text(
-              repeatConfig.label.tr(),
+      child: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              padding: EdgeInsets.only(
+                left: 24.0,
+                right: 24.0,
+                bottom: context.proportionateScreenHeightFraction(ScreenFraction.onetenth),
+              ),
+              itemCount: repeatConfigs.length,
+              itemBuilder: (context, index) {
+                final repeatConfig = repeatConfigs[index];
+                return ListTile(
+                  title: Text(
+                    repeatConfig.label.tr(),
+                  ),
+                  leading: Icon(repeatConfig.icon),
+                  onTap: () {
+                    formViewModel.data = formViewModel.data.copyWith(
+                      repeatConfiguration: repeatConfig,
+                    );
+                    Navigator.pop(context);
+                  },
+                  selected:
+                    formViewModel.data.repeatConfiguration?.interval
+                        == repeatConfig.interval,
+                );
+              },
             ),
-            leading: Icon(repeatConfig.icon),
-            onTap: () {
-              formViewModel.data = formViewModel.data.copyWith(
-                repeatConfiguration: repeatConfig,
-              );
-              Navigator.pop(context);
-            },
-            selected:
-              formViewModel.data.repeatConfiguration?.interval
-                  == repeatConfig.interval,
-          );
-        },
+          ),
+          const LinumCloseButton(),
+        ],
       ),
     );
   }

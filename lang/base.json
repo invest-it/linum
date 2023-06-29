@@ -208,11 +208,14 @@
             "dialog-label-title-expenses": "Bitte füge einen Betrag zu deiner Ausgabe hinzu!",
             "dialog-label-title-income": "Bitte füge einen Betrag zu deinem Einkommen hinzu!"
         },
-        "button-delete-entry": "Eintrag löschen",
-        "button-expenses-label": "Ausgabe",
-        "button-income-label": "Einnahme",
-        "button-save-entry": "Eintrag speichern",
-        "button-transaction-label": "Transaktion",
+
+        "button": {
+            "expenses-label": "Ausgabe",
+            "income-label": "Einnahme",
+            "save-note": "Notiz speichern",
+            "close": "Schließen"
+        },
+
         "change-entry": {
             "dialog-label-change": "Welchen Eintrag möchtest du ändern?"
         },
