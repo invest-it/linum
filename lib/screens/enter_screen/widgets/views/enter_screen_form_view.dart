@@ -11,8 +11,8 @@ import 'package:linum/screens/enter_screen/widgets/enter_screen_text_field.dart'
 import 'package:linum/screens/enter_screen/widgets/quick_tag_menu.dart';
 import 'package:provider/provider.dart';
 
-class EnterScreenForm extends StatelessWidget {
-  const EnterScreenForm({super.key});
+class EnterScreenFormView extends StatelessWidget {
+  const EnterScreenFormView({super.key});
 
   @override
   Widget build(BuildContext context) {

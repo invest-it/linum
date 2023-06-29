@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:linum/common/enums/entry_type.dart';
-import 'package:linum/common/utils/debug.dart';
 import 'package:linum/core/account/services/account_settings_service.dart';
 import 'package:linum/core/categories/utils/translate_category.dart';
 import 'package:linum/core/design/layout/utils/media_query_accessors.dart';
@@ -82,7 +81,10 @@ class EnterScreenTextFieldViewModel extends ChangeNotifier {
         return;
       }
       _rebuildSuggestionList();
-      _formViewModel.data = EnterScreenData.fromInput(textController.parsed!);
+      _formViewModel.data = EnterScreenData.fromInput(
+        textController.parsed!,
+        notes: _formViewModel.data.notes,
+      );
     });
 
     _streamSubscription = _formViewModel.stream.listen((data) {

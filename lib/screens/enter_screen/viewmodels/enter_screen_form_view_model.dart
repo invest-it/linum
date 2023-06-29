@@ -59,6 +59,7 @@ class EnterScreenFormViewModel extends ChangeNotifier {
       date: transaction?.date.toDate().toIso8601String(),
       category: standardCategories[transaction?.category],
       repeatConfiguration: repeatConfigurations[repeatInterval],
+      notes: transaction?.note,
     );
 
     withExistingData = transaction != null;

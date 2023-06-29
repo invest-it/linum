@@ -47,7 +47,8 @@ class BalanceDataService extends ChangeNotifier {
     String? category,
     String? currency,
     String? name,
-     Timestamp? date,
+    Timestamp? date,
+    String? note,
   }) async {
     return _repository.balanceDocument.asyncMap((data) async {
       if (data == null) {
@@ -63,6 +64,7 @@ class BalanceDataService extends ChangeNotifier {
         currency: currency,
         name: name,
         date: date,
+        note: note,
       )) {
         await _repository.set(data);
         return true;
@@ -84,6 +86,7 @@ class BalanceDataService extends ChangeNotifier {
       currency: transaction.currency,
       name: transaction.name,
       date: transaction.date,
+      note: transaction.note,
     );
   }
 
@@ -161,6 +164,7 @@ class BalanceDataService extends ChangeNotifier {
         resetEndDate: resetEndDate,
         oldDate: oldDate,
         newDate: newDate,
+        note: serialTransaction.note,
       )) {
         await _repository.set(data);
         return true;

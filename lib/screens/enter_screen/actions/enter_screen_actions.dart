@@ -47,6 +47,7 @@ class EnterScreenActions {
         category: category?.id,
         currency: data.currency?.name ?? defaultData.currency.name,
         name: data.name ?? defaultData.name,
+        note: data.notes,
         startDate:  Timestamp.fromDate(
           DateTime.parse(data.date ?? defaultData.date),
         ),
@@ -67,8 +68,8 @@ class EnterScreenActions {
         DateTime.parse(data.date ?? defaultData.date),
       ),
       category: category?.id,
+      note: data.notes,
     );
-
     _onSave(transaction: transaction);
   }
 

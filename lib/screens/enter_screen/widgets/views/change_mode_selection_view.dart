@@ -6,8 +6,8 @@ import 'package:linum/screens/enter_screen/widgets/buttons/change_mode_button.da
 import 'package:linum/screens/enter_screen/widgets/enter_screen_scaffold.dart';
 import 'package:provider/provider.dart';
 
-class ChangeModeSelector extends StatelessWidget {
-  const ChangeModeSelector({super.key});
+class ChangeModeSelectionView extends StatelessWidget {
+  const ChangeModeSelectionView({super.key});
 
   @override
   Widget build(BuildContext context) {

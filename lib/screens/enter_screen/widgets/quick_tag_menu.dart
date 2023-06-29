@@ -7,9 +7,10 @@ import 'package:linum/screens/enter_screen/utils/date_formatter.dart';
 import 'package:linum/screens/enter_screen/utils/show_enter_screen_menu.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_form_view_model.dart';
 import 'package:linum/screens/enter_screen/widgets/buttons/tag_selector_button.dart';
-import 'package:linum/screens/enter_screen/widgets/views/category_list_view.dart';
-import 'package:linum/screens/enter_screen/widgets/views/currency_list_view.dart';
-import 'package:linum/screens/enter_screen/widgets/views/repeat_config_list_view.dart';
+import 'package:linum/screens/enter_screen/widgets/views/menu/category_list_view.dart';
+import 'package:linum/screens/enter_screen/widgets/views/menu/currency_list_view.dart';
+import 'package:linum/screens/enter_screen/widgets/views/menu/notes_view.dart';
+import 'package:linum/screens/enter_screen/widgets/views/menu/repeat_config_list_view.dart';
 import 'package:provider/provider.dart';
 
 class QuickTagColors {
@@ -123,20 +124,7 @@ class QuickTagMenu extends StatelessWidget {
           showEnterScreenMenu(
               context: context,
               title: tr("enter_screen.menu.notes"),
-              content: Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: TextField(
-                      keyboardType: TextInputType.multiline,
-                      maxLines: null,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: tr("enter_screen.enter_note_hint"),
-                      ),
-
-                    ),
-                  ),
-              ),
+              content: const NotesView(),
           );
         },
       )

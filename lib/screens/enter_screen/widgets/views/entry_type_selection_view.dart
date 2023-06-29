@@ -8,8 +8,8 @@ import 'package:linum/screens/enter_screen/widgets/buttons/entry_type_button.dar
 import 'package:linum/screens/enter_screen/widgets/enter_screen_scaffold.dart';
 import 'package:provider/provider.dart';
 
-class EntryTypeSelector extends StatelessWidget {
-  const EntryTypeSelector({super.key});
+class EntryTypeSelectionView extends StatelessWidget {
+  const EntryTypeSelectionView({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -14,6 +14,7 @@ class EnterScreenData {
   final Category? category;
   final String? date;
   final RepeatConfiguration? repeatConfiguration;
+  final String? notes;
   final bool isParsed;
 
   const EnterScreenData({
@@ -23,6 +24,7 @@ class EnterScreenData {
     this.category,
     this.date,
     this.repeatConfiguration,
+    this.notes,
     this.isParsed = false,
   });
 
@@ -33,6 +35,7 @@ class EnterScreenData {
     Category? category,
     String? date,
     RepeatConfiguration? repeatConfiguration,
+    String? notes,
     bool isParsed = false,
   }) {
     return EnterScreenData(
@@ -42,6 +45,7 @@ class EnterScreenData {
       category: category ?? this.category,
       date: date ?? this.date,
       repeatConfiguration: repeatConfiguration ?? this.repeatConfiguration,
+      notes: notes ?? this.notes,
       isParsed: isParsed,
     );
   }
@@ -53,15 +57,15 @@ class EnterScreenData {
       currency: currency,
       date: date,
       repeatConfiguration: repeatConfiguration,
+      notes: notes,
       isParsed: isParsed,
     );
   }
 
-  factory EnterScreenData.fromInput(EnterScreenInput input) {
+  factory EnterScreenData.fromInput(EnterScreenInput input, {String? notes}) {
     final amount = input.amount?.value;
     final name = input.name?.value;
-    final currency = standardCurrencies[input.currency?.value];
-
+    final currency = standardCurrencies[input.currency?.value.name];
     Category? category;
     String? date;
     RepeatConfiguration? repeatConfiguration;
@@ -89,6 +93,7 @@ class EnterScreenData {
       category: category,
       date: date,
       repeatConfiguration: repeatConfiguration,
+      notes: notes,
       isParsed: true,
     );
   }
@@ -102,6 +107,7 @@ class EnterScreenData {
         'category: $category, '
         'date: $date, '
         'repeatConfiguration: $repeatConfiguration, '
+        'notes: $notes, '
         'isParsed: $isParsed'
         '}';
   }

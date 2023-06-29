@@ -13,4 +13,10 @@ class Category {
     this.icon,
     this.entryType = EntryType.expense,
   });
+
+  @override
+  String toString() {
+    return 'Category(id: $id, label: $label, icon: $icon, entryType: $entryType)';
+  }
+
 }

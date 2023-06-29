@@ -100,6 +100,19 @@ class EnterScreenInput {
     }
     return list;
   }
+
+  @override
+  String toString() {
+    return 'EnterScreenInput('
+        'raw: $raw, '
+        'amount: $amount, '
+        'currency: $currency, '
+        'name: $name, '
+        'category: $category, '
+        'date: $date, '
+        'repeatInfo: $repeatInfo'
+        ')';
+  }
 }
 
 
