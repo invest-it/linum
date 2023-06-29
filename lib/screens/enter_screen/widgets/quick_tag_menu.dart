@@ -123,7 +123,6 @@ class QuickTagMenu extends StatelessWidget {
         onTap: () {
           showEnterScreenMenu(
               context: context,
-              title: tr("enter_screen.menu.notes"),
               content: const NotesView(),
           );
         },

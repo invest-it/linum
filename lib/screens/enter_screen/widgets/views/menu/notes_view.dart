@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_form_view_model.dart';
+import 'package:linum/screens/enter_screen/widgets/buttons/abort_button.dart';
 import 'package:linum/screens/enter_screen/widgets/buttons/menu_action_button.dart';
 import 'package:provider/provider.dart';
 
@@ -19,15 +20,23 @@ class NotesView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: TextField(
-              controller: textController,
-              keyboardType: TextInputType.multiline,
-              maxLines: null,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: tr("enter_screen.enter-note-hint"),
-              ),
+            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
+            child: Flex(
+              direction: Axis.horizontal,
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: textController,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: tr("enter_screen.enter-note-hint"),
+                    ),
+                  ),
+                ),
+                const EnterScreenAbortButton(),
+              ],
             ),
           ),
           MenuActionButton(

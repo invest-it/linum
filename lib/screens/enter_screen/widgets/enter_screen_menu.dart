@@ -9,6 +9,26 @@ class EnterScreenMenu extends StatelessWidget {
     required this.content,
   });
 
+  List<Widget> buildItems(BuildContext context) {
+    final List<Widget> items = [];
+
+    if (title != null) {
+      items.add(
+        Container(
+          width: double.infinity,
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(vertical: 32.0),
+          child: Text(
+            title!,
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
+        ),
+      );
+    }
+    items.add(content);
+    return items;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -18,18 +38,7 @@ class EnterScreenMenu extends StatelessWidget {
       ),
       child: Flex(
         direction: Axis.vertical,
-        children: [
-          Container(
-            width: double.infinity,
-            alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(vertical: 32.0),
-            child: Text(
-              title ?? "", // TODO make field conditional
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-          ),
-          content,
-        ],
+        children: buildItems(context),
       ),
     );
   }
