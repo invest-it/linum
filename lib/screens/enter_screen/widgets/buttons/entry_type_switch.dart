@@ -31,7 +31,7 @@ class EnterScreenEntryTypeSwitch extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Text(tr("enter_screen.button-expenses-label"), style: style?.copyWith(
                   color: viewModel.entryType == EntryType.expense
-                      ? Colors.red
+                      ? Theme.of(context).colorScheme.error
                       : Colors.black26,
                 ),),
               ),
@@ -42,7 +42,7 @@ class EnterScreenEntryTypeSwitch extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 child: Text(tr("enter_screen.button-income-label"), style: style?.copyWith(
                     color: viewModel.entryType == EntryType.income
-                        ? Colors.lightGreen
+                        ? Theme.of(context).colorScheme.primary
                         : Colors.black26,
                 ),),
               ),

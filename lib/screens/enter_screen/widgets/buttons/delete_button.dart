@@ -21,9 +21,9 @@ class EnterScreenDeleteButton extends StatelessWidget {
         onTap: () => viewModel.delete(),
         child: Container(
           padding: const EdgeInsets.all(15),
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(5)),
-            color: Colors.redAccent,
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(5)),
+            color: Theme.of(context).colorScheme.error,
           ),
           child: const Icon(
             Icons.delete_outline_rounded,

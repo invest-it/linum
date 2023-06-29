@@ -34,7 +34,7 @@ class EntryTypeSelectionView extends StatelessWidget {
                   EntryTypeButton(
                       title: tr("enter_screen.button-expenses-label"),
                       iconData: Icons.arrow_circle_down_rounded,
-                      iconColor: Colors.redAccent,
+                      iconColor: Theme.of(context).colorScheme.error,
                       onTap: () => viewModel.selectEntryType(EntryType.expense),
                   ),
                   VerticalDivider(
