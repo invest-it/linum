@@ -55,19 +55,14 @@ class LanguageSelector extends StatelessWidget {
                           switch (index) {
                             case 0:
                               langSelector = 'de-DE';
-                              break;
                             case 1:
                               langSelector = 'en-US';
-                              break;
                             case 2:
                               langSelector = 'nl-NL';
-                              break;
                             case 3:
                               langSelector = 'es-ES';
-                              break;
                             case 4:
                               langSelector = 'fr-FR';
-                              break;
                             default:
                               langSelector = 'en-US';
                           }

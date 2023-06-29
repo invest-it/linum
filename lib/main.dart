@@ -63,28 +63,6 @@ class _LifecycleWatcherState extends State<LifecycleWatcher> {
 }
 
 
-// Defines the State of the App (in our MVP test phase, this will be "ALPHA" according
-// to the principles of versioning)
-
-Widget wrapWithBanner(Widget child) {
-  return Directionality(
-    textDirection: TextDirection.ltr,
-    child: Banner(
-      location: BannerLocation.bottomEnd,
-      message: 'TESTING',
-      color: Colors.white.withOpacity(1),
-      textStyle: const TextStyle(
-        fontWeight: FontWeight.w700,
-        fontSize: 12.0,
-        letterSpacing: 1.0,
-        color: Color(0xFF79BC4E),
-      ),
-      textDirection: TextDirection.ltr,
-      child: child,
-    ),
-  );
-}
-
 /* class OnBoardingOrLayoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

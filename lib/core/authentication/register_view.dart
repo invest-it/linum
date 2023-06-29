@@ -34,10 +34,8 @@ class _RegisterViewState extends State<RegisterView> {
     switch (onboardingScreenProvider.pageState) {
       case OnboardingPageState.none:
         _registerYOffset = useScreenHeight(context);
-        break;
       case OnboardingPageState.login:
         _registerYOffset = useScreenHeight(context);
-        break;
       case OnboardingPageState.register:
         _registerYOffset = context.isKeyboardOpen()
             ? context.proportionateScreenHeightFraction(

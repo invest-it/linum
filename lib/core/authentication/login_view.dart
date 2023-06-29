@@ -45,7 +45,6 @@ class _LoginViewState extends State<LoginView> {
         _loginXOffset = 0;
         _loginWidth = useScreenHeight(context);
         _loginOpacity = 1;
-        break;
       case OnboardingPageState.login:
         _loginYOffset = context.isKeyboardOpen()
             ? context.proportionateScreenHeightFraction(
@@ -58,7 +57,6 @@ class _LoginViewState extends State<LoginView> {
         _loginXOffset = 0;
         _loginWidth = useScreenWidth(context);
         _loginOpacity = 1;
-        break;
       case OnboardingPageState.register:
         _loginYOffset = context.isKeyboardOpen()
             ? context.proportionateScreenHeightFraction(

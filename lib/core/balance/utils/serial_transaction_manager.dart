@@ -301,24 +301,24 @@ class SerialTransactionManager {
         !tillDate.isBefore(currentTime)) {
       // if "changed" -> "this  Timestamp" -> deleted exist AND it is true, dont add this balance
       if (serialTransaction.changed == null ||
-          serialTransaction.changed![currentTime] == null ||
-          serialTransaction.changed![currentTime]!.deleted == null ||
-          !serialTransaction.changed![currentTime]!.deleted!) {
+          serialTransaction.changed!.get(currentTime) == null ||
+          serialTransaction.changed!.get(currentTime)!.deleted == null ||
+          !serialTransaction.changed!.get(currentTime)!.deleted!) {
         transaction.add(
           Transaction(
-            amount: serialTransaction.changed?[currentTime]?.amount ??
+            amount: serialTransaction.changed?.get(currentTime)?.amount ??
                 serialTransaction.amount,
-            category: serialTransaction.changed?[currentTime]?.category ??
+            category: serialTransaction.changed?.get(currentTime)?.category ??
                 serialTransaction.category,
-            currency: serialTransaction.changed?[currentTime]?.currency ??
+            currency: serialTransaction.changed?.get(currentTime)?.currency ??
                 serialTransaction.currency,
-            name: serialTransaction.changed?[currentTime]?.name ??
+            name: serialTransaction.changed?.get(currentTime)?.name ??
                 serialTransaction.name,
-            date: serialTransaction.changed?[currentTime]?.date ??
+            date: serialTransaction.changed?.get(currentTime)?.date ??
                  Timestamp.fromDate(currentTime),
             repeatId: serialTransaction.id,
             id: const Uuid().v4(),
-            formerDate: (serialTransaction.changed?[currentTime]?.date != null)
+            formerDate: (serialTransaction.changed?.get(currentTime)?.date != null)
                 ?  Timestamp.fromDate(currentTime)
                 : null,
           ),

@@ -138,7 +138,6 @@ class EnterScreenViewModel extends ChangeNotifier {
           existingId: initialTransaction?.id,
           existingSerialId: initialSerialTransaction?.id ?? parentalSerialTransaction?.id,
         );
-        break;
       case EditIntention.delete:
         _actions.delete(
           transaction: initialTransaction,

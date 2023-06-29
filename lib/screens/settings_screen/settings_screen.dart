@@ -3,7 +3,6 @@
 //  Author: aronzimmermann
 //  Co-Author: SoTBurst, NightmindOfficial
 //  Refactored: TheBlueBaron
-/// PAGE INDEX 3
 
 import 'package:flutter/material.dart';
 import 'package:linum/common/utils/silent_scroll.dart';

@@ -2,7 +2,6 @@
 //
 //  Author: thebluebaronx (In the Future)
 //  Co-Author: n/a
-/// PAGE INDEX 2
 
 
 import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;

@@ -63,7 +63,6 @@ class StyledAmount extends StatelessWidget {
             .textTheme
             .headlineMedium
             ?.copyWith(color: Theme.of(context).colorScheme.error);
-        break;
       case StyledFontSize.compact:
         normalFontTheme = Theme.of(context).textTheme.headlineMedium;
         smallFontTheme = Theme.of(context).textTheme.headlineSmall;
@@ -75,7 +74,6 @@ class StyledAmount extends StatelessWidget {
             .textTheme
             .headlineSmall
             ?.copyWith(color: Theme.of(context).colorScheme.error);
-        break;
       case StyledFontSize.maximize:
         normalFontTheme = Theme.of(context).textTheme.displayMedium?.copyWith(
               fontSize: 39.81,
@@ -89,7 +87,6 @@ class StyledAmount extends StatelessWidget {
             .textTheme
             .displayMedium
             ?.copyWith(color: Theme.of(context).colorScheme.error);
-        break;
     }
 
     if (_formatter.amountBeforeSymbol()) {

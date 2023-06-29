@@ -2,7 +2,6 @@
 //  NOTE: THE SCOPE OF THIS SCREEN IS GOING TO CHANGE SOON. //TODO @thebluebaronx pleas change this description once the change has been fulfilled.
 //  Author: NightmindOfficial
 //  Co-Author: SoTBurst
-/// PAGE INDEX 1
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';

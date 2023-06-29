@@ -291,7 +291,6 @@ class PinCodeService extends ChangeNotifier {
             }
             _context.getMainRouterDelegate().popRoute();
             _emptyCode();
-            break;
           case PINLockIntent.change:
             if (_lastEmail != 'Error!') {
               _storePIN(_code);
@@ -302,11 +301,9 @@ class PinCodeService extends ChangeNotifier {
 
             _context.getMainRouterDelegate().popRoute();
             _emptyCode();
-            break;
           case PINLockIntent.recall:
             _checkCode(_code);
             _emptyCode();
-            break;
         }
       }
       notifyListeners();

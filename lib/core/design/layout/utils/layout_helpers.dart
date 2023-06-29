@@ -45,40 +45,28 @@ extension LayoutHelpers on BuildContext {
     switch (inputFraction) {
       case ScreenFraction.full:
         scalingFactor = 1.0;
-        break;
       case ScreenFraction.fourfiths:
         scalingFactor = 4 / 5;
-        break;
       case ScreenFraction.threequearters:
         scalingFactor = 3 / 4;
-        break;
       case ScreenFraction.twothirds:
         scalingFactor = 2 / 3;
-        break;
       case ScreenFraction.threefifths:
         scalingFactor = 3 / 5;
-        break;
       case ScreenFraction.half:
         scalingFactor = 1 / 2;
-        break;
       case ScreenFraction.twofifths:
         scalingFactor = 2 / 5;
-        break;
       case ScreenFraction.onethird:
         scalingFactor = 1 / 3;
-        break;
       case ScreenFraction.onequarter:
         scalingFactor = 1 / 4;
-        break;
       case ScreenFraction.onefifth:
         scalingFactor = 1 / 5;
-        break;
       case ScreenFraction.onetenth:
         scalingFactor = 1 / 10;
-        break;
       case ScreenFraction.quantile:
         scalingFactor = 1 / 100;
-        break;
     }
 
     return ((scalingFactor * LayoutReference.screenHeight) / LayoutReference.screenHeight) *
@@ -91,40 +79,28 @@ extension LayoutHelpers on BuildContext {
     switch (inputFraction) {
       case ScreenFraction.full:
         scalingFactor = 1.0;
-        break;
       case ScreenFraction.fourfiths:
         scalingFactor = 4 / 5;
-        break;
       case ScreenFraction.threequearters:
         scalingFactor = 3 / 4;
-        break;
       case ScreenFraction.twothirds:
         scalingFactor = 2 / 3;
-        break;
       case ScreenFraction.threefifths:
         scalingFactor = 3 / 5;
-        break;
       case ScreenFraction.half:
         scalingFactor = 1 / 2;
-        break;
       case ScreenFraction.twofifths:
         scalingFactor = 2 / 5;
-        break;
       case ScreenFraction.onethird:
         scalingFactor = 1 / 3;
-        break;
       case ScreenFraction.onequarter:
         scalingFactor = 1 / 4;
-        break;
       case ScreenFraction.onefifth:
         scalingFactor = 1 / 5;
-        break;
       case ScreenFraction.onetenth:
         scalingFactor = 1 / 10;
-        break;
       case ScreenFraction.quantile:
         scalingFactor = 1 / 100;
-        break;
     }
 
     return ((scalingFactor * LayoutReference.screenWidth) / LayoutReference.screenWidth) *

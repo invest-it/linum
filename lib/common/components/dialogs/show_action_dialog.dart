@@ -33,13 +33,10 @@ Future<bool?> showActionDialog(
               switch (item.dialogPurpose) {
                 case DialogPurpose.primary:
                   buttonColor = Theme.of(context).colorScheme.primary;
-                  break;
                 case DialogPurpose.secondary:
                   buttonColor = Theme.of(context).colorScheme.secondary;
-                  break;
                 case DialogPurpose.danger:
                   buttonColor = Theme.of(context).colorScheme.error;
-                  break;
               }
               return TextButton(
                 child: Text(

@@ -2,7 +2,6 @@
 //
 //  Author: NightmindOfficial
 //  Co-Author: SoTBurst, damattl
-/// PAGE INDEX 5
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +14,6 @@ import 'package:linum/screens/lock_screen/services/pin_code_service.dart';
 import 'package:linum/screens/lock_screen/widgets/numeric_field.dart';
 import 'package:linum/screens/lock_screen/widgets/pin_field.dart';
 import 'package:provider/provider.dart';
-
-
-
 
 /// Page Index: 5
 class LockScreen extends StatefulWidget {

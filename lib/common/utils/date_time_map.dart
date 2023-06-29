@@ -27,6 +27,10 @@ class DateTimeMap<K, V> extends DelegatingMap<K, V> {
     return DateTimeMap._(map);
   }
 
+  V? get(Object? key) {
+    return this[key];
+  }
+
   @override
   V? operator [](Object? key) {
     if (key is DateTime) {

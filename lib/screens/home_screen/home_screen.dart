@@ -2,7 +2,6 @@
 //
 //  Author: SoTBurst, thebluebaronx, NightmindOfficial
 //  Co-Author: damattl
-/// PAGE INDEX 0
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';

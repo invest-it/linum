@@ -75,7 +75,7 @@ dev_dependencies:
   integration_test:
     sdk: flutter
   json_serializable: ^6.4.1
-  lint: ^1.10.0
+  lint: ^2.1.2
 
 flutter_icons:
   android: true

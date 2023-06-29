@@ -1,9 +1,3 @@
-///
-///
-///
-/// generate Mockfile command:
-/// flutter pub run build_runner build
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/common/components/action_lip/viewmodels/action_lip_viewmodel.dart';
@@ -19,6 +13,8 @@ import 'package:provider/provider.dart';
 @GenerateNiceMocks([MockSpec<AuthenticationService>()])
 import 'login_screen_test.mocks.dart';
 
+/// generate Mockfile command:
+/// flutter pub run build_runner build
 void main() {
   group('LoginScreen', () {
     late MockOnboardingScreenProvider mockOnboardingScreenProvider;
