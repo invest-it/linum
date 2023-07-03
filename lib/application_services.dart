@@ -9,6 +9,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/core/design/layout/loading_scaffold.dart';
 import 'package:linum/firebase/firebase_options.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/objectbox.g.dart';
 import 'package:linum/providers/account_settings_service_provider.dart';
 import 'package:linum/providers/action_lip_viewmodel_provider.dart';
@@ -32,7 +33,7 @@ class ApplicationServices extends StatelessWidget {
   Scaffold buildErrorScaffold(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text(tr("main.label-error")),
+        child: Text(tr(translationKeys.main.labelError)),
       ),
     );
   }

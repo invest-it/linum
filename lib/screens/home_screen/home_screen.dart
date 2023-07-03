@@ -14,6 +14,7 @@ import 'package:linum/core/design/layout/widgets/app_bar_action.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
 import 'package:linum/core/navigation/get_delegate.dart';
 import 'package:linum/core/navigation/main_routes.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/home_screen/components/home_screen_card/widgets/home_screen_card.dart';
 import 'package:linum/screens/home_screen/widgets/home_screen_listview.dart';
 import 'package:linum/screens/lock_screen/services/pin_code_service.dart';
@@ -95,13 +96,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           DropdownMenuItem<bool>(
                             value: false,
                             child: Text(
-                              tr('home_screen.label-recent-transactions'),
+                              tr(translationKeys.homeScreen.labelRecentTransactions),
                             ),
                           ),
                           DropdownMenuItem<bool>(
                             value: true,
                             child: Text(
-                              tr('home_screen.label-active-serialcontracts'),
+                              tr(translationKeys.homeScreen.labelActiveSerialcontracts),
                             ),
                           ),
                         ],
@@ -126,8 +127,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       child: Text(
                         showRepeatables
-                            ? tr('home_screen.button-show-all').toUpperCase()
-                            : tr('home_screen.button-show-more').toUpperCase(),
+                            ? tr(translationKeys.homeScreen.buttonShowAll).toUpperCase()
+                            : tr(translationKeys.homeScreen.buttonShowMore).toUpperCase(),
                         style: Theme.of(context).textTheme.labelSmall?.copyWith(
                               color: Theme.of(context).colorScheme.primary,
                               fontSize: 14,

@@ -9,6 +9,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
 import 'package:linum/core/design/layout/widgets/top_bar_action_item.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 
 /// Page Index: 2
 class StatisticsScreen extends StatelessWidget {
@@ -26,7 +27,7 @@ class StatisticsScreen extends StatelessWidget {
               buttonIcon: Icons.build,
               onPressedAction: () => log('message'),
             ),
-            Text(tr('main.label-wip')),
+            Text(tr(translationKeys.main.labelWip)),
           ],
         ),
       ),

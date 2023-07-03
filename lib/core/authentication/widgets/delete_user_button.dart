@@ -5,6 +5,7 @@ import 'package:linum/common/components/dialogs/show_action_dialog.dart';
 import 'package:linum/common/components/dialogs/show_alert_dialog.dart';
 import 'package:linum/core/authentication/services/authentication_service.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 import 'package:provider/provider.dart';
 
 
@@ -21,24 +22,24 @@ class DeleteUserButton extends StatelessWidget {
         onPressed: () {
           showActionDialog(
             context,
-            message: tr("alertdialog.delete-account.message"),
+            message: tr(translationKeys.alertdialog.deleteAccount.message),
             actions: <DialogAction>[
               DialogAction(
-                actionTitle: tr("alertdialog.delete-account.cancel"),
+                actionTitle: tr(translationKeys.alertdialog.deleteAccount.cancel),
                 dialogPurpose: DialogPurpose.secondary,
                 function: () =>
                     {Navigator.of(context, rootNavigator: true).pop()},
               ),
               DialogAction(
-                actionTitle: tr("alertdialog.delete-account.action"),
+                actionTitle: tr(translationKeys.alertdialog.deleteAccount.action),
                 dialogPurpose: DialogPurpose.danger,
                 function: () {
                   context.read<AuthenticationService>().deleteUserAccount(
                     onError: (message) => showAlertDialog(
                       context,
                       message: message,
-                      title: "alertdialog.reset-password.title",
-                      actionTitle: "alertdialog.reset-password.action",
+                      title: translationKeys.alertdialog.resetPassword.title,
+                      actionTitle: translationKeys.alertdialog.resetPassword.action,
                       userMustDismissWithButton: true,
                     ),
                   );
@@ -46,7 +47,7 @@ class DeleteUserButton extends StatelessWidget {
                 },
               ),
             ],
-            title: tr("alertdialog.delete-account.title"),
+            title: tr(translationKeys.alertdialog.deleteAccount.title),
           );
         },
         style: OutlinedButton.styleFrom(
@@ -66,7 +67,7 @@ class DeleteUserButton extends StatelessWidget {
           ),
         ),
         child: Text(
-          tr("settings_screen.system-settings.button-delete-user"),
+          tr(translationKeys.settingsScreen.systemSettings.buttonDeleteUser),
           style: Theme.of(context)
               .textTheme
               .labelLarge

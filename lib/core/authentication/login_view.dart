@@ -13,6 +13,7 @@ import 'package:linum/core/authentication/widgets/login_form.dart';
 import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/core/design/layout/utils/media_query_accessors.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/onboarding_screen/viewmodels/onboarding_screen_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -137,7 +138,7 @@ class _LoginViewState extends State<LoginView> {
                           Padding(
                             padding: const EdgeInsets.only(top: 6.0),
                             child: Text(
-                              tr('onboarding_screen.cta-login'),
+                              tr(translationKeys.onboardingScreen.ctaLogin),
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyLarge
@@ -186,7 +187,7 @@ class _LoginViewState extends State<LoginView> {
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),
                           child: Text(
-                            tr('onboarding_screen.cta-register'),
+                            tr(translationKeys.onboardingScreen.ctaRegister),
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyLarge

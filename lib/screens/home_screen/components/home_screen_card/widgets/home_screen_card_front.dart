@@ -16,6 +16,7 @@ import 'package:linum/core/balance/utils/balance_data_processors.dart';
 import 'package:linum/core/balance/widgets/balance_data_stream_consumer.dart';
 import 'package:linum/features/currencies/models/currency.dart';
 import 'package:linum/features/currencies/services/exchange_rate_service.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/home_screen/components/home_screen_card/models/home_screen_card_data.dart';
 import 'package:linum/screens/home_screen/components/home_screen_card/utils/home_screen_functions.dart';
 import 'package:linum/screens/home_screen/components/home_screen_card/utils/homescreen_card_time_warp.dart';
@@ -108,7 +109,7 @@ class HomeScreenCardFront extends StatelessWidget {
                   ),
                   Text(
                     //SUBHEADLINE
-                    tr('home_screen_card.label-current-balance'),
+                    tr(translationKeys.homeScreenCard.labelCurrentBalance),
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 ],
