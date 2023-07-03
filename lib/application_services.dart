@@ -8,7 +8,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/core/design/layout/loading_scaffold.dart';
-import 'package:linum/firebase/firebase_options.dart';
+import 'package:linum/firebase/firebase_options.g.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/objectbox.g.dart';
 import 'package:linum/providers/account_settings_service_provider.dart';
