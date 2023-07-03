@@ -6,6 +6,7 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/lock_screen/services/pin_code_service.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +26,7 @@ class PinSwitch extends StatelessWidget {
         SwitchListTile(
           key: const Key("pinActivationSwitch"),
           title: Text(
-            tr("settings_screen.pin-lock.switch-label"),
+            tr(translationKeys.settingsScreen.pinLock.switchLabel),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           value: pinCodeService.pinSet,
@@ -42,7 +43,7 @@ class PinSwitch extends StatelessWidget {
             dense: true,
             trailing: const Icon(Icons.arrow_forward_ios_rounded),
             title: Text(
-              tr("settings_screen.pin-lock.label-change-pin"),
+              tr(translationKeys.settingsScreen.pinLock.labelChangePin),
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             onTap: () {

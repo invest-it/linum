@@ -14,6 +14,7 @@ import 'package:linum/core/balance/services/algorithm_service.dart';
 import 'package:linum/core/balance/utils/balance_data_processors.dart';
 import 'package:linum/core/balance/widgets/balance_data_stream_consumer.dart';
 import 'package:linum/features/currencies/services/exchange_rate_service.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/home_screen/components/home_screen_card/models/home_screen_card_data.dart';
 import 'package:linum/screens/home_screen/components/home_screen_card/utils/home_screen_functions.dart';
 import 'package:linum/screens/home_screen/components/home_screen_card/utils/homescreen_card_time_warp.dart';
@@ -97,7 +98,7 @@ class HomeScreenCardBack extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     textAlign: TextAlign.center,
-                    "${tr("home_screen_card.label-monthly-planner")} | ${dateFormat.format(algorithmService.state.shownMonth)}",
+                    "${tr(translationKeys.homeScreenCard.labelMonthlyPlanner)} | ${dateFormat.format(algorithmService.state.shownMonth)}",
                     style: MediaQuery.of(context).size.height < 650
                         ? Theme.of(context).textTheme.headlineSmall
                         : Theme.of(context).textTheme.headlineMedium,
@@ -161,7 +162,7 @@ class HomeScreenCardBack extends StatelessWidget {
                                           child: Column(
                                             children: [
                                               Text(
-                                                tr("home_screen_card.label-mtd-balance")
+                                                tr(translationKeys.homeScreenCard.labelMtdBalance)
                                                     .toUpperCase(),
                                                 style: Theme.of(context)
                                                     .textTheme
@@ -191,7 +192,7 @@ class HomeScreenCardBack extends StatelessWidget {
                                               FittedBox(
                                                 fit: BoxFit.fitWidth,
                                                 child: Text(
-                                                  tr("home_screen_card.label-contracts")
+                                                  tr(translationKeys.homeScreenCard.labelContracts)
                                                       .toUpperCase(),
                                                   style: Theme.of(context)
                                                       .textTheme
@@ -256,7 +257,7 @@ class HomeScreenCardBack extends StatelessWidget {
                                         child: Column(
                                           children: [
                                             Text(
-                                              tr("home_screen_card.label-eom-projected-balance")
+                                              tr(translationKeys.homeScreenCard.labelEomProjectedBalance)
                                                   .toUpperCase(),
                                               style: Theme.of(context)
                                                   .textTheme
@@ -291,7 +292,7 @@ class HomeScreenCardBack extends StatelessWidget {
                                         CrossAxisAlignment.stretch,
                                     children: [
                                       Text(
-                                        tr("home_screen_card.label-account-position-month")
+                                        tr(translationKeys.homeScreenCard.labelAccountPositionMonth)
                                             .toUpperCase(),
                                         textAlign: TextAlign.center,
                                         style: Theme.of(context)

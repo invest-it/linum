@@ -14,6 +14,7 @@ import 'package:linum/core/categories/constants/standard_categories.dart';
 import 'package:linum/core/categories/models/category.dart';
 import 'package:linum/core/design/layout/enums/screen_key.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/settings_screen/widget/standard_category/category_list_view.dart';
 import 'package:provider/provider.dart';
 
@@ -36,7 +37,7 @@ class _StandardCategorySelectorState extends State<StandardCategorySelector> {
               screenKey: ScreenKey.settings,
               actionLipStatus: ActionLipVisibility.onviewport,
               actionLipTitle:
-                  tr('action_lip.standard-category.income.label-title'),
+                  tr(translationKeys.actionLip.standardCategory.income.labelTitle),
               actionLipBody: CategoryListView(
                 categories: standardCategories.values
                     .where((category) => category.entryType == EntryType.income)
@@ -50,7 +51,7 @@ class _StandardCategorySelectorState extends State<StandardCategorySelector> {
             builder: (context, category, _) {
               return CategoryListTile(
                 labelTitle:
-                    tr('settings_screen.standard-income-selector.label-title'),
+                    tr(translationKeys.settingsScreen.standardIncomeSelector.labelTitle),
                 category: category,
                 trailingIcon: Icons.north_east,
                 trailingIconColor: Colors.green,
@@ -65,7 +66,7 @@ class _StandardCategorySelectorState extends State<StandardCategorySelector> {
               screenKey: ScreenKey.settings,
               actionLipStatus: ActionLipVisibility.onviewport,
               actionLipTitle:
-                  tr('action_lip.standard-category.expenses.label-title'),
+                  tr(translationKeys.actionLip.standardCategory.expenses.labelTitle),
               actionLipBody: CategoryListView(
                 categories: standardCategories.values
                     .where((category) => category.entryType == EntryType.expense)
@@ -79,7 +80,7 @@ class _StandardCategorySelectorState extends State<StandardCategorySelector> {
             builder: (context, category, _) {
               return CategoryListTile(
                 labelTitle:
-                    tr('settings_screen.standard-expense-selector.label-title'),
+                    tr(translationKeys.settingsScreen.standardExpenseSelector.labelTitle),
                 category: category,
                 trailingIcon: Icons.south_east,
                 trailingIconColor: Colors.red,
@@ -91,3 +92,5 @@ class _StandardCategorySelectorState extends State<StandardCategorySelector> {
     );
   }
 }
+
+

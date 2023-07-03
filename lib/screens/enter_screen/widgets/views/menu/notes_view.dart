@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_form_view_model.dart';
 import 'package:linum/screens/enter_screen/widgets/buttons/abort_button.dart';
 import 'package:linum/screens/enter_screen/widgets/buttons/menu_action_button.dart';
@@ -31,7 +32,7 @@ class NotesView extends StatelessWidget {
                     maxLines: null,
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: tr("enter_screen.enter-note-hint"),
+                      hintText: tr(translationKeys.enterScreen.enterNoteHint),
                     ),
                   ),
                 ),
@@ -40,7 +41,7 @@ class NotesView extends StatelessWidget {
             ),
           ),
           MenuActionButton(
-            label: tr("enter_screen.button.save-note"),
+            label: tr(translationKeys.enterScreen.button.saveNote),
             padding: const EdgeInsets.symmetric(vertical: 24.0),
             onPressed: () {
               formViewModel.data = formViewModel.data.copyWith(

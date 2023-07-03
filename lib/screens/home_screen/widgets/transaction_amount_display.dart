@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/core/balance/models/transaction.dart';
 import 'package:linum/core/balance/utils/transaction_amount_formatter.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 
 
 
@@ -19,7 +20,7 @@ class TransactionAmountDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return transaction.amount == 0
         ? Text(
-            tr('home_screen.free-text'),
+            tr(translationKeys.homeScreen.freeText),
             style: Theme.of(context).textTheme.bodyLarge,
           )
         : buildRow(context);

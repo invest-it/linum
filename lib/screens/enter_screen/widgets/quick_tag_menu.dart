@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/core/categories/constants/standard_categories.dart';
 import 'package:linum/core/categories/utils/translate_category.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/enter_screen/utils/date_formatter.dart';
 import 'package:linum/screens/enter_screen/utils/show_enter_screen_menu.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_form_view_model.dart';
@@ -83,7 +84,7 @@ class QuickTagMenu extends StatelessWidget {
         onTap: () {
           showEnterScreenMenu(
             context: context,
-            title: tr("enter_screen.menu.currency"),
+            title: tr(translationKeys.enterScreen.menu.currency),
             content: CurrencyListView(),
           );
         },
@@ -95,7 +96,7 @@ class QuickTagMenu extends StatelessWidget {
         onTap: () {
           showEnterScreenMenu(
             context: context,
-            title: tr("enter_screen.menu.category"),
+            title: tr(translationKeys.enterScreen.menu.category),
             content: CategoryListView(
               categories: standardCategories.values
                   .where((element) => element.entryType == formViewModel.entryType)
@@ -111,14 +112,14 @@ class QuickTagMenu extends StatelessWidget {
         onTap: () {
           showEnterScreenMenu(
             context: context,
-            title: tr("enter_screen.menu.repeat-config"),
+            title: tr(translationKeys.enterScreen.menu.repeatConfig),
             content: RepeatConfigListView(),
           );
         },
         textColor: colors.repeatInfo,
       ),
       TagSelectorButton(
-        title: tr("enter_screen.menu.notes"),
+        title: tr(translationKeys.enterScreen.menu.notes),
         icon: Icons.edit_outlined,
         onTap: () {
           showEnterScreenMenu(

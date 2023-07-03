@@ -8,6 +8,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:linum/generated/translation_keys.g.dart';
+
 
 
 TextStyle? getBalanceTextStyle(BuildContext context, num balance) {
@@ -37,7 +39,7 @@ void onFlipCardTap(FlipCardController controller) {
   );
 
   Fluttertoast.showToast(
-    msg: tr('home_screen_card.home-screen-card-toast'),
+    msg: tr(translationKeys.homeScreenCard.homeScreenCardToast),
     toastLength: Toast.LENGTH_SHORT,
   );
 }

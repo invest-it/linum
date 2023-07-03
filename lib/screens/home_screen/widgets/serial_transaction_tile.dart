@@ -6,6 +6,7 @@ import 'package:linum/core/balance/models/serial_transaction.dart';
 import 'package:linum/core/categories/constants/standard_categories.dart';
 import 'package:linum/core/categories/utils/translate_category.dart';
 import 'package:linum/core/repeating/enums/repeat_duration_type_enum.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/enter_screen/utils/show_enter_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -91,38 +92,38 @@ class SerialTransactionTile extends StatelessWidget {
         // If the repeatDuration is on a weekly basis
         if (duration % week == 0) {
           if (duration / week == 1) {
-            return "$formattedAmount ${tr('enter_screen.repeat.weekly')}";
+            return "$formattedAmount ${tr(translationKeys.enterScreen.repeat.weekly)}";
           }
-          return "${tr('listview.label-every')} ${(duration / day).floor()} ${tr('listview.label-weeks')}";
+          return "${tr(translationKeys.listview.labelEvery)} ${(duration / day).floor()} ${tr(translationKeys.listview.labelWeeks)}";
         }
 
         // If the repeatDuration is on a daily basis
         else if (duration % day == 0) {
           if (duration / day == 1) {
-            return "$formattedAmount ${tr('enter_screen.repeat.daily')}";
+            return "$formattedAmount ${tr(translationKeys.enterScreen.repeat.daily)}";
           }
-          return "${tr('listview.label-every')} ${(duration / day).floor()} ${tr('listview.label-days')}";
+          return "${tr(translationKeys.listview.labelEvery)} ${(duration / day).floor()} ${tr(translationKeys.listview.labelDays)}";
         } else {
           //This should never happen, but just in case (if we forget to cap the repeat duration to at least one day)
-          return tr('main.label-error');
+          return tr(translationKeys.main.labelError);
         }
 
     // If the repeatDuration is on a monthly / yearly basis
       case RepeatDurationType.months:
         if (duration % 12 == 0) {
           if (duration / 12 == 1) {
-            return "$formattedAmount ${tr('enter_screen.repeat.annually')}";
+            return "$formattedAmount ${tr(translationKeys.enterScreen.repeat.annually)}";
           }
-          return "${tr('listview.label-every')} ${(duration / 12).floor()} ${tr('listview.label-years')}";
+          return "${tr(translationKeys.listview.labelEvery)} ${(duration / 12).floor()} ${tr(translationKeys.listview.labelYears)}";
         }
         if (duration == 1) {
-          return "$formattedAmount ${tr('enter_screen.repeat.thirty_days')}";
+          return "$formattedAmount ${tr(translationKeys.enterScreen.repeat.thirtyDays)}";
         } else if (duration == 3) {
-          return "$formattedAmount ${tr('enter_screen.repeat.quarterly')}";
+          return "$formattedAmount ${tr(translationKeys.enterScreen.repeat.quarterly)}";
         } else if (duration == 6) {
-          return "$formattedAmount ${tr('enter_screen.repeat.semiannually')}";
+          return "$formattedAmount ${tr(translationKeys.enterScreen.repeat.semiannually)}";
         }
-        return "${tr('listview.label-every')} ${(duration / 12).floor()} ${tr('listview.label-months')}";
+        return "${tr(translationKeys.listview.labelEvery)} ${(duration / 12).floor()} ${tr(translationKeys.listview.labelMonths)}";
     }
   }
 }

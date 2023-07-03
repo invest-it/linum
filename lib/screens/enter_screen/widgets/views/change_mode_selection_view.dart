@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/core/balance/enums/serial_transaction_change_type_enum.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model.dart';
 import 'package:linum/screens/enter_screen/widgets/buttons/change_mode_button.dart';
 import 'package:linum/screens/enter_screen/widgets/enter_screen_scaffold.dart';
@@ -25,7 +26,7 @@ class ChangeModeSelectionView extends StatelessWidget {
               width: double.maxFinite,
               padding: const EdgeInsets.only(bottom: 14.0),
               child: Text(
-                tr("enter_screen.change-mode-selection.title"),
+                tr(translationKeys.enterScreen.changeModeSelection.title),
                 style: Theme.of(context).textTheme.labelMedium?.copyWith(
                   color: Colors.black45,
                 ),
@@ -33,22 +34,22 @@ class ChangeModeSelectionView extends StatelessWidget {
               ),
             ),
             ChangeModeButton(
-              label: tr("enter_screen.change-mode-selection.only-this-one"),
+              label: tr(translationKeys.enterScreen.changeModeSelection.onlyThisOne),
               onPressed: () => viewModel
                   .selectChangeModeType(SerialTransactionChangeMode.onlyThisOne),
             ),
             ChangeModeButton(
-                label: tr("enter_screen.change-mode-selection.this-and-all-before"),
+                label: tr(translationKeys.enterScreen.changeModeSelection.thisAndAllBefore),
                 onPressed: () => viewModel
                     .selectChangeModeType(SerialTransactionChangeMode.thisAndAllBefore),
             ),
             ChangeModeButton(
-              label: tr("enter_screen.change-mode-selection.this-and-all-after"),
+              label: tr(translationKeys.enterScreen.changeModeSelection.thisAndAllAfter),
               onPressed: () => viewModel
                   .selectChangeModeType(SerialTransactionChangeMode.thisAndAllAfter),
             ),
             ChangeModeButton(
-              label: tr("enter_screen.change-mode-selection.all"),
+              label: tr(translationKeys.enterScreen.changeModeSelection.all),
               onPressed: () => viewModel
                   .selectChangeModeType(SerialTransactionChangeMode.all),
             ),

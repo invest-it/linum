@@ -5,130 +5,131 @@
 //  (Refactored)
 
 import 'package:linum/features/currencies/models/currency.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 
 final standardCurrencies = Map<String, Currency>.unmodifiable({
-  "EUR": const Currency(
-    label: 'currency.name.eur',
+  "EUR": Currency(
+    label: translationKeys.currency.name.eur,
     name: 'EUR',
     symbol: '€',
   ),
-  "GBP": const Currency(
-    label: 'currency.name.gbp',
+  "GBP": Currency(
+    label: translationKeys.currency.name.gbp,
     name: 'GBP',
     symbol: '£',
   ),
-  "USD": const Currency(
-    label: 'currency.name.usd',
+  "USD": Currency(
+    label: translationKeys.currency.name.usd,
     name: 'USD',
     symbol: '\$',
   ),
-  "CHF": const Currency(
-    label: 'currency.name.chf',
+  "CHF": Currency(
+    label: translationKeys.currency.name.chf,
     name: 'CHF',
     symbol: 'CHF',
   ),
-  "PLN": const Currency(
-    label: 'currency.name.pln',
+  "PLN": Currency(
+    label: translationKeys.currency.name.pln,
     name: 'PLN',
     symbol: 'zł',
   ),
-  "CZK": const Currency(
-    label: 'currency.name.czk',
+  "CZK": Currency(
+    label: translationKeys.currency.name.czk,
     name: 'CZK',
     symbol: 'Kč',
   ),
-  "JPY": const Currency(
-    label: 'currency.name.jpy',
+  "JPY": Currency(
+    label: translationKeys.currency.name.jpy,
     name: 'JPY',
     symbol: 'JP¥',
   ),
-  "CNY": const Currency(
-    label: 'currency.name.cny',
+  "CNY": Currency(
+    label: translationKeys.currency.name.cny,
     name: 'CNY',
     symbol: 'CN¥',
   ),
-  "KRW": const Currency(
-    label: 'currency.name.krw',
+  "KRW": Currency(
+    label: translationKeys.currency.name.krw,
     name: 'KRW',
     symbol: '원',
   ),
-  "AUD": const Currency(
-    label: 'currency.name.aud',
+  "AUD": Currency(
+    label: translationKeys.currency.name.aud,
     name: 'AUD',
     symbol: 'AU\$',
   ),
-  "NZD": const Currency(
-    label: 'currency.name.nzd',
+  "NZD": Currency(
+    label: translationKeys.currency.name.nzd,
     name: 'NZD',
     symbol: 'NZ\$',
   ),
-  "CAD": const Currency(
-    label: 'currency.name.cad',
+  "CAD": Currency(
+    label: translationKeys.currency.name.cad,
     name: 'CAD',
     symbol: 'C\$',
   ),
-  "NOK": const Currency(
-    label: 'currency.name.nok',
+  "NOK": Currency(
+    label: translationKeys.currency.name.nok,
     name: 'NOK',
     symbol: 'nkr',
   ),
-  "SEK": const Currency(
-    label: 'currency.name.sek',
+  "SEK": Currency(
+    label: translationKeys.currency.name.sek,
     name: 'SEK',
     symbol: 'skr',
   ),
-  "DKK": const Currency(
-    label: 'currency.name.dkk',
+  "DKK": Currency(
+    label: translationKeys.currency.name.dkk,
     name: 'DKK',
     symbol: 'dkr',
   ),
-  "ISK": const Currency(
-    label: 'currency.name.isk',
+  "ISK": Currency(
+    label: translationKeys.currency.name.isk,
     name: 'ISK',
     symbol: 'Íkr',
   ),
-  "TRY": const Currency(
-    label: 'currency.name.tyr', // TODO: fix key name
+  "TRY": Currency(
+    label: translationKeys.currency.name.tyr, // TODO: fix key name
     name: 'TRY',
     symbol: '₺',
   ),
-  "MYR": const Currency(
-    label: 'currency.name.myr',
+  "MYR": Currency(
+    label: translationKeys.currency.name.myr,
     name: 'MYR',
     symbol: 'RM',
   ),
-  "INR": const Currency(
-    label: 'currency.name.inr',
+  "INR": Currency(
+    label: translationKeys.currency.name.inr,
     name: 'INR',
     symbol: '₹',
   ),
-  "IDR": const Currency(
-    label: 'currency.name.idr',
+  "IDR": Currency(
+    label: translationKeys.currency.name.idr,
     name: 'IDR',
     symbol: 'Rp',
   ),
-  "MXN": const Currency(
-    label: 'currency.name.mxn',
+  "MXN": Currency(
+    label: translationKeys.currency.name.mxn,
     name: 'MXN',
     symbol: 'Mex\$',
   ),
-  "THB": const Currency(
-    label: 'currency.name.thb',
+  "THB": Currency(
+    label: translationKeys.currency.name.thb,
     name: 'THB',
     symbol: '฿',
   ),
-  "ILS": const Currency(
-    label: 'currency.name.ils',
+  "ILS": Currency(
+    label: translationKeys.currency.name.ils,
     name: 'ILS',
     symbol: '₪',
   ),
-  "BRL": const Currency(
-    label: 'currency.name.blr', // TODO: fix key name
+  "BRL": Currency(
+    label: translationKeys.currency.name.blr, // TODO: fix key name
     name: 'BRL',
     symbol: 'R\$',
   ),
-  "ZAR": const Currency(
-    label: 'currency.name.zar',
+  "ZAR": Currency(
+    label: translationKeys.currency.name.zar,
     name: 'ZAR',
     symbol: 'R',
   ),

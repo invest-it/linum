@@ -17,6 +17,7 @@ import 'package:linum/core/authentication/services/authentication_service.dart';
 import 'package:linum/core/design/theme/constants/ring_colors.dart';
 import 'package:linum/core/navigation/get_delegate.dart';
 import 'package:linum/core/navigation/main_routes.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/lock_screen/models/lock_screen_action.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -91,7 +92,7 @@ class PinCodeService extends ChangeNotifier {
       _pinSet = false; // TODO: Re-Enter pin?
       _removePIN();
       Fluttertoast.showToast(
-        msg: tr("lock_screen.toast-pin-deactivated"),
+        msg: tr(translationKeys.lockScreen.toastPinDeactivated),
       );
     }
     notifyListeners();
@@ -166,15 +167,15 @@ class PinCodeService extends ChangeNotifier {
     switch (_intent) {
       case PINLockIntent.initialize:
         return LockScreenAction(
-          screenTitle: "lock_screen.initialize.label-title",
-          actionTitle: "lock_screen.initialize.label-button",
+          screenTitle: translationKeys.lockScreen.initialize.labelTitle,
+          actionTitle: translationKeys.lockScreen.initialize.labelButton,
           function: () {
             showActionDialog(
               context,
-              message: "alertdialog.killswitch-initialize.message",
+              message: translationKeys.alertdialog.killswitchInitialize.message,
               actions: [
                 DialogAction(
-                  actionTitle: "alertdialog.killswitch-initialize.action",
+                  actionTitle: translationKeys.alertdialog.killswitchInitialize.action,
                   function: () {
                     _emptyCode();
                     _removePIN();
@@ -185,7 +186,7 @@ class PinCodeService extends ChangeNotifier {
                   popDialog: true, // TODO: What does this thing do even?
                 ),
                 DialogAction(
-                  actionTitle: "alertdialog.killswitch-initialize.cancel",
+                  actionTitle: translationKeys.alertdialog.killswitchInitialize.cancel,
                   //If this is empty, UserAlert will use its own context to pop the dialog
                   function: () {
                     Navigator.of(_context, rootNavigator: true).pop();
@@ -194,21 +195,21 @@ class PinCodeService extends ChangeNotifier {
                   popDialog: true,
                 ),
               ],
-              title: "alertdialog.killswitch-initialize.title",
+              title: translationKeys.alertdialog.killswitchInitialize.title,
             );
           },
         );
       case PINLockIntent.change:
         return LockScreenAction(
-          screenTitle: "lock_screen.change.label-title",
-          actionTitle: "lock_screen.change.label-button",
+          screenTitle: translationKeys.lockScreen.change.labelTitle,
+          actionTitle: translationKeys.lockScreen.change.labelButton,
           function: () {
             showActionDialog(
               context,
-              message: "alertdialog.killswitch-change.message",
+              message: translationKeys.alertdialog.killswitchChange.message,
               actions: [
                 DialogAction(
-                  actionTitle: "alertdialog.killswitch-change.action",
+                  actionTitle: translationKeys.alertdialog.killswitchChange.action,
                   function: () {
                     _emptyCode();
                     Navigator.of(_context, rootNavigator: true).pop();
@@ -217,7 +218,7 @@ class PinCodeService extends ChangeNotifier {
                   },
                 ),
                 DialogAction(
-                  actionTitle: "alertdialog.killswitch-change.cancel",
+                  actionTitle: translationKeys.alertdialog.killswitchChange.cancel,
                   //If this is empty, UserAlert will use its own context to pop the dialog
                   function: () {
                     Navigator.of(_context, rootNavigator: true).pop();
@@ -227,21 +228,21 @@ class PinCodeService extends ChangeNotifier {
                   popDialog: true,
                 ),
               ],
-              title: "alertdialog.killswitch-change.title",
+              title: translationKeys.alertdialog.killswitchChange.title,
             );
           },
         );
       case PINLockIntent.recall:
         return LockScreenAction(
-          screenTitle: "lock_screen.recall.label-title",
-          actionTitle: "lock_screen.recall.label-button",
+          screenTitle: translationKeys.lockScreen.recall.labelTitle,
+          actionTitle: translationKeys.lockScreen.recall.labelButton,
           function: () {
             showActionDialog(
               context,
-              message: "alertdialog.killswitch-recall.message",
+              message: translationKeys.alertdialog.killswitchRecall.message,
               actions: [
                 DialogAction(
-                  actionTitle: "alertdialog.killswitch-recall.action",
+                  actionTitle: translationKeys.alertdialog.killswitchRecall.action,
                   function: () {
                     Navigator.of(_context, rootNavigator: true).pop();
                     _pinSet = false;
@@ -252,7 +253,7 @@ class PinCodeService extends ChangeNotifier {
                   },
                 ),
                 DialogAction(
-                  actionTitle: "alertdialog.killswitch-recall.cancel",
+                  actionTitle: translationKeys.alertdialog.killswitchRecall.cancel,
                   //If this is empty, UserAlert will use its own context to pop the dialog
                   function: () {
                     Navigator.of(_context, rootNavigator: true).pop();
@@ -261,7 +262,7 @@ class PinCodeService extends ChangeNotifier {
                   popDialog: true,
                 ),
               ],
-              title: "alertdialog.killswitch-recall.title",
+              title: translationKeys.alertdialog.killswitchRecall.title,
             );
           },
         );
@@ -285,18 +286,18 @@ class PinCodeService extends ChangeNotifier {
           case PINLockIntent.initialize:
             if (_lastEmail != 'Error!') {
               _storePIN(_code);
-              toastFromTranslationKey("lock_screen.toast-pin-set");
+              toastFromTranslationKey(translationKeys.lockScreen.toastPinSet);
             } else {
-              toastFromTranslationKey("lock_screen.errors.last-mail-missing");
+              toastFromTranslationKey(translationKeys.lockScreen.errors.lastMailMissing);
             }
             _context.getMainRouterDelegate().popRoute();
             _emptyCode();
           case PINLockIntent.change:
             if (_lastEmail != 'Error!') {
               _storePIN(_code);
-              toastFromTranslationKey("lock_screen.toast-pin-changed");
+              toastFromTranslationKey(translationKeys.lockScreen.toastPinChanged);
             } else {
-              toastFromTranslationKey("lock_screen.errors.last-mail-missing");
+              toastFromTranslationKey(translationKeys.lockScreen.errors.lastMailMissing);
             }
 
             _context.getMainRouterDelegate().popRoute();
@@ -351,7 +352,7 @@ class PinCodeService extends ChangeNotifier {
     HapticFeedback.vibrate();
     _ringColor = RingColors.red;
     Fluttertoast.showToast(
-      msg: tr("lock_screen.toast-wrong-code"),
+      msg: tr(translationKeys.lockScreen.toastWrongCode),
     );
     _emptyCode();
   }

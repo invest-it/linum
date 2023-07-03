@@ -1,77 +1,78 @@
 import 'package:flutter/material.dart';
 import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/core/categories/models/category.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 
-const standardCategories = <String, Category>{
+final standardCategories = <String, Category>{
   "income": Category(
-    label: "settings_screen.standard-income-selector.salary",
+    label: translationKeys.settingsScreen.standardIncomeSelector.salary,
     id: "income",
     icon: Icons.work_rounded,
     entryType: EntryType.income,
   ),
   "allowance": Category(
-    label: "settings_screen.standard-income-selector.allowance",
+    label: translationKeys.settingsScreen.standardIncomeSelector.allowance,
     id: "allowance",
     icon: Icons.savings_rounded,
     entryType: EntryType.income,
   ),
   "sidejob": Category(
-    label: "settings_screen.standard-income-selector.sidejob",
+    label: translationKeys.settingsScreen.standardIncomeSelector.sidejob,
     id: "sidejob",
     icon: Icons.add_business_rounded,
     entryType: EntryType.income,
   ),
   "investments": Category(
-    label: "settings_screen.standard-income-selector.investments",
+    label: translationKeys.settingsScreen.standardIncomeSelector.investments,
     id: "investments",
     icon: Icons.auto_graph_rounded,
     entryType: EntryType.income,
   ),
   "childsupport": Category(
-      label: "settings_screen.standard-income-selector.childsupport",
+      label: translationKeys.settingsScreen.standardIncomeSelector.childsupport,
       id: "childsupport",
       icon: Icons.family_restroom_rounded,
       entryType: EntryType.income,
   ),
   "interest": Category(
-      label: "settings_screen.standard-income-selector.interest",
+      label: translationKeys.settingsScreen.standardIncomeSelector.interest,
       id: "interest",
       icon: Icons.attach_money_rounded,
       entryType: EntryType.income,
   ),
   "food": Category(
-    label: "settings_screen.standard-expense-selector.food",
+    label: translationKeys.settingsScreen.standardExpenseSelector.food,
     id: "food",
     icon: Icons.local_dining_rounded,
   ),
   "freetime": Category(
-    label: "settings_screen.standard-expense-selector.freetime",
+    label: translationKeys.settingsScreen.standardExpenseSelector.freetime,
     id: "freetime",
     icon: Icons.beach_access_rounded,
   ),
   "house": Category(
-    label: "settings_screen.standard-expense-selector.house",
+    label: translationKeys.settingsScreen.standardExpenseSelector.house,
     id: "house",
     icon: Icons.home_rounded,
   ),
   "lifestyle": Category(
-    label: "settings_screen.standard-expense-selector.lifestyle",
+    label: translationKeys.settingsScreen.standardExpenseSelector.lifestyle,
     id: "lifestyle",
     icon: Icons.local_fire_department_outlined,
   ),
   "car": Category(
-    label: "settings_screen.standard-expense-selector.car",
+    label: translationKeys.settingsScreen.standardExpenseSelector.car,
     id: "car",
     icon: Icons.directions_car_rounded,
   ),
   "misc-income": Category(
-    label: "settings_screen.standard-income-selector.misc",
+    label: translationKeys.settingsScreen.standardIncomeSelector.misc,
     id: "misc-income",
     icon: Icons.inventory_2,
     entryType: EntryType.income,
   ),
   "misc-expense": Category(
-    label: "settings_screen.standard-expense-selector.misc",
+    label: translationKeys.settingsScreen.standardExpenseSelector.misc,
     id: "misc-expense",
     icon: Icons.inventory_2,
   ),

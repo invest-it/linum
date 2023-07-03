@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model.dart';
 import 'package:linum/screens/enter_screen/widgets/buttons/entry_type_button.dart';
 import 'package:linum/screens/enter_screen/widgets/enter_screen_scaffold.dart';
@@ -21,7 +22,7 @@ class EntryTypeSelectionView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12),
             child: Text(
-              tr("enter_screen.entry-type-selection.title").toUpperCase(),
+              tr(translationKeys.enterScreen.entryTypeSelection.title).toUpperCase(),
               style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 12.0),
             ),
           ),
@@ -32,7 +33,7 @@ class EntryTypeSelectionView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   EntryTypeButton(
-                      title: tr("enter_screen.button.expenses-label"),
+                      title: tr(translationKeys.enterScreen.button.expensesLabel),
                       iconData: Icons.arrow_circle_down_rounded,
                       iconColor: Theme.of(context).colorScheme.error,
                       onTap: () => viewModel.selectEntryType(EntryType.expense),
@@ -44,7 +45,7 @@ class EntryTypeSelectionView extends StatelessWidget {
                       color: Colors.grey,
                   ),
                   EntryTypeButton(
-                      title: tr("enter_screen.button.income-label"),
+                      title: tr(translationKeys.enterScreen.button.incomeLabel),
                       iconData: Icons.arrow_circle_up_rounded,
                       iconColor: Theme.of(context).colorScheme.primary,
                       onTap: () => viewModel.selectEntryType(EntryType.income),

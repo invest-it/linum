@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/core/navigation/url_handler.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/onboarding_screen/models/onboarding_slide_data.dart';
 
 
@@ -36,7 +37,7 @@ class _SingleSlideState extends State<SingleSlide> {
             ),
             child: CupertinoButton(
               child: Text(
-                tr('onboardingScreen.svg-credit-label'),
+                tr(translationKeys.onboardingScreen.svgCreditLabel),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               onPressed: () => {

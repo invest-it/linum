@@ -6,6 +6,7 @@ import 'package:linum/core/account/services/account_settings_service.dart';
 import 'package:linum/core/design/layout/enums/screen_key.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
 import 'package:linum/features/currencies/models/currency.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/settings_screen/widget/standard_currency/curreny_list_view.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +29,7 @@ class _StandardCurrencySelectorState extends State<StandardCurrencySelector> {
               context: context,
               screenKey: ScreenKey.settings,
               actionLipStatus: ActionLipVisibility.onviewport,
-              actionLipTitle: tr('action_lip.standard-currency.label-title'),
+              actionLipTitle: tr(translationKeys.actionLip.standardCurrency.labelTitle),
               actionLipBody: CurrencyListView(),
             );
           },
