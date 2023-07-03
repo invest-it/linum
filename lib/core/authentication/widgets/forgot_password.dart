@@ -13,6 +13,7 @@ import 'package:linum/core/authentication/services/authentication_service.dart';
 import 'package:linum/core/design/layout/enums/screen_key.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 import 'package:provider/provider.dart';
 
 
@@ -46,7 +47,7 @@ class ForgotPasswordButton extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
-                    tr('action_lip.forgot-password.logged-out.label-description'),
+                    tr(translationKeys.actionLip.forgotPassword.loggedOut.labelDescription),
                     style: Theme.of(context).textTheme.bodyLarge,
                     textAlign: TextAlign.center,
                   ),
@@ -91,8 +92,8 @@ class ForgotPasswordButton extends StatelessWidget {
                                   onComplete: (message) => showAlertDialog(
                                     context,
                                     message: message,
-                                    title: "alertdialog.reset-password.title",
-                                    actionTitle: "alertdialog.reset-password.action",
+                                    title: translationKeys.alertdialog.resetPassword.title,
+                                    actionTitle: translationKeys.alertdialog.resetPassword.action,
                                     userMustDismissWithButton: true,
                                   ),
                                 ),
@@ -100,7 +101,7 @@ class ForgotPasswordButton extends StatelessWidget {
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: tr(
-                                  'onboarding_screen.login-email-hintlabel',
+                                  translationKeys.onboardingScreen.loginEmailHintlabel,
                                 ),
                                 hintStyle: Theme.of(context)
                                     .textTheme
@@ -134,8 +135,8 @@ class ForgotPasswordButton extends StatelessWidget {
                             showAlertDialog(
                               context,
                               message: message,
-                              title: "alertdialog.reset-password.title",
-                              actionTitle: "alertdialog.reset-password.action",
+                              title: translationKeys.alertdialog.resetPassword.title,
+                              actionTitle: translationKeys.alertdialog.resetPassword.action,
                             );
                             actionLipStatusProvider.setActionLipStatus(
                               context: context,
@@ -158,7 +159,7 @@ class ForgotPasswordButton extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
-                        tr('action_lip.forgot-password.logged-out.button-submit'),
+                        tr(translationKeys.actionLip.forgotPassword.loggedOut.buttonSubmit),
                         style: Theme.of(context).textTheme.labelLarge,
                       ),
                     ),
@@ -169,7 +170,7 @@ class ForgotPasswordButton extends StatelessWidget {
           ),
           actionLipStatus: ActionLipVisibility.onviewport,
           actionLipTitle:
-              tr('action_lip.forgot-password.logged-out.label-title'),
+              tr(translationKeys.actionLip.forgotPassword.loggedOut.labelTitle),
         );
       }
       // lip if the user has already authenticated themself
@@ -187,7 +188,7 @@ class ForgotPasswordButton extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
-                    tr('action_lip.forgot-password.logged-in.label-description'),
+                    tr(translationKeys.actionLip.forgotPassword.loggedIn.labelDescription),
                     style: Theme.of(context).textTheme.bodyLarge,
                     textAlign: TextAlign.center,
                   ),
@@ -233,9 +234,9 @@ class ForgotPasswordButton extends StatelessWidget {
                                   onComplete: (message) => showAlertDialog(
                                     context,
                                     message: message,
-                                    title: "alertdialog.update-password.title",
+                                    title: translationKeys.alertdialog.updatePassword.title,
                                     actionTitle:
-                                      "alertdialog.update-password.action",
+                                      translationKeys.alertdialog.updatePassword.action,
                                     userMustDismissWithButton: true,
                                   ),
                                 ),
@@ -243,7 +244,7 @@ class ForgotPasswordButton extends StatelessWidget {
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: tr(
-                                  'onboarding_screen.login-password-hintlabel',
+                                    translationKeys.onboardingScreen.loginPasswordHintlabel,
                                 ),
                                 hintStyle: Theme.of(context)
                                     .textTheme
@@ -277,8 +278,8 @@ class ForgotPasswordButton extends StatelessWidget {
                             showAlertDialog(
                               context,
                               message: message,
-                              title: "alertdialog.update-password.title",
-                              actionTitle: "alertdialog.update-password.action",
+                              title: translationKeys.alertdialog.updatePassword.title,
+                              actionTitle: translationKeys.alertdialog.updatePassword.action,
                             );
                             actionLipStatusProvider.setActionLipStatus(
                               context: context,
@@ -301,7 +302,7 @@ class ForgotPasswordButton extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
-                        tr('action_lip.forgot-password.logged-in.button-submit'),
+                        tr(translationKeys.actionLip.forgotPassword.loggedIn.buttonSubmit),
                         style: Theme.of(context).textTheme.labelLarge,
                       ),
                     ),
@@ -312,7 +313,7 @@ class ForgotPasswordButton extends StatelessWidget {
           ),
           actionLipStatus: ActionLipVisibility.onviewport,
           actionLipTitle:
-              tr('action_lip.forgot-password.logged-in.label-title'),
+              tr(translationKeys.actionLip.forgotPassword.loggedIn.labelTitle),
         );
       }
     }
@@ -338,8 +339,8 @@ class ForgotPasswordButton extends StatelessWidget {
       ),
       child: Text(
         authenticationService.isLoggedIn
-            ? tr("settings_screen.system-settings.button-forgot-password")
-            : tr('onboarding_screen.login-lip-forgot-password-button'),
+            ? tr(translationKeys.settingsScreen.systemSettings.buttonForgotPassword)
+            : tr(translationKeys.onboardingScreen.loginLipForgotPasswordButton),
         style: Theme.of(context)
             .textTheme
             .labelLarge

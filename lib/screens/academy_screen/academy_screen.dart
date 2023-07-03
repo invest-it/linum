@@ -12,6 +12,7 @@ import 'package:linum/core/design/layout/widgets/app_bar_action.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
 import 'package:linum/core/navigation/get_delegate.dart';
 import 'package:linum/core/navigation/url_handler.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 
 
 /// Page Index: 4
@@ -41,7 +42,7 @@ class AcademyScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Text(
-                tr('academy_screen.label-title'),
+                tr(translationKeys.academyScreen.labelTitle),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.displaySmall,
               ),
@@ -49,7 +50,7 @@ class AcademyScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               child: Text(
-                tr('academy_screen.label-description'),
+                tr(translationKeys.academyScreen.labelDescription),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
@@ -65,7 +66,7 @@ class AcademyScreen extends StatelessWidget {
                     spacing: 12,
                     children: [
                       const Icon(Icons.open_in_new_rounded),
-                      Text(tr("academy_screen.label-button")),
+                      Text(tr(translationKeys.academyScreen.labelButton)),
                     ],
                   ),
                 ),
@@ -81,7 +82,7 @@ class AcademyScreen extends StatelessWidget {
               width: double.infinity,
               child: CupertinoButton(
                 child: Text(
-                  tr('onboarding_screen.svg-credit-label'),
+                  tr(translationKeys.onboardingScreen.svgCreditLabel),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 onPressed: () => {

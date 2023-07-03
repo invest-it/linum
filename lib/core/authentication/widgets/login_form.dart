@@ -15,6 +15,7 @@ import 'package:linum/core/authentication/widgets/sign_in_sign_up_button.dart';
 import 'package:linum/core/authentication/widgets/sign_in_with_google_button.dart';
 import 'package:linum/core/design/layout/enums/screen_key.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/onboarding_screen/viewmodels/onboarding_screen_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -56,9 +57,9 @@ class _LoginFormState extends State<LoginForm> {
         onError: (message) => showAlertDialog(context, message: message),
         onNotVerified: () => showAlertDialog(
           context,
-          message: "alertdialog.login-verification.message",
-          title: "alertdialog.login-verification.title",
-          actionTitle: "alertdialog.login-verification.action",
+          message: translationKeys.alertdialog.loginVerification.message,
+          title: translationKeys.alertdialog.loginVerification.title,
+          actionTitle: translationKeys.alertdialog.loginVerification.action,
         ),
       );
     }
@@ -68,7 +69,7 @@ class _LoginFormState extends State<LoginForm> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 12.0),
           child: Text(
-            tr('onboarding_screen.login-lip-title'),
+            tr(translationKeys.onboardingScreen.loginLipTitle),
             style: Theme.of(context).textTheme.headlineSmall,
           ),
         ),
@@ -106,7 +107,7 @@ class _LoginFormState extends State<LoginForm> {
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText:
-                              tr('onboarding_screen.login-email-hintlabel'),
+                              tr(translationKeys.onboardingScreen.loginEmailHintlabel),
                           hintStyle: Theme.of(context)
                               .textTheme
                               .bodyLarge
@@ -114,7 +115,7 @@ class _LoginFormState extends State<LoginForm> {
                                 color: Theme.of(context).colorScheme.secondary,
                               ),
                           errorText: _mailValidate
-                              ? tr('onboarding_screen.login-email-errorlabel')
+                              ? tr(translationKeys.onboardingScreen.loginEmailErrorlabel)
                               : null,
                         ),
                         onTap: () {
@@ -140,10 +141,10 @@ class _LoginFormState extends State<LoginForm> {
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText:
-                              tr('onboarding_screen.login-password-hintlabel'),
+                              tr(translationKeys.onboardingScreen.loginPasswordHintlabel),
                           errorText: _passValidate
                               ? tr(
-                                  'onboarding_screen.login-password-errorlabel',
+                                  translationKeys.onboardingScreen.loginPasswordErrorlabel,
                                 )
                               : null,
                           hintStyle: Theme.of(context)
@@ -181,7 +182,7 @@ class _LoginFormState extends State<LoginForm> {
               // ),
 
               SignInSignUpButton(
-                text: tr('onboarding_screen.login-lip-login-button'),
+                text: tr(translationKeys.onboardingScreen.loginLipLoginButton),
                 callback: () {
                   setState(() {
                     _mailController!.text.isEmpty
@@ -214,7 +215,7 @@ class _LoginFormState extends State<LoginForm> {
                 // Works only on iOS at the moment (according to Google)
                 SignInWithAppleButton(
                   onPressed: context.read<AuthenticationService>().signInWithApple,
-                  text: tr('onboarding_screen.apple-button'),
+                  text: tr(translationKeys.onboardingScreen.appleButton),
                   height: context.proportionateScreenHeight(40),
                 ),
               ],

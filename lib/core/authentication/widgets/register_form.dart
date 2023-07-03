@@ -15,6 +15,7 @@ import 'package:linum/core/authentication/widgets/sign_in_sign_up_button.dart';
 import 'package:linum/core/authentication/widgets/sign_in_with_google_button.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/core/navigation/url_handler.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/onboarding_screen/viewmodels/onboarding_screen_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -62,9 +63,9 @@ class _RegisterFormState extends State<RegisterForm> {
         onNotVerified: () {
           showAlertDialog(
             context,
-            message: tr("alertdialog.signup-verification.message"),
-            title: tr("alertdialog.signup-verification.title"),
-            actionTitle: tr("alertdialog.signup-verification.action"),
+            message: tr(translationKeys.alertdialog.signupVerification.message),
+            title: tr(translationKeys.alertdialog.signupVerification.title),
+            actionTitle: tr(translationKeys.alertdialog.signupVerification.action),
           );
           viewModel.setEmailLoginInputSilently(mail);
           _mailController.clear();
@@ -81,7 +82,7 @@ class _RegisterFormState extends State<RegisterForm> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 12.0),
           child: Text(
-            tr('onboarding_screen.register-lip-title').toUpperCase(),
+            tr(translationKeys.onboardingScreen.registerLipTitle).toUpperCase(),
             style: Theme.of(context).textTheme.headlineSmall,
           ),
         ),
@@ -119,7 +120,7 @@ class _RegisterFormState extends State<RegisterForm> {
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText:
-                              tr('onboarding_screen.register-email-hintlabel'),
+                              tr(translationKeys.onboardingScreen.registerEmailHintlabel),
                           hintStyle: Theme.of(context)
                               .textTheme
                               .bodyLarge
@@ -128,7 +129,7 @@ class _RegisterFormState extends State<RegisterForm> {
                               ),
                           errorText: _mailValidate
                               ? tr(
-                                  'onboarding_screen.register-email-errorlabel',
+                                  translationKeys.onboardingScreen.registerEmailErrorlabel,
                                 )
                               : null,
                         ),
@@ -157,7 +158,7 @@ class _RegisterFormState extends State<RegisterForm> {
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: tr(
-                            'onboarding_screen.register-password-hintlabel',
+                            translationKeys.onboardingScreen.registerPasswordHintlabel,
                           ),
                           hintStyle: Theme.of(context)
                               .textTheme
@@ -167,7 +168,7 @@ class _RegisterFormState extends State<RegisterForm> {
                               ),
                           errorText: _passValidate
                               ? tr(
-                                  'onboarding_screen.register-password-errorlabel',
+                                  translationKeys.onboardingScreen.registerPasswordErrorlabel,
                                 )
                               : null,
                         ),
@@ -198,7 +199,7 @@ class _RegisterFormState extends State<RegisterForm> {
               //   ),
               // ),
               SignInSignUpButton(
-                text: tr('onboarding_screen.register-lip-signup-button'),
+                text: tr(translationKeys.onboardingScreen.registerLipSignupButton),
                 callback: () {
                   setState(() {
                     _mailController.text.isEmpty
@@ -229,7 +230,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 SignInWithAppleButton(
                   onPressed: context.read<AuthenticationService>()
                       .signInWithApple,
-                  text: tr('onboarding_screen.apple-button'),
+                  text: tr(translationKeys.onboardingScreen.appleButton),
                 )
               ],
               SizedBox(
@@ -240,7 +241,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   children: [
                     TextSpan(
                       text: tr(
-                        'onboarding_screen.register-privacy.label-leading',
+                        translationKeys.onboardingScreen.registerPrivacy.labelLeading,
                       ),
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.w600,
@@ -248,7 +249,7 @@ class _RegisterFormState extends State<RegisterForm> {
                           ),
                     ),
                     TextSpan(
-                      text: tr('onboarding_screen.register-privacy.label-link'),
+                      text: tr(translationKeys.onboardingScreen.registerPrivacy.labelLink),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () async {
                           launchURL(
@@ -263,7 +264,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     ),
                     TextSpan(
                       text: tr(
-                        'onboarding_screen.register-privacy.label-trailing',
+                        translationKeys.onboardingScreen.registerPrivacy.labelTrailing,
                       ),
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.w600,

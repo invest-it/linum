@@ -10,6 +10,7 @@ import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:linum/core/authentication/services/authentication_service.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/core/navigation/get_delegate.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/lock_screen/services/pin_code_service.dart';
 import 'package:provider/provider.dart';
 
@@ -31,7 +32,7 @@ class _LogoutFormState extends State<LogoutForm> {
           child: Consumer<AuthenticationService>(
             builder: (context, authService, _) {
               return Text(
-                tr('logout_form.label-current-email') + authService.userEmail,
+                tr(translationKeys.logoutForm.labelCurrentEmail) + authService.userEmail,
                 style: Theme.of(context).textTheme.bodyLarge,
                 textAlign: TextAlign.center,
               );
@@ -58,7 +59,7 @@ class _LogoutFormState extends State<LogoutForm> {
           increaseWidthBy: double.infinity,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           child: Text(
-            tr('settings_screen.system-settings.button-signout'),
+            tr(translationKeys.settingsScreen.systemSettings.buttonSignout),
             style: Theme.of(context).textTheme.labelLarge,
           ),
         ),

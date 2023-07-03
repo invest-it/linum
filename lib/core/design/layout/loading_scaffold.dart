@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 
 
 
@@ -19,7 +20,7 @@ class LoadingScaffold extends StatelessWidget {
               child: CircularProgressIndicator(),
             ),
             Text(
-              tr("main.label-loading"),
+              tr(translationKeys.main.labelLoading),
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headlineSmall,
             ),

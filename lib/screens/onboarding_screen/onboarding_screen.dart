@@ -16,6 +16,7 @@ import 'package:linum/core/authentication/services/authentication_service.dart';
 import 'package:linum/core/design/layout/enums/screen_key.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/onboarding_screen/constants/country_codes.dart';
 import 'package:linum/screens/onboarding_screen/models/onboarding_slide_data.dart';
 import 'package:linum/screens/onboarding_screen/viewmodels/onboarding_screen_viewmodel.dart';
@@ -45,26 +46,26 @@ class _OnboardingScreenState extends State<OnboardingPage> {
     _slides = [
       OnboardingSlideData(
         imageURL: 'assets/svg/mobile-login.svg',
-        heading: 'onboarding_screen.card1-title',
+        heading: translationKeys.onboardingScreen.card1Title,
         freepikURL: 'https://storyset.com/phone',
-        description: 'onboarding_screen.card1-description',
+        description: translationKeys.onboardingScreen.card1Description,
       ),
       OnboardingSlideData(
         imageURL: 'assets/svg/refund.svg',
-        heading: 'onboarding_screen.card2-title',
+        heading: translationKeys.onboardingScreen.card2Title,
         freepikURL: 'https://storyset.com/device',
-        description: 'onboarding_screen.card2-description',
+        description: translationKeys.onboardingScreen.card2Description,
       ),
       OnboardingSlideData(
         imageURL: 'assets/svg/video-files.svg',
-        heading: 'onboarding_screen.card3-title',
-        description: 'onboarding_screen.card3-description',
+        heading: translationKeys.onboardingScreen.card3Title,
+        description: translationKeys.onboardingScreen.card3Description,
         freepikURL: 'https://storyset.com/technology',
       ),
       OnboardingSlideData(
         imageURL: 'assets/svg/financial-data.svg',
-        heading: 'onboarding_screen.card4-title',
-        description: 'onboarding_screen.card4-description',
+        heading: translationKeys.onboardingScreen.card4Title,
+        description: translationKeys.onboardingScreen.card4Description,
         freepikURL: 'https://storyset.com/data',
       ),
     ];
@@ -193,7 +194,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
-                          tr('onboarding_screen.register-button'),
+                          tr(translationKeys.onboardingScreen.registerButton),
                           style: Theme.of(context).textTheme.labelLarge,
                         ),
                       ),
@@ -204,7 +205,7 @@ class _OnboardingScreenState extends State<OnboardingPage> {
                   ),
                   CupertinoButton(
                     child: Text(
-                      tr('onboarding_screen.login-button'),
+                      tr(translationKeys.onboardingScreen.loginButton),
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                             color: Theme.of(context).colorScheme.onSurface,
                           ),

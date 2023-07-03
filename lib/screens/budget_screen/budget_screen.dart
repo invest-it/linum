@@ -10,6 +10,7 @@ import 'package:linum/common/utils/silent_scroll.dart';
 import 'package:linum/core/balance/services/algorithm_service.dart';
 import 'package:linum/core/design/layout/widgets/app_bar_action.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/home_screen/widgets/home_screen_listview.dart';
 import 'package:provider/provider.dart';
 
@@ -37,7 +38,7 @@ class BudgetScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 15.0),
                 child: Text(
-                  tr('budget_screen.label-all-transactions'),
+                  tr(translationKeys.budgetScreen.labelAllTransactions),
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ),
@@ -46,7 +47,7 @@ class BudgetScreen extends StatelessWidget {
                 child: TextButton(
                   onPressed: () {},
                   child: Text(
-                    tr('budget_screen.button-filter').toUpperCase(),
+                    tr(translationKeys.budgetScreen.buttonFilter).toUpperCase(),
                     style: Theme.of(context).textTheme.labelSmall?.copyWith(
                           color: Theme.of(context).colorScheme.primary,
                           fontSize: 14,

@@ -7,6 +7,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 
 
 
@@ -49,7 +50,7 @@ class SignInWithGoogleButton extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 14),
               child: Text(
-                tr('onboarding_screen.google-button'),
+                tr(translationKeys.onboardingScreen.googleButton),
                 style: Theme.of(context).textTheme.labelLarge?.copyWith(
                       fontWeight: FontWeight.w500,
                       color: Theme.of(context).colorScheme.secondary,

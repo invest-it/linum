@@ -36,7 +36,7 @@ class _SingleSlideState extends State<SingleSlide> {
             ),
             child: CupertinoButton(
               child: Text(
-                tr('onboarding_screen.svg-credit-label'),
+                tr('onboardingScreen.svg-credit-label'),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               onPressed: () => {
