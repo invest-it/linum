@@ -92,5 +92,3 @@ class _StandardCategorySelectorState extends State<StandardCategorySelector> {
     );
   }
 }
-
-

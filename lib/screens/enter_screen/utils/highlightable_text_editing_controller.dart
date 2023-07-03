@@ -135,7 +135,6 @@ class HighlightableTextEditingController extends TextEditingController {
 
   @override
   set value(TextEditingValue newValue) {
-
     final int oldCursor = value.selection.base.offset;
     int newCursor = newValue.selection.base.offset;
 
@@ -143,10 +142,11 @@ class HighlightableTextEditingController extends TextEditingController {
     String newText = newValue.text;
 
 
-    // print("New: '$newText', $newCursor");
-    // print("Old: '$oldText', $oldCursor");
+    print("New: '$newText', $newCursor");
+    print("Old: '$oldText', $oldCursor");
     if (oldText == newText) {
       if (newCursor == oldCursor) {
+        super.value = newValue;
         return;
       }
       super.value = newValue;
@@ -185,12 +185,22 @@ class HighlightableTextEditingController extends TextEditingController {
     final textLengthDiff = calculateTextLengthDifference(restoredCursor, placeholders);
     newCursor = restoredCursor - textLengthDiff;
 
-    // print("Final: '$newText', $newCursor");
-    // print(newText.runes);
+    print("Final: '$newText', $newCursor");
+    print(newText.runes);
+
+    final newSelection = getSelectionFromCursor(newCursor);
+    final newComposing = TextRange(
+        start: newValue.composing.start,
+        end: newValue.composing.end == -1 ? -1 : newCursor,
+    );
+    print(newSelection);
+    print(newValue.composing);
+    print(newComposing);
 
     super.value = newValue.copyWith(
       text: newText,
-      selection: getSelectionFromCursor(newCursor),
+      selection: newSelection,
+      composing: newComposing,
     );
   }
 
