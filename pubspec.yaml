@@ -29,6 +29,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   dart_style: ^2.2.3
   easy_localization: ^3.0.2
+  easy_localization_loader: ^1.0.1+1
   enum_to_string: ^2.0.1
 
   firebase_auth: ^4.6.2
@@ -76,6 +77,9 @@ dev_dependencies:
     sdk: flutter
   json_serializable: ^6.4.1
   lint: ^2.1.2
+  localization_tools:
+    git:
+      url: "https://github.com/damattl/localization-tools.git"
 
 flutter_icons:
   android: true
@@ -111,7 +115,7 @@ flutter:
   assets:
     - assets/images/
     - assets/svg/
-    - lang/
+    - assets/lang/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

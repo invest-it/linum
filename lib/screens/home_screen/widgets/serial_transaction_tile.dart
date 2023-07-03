@@ -116,7 +116,7 @@ class SerialTransactionTile extends StatelessWidget {
           return "${tr('listview.label-every')} ${(duration / 12).floor()} ${tr('listview.label-years')}";
         }
         if (duration == 1) {
-          return "$formattedAmount ${tr('enter_screen.repeat.30days')}";
+          return "$formattedAmount ${tr('enter_screen.repeat.thirty_days')}";
         } else if (duration == 3) {
           return "$formattedAmount ${tr('enter_screen.repeat.quarterly')}";
         } else if (duration == 6) {

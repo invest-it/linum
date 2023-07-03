@@ -208,7 +208,6 @@
             "today": "Hoy"
         },
         "repeat": {
-            "30days": "Mensualmente",
             "annually": "Anual",
             "daily": "Diario",
             "freeselect": "Seleccione libremente",
@@ -217,7 +216,8 @@
             "quarterly": "Cada 3 meses",
             "semiannually": "Semestral",
             "weekly": "Semanal",
-            "custom": "A medida"
+            "custom": "A medida",
+            "thirty_days": "Mensualmente"
         },
         "menu": {
             "category": "Categoría",

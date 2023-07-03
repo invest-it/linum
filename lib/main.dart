@@ -49,7 +49,7 @@ class _LifecycleWatcherState extends State<LifecycleWatcher> {
   Widget build(BuildContext context) {
     return EasyLocalization(
       supportedLocales: supportedLocales,
-      path: 'lang',
+      path: 'assets/lang',
       fallbackLocale: const Locale('de', 'DE'),
       child: LinumApp(widget.store, testing: widget.testing),
     );

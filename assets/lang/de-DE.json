@@ -211,7 +211,6 @@
             "today": "Heute"
         },
         "repeat": {
-            "30days": "Monatlich",
             "annually": "Jährlich",
             "daily": "Täglich",
             "freeselect": "Frei auswählen",
@@ -220,7 +219,8 @@
             "quarterly": "Alle 3 Monate",
             "semiannually": "Halbjährlich",
             "weekly": "Wöchentlich",
-            "custom": "Benutzerdefiniert"
+            "custom": "Benutzerdefiniert",
+            "thirty_days": "Monatlich"
         },
         "menu": {
             "category": "Kategorie",

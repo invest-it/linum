@@ -27,7 +27,7 @@ final repeatConfigurations = <RepeatInterval, RepeatConfiguration>{
   ),
   RepeatInterval.monthly: const RepeatConfiguration(
     interval: RepeatInterval.monthly,
-    label: 'enter_screen.repeat.30days',
+    label: 'enter_screen.repeat.thirty_days',
     icon: Icons.calendar_view_month_rounded,
     duration: 1,
     durationType: RepeatDurationType.months,

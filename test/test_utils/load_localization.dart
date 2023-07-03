@@ -9,7 +9,7 @@ import 'package:easy_localization/src/translations.dart';
 /// Default Locale is `en-US`.
 Future<void> loadLocalization({String locale = "en-US"}) async {
 
-  final content = await File('./lang/$locale.json').readAsString();
+  final content = await File('./assets/lang/$locale.json').readAsString();
   final data = jsonDecode(content) as Map<String, dynamic>;
 
   final localeSplits = locale.split('-');

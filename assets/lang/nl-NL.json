@@ -211,7 +211,6 @@
             "today": "Vandaag"
         },
         "repeat": {
-            "30days": "Maandelijks",
             "annually": "Jaarlijks",
             "daily": "Dagelijks",
             "freeselect": "Selecteer vrij",
@@ -220,7 +219,8 @@
             "quarterly": "Elke 3 maanden",
             "semiannually": "Halfjaarlijks",
             "weekly": "Wekelijks",
-            "custom": "Aangepaste"
+            "custom": "Aangepaste",
+            "thirty_days": "Maandelijks"
         },
         "menu": {
             "category": "Categorie",
