@@ -112,6 +112,34 @@ class EnterScreenInput {
         'repeatInfo: $repeatInfo'
         ')';
   }
+
+
+
+  @override
+  bool operator ==(Object other) {
+    if (other is EnterScreenInput) {
+      return raw == other.raw &&
+          amount == other.amount &&
+          currency == other.currency &&
+          name == other.name &&
+          category == other.category &&
+          date == other.date &&
+          repeatInfo == other.repeatInfo;
+    }
+    return false;
+  }
+
+  @override
+  int get hashCode {
+    return raw.hashCode ^
+        amount.hashCode ^
+        currency.hashCode ^
+        name.hashCode ^
+        category.hashCode ^
+        date.hashCode ^
+        repeatInfo.hashCode;
+  }
+
 }
 
 
