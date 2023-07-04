@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:linum/objectbox.g.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model.dart';
-import 'package:linum/screens/enter_screen/widgets/enter_screen_menu.dart';
+import 'package:linum/screens/enter_screen/widgets/menu/enter_screen_menu_scaffold.dart';
 import 'package:provider/provider.dart';
 
 void showEnterScreenMenu({
@@ -14,7 +13,7 @@ void showEnterScreenMenu({
     backgroundColor: Colors.transparent,
     context: context,
     builder: (context) {
-      return EnterScreenMenu(title: title, content: content);
+      return EnterScreenMenuScaffold(title: title, content: content);
     },
   );
   viewModel.isBottomSheetOpened = true;

@@ -1,6 +1,6 @@
 import 'package:linum/features/currencies/data/exchange_rate_api.dart';
 import 'package:linum/features/currencies/models/exchange_rates_for_date.dart';
-import 'package:linum/objectbox.g.dart';
+import 'package:linum/generated/objectbox/objectbox.g.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ExchangeRateSynchronizer {

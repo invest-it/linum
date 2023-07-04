@@ -6,12 +6,12 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/application_services.dart';
 import 'package:linum/core/design/theme/constants/main_theme_data.dart';
 import 'package:linum/core/navigation/main_route_information_parser.dart';
 import 'package:linum/core/navigation/main_router_delegate.dart';
 import 'package:linum/core/navigation/main_routes.dart';
-import 'package:linum/objectbox.g.dart';
+import 'package:linum/generated/objectbox/objectbox.g.dart';
+import 'package:linum/services.dart';
 
 class LinumApp extends StatelessWidget {
   final bool? testing;

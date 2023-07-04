@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/screens/enter_screen/models/suggestion.dart';
 import 'package:linum/screens/enter_screen/utils/suggestions/get_sub_suggestions.dart';
-import 'package:linum/screens/enter_screen/widgets/suggestion_list_item.dart';
+import 'package:linum/screens/enter_screen/widgets/overlay/suggestion_list_item.dart';
 
 void _onSelection(
   Suggestion suggestion,

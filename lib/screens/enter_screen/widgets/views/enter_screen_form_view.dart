@@ -7,8 +7,8 @@ import 'package:linum/screens/enter_screen/widgets/buttons/continue_button.dart'
 import 'package:linum/screens/enter_screen/widgets/buttons/delete_button.dart';
 import 'package:linum/screens/enter_screen/widgets/buttons/entry_type_switch.dart';
 import 'package:linum/screens/enter_screen/widgets/enter_screen_scaffold.dart';
-import 'package:linum/screens/enter_screen/widgets/enter_screen_text_field.dart';
-import 'package:linum/screens/enter_screen/widgets/quick_tag_menu.dart';
+import 'package:linum/screens/enter_screen/widgets/form/enter_screen_text_field.dart';
+import 'package:linum/screens/enter_screen/widgets/form/quick_tag_menu.dart';
 import 'package:provider/provider.dart';
 
 class EnterScreenFormView extends StatelessWidget {

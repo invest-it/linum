@@ -49,8 +49,6 @@ void main() {
           indices: (start: 12, end: 18),
         ),
       );
-      print(expected);
-      print(result);
 
       expect(result, expected);
     });

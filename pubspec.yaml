@@ -143,4 +143,6 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 
+object_box:
+  output_dir: "lib/generated/object_box"
 

@@ -16,6 +16,8 @@ class EnterScreenScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const radius = Radius.circular(16.0);
+
     return ConstrainedBox(
       constraints: BoxConstraints(
         maxHeight: context.proportionateScreenHeightFraction(ScreenFraction.threefifths) + useKeyBoardHeight(context),
@@ -35,7 +37,7 @@ class EnterScreenScaffold extends StatelessWidget {
             Container(
               decoration: const BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(16.0)),
+                borderRadius: BorderRadius.only(topLeft: radius, topRight: radius),
               ),
               height: bodyHeight,
               width: bodyWidth,

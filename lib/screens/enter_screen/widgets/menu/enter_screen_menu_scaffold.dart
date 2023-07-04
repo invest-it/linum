@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class EnterScreenMenu extends StatelessWidget {
+class EnterScreenMenuScaffold extends StatelessWidget {
   final String? title;
   final Widget content;
-  const EnterScreenMenu({
+  const EnterScreenMenuScaffold({
     super.key,
     required this.title,
     required this.content,
@@ -31,10 +31,11 @@ class EnterScreenMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const radius = Radius.circular(16.0);
     return Container(
       decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(16.0)),
+        borderRadius: BorderRadius.only(topLeft: radius, topRight: radius),
       ),
       child: Flex(
         direction: Axis.vertical,

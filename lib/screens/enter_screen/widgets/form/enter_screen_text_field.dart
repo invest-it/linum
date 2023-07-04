@@ -47,12 +47,12 @@ class EnterScreenTextField extends StatelessWidget {
         return Stack(
           children: [
             TextField(
-
               decoration: const InputDecoration(
                 border: InputBorder.none,
                 isDense: true,
               ),
               keyboardType: TextInputType.multiline,
+              maxLines: null,
               style: baseTextStyle,
               key: _key,
               controller: textFieldViewModel.textController,

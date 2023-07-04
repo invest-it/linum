@@ -17,7 +17,7 @@ import 'package:linum/screens/enter_screen/utils/highlightable_text_editing_cont
 import 'package:linum/screens/enter_screen/utils/string_from_existing_data.dart';
 import 'package:linum/screens/enter_screen/utils/suggestions/insert_suggestion.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_form_view_model.dart';
-import 'package:linum/screens/enter_screen/widgets/suggestion_list.dart';
+import 'package:linum/screens/enter_screen/widgets/overlay/suggestion_list.dart';
 import 'package:provider/provider.dart';
 
 

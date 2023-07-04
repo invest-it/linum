@@ -8,10 +8,10 @@ import 'package:linum/screens/enter_screen/utils/date_formatter.dart';
 import 'package:linum/screens/enter_screen/utils/show_enter_screen_menu.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_form_view_model.dart';
 import 'package:linum/screens/enter_screen/widgets/buttons/tag_selector_button.dart';
-import 'package:linum/screens/enter_screen/widgets/views/menu/category_list_view.dart';
-import 'package:linum/screens/enter_screen/widgets/views/menu/currency_list_view.dart';
-import 'package:linum/screens/enter_screen/widgets/views/menu/notes_view.dart';
-import 'package:linum/screens/enter_screen/widgets/views/menu/repeat_config_list_view.dart';
+import 'package:linum/screens/enter_screen/widgets/menu/category_list_view.dart';
+import 'package:linum/screens/enter_screen/widgets/menu/currency_list_view.dart';
+import 'package:linum/screens/enter_screen/widgets/menu/notes_view.dart';
+import 'package:linum/screens/enter_screen/widgets/menu/repeat_config_list_view.dart';
 import 'package:provider/provider.dart';
 
 class QuickTagColors {

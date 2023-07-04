@@ -8,7 +8,7 @@ import 'package:linum/features/currencies/models/exchange_rate_info.dart';
 import 'package:linum/features/currencies/models/exchange_rates_for_date.dart';
 import 'package:linum/features/currencies/repositories/exchange_rate_repository.dart';
 import 'package:linum/features/currencies/utils/int_list_extensions.dart';
-import 'package:linum/objectbox.g.dart';
+import 'package:linum/generated/objectbox/objectbox.g.dart';
 import 'package:provider/provider.dart';
 
 class ExchangeRateService extends ChangeNotifier {

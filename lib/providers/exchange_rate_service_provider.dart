@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:linum/core/account/services/account_settings_service.dart';
 import 'package:linum/features/currencies/services/exchange_rate_service.dart';
-import 'package:linum/objectbox.g.dart';
+import 'package:linum/generated/objectbox/objectbox.g.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
