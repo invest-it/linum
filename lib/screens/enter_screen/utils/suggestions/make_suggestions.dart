@@ -17,6 +17,7 @@ Map<String, Suggestion> makeSuggestions(String text, int cursor, {
   final textBefore = text.substring(0, cursor).split('#');
   // final textAfter = text.substring(cursor, text.length).split('#');
   if (textBefore.length == 1) {
+    print("WTF");
     return {};
   }
   final preCursorText = textBefore[textBefore.length - 1];

@@ -5,9 +5,8 @@ import 'package:linum/screens/enter_screen/viewmodels/enter_screen_text_field_vi
 import 'package:provider/provider.dart';
 
 class EnterScreenTextField extends StatelessWidget {
-  final GlobalKey _key = LabeledGlobalKey("text_field");
 
-  EnterScreenTextField({
+  const EnterScreenTextField({
     super.key,
   });
 
@@ -23,20 +22,17 @@ class EnterScreenTextField extends StatelessWidget {
     >(
       create: (context) => EnterScreenTextFieldViewModel(
           context,
-          textFieldKey: _key,
       ),
       update: (context, formViewModel, textFieldViewModel) {
         if (textFieldViewModel == null) {
           return EnterScreenTextFieldViewModel(
             context,
-            textFieldKey: _key,
           );
         }
         if (formViewModel.entryType != textFieldViewModel.entryType) {
           debug("'${textFieldViewModel.textController.text}'");
           return EnterScreenTextFieldViewModel(
             context,
-            textFieldKey: _key,
             prevControllerText: textFieldViewModel.textController.trueText,
           );
         }
@@ -53,8 +49,9 @@ class EnterScreenTextField extends StatelessWidget {
               ),
               keyboardType: TextInputType.multiline,
               maxLines: null,
+              autofocus: true,
               style: baseTextStyle,
-              key: _key,
+              key: textFieldViewModel.textFieldKey,
               controller: textFieldViewModel.textController,
             ),
           ],

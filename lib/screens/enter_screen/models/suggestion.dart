@@ -20,4 +20,9 @@ class Suggestion {
     }
     return plainText ?? "";
   }
+
+  @override
+  String toString() {
+    return 'Suggestion(flag: $flag, label: $label, plainText: $plainText)';
+  }
 }

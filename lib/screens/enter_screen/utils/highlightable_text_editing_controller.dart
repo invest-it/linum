@@ -156,7 +156,7 @@ class HighlightableTextEditingController extends TextEditingController {
     final restoredText = restoreText(newText, _placeholderMap);
     final restoredCursor = restoreCursor(newText, newCursor, _placeholderMap);
     trueText = restoredText;
-    // print("Restored: '$restoredText', $restoredCursor");
+    print("Restored: '$restoredText', $restoredCursor");
 
 
     final parsed = InputParser().parse(restoredText);
@@ -175,6 +175,7 @@ class HighlightableTextEditingController extends TextEditingController {
       repeatFilter: suggestionFilters?.repeatFilter,
       dateFilter: suggestionFilters?.dateFilter,
     );
+    print(_suggestions);
     // updatePlaceholders(newText, newCursor, placeholders);
 
     _placeholderMap = placeholders;
@@ -189,10 +190,14 @@ class HighlightableTextEditingController extends TextEditingController {
     print(newText.runes);
 
     final newSelection = getSelectionFromCursor(newCursor);
-    final newComposing = TextRange(
+    /* final newComposing = TextRange(
         start: newValue.composing.start,
         end: newValue.composing.end == -1 ? -1 : newCursor,
-    );
+    ); */
+
+    const newComposing = TextRange.empty;
+
+
     print(newSelection);
     print(newValue.composing);
     print(newComposing);

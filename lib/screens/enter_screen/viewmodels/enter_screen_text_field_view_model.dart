@@ -22,17 +22,17 @@ import 'package:provider/provider.dart';
 
 
 class EnterScreenTextFieldViewModel extends ChangeNotifier {
-  late final GlobalKey textFieldKey;
+
   late final BuildContext _context;
   late HighlightableTextEditingController textController;
   late EnterScreenFormViewModel _formViewModel;
   late EntryType entryType;
   late StreamSubscription _streamSubscription;
 
+  final GlobalKey textFieldKey = LabeledGlobalKey("text_field");
 
   EnterScreenTextFieldViewModel(
       BuildContext context, {
-        required this.textFieldKey,
         String? prevControllerText,
   }) {
     _context = context;
