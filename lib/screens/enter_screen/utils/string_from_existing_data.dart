@@ -26,7 +26,7 @@ class StringBuilder {
   }
 
   StringBuilder useEnterScreenData(EnterScreenData data) {
-    _amount = data.amount?.toString() ?? "";
+    _amount = data.amount?.abs().toString() ?? "";
     _currency = data.currency?.name ?? "";
     _name = data.name ?? "";
 

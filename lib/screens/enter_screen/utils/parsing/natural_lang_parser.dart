@@ -7,15 +7,16 @@ import 'package:linum/screens/enter_screen/models/parsed_input.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/get_text_indices.dart';
 
 final amountRegex = RegExp(
-  r'([a-zA-Z\p{Sc}]{0,3}) ?(-?[0-9]+[,.]?(?:[0-9]{1,2})?) ?([a-zA-Z\p{Sc}]{0,3})(?: (.{0,140}))?$',
+  r"(?:(?<name1>\w{4,140}) )?(?<currency1>[a-zA-Z\p{Sc}]{0,3}) ?(?<amount>-?[0-9]+[,.]?(?:[0-9]{1,2})?)? ?(?<currency2>[a-zA-Z\p{Sc}]{0,3})(?: (?<name2>.{4,140}))?$",
   unicode: true,
 );
 
 class NaturalLangParser {
+  final List<ParsedInput> parsedInputs = [];
+
+
   List<ParsedInput> parse(String input, String raw) {
     final matches = amountRegex.allMatches(input).toList();
-
-    final List<ParsedInput> parsedInputs = [];
 
     if (matches.isEmpty) {
       return parsedInputs;
@@ -23,22 +24,39 @@ class NaturalLangParser {
     }
     final match = matches.toList()[0];
 
-    var currencySubstr = match.group(1);
+
+    var currencySubstr = match.namedGroup("currency1");
     var currencyIndices = getTextIndices(currencySubstr, raw);
 
-    final amountSubstr = match.group(2);
+    final amountSubstr = match.namedGroup("amount");
     final amountIndices = getTextIndices(amountSubstr, raw);
 
-    if (match.group(3) != null && match.group(3) != "") {
-      currencySubstr = match.group(3);
+    final secondCurrencyGroup = match.namedGroup("currency2");
+
+
+
+    final firstNameGroup = match.namedGroup("name1");
+    final secondNameGroup = match.namedGroup("name2");
+
+    String? nameSubstr = firstNameGroup;
+
+    if (isValidCurrency(secondCurrencyGroup)) {
+      currencySubstr = secondCurrencyGroup;
       currencyIndices = getTextIndices(currencySubstr, raw);
     }
-    final nameSubstr = match.group(4)?.trim();
-    final nameIndices = getTextIndices(nameSubstr, raw);
 
-    addParsedAmount(amountSubstr, amountIndices, parsedInputs);
-    addParsedCurrency(currencySubstr, currencyIndices, parsedInputs);
-    addParsedName(nameSubstr, nameIndices, parsedInputs);
+    if (secondNameGroup != null) {
+      nameSubstr = secondNameGroup;
+    }
+
+    final nameIndices = getTextIndices(nameSubstr, raw);
+    
+    addParsedAmount(amountSubstr, amountIndices);
+    addParsedCurrency(
+        currencySubstr?.replaceAll("-", ""),
+        currencyIndices,
+    );
+    addParsedName(nameSubstr, nameIndices);
 
     return parsedInputs;
   }
@@ -46,7 +64,6 @@ class NaturalLangParser {
   void addParsedName(
       String? substr,
       TextIndices? indices,
-      List<ParsedInput> parsedInputs,
       ) {
     if (substr != null) {
       parsedInputs.add(
@@ -63,7 +80,6 @@ class NaturalLangParser {
   void addParsedAmount(
       String? substr,
       TextIndices? indices,
-      List<ParsedInput> parsedInputs,
       ) {
     final amount = double.tryParse(
       substr?.replaceAll(",", ".") ?? "",
@@ -81,18 +97,12 @@ class NaturalLangParser {
     }
   }
 
+
   void addParsedCurrency(
       String? substr,
       TextIndices? indices,
-      List<ParsedInput> parsedInputs,
   ) {
-    Currency? currency;
-    if (substr != null) {
-      currency = standardCurrencies[substr];
-      currency ??= standardCurrencies.entries
-          .firstWhereOrNull((element) => element.value.symbol == substr)?.value;
-    }
-
+    final currency = getCurrencyFromSubstring(substr);
     if (currency != null && substr != null) {
       parsedInputs.add(
         ParsedInput<Currency>(

@@ -4,6 +4,7 @@
 //  Co-Author: damattl
 //  (Refactored)
 
+import 'package:collection/collection.dart';
 import 'package:linum/features/currencies/models/currency.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 
@@ -134,3 +135,19 @@ final standardCurrencies = Map<String, Currency>.unmodifiable({
     symbol: 'R',
   ),
 });
+
+
+Currency? getCurrencyFromSubstring(String? substring) {
+  final currency = standardCurrencies[substring];
+  return currency ?? standardCurrencies.entries
+      .firstWhereOrNull((element) => element.value.symbol == substring)?.value;
+
+}
+
+bool isValidCurrency(String? substring) {
+  if (substring == null) {
+    return false;
+  }
+
+  return getCurrencyFromSubstring(substring) != null;
+}

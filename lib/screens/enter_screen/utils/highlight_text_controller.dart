@@ -45,7 +45,7 @@ class HighlightTextEditingController extends TextEditingController {
       super.value = newValue;
       return;
     }
-    
+
     final parser = InputParser()
         ..categoryFilter = parsingFilters?.categoryFilter
         ..repeatFilter = parsingFilters?.repeatFilter
