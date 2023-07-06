@@ -41,8 +41,9 @@ class EnterScreenTextFieldViewModel extends ChangeNotifier {
     final accountSettingsService = context.read<AccountSettingsService>();
 
     entryType = _formViewModel.entryType;
+    print(entryType);
 
-    final defaultCategory = _formViewModel.entryType == EntryType.expense
+    final defaultCategory = entryType == EntryType.expense
         ? accountSettingsService.getExpenseEntryCategory()
         : accountSettingsService.getIncomeEntryCategory();
 
@@ -55,15 +56,14 @@ class EnterScreenTextFieldViewModel extends ChangeNotifier {
         defaultDate: parsableDateMap[ParsableDate.today]!,
         defaultRepeatInfo: repeatConfigurations[RepeatInterval.none]!.label,
       ),
-      suggestionFilters: SuggestionFilters(
-        categoryFilter: (category) => category.entryType == _formViewModel.entryType,
+      parsingFilters: ParsingFilters(
+        categoryFilter: (category) => category.entryType == entryType,
       ),
     );
 
     if (_formViewModel.withExistingData) {
-      // Needs to be refactored alot
+      // Needs to be refactored a lot
       if (!_formViewModel.data.isParsed) {
-
         final text = StringBuilder()
             .useEnterScreenData(_formViewModel.data)
             .build();
@@ -74,6 +74,7 @@ class EnterScreenTextFieldViewModel extends ChangeNotifier {
 
     if (prevControllerText != null) {
       textController.text = prevControllerText;
+      print(textController.parsed);
     }
 
     textController.addListener(() {

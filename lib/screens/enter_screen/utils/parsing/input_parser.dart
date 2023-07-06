@@ -1,4 +1,9 @@
 
+import 'package:linum/common/types/filter_function.dart';
+import 'package:linum/core/categories/models/category.dart';
+import 'package:linum/core/repeating/enums/repeat_interval.dart';
+import 'package:linum/screens/enter_screen/enums/input_flag.dart';
+import 'package:linum/screens/enter_screen/enums/parsable_date.dart';
 import 'package:linum/screens/enter_screen/models/enter_screen_input.dart';
 import 'package:linum/screens/enter_screen/models/parsed_input.dart';
 import 'package:linum/screens/enter_screen/models/parsed_input_tag.dart';
@@ -12,6 +17,11 @@ final RegExp splitRegex = RegExp("(?=#)|(?=@)");
 final RegExp trimTagRegex = RegExp("(#)|(@)");
 
 class InputParser {
+  Filter<Category>? categoryFilter;
+  Filter<RepeatInterval>? repeatFilter;
+  Filter<ParsableDate>? dateFilter;
+
+
   EnterScreenInput parse(String? input) {
     if (input == null || input.isEmpty) {
       return EnterScreenInput(input ?? "");
@@ -58,31 +68,55 @@ class InputParser {
     final trimmedTag = tag.replaceAll(trimTagRegex, "");
     final parsedTag = TagParser().parse(trimmedTag);
 
-    if (parsedTag.flag != null) {
-      final fun = parserFunctions[parsedTag.flag];
-      if (fun != null) {
-        final result = fun(parsedTag.text);
+    switch(parsedTag.flag) {
+      case InputFlag.category:
+        final result = categoryParser(parsedTag.text, filter: categoryFilter);
         if (result != null) {
           return ParsedInputTag(
-            flag: parsedTag.flag!,
+            flag: InputFlag.category,
             indices: getTextIndices(tag.trimRight(), fullInput),
             value: result,
             raw: tag.trimRight(),
           );
         }
-      }
-    } else {
-      final guess = findFitting(parsedTag.text);
-      if (guess == null) {
-        return null;
-      }
-      return ParsedInputTag(
+      case InputFlag.repeatInfo:
+        final result = repeatInfoParser(parsedTag.text, filter: repeatFilter);
+        if (result != null) {
+          return ParsedInputTag(
+            flag: InputFlag.repeatInfo,
+            indices: getTextIndices(tag.trimRight(), fullInput),
+            value: result,
+            raw: tag.trimRight(),
+          );
+        }
+      case InputFlag.date:
+        final result = dateParser(parsedTag.text, filter: dateFilter);
+        if (result != null) {
+          return ParsedInputTag(
+            flag: InputFlag.date,
+            indices: getTextIndices(tag.trimRight(), fullInput),
+            value: result,
+            raw: tag.trimRight(),
+          );
+        }
+      case null:
+        final guess = findFitting(
+          parsedTag.text,
+          categoryFilter: categoryFilter,
+          repeatFilter: repeatFilter,
+          dateFilter: dateFilter,
+        );
+        if (guess == null) {
+          return null;
+        }
+        return ParsedInputTag(
           flag: guess.flag,
           value: guess.value,
           raw: tag.trimRight(),
           indices: getTextIndices(tag.trimRight(), fullInput),
-      );
+        );
     }
+
     return null;
   }
 }

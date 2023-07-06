@@ -1,15 +1,21 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:linum/common/types/filter_function.dart';
 import 'package:linum/core/categories/constants/standard_categories.dart';
+import 'package:linum/core/categories/models/category.dart';
+import 'package:linum/core/repeating/enums/repeat_interval.dart';
 import 'package:linum/screens/enter_screen/enums/input_flag.dart';
 import 'package:linum/screens/enter_screen/enums/parsable_date.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/date_parsing.dart';
 import 'package:linum/screens/enter_screen/utils/supported_values.dart';
 
-typedef ParserFunction = String? Function(String input);
 
-String? _categoryParser(String input) {
+String? categoryParser(String input, {Filter<Category>? filter}) {
   final lowercase = input.trim().toLowerCase();
-  for (final entry in standardCategories.entries) {
+  final filteredCategories = standardCategories.entries
+      .where((element) => filter == null || filter(element.value));
+
+
+  for (final entry in filteredCategories) {
     if (lowercase == entry.key) {
       return entry.key;
     }
@@ -21,16 +27,28 @@ String? _categoryParser(String input) {
   return null;
 }
 
-String? _repeatInfoParser(String input) {
+String? repeatInfoParser(String input, {Filter<RepeatInterval>? filter}) {
   final lowercase = input.trim().toLowerCase();
   final repeatInterval = SupportedValues.repeatIntervals[lowercase];
+  if (repeatInterval == null) {
+    return null;
+  }
 
-  return repeatInterval?.name;
+  if (filter == null || filter(repeatInterval)) {
+    return repeatInterval.name;
+  }
+
+  return null;
 }
 
-String? _dateParser(String input) {
+String? dateParser(String input, {Filter<ParsableDate>? filter}) {
   final lowercase = input.trim().toLowerCase();
   final today = DateTime.now();
+
+  // TODO: Implement date filters
+  if (filter != null) {
+    throw Exception("Filters not implemented for dates yet!");
+  }
 
   final parsableDate = SupportedValues.dates[lowercase];
 
@@ -49,22 +67,26 @@ String? _dateParser(String input) {
   }
 }
 
-({InputFlag flag, String value})? findFitting(String text) {
-  var result = _categoryParser(text);
+({InputFlag flag, String value})? findFitting(String text, {
+  Filter<Category>? categoryFilter,
+  Filter<RepeatInterval>? repeatFilter,
+  Filter<ParsableDate>? dateFilter,
+}) {
+  var result = categoryParser(text, filter: categoryFilter);
   if (result != null) {
     return (
       flag: InputFlag.category,
       value: result,
     );
   }
-  result = _repeatInfoParser(text);
+  result = repeatInfoParser(text, filter: repeatFilter);
   if (result != null) {
     return (
       flag: InputFlag.repeatInfo,
       value: result,
     );
   }
-  result = _dateParser(text);
+  result = dateParser(text, filter: dateFilter);
   if (result != null) {
     return (
       flag: InputFlag.date,
@@ -73,9 +95,3 @@ String? _dateParser(String input) {
   }
   return null;
 }
-
-const parserFunctions = <InputFlag, ParserFunction>{
-  InputFlag.category: _categoryParser,
-  InputFlag.date: _dateParser,
-  InputFlag.repeatInfo: _repeatInfoParser,
-};

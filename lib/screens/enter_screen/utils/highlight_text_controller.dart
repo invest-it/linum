@@ -15,11 +15,11 @@ TextSelection getSelectionFromCursor(int cursor) {
 
 class HighlightTextEditingController extends TextEditingController {
   final ExampleStringBuilder exampleStringBuilder;
-  final SuggestionFilters? suggestionFilters;
+  final ParsingFilters? parsingFilters;
 
   HighlightTextEditingController({
     required this.exampleStringBuilder,
-    this.suggestionFilters,
+    this.parsingFilters,
     super.text,
   });
 
@@ -45,18 +45,22 @@ class HighlightTextEditingController extends TextEditingController {
       super.value = newValue;
       return;
     }
+    
+    final parser = InputParser()
+        ..categoryFilter = parsingFilters?.categoryFilter
+        ..repeatFilter = parsingFilters?.repeatFilter
+        ..dateFilter = parsingFilters?.dateFilter;
+    final parsed = parser.parse(newText);
 
-
-    final parsed = InputParser().parse(newText);
 
     exampleStringBuilder.rebuild(parsed);
     _parsed = parsed;
     _suggestions = makeSuggestions(
       newText,
       newCursor, // Cursor position
-      categoryFilter: suggestionFilters?.categoryFilter,
-      repeatFilter: suggestionFilters?.repeatFilter,
-      dateFilter: suggestionFilters?.dateFilter,
+      categoryFilter: parsingFilters?.categoryFilter,
+      repeatFilter: parsingFilters?.repeatFilter,
+      dateFilter: parsingFilters?.dateFilter,
     );
 
     super.value = newValue;

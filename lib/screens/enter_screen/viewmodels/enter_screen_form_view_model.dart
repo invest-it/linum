@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/core/account/services/account_settings_service.dart';
 import 'package:linum/core/categories/constants/standard_categories.dart';
+import 'package:linum/core/categories/models/category.dart';
 import 'package:linum/core/repeating/constants/standard_repeat_configs.dart';
 import 'package:linum/core/repeating/enums/repeat_interval.dart';
 import 'package:linum/features/currencies/constants/standard_currencies.dart';
@@ -52,12 +53,21 @@ class EnterScreenFormViewModel extends ChangeNotifier {
       parentalSerialTransaction?.repeatDurationType,
     );
 
+    entryType = screenViewModel.entryType;
+
+    Category? category = standardCategories[transaction?.category];
+    if (category?.entryType != entryType) {
+      category = null;
+    }
+
+      print(transaction);
+
     _data = EnterScreenData(
       name: transaction?.name,
       amount: transaction?.amount,
       currency: standardCurrencies[transaction?.currency],
       date: transaction?.date.toDate().toIso8601String(),
-      category: standardCategories[transaction?.category],
+      category: category,
       repeatConfiguration: repeatConfigurations[repeatInterval],
       notes: transaction?.note,
     );
@@ -76,7 +86,7 @@ class EnterScreenFormViewModel extends ChangeNotifier {
       incomeCategory: accountSettingsService.getIncomeEntryCategory(),
       repeatConfiguration: repeatConfigurations[RepeatInterval.none]!,
     );
-    entryType = screenViewModel.entryType;
+
   }
 
 
