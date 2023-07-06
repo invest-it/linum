@@ -13,7 +13,7 @@ import 'package:linum/screens/enter_screen/models/enter_screen_data.dart';
 import 'package:linum/screens/enter_screen/models/suggestion.dart';
 import 'package:linum/screens/enter_screen/models/suggestion_filters.dart';
 import 'package:linum/screens/enter_screen/utils/example_string_builder.dart';
-import 'package:linum/screens/enter_screen/utils/highlightable_text_editing_controller.dart';
+import 'package:linum/screens/enter_screen/utils/highlight_text_controller.dart';
 import 'package:linum/screens/enter_screen/utils/string_from_existing_data.dart';
 import 'package:linum/screens/enter_screen/utils/suggestions/insert_suggestion.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_form_view_model.dart';
@@ -24,7 +24,7 @@ import 'package:provider/provider.dart';
 class EnterScreenTextFieldViewModel extends ChangeNotifier {
 
   late final BuildContext _context;
-  late HighlightableTextEditingController textController;
+  late HighlightTextEditingController textController;
   late EnterScreenFormViewModel _formViewModel;
   late EntryType entryType;
   late StreamSubscription _streamSubscription;
@@ -46,7 +46,7 @@ class EnterScreenTextFieldViewModel extends ChangeNotifier {
         ? accountSettingsService.getExpenseEntryCategory()
         : accountSettingsService.getIncomeEntryCategory();
 
-    textController = HighlightableTextEditingController(
+    textController = HighlightTextEditingController(
       exampleStringBuilder: ExampleStringBuilder(
         defaultAmount: 0.00,
         defaultCurrency: accountSettingsService.getStandardCurrency().name,

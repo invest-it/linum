@@ -15,6 +15,8 @@ class EnterScreenTextField extends StatelessWidget {
     final baseTextStyle = Theme.of(context).textTheme.titleMedium!.copyWith(
       fontSize: 16,
       letterSpacing: 1.0,
+      textBaseline: TextBaseline.alphabetic,
+
     );
     return ChangeNotifierProxyProvider<
         EnterScreenFormViewModel,
@@ -33,7 +35,7 @@ class EnterScreenTextField extends StatelessWidget {
           debug("'${textFieldViewModel.textController.text}'");
           return EnterScreenTextFieldViewModel(
             context,
-            prevControllerText: textFieldViewModel.textController.trueText,
+            prevControllerText: textFieldViewModel.textController.text,
           );
         }
         return textFieldViewModel;
@@ -45,15 +47,16 @@ class EnterScreenTextField extends StatelessWidget {
             TextField(
               decoration: const InputDecoration(
                 border: InputBorder.none,
-                isDense: true,
               ),
               keyboardType: TextInputType.multiline,
-              maxLines: null,
+              maxLines: 6,
               autofocus: true,
               style: baseTextStyle,
               key: textFieldViewModel.textFieldKey,
               controller: textFieldViewModel.textController,
+              textAlignVertical: TextAlignVertical.bottom,
             ),
+            // TODO: Add error line
           ],
         );
       },

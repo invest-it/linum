@@ -47,7 +47,7 @@ class EnterScreenFormView extends StatelessWidget {
                           vertical: 10,
                         ),
 
-                        child: EnterScreenTextField(),
+                        child: const EnterScreenTextField(),
                       ),
                   ),
                   const Padding(
@@ -77,6 +77,9 @@ class EnterScreenFormView extends StatelessWidget {
                     EnterScreenContinueButton()
                   ],
                 ),
+              ),
+              Container(
+                height: useKeyBoardHeight(context),
               ),
             ],
           ),
