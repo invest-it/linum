@@ -5,6 +5,7 @@ import 'package:linum/core/categories/constants/standard_categories.dart';
 import 'package:linum/core/categories/utils/translate_category.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/enter_screen/utils/date_formatter.dart';
+import 'package:linum/screens/enter_screen/utils/parsing/context_extensions.dart';
 import 'package:linum/screens/enter_screen/utils/show_enter_screen_menu.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_form_view_model.dart';
 import 'package:linum/screens/enter_screen/widgets/buttons/tag_selector_button.dart';
@@ -45,9 +46,11 @@ class QuickTagMenu extends StatelessWidget {
 
 
   List<Widget> _buildButtons(BuildContext context, EnterScreenFormViewModel formViewModel) {
+    final entryType = context.getEntryType();
+
     final currency = formViewModel.data.currency ?? formViewModel.defaultValues.currency;
     final category = formViewModel.data.category
-        ?? (formViewModel.entryType == EntryType.expense
+        ?? (entryType == EntryType.expense
             ? formViewModel.defaultValues.expenseCategory
             : formViewModel.defaultValues.incomeCategory
         );
@@ -57,11 +60,7 @@ class QuickTagMenu extends StatelessWidget {
 
     return [
       TagSelectorButton(
-        title: tr(
-          formatter
-            .format(date)
-            ?? "",
-        ),
+        title: tr(formatter.format(date) ?? ""),
         icon: Icons.calendar_today_outlined,
         onTap: () {
           final result = showDatePicker(
@@ -99,7 +98,7 @@ class QuickTagMenu extends StatelessWidget {
             title: tr(translationKeys.enterScreen.menu.category),
             content: CategoryListView(
               categories: standardCategories.values
-                  .where((element) => element.entryType == formViewModel.entryType)
+                  .where((element) => element.entryType == entryType)
                   .toList(),
             ),
           );
@@ -140,13 +139,13 @@ class QuickTagMenu extends StatelessWidget {
         Expanded(
           child: Consumer<EnterScreenFormViewModel>(
             builder: (context, formViewModel, _,) {
-
-            return Wrap(
-              spacing: 5,
-              runSpacing: 5,
-              children: _buildButtons(context, formViewModel),
-            );
-          },),
+              return Wrap(
+                spacing: 5,
+                runSpacing: 5,
+                children: _buildButtons(context, formViewModel),
+              );
+            },
+          ),
         ),
       ],
     );

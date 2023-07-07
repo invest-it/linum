@@ -1,10 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/core/account/services/account_settings_service.dart';
 import 'package:linum/core/categories/constants/standard_categories.dart';
-import 'package:linum/core/categories/models/category.dart';
 import 'package:linum/core/repeating/constants/standard_repeat_configs.dart';
 import 'package:linum/core/repeating/enums/repeat_interval.dart';
 import 'package:linum/features/currencies/constants/standard_currencies.dart';
@@ -17,7 +15,6 @@ import 'package:provider/provider.dart';
 class EnterScreenFormViewModel extends ChangeNotifier {
   late final DefaultValues defaultValues;
   late final bool withExistingData;
-  late final EntryType entryType;
 
   late EnterScreenData _data;
   /// When using context.watch or Consumer / Selector
@@ -34,6 +31,7 @@ class EnterScreenFormViewModel extends ChangeNotifier {
   /// stream will provide you with the newest data.
   late Stream<EnterScreenData> stream = _streamController.stream;
 
+  EntryType? _entryType;
 
 
   OverlayEntry? _currentOverlay;
@@ -43,35 +41,12 @@ class EnterScreenFormViewModel extends ChangeNotifier {
     _currentOverlay = overlayEntry;
   }
 
+
   EnterScreenFormViewModel(BuildContext context) {
     final screenViewModel = context.read<EnterScreenViewModel>();
+    _setupData(screenViewModel);
+
     final transaction = screenViewModel.initialTransaction;
-    final parentalSerialTransaction = screenViewModel.parentalSerialTransaction;
-
-    final repeatInterval = getRepeatInterval(
-      parentalSerialTransaction?.repeatDuration,
-      parentalSerialTransaction?.repeatDurationType,
-    );
-
-    entryType = screenViewModel.entryType;
-
-    Category? category = standardCategories[transaction?.category];
-    if (category?.entryType != entryType) {
-      category = null;
-    }
-
-      print(transaction);
-
-    _data = EnterScreenData(
-      name: transaction?.name,
-      amount: transaction?.amount,
-      currency: standardCurrencies[transaction?.currency],
-      date: transaction?.date.toDate().toIso8601String(),
-      category: category,
-      repeatConfiguration: repeatConfigurations[repeatInterval],
-      notes: transaction?.note,
-    );
-
     withExistingData = transaction != null;
 
     final accountSettingsService
@@ -87,6 +62,37 @@ class EnterScreenFormViewModel extends ChangeNotifier {
       repeatConfiguration: repeatConfigurations[RepeatInterval.none]!,
     );
 
+  }
+
+
+  void _setupData(EnterScreenViewModel screenViewModel) {
+    final transaction = screenViewModel.initialTransaction;
+    final parentalSerialTransaction = screenViewModel.parentalSerialTransaction;
+
+    final repeatInterval = getRepeatInterval(
+      parentalSerialTransaction?.repeatDuration,
+      parentalSerialTransaction?.repeatDurationType,
+    );
+
+    _entryType = screenViewModel.entryType;
+
+    _data = EnterScreenData(
+      name: transaction?.name,
+      amount: transaction?.amount,
+      currency: standardCurrencies[transaction?.currency],
+      date: transaction?.date.toDate().toIso8601String(),
+      category: getCategory(transaction?.category, entryType: _entryType),
+      repeatConfiguration: repeatConfigurations[repeatInterval],
+      notes: transaction?.note,
+    );
+  }
+
+  void handleUpdate(BuildContext context) {
+    final screenViewModel = context.read<EnterScreenViewModel>();
+    if (screenViewModel.entryType != _entryType) {
+      _setupData(screenViewModel);
+      notifyListeners();
+    }
   }
 
 

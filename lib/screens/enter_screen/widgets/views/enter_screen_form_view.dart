@@ -25,10 +25,7 @@ class EnterScreenFormView extends StatelessWidget {
         if (formViewModel == null) {
           return EnterScreenFormViewModel(context);
         }
-        if (viewModel.entryType != formViewModel.entryType) {
-          print("Update: ${viewModel.entryType}");
-          return EnterScreenFormViewModel(context);
-        }
+        formViewModel.handleUpdate(context);
         return formViewModel;
       },
       child: EnterScreenScaffold(

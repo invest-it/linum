@@ -77,3 +77,15 @@ final standardCategories = <String, Category>{
     icon: Icons.inventory_2,
   ),
 };
+
+
+Category? getCategory(String? name, {EntryType? entryType}) {
+  final category = standardCategories[name];
+  if (entryType == null) {
+    return category;
+  }
+  if (category?.entryType != entryType) {
+    return null;
+  }
+  return category;
+}

@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:linum/features/currencies/constants/standard_currencies.dart';
 import 'package:linum/features/currencies/models/currency.dart';
 import 'package:linum/screens/enter_screen/enums/input_type.dart';
@@ -7,7 +6,7 @@ import 'package:linum/screens/enter_screen/models/parsed_input.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/get_text_indices.dart';
 
 final amountRegex = RegExp(
-  r"(?:(?<name1>\w{4,140}) )?(?<currency1>[a-zA-Z\p{Sc}]{0,3}) ?(?<amount>-?[0-9]+[,.]?(?:[0-9]{1,2})?)? ?(?<currency2>[a-zA-Z\p{Sc}]{0,3})(?: (?<name2>.{4,140}))?$",
+  r"(?:(?<name1>\w{4,140}) )?(?<currency1>[a-zA-Z\p{Sc}]{0,3}) ?(?<amount>-?[0-9]{1,9}[,.]?(?:[0-9]{1,2})?)? ?(?<currency2>[a-zA-Z\p{Sc}]{0,3})(?: (?<name2>.{4,140}))?$",
   unicode: true,
 );
 
@@ -50,7 +49,7 @@ class NaturalLangParser {
     }
 
     final nameIndices = getTextIndices(nameSubstr, raw);
-    
+
     addParsedAmount(amountSubstr, amountIndices);
     addParsedCurrency(
         currencySubstr?.replaceAll("-", ""),
