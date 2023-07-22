@@ -44,6 +44,26 @@ class QuickTagMenu extends StatelessWidget {
   });
 
 
+  @override
+  Widget build(BuildContext context) {
+    return Flex(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      direction: Axis.horizontal,
+      children: [
+        Expanded(
+          child: Consumer<EnterScreenFormViewModel>(
+            builder: (context, formViewModel, _,) {
+              return Wrap(
+                spacing: 5,
+                runSpacing: 5,
+                children: _buildButtons(context, formViewModel),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
 
   List<Widget> _buildButtons(BuildContext context, EnterScreenFormViewModel formViewModel) {
     final entryType = context.getEntryType();
@@ -64,10 +84,10 @@ class QuickTagMenu extends StatelessWidget {
         icon: Icons.calendar_today_outlined,
         onTap: () {
           final result = showDatePicker(
-              context: context,
-              initialDate: DateTime.parse(date),
-              firstDate: DateTime(2000),
-              lastDate: DateTime(DateTime.now().year + 5, 12),
+            context: context,
+            initialDate: DateTime.parse(date),
+            firstDate: DateTime(2000),
+            lastDate: DateTime(DateTime.now().year + 5, 12),
           );
           result.then((value) {
             formViewModel.data = formViewModel.data.copyWith(
@@ -122,32 +142,13 @@ class QuickTagMenu extends StatelessWidget {
         icon: Icons.edit_outlined,
         onTap: () {
           showEnterScreenMenu(
-              context: context,
-              content: const NotesView(),
+            context: context,
+            content: const NotesView(),
           );
         },
       )
     ];
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Flex(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      direction: Axis.horizontal,
-      children: [
-        Expanded(
-          child: Consumer<EnterScreenFormViewModel>(
-            builder: (context, formViewModel, _,) {
-              return Wrap(
-                spacing: 5,
-                runSpacing: 5,
-                children: _buildButtons(context, formViewModel),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
+
 }

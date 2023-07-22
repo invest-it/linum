@@ -139,7 +139,7 @@ class EnterScreenTextFieldViewModel extends ChangeNotifier {
         child: Material(
           borderRadius: const BorderRadius.all(Radius.circular(5)),
           child: SuggestionList(
-            suggestions: textController.suggestions,
+            suggestions: textController.suggestions.values.toList(),
             onSelection: (child, parent) {
               _onSuggestionSelection(child, parent);
             },

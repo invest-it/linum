@@ -39,7 +39,6 @@ class EnterScreen extends StatelessWidget {
         ) {
           return const LoadingSpinner();
         }
-
         return ChangeNotifierProvider(
           create: (context) {
             _createViewModel(context, snapshot);

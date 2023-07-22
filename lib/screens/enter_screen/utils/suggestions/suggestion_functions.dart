@@ -38,18 +38,18 @@ Map<String, Suggestion> suggestCategory(String text, {
     if (filter != null && !filter(entry.value)) {
       continue;
     }
-    String? valueSubstr;
+    String? valueSubstring;
     final translatedLabel = entry.value.label.tr().toLowerCase();
     if (translatedLabel.length > text.length) {
-      valueSubstr = translatedLabel.substring(0, text.length);
+      valueSubstring = translatedLabel.substring(0, text.length);
     }
 
-    String? keySubstr;
+    String? keySubstring;
     if (entry.key.length > text.length) {
-      keySubstr = entry.key.substring(0, text.length);
+      keySubstring = entry.key.substring(0, text.length);
     }
 
-    if (keySubstr == lowercase || valueSubstr == lowercase) {
+    if (keySubstring == lowercase || valueSubstring == lowercase) {
       suggestions[entry.key] = Suggestion(
         label: entry.value.label,
       );

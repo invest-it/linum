@@ -9,7 +9,23 @@ class EnterScreenMenuScaffold extends StatelessWidget {
     required this.content,
   });
 
-  List<Widget> buildItems(BuildContext context) {
+
+  @override
+  Widget build(BuildContext context) {
+    const radius = Radius.circular(16.0);
+    return Container(
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(topLeft: radius, topRight: radius),
+      ),
+      child: Flex(
+        direction: Axis.vertical,
+        children: _buildFlexItems(context),
+      ),
+    );
+  }
+
+  List<Widget> _buildFlexItems(BuildContext context) {
     final List<Widget> items = [];
 
     if (title != null) {
@@ -27,20 +43,5 @@ class EnterScreenMenuScaffold extends StatelessWidget {
     }
     items.add(content);
     return items;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    const radius = Radius.circular(16.0);
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(topLeft: radius, topRight: radius),
-      ),
-      child: Flex(
-        direction: Axis.vertical,
-        children: buildItems(context),
-      ),
-    );
   }
 }

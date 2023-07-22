@@ -61,15 +61,15 @@ class NaturalLangParser {
   }
 
   void addParsedName(
-      String? substr,
+      String? substring,
       TextIndices? indices,
       ) {
-    if (substr != null) {
+    if (substring != null) {
       parsedInputs.add(
         ParsedInput<String>(
           type: InputType.name,
-          value: substr.trim(),
-          raw: substr,
+          value: substring.trim(),
+          raw: substring,
           indices: indices!,
         ),
       );
@@ -98,16 +98,16 @@ class NaturalLangParser {
 
 
   void addParsedCurrency(
-      String? substr,
+      String? substring,
       TextIndices? indices,
   ) {
-    final currency = getCurrencyFromSubstring(substr);
-    if (currency != null && substr != null) {
+    final currency = getCurrencyFromSubstring(substring);
+    if (currency != null && substring != null) {
       parsedInputs.add(
         ParsedInput<Currency>(
           type: InputType.currency,
           value: currency,
-          raw: substr,
+          raw: substring,
           indices: indices!,
         ),
       );
