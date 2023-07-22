@@ -41,7 +41,7 @@ class EnterScreen extends StatelessWidget {
         }
         return ChangeNotifierProvider(
           create: (context) {
-            _createViewModel(context, snapshot);
+            return _createViewModel(context, snapshot);
           },
           child: const EnterScreenFlow(),
         );
