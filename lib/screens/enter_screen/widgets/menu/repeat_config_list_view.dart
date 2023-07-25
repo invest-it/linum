@@ -34,14 +34,13 @@ class RepeatConfigListView extends StatelessWidget {
                   ),
                   leading: Icon(repeatConfig.icon),
                   onTap: () {
-                    formViewModel.data = formViewModel.data.copyWith(
+                    formViewModel.data = formViewModel.data.copyWithOptions(
                       repeatConfiguration: repeatConfig,
                     );
                     Navigator.pop(context);
                   },
-                  selected:
-                    formViewModel.data.repeatConfiguration?.interval
-                        == repeatConfig.interval,
+                  selected: formViewModel.data.options.repeatConfiguration
+                      ?.interval == repeatConfig.interval,
                 );
               },
             ),

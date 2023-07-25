@@ -32,9 +32,9 @@ class CategoryListView extends StatelessWidget {
 
                 return CategoryListTile(
                   category: category,
-                  selected: formViewModel.data.category?.id == category.id,
+                  selected: formViewModel.data.options.category?.id == category.id,
                   onTap: () {
-                    formViewModel.data = formViewModel.data.copyWith(
+                    formViewModel.data = formViewModel.data.copyWithOptions(
                       category: category,
                     );
                     Navigator.pop(context);

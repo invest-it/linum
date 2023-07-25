@@ -12,7 +12,7 @@ class NotesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final formViewModel = context.read<EnterScreenFormViewModel>();
-    final notes = formViewModel.data.notes;
+    final notes = formViewModel.data.options.notes;
     final textController = TextEditingController(
       text: (notes != null && notes != "") ? notes : null,
     );
@@ -44,8 +44,8 @@ class NotesView extends StatelessWidget {
             label: tr(translationKeys.enterScreen.button.saveNote),
             padding: const EdgeInsets.symmetric(vertical: 24.0),
             onPressed: () {
-              formViewModel.data = formViewModel.data.copyWith(
-                notes: textController.text,
+              formViewModel.data = formViewModel.data.copyWithOptions(
+                notes: notes,
               );
               Navigator.pop(context);
             },

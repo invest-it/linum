@@ -34,9 +34,9 @@ class CurrencyListView extends StatelessWidget {
                 return CurrencyListTile(
                   currency: currency,
                   selected:
-                    currency.name == formViewModel.data.currency?.name,
+                    currency.name == formViewModel.data.options.currency?.name,
                   onTap: () {
-                    formViewModel.data = formViewModel.data.copyWith(
+                    formViewModel.data = formViewModel.data.copyWithOptions(
                       currency: currency,
                     );
                     Navigator.of(context).pop();

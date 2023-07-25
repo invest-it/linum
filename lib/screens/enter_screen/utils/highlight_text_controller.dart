@@ -1,7 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/screens/enter_screen/constants/hightlight_colors.dart';
-import 'package:linum/screens/enter_screen/models/enter_screen_input.dart';
+import 'package:linum/screens/enter_screen/models/structured_parsed_data.dart';
+import 'package:linum/screens/enter_screen/models/parsed_input.dart';
 import 'package:linum/screens/enter_screen/models/suggestion.dart';
 import 'package:linum/screens/enter_screen/models/suggestion_filters.dart';
 import 'package:linum/screens/enter_screen/utils/example_string_builder.dart';
@@ -26,9 +27,8 @@ class HighlightTextEditingController extends TextEditingController {
   Map<String, Suggestion> _suggestions = {};
   Map<String, Suggestion> get suggestions => _suggestions;
 
-  EnterScreenInput? _parsed;
-  EnterScreenInput? get parsed => _parsed;
-  
+  StructuredParsedData? get parsed => _parsed;
+  StructuredParsedData? _parsed;
 
   int offsetCounter = 0;
 

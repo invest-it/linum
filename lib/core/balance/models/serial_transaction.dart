@@ -8,6 +8,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:linum/common/utils/date_time_map.dart';
 import 'package:linum/core/balance/models/changed_transaction.dart';
 import 'package:linum/core/repeating/enums/repeat_duration_type_enum.dart';
+import 'package:linum/core/repeating/enums/repeat_interval.dart';
+import 'package:linum/screens/enter_screen/utils/get_repeat_interval.dart';
 import 'package:uuid/uuid.dart';
 
 class SerialTransaction {
@@ -22,6 +24,10 @@ class SerialTransaction {
   final Timestamp? endDate;
   final int repeatDuration;
   final RepeatDurationType repeatDurationType;
+
+  RepeatInterval get repeatInterval => getRepeatInterval(
+      repeatDuration, repeatDurationType,
+  );
 
   SerialTransaction({
     required this.amount,

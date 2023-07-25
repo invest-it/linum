@@ -8,6 +8,7 @@ import 'package:linum/screens/enter_screen/enums/edit_intention.dart';
 import 'package:linum/screens/enter_screen/enums/enter_screen_view_state.dart';
 import 'package:linum/screens/enter_screen/models/default_values.dart';
 import 'package:linum/screens/enter_screen/models/enter_screen_data.dart';
+import 'package:linum/screens/enter_screen/models/enter_screen_form_data.dart';
 import 'package:linum/screens/enter_screen/utils/get_entry_type.dart';
 
 
@@ -41,7 +42,7 @@ class EnterScreenViewModel extends ChangeNotifier {
   EditIntention _intention = EditIntention.save;
 
 
-  EnterScreenData? _formResult;
+  EnterScreenData? _data;
   DefaultValues? _defaultValues;
 
   EnterScreenViewModel._({
@@ -98,10 +99,10 @@ class EnterScreenViewModel extends ChangeNotifier {
   }
 
   void next({
-    required EnterScreenData data,
+    required EnterScreenFormData data,
     required DefaultValues defaultValues,
   }) {
-    _formResult = data;
+    _data = EnterScreenData.fromFormData(data);
     _defaultValues = defaultValues;
 
     if (parentalSerialTransaction == null) {
@@ -114,7 +115,7 @@ class EnterScreenViewModel extends ChangeNotifier {
 
   void save() {
     _actions.save(
-      data: _formResult,
+      data: _data,
       defaultData: _defaultValues,
       entryType: _entryType,
       existingId: initialTransaction?.id,
@@ -131,7 +132,7 @@ class EnterScreenViewModel extends ChangeNotifier {
     switch(_intention) {
       case EditIntention.save:
         _actions.save(
-          data: _formResult,
+          data: _data,
           defaultData: _defaultValues,
           entryType: _entryType,
           changeMode: changeMode,

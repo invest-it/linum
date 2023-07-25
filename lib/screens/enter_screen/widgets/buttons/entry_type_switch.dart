@@ -23,7 +23,7 @@ class EnterScreenEntryTypeSwitch extends StatelessWidget {
               return;
             }
             viewModel.entryType = selection.first;
-            formViewModel.data = formViewModel.data.removeCategory();
+            formViewModel.data = formViewModel.data.removeCategoryAndCopy();
           },
           segments: [
             ButtonSegment(

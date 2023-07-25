@@ -68,15 +68,15 @@ class QuickTagMenu extends StatelessWidget {
   List<Widget> _buildButtons(BuildContext context, EnterScreenFormViewModel formViewModel) {
     final entryType = context.getEntryType();
 
-    final currency = formViewModel.data.currency ?? formViewModel.defaultValues.currency;
-    final category = formViewModel.data.category
+    final currency = formViewModel.data.options.currency ?? formViewModel.defaultValues.currency;
+    final category = formViewModel.data.options.category
         ?? (entryType == EntryType.expense
             ? formViewModel.defaultValues.expenseCategory
             : formViewModel.defaultValues.incomeCategory
         );
     final repeatConfiguration =
-        formViewModel.data.repeatConfiguration ?? formViewModel.defaultValues.repeatConfiguration;
-    final date = formViewModel.data.date ?? formViewModel.defaultValues.date;
+        formViewModel.data.options.repeatConfiguration ?? formViewModel.defaultValues.repeatConfiguration;
+    final date = formViewModel.data.options.date ?? formViewModel.defaultValues.date;
 
     return [
       TagSelectorButton(
@@ -90,7 +90,7 @@ class QuickTagMenu extends StatelessWidget {
             lastDate: DateTime(DateTime.now().year + 5, 12),
           );
           result.then((value) {
-            formViewModel.data = formViewModel.data.copyWith(
+            formViewModel.data = formViewModel.data.copyWithOptions(
               date: value?.toIso8601String(),
             );
           });

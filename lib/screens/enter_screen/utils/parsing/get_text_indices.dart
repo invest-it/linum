@@ -1,4 +1,4 @@
-import 'package:linum/screens/enter_screen/models/enter_screen_input.dart';
+import 'package:linum/screens/enter_screen/models/structured_parsed_data.dart';
 
 TextIndices? getTextIndices(
     String? substring,

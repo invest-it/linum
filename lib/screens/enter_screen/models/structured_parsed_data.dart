@@ -1,3 +1,5 @@
+import 'package:linum/core/categories/models/category.dart';
+import 'package:linum/core/repeating/models/repeat_configuration.dart';
 import 'package:linum/features/currencies/models/currency.dart';
 import 'package:linum/screens/enter_screen/enums/input_type.dart';
 import 'package:linum/screens/enter_screen/models/parsed_input.dart';
@@ -5,16 +7,16 @@ import 'package:linum/screens/enter_screen/models/parsed_input.dart';
 typedef TextIndices = ({int start, int end});
 
 
-class EnterScreenInput {
+class StructuredParsedData {
   final String raw;
   final ParsedInput<double>? amount;
   final ParsedInput<Currency>? currency;
   final ParsedInput<String>? name;
-  final ParsedInput<String>? category;
+  final ParsedInput<Category>? category;
   final ParsedInput<String>? date;
-  final ParsedInput<String>? repeatInfo;
+  final ParsedInput<RepeatConfiguration>? repeatInfo;
 
-  EnterScreenInput(
+  StructuredParsedData(
     this.raw, {
       this.amount,
       this.name,
@@ -26,14 +28,13 @@ class EnterScreenInput {
 
 
 
-
-  factory EnterScreenInput.fromParsedInputs(List<ParsedInput> parsedInputs, String raw) {
+  factory StructuredParsedData.fromParsedInputs(List<ParsedInput> parsedInputs, String raw) {
     ParsedInput<double>? amount;
     ParsedInput<Currency>? currency;
     ParsedInput<String>? name;
-    ParsedInput<String>? category;
+    ParsedInput<Category>? category;
     ParsedInput<String>? date;
-    ParsedInput<String>? repeatInfo;
+    ParsedInput<RepeatConfiguration>? repeatInfo;
 
     for (final parsed in parsedInputs) {
       switch(parsed.type) {
@@ -47,18 +48,18 @@ class EnterScreenInput {
           name = _castOrNull<String>(parsed);
           continue;
         case InputType.category:
-          category = _castOrNull<String>(parsed);
+          category = _castOrNull<Category>(parsed);
           continue;
         case InputType.date:
           date = _castOrNull<String>(parsed);
           continue;
         case InputType.repeatInfo:
-          repeatInfo = _castOrNull<String>(parsed);
+          repeatInfo = _castOrNull<RepeatConfiguration>(parsed);
           continue;
       }
     }
 
-    return EnterScreenInput(
+    return StructuredParsedData(
       raw,
       amount: amount,
       currency: currency,
@@ -100,9 +101,30 @@ class EnterScreenInput {
     return list;
   }
 
+
+  StructuredParsedData copyWith({
+    String? raw,
+    ParsedInput<double>? amount,
+    ParsedInput<Currency>? currency,
+    ParsedInput<String>? name,
+    ParsedInput<Category>? category,
+    ParsedInput<String>? date,
+    ParsedInput<RepeatConfiguration>? repeatInfo,
+  }) {
+    return StructuredParsedData(
+      raw ?? this.raw,
+      amount: amount ?? this.amount,
+      currency: currency ?? this.currency,
+      name: name ?? this.name,
+      category: category ?? this.category,
+      date: date ?? this.date,
+      repeatInfo: repeatInfo ?? this.repeatInfo,
+    );
+  }
+
   @override
   String toString() {
-    return 'EnterScreenInput('
+    return 'StructuredParsedData('
         'raw: $raw, '
         'amount: $amount, '
         'currency: $currency, '
@@ -117,7 +139,7 @@ class EnterScreenInput {
 
   @override
   bool operator ==(Object other) {
-    if (other is EnterScreenInput) {
+    if (other is StructuredParsedData) {
       return raw == other.raw &&
           amount == other.amount &&
           currency == other.currency &&
@@ -141,7 +163,6 @@ class EnterScreenInput {
   }
 
 }
-
 
 ParsedInput<T>? _castOrNull<T>(ParsedInput parsedInput) {
   if (parsedInput is ParsedInput<T>) {

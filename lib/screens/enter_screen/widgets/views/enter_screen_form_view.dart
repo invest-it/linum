@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:linum/core/design/layout/utils/media_query_accessors.dart';
+import 'package:linum/core/repeating/constants/standard_repeat_configs.dart';
+import 'package:linum/features/currencies/constants/standard_currencies.dart';
+import 'package:linum/screens/enter_screen/utils/get_default_values.dart';
+import 'package:linum/screens/enter_screen/utils/get_entry_type.dart';
+import 'package:linum/screens/enter_screen/utils/initial_form_data_builder.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_form_view_model.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model.dart';
 import 'package:linum/screens/enter_screen/widgets/buttons/abort_button.dart';
@@ -18,14 +23,14 @@ class EnterScreenFormView extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return ChangeNotifierProxyProvider<EnterScreenViewModel, EnterScreenFormViewModel>(
-      create: (context) {
-        return EnterScreenFormViewModel(context);
-      },
+      create: (context) => _createViewModel(context),
       update: (context, viewModel, formViewModel) {
         if (formViewModel == null) {
-          return EnterScreenFormViewModel(context);
+          return _createViewModel(context);
         }
-        formViewModel.handleUpdate(context);
+        formViewModel.handleUpdate(
+          viewModel.entryType,
+        );
         return formViewModel;
       },
       child: EnterScreenScaffold(
@@ -83,6 +88,31 @@ class EnterScreenFormView extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  EnterScreenFormViewModel _createViewModel(BuildContext context) {
+    final builder = InitialFormDataBuilder(
+      currencies: standardCurrencies,
+      repeatConfigurations: repeatConfigurations,
+    );
+    final screenViewModel = context.read<EnterScreenViewModel>();
+    builder
+      ..useTransaction(
+        screenViewModel.initialTransaction,
+        parentalSerialTransaction: screenViewModel.parentalSerialTransaction,
+      )
+      ..useSerialTransaction(
+        screenViewModel.initialSerialTransaction,
+      )
+      ..entryType = screenViewModel.entryType;
+
+    final initialData = builder.build();
+    print(initialData);
+    return EnterScreenFormViewModel(
+      defaultValues: getDefaultValues(context),
+      initialData: initialData,
+      entryType: screenViewModel.entryType,
     );
   }
 }

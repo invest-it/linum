@@ -5,7 +5,8 @@ import 'package:linum/core/repeating/enums/repeat_interval.dart';
 import 'package:linum/core/repeating/models/repeat_configuration.dart';
 import 'package:linum/features/currencies/constants/standard_currencies.dart';
 import 'package:linum/features/currencies/models/currency.dart';
-import 'package:linum/screens/enter_screen/models/enter_screen_input.dart';
+import 'package:linum/screens/enter_screen/models/enter_screen_form_data.dart';
+import 'package:linum/screens/enter_screen/models/structured_parsed_data.dart';
 
 class EnterScreenData {
   final num? amount;
@@ -62,29 +63,17 @@ class EnterScreenData {
     );
   }
 
-  factory EnterScreenData.fromInput(EnterScreenInput input, {String? notes}) {
-    final amount = input.amount?.value;
-    final name = input.name?.value;
-    final currency = standardCurrencies[input.currency?.value.name];
-    Category? category;
-    String? date;
-    RepeatConfiguration? repeatConfiguration;
+  factory EnterScreenData.fromFormData(EnterScreenFormData formData) {
+    final parsed = formData.parsed;
+    final options = formData.options;
 
-    if (input.hasCategory) {
-      category = standardCategories[input.category!.value];
-    }
-    if (input.hasDate) {
-      date = input.date!.value;
-    }
-    if (input.hasRepeatInfo) {
-      RepeatInterval interval;
-      try {
-        interval = RepeatInterval.values.byName(input.repeatInfo!.value);
-      } catch (e) {
-        interval = RepeatInterval.none;
-      }
-      repeatConfiguration = repeatConfigurations[interval];
-    }
+    final amount = parsed.amount?.value;
+    final name = parsed.name?.value;
+    final currency = options.currency ?? parsed.currency?.value;
+
+    final category = options.category ?? parsed.category?.value;
+    final date = options.date ?? parsed.date?.value;
+    final repeatConfiguration = options.repeatConfiguration ?? parsed.repeatInfo?.value;
 
     return EnterScreenData(
       amount: amount,
@@ -93,7 +82,7 @@ class EnterScreenData {
       category: category,
       date: date,
       repeatConfiguration: repeatConfiguration,
-      notes: notes,
+      notes: options.notes,
       isParsed: true,
     );
   }

@@ -1,5 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:linum/core/categories/models/category.dart';
 import 'package:linum/core/repeating/enums/repeat_interval.dart';
+import 'package:linum/core/repeating/models/repeat_configuration.dart';
+import 'package:linum/features/currencies/models/currency.dart';
 import 'package:linum/screens/enter_screen/constants/suggestion_defaults.dart';
 import 'package:linum/screens/enter_screen/enums/input_flag.dart';
 import 'package:linum/screens/enter_screen/models/enter_screen_data.dart';
@@ -20,30 +23,37 @@ class StringBuilder {
   String _date = "";
   String _repeatInfo = "";
 
-  StringBuilder useExistingString(String str) {
+  void useExistingString(String str) {
     _existingStr = str;
-    return this;
   }
 
-  StringBuilder useEnterScreenData(EnterScreenData data) {
-    _amount = data.amount?.abs().toString() ?? "";
-    _currency = data.currency?.name ?? "";
-    _name = data.name ?? "";
+  void setAmount(num? amount) {
+    _amount = amount?.abs().toString() ?? "";
+  }
 
-    if (data.category != null) {
+  void setCurrency(Currency? currency) {
+    _currency = currency?.name ?? "";
+  }
+  void setName(String? name) {
+    _name = name ?? "";
+  }
+  void setCategory(Category? category) {
+    if (category != null) {
       _category = "#${flagSuggestionDefaults[InputFlag.category]?.tr()}:"
-                  "${data.category!.label.tr()}";
+          "${category.label.tr()}";
     }
-    if (data.date != null && data.date != "") {
+  }
+  void setDate(String? date) {
+    if (date != null && date != "") {
       _date = "#${flagSuggestionDefaults[InputFlag.date]?.tr()}:"
-              "${_dateFormatter.format(data.date!)?.tr()}";
+          "${_dateFormatter.format(date)?.tr()}";
     }
-    if (data.repeatConfiguration != null && data.repeatConfiguration?.interval != RepeatInterval.none) {
+  }
+  void setRepeatConfiguration(RepeatConfiguration? repeatConfiguration) {
+    if (repeatConfiguration != null && repeatConfiguration.interval != RepeatInterval.none) {
       _repeatInfo = "#${flagSuggestionDefaults[InputFlag.repeatInfo]?.tr()}:"
-                    "${data.repeatConfiguration!.label.tr()}";
+          "${repeatConfiguration.label.tr()}";
     }
-
-    return this;
   }
 
   String build() {

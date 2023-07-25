@@ -1,7 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:linum/screens/enter_screen/constants/suggestion_defaults.dart';
 import 'package:linum/screens/enter_screen/enums/input_flag.dart';
-import 'package:linum/screens/enter_screen/models/enter_screen_input.dart';
+import 'package:linum/screens/enter_screen/models/structured_parsed_data.dart';
+import 'package:linum/screens/enter_screen/models/parsed_input.dart';
 import 'package:tuple/tuple.dart';
 
 class ExampleStringBuilder {
@@ -48,11 +49,12 @@ class ExampleStringBuilder {
     value = Tuple2("", str2);
   }
 
-  void rebuild(EnterScreenInput parsed) {
+  void rebuild(StructuredParsedData parsed) {
     if (parsed.raw == "") {
       build();
       return;
     }
+
 
     final str2 = (parsed.hasAmount ? "" : "$defaultAmount ") +
         (parsed.raw.endsWith(" ") && parsed.hasAmount ? "" : " ") +

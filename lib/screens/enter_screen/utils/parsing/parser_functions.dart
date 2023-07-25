@@ -2,14 +2,17 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:linum/common/types/filter_function.dart';
 import 'package:linum/core/categories/constants/standard_categories.dart';
 import 'package:linum/core/categories/models/category.dart';
+import 'package:linum/core/repeating/constants/standard_repeat_configs.dart';
 import 'package:linum/core/repeating/enums/repeat_interval.dart';
+import 'package:linum/core/repeating/models/repeat_configuration.dart';
 import 'package:linum/screens/enter_screen/enums/input_flag.dart';
 import 'package:linum/screens/enter_screen/enums/parsable_date.dart';
+import 'package:linum/screens/enter_screen/models/parsed_input.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/date_parsing.dart';
 import 'package:linum/screens/enter_screen/utils/supported_values.dart';
 
 
-String? categoryParser(String input, {Filter<Category>? filter}) {
+Category? categoryParser(String input, {Filter<Category>? filter}) {
   final lowercase = input.trim().toLowerCase();
   final filteredCategories = standardCategories.entries
       .where((element) => filter == null || filter(element.value));
@@ -17,17 +20,17 @@ String? categoryParser(String input, {Filter<Category>? filter}) {
 
   for (final entry in filteredCategories) {
     if (lowercase == entry.key) {
-      return entry.key;
+      return getCategory(entry.key);
     }
     final label = entry.value.label.tr().toLowerCase();
     if (lowercase == label) {
-      return entry.key;
+      return getCategory(entry.key);
     }
   }
   return null;
 }
 
-String? repeatInfoParser(String input, {Filter<RepeatInterval>? filter}) {
+RepeatConfiguration? repeatInfoParser(String input, {Filter<RepeatInterval>? filter}) {
   final lowercase = input.trim().toLowerCase();
   final repeatInterval = SupportedValues.repeatIntervals[lowercase];
   if (repeatInterval == null) {
@@ -35,7 +38,7 @@ String? repeatInfoParser(String input, {Filter<RepeatInterval>? filter}) {
   }
 
   if (filter == null || filter(repeatInterval)) {
-    return repeatInterval.name;
+    return repeatConfigurations[repeatInterval];
   }
 
   return null;
@@ -67,31 +70,4 @@ String? dateParser(String input, {Filter<ParsableDate>? filter}) {
   }
 }
 
-({InputFlag flag, String value})? findFitting(String text, {
-  Filter<Category>? categoryFilter,
-  Filter<RepeatInterval>? repeatFilter,
-  Filter<ParsableDate>? dateFilter,
-}) {
-  var result = categoryParser(text, filter: categoryFilter);
-  if (result != null) {
-    return (
-      flag: InputFlag.category,
-      value: result,
-    );
-  }
-  result = repeatInfoParser(text, filter: repeatFilter);
-  if (result != null) {
-    return (
-      flag: InputFlag.repeatInfo,
-      value: result,
-    );
-  }
-  result = dateParser(text, filter: dateFilter);
-  if (result != null) {
-    return (
-      flag: InputFlag.date,
-      value: result,
-    );
-  }
-  return null;
-}
+

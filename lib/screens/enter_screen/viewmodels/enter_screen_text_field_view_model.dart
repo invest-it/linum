@@ -9,13 +9,11 @@ import 'package:linum/core/repeating/constants/standard_repeat_configs.dart';
 import 'package:linum/core/repeating/enums/repeat_interval.dart';
 import 'package:linum/screens/enter_screen/constants/parsable_date_map.dart';
 import 'package:linum/screens/enter_screen/enums/parsable_date.dart';
-import 'package:linum/screens/enter_screen/models/enter_screen_data.dart';
 import 'package:linum/screens/enter_screen/models/suggestion.dart';
 import 'package:linum/screens/enter_screen/models/suggestion_filters.dart';
 import 'package:linum/screens/enter_screen/utils/example_string_builder.dart';
 import 'package:linum/screens/enter_screen/utils/highlight_text_controller.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/context_extensions.dart';
-import 'package:linum/screens/enter_screen/utils/string_from_existing_data.dart';
 import 'package:linum/screens/enter_screen/utils/suggestions/insert_suggestion.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_form_view_model.dart';
 import 'package:linum/screens/enter_screen/widgets/overlay/suggestion_list.dart';
@@ -39,19 +37,19 @@ class EnterScreenTextFieldViewModel extends ChangeNotifier {
     _formViewModel = context.read<EnterScreenFormViewModel>();
 
     _entryType = context.getEntryType();
-    _setupTextController(context);
+    _setupTextController();
 
     _streamSubscription = _formViewModel.stream.listen((data) {
-      if (!data.isParsed) {
-        textController.text = StringBuilder().useEnterScreenData(data).build();
+      if (data.parsed.raw != textController.text) {
+        print(data.parsed.raw);
+        textController.text = data.parsed.raw;
       }
+
     });
   }
 
-  void _setupTextController(BuildContext context, {
-    String? previousText,
-  }) {
-    final accountSettingsService = context.read<AccountSettingsService>();
+  void _setupTextController() {
+    final accountSettingsService = _context.read<AccountSettingsService>();
     final defaultCategory = _entryType == EntryType.expense
         ? accountSettingsService.getExpenseEntryCategory()
         : accountSettingsService.getIncomeEntryCategory();
@@ -70,29 +68,18 @@ class EnterScreenTextFieldViewModel extends ChangeNotifier {
       ),
     );
 
-    if (_formViewModel.withExistingData) {
-      // Needs to be refactored a lot
-      if (!_formViewModel.data.isParsed) {
-        final text = StringBuilder()
-            .useEnterScreenData(_formViewModel.data)
-            .build();
-        textController.text = text;
-      }
+    textController.text = _formViewModel.data.parsed.raw;
 
-    }
-
-    if (previousText != null) {
-      textController.text = previousText;
-    }
+    // TODO Get rid of this
 
     textController.addListener(() {
-      if (textController.parsed == null) {
+      final parsedData = textController.parsed;
+      if (parsedData == null) {
         return;
       }
       _rebuildSuggestionList();
-      _formViewModel.data = EnterScreenData.fromInput(
-        textController.parsed!,
-        notes: _formViewModel.data.notes,
+      _formViewModel.data = _formViewModel.data.copyWith(
+        parsed: parsedData,
       );
     });
   }
@@ -101,10 +88,10 @@ class EnterScreenTextFieldViewModel extends ChangeNotifier {
     final newEntryType = context.getEntryType();
     if (newEntryType != _entryType) {
       _context = context;
+      _formViewModel = context.read<EnterScreenFormViewModel>();
       _entryType = newEntryType;
-      final previousText = textController.text;
       textController.dispose();
-      _setupTextController(context, previousText: previousText);
+      _setupTextController();
       notifyListeners();
     }
   }
