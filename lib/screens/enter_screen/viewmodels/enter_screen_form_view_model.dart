@@ -17,8 +17,6 @@ class EnterScreenFormViewModel extends ChangeNotifier {
   EnterScreenFormData get data => _data;
   set data(EnterScreenFormData data) {
     _data = FormDataUpdater(oldData: _data, newData: data).update();
-    print(_data.parsed.currency);
-    print(_data.options.currency);
     _streamController.add(_data);
     notifyListeners();
   }

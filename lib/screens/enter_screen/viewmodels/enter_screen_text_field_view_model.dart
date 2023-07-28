@@ -41,7 +41,6 @@ class EnterScreenTextFieldViewModel extends ChangeNotifier {
 
     _streamSubscription = _formViewModel.stream.listen((data) {
       if (data.parsed.raw != textController.text) {
-        print(data.parsed.raw);
         textController.text = data.parsed.raw;
       }
 

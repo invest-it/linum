@@ -105,7 +105,7 @@ class EnterScreenViewModel extends ChangeNotifier {
     _data = EnterScreenData.fromFormData(data);
     _defaultValues = defaultValues;
 
-    if (parentalSerialTransaction == null) {
+    if (parentalSerialTransaction == null && initialSerialTransaction == null) {
       save();
       return;
     }
