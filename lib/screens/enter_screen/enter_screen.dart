@@ -134,20 +134,42 @@ class EnterScreen extends StatelessWidget {
   }
 
   EnterScreenActions _setupSerialTransactionActions(BuildContext context) {
+    final balanceDataService  = context.read<BalanceDataService>();
+
     return EnterScreenActions(
       onSave: ({
         Transaction? transaction,
         SerialTransaction? serialTransaction,
         SerialTransactionChangeMode? changeMode,
       }) {
-        // TODO
+        // TODO: This might not be necessary in this way.
+        if (transaction != null) {
+          balanceDataService.updateTransaction(transaction);
+        } else if (serialTransaction != null && changeMode != null) {
+          balanceDataService.updateSerialTransaction(
+            serialTransaction: serialTransaction,
+            changeMode: changeMode,
+            oldDate: this.transaction?.formerDate ?? this.transaction?.date,
+            newDate: serialTransaction.startDate,
+          );
+        }
+        Navigator.pop(context);
       },
       onDelete: ({
         Transaction? transaction,
         SerialTransaction? serialTransaction,
         SerialTransactionChangeMode? changeMode,
       }) {
-        // TODO
+        // TODO: This might not be necessary in this way.
+        if (transaction != null && changeMode == null) {
+          balanceDataService.removeTransaction(transaction);
+        } else if (serialTransaction != null && changeMode != null) {
+          balanceDataService.removeSerialTransaction(
+            serialTransaction: serialTransaction,
+            removeType: changeMode,
+            date: transaction?.date,
+          );
+        }
       },
     );
   }

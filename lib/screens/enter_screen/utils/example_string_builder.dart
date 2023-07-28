@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:linum/screens/enter_screen/constants/suggestion_defaults.dart';
 import 'package:linum/screens/enter_screen/enums/input_flag.dart';
 import 'package:linum/screens/enter_screen/models/structured_parsed_data.dart';
-import 'package:linum/screens/enter_screen/models/parsed_input.dart';
 import 'package:tuple/tuple.dart';
 
 class ExampleStringBuilder {

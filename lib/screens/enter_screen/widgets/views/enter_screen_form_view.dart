@@ -3,7 +3,6 @@ import 'package:linum/core/design/layout/utils/media_query_accessors.dart';
 import 'package:linum/core/repeating/constants/standard_repeat_configs.dart';
 import 'package:linum/features/currencies/constants/standard_currencies.dart';
 import 'package:linum/screens/enter_screen/utils/get_default_values.dart';
-import 'package:linum/screens/enter_screen/utils/get_entry_type.dart';
 import 'package:linum/screens/enter_screen/utils/initial_form_data_builder.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_form_view_model.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model.dart';
@@ -21,6 +20,8 @@ class EnterScreenFormView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
 
     return ChangeNotifierProxyProvider<EnterScreenViewModel, EnterScreenFormViewModel>(
       create: (context) => _createViewModel(context),
@@ -108,7 +109,6 @@ class EnterScreenFormView extends StatelessWidget {
       ..entryType = screenViewModel.entryType;
 
     final initialData = builder.build();
-    print(initialData);
     return EnterScreenFormViewModel(
       defaultValues: getDefaultValues(context),
       initialData: initialData,

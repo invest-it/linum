@@ -15,8 +15,24 @@ class EnterScreenFlow extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewModel = context.watch<EnterScreenViewModel>();
 
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 500),
+      transitionBuilder: (child, animation) {
+        return SlideTransition(
+          position: Tween(
+            begin: const Offset(0, 1.5),
+            end: Offset.zero,
+          ).animate(animation),
+          child: child,
+        );
+      },
+      child: _nextView(viewModel.viewState),
+    );
 
-    switch(viewModel.viewState) {
+  }
+
+  Widget _nextView(EnterScreenViewState viewState) {
+    switch(viewState) {
       case EnterScreenViewState.selectEntryType:
         return const EntryTypeSelectionView();
       case EnterScreenViewState.enter:

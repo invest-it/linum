@@ -5,7 +5,6 @@ import 'package:linum/core/repeating/models/repeat_configuration.dart';
 import 'package:linum/features/currencies/models/currency.dart';
 import 'package:linum/screens/enter_screen/constants/suggestion_defaults.dart';
 import 'package:linum/screens/enter_screen/enums/input_flag.dart';
-import 'package:linum/screens/enter_screen/models/enter_screen_data.dart';
 import 'package:linum/screens/enter_screen/utils/date_formatter.dart';
 
 
@@ -82,7 +81,7 @@ class StringBuilder {
       return;
     }
     final lastChar = _str[_str.length - 1];
-    if (lastChar == "") {
+    if (lastChar == " ") {
       return;
     }
     _str += " ";
