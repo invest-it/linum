@@ -15,6 +15,20 @@ class ParsedInput<T extends dynamic> {
     required this.indices,
   });
 
+  factory ParsedInput.testing({
+    required InputType type,
+    required T value,
+    required String text,
+    required String substr,
+  }) {
+    return ParsedInput(
+        type: type,
+        value: value,
+        raw: substr,
+        indices: _getIndices(text, substr),
+    );
+  }
+
   @override
   String toString() {
     return "ParsedInput(value: $value, raw: $raw, indices: $indices)";
@@ -38,4 +52,13 @@ class ParsedInput<T extends dynamic> {
       value.hashCode ^
       raw.hashCode;
   }
+}
+
+
+TextIndices _getIndices(String text, String substr) {
+  final start = text.indexOf(substr);
+  return (
+  start: start,
+  end: start + substr.length,
+  );
 }
