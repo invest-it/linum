@@ -22,8 +22,8 @@ List<StructuredParsedData> generateTestData() {
     ..setAmount("12.00", 12.00)
     ..setCurrency("USD", standardCurrencies["USD"]!)
     ..setName("Test")
-    ..setDate("#Date:28.07.", parsedDate("28.07.") ?? "");
-  // testInputs.add(builder.build());
+    ..setDate("#Date:28.07.", parsedDate("28.07.") ?? "null");
+  testInputs.add(builder.build());
 
   return testInputs;
 }
