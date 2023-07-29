@@ -10,7 +10,7 @@ import 'package:linum/screens/enter_screen/utils/parsing/date_parsing.dart';
 import 'package:linum/screens/enter_screen/utils/supported_values.dart';
 
 
-Category? categoryParser(String input, {Filter<Category>? filter}) {
+Category? parsedCategory(String input, {Filter<Category>? filter}) {
   final lowercase = input.trim().toLowerCase();
   final filteredCategories = standardCategories.entries
       .where((element) => filter == null || filter(element.value));
@@ -28,7 +28,7 @@ Category? categoryParser(String input, {Filter<Category>? filter}) {
   return null;
 }
 
-RepeatConfiguration? repeatInfoParser(String input, {Filter<RepeatInterval>? filter}) {
+RepeatConfiguration? parseRepeatConfiguration(String input, {Filter<RepeatInterval>? filter}) {
   final lowercase = input.trim().toLowerCase();
   final repeatInterval = SupportedValues.repeatIntervals[lowercase];
   if (repeatInterval == null) {
@@ -42,7 +42,7 @@ RepeatConfiguration? repeatInfoParser(String input, {Filter<RepeatInterval>? fil
   return null;
 }
 
-String? dateParser(String input, {Filter<ParsableDate>? filter}) {
+String? parsedDate(String input, {Filter<ParsableDate>? filter}) {
   final lowercase = input.trim().toLowerCase();
   final today = DateTime.now();
 

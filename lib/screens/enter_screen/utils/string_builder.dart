@@ -14,7 +14,6 @@ class StringBuilder {
 
   String _existingStr = "";
   String _str = "";
-
   String _amount = "";
   String _currency = "";
   String _name = "";

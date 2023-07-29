@@ -15,7 +15,7 @@ class ParsedInput<T extends dynamic> {
     required this.indices,
   });
 
-  factory ParsedInput.testing({
+  factory ParsedInput.fromSubstring({
     required InputType type,
     required T value,
     required String text,
@@ -58,7 +58,7 @@ class ParsedInput<T extends dynamic> {
 TextIndices _getIndices(String text, String substr) {
   final start = text.indexOf(substr);
   return (
-  start: start,
-  end: start + substr.length,
+    start: start,
+    end: start + substr.length,
   );
 }

@@ -2,16 +2,13 @@
 import 'package:linum/common/types/filter_function.dart';
 import 'package:linum/core/categories/models/category.dart';
 import 'package:linum/core/repeating/enums/repeat_interval.dart';
-import 'package:linum/core/repeating/models/repeat_configuration.dart';
 import 'package:linum/screens/enter_screen/enums/input_flag.dart';
-import 'package:linum/screens/enter_screen/enums/input_type.dart';
 import 'package:linum/screens/enter_screen/enums/parsable_date.dart';
-import 'package:linum/screens/enter_screen/models/parsed_input.dart';
 import 'package:linum/screens/enter_screen/models/structured_parsed_data.dart';
-import 'package:linum/screens/enter_screen/utils/parsing/get_text_indices.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/natural_lang_parser.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/parser_functions.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/tag_parser.dart';
+import 'package:linum/screens/enter_screen/utils/structured_parsed_data_builder.dart';
 
 
 final RegExp splitRegex = RegExp("(?=#)|(?=@)");
@@ -22,13 +19,13 @@ class InputParser {
   Filter<RepeatInterval>? repeatFilter;
   Filter<ParsableDate>? dateFilter;
 
+  StructuredParsedDataBuilder? _parsedDataBuilder;
 
   StructuredParsedData parse(String? input) {
     if (input == null || input.isEmpty) {
       return StructuredParsedData("");
     }
-
-    final List<ParsedInput> parsedInputs = [];
+    _parsedDataBuilder = StructuredParsedDataBuilder(input);
 
     final splits = _splitInput(input);
 
@@ -36,19 +33,16 @@ class InputParser {
       final split = splits[i];
 
       if (split.startsWith(trimTagRegex)) {
-        final parsedInput = _interpretTag(splits[i], input);
-        if (parsedInput != null) {
-          parsedInputs.add(parsedInput);
-        }
+        _interpretTag(splits[i], input);
         continue;
       }
-      parsedInputs.addAll(
-          NaturalLangParser().parse(split, input),
-      );
+      NaturalLangParser(_parsedDataBuilder!).parse(split, input);
     }
 
 
-    return StructuredParsedData.fromParsedInputs(parsedInputs, input);
+    final parsedData = _parsedDataBuilder!.build();
+    _parsedDataBuilder = null;
+    return parsedData;
   }
 
   List<String> _splitInput(String input) {
@@ -60,7 +54,7 @@ class InputParser {
     return splits;
   }
 
-  ParsedInput? _interpretTag(String tag, String fullInput) {
+  void _interpretTag(String tag, String fullInput) {
     final trimmedTag = tag.replaceAll(trimTagRegex, "");
     final parsedTag = TagParser().parse(trimmedTag);
     return _handleFlag(
@@ -71,7 +65,7 @@ class InputParser {
     );
   }
 
-  ParsedInput? _handleFlag({
+  void _handleFlag({
     required InputFlag? flag,
     required String tag,
     required String fullInput,
@@ -79,89 +73,84 @@ class InputParser {
   }) {
     switch(flag) {
       case InputFlag.category:
-        return _handleCategoryFlag(tag, fullInput, parsedTag);
+        _handleCategoryFlag(tag, fullInput, parsedTag);
       case InputFlag.date:
-        return _handleDateFlag(tag, fullInput, parsedTag);
+        _handleDateFlag(tag, fullInput, parsedTag);
       case InputFlag.repeatInfo:
-        return _handleRepeatInfoFlag(tag, fullInput, parsedTag);
+        _handleRepeatInfoFlag(tag, fullInput, parsedTag);
       default:
-        return _handleNullFlag(tag, fullInput, parsedTag);
+        _handleNullFlag(tag, fullInput, parsedTag);
     }
   }
 
-  ParsedInput? _handleNullFlag(
+  void _handleNullFlag(
       String tag,
       String fullInput,
       ParsedTag parsedTag,
   ) {
     final categoryResult = _handleCategoryFlag(tag, fullInput, parsedTag);
-    if (categoryResult != null) {
-      return categoryResult;
+    if (categoryResult) {
+      return;
     }
 
     final dateResult = _handleDateFlag(tag, fullInput, parsedTag);
-    if (dateResult != null) {
-      return dateResult;
+    if (dateResult) {
+      return;
     }
 
     final repeatInfoResult = _handleRepeatInfoFlag(tag, fullInput, parsedTag);
-    if (repeatInfoResult != null) {
-      return repeatInfoResult;
+    if (repeatInfoResult) {
+      return;
     }
-
-    return null;
   }
 
 
-  ParsedInput<Category>? _handleCategoryFlag(
+  bool _handleCategoryFlag(
       String tag,
       String fullInput,
       ParsedTag parsedTag,
   ) {
-    final category = categoryParser(parsedTag.text, filter: categoryFilter);
-    if (category != null) {
-      return ParsedInput<Category>(
-        type: InputType.category,
-        indices: getTextIndices(tag.trimRight(), fullInput)!,
-        value: category,
-        raw: tag.trimRight(),
+    final result = parsedCategory(parsedTag.text, filter: categoryFilter);
+    if (result != null) {
+      _parsedDataBuilder?.setCategory(
+          tag.trimRight(),
+          result,
       );
+      return true;
     }
-    return null;
+    return false;
   }
 
-  ParsedInput<RepeatConfiguration>? _handleRepeatInfoFlag(
+  bool _handleRepeatInfoFlag(
       String tag,
       String fullInput,
       ParsedTag parsedTag,
       ) {
-    final result = repeatInfoParser(parsedTag.text, filter: repeatFilter);
+    final result = parseRepeatConfiguration(parsedTag.text, filter: repeatFilter);
     if (result != null) {
-      return ParsedInput<RepeatConfiguration>(
-        type: InputType.repeatInfo,
-        indices: getTextIndices(tag.trimRight(), fullInput)!,
-        value: result,
-        raw: tag.trimRight(),
+      _parsedDataBuilder?.setRepeatConfiguration(
+          tag.trimRight(),
+          result,
       );
+      return true;
     }
-    return null;
+    return false;
   }
 
-  ParsedInput<String>? _handleDateFlag(
+  bool _handleDateFlag(
       String tag,
       String fullInput,
       ParsedTag parsedTag,
       ) {
-    final result = dateParser(parsedTag.text, filter: dateFilter);
+    final result = parsedDate(parsedTag.text, filter: dateFilter);
     if (result != null) {
-      return ParsedInput<String>(
-        type: InputType.date,
-        indices: getTextIndices(tag.trimRight(), fullInput)!,
-        value: result,
-        raw: tag.trimRight(),
+      _parsedDataBuilder?.setDate(
+        tag.trimRight(),
+        result,
       );
+      return true;
     }
-    return null;
+    return false;
   }
 }
 
