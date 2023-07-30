@@ -280,7 +280,7 @@ class SerialTransactionUpdater {
      Timestamp? updatedEndTime;
 
     if (oldSerialTransaction.repeatDurationType.name.toUpperCase() == "MONTHS") {
-      updatedEndTime =  Timestamp.fromDate(
+      updatedEndTime = Timestamp.fromDate(
         calculateOneTimeStepBackwards(
           oldSerialTransaction.repeatDuration,
           oldDate.toDate(),
@@ -289,7 +289,7 @@ class SerialTransactionUpdater {
         ),
       );
     } else {
-      updatedEndTime =  Timestamp.fromDate(
+      updatedEndTime = Timestamp.fromDate(
         calculateOneTimeStepBackwards(
           oldSerialTransaction.repeatDuration,
           oldDate.toDate(),

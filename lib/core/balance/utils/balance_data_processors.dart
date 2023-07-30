@@ -20,49 +20,6 @@ import 'package:tuple/tuple.dart';
 
 typedef PreparedBalanceData = Tuple2<List<Transaction>, List<SerialTransaction>>;
 
-Future<PreparedBalanceData> prepareData(
-     DocumentSnapshot<BalanceDocument> snapshot,
-    AlgorithmState algorithms,
-    ExchangeRateService exchangeRateService,
-) async {
-  final data = snapshot.data(); // TODO: Model for Document
-
-  if (data == null) {
-    return const Tuple2(<Transaction>[], <SerialTransaction>[]);
-  }
-
-  final List<Transaction> transactions = <Transaction>[];
-
-  for (final transaction in data.transactions) {
-    if (transaction.repeatId == null) {
-      transactions.add(transaction);
-    }
-  }
-
-  final List<SerialTransaction> serialTransactions = <SerialTransaction>[];
-
-  for (final singleRepeatable in data.serialTransactions) {
-    serialTransactions.add(singleRepeatable);
-  }
-
-  SerialTransactionManager.addAllSerialTransactionsToTransactionsLocally(
-    serialTransactions,
-    transactions,
-    DateTime.now().returnLaterDate(
-      DateTime(
-        algorithms.shownMonth.year,
-        algorithms.shownMonth.month + 1,
-      ),
-    ),
-  );
-
-  try {
-    await exchangeRateService.addExchangeRatesToTransactions(transactions);
-  } catch (e) {
-    Logger().e(e);
-  }
-  return Tuple2(transactions, serialTransactions);
-}
 
 Future<Tuple2<List<Transaction>, List<SerialTransaction>>>
   processBalanceData({
@@ -72,58 +29,87 @@ Future<Tuple2<List<Transaction>, List<SerialTransaction>>>
   bool isSerial = false,
 }) async {
   if (!isSerial) {
-    final preparedData = await prepareData(
-      snapshot,
-      algorithms,
-      exchangeRateService,
+    return _processTransactions(
+        snapshot: snapshot,
+        algorithms: algorithms,
+        exchangeRateService: exchangeRateService,
     );
-    final transactions = preparedData.item1;
-
-    // Future there could be an sort algorithm provider
-    // (and possibly also a filter algorithm provided)
-    transactions.removeWhere(algorithms.filter);
-    transactions.sort(algorithms.sorter);
-
-    return Tuple2(transactions, preparedData.item2);
   } else {
     // TODO: Prepare Data once
-    final data = await prepareData(
-      snapshot, algorithms, exchangeRateService,
+    return _processSerialTransactions(
+        snapshot: snapshot,
+        algorithms: algorithms,
+        exchangeRateService: exchangeRateService,
     );
-    final transactions = data.item1;
-    final serialTransactions = data.item2;
-
-    transactions.removeWhere(algorithms.filter);
-    transactions.removeWhere((transaction) {
-      return transaction.repeatId == null;
-    });
-
-    serialTransactions.removeWhere((serialTransaction) {
-      return !transactions.any((transaction) {
-        return transaction.repeatId == serialTransaction.id;
-      });
-    });
-
-    serialTransactions.sort((a, b) {
-      // are both expenses / incomes
-      if ((a.amount <= 0 && b.amount <= 0) ||
-          (a.amount > 0 && b.amount > 0)) {
-        return a.name.compareTo(b.name);
-      } else {
-        return a.amount.compareTo(b.amount);
-      }
-    });
-
-    return Tuple2(data.item1, serialTransactions);
   }
 }
+
+Future<Tuple2<List<Transaction>, List<SerialTransaction>>>
+_processTransactions({
+  required DocumentSnapshot<BalanceDocument> snapshot,
+  required AlgorithmState algorithms,
+  required ExchangeRateService exchangeRateService,
+}) async {
+  final preparedData = await _prepareData(
+    snapshot,
+    algorithms,
+    exchangeRateService,
+  );
+  final transactions = preparedData.item1;
+
+  // Future there could be an sort algorithm provider
+  // (and possibly also a filter algorithm provided)
+  transactions.removeWhere(algorithms.filter);
+  transactions.sort(algorithms.sorter);
+
+  return Tuple2(transactions, preparedData.item2);
+}
+
+
+Future<Tuple2<List<Transaction>, List<SerialTransaction>>>
+_processSerialTransactions({
+  required DocumentSnapshot<BalanceDocument> snapshot,
+  required AlgorithmState algorithms,
+  required ExchangeRateService exchangeRateService,
+}) async {
+  final data = await _prepareData(
+    snapshot, algorithms, exchangeRateService,
+  );
+  final transactions = data.item1;
+  final serialTransactions = data.item2;
+
+  transactions.removeWhere(algorithms.filter);
+  transactions.removeWhere((transaction) {
+    return transaction.repeatId == null;
+  });
+
+  serialTransactions.removeWhere((serialTransaction) {
+    return !transactions.any((transaction) {
+      return transaction.repeatId == serialTransaction.id;
+    });
+  });
+
+  serialTransactions.sort((a, b) {
+    // are both expenses / incomes
+    if ((a.amount <= 0 && b.amount <= 0) ||
+        (a.amount > 0 && b.amount > 0)) {
+      return a.name.compareTo(b.name);
+    } else {
+      return a.amount.compareTo(b.amount);
+    }
+  });
+
+  return Tuple2(data.item1, serialTransactions);
+}
+
+
 
 Future<StatisticalCalculations> generateStatistics({
   required  DocumentSnapshot<BalanceDocument> snapshot,
   required AlgorithmState algorithms,
   required ExchangeRateService exchangeRateService,
 }) async {
-  final preparedData = await prepareData(
+  final preparedData = await _prepareData(
     snapshot, algorithms, exchangeRateService,
   );
   return StatisticalCalculations(
@@ -133,4 +119,48 @@ Future<StatisticalCalculations> generateStatistics({
     algorithms: algorithms,
   );
 
+}
+
+
+Future<PreparedBalanceData> _prepareData(
+    DocumentSnapshot<BalanceDocument> snapshot,
+    AlgorithmState algorithms,
+    ExchangeRateService exchangeRateService,
+) async {
+
+  final data = snapshot.data(); // TODO: Model for Document
+  if (data == null) {
+    return const Tuple2(<Transaction>[], <SerialTransaction>[]);
+  }
+
+  final transactions = <Transaction>[];
+  for (final transaction in data.transactions) {
+    if (transaction.repeatId == null) {
+      transactions.add(transaction);
+    }
+  }
+
+  final serialTransactions = <SerialTransaction>[];
+  for (final singleRepeatable in data.serialTransactions) {
+    serialTransactions.add(singleRepeatable);
+  }
+
+
+  final nextMonth = DateTime(
+    algorithms.shownMonth.year,
+    algorithms.shownMonth.month + 1,
+  );
+  SerialTransactionManager.addAllSerialTransactionsToTransactionsLocally(
+    serialTransactions,
+    transactions,
+    DateTime.now().returnLaterDate(nextMonth),
+  );
+
+  try {
+    await exchangeRateService.addExchangeRatesToTransactions(transactions);
+  } catch (e) {
+    Logger().e(e);
+  }
+
+  return Tuple2(transactions, serialTransactions);
 }

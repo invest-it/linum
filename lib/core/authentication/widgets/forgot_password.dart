@@ -15,8 +15,10 @@ import 'package:provider/provider.dart';
 
 
 class ForgotPasswordButton extends StatelessWidget {
-  const ForgotPasswordButton(this.screenKey);
   final ScreenKey screenKey;
+
+  const ForgotPasswordButton(this.screenKey);
+
 
   @override
   Widget build(BuildContext context) {

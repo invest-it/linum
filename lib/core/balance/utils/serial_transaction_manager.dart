@@ -64,7 +64,7 @@ class SerialTransactionManager {
       logger.e("no id provided");
       return false;
     }
-    if (changeType == SerialTransactionChangeMode.thisAndAllBefore) {
+    if (changeType.isThisAndAllBefore()) {
       if (oldDate == null) {
         logger.e("RepeatableChangeType.thisAndAllBefore => date != null");
         return false;
@@ -76,7 +76,7 @@ class SerialTransactionManager {
         return false;
       }
     }
-    if (changeType == SerialTransactionChangeMode.thisAndAllAfter) {
+    if (changeType.isThisAndAllAfter()) {
       if (oldDate == null) {
         logger.e("RepeatableChangeType.thisAndAllAfter => date != null");
         return false;
@@ -88,7 +88,7 @@ class SerialTransactionManager {
         return false;
       }
     }
-    if (changeType == SerialTransactionChangeMode.onlyThisOne) {
+    if (changeType.isOnlyThisOne()) {
       if (oldDate == null) {
         logger.e("RepeatableChangeType.onlyThisOne => date != null");
         return false;
@@ -228,21 +228,21 @@ class SerialTransactionManager {
      Timestamp? date,
   }) {
     // conditions
-    if (removeType == SerialTransactionChangeMode.thisAndAllBefore &&
+    if (removeType.isThisAndAllBefore() &&
         date == null) {
       logger.e(
         "removeType == RepeatableChangeType.thisAndAllBefore => date != null",
       );
       return false;
     }
-    if (removeType == SerialTransactionChangeMode.thisAndAllAfter &&
+    if (removeType.isThisAndAllAfter() &&
         date == null) {
       logger.e(
         "removeType == RepeatableChangeType.thisAndAllAfter => date != null",
       );
       return false;
     }
-    if (removeType == SerialTransactionChangeMode.onlyThisOne && date == null) {
+    if (removeType.isOnlyThisOne() && date == null) {
       logger
           .e("removeType == RepeatableChangeType.onlyThisOne => date != null");
       return false;
@@ -253,15 +253,11 @@ class SerialTransactionManager {
         return SerialTransactionRemover.removeAll(data, id);
       case SerialTransactionChangeMode.thisAndAllBefore:
         return SerialTransactionRemover.removeThisAndAllBefore(
-          data,
-          id,
-          date!,
+          data, id, date!,
         );
       case SerialTransactionChangeMode.thisAndAllAfter:
         final value = SerialTransactionRemover.removeThisAndAllAfter(
-          data,
-          id,
-          date!,
+          data, id, date!,
         );
         return value;
       case SerialTransactionChangeMode.onlyThisOne:

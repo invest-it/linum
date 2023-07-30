@@ -40,7 +40,7 @@ void main() {
             create: (_) => ActionLipViewModel(),
           ),
         ],
-        child: LoginView(),
+        child: const LoginView(),
       );
     });
 

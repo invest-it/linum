@@ -17,6 +17,7 @@ import 'package:provider/provider.dart';
 class LoginView extends StatelessWidget {
   // double windowWidth = realScreenWidth();
   // double windowHeight = realScreenHeight();
+  const LoginView({super.key});
 
   @override
   Widget build(BuildContext context) {

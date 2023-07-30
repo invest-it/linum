@@ -17,6 +17,7 @@ class RegisterView extends StatelessWidget {
 
   // double windowWidth = realScreenWidth();
   // double windowHeight = realScreenHeight();
+  const RegisterView({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -19,16 +19,9 @@ import 'package:linum/screens/settings_screen/widget/standard_category/standard_
 import 'package:linum/screens/settings_screen/widget/standard_currency/standard_currency_selector.dart';
 import 'package:linum/screens/settings_screen/widget/version_number.dart';
 
-class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({
-    super.key,
-  });
+class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({super.key});
 
-  @override
-  _SettingsScreenState createState() => _SettingsScreenState();
-}
-
-class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return ScreenSkeleton(

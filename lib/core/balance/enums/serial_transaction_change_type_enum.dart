@@ -8,5 +8,15 @@ enum SerialTransactionChangeMode {
   all,
   thisAndAllBefore,
   thisAndAllAfter,
-  onlyThisOne,
+  onlyThisOne;
+
+  bool isThisAndAllBefore() {
+    return this == SerialTransactionChangeMode.thisAndAllBefore;
+  }
+  bool isThisAndAllAfter() {
+    return this == SerialTransactionChangeMode.thisAndAllAfter;
+  }
+  bool isOnlyThisOne() {
+    return this == SerialTransactionChangeMode.onlyThisOne;
+  }
 }
