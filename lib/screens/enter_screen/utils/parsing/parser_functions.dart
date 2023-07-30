@@ -7,6 +7,7 @@ import 'package:linum/core/repeating/enums/repeat_interval.dart';
 import 'package:linum/core/repeating/models/repeat_configuration.dart';
 import 'package:linum/screens/enter_screen/enums/parsable_date.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/date_parsing.dart';
+import 'package:linum/screens/enter_screen/utils/special_dates.dart';
 import 'package:linum/screens/enter_screen/utils/supported_values.dart';
 
 
@@ -44,7 +45,6 @@ RepeatConfiguration? parseRepeatConfiguration(String input, {Filter<RepeatInterv
 
 String? parsedDate(String input, {Filter<ParsableDate>? filter}) {
   final lowercase = input.trim().toLowerCase();
-  final today = DateTime.now();
 
   // TODO: Implement date filters
   if (filter != null) {
@@ -55,11 +55,11 @@ String? parsedDate(String input, {Filter<ParsableDate>? filter}) {
 
   switch (parsableDate) {
     case ParsableDate.today:
-      return today.toIso8601String();
+      return SpecialDates.today().toIso8601String();
     case ParsableDate.tomorrow:
-      return DateTime(today.year, today.month, today.day + 1).toIso8601String();
+      return SpecialDates.tomorrow().toIso8601String();
     case ParsableDate.yesterday:
-      return DateTime(today.year, today.month, today.day - 1).toIso8601String();
+      return SpecialDates.yesterday().toIso8601String();
     default:
       if (parsableDate != null) {
         return getLastWeekdayDate(parsableDate);

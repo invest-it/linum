@@ -6,7 +6,6 @@ import 'package:linum/screens/enter_screen/utils/structured_parsed_data_builder.
 
 
 
-
 List<StructuredParsedData> generateTestData() {
   final List<StructuredParsedData> testInputs = [];
 
@@ -23,6 +22,15 @@ List<StructuredParsedData> generateTestData() {
     ..setCurrency("USD", standardCurrencies["USD"]!)
     ..setName("Test")
     ..setDate("#Date:28.07.", parsedDate("28.07.") ?? "null");
+  testInputs.add(builder.build());
+
+
+  builder = StructuredParsedDataBuilder("42 JPY Sushi #tdy #cat:Food & Drinks")
+    ..setAmount("42", 42)
+    ..setCurrency("JPY", standardCurrencies["JPY"]!)
+    ..setName("Sushi")
+    ..setDate("#tdy", parsedDate("tdy") ?? "null")
+    ..setCategory("#cat:Food & Drinks", getCategory("food")!);
   testInputs.add(builder.build());
 
   return testInputs;
