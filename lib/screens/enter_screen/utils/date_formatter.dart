@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:linum/screens/enter_screen/constants/parsable_date_map.dart';
 import 'package:linum/screens/enter_screen/enums/parsable_date.dart';
+import 'package:linum/screens/enter_screen/utils/date_utils.dart';
 
 class DateFormatter {
   final String pattern;
@@ -9,24 +10,15 @@ class DateFormatter {
   String? format(String isoStr) {
     final date = DateTime.parse(isoStr);
 
-    final now = DateTime.now();
-
-    final yesterdayStart = DateTime(now.year, now.month, now.day - 1, 0, 0, -1);
-    final yesterdayEnd = DateTime(now.year, now.month, now.day, 0, 0, -1);
-
-    if (date.isBefore(yesterdayEnd) && date.isAfter(yesterdayStart)) {
+    if (date.isYesterday()) {
       return parsableDateMap[ParsableDate.yesterday];
     }
 
-    final todayEnd = DateTime(now.year, now.month, now.day + 1, 0, 0, -1);
-
-    if (date.isBefore(todayEnd) && date.isAfter(yesterdayEnd)) {
+    if (date.isToday()) {
       return parsableDateMap[ParsableDate.today];
     }
 
-    final tomorrowEnd = DateTime(now.year, now.month, now.day + 2, 0, 0, -1);
-
-    if (date.isBefore(tomorrowEnd) && date.isAfter(todayEnd)) {
+    if (date.isTomorrow()) {
       return parsableDateMap[ParsableDate.tomorrow];
     }
 

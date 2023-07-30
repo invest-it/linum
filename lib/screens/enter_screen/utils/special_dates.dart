@@ -5,12 +5,17 @@ class SpecialDates {
   }
 
   static DateTime tomorrow() {
-    final today = SpecialDates.today();
-    return DateTime(today.year, today.month, today.day + 1);
+    final now = DateTime.now();
+    return DateTime(now.year, now.month, now.day + 1);
+  }
+
+  static DateTime dayAfterTomorrow() {
+    final now = DateTime.now();
+    return DateTime(now.year, now.month, now.day + 2);
   }
 
   static DateTime yesterday() {
-    final today = SpecialDates.today();
-    return DateTime(today.year, today.month, today.day - 1);
+    final now = DateTime.now();
+    return DateTime(now.year, now.month, now.day - 1);
   }
 }
