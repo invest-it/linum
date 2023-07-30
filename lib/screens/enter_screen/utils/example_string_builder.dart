@@ -48,6 +48,8 @@ class ExampleStringBuilder {
     value = Tuple2("", str2);
   }
 
+
+  // TODO: Refactor
   void rebuild(StructuredParsedData parsed) {
     if (parsed.raw == "") {
       build();

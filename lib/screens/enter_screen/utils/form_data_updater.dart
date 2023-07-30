@@ -3,22 +3,6 @@ import 'package:linum/screens/enter_screen/models/parsed_input.dart';
 import 'package:linum/screens/enter_screen/models/selected_options.dart';
 import 'package:linum/screens/enter_screen/models/structured_parsed_data.dart';
 
-class DidChange {
-  final bool category;
-  final bool currency;
-  final bool date;
-  final bool repeatInfo;
-
-  DidChange({
-    this.category = false,
-    this.currency = false,
-    this.date = false,
-    this.repeatInfo = false,
-  });
-
-  bool get changed => category || currency || repeatInfo || date;
-}
-
 
 class FormDataUpdater {
   final EnterScreenFormData oldData;
@@ -161,6 +145,22 @@ class FormDataUpdater {
   }
 }
 
+
+class DidChange {
+  final bool category;
+  final bool currency;
+  final bool date;
+  final bool repeatInfo;
+
+  DidChange({
+    this.category = false,
+    this.currency = false,
+    this.date = false,
+    this.repeatInfo = false,
+  });
+
+  bool get changed => category || currency || repeatInfo || date;
+}
 
 DidChange _detectOptionChanges({
   required SelectedOptions oldOptions,

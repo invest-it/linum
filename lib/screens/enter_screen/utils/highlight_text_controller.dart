@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/screens/enter_screen/constants/hightlight_colors.dart';
+import 'package:linum/screens/enter_screen/models/parsed_input.dart';
 import 'package:linum/screens/enter_screen/models/structured_parsed_data.dart';
 import 'package:linum/screens/enter_screen/models/suggestion.dart';
 import 'package:linum/screens/enter_screen/models/suggestion_filters.dart';
@@ -84,43 +85,53 @@ class HighlightTextEditingController extends TextEditingController {
     var counter = 0; // Current position in Text
 
     for (final parsedInput in parsedInputList) {
-      final start = parsedInput.indices.start;
-      final end = parsedInput.indices.end;
-
-      if (counter < start) {
-        builder.addCharList(
-          charList: text.substring(counter, start),
-        );
-      }
-
-      final highlightColor = highlightColors[parsedInput.type.name];
-      assert(highlightColor != null);
-
-      final raw = parsedInput.raw;
-
-      builder.addHighlightedCharList(
-        charList: raw,
-        color: highlightColor!,
-      );
-      counter = end;
+      _addParsedInputToSpan(parsedInput, builder, counter);
+      counter = parsedInput.indices.end;
     }
 
+    _addRemainingChars(builder, counter);
+    _addExampleString(builder);
+
+    return TextSpan(
+      children: builder.build(),
+    );
+  }
+
+
+  void _addRemainingChars(SpanListBuilder builder, int counter) {
     if (counter < text.length) {
       builder.addCharList(
         charList: text.substring(counter, text.length),
       );
     }
+  }
 
-    // print(spans);
+  void _addExampleString(SpanListBuilder builder) {
     if (!text.contains(trimTagRegex)) {
       builder.addCharList(
         charList: exampleStringBuilder.value.item2,
         textColor: Colors.black26,
       );
     }
+  }
 
-    return TextSpan(
-      children: builder.build(),
+  void _addParsedInputToSpan(ParsedInput parsedInput, SpanListBuilder builder, int counter) {
+    final start = parsedInput.indices.start;
+
+    if (counter < start) {
+      builder.addCharList(
+        charList: text.substring(counter, start),
+      );
+    }
+
+    final highlightColor = highlightColors[parsedInput.type.name];
+    assert(highlightColor != null);
+
+    final raw = parsedInput.raw;
+
+    builder.addHighlightedCharList(
+      charList: raw,
+      color: highlightColor!,
     );
   }
 }
