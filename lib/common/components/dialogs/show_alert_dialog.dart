@@ -8,6 +8,9 @@ Future<void> showAlertDialog(
       String actionTitle = 'alertdialog.login.action-standard',
       bool userMustDismissWithButton = false,
     }) async {
+  final actionTitleStyle = Theme.of(context).textTheme.bodyLarge
+      ?.copyWith(color: Theme.of(context).colorScheme.primary);
+
   return showDialog<void>(
     context: context,
     barrierDismissible:
@@ -29,10 +32,7 @@ Future<void> showAlertDialog(
           TextButton(
             child: Text(
               actionTitle.tr(),
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge
-                  ?.copyWith(color: Theme.of(context).colorScheme.primary),
+              style: actionTitleStyle,
             ),
             onPressed: () {
               Navigator.of(context, rootNavigator: true).pop();

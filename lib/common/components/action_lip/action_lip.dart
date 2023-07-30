@@ -1,33 +1,21 @@
 //  Action Lip - A Lip that replaced the ModalBottomSheet Functionality. An ActionLip can be triggered on any screen, supposed that the screenKey is unique.
 //
-//  Code was Spaghetti before the SizeGuide remake. Code is Spaghetti after the SizeGuide remake.
-//
-//  Author: NightmindOfficial
+//  Author: NightmindOfficial & damattl
 //  Co-Author: SoTBurst
 //  (Refactored)
 
 import 'package:flutter/material.dart';
+import 'package:linum/common/components/action_lip/utils/action_lip_y_offset.dart';
 import 'package:linum/common/components/action_lip/viewmodels/action_lip_viewmodel.dart';
 import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
 import 'package:linum/core/design/layout/enums/screen_key.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
-import 'package:linum/core/design/layout/utils/media_query_accessors.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
 import 'package:provider/provider.dart';
 
 
-// ignore: must_be_immutable
-class ActionLip extends StatefulWidget {
+class ActionLip extends StatelessWidget {
   const ActionLip(this.screenKey);
-
-  final ScreenKey screenKey;
-
-  @override
-  State<ActionLip> createState() => _ActionLipState(screenKey);
-}
-
-class _ActionLipState extends State<ActionLip> {
-  _ActionLipState(this.screenKey);
 
   final ScreenKey screenKey;
 
@@ -41,7 +29,7 @@ class _ActionLipState extends State<ActionLip> {
           duration: const Duration(milliseconds: 1000),
           transform: Matrix4.translationValues(
             0,
-            _calculateYOffset(status),
+            ActionLipYOffset(context).forStatus(status),
             1,
           ),
           decoration: BoxDecoration(
@@ -95,27 +83,5 @@ class _ActionLipState extends State<ActionLip> {
         );
       },
     );
-  }
-
-  double _calculateYOffset(
-    ActionLipVisibility status,
-  ) {
-    switch (status) {
-      case ActionLipVisibility.hidden:
-        return useScreenHeight(context);
-      case ActionLipVisibility.onviewport:
-        return context.isKeyboardOpen()
-            ? context.proportionateScreenHeightFraction(
-                  ScreenFraction.twofifths,
-                ) -
-                (useKeyBoardHeight(context) / 2)
-            : context
-                .proportionateScreenHeightFraction(ScreenFraction.twofifths);
-      case ActionLipVisibility.disabled:
-        throw ArgumentError(
-          'If the actionLipStatus is set to DISABLED, the ActionLip class must not be invoked.',
-          'actionLipStatus',
-        );
-    }
   }
 }

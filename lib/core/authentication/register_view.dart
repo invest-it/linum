@@ -5,56 +5,33 @@
 //  (Refactored by damattl)
 
 import 'package:flutter/material.dart';
-import 'package:linum/core/authentication/widgets/register_form.dart';
+import 'package:linum/common/utils/execute.dart';
+import 'package:linum/core/authentication/widgets/register_form/register_form.dart';
 import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/core/design/layout/utils/media_query_accessors.dart';
 import 'package:linum/screens/onboarding_screen/viewmodels/onboarding_screen_viewmodel.dart';
 import 'package:provider/provider.dart';
 
-class RegisterView extends StatefulWidget {
-  const RegisterView({super.key});
+class RegisterView extends StatelessWidget {
 
-  @override
-  State<RegisterView> createState() => _RegisterViewState();
-}
-
-class _RegisterViewState extends State<RegisterView> {
-  double _registerYOffset = 0;
   // double windowWidth = realScreenWidth();
   // double windowHeight = realScreenHeight();
 
   @override
   Widget build(BuildContext context) {
-    final OnboardingScreenViewModel onboardingScreenProvider =
-        Provider.of<OnboardingScreenViewModel>(
-      context,
-    );
-
-    switch (onboardingScreenProvider.pageState) {
-      case OnboardingPageState.none:
-        _registerYOffset = useScreenHeight(context);
-      case OnboardingPageState.login:
-        _registerYOffset = useScreenHeight(context);
-      case OnboardingPageState.register:
-        _registerYOffset = context.isKeyboardOpen()
-            ? context.proportionateScreenHeightFraction(
-                  ScreenFraction.twofifths,
-                ) -
-                (useKeyBoardHeight(context) / 2)
-            : context
-                .proportionateScreenHeightFraction(ScreenFraction.twofifths);
-    }
+    final onboardingScreenViewModel = context.watch<OnboardingScreenViewModel>();
+    final pageState = onboardingScreenViewModel.pageState;
 
     return GestureDetector(
       onTap: () {
-        onboardingScreenProvider.setPageState(OnboardingPageState.register);
+        onboardingScreenViewModel.setPageState(OnboardingPageState.register);
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: AnimatedContainer(
         curve: Curves.fastLinearToSlowEaseIn,
         duration: const Duration(milliseconds: 800),
-        transform: Matrix4.translationValues(0, _registerYOffset, 0),
+        transform: Matrix4.translationValues(0, _yOffset(context, pageState), 0),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.background,
           borderRadius: const BorderRadius.only(
@@ -80,5 +57,24 @@ class _RegisterViewState extends State<RegisterView> {
         ),
       ),
     );
+  }
+
+  double _yOffset(BuildContext context, OnboardingPageState pageState) {
+    switch (pageState) {
+      case OnboardingPageState.none:
+        return useScreenHeight(context);
+      case OnboardingPageState.login:
+        return useScreenHeight(context);
+      case OnboardingPageState.register:
+        return calculate(() {
+          final screenHeight = context.proportionateScreenHeightFraction(
+            ScreenFraction.twofifths,
+          );
+          if (context.isKeyboardOpen()) {
+            return screenHeight - (useKeyBoardHeight(context) / 2);
+          }
+          return screenHeight;
+        });
+    }
   }
 }

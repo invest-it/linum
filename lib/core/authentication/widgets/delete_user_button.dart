@@ -68,9 +68,7 @@ class DeleteUserButton extends StatelessWidget {
         ),
         child: Text(
           tr(translationKeys.settingsScreen.systemSettings.buttonDeleteUser),
-          style: Theme.of(context)
-              .textTheme
-              .labelLarge
+          style: Theme.of(context).textTheme.labelLarge
               ?.copyWith(color: Theme.of(context).colorScheme.error),
         ),
       ),

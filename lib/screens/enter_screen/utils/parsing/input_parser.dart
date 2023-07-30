@@ -7,8 +7,8 @@ import 'package:linum/screens/enter_screen/enums/parsable_date.dart';
 import 'package:linum/screens/enter_screen/models/structured_parsed_data.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/natural_lang_parser.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/parser_functions.dart';
-import 'package:linum/screens/enter_screen/utils/parsing/tag_parser.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/structured_parsed_data_builder.dart';
+import 'package:linum/screens/enter_screen/utils/parsing/tag_parser.dart';
 
 
 final RegExp splitRegex = RegExp("(?=#)|(?=@)");

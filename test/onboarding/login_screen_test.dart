@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/common/components/action_lip/viewmodels/action_lip_viewmodel.dart';
 import 'package:linum/core/authentication/login_view.dart';
 import 'package:linum/core/authentication/services/authentication_service.dart';
-import 'package:linum/core/authentication/widgets/login_form.dart';
+import 'package:linum/core/authentication/widgets/login_form/login_form.dart';
 import 'package:linum/screens/onboarding_screen/viewmodels/onboarding_screen_viewmodel.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -40,7 +40,7 @@ void main() {
             create: (_) => ActionLipViewModel(),
           ),
         ],
-        child: const LoginView(),
+        child: LoginView(),
       );
     });
 

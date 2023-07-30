@@ -78,7 +78,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: [
                 // All Authentication Actions (including logOut will be handled via widgets/auth from now on.)
                 LogoutForm(),
-                ForgotPasswordButton(ScreenKey.settings),
+                const ForgotPasswordButton(ScreenKey.settings),
                 const DeleteUserButton(),
               ],
             ),

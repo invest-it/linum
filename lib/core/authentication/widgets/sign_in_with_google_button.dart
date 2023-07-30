@@ -20,8 +20,10 @@ class SignInWithGoogleButton extends StatelessWidget {
 
   final VoidCallback onPressed;
 
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
         backgroundColor: Colors.white,
@@ -51,12 +53,12 @@ class SignInWithGoogleButton extends StatelessWidget {
               padding: const EdgeInsets.only(left: 14),
               child: Text(
                 tr(translationKeys.onboardingScreen.googleButton),
-                style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      fontWeight: FontWeight.w500,
-                      color: Theme.of(context).colorScheme.secondary,
-                      letterSpacing: -0.41,
-                      fontFamily: 'Roboto',
-                    ),
+                style: theme.textTheme.labelLarge?.copyWith(
+                  fontWeight: FontWeight.w500,
+                  color: theme.colorScheme.secondary,
+                  letterSpacing: -0.41,
+                  fontFamily: 'Roboto',
+                ),
               ),
             )
           ],
