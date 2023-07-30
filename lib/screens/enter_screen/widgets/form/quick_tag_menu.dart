@@ -6,7 +6,7 @@ import 'package:linum/core/categories/utils/translate_category.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/enter_screen/utils/date_formatter.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/context_extensions.dart';
-import 'package:linum/screens/enter_screen/utils/show_enter_screen_menu.dart';
+import 'package:linum/screens/enter_screen/utils/ui/show_enter_screen_menu.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_form_view_model.dart';
 import 'package:linum/screens/enter_screen/widgets/buttons/tag_selector_button.dart';
 import 'package:linum/screens/enter_screen/widgets/menu/category_list_view.dart';

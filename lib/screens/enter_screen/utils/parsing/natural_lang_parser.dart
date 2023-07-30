@@ -1,5 +1,5 @@
 import 'package:linum/features/currencies/constants/standard_currencies.dart';
-import 'package:linum/screens/enter_screen/utils/structured_parsed_data_builder.dart';
+import 'package:linum/screens/enter_screen/utils/parsing/structured_parsed_data_builder.dart';
 
 final amountRegex = RegExp(
   r"(?:(?<name1>\w{4,140}) )?(?<currency1>[a-zA-Z\p{Sc}]{0,3}) ?(?<amount>-?[0-9]{1,9}[,.]?(?:[0-9]{1,2})?)? ?(?<currency2>[a-zA-Z\p{Sc}]{0,3})(?: (?<name2>.{4,140}))?$",

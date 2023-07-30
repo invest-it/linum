@@ -2,7 +2,7 @@ import 'package:linum/core/categories/constants/standard_categories.dart';
 import 'package:linum/features/currencies/constants/standard_currencies.dart';
 import 'package:linum/screens/enter_screen/models/structured_parsed_data.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/parser_functions.dart';
-import 'package:linum/screens/enter_screen/utils/structured_parsed_data_builder.dart';
+import 'package:linum/screens/enter_screen/utils/parsing/structured_parsed_data_builder.dart';
 
 
 

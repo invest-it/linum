@@ -6,7 +6,7 @@ import 'package:linum/screens/enter_screen/models/suggestion.dart';
 import 'package:linum/screens/enter_screen/models/suggestion_filters.dart';
 import 'package:linum/screens/enter_screen/utils/example_string_builder.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/input_parser.dart';
-import 'package:linum/screens/enter_screen/utils/span_list_builder.dart';
+import 'package:linum/screens/enter_screen/utils/ui/span_list_builder.dart';
 import 'package:linum/screens/enter_screen/utils/suggestions/make_suggestions.dart';
 
 TextSelection getSelectionFromCursor(int cursor) {

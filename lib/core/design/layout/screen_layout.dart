@@ -14,7 +14,7 @@ import 'package:linum/core/design/layout/widgets/bottom_app_bar.dart';
 import 'package:linum/core/navigation/get_delegate.dart';
 import 'package:linum/core/navigation/main_routes.dart';
 import 'package:linum/core/navigation/screen_routes.dart';
-import 'package:linum/screens/enter_screen/utils/show_enter_screen.dart';
+import 'package:linum/screens/enter_screen/utils/ui/show_enter_screen.dart';
 import 'package:linum/screens/lock_screen/services/pin_code_service.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
