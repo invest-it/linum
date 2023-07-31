@@ -12,7 +12,7 @@ import 'package:linum/core/design/layout/enums/screen_key.dart';
 import 'package:linum/core/design/layout/screen_layout.dart';
 import 'package:linum/core/navigation/route_configuration.dart';
 import 'package:linum/screens/filter_screen/filter_screen.dart';
-import 'package:linum/screens/lock_screen/widgets/lock_screen.dart';
+import 'package:linum/screens/lock_screen/lock_screen.dart';
 import 'package:linum/screens/sandbox_screen/sandbox_screen.dart';
 import 'package:uuid/uuid.dart';
 

@@ -11,32 +11,17 @@ import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
 import 'package:linum/screens/lock_screen/models/lock_screen_action.dart';
 import 'package:linum/screens/lock_screen/services/pin_code_service.dart';
-import 'package:linum/screens/lock_screen/widgets/numeric_field.dart';
+import 'package:linum/screens/lock_screen/widgets/peripherals_field.dart';
 import 'package:linum/screens/lock_screen/widgets/pin_field.dart';
 import 'package:provider/provider.dart';
 
 /// Page Index: 5
-class LockScreen extends StatefulWidget {
-  @override
-  State<LockScreen> createState() => _LockScreenState();
-}
-
-class _LockScreenState extends State<LockScreen> {
-  List<NumericField> _generateNumericFields(
-    List<int> numbers,
-    PinCodeService pinCodeProvider,
-  ) {
-    final fields = <NumericField>[];
-    for (final number in numbers) {
-      final field = NumericField(number, pinCodeProvider.addDigit);
-      fields.add(field);
-    }
-    return fields;
-  }
+class LockScreen extends StatelessWidget {
+  const LockScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final PinCodeService pinCodeService =
+    final pinCodeService =
         context.watch<PinCodeService>();
     //final ScreenIndexProvider sip = context.watch<ScreenIndexProvider>();
     final LockScreenAction screenIntent = pinCodeService.recallPINLockIntent(context);
@@ -92,74 +77,7 @@ class _LockScreenState extends State<LockScreen> {
           ),
 
           /// PERIPHERALS FIELD
-          Expanded(
-            flex: 5,
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      ..._generateNumericFields([1, 4, 7], pinCodeService),
-                      //Backspace
-                      Expanded(
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints(
-                            minWidth: double.infinity,
-                          ),
-                          child: Material(
-                            child: IconButton(
-                              key: const Key("pinlockBackspace"),
-                              icon: Icon(
-                                Icons.backspace_outlined,
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
-                              onPressed: () {
-                                pinCodeService.removeLastDigit();
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    children:
-                        _generateNumericFields([2, 5, 8, 0], pinCodeService),
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      ..._generateNumericFields([3, 6, 9], pinCodeService),
-                      // If Fingerprint is enabled, trigger dialog here
-                      Expanded(
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints(
-                            minWidth: double.infinity,
-                          ),
-                          child: const Material(
-                            child: IconButton(
-                              icon: Icon(Icons.fingerprint_rounded),
-                              onPressed: null,
-                              // Alternatively, we could display a toast here. Uncomment this if simply disabling the button displeases too many people in the dev team.
-                              // onPressed: () {
-                              // Fluttertoast.showToast(
-                              //     msg: AppLocalizations.of(context)!.translate(
-                              //         'home_screen_card/home-screen-card-toast'),
-                              //     toastLength: Toast.LENGTH_SHORT);
-                              // },
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
+          const PeripheralsField(),
 
           /// Action Switch
           Expanded(
