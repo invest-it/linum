@@ -11,7 +11,6 @@ import 'package:linum/core/navigation/main_routes_extensions.dart';
 import 'package:linum/core/navigation/main_transition_delegate.dart';
 import 'package:linum/screens/lock_screen/services/pin_code_service.dart';
 import 'package:linum/screens/onboarding_screen/onboarding_screen.dart';
-import 'package:linum/screens/onboarding_screen/viewmodels/onboarding_screen_viewmodel.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
@@ -65,15 +64,8 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
 
   List<Page> _buildPageStackUnauthorized() {
     return <Page>[
-      MaterialPage(
-        child: MultiProvider(
-          providers: [
-            ChangeNotifierProvider<OnboardingScreenViewModel>(
-              create: (_) => OnboardingScreenViewModel(),
-            ),
-          ],
-          child: const OnboardingPage(),
-        ),
+      const MaterialPage(
+        child: OnboardingScreen(),
       ),
     ];
   }

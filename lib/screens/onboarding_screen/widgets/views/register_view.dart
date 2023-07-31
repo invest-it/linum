@@ -6,11 +6,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:linum/common/utils/execute.dart';
-import 'package:linum/core/authentication/widgets/register_form/register_form.dart';
 import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/core/design/layout/utils/media_query_accessors.dart';
+import 'package:linum/screens/onboarding_screen/enums/onboarding_page_state.dart';
 import 'package:linum/screens/onboarding_screen/viewmodels/onboarding_screen_viewmodel.dart';
+import 'package:linum/screens/onboarding_screen/widgets/register_form/register_form.dart';
 import 'package:provider/provider.dart';
 
 class RegisterView extends StatelessWidget {

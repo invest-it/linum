@@ -11,14 +11,14 @@ import 'package:flutter/material.dart';
 import 'package:linum/common/components/dialogs/show_alert_dialog.dart';
 import 'package:linum/core/authentication/services/authentication_service.dart';
 import 'package:linum/core/authentication/widgets/forgot_password.dart';
-import 'package:linum/core/authentication/widgets/login_form/login_email_field.dart';
-import 'package:linum/core/authentication/widgets/login_form/login_password_field.dart';
 import 'package:linum/core/authentication/widgets/sign_in_sign_up_button.dart';
 import 'package:linum/core/authentication/widgets/sign_in_with_google_button.dart';
 import 'package:linum/core/design/layout/enums/screen_key.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/onboarding_screen/viewmodels/onboarding_screen_viewmodel.dart';
+import 'package:linum/screens/onboarding_screen/widgets/login_form/login_email_field.dart';
+import 'package:linum/screens/onboarding_screen/widgets/login_form/login_password_field.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/common/components/action_lip/viewmodels/action_lip_viewmodel.dart';
-import 'package:linum/core/authentication/login_view.dart';
 import 'package:linum/core/authentication/services/authentication_service.dart';
-import 'package:linum/core/authentication/widgets/login_form/login_form.dart';
+import 'package:linum/screens/onboarding_screen/enums/onboarding_page_state.dart';
 import 'package:linum/screens/onboarding_screen/viewmodels/onboarding_screen_viewmodel.dart';
+import 'package:linum/screens/onboarding_screen/widgets/login_form/login_form.dart';
+import 'package:linum/screens/onboarding_screen/widgets/views/login_view.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';

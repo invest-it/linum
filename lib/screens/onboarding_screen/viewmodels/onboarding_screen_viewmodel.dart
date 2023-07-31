@@ -5,8 +5,13 @@
 //  (Refactored)
 
 import 'package:flutter/material.dart';
+import 'package:linum/screens/onboarding_screen/enums/onboarding_page_state.dart';
+
 
 class OnboardingScreenViewModel extends ChangeNotifier {
+  final slideController = PageController();
+  int _currentSlide = 0;
+
   OnboardingPageState _pageState = OnboardingPageState.none;
   String _mailInput = "";
   bool _hasPageChanged = false;
@@ -40,21 +45,10 @@ class OnboardingScreenViewModel extends ChangeNotifier {
     return tempMail;
   }
 
-}
+  int get currentSlide => _currentSlide;
 
-enum OnboardingPageState {
-  none,
-  login,
-  register;
-  // google
-
-  bool isRegister() {
-    return this == OnboardingPageState.register;
-  }
-  bool isLogin() {
-    return this == OnboardingPageState.login;
-  }
-  bool isNone() {
-    return this == OnboardingPageState.none;
+  set currentSlide(int slide) {
+    _currentSlide = slide;
+    notifyListeners();
   }
 }

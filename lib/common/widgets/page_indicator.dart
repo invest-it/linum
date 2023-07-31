@@ -5,7 +5,7 @@
 //  (Refactored by damattl)
 
 import 'package:flutter/cupertino.dart';
-import 'package:linum/screens/onboarding_screen/widgets/page_indicator_item.dart';
+import 'package:linum/common/widgets/page_indicator_item.dart';
 
 class PageIndicator extends StatefulWidget {
   const PageIndicator({

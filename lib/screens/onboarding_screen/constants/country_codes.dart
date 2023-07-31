@@ -6,10 +6,10 @@
 
 import 'package:linum/common/utils/country_flag_generator.dart';
 
-final Map<String, String> countryFlagsToCountryCode = {
+final countryFlagsToCountryCode = Map<String, String>.unmodifiable({
   countryFlag('de'): "de",
   countryFlag('gb'): "en",
   countryFlag('nl'): "nl",
   countryFlag('es'): "es",
   countryFlag('fr'): "fr",
-};
+});
