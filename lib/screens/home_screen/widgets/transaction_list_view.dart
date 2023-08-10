@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/core/account/services/account_settings_service.dart';
+import 'package:linum/core/account/app_settings.dart';
 import 'package:linum/core/balance/models/transaction.dart';
 import 'package:linum/core/balance/services/algorithm_service.dart';
 import 'package:linum/core/balance/utils/transaction_amount_formatter.dart';
@@ -25,7 +25,7 @@ class TransactionListView extends StatelessWidget {
         transactions: transactions,
         amountFormatter: TransactionAmountFormatter(
           context.locale,
-          context.watch<AccountSettingsService>().getStandardCurrency(),
+          context.watch<AppSettings>().getStandardCurrency(),
         ),
         shownMonth: shownMonth,
       ),

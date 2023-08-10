@@ -8,7 +8,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/components/screen_card/widgets/home_screen_card_avatar.dart';
 import 'package:linum/common/utils/currency_formatter.dart';
-import 'package:linum/core/account/services/account_settings_service.dart';
+import 'package:linum/core/account/app_settings.dart';
 import 'package:linum/core/balance/services/algorithm_service.dart';
 import 'package:linum/core/balance/utils/balance_data_processors.dart';
 import 'package:linum/core/balance/widgets/balance_data_stream_consumer.dart';
@@ -80,7 +80,7 @@ class HomeScreenCardRow extends StatelessWidget {
                       ),
                     );
                   }
-                  return Selector<AccountSettingsService, Currency>(
+                  return Selector<AppSettings, Currency>(
                     selector: (_, settings) => settings.getStandardCurrency() ,
                     builder: (context, standardCurrency, _) {
                       return Text(

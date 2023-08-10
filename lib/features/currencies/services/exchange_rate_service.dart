@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:linum/core/account/services/account_settings_service.dart';
+import 'package:linum/core/account/app_settings.dart';
 import 'package:linum/core/balance/models/transaction.dart';
 import 'package:linum/features/currencies/models/currency.dart';
 import 'package:linum/features/currencies/models/exchange_rate_info.dart';
@@ -9,17 +9,13 @@ import 'package:linum/features/currencies/models/exchange_rates_for_date.dart';
 import 'package:linum/features/currencies/repositories/exchange_rate_repository.dart';
 import 'package:linum/features/currencies/utils/int_list_extensions.dart';
 import 'package:linum/generated/objectbox/objectbox.g.dart';
-import 'package:provider/provider.dart';
 
 class ExchangeRateService extends ChangeNotifier {
   late final ExchangeRateRepository _repository;
   final Store _store;
-  late AccountSettingsService _settings;
-  ExchangeRateService(BuildContext context, this._store) {
+  final AppSettings _settings;
+  ExchangeRateService(this._settings, this._store) {
     _repository = ExchangeRateRepository(_store);
-    _settings = context.read<AccountSettingsService>();
-
-
   }
 
   Currency get standardCurrency => _settings.getStandardCurrency();
@@ -134,11 +130,6 @@ class ExchangeRateService extends ChangeNotifier {
 
 
     }
-  }
-
-  void update(AccountSettingsService settings) {
-    _settings = settings;
-    // TODO: Do this better
   }
 
 }

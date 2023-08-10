@@ -77,7 +77,7 @@ final mainRoutes = Map<MainRoute, RouteConfiguration>.of({
     path: "/lock",
     builder: <T>(_) {
       return MaterialPage(
-        child: LockScreen(),
+        child: const LockScreen(),
         name: MainRoute.lock.toString(),
       );
     },

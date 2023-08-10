@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
-import 'package:linum/core/account/services/account_settings_service.dart';
+import 'package:linum/core/account/app_settings.dart';
 import 'package:linum/core/repeating/constants/standard_repeat_configs.dart';
 import 'package:linum/core/repeating/enums/repeat_interval.dart';
 import 'package:linum/screens/enter_screen/models/default_values.dart';
 import 'package:provider/provider.dart';
 
 DefaultValues getDefaultValues(BuildContext context) {
-  final accountSettingsService = context.read<AccountSettingsService>();
+  final accountSettingsService = context.read<AppSettings>();
   return DefaultValues(
     name: "",
     amount: 0,

@@ -10,7 +10,7 @@ import 'package:linum/common/components/screen_card/viewmodels/screen_card_viewm
 import 'package:linum/common/components/screen_card/widgets/home_screen_card_avatar.dart';
 import 'package:linum/common/widgets/loading_spinner.dart';
 import 'package:linum/common/widgets/styled_amount.dart';
-import 'package:linum/core/account/services/account_settings_service.dart';
+import 'package:linum/core/account/app_settings.dart';
 import 'package:linum/core/balance/services/algorithm_service.dart';
 import 'package:linum/core/balance/utils/balance_data_processors.dart';
 import 'package:linum/core/balance/widgets/balance_data_stream_consumer.dart';
@@ -144,7 +144,7 @@ class HomeScreenCardFront extends StatelessWidget {
 
                         return FittedBox(
                           fit: BoxFit.scaleDown,
-                          child: Selector<AccountSettingsService, Currency>(
+                          child: Selector<AppSettings, Currency>(
                             selector: (_, settings) => settings.getStandardCurrency(),
                             builder: (context, standardCurrency, _) {
                               return StyledAmount(

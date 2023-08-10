@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/common/components/action_lip/viewmodels/action_lip_viewmodel.dart';
 import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/common/widgets/category_list_tile.dart';
-import 'package:linum/core/account/services/account_settings_service.dart';
+import 'package:linum/core/account/app_settings.dart';
 import 'package:linum/core/categories/constants/standard_categories.dart';
 import 'package:linum/core/categories/models/category.dart';
 import 'package:linum/core/design/layout/enums/screen_key.dart';
@@ -46,7 +46,7 @@ class _StandardCategorySelectorState extends State<StandardCategorySelector> {
               ),
             );
           },
-          child: Selector<AccountSettingsService, Category?>(
+          child: Selector<AppSettings, Category?>(
             selector: (_, settings) => settings.getIncomeEntryCategory(),
             builder: (context, category, _) {
               return CategoryListTile(
@@ -75,7 +75,7 @@ class _StandardCategorySelectorState extends State<StandardCategorySelector> {
               ),
             );
           },
-          child: Selector<AccountSettingsService, Category?>(
+          child: Selector<AppSettings, Category?>(
             selector: (_, settings) => settings.getExpenseEntryCategory(),
             builder: (context, category, _) {
               return CategoryListTile(

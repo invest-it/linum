@@ -7,7 +7,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/utils/country_flag_generator.dart';
-import 'package:linum/core/account/services/account_settings_service.dart';
+import 'package:linum/core/account/app_settings.dart';
 import 'package:linum/screens/settings_screen/widget/toggle_button_element.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +21,7 @@ class LanguageSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accountSettingsService = context.watch<AccountSettingsService>();
+    final accountSettingsService = context.watch<AppSettings>();
 
     return Column(
       children: [

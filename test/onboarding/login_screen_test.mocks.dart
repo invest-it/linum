@@ -8,7 +8,6 @@ import 'dart:developer' as _i9;
 import 'dart:ui' as _i3;
 
 import 'package:firebase_auth/firebase_auth.dart' as _i8;
-import 'package:flutter/material.dart' as _i5;
 import 'package:linum/core/authentication/services/authentication_service.dart' as _i6;
 import 'package:linum/screens/onboarding_screen/enums/onboarding_page_state.dart';
 import 'package:linum/screens/onboarding_screen/viewmodels/onboarding_screen_viewmodel.dart' as _i2;
@@ -129,11 +128,11 @@ class MockAuthenticationService extends _i1.Mock
         returnValueForMissingStub: false,
       ) as bool);
   @override
-  String get uid => (super.noSuchMethod(
+  _i8.User get currentUser => (super.noSuchMethod(
         Invocation.getter(#uid),
         returnValue: '',
         returnValueForMissingStub: '',
-      ) as String);
+      ) as _i8.User);
   @override
   String get userEmail => (super.noSuchMethod(
         Invocation.getter(#userEmail),
@@ -141,17 +140,7 @@ class MockAuthenticationService extends _i1.Mock
         returnValueForMissingStub: '',
       ) as String);
   @override
-  String get displayName => (super.noSuchMethod(
-        Invocation.getter(#displayName),
-        returnValue: '',
-        returnValueForMissingStub: '',
-      ) as String);
-  @override
-  bool get isEmailVerified => (super.noSuchMethod(
-        Invocation.getter(#isEmailVerified),
-        returnValue: false,
-        returnValueForMissingStub: false,
-      ) as bool);
+
   @override
   bool get hasListeners => (super.noSuchMethod(
         Invocation.getter(#hasListeners),
@@ -334,10 +323,10 @@ class MockAuthenticationService extends _i1.Mock
         returnValueForMissingStub: _i7.Future<void>.value(),
       ) as _i7.Future<void>);
   @override
-  void updateLanguageCode(_i5.BuildContext? context) => super.noSuchMethod(
+  void updateLanguageCode(String? languageCode) => super.noSuchMethod(
         Invocation.method(
           #updateLanguageCode,
-          [context],
+          [languageCode],
         ),
         returnValueForMissingStub: null,
       );

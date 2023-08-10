@@ -4,13 +4,17 @@
 //  Co-Author: NightmindOfficial, damattl
 //  (Refactored)
 
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:linum/common/utils/cryptography.dart';
+import 'package:linum/core/authentication/utils/apple_utils.dart';
+import 'package:linum/core/authentication/utils/firebase_auth_extensions.dart';
+import 'package:linum/core/authentication/utils/google_utils.dart';
 import 'package:logger/logger.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -21,21 +25,33 @@ class AuthenticationService extends ChangeNotifier {
   final FirebaseAuth _firebaseAuth;
   late Logger logger;
 
-  /// Constructor
-  AuthenticationService(this._firebaseAuth, BuildContext context) {
-    logger = Logger();
 
-    updateLanguageCode(context);
+  /// Constructor
+  AuthenticationService(this._firebaseAuth, {
+    String? languageCode,
+  }) {
+    logger = Logger();
+    _user.add(_firebaseAuth.currentUser);
+    updateLanguageCode(languageCode);
+
   }
 
   /// Returns the authStateChanges Stream from the FirebaseAuth
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
-  bool get isLoggedIn => uid != "";
+  bool get isLoggedIn => _firebaseAuth.currentUid != "";
 
   bool get isInDebugMode => FirebaseFirestore.instance.settings.asMap["host"]
       .toString()
       .contains("localhost");
+
+  final BehaviorSubject<User?> _user = BehaviorSubject();
+
+
+  Stream<User?> get user => _user.stream;
+
+  User? get currentUser => _user.value;
+  String get userEmail => _firebaseAuth.userEmail;
 
   /// Tries to sign the user in
   Future<void> signIn(
@@ -54,19 +70,21 @@ class AuthenticationService extends ChangeNotifier {
         password: password,
       );
 
-      if (isEmailVerified) {
-        await setLastMail(email);
-        notifyListeners();
+      if (_firebaseAuth.isEmailVerified) {
+        setUser(_firebaseAuth.currentUser);
+
         onComplete("Successfully signed in to Firebase");
       } else {
         await sendVerificationEmail(email, onError: onError);
         await signOut();
+
         if (onNotVerified != null) {
           onNotVerified();
         } else {
           logger.i("Your mail is not verified.");
         }
       }
+
     } on FirebaseAuthException catch (e) {
       logger.e(e.message);
       onError("auth.${e.code}");
@@ -90,13 +108,13 @@ class AuthenticationService extends ChangeNotifier {
         password: password,
       );
 
-      if (isEmailVerified) {
-        await setLastMail(email);
-        notifyListeners();
+      if (_firebaseAuth.isEmailVerified) {
+        setUser(_firebaseAuth.currentUser);
+
         onComplete("Successfully signed up to Firebase");
       } else {
         await sendVerificationEmail(email);
-        signOut();
+        await signOut();
         onNotVerified();
       }
     } on FirebaseAuthException catch (e) {
@@ -111,18 +129,13 @@ class AuthenticationService extends ChangeNotifier {
   }) async {
     onComplete ??= logger.i;
     onError ??= logger.e;
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
-
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
 
     try {
-      await _firebaseAuth.signInWithCredential(credential);
-      await setLastMail(_firebaseAuth.currentUser!.email);
+      final credentials = await acquireGoogleCredentials();
+      await _firebaseAuth.signInWithCredential(credentials);
+
+      setUser(_firebaseAuth.currentUser);
+
       notifyListeners();
       onComplete("Successfully signed in to Firebase");
     } on FirebaseAuthException catch (e) {
@@ -137,25 +150,13 @@ class AuthenticationService extends ChangeNotifier {
   }) async {
     onComplete ??= logger.i;
     onError ??= logger.e;
-    final rawNonce = generateNonce();
-    final nonce = sha256ofString(rawNonce);
 
     try {
-      final appleCredential = await SignInWithApple.getAppleIDCredential(
-        scopes: [
-          AppleIDAuthorizationScopes.email,
-          AppleIDAuthorizationScopes.fullName,
-        ],
-        nonce: nonce,
-      );
-      final oauthCredential = OAuthProvider("apple.com").credential(
-        idToken: appleCredential.identityToken,
-        rawNonce: rawNonce,
-      );
+      final credentials = await acquireAppleCredentials();
+      await _firebaseAuth.signInWithCredential(credentials);
 
-      await _firebaseAuth.signInWithCredential(oauthCredential);
-      await setLastMail(_firebaseAuth.currentUser!.email);
-      notifyListeners();
+      setUser(_firebaseAuth.currentUser);
+
       onComplete("Successfully signed in to Firebase");
     } on FirebaseAuthException catch (e) {
       logger.e(e.message);
@@ -167,54 +168,6 @@ class AuthenticationService extends ChangeNotifier {
         rethrow;
       }
     }
-  }
-  // TODO: Refactor already??
-
-  /// returns the uid, and if the user isnt logged in return ""
-  String get uid {
-    if (_firebaseAuth.currentUser != null) {
-      return _firebaseAuth.currentUser!.uid;
-    }
-    return "";
-  }
-
-  String get userEmail {
-    if (_firebaseAuth.currentUser != null) {
-      return _firebaseAuth.currentUser!.email ?? "No Email found";
-    }
-    return "";
-  }
-
-  /// Shouldn't be found
-  String get displayName {
-    if (_firebaseAuth.currentUser != null) {
-      return _firebaseAuth.currentUser!.displayName ?? "No Displayname found";
-    }
-    return "";
-  }
-
-  bool get isEmailVerified {
-    if (isInDebugMode) {
-      return true;
-    }
-    if (_firebaseAuth.currentUser != null) {
-      return _firebaseAuth.currentUser!.emailVerified;
-    }
-    return false;
-  }
-
-  DateTime? get lastLogin {
-    if (_firebaseAuth.currentUser != null) {
-      return _firebaseAuth.currentUser!.metadata.lastSignInTime;
-    }
-    return null;
-  }
-
-  DateTime? get creationDate {
-    if (_firebaseAuth.currentUser != null) {
-      return _firebaseAuth.currentUser!.metadata.creationTime;
-    }
-    return null;
   }
 
   /// tells firebase that user wants to change its password to [newPassword]
@@ -288,7 +241,9 @@ class AuthenticationService extends ChangeNotifier {
         await GoogleSignIn().signOut();
       }
       await _firebaseAuth.signOut();
-      notifyListeners();
+
+      setUser(_firebaseAuth.currentUser);
+
       onComplete("Successfully signed out from Firebase");
     } on FirebaseAuthException catch (e) {
       onError("auth.${e.code}");
@@ -303,7 +258,8 @@ class AuthenticationService extends ChangeNotifier {
     onError ??= logger.e;
     try {
       await _firebaseAuth.currentUser?.delete();
-      notifyListeners();
+      setUser(_firebaseAuth.currentUser);
+
       onComplete("Successfully deleted Account");
     } on FirebaseAuthException catch (e) {
       if (e.code == "requires-recent-login") {
@@ -314,6 +270,14 @@ class AuthenticationService extends ChangeNotifier {
     }
   }
 
+  Future<void> setUser(User? user) async {
+    if (user != null) {
+      await setLastMail(_firebaseAuth.currentUser!.email);
+    }
+    _user.add(user);
+    notifyListeners();
+  }
+
   Future<void> setLastMail(String? email) async {
     if (email == null) {
       return;
@@ -322,9 +286,10 @@ class AuthenticationService extends ChangeNotifier {
     await prefs.setString('lastMail', email);
   }
 
-  void updateLanguageCode(BuildContext context) {
-    _firebaseAuth.setLanguageCode(
-      context.locale.languageCode,
-    );
+
+  void updateLanguageCode(String? languageCode) {
+    _firebaseAuth.setLanguageCode(languageCode);
   }
+
+
 }

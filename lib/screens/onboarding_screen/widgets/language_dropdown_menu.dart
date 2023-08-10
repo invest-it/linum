@@ -48,7 +48,9 @@ class LanguageDropDownMenu extends StatelessWidget {
         ),
       );
 
-      context.read<AuthenticationService>().updateLanguageCode(context);
+      context.read<AuthenticationService>().updateLanguageCode(
+          context.locale.languageCode,
+      );
     }
   }
 }

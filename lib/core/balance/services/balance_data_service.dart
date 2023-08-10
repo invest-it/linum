@@ -12,11 +12,12 @@ import 'package:linum/core/balance/utils/transaction_manager.dart';
 import 'package:logger/logger.dart';
 
 class BalanceDataService extends ChangeNotifier {
+  final String userId;
+
   BalanceDataService(this.userId) {
+    print(userId);
     _repository = BalanceDataRepository(userId: userId);
   }
-
-  final String userId;
 
   late BalanceDataRepository _repository;
 

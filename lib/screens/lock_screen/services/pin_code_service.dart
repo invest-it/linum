@@ -19,7 +19,6 @@ import 'package:linum/core/navigation/get_delegate.dart';
 import 'package:linum/core/navigation/main_routes.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/lock_screen/models/lock_screen_action.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PinCodeService extends ChangeNotifier {
@@ -34,13 +33,10 @@ class PinCodeService extends ChangeNotifier {
   bool _pinSetStillLoading = true;
   bool _lastEmailStillLoading = true;
 
-  PinCodeService(BuildContext context) {
+  PinCodeService(AuthenticationService authenticationService, BuildContext context) {
     _initializeLastEmail();
     initializeIsPINSet();
-    _auth = Provider.of<AuthenticationService>(
-      context,
-      listen: false,
-    );
+    _auth = authenticationService;
     _context = context;
   }
 
@@ -53,7 +49,7 @@ class PinCodeService extends ChangeNotifier {
     if (!_pinSet) {
       _sessionIsSafe = true;
     }
-    if (_auth.uid == "") {
+    if (_auth.currentUser == null) {
       _sessionIsSafe = false;
     }
   }
@@ -63,16 +59,6 @@ class PinCodeService extends ChangeNotifier {
     _lastEmailStillLoading = false;
   }
 
-  void updateSipAndAuth(BuildContext context) {
-    _lastEmail = null;
-    _lastEmailStillLoading = true;
-    _initializeLastEmail();
-    initializeIsPINSet();
-
-    _auth = context.read<AuthenticationService>();
-
-    _context = context;
-  }
 
   // If the intent of the PIN lock is not set before the screen is called, assume that we want to check whether user knows the code (classic recall)
   PINLockIntent _intent = PINLockIntent.recall;

@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/components/action_lip/viewmodels/action_lip_viewmodel.dart';
 import 'package:linum/common/widgets/currency_list_tile.dart';
-import 'package:linum/core/account/services/account_settings_service.dart';
+import 'package:linum/core/account/app_settings.dart';
 import 'package:linum/core/design/layout/enums/screen_key.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
 import 'package:linum/features/currencies/models/currency.dart';
@@ -33,7 +33,7 @@ class _StandardCurrencySelectorState extends State<StandardCurrencySelector> {
               actionLipBody: CurrencyListView(),
             );
           },
-          child: Selector<AccountSettingsService, Currency>(
+          child: Selector<AppSettings, Currency>(
             selector: (_, settings) => settings.getStandardCurrency(),
             builder: (context, currency, _) {
               return CurrencyListTile(

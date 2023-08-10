@@ -8,6 +8,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/core/authentication/services/authentication_service.dart';
 import 'package:linum/core/categories/constants/standard_categories.dart';
@@ -17,17 +18,32 @@ import 'package:linum/features/currencies/models/currency.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
-class AccountSettingsService extends ChangeNotifier {
+class AppSettings extends ChangeNotifier {
   DocumentReference<Map<String, dynamic>>? _settings;
 
-  StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>? settingsListener;
+  StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>? _settingsListener;
+  late StreamSubscription<User?> _userListener;
+
 
   /// The uid of the user
   late String _uid;
 
-  late final Logger logger;
+  final Logger logger = Logger();
 
   Map<String, dynamic> lastGrabbedData = {};
+
+  AppSettings({
+    required BuildContext context,
+    required User? user,
+  }) {
+    _uid = user?.uid ?? "";
+
+    if (_uid != "") {
+      _settings =
+          FirebaseFirestore.instance.collection('account_settings').doc(_uid);
+    }
+    _createAutoUpdate(context);
+  }
 
   Category? getIncomeEntryCategory() {
     final String categoryId =
@@ -64,34 +80,23 @@ class AccountSettingsService extends ChangeNotifier {
     }
   }
 
-  AccountSettingsService(BuildContext context) {
-    logger = Logger();
-
-    _uid = context.read<AuthenticationService>().uid;
-
-    if (_uid != "") {
-      _settings =
-          FirebaseFirestore.instance.collection('account_settings').doc(_uid);
-    }
-    _createAutoUpdate(context);
-  }
-
-  void updateAuth(AuthenticationService auth, BuildContext context) {
-    if (_uid != auth.uid) {
+  void _handleAuthChange(User? user, BuildContext context) {
+    final userId = user?.uid ?? "";
+    if (_uid != userId) {
       logger.d("updateAuth still works");
-      _uid = auth.uid;
+      _uid = userId;
       if (_uid == "") {
-        if (settingsListener != null) {
-          settingsListener!.cancel().then((_) {
-            updateAuthHelper(context);
+        if (_settingsListener != null) {
+          _settingsListener!.cancel().then((_) {
+            _updateUser(context);
           });
         }
       }
-      updateAuthHelper(context);
+      _updateUser(context);
     }
   }
 
-  void updateAuthHelper(BuildContext context) {
+  void _updateUser(BuildContext context) {
     if (_uid != "") {
       _settings =
           FirebaseFirestore.instance.collection('account_settings').doc(_uid);
@@ -100,6 +105,7 @@ class AccountSettingsService extends ChangeNotifier {
     notifyListeners();
   }
 
+  // TODO: Check if this name makes sense
   Future<void> _createAutoUpdate(BuildContext context) async {
     if (_uid == "") {
       setToDeviceLocale(context);
@@ -113,7 +119,7 @@ class AccountSettingsService extends ChangeNotifier {
     if (!(await _settings!.get()).exists) {
       await _settings!.set({});
     }
-    settingsListener = _settings!.snapshots().listen(
+    _settingsListener = _settings!.snapshots().listen(
       (DocumentSnapshot<Map<String, dynamic>> innerSnapshot) {
         lastGrabbedData = innerSnapshot.data() ?? {};
 
@@ -127,8 +133,9 @@ class AccountSettingsService extends ChangeNotifier {
           setToDeviceLocale(context);
         }
 
-        context.read<AuthenticationService>()
-            .updateLanguageCode(context);
+        context.read<AuthenticationService>().updateLanguageCode(
+          context.locale.languageCode,
+        );
         notifyListeners();
       },
       onError: (error, stackTrace) {
@@ -178,7 +185,8 @@ class AccountSettingsService extends ChangeNotifier {
 
   @override
   void dispose() {
-    settingsListener?.cancel();
+    _settingsListener?.cancel();
+    _userListener.cancel();
     super.dispose();
   }
 }

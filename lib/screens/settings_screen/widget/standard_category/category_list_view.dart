@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:linum/common/components/action_lip/viewmodels/action_lip_viewmodel.dart';
 import 'package:linum/common/widgets/category_list_tile.dart';
-import 'package:linum/core/account/services/account_settings_service.dart';
+import 'package:linum/core/account/app_settings.dart';
 import 'package:linum/core/categories/models/category.dart';
 import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
 import 'package:linum/core/design/layout/enums/screen_key.dart';
@@ -21,7 +21,7 @@ class CategoryListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final accountSettingsService
-      = context.read<AccountSettingsService>();
+      = context.read<AppSettings>();
     final actionLipViewModel
       = context.read<ActionLipViewModel>();
 

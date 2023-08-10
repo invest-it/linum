@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:linum/common/enums/entry_type.dart';
-import 'package:linum/core/account/services/account_settings_service.dart';
+import 'package:linum/core/account/app_settings.dart';
 import 'package:linum/core/categories/utils/translate_category.dart';
 import 'package:linum/core/design/layout/utils/media_query_accessors.dart';
 import 'package:linum/core/repeating/constants/standard_repeat_configs.dart';
@@ -48,7 +48,7 @@ class EnterScreenTextFieldViewModel extends ChangeNotifier {
   }
 
   void _setupTextController() {
-    final accountSettingsService = _context.read<AccountSettingsService>();
+    final accountSettingsService = _context.read<AppSettings>();
     final defaultCategory = _entryType == EntryType.expense
         ? accountSettingsService.getExpenseEntryCategory()
         : accountSettingsService.getIncomeEntryCategory();

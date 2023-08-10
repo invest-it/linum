@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:linum/common/components/action_lip/viewmodels/action_lip_viewmodel.dart';
 import 'package:linum/common/widgets/currency_list_tile.dart';
-import 'package:linum/core/account/services/account_settings_service.dart';
+import 'package:linum/core/account/app_settings.dart';
 import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
 import 'package:linum/core/design/layout/enums/screen_key.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
@@ -27,7 +27,7 @@ class CurrencyListView extends StatelessWidget {
         itemCount: currencies.length,
         itemBuilder: (BuildContext context, int index) {
           final currency = currencies[index];
-          return Consumer<AccountSettingsService>(
+          return Consumer<AppSettings>(
             builder: (context, settings, _) {
               return CurrencyListTile(
                 currency: currency,
