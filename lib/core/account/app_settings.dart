@@ -80,31 +80,6 @@ class AppSettings extends ChangeNotifier {
     }
   }
 
-  void _handleAuthChange(User? user, BuildContext context) {
-    final userId = user?.uid ?? "";
-    if (_uid != userId) {
-      logger.d("updateAuth still works");
-      _uid = userId;
-      if (_uid == "") {
-        if (_settingsListener != null) {
-          _settingsListener!.cancel().then((_) {
-            _updateUser(context);
-          });
-        }
-      }
-      _updateUser(context);
-    }
-  }
-
-  void _updateUser(BuildContext context) {
-    if (_uid != "") {
-      _settings =
-          FirebaseFirestore.instance.collection('account_settings').doc(_uid);
-    }
-    _createAutoUpdate(context);
-    notifyListeners();
-  }
-
   // TODO: Check if this name makes sense
   Future<void> _createAutoUpdate(BuildContext context) async {
     if (_uid == "") {
