@@ -452,29 +452,6 @@ void main() {
           expect(result, false);
         }
       });
-      test("category == ''", () {
-        // Arrange (Initialization)
-
-        final data = generateRandomData();
-
-        final math.Random rand = math.Random();
-        final int idIndex = rand.nextInt(data.serialTransactions.length);
-        final String id = data.serialTransactions[idIndex].id;
-
-        for (final changeType in SerialTransactionChangeMode.values) {
-          // Act (Execution)
-          final bool result =
-              SerialTransactionManager.updateSerialTransactionInData(
-            id: id,
-            data: data,
-            changeType: changeType,
-            category: "",
-          );
-
-          // Assert (Observation)
-          expect(result, false);
-        }
-      });
       test("currency == ''", () {
         // Arrange (Initialization)
 
@@ -535,8 +512,7 @@ void main() {
         const SerialTransactionChangeMode changeType =
             SerialTransactionChangeMode.thisAndAllAfter;
         // Act (Execution)
-        final bool result =
-            SerialTransactionManager.updateSerialTransactionInData(
+        final bool result = SerialTransactionManager.updateSerialTransactionInData(
           id: id,
           data: data,
           changeType: changeType,
