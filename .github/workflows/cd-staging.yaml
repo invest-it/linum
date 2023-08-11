@@ -4,7 +4,7 @@
 #   Author: NightmindOfficial
 #   Co-Author: n/a
 
-name: Continuous Staging
+name: Stage
 
 on:
   pull_request:
@@ -39,6 +39,22 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: ${{ env.FLUTTER_CHANNEL }}
+
+      - id: Auth
+        name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCLOUD_KEY }}
+          service_account: 'github-actions@linum-5d9f6.iam.gserviceaccount.com'
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+
+      - name: Get gcloud secrets
+        run: |
+          gcloud secrets versions access latest --secret=linum-android-release-keystore-file --project=658687609050
+          gcloud secrets versions access latest --secret=linum-ios-auth-file --project=658687609050
+
 
       - name: Prepare Firebase Option Configuration
         run: |

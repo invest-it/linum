@@ -49,9 +49,9 @@ class BalanceDataRepository {
     Logger().i("creating document");
     final  DocumentSnapshot<Map<String, dynamic>> doc = await
         FirebaseFirestore.instance
-        .collection('balance')
-        .doc("documentToUser")
-        .get();
+          .collection('balance')
+          .doc("documentToUser")
+          .get();
     final Map<String, dynamic>? docData = doc.data();
     Map<String, dynamic> docDataNullSafe = {};
     if (docData != null) {
