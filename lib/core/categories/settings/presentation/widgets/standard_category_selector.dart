@@ -6,10 +6,10 @@ import 'package:linum/core/categories/core/constants/standard_categories.dart';
 import 'package:linum/core/categories/core/data/models/category.dart';
 import 'package:linum/core/categories/core/presentation/widgets/category_list_tile.dart';
 import 'package:linum/core/categories/settings/presentation/category_settings_service.dart';
+import 'package:linum/core/categories/settings/presentation/widgets/category_list_view.dart';
 import 'package:linum/core/design/layout/enums/screen_key.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
 import 'package:linum/generated/translation_keys.g.dart';
-import 'package:linum/screens/settings_screen/widgets/standard_category/category_list_view.dart';
 import 'package:provider/provider.dart';
 
 class StandardCategorySelector extends StatelessWidget {
@@ -38,7 +38,6 @@ class StandardCategorySelector extends StatelessWidget {
             defaultCategoryId: categorySettings
                 .getEntryCategory(categoryType)?.id ?? "",
             onCategorySelection: (Category category) {
-
               categorySettings.setEntryCategory(category);
               actionLipViewModel.setActionLipStatus(
                 context: context,
@@ -56,14 +55,36 @@ class StandardCategorySelector extends StatelessWidget {
           return CategoryListTile(
             labelTitle: _selectLabelTitle(),
             category: category,
-            trailingIcon: Icons.north_east,
-            trailingIconColor: Colors.green,
+            trailingIcon: _selectIcon(),
+            trailingIconColor: _selectIconColor(),
           );
         },
       ),
     );
   }
+  // TODO: Create custom widgets for expense and income
 
+  IconData _selectIcon() {
+    switch (categoryType) {
+      case EntryType.expense:
+        return Icons.south_east;
+      case EntryType.income:
+        return Icons.north_east;
+      case EntryType.unknown:
+        return Icons.error;
+    }
+  }
+
+  Color _selectIconColor() {
+    switch (categoryType) {
+      case EntryType.expense:
+        return Colors.redAccent;
+      case EntryType.income:
+        return Colors.green;
+      case EntryType.unknown:
+        return Colors.grey;
+    }
+  }
 
   String _selectLabel() {
     switch (categoryType) {

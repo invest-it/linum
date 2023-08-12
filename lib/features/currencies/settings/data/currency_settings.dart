@@ -14,4 +14,7 @@ class CurrencySettings {
       currency: currency ?? this.currency,
     );
   }
+
+  @override
+  String toString() => 'CurrencySettings(currency: $currency)';
 }

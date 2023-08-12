@@ -11,12 +11,12 @@ import 'package:linum/common/widgets/list_header.dart';
 import 'package:linum/core/authentication/widgets/delete_user_button.dart';
 import 'package:linum/core/authentication/widgets/forgot_password.dart';
 import 'package:linum/core/authentication/widgets/logout_form.dart';
+import 'package:linum/core/categories/settings/presentation/widgets/standard_category_selectors.dart';
 import 'package:linum/core/design/layout/enums/screen_key.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
+import 'package:linum/features/currencies/settings/presentation/widgets/standard_currency_selector.dart';
 import 'package:linum/screens/settings_screen/widgets/language_selector.dart';
 import 'package:linum/screens/settings_screen/widgets/pin_switch.dart';
-import 'package:linum/screens/settings_screen/widgets/standard_category/standard_category_selectors.dart';
-import 'package:linum/screens/settings_screen/widgets/standard_currency/standard_currency_selector.dart';
 import 'package:linum/screens/settings_screen/widgets/version_number.dart';
 
 class SettingsScreen extends StatelessWidget {

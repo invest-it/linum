@@ -6,7 +6,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:linum/common/enums/entry_type.dart';
-import 'package:linum/screens/settings_screen/widgets/standard_category/standard_category_selector.dart';
+import 'package:linum/core/categories/settings/presentation/widgets/standard_category_selector.dart';
 
 class StandardCategorySelectors extends StatefulWidget {
   const StandardCategorySelectors({super.key});

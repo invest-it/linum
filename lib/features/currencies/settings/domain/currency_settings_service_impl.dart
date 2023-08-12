@@ -20,8 +20,8 @@ class CurrencySettingsServiceImpl extends SubscriptionHandler implements ICurren
   }
 
   @override
-  Future<void> setStandardCurrency(Currency currency) {
+  Future<void> setStandardCurrency(Currency currency) async {
     final update = _repository.settings.copyWith(currency: currency);
-    return _repository.update(update);
+    await _repository.update(update);
   }
 }
