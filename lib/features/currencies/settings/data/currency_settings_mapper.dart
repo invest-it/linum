@@ -1,5 +1,5 @@
-import 'package:linum/core/account/data/mappers/settings_mapper_interface.dart';
-import 'package:linum/features/currencies/constants/standard_currencies.dart';
+import 'package:linum/core/settings/data/settings_mapper_interface.dart';
+import 'package:linum/features/currencies/core/constants/standard_currencies.dart';
 import 'package:linum/features/currencies/settings/data/currency_settings.dart';
 
 class CurrencySettingsMapper implements ISettingsMapper<CurrencySettings> {

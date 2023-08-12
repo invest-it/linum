@@ -1,10 +1,10 @@
 import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/core/balance/models/serial_transaction.dart';
 import 'package:linum/core/balance/models/transaction.dart';
-import 'package:linum/core/categories/constants/standard_categories.dart';
+import 'package:linum/core/categories/core/constants/standard_categories.dart';
 import 'package:linum/core/repeating/enums/repeat_interval.dart';
 import 'package:linum/core/repeating/models/repeat_configuration.dart';
-import 'package:linum/features/currencies/models/currency.dart';
+import 'package:linum/features/currencies/core/data/models/currency.dart';
 import 'package:linum/screens/enter_screen/models/enter_screen_form_data.dart';
 import 'package:linum/screens/enter_screen/models/selected_options.dart';
 import 'package:linum/screens/enter_screen/models/structured_parsed_data.dart';

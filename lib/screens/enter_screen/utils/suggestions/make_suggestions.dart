@@ -1,4 +1,4 @@
-import 'package:linum/core/categories/models/category.dart';
+import 'package:linum/core/categories/core/data/models/category.dart';
 import 'package:linum/core/repeating/enums/repeat_interval.dart';
 import 'package:linum/screens/enter_screen/enums/input_flag.dart';
 import 'package:linum/screens/enter_screen/enums/parsable_date.dart';

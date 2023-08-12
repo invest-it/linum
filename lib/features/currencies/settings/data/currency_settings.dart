@@ -1,4 +1,4 @@
-import 'package:linum/features/currencies/models/currency.dart';
+import 'package:linum/features/currencies/core/data/models/currency.dart';
 
 class CurrencySettings {
   final Currency currency;

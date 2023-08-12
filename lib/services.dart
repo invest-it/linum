@@ -7,10 +7,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/common/utils/locale_utils.dart';
-import 'package:linum/core/account/presentation/services/language_settings_service.dart';
 import 'package:linum/core/design/layout/loading_scaffold.dart';
 import 'package:linum/core/events/event_interface.dart';
+import 'package:linum/core/localization/settings/presentation/language_settings_service.dart';
+import 'package:linum/core/localization/settings/utils/locale_utils.dart';
 import 'package:linum/firebase/firebase_options.g.dart';
 import 'package:linum/generated/objectbox/objectbox.g.dart';
 import 'package:linum/generated/translation_keys.g.dart';
@@ -67,6 +67,7 @@ class ApplicationServices extends StatelessWidget {
     );
   }
 
+  // TODO: find a place for this
   void _handleLanguageChangeEvent(IEvent event, BuildContext context) {
     final languageSettingsService = context.read<ILanguageSettingsService>();
     final String? langCode = languageSettingsService.getLanguageCode();

@@ -1,6 +1,6 @@
-import 'package:linum/core/categories/models/category.dart';
+import 'package:linum/core/categories/core/data/models/category.dart';
 import 'package:linum/core/repeating/models/repeat_configuration.dart';
-import 'package:linum/features/currencies/models/currency.dart';
+import 'package:linum/features/currencies/core/data/models/currency.dart';
 import 'package:linum/screens/enter_screen/models/selected_options.dart';
 import 'package:linum/screens/enter_screen/models/structured_parsed_data.dart';
 

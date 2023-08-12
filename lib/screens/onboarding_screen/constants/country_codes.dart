@@ -4,7 +4,7 @@
 //  Co-Author: damattl
 //  (Refactored)
 
-import 'package:linum/common/utils/country_flag_generator.dart';
+import 'package:linum/core/localization/settings/utils/country_flag_generator.dart';
 
 final countryFlagsToCountryCode = Map<String, String>.unmodifiable({
   countryFlag('de'): "de",

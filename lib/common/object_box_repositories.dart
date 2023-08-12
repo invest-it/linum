@@ -1,4 +1,4 @@
-import 'package:linum/features/currencies/repositories/exchange_rate_repository.dart';
+import 'package:linum/features/currencies/core/domain/exchange_rate_repository.dart';
 import 'package:linum/generated/objectbox/objectbox.g.dart';
 
 class ObjectBoxRepositories {

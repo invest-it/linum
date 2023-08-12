@@ -5,7 +5,7 @@
 //
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:linum/features/currencies/models/exchange_rate_info.dart';
+import 'package:linum/features/currencies/core/data/models/exchange_rate_info.dart';
 import 'package:uuid/uuid.dart';
 
 class Transaction {

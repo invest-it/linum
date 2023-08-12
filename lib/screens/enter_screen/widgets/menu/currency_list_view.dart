@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:linum/common/widgets/currency_list_tile.dart';
 import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
-import 'package:linum/features/currencies/constants/standard_currencies.dart';
+import 'package:linum/features/currencies/core/constants/standard_currencies.dart';
+import 'package:linum/features/currencies/core/presentation/widgets/currency_list_tile.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_form_view_model.dart';
 import 'package:linum/screens/enter_screen/widgets/buttons/linum_close_button.dart';
 import 'package:provider/provider.dart';

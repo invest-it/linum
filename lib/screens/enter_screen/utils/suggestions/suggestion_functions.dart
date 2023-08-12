@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:linum/core/categories/constants/standard_categories.dart';
-import 'package:linum/core/categories/models/category.dart';
+import 'package:linum/core/categories/core/constants/standard_categories.dart';
+import 'package:linum/core/categories/core/data/models/category.dart';
 import 'package:linum/core/repeating/constants/standard_repeat_configs.dart';
 import 'package:linum/core/repeating/enums/repeat_interval.dart';
 import 'package:linum/screens/enter_screen/constants/input_flag_map.dart';

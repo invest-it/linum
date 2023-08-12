@@ -6,8 +6,8 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/common/utils/country_flag_generator.dart';
-import 'package:linum/core/account/presentation/services/language_settings_service.dart';
+import 'package:linum/core/localization/settings/presentation/language_settings_service.dart';
+import 'package:linum/core/localization/settings/utils/country_flag_generator.dart';
 import 'package:linum/screens/settings_screen/widgets/toggle_button_element.dart';
 import 'package:provider/provider.dart';
 

@@ -1,4 +1,4 @@
-import 'package:linum/core/categories/constants/standard_categories.dart';
+import 'package:linum/core/categories/core/constants/standard_categories.dart';
 import 'package:linum/core/repeating/constants/standard_repeat_configs.dart';
 import 'package:linum/screens/enter_screen/constants/parsable_date_map.dart';
 import 'package:linum/screens/enter_screen/enums/input_flag.dart';

@@ -1,4 +1,4 @@
-import 'package:linum/features/currencies/constants/standard_currencies.dart';
+import 'package:linum/features/currencies/core/constants/standard_currencies.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/structured_parsed_data_builder.dart';
 
 final amountRegex = RegExp(

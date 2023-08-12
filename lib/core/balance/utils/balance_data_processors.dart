@@ -14,7 +14,7 @@ import 'package:linum/core/balance/models/transaction.dart';
 import 'package:linum/core/balance/utils/date_time_extension.dart';
 import 'package:linum/core/balance/utils/serial_transaction_manager.dart';
 import 'package:linum/core/balance/utils/statistical_calculations.dart';
-import 'package:linum/features/currencies/services/exchange_rate_service.dart';
+import 'package:linum/features/currencies/core/presentation/exchange_rate_service.dart';
 import 'package:logger/logger.dart';
 import 'package:tuple/tuple.dart';
 

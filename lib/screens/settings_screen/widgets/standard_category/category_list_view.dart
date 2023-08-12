@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:linum/common/widgets/category_list_tile.dart';
-import 'package:linum/core/categories/models/category.dart';
+import 'package:linum/core/categories/core/data/models/category.dart';
+import 'package:linum/core/categories/core/presentation/widgets/category_list_tile.dart';
 import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:linum/common/utils/currency_formatter.dart';
 import 'package:linum/core/balance/models/transaction.dart';
-import 'package:linum/features/currencies/constants/standard_currencies.dart';
-import 'package:linum/features/currencies/data/exchange_rate_converter.dart';
-import 'package:linum/features/currencies/models/currency.dart';
+import 'package:linum/features/currencies/core/constants/standard_currencies.dart';
+import 'package:linum/features/currencies/core/data/exchange_rate_converter.dart';
+import 'package:linum/features/currencies/core/data/models/currency.dart';
+import 'package:linum/features/currencies/core/utils/currency_formatter.dart';
 
 class TransactionAmountFormatter {
   final Locale locale;

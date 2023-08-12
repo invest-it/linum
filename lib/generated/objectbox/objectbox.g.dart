@@ -10,7 +10,7 @@
 import 'dart:typed_data';
 
 import 'package:flat_buffers/flat_buffers.dart' as fb;
-import 'package:linum/features/currencies/models/exchange_rates_for_date.dart';
+import 'package:linum/features/currencies/core/data/models/exchange_rates_for_date.dart';
 import 'package:objectbox/internal.dart'; // generated code can access "internal" functionality
 import 'package:objectbox/objectbox.dart';
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';

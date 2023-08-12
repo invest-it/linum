@@ -12,7 +12,7 @@ import 'package:linum/common/widgets/loading_spinner.dart';
 import 'package:linum/core/balance/services/algorithm_service.dart';
 import 'package:linum/core/balance/utils/balance_data_processors.dart';
 import 'package:linum/core/balance/widgets/balance_data_stream_consumer.dart';
-import 'package:linum/features/currencies/services/exchange_rate_service.dart';
+import 'package:linum/features/currencies/core/presentation/exchange_rate_service.dart';
 import 'package:linum/screens/home_screen/widgets/serial_transaction_list_view.dart';
 import 'package:linum/screens/home_screen/widgets/transaction_list_view.dart';
 import 'package:logger/logger.dart';

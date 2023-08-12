@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:linum/common/enums/entry_type.dart';
-import 'package:linum/core/account/presentation/services/category_settings_service.dart';
-import 'package:linum/core/categories/utils/translate_category.dart';
+import 'package:linum/core/categories/core/utils/translate_category.dart';
+import 'package:linum/core/categories/settings/presentation/category_settings_service.dart';
 import 'package:linum/core/design/layout/utils/media_query_accessors.dart';
 import 'package:linum/core/repeating/constants/standard_repeat_configs.dart';
 import 'package:linum/core/repeating/enums/repeat_interval.dart';

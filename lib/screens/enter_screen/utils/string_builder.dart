@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:linum/core/categories/models/category.dart';
+import 'package:linum/core/categories/core/data/models/category.dart';
 import 'package:linum/core/repeating/enums/repeat_interval.dart';
 import 'package:linum/core/repeating/models/repeat_configuration.dart';
-import 'package:linum/features/currencies/models/currency.dart';
+import 'package:linum/features/currencies/core/data/models/currency.dart';
 import 'package:linum/screens/enter_screen/constants/suggestion_defaults.dart';
 import 'package:linum/screens/enter_screen/enums/input_flag.dart';
 import 'package:linum/screens/enter_screen/utils/date_formatter.dart';

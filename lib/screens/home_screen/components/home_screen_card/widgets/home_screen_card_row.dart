@@ -7,13 +7,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/components/screen_card/widgets/home_screen_card_avatar.dart';
-import 'package:linum/common/utils/currency_formatter.dart';
 import 'package:linum/core/balance/services/algorithm_service.dart';
 import 'package:linum/core/balance/utils/balance_data_processors.dart';
 import 'package:linum/core/balance/widgets/balance_data_stream_consumer.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
-import 'package:linum/features/currencies/models/currency.dart';
-import 'package:linum/features/currencies/services/exchange_rate_service.dart';
+import 'package:linum/features/currencies/core/data/models/currency.dart';
+import 'package:linum/features/currencies/core/presentation/exchange_rate_service.dart';
+import 'package:linum/features/currencies/core/utils/currency_formatter.dart';
 import 'package:linum/features/currencies/settings/presentation/currency_settings_service.dart';
 import 'package:linum/screens/home_screen/components/home_screen_card/models/home_screen_card_data.dart';
 import 'package:provider/provider.dart';

@@ -5,7 +5,7 @@
 //
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:linum/common/utils/country_flag_generator.dart';
+import 'package:linum/core/localization/settings/utils/country_flag_generator.dart';
 
 void main() {
   group("country_flag_generator", () {

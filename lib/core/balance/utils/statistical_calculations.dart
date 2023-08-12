@@ -10,7 +10,7 @@ import 'package:linum/core/balance/models/algorithm_state.dart';
 import 'package:linum/core/balance/models/serial_transaction.dart';
 import 'package:linum/core/balance/models/single_month_statistic.dart';
 import 'package:linum/core/balance/models/transaction.dart';
-import 'package:linum/features/currencies/data/exchange_rate_converter.dart';
+import 'package:linum/features/currencies/core/data/exchange_rate_converter.dart';
 import 'package:logger/logger.dart';
 import 'package:tuple/tuple.dart';
 
