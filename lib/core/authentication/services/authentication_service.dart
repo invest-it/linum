@@ -8,19 +8,22 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:linum/common/utils/subscription_handler.dart';
 import 'package:linum/core/authentication/utils/apple_utils.dart';
 import 'package:linum/core/authentication/utils/firebase_auth_extensions.dart';
 import 'package:linum/core/authentication/utils/google_utils.dart';
+import 'package:linum/core/events/event_service.dart';
+import 'package:linum/core/events/event_types.dart';
 import 'package:logger/logger.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
+// TODO: Remove dependency on firebase
 /// The AuthenticationService authenticates the user
 /// and provides the information needed for other classes
-class AuthenticationService extends ChangeNotifier {
+class AuthenticationService extends SubscriptionHandler {
   /// The FirebaseAuth Object of the Project
   final FirebaseAuth _firebaseAuth;
   late Logger logger;
@@ -29,11 +32,18 @@ class AuthenticationService extends ChangeNotifier {
   /// Constructor
   AuthenticationService(this._firebaseAuth, {
     String? languageCode,
+    required EventService eventService,
   }) {
     logger = Logger();
+
+    super.subscribe(eventService.eventStream, (event) {
+      if (event.type == EventType.languageChange) {
+        updateLanguageCode(event.message);
+      }
+    });
+
     _user.add(_firebaseAuth.currentUser);
     updateLanguageCode(languageCode);
-
   }
 
   /// Returns the authStateChanges Stream from the FirebaseAuth

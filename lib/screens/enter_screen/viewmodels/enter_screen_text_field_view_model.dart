@@ -2,11 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:linum/common/enums/entry_type.dart';
-import 'package:linum/core/account/app_settings.dart';
+import 'package:linum/core/account/presentation/services/category_settings_service.dart';
 import 'package:linum/core/categories/utils/translate_category.dart';
 import 'package:linum/core/design/layout/utils/media_query_accessors.dart';
 import 'package:linum/core/repeating/constants/standard_repeat_configs.dart';
 import 'package:linum/core/repeating/enums/repeat_interval.dart';
+import 'package:linum/features/currencies/settings/presentation/currency_settings_service.dart';
 import 'package:linum/screens/enter_screen/constants/parsable_date_map.dart';
 import 'package:linum/screens/enter_screen/enums/parsable_date.dart';
 import 'package:linum/screens/enter_screen/models/suggestion.dart';
@@ -48,15 +49,17 @@ class EnterScreenTextFieldViewModel extends ChangeNotifier {
   }
 
   void _setupTextController() {
-    final accountSettingsService = _context.read<AppSettings>();
+    final currencySettingsService = _context.read<ICurrencySettingsService>();
+    final categorySettingsService = _context.read<ICategorySettingsService>();
+
     final defaultCategory = _entryType == EntryType.expense
-        ? accountSettingsService.getExpenseEntryCategory()
-        : accountSettingsService.getIncomeEntryCategory();
+        ? categorySettingsService.getExpenseEntryCategory()
+        : categorySettingsService.getIncomeEntryCategory();
 
     _textController = HighlightTextEditingController(
       exampleStringBuilder: ExampleStringBuilder(
         defaultAmount: 0.00,
-        defaultCurrency: accountSettingsService.getStandardCurrency().name,
+        defaultCurrency: currencySettingsService.getStandardCurrency().name,
         defaultName: "Name",
         defaultCategory: translateCategory(defaultCategory),
         defaultDate: parsableDateMap[ParsableDate.today]!,

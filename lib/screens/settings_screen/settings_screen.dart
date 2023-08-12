@@ -13,11 +13,11 @@ import 'package:linum/core/authentication/widgets/forgot_password.dart';
 import 'package:linum/core/authentication/widgets/logout_form.dart';
 import 'package:linum/core/design/layout/enums/screen_key.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
-import 'package:linum/screens/settings_screen/widget/language_selector.dart';
-import 'package:linum/screens/settings_screen/widget/pin_switch.dart';
-import 'package:linum/screens/settings_screen/widget/standard_category/standard_category_selector.dart';
-import 'package:linum/screens/settings_screen/widget/standard_currency/standard_currency_selector.dart';
-import 'package:linum/screens/settings_screen/widget/version_number.dart';
+import 'package:linum/screens/settings_screen/widgets/language_selector.dart';
+import 'package:linum/screens/settings_screen/widgets/pin_switch.dart';
+import 'package:linum/screens/settings_screen/widgets/standard_category/standard_category_selectors.dart';
+import 'package:linum/screens/settings_screen/widgets/standard_currency/standard_currency_selector.dart';
+import 'package:linum/screens/settings_screen/widgets/version_number.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -42,7 +42,7 @@ class SettingsScreen extends StatelessWidget {
               'settings_screen.standard-category.label-title',
               tooltipMessage: 'settings_screen.standard-category.label-tooltip',
             ),
-            const StandardCategorySelector(),
+            const StandardCategorySelectors(),
             const ListDivider(),
 
             /// PIN SWITCH

@@ -10,12 +10,12 @@ import 'package:linum/common/components/screen_card/viewmodels/screen_card_viewm
 import 'package:linum/common/components/screen_card/widgets/home_screen_card_avatar.dart';
 import 'package:linum/common/widgets/loading_spinner.dart';
 import 'package:linum/common/widgets/styled_amount.dart';
-import 'package:linum/core/account/app_settings.dart';
 import 'package:linum/core/balance/services/algorithm_service.dart';
 import 'package:linum/core/balance/utils/balance_data_processors.dart';
 import 'package:linum/core/balance/widgets/balance_data_stream_consumer.dart';
 import 'package:linum/features/currencies/models/currency.dart';
 import 'package:linum/features/currencies/services/exchange_rate_service.dart';
+import 'package:linum/features/currencies/settings/presentation/currency_settings_service.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/home_screen/components/home_screen_card/models/home_screen_card_data.dart';
 import 'package:linum/screens/home_screen/components/home_screen_card/utils/home_screen_functions.dart';
@@ -144,8 +144,8 @@ class HomeScreenCardFront extends StatelessWidget {
 
                         return FittedBox(
                           fit: BoxFit.scaleDown,
-                          child: Selector<AppSettings, Currency>(
-                            selector: (_, settings) => settings.getStandardCurrency(),
+                          child: Selector<ICurrencySettingsService, Currency>(
+                            selector: (_, currencySettings) => currencySettings.getStandardCurrency(),
                             builder: (context, standardCurrency, _) {
                               return StyledAmount(
                                 value: snapshot.data?.mtdBalance ?? 0.00,

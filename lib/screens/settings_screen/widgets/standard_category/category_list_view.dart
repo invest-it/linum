@@ -1,30 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:linum/common/components/action_lip/viewmodels/action_lip_viewmodel.dart';
 import 'package:linum/common/widgets/category_list_tile.dart';
-import 'package:linum/core/account/app_settings.dart';
 import 'package:linum/core/categories/models/category.dart';
 import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
-import 'package:linum/core/design/layout/enums/screen_key.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
-import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
-import 'package:provider/provider.dart';
 
 class CategoryListView extends StatelessWidget {
   final List<Category> categories;
-  final String settingsKey;
+  final String defaultCategoryId;
+  final void Function(Category category) onCategorySelection;
 
   const CategoryListView({
     required this.categories,
-    required this.settingsKey,
+    required this.defaultCategoryId,
+    required this.onCategorySelection,
   });
 
   @override
   Widget build(BuildContext context) {
-    final accountSettingsService
-      = context.read<AppSettings>();
-    final actionLipViewModel
-      = context.read<ActionLipViewModel>();
-
     return Expanded(
       child: ListView.builder(
         padding: EdgeInsets.only(
@@ -39,16 +31,9 @@ class CategoryListView extends StatelessWidget {
 
           return CategoryListTile(
             category: category,
-            selected: category.id == accountSettingsService.settings[settingsKey],
+            selected: category.id == defaultCategoryId,
             onTap: () {
-              accountSettingsService.updateSettings({
-                settingsKey: category.id,
-              });
-              actionLipViewModel.setActionLipStatus(
-                context: context,
-                screenKey: ScreenKey.settings,
-                status: ActionLipVisibility.hidden,
-              );
+              onCategorySelection(category);
             },
           );
         },

@@ -5,94 +5,20 @@
 //
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/common/components/action_lip/viewmodels/action_lip_viewmodel.dart';
-import 'package:linum/core/account/app_settings.dart';
-import 'package:linum/core/authentication/services/authentication_service.dart';
-import 'package:linum/core/balance/services/algorithm_service.dart';
-import 'package:linum/core/balance/services/balance_data_service.dart';
+import 'package:linum/common/utils/locale_utils.dart';
+import 'package:linum/core/account/presentation/services/language_settings_service.dart';
 import 'package:linum/core/design/layout/loading_scaffold.dart';
-import 'package:linum/features/currencies/services/exchange_rate_service.dart';
+import 'package:linum/core/events/event_interface.dart';
 import 'package:linum/firebase/firebase_options.g.dart';
 import 'package:linum/generated/objectbox/objectbox.g.dart';
 import 'package:linum/generated/translation_keys.g.dart';
-import 'package:linum/screens/lock_screen/services/pin_code_service.dart';
+import 'package:linum/global_event_handler.dart';
+import 'package:linum/user_dependent_services.dart';
+import 'package:linum/user_independent_services.dart';
 import 'package:provider/provider.dart';
 
-
-
-class UserIndependentServices extends StatelessWidget {
-  final Widget child;
-  const UserIndependentServices({super.key, required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    final authService = AuthenticationService(
-      FirebaseAuth.instance,
-      languageCode: context.locale.languageCode,
-    );
-
-    final algorithmService = AlgorithmService();
-
-
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<AuthenticationService>.value(
-          value: authService,
-        ),
-        ChangeNotifierProvider<AlgorithmService>.value(
-            value: algorithmService,
-        ),
-        ChangeNotifierProvider<ActionLipViewModel>(
-          create: (_) => ActionLipViewModel(),
-        ),
-
-      ],
-      child: child,
-    );
-  }
-}
-
-class UserDependentServices extends StatelessWidget {
-  final Store store;
-  final Widget widget;
-  const UserDependentServices({super.key, required this.store, required this.widget});
-
-  @override
-  Widget build(BuildContext context) {
-    final authService = context.watch<AuthenticationService>();
-
-    print(authService.currentUser);
-    final appSettings = AppSettings(
-        context: context,
-        user: authService.currentUser,
-    );
-
-
-    final exchangeRateService = ExchangeRateService(appSettings, store);
-    final balanceDataService = BalanceDataService(authService.currentUser?.uid ?? "");
-
-    return MultiProvider(
-        providers: [
-          ChangeNotifierProvider<AppSettings>.value(
-            value: appSettings,
-          ),
-          ChangeNotifierProvider<BalanceDataService>.value(
-            value: balanceDataService,
-          ),
-          ChangeNotifierProvider<ExchangeRateService>.value(
-              value: exchangeRateService,
-          ),
-          ChangeNotifierProvider<PinCodeService>(
-            create: (context) => PinCodeService(authService, context),
-          ),
-        ],
-        child: widget,
-    );
-  }
-}
 
 
 
@@ -127,12 +53,30 @@ class ApplicationServices extends StatelessWidget {
           return UserIndependentServices(
             child: UserDependentServices(
               store: store,
-              widget: router,
+              child: GlobalEventListener(
+                listeners: [
+                  _handleLanguageChangeEvent
+                ],
+                child: router,
+              ),
             ),
           );
         }
         return const LoadingScaffold();
       },
     );
+  }
+
+  void _handleLanguageChangeEvent(IEvent event, BuildContext context) {
+    final languageSettingsService = context.read<ILanguageSettingsService>();
+    final String? langCode = languageSettingsService.getLanguageCode();
+    Locale? locale;
+    if (!languageSettingsService.useSystemLanguage && langCode != null) {
+      final List<String> langArray = langCode.split("-");
+      locale = Locale(langArray[0], langArray[1]);
+      context.setAppLocale(locale);
+    } else {
+      context.setLocaleToDeviceLocale();
+    }
   }
 }

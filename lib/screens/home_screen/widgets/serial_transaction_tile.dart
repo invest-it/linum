@@ -1,11 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/utils/currency_formatter.dart';
-import 'package:linum/core/account/app_settings.dart';
 import 'package:linum/core/balance/models/serial_transaction.dart';
 import 'package:linum/core/categories/constants/standard_categories.dart';
 import 'package:linum/core/categories/utils/translate_category.dart';
 import 'package:linum/core/repeating/enums/repeat_duration_type_enum.dart';
+import 'package:linum/features/currencies/settings/presentation/currency_settings_service.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/enter_screen/utils/ui/show_enter_screen.dart';
 import 'package:provider/provider.dart';
@@ -77,10 +77,11 @@ class SerialTransactionTile extends StatelessWidget {
     final int duration = serialTransaction.repeatDuration;
     final RepeatDurationType repeatDurationType =
         serialTransaction.repeatDurationType;
-    final settings = context.watch<AppSettings>();
+
+    final currencySettings = context.watch<ICurrencySettingsService>();
     final formattedAmount = CurrencyFormatter(
       context.locale,
-      symbol: settings.getStandardCurrency().name,
+      symbol: currencySettings.getStandardCurrency().name,
     ).format(serialTransaction.amount.abs());
 
     switch (repeatDurationType) {

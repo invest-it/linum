@@ -15,7 +15,6 @@ class BalanceDataService extends ChangeNotifier {
   final String userId;
 
   BalanceDataService(this.userId) {
-    print(userId);
     _repository = BalanceDataRepository(userId: userId);
   }
 

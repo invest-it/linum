@@ -9,11 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:linum/common/components/screen_card/viewmodels/screen_card_viewmodel.dart';
 import 'package:linum/common/widgets/loading_spinner.dart';
 import 'package:linum/common/widgets/styled_amount.dart';
-import 'package:linum/core/account/app_settings.dart';
 import 'package:linum/core/balance/services/algorithm_service.dart';
 import 'package:linum/core/balance/utils/balance_data_processors.dart';
 import 'package:linum/core/balance/widgets/balance_data_stream_consumer.dart';
 import 'package:linum/features/currencies/services/exchange_rate_service.dart';
+import 'package:linum/features/currencies/settings/presentation/currency_settings_service.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/home_screen/components/home_screen_card/models/home_screen_card_data.dart';
 import 'package:linum/screens/home_screen/components/home_screen_card/utils/home_screen_functions.dart';
@@ -37,7 +37,7 @@ class HomeScreenCardBack extends StatelessWidget {
       );
     }
 
-    final accountSettingsService = context.watch<AppSettings>();
+    final currencySettings = context.watch<ICurrencySettingsService>();
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -175,7 +175,7 @@ class HomeScreenCardBack extends StatelessWidget {
                                                     value: snapshot.data?.mtdBalance ??
                                                         0.00,
                                                     locale: context.locale,
-                                                    symbol: accountSettingsService
+                                                    symbol: currencySettings
                                                         .getStandardCurrency()
                                                         .symbol,
                                                   ),
@@ -212,7 +212,7 @@ class HomeScreenCardBack extends StatelessWidget {
                                                                   ?.eomFutureSerialIncome ??
                                                               0.00,
                                                           locale: context.locale,
-                                                          symbol: accountSettingsService
+                                                          symbol: currencySettings
                                                               .getStandardCurrency()
                                                               .symbol,
                                                           fontSize:
@@ -231,7 +231,7 @@ class HomeScreenCardBack extends StatelessWidget {
                                                                   ?.eomFutureSerialExpenses ??
                                                               0.00,
                                                           locale: context.locale,
-                                                          symbol: accountSettingsService
+                                                          symbol: currencySettings
                                                               .getStandardCurrency()
                                                               .symbol,
                                                           fontPrefix:
@@ -270,7 +270,7 @@ class HomeScreenCardBack extends StatelessWidget {
                                                   value: snapshot.data?.eomBalance ??
                                                       0.00,
                                                   locale: context.locale,
-                                                  symbol: accountSettingsService
+                                                  symbol: currencySettings
                                                       .getStandardCurrency()
                                                       .symbol,
                                                 ),
@@ -310,7 +310,7 @@ class HomeScreenCardBack extends StatelessWidget {
                                                           ?.tillBeginningOfMonthSumBalance ??
                                                       0.00,
                                                   locale: context.locale,
-                                                  symbol: accountSettingsService
+                                                  symbol: currencySettings
                                                       .getStandardCurrency()
                                                       .symbol,
                                                 ),
@@ -330,7 +330,7 @@ class HomeScreenCardBack extends StatelessWidget {
                                                           ?.tillEndOfMonthSumBalance ??
                                                       0.00,
                                                   locale: context.locale,
-                                                  symbol: accountSettingsService
+                                                  symbol: currencySettings
                                                       .getStandardCurrency()
                                                       .symbol,
                                                 ),
