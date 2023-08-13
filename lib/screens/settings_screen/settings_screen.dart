@@ -14,8 +14,8 @@ import 'package:linum/core/authentication/widgets/logout_form.dart';
 import 'package:linum/core/categories/settings/presentation/widgets/standard_category_selectors.dart';
 import 'package:linum/core/design/layout/enums/screen_key.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
+import 'package:linum/core/localization/settings/presentation/widgets/language_selector.dart';
 import 'package:linum/features/currencies/settings/presentation/widgets/standard_currency_selector.dart';
-import 'package:linum/screens/settings_screen/widgets/language_selector.dart';
 import 'package:linum/screens/settings_screen/widgets/pin_switch.dart';
 import 'package:linum/screens/settings_screen/widgets/version_number.dart';
 
