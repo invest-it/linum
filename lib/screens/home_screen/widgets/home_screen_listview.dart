@@ -31,7 +31,7 @@ class HomeScreenListView extends StatelessWidget {
     initializeDateFormatting();
 
     return BalanceDataStreamConsumer3<
-        ExchangeRateService,
+        IExchangeRateService,
         AlgorithmService,
         PreparedBalanceData
     >(

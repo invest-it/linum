@@ -126,7 +126,7 @@ class HomeScreenCardFront extends StatelessWidget {
                   ),
                   Expanded(
                     child: BalanceDataStreamConsumer3<
-                        ExchangeRateService, AlgorithmService, HomeScreenCardData>(
+                        IExchangeRateService, AlgorithmService, HomeScreenCardData>(
                       transformer: (snapshot, exchangeRateService, algorithmService) async {
                         final statData = await generateStatistics(
                           snapshot: snapshot,

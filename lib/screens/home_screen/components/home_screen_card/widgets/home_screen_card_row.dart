@@ -59,7 +59,7 @@ class HomeScreenCardRow extends StatelessWidget {
                     .copyWith(fontSize: 12),
               ),
               BalanceDataStreamConsumer3<
-                  ExchangeRateService, AlgorithmService, HomeScreenCardData>(
+                  IExchangeRateService, AlgorithmService, HomeScreenCardData>(
                 transformer: (snapshot, exchangeRateService, algorithmService) async {
                   final statData = await generateStatistics(
                     snapshot: snapshot,

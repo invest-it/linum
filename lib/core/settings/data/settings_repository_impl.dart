@@ -1,10 +1,10 @@
 import 'package:linum/core/settings/data/settings_mapper_interface.dart';
-import 'package:linum/core/settings/domain/settings_adapter.dart';
 import 'package:linum/core/settings/domain/settings_repository.dart';
+import 'package:linum/core/settings/domain/settings_storage.dart';
 import 'package:rxdart/rxdart.dart';
 
 class SettingsRepositoryImpl<TSettings> extends ISettingsRepository<TSettings> {
-  final ISettingsAdapter _adapter;
+  final ISettingsStorage _adapter;
   final ISettingsMapper<TSettings> _mapper;
   final String? userId;
 
@@ -12,7 +12,7 @@ class SettingsRepositoryImpl<TSettings> extends ISettingsRepository<TSettings> {
 
   SettingsRepositoryImpl({
     this.userId,
-    required ISettingsAdapter adapter,
+    required ISettingsStorage adapter,
     required ISettingsMapper<TSettings> mapper,
   }): _adapter = adapter, _mapper = mapper {
     _settings.add(mapper.toModel({}));

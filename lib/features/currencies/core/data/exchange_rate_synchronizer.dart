@@ -7,7 +7,7 @@ class ExchangeRateSynchronizer {
   final Box<ExchangeRatesForDate> _box;
   final Future<SharedPreferences> _prefs =  SharedPreferences.getInstance();
 
-  ExchangeRateSynchronizer(this._box);
+  ExchangeRateSynchronizer(Store store): _box = store.box();
 
   Future<void> sync() async {
     final today = DateTime.now(); // TODO: Check timezone

@@ -11,8 +11,13 @@ import 'package:linum/core/localization/settings/data/language_settings.dart';
 import 'package:linum/core/localization/settings/data/language_settings_mapper.dart';
 import 'package:linum/core/localization/settings/domain/language_settings_service_impl.dart';
 import 'package:linum/core/localization/settings/presentation/language_settings_service.dart';
-import 'package:linum/core/settings/data/settings_adapter_impl.dart';
 import 'package:linum/core/settings/data/settings_repository_impl.dart';
+import 'package:linum/core/settings/data/settings_storage_impl.dart';
+import 'package:linum/features/currencies/core/data/exchange_rate_repository_impl.dart';
+import 'package:linum/features/currencies/core/data/exchange_rate_storage_impl.dart';
+import 'package:linum/features/currencies/core/data/exchange_rate_synchronizer.dart';
+import 'package:linum/features/currencies/core/domain/exchange_rate_fetcher.dart';
+import 'package:linum/features/currencies/core/domain/exchange_rate_service_impl.dart';
 import 'package:linum/features/currencies/core/presentation/exchange_rate_service.dart';
 import 'package:linum/features/currencies/settings/data/currency_settings.dart';
 import 'package:linum/features/currencies/settings/data/currency_settings_mapper.dart';
@@ -32,24 +37,35 @@ class UserDependentServices extends StatelessWidget {
     final authService = context.read<AuthenticationService>();
     final eventService = context.read<EventService>();
 
-    final firestoreAdapter = SettingsAdapterImpl(FirebaseFirestore.instance);
+    final settingsStorage = SettingsStorageImpl(FirebaseFirestore.instance);
 
     final languageSettingsRepository = SettingsRepositoryImpl<LanguageSettings>(
       userId: authService.currentUser?.uid,
-      adapter: firestoreAdapter,
+      adapter: settingsStorage,
       mapper: LanguageSettingsMapper(),
     );
 
     final categorySettingsRepository = SettingsRepositoryImpl<CategorySettings>(
       userId: authService.currentUser?.uid,
-      adapter: firestoreAdapter,
+      adapter: settingsStorage,
       mapper: CategorySettingsMapper(),
     );
 
     final currencySettingsRepository = SettingsRepositoryImpl<CurrencySettings>(
       userId: authService.currentUser?.uid,
-      adapter: firestoreAdapter,
+      adapter: settingsStorage,
       mapper: CurrencySettingsMapper(),
+    );
+
+    final exchangeRateStorage = ExchangeRateStorageImpl(store);
+    final exchangeRateSynchronizer = ExchangeRateSynchronizer(store);
+
+    final exchangeRateRepository = ExchangeRateRepositoryImpl(
+      exchangeRateStorage, exchangeRateSynchronizer,
+    );
+
+    final exchangeRateFetcher = ExchangeRateFetcher(
+      exchangeRateRepository,
     );
 
 
@@ -57,12 +73,12 @@ class UserDependentServices extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<ICurrencySettingsService>(
           create: (context) => CurrencySettingsServiceImpl(
-              currencySettingsRepository,
+            currencySettingsRepository,
           ),
         ),
         ChangeNotifierProvider<ICategorySettingsService>(
           create: (context) => CategorySettingsServiceImpl(
-              categorySettingsRepository,
+            categorySettingsRepository,
           ),
         ),
         ChangeNotifierProvider<ILanguageSettingsService>(
@@ -73,13 +89,13 @@ class UserDependentServices extends StatelessWidget {
         ),
         ChangeNotifierProvider<BalanceDataService>(
           create: (context) => BalanceDataService(
-              authService.currentUser?.uid ?? "",
+            authService.currentUser?.uid ?? "",
           ),
         ),
-        ChangeNotifierProvider<ExchangeRateService>(
-          create: (context) => ExchangeRateService(
-              context.read<ICurrencySettingsService>(),
-              store,
+        ChangeNotifierProvider<IExchangeRateService>(
+          create: (context) => ExchangeRateServiceImpl(
+            context.read<ICurrencySettingsService>(),
+            exchangeRateFetcher,
           ),
         ),
         ChangeNotifierProvider<PinCodeService>(

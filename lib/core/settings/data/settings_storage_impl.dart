@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:linum/core/settings/data/settings_data.dart';
-import 'package:linum/core/settings/domain/settings_adapter.dart';
+import 'package:linum/core/settings/domain/settings_storage.dart';
 
-class SettingsAdapterImpl implements ISettingsAdapter {
+class SettingsStorageImpl implements ISettingsStorage {
   final FirebaseFirestore _firestore;
-  SettingsAdapterImpl(this._firestore);
+  SettingsStorageImpl(this._firestore);
 
   DocumentReference<SettingsData> _getDocRef(String? userId)
     => _firestore.collection("account_settings").doc(userId);

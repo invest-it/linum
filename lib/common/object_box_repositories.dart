@@ -1,11 +1,10 @@
-import 'package:linum/features/currencies/core/domain/exchange_rate_repository.dart';
-import 'package:linum/generated/objectbox/objectbox.g.dart';
-
-class ObjectBoxRepositories {
-  final ExchangeRateRepository exchangeRates;
+// TODO: Might be a nice pattern but could be removed currently
+/* class ObjectBoxRepositories {
+  final IExchangeRateRepository exchangeRates;
 
   static Future<ObjectBoxRepositories> create() async =>
       ObjectBoxRepositories._(await openStore());
   ObjectBoxRepositories._(Store store)
-      : exchangeRates = ExchangeRateRepository(store);
+      : exchangeRates = IExchangeRateRepository(store);
 }
+*/

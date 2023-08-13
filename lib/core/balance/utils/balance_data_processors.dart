@@ -25,7 +25,7 @@ Future<Tuple2<List<Transaction>, List<SerialTransaction>>>
   processBalanceData({
   required DocumentSnapshot<BalanceDocument> snapshot,
   required AlgorithmState algorithms,
-  required ExchangeRateService exchangeRateService,
+  required IExchangeRateService exchangeRateService,
   bool isSerial = false,
 }) async {
   if (!isSerial) {
@@ -48,7 +48,7 @@ Future<Tuple2<List<Transaction>, List<SerialTransaction>>>
 _processTransactions({
   required DocumentSnapshot<BalanceDocument> snapshot,
   required AlgorithmState algorithms,
-  required ExchangeRateService exchangeRateService,
+  required IExchangeRateService exchangeRateService,
 }) async {
   final preparedData = await _prepareData(
     snapshot,
@@ -70,7 +70,7 @@ Future<Tuple2<List<Transaction>, List<SerialTransaction>>>
 _processSerialTransactions({
   required DocumentSnapshot<BalanceDocument> snapshot,
   required AlgorithmState algorithms,
-  required ExchangeRateService exchangeRateService,
+  required IExchangeRateService exchangeRateService,
 }) async {
   final data = await _prepareData(
     snapshot, algorithms, exchangeRateService,
@@ -107,7 +107,7 @@ _processSerialTransactions({
 Future<StatisticalCalculations> generateStatistics({
   required  DocumentSnapshot<BalanceDocument> snapshot,
   required AlgorithmState algorithms,
-  required ExchangeRateService exchangeRateService,
+  required IExchangeRateService exchangeRateService,
 }) async {
   final preparedData = await _prepareData(
     snapshot, algorithms, exchangeRateService,
@@ -125,7 +125,7 @@ Future<StatisticalCalculations> generateStatistics({
 Future<PreparedBalanceData> _prepareData(
     DocumentSnapshot<BalanceDocument> snapshot,
     AlgorithmState algorithms,
-    ExchangeRateService exchangeRateService,
+    IExchangeRateService exchangeRateService,
 ) async {
 
   final data = snapshot.data(); // TODO: Model for Document
