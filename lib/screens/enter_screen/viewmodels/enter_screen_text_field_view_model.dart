@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:linum/common/enums/entry_type.dart';
+import 'package:linum/common/interfaces/translator.dart';
 import 'package:linum/core/categories/core/utils/translate_category.dart';
 import 'package:linum/core/categories/settings/presentation/category_settings_service.dart';
 import 'package:linum/core/design/layout/utils/media_query_accessors.dart';
@@ -29,11 +30,13 @@ class EnterScreenTextFieldViewModel extends ChangeNotifier {
   late EntryType _entryType;
   late StreamSubscription _streamSubscription;
 
+  final ITranslator _translator;
+
   HighlightTextEditingController get textController => _textController;
 
   final GlobalKey textFieldKey = LabeledGlobalKey("text_field");
 
-  EnterScreenTextFieldViewModel(BuildContext context) {
+  EnterScreenTextFieldViewModel(BuildContext context, this._translator) {
     _context = context;
     _formViewModel = context.read<EnterScreenFormViewModel>();
 
@@ -64,7 +67,9 @@ class EnterScreenTextFieldViewModel extends ChangeNotifier {
         defaultCategory: translateCategory(defaultCategory),
         defaultDate: parsableDateMap[ParsableDate.today]!,
         defaultRepeatInfo: repeatConfigurations[RepeatInterval.none]!.label,
+        translator: _translator,
       ),
+      translator: _translator,
       parsingFilters: ParsingFilters(
         categoryFilter: (category) => category.entryType == _entryType,
       ),

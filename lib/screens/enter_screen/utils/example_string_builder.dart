@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:linum/common/interfaces/translator.dart';
 import 'package:linum/screens/enter_screen/constants/suggestion_defaults.dart';
 import 'package:linum/screens/enter_screen/enums/input_flag.dart';
 import 'package:linum/screens/enter_screen/models/structured_parsed_data.dart';
@@ -11,6 +11,7 @@ class ExampleStringBuilder {
   final String defaultCategory;
   final String defaultDate;
   final String defaultRepeatInfo;
+  final ITranslator translator;
 
   late Tuple2<String, String> value;
 
@@ -21,23 +22,24 @@ class ExampleStringBuilder {
     required this.defaultCategory,
     required this.defaultDate,
     required this.defaultRepeatInfo,
+    required this.translator,
   }) {
     build();
   }
 
   String _buildCategoryString({String? category}) {
-    return "#${flagSuggestionDefaults[InputFlag.category]?.tr()}:"
-        "${(category ?? defaultCategory).tr()}";
+    return "#${translator.translate(flagSuggestionDefaults[InputFlag.category] ?? "")}:"
+        "${translator.translate(category ?? defaultCategory)}";
   }
 
   String _buildDateString({String? date}) {
-    return "#${flagSuggestionDefaults[InputFlag.date]?.tr()}:"
-        "${(date ?? defaultDate).tr()}";
+    return "#${translator.translate(flagSuggestionDefaults[InputFlag.date] ?? "")}:"
+        "${translator.translate(date ?? defaultDate)}";
   }
 
   String _buildRepeatInfoString({String? repeatInfo}) {
-    return "#${flagSuggestionDefaults[InputFlag.repeatInfo]?.tr()}:"
-        "${(repeatInfo ?? defaultRepeatInfo).tr()}";
+    return "#${translator.translate(flagSuggestionDefaults[InputFlag.repeatInfo] ?? "")}:"
+        "${translator.translate(repeatInfo ?? defaultRepeatInfo)}";
   }
 
   void build() {

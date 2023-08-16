@@ -1,4 +1,5 @@
 import 'package:linum/common/enums/entry_type.dart';
+import 'package:linum/common/interfaces/translator.dart';
 import 'package:linum/core/balance/models/serial_transaction.dart';
 import 'package:linum/core/balance/models/transaction.dart';
 import 'package:linum/core/categories/core/constants/standard_categories.dart';
@@ -12,6 +13,8 @@ import 'package:linum/screens/enter_screen/utils/get_repeat_interval.dart';
 import 'package:linum/screens/enter_screen/utils/string_builder.dart';
 
 class InitialFormDataBuilder {
+  final ITranslator translator;
+
   Map<String, Currency> currencies;
   Map<RepeatInterval, RepeatConfiguration> repeatConfigurations;
   EntryType entryType = EntryType.unknown;
@@ -19,6 +22,7 @@ class InitialFormDataBuilder {
   InitialFormDataBuilder({
     required this.currencies,
     required this.repeatConfigurations,
+    required this.translator,
   });
 
   String? name;
@@ -76,7 +80,7 @@ class InitialFormDataBuilder {
       notes: notes,
     );
 
-    final strBuilder = StringBuilder()
+    final strBuilder = StringBuilder(translator)
       ..setAmount(amount)
       ..setName(name)
       ..setCurrency(currency)

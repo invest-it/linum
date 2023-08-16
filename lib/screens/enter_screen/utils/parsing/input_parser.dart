@@ -1,12 +1,15 @@
 
+import 'package:linum/common/interfaces/translator.dart';
 import 'package:linum/common/types/filter_function.dart';
 import 'package:linum/core/categories/core/data/models/category.dart';
 import 'package:linum/core/repeating/enums/repeat_interval.dart';
 import 'package:linum/screens/enter_screen/enums/input_flag.dart';
 import 'package:linum/screens/enter_screen/enums/parsable_date.dart';
 import 'package:linum/screens/enter_screen/models/structured_parsed_data.dart';
+import 'package:linum/screens/enter_screen/utils/parsing/category_parser.dart';
+import 'package:linum/screens/enter_screen/utils/parsing/date_parser.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/natural_lang_parser.dart';
-import 'package:linum/screens/enter_screen/utils/parsing/parser_functions.dart';
+import 'package:linum/screens/enter_screen/utils/parsing/repeat_config_parser.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/structured_parsed_data_builder.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/tag_parser.dart';
 
@@ -15,11 +18,15 @@ final RegExp splitRegex = RegExp("(?=#)|(?=@)");
 final RegExp trimTagRegex = RegExp("(#)|(@)");
 
 class InputParser {
+  final ITranslator translator;
+
   Filter<Category>? categoryFilter;
   Filter<RepeatInterval>? repeatFilter;
   Filter<ParsableDate>? dateFilter;
 
   StructuredParsedDataBuilder? _parsedDataBuilder;
+
+  InputParser(this.translator);
 
   StructuredParsedData parse(String? input) {
     if (input == null || input.isEmpty) {
@@ -110,7 +117,11 @@ class InputParser {
       String fullInput,
       ParsedTag parsedTag,
   ) {
-    final result = parsedCategory(parsedTag.text, filter: categoryFilter);
+    final result = CategoryParser(
+      filter: categoryFilter,
+      translator: translator,
+    ).parse(parsedTag.text);
+
     if (result != null) {
       _parsedDataBuilder?.setCategory(
           tag.trimRight(),
@@ -126,7 +137,9 @@ class InputParser {
       String fullInput,
       ParsedTag parsedTag,
       ) {
-    final result = parseRepeatConfiguration(parsedTag.text, filter: repeatFilter);
+    final result = RepeatConfigParser(filter: repeatFilter)
+        .parse(parsedTag.text);
+
     if (result != null) {
       _parsedDataBuilder?.setRepeatConfiguration(
           tag.trimRight(),
@@ -142,7 +155,7 @@ class InputParser {
       String fullInput,
       ParsedTag parsedTag,
       ) {
-    final result = parsedDate(parsedTag.text, filter: dateFilter);
+    final result = DateParser(filter: dateFilter).parse(parsedTag.text);
     if (result != null) {
       _parsedDataBuilder?.setDate(
         tag.trimRight(),

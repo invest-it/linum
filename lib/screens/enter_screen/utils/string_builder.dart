@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:linum/common/interfaces/translator.dart';
 import 'package:linum/core/categories/core/data/models/category.dart';
 import 'package:linum/core/repeating/enums/repeat_interval.dart';
 import 'package:linum/core/repeating/models/repeat_configuration.dart';
@@ -11,6 +11,9 @@ import 'package:linum/screens/enter_screen/utils/date_formatter.dart';
 
 class StringBuilder {
   final _dateFormatter = const DateFormatter();
+  final ITranslator translator;
+  
+  StringBuilder(this.translator);
 
   String _existingStr = "";
   String _str = "";
@@ -36,21 +39,30 @@ class StringBuilder {
     _name = name ?? "";
   }
   void setCategory(Category? category) {
+    final translationKey = translator
+        .translate(flagSuggestionDefaults[InputFlag.category] ?? "");
+
     if (category != null) {
-      _category = "#${flagSuggestionDefaults[InputFlag.category]?.tr()}:"
-          "${category.label.tr()}";
+      _category = "#$translationKey:"
+          "${translator.translate(category.label)}";
     }
   }
   void setDate(String? date) {
+    final translationKey = translator
+        .translate(flagSuggestionDefaults[InputFlag.date] ?? "");
+
     if (date != null && date != "") {
-      _date = "#${flagSuggestionDefaults[InputFlag.date]?.tr()}:"
-          "${_dateFormatter.format(date)?.tr()}";
+      _date = "#$translationKey:"
+          "${translator.translate(_dateFormatter.format(date) ?? "")}";
     }
   }
   void setRepeatConfiguration(RepeatConfiguration? repeatConfiguration) {
     if (repeatConfiguration != null && repeatConfiguration.interval != RepeatInterval.none) {
-      _repeatInfo = "#${flagSuggestionDefaults[InputFlag.repeatInfo]?.tr()}:"
-          "${repeatConfiguration.label.tr()}";
+      final translationKey = translator
+          .translate(flagSuggestionDefaults[InputFlag.repeatInfo] ?? "");
+
+      _repeatInfo = "#$translationKey:"
+          "${translator.translate(repeatConfiguration.label)}";
     }
   }
 

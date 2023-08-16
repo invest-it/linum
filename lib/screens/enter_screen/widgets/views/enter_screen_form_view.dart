@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linum/common/utils/base_translator.dart';
 import 'package:linum/core/design/layout/utils/media_query_accessors.dart';
 import 'package:linum/core/repeating/constants/standard_repeat_configs.dart';
 import 'package:linum/features/currencies/core/constants/standard_currencies.dart';
@@ -96,6 +97,7 @@ class EnterScreenFormView extends StatelessWidget {
     final builder = InitialFormDataBuilder(
       currencies: standardCurrencies,
       repeatConfigurations: repeatConfigurations,
+      translator: BaseTranslator(),
     );
     final screenViewModel = context.read<EnterScreenViewModel>();
     builder

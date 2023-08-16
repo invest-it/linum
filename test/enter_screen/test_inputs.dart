@@ -1,13 +1,14 @@
 import 'package:linum/core/categories/core/constants/standard_categories.dart';
 import 'package:linum/features/currencies/core/constants/standard_currencies.dart';
 import 'package:linum/screens/enter_screen/models/structured_parsed_data.dart';
-import 'package:linum/screens/enter_screen/utils/parsing/parser_functions.dart';
+import 'package:linum/screens/enter_screen/utils/parsing/date_parser.dart';
 import 'package:linum/screens/enter_screen/utils/parsing/structured_parsed_data_builder.dart';
 
 
 
 List<StructuredParsedData> generateTestData() {
   final List<StructuredParsedData> testInputs = [];
+  final dateParser = DateParser();
 
   var builder = StructuredParsedDataBuilder("9 EUR Döner #Food & Drinks")
     ..setAmount("9", 9)
@@ -21,7 +22,7 @@ List<StructuredParsedData> generateTestData() {
     ..setAmount("12.00", 12.00)
     ..setCurrency("USD", standardCurrencies["USD"]!)
     ..setName("Test")
-    ..setDate("#Date:28.07.", parsedDate("28.07.") ?? "null");
+    ..setDate("#Date:28.07.", dateParser.parse("28.07.") ?? "null");
   testInputs.add(builder.build());
 
 
@@ -29,7 +30,7 @@ List<StructuredParsedData> generateTestData() {
     ..setAmount("42", 42)
     ..setCurrency("JPY", standardCurrencies["JPY"]!)
     ..setName("Sushi")
-    ..setDate("#tdy", parsedDate("tdy") ?? "null")
+    ..setDate("#tdy", dateParser.parse("tdy") ?? "null")
     ..setCategory("#cat:Food & Drinks", getCategory("food")!);
   testInputs.add(builder.build());
 

@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/common/interfaces/translator.dart';
 import 'package:linum/screens/enter_screen/constants/hightlight_colors.dart';
 import 'package:linum/screens/enter_screen/models/parsed_input.dart';
 import 'package:linum/screens/enter_screen/models/structured_parsed_data.dart';
@@ -17,9 +18,11 @@ TextSelection getSelectionFromCursor(int cursor) {
 class HighlightTextEditingController extends TextEditingController {
   final ExampleStringBuilder exampleStringBuilder;
   final ParsingFilters? parsingFilters;
+  final ITranslator translator;
 
   HighlightTextEditingController({
     required this.exampleStringBuilder,
+    required this.translator,
     this.parsingFilters,
     super.text,
   });
@@ -46,7 +49,7 @@ class HighlightTextEditingController extends TextEditingController {
       return;
     }
 
-    final parser = InputParser()
+    final parser = InputParser(translator)
         ..categoryFilter = parsingFilters?.categoryFilter
         ..repeatFilter = parsingFilters?.repeatFilter
         ..dateFilter = parsingFilters?.dateFilter;
@@ -56,8 +59,9 @@ class HighlightTextEditingController extends TextEditingController {
     exampleStringBuilder.rebuild(parsed);
     _parsed = parsed;
     _suggestions = makeSuggestions(
-      newText,
-      newCursor, // Cursor position
+      text: newText,
+      cursor: newCursor, // Cursor position
+      translator: translator,
       categoryFilter: parsingFilters?.categoryFilter,
       repeatFilter: parsingFilters?.repeatFilter,
       dateFilter: parsingFilters?.dateFilter,

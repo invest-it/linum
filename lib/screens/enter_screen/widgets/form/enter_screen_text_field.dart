@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linum/common/utils/base_translator.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_form_view_model.dart';
 import 'package:linum/screens/enter_screen/viewmodels/enter_screen_text_field_view_model.dart';
 import 'package:provider/provider.dart';
@@ -22,12 +23,12 @@ class EnterScreenTextField extends StatelessWidget {
         EnterScreenTextFieldViewModel
     >(
       create: (context) => EnterScreenTextFieldViewModel(
-          context,
+          context, BaseTranslator(),
       ),
       update: (context, formViewModel, textFieldViewModel) {
         if (textFieldViewModel == null) {
           return EnterScreenTextFieldViewModel(
-            context,
+            context, BaseTranslator(),
           );
         }
         textFieldViewModel.handleUpdate(context);
