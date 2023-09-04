@@ -5,6 +5,7 @@ import 'package:linum/core/repeating/models/repeat_configuration.dart';
 import 'package:linum/screens/enter_screen/domain/parsing/parser.dart';
 import 'package:linum/screens/enter_screen/domain/utils/supported_values.dart';
 
+// Testable
 class RepeatConfigParser implements IParser<RepeatConfiguration> {
   final Filter<RepeatInterval>? filter;
 

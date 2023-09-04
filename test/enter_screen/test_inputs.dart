@@ -1,4 +1,6 @@
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:linum/core/categories/core/constants/standard_categories.dart';
+import 'package:linum/core/categories/core/data/models/category.dart';
 import 'package:linum/features/currencies/core/constants/standard_currencies.dart';
 import 'package:linum/screens/enter_screen/domain/models/structured_parsed_data.dart';
 import 'package:linum/screens/enter_screen/domain/parsing/date_parser.dart';
@@ -6,7 +8,7 @@ import 'package:linum/screens/enter_screen/domain/parsing/structured_parsed_data
 
 
 
-List<StructuredParsedData> generateTestData() {
+List<StructuredParsedData> generateInputParserData() {
   final List<StructuredParsedData> testInputs = [];
   final dateParser = DateParser();
 
@@ -36,3 +38,40 @@ List<StructuredParsedData> generateTestData() {
 
   return testInputs;
 }
+
+Map<String, Category?> getCategoryParserTestData(String? filterType) {
+  final expenseCategories = <String, Category?>{
+    // Expense
+    "house": standardCategories["house"],
+    "Home & Living": standardCategories["house"],
+    "Lifestyle": standardCategories["lifestyle"],
+  };
+
+  final incomeCategories = <String, Category?>{
+    // Income
+    "Side Job": standardCategories["sidejob"],
+    "Child Support": standardCategories["childsupport"],
+    "Investments": standardCategories["investments"],
+  };
+
+  assert(filterType == "expense" || filterType == "income" || filterType == null);
+
+  if (filterType == "expense") {
+    return expenseCategories;
+  }
+
+  if (filterType == "income") {
+    return incomeCategories;
+  }
+
+  if (filterType == null) {
+    final data = <String, Category?> {};
+    data.addAll(incomeCategories);
+    data.addAll(expenseCategories);
+    return data;
+  }
+
+  return {};
+}
+
+

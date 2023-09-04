@@ -4,6 +4,7 @@ import 'package:linum/core/categories/core/constants/standard_categories.dart';
 import 'package:linum/core/categories/core/data/models/category.dart';
 import 'package:linum/screens/enter_screen/domain/parsing/parser.dart';
 
+// Testable
 class CategoryParser implements IParser<Category> {
   final ITranslator translator;
   final Filter<Category>? filter;

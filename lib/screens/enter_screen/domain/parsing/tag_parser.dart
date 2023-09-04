@@ -3,6 +3,7 @@ import 'package:linum/screens/enter_screen/domain/enums/input_flag.dart';
 
 typedef ParsedTag = ({InputFlag? flag, String text});
 
+// Testable
 class TagParser {
    ParsedTag parse(String tag) {
     final splits = tag.split(":");

@@ -12,7 +12,7 @@ final _dateRegExps = <String, RegExp>{
     r'^(1[0-2]|0?[1-9])[,.|/-](0?[1-9]|[1-2][0-9]|30|31)[,.|/-]?(20[1-9][0-9]|[1-9][0-9])? ?$',)
 };
 
-
+// Testable
 class DateParser implements IParser<String> {
   final Filter<ParsableDate>? filter;
 

@@ -17,6 +17,7 @@ import 'package:linum/screens/enter_screen/domain/parsing/tag_parser.dart';
 final RegExp splitRegex = RegExp("(?=#)|(?=@)");
 final RegExp trimTagRegex = RegExp("(#)|(@)");
 
+// Testable
 class InputParser {
   final ITranslator translator;
 

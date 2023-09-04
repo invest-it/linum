@@ -6,6 +6,7 @@ final amountRegex = RegExp(
   unicode: true,
 );
 
+// Testable
 class NaturalLangParser {
   final StructuredParsedDataBuilder parsedDataBuilder;
 
