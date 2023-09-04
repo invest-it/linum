@@ -42,7 +42,6 @@ class MainThemeData {
     textTheme: MainTextTheme.lightTheme,
   );
 
-//DARK THEME NOT YET IMPLEMENTET FRONT-END-WISE. //TODO @NightmindOfficial provide aesthetic guidance here
   static final ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
 

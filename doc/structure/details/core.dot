@@ -281,5 +281,5 @@ digraph "" {
   "/localization/settings/domain/language_settings_service_impl.dart" -> "/settings/domain/settings_repository.dart";
   "/localization/settings/presentation/widgets/language_selector.dart" -> "/localization/settings/presentation/language_settings_service.dart";
   "/localization/settings/presentation/widgets/language_selector.dart" -> "/localization/settings/utils/country_flag_generator.dart";
-  "metrics" [label=" isAcyclic: false \l numNodes: 99  \l numEdges: 180  \l avgDegree: 1.82 \l numOrphans: 5 \l ccd: 764 \l acd: 7.72 \l nccd: 1.35 \l totalSloc: 5306 \l avgSloc: 53.6 \l"];
+  "metrics" [label=" isAcyclic: false \l numNodes: 99  \l numEdges: 180  \l avgDegree: 1.82 \l numOrphans: 5 \l ccd: 764 \l acd: 7.72 \l nccd: 1.35 \l totalSloc: 5291 \l avgSloc: 53.44 \l"];
 }

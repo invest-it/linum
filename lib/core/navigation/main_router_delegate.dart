@@ -144,7 +144,6 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
 
   /// Pop the current route from the MainRouter's Stack.
   /// If there is only one route left, the app will close.
-  /// TODO: Discuss if this is the wanted behaviour
   @override
   Future<bool> popRoute() async {
     logger.i("Stack: $_pageStack");
@@ -177,7 +176,7 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
 
       return Future.value(true);
     }
-    return Future.value(true); // TODO: Check if this makes sense
+    return Future.value(true);
   }
 
   /// Push a route to the MainRouter's Stack.

@@ -1,9 +1,3 @@
-//  Authentication Service - Provider that handles all FirebaseAuth Functions and User State Persistence
-//
-//  Author: SoTBurst
-//  Co-Author: NightmindOfficial, damattl
-//  (Refactored)
-
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -29,14 +23,13 @@ class AuthenticationService extends SubscriptionHandler {
   late Logger logger;
 
 
-  /// Constructor
   AuthenticationService(this._firebaseAuth, {
     String? languageCode,
     required EventService eventService,
   }) {
     logger = Logger();
 
-    super.subscribe(eventService.eventStream, (event) {
+    super.subscribe(eventService.getGlobalEventStream(), (event) {
       if (event.type == EventType.languageChange) {
         updateLanguageCode(event.message);
       }
@@ -63,7 +56,6 @@ class AuthenticationService extends SubscriptionHandler {
   User? get currentUser => _user.value;
   String get userEmail => _firebaseAuth.userEmail;
 
-  /// Tries to sign the user in
   Future<void> signIn(
     String email,
     String password, {
@@ -101,7 +93,6 @@ class AuthenticationService extends SubscriptionHandler {
     }
   }
 
-  /// Tries to sign the user up
   Future<void> signUp(
     String email,
     String password, {
@@ -180,7 +171,6 @@ class AuthenticationService extends SubscriptionHandler {
     }
   }
 
-  /// tells firebase that user wants to change its password to [newPassword]
   Future<void> updatePassword(
     String newPassword, {
     void Function(String)? onComplete,
@@ -204,7 +194,8 @@ class AuthenticationService extends SubscriptionHandler {
     }
   }
 
-  /// tells firebase that [email] wants to verify itself
+  /// Sends a verification email to the current users email address.
+  /// Fails if there is no user currently logged in.
   Future<void> sendVerificationEmail(
     String email, {
     void Function(String)? onError,
@@ -223,7 +214,7 @@ class AuthenticationService extends SubscriptionHandler {
     }
   }
 
-  /// tells firebase that [email] wants to reset the password
+  /// Sends a reset password email to the current users email address.
   Future<void> resetPassword(
     String email, {
     void Function(String)? onComplete,

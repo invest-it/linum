@@ -6,11 +6,19 @@ import 'package:rxdart/rxdart.dart';
 
 class EventService extends ChangeNotifier {
   final BehaviorSubject<IEvent> _behaviorSubject = BehaviorSubject();
-  Stream<IEvent> get eventStream => _behaviorSubject.stream;
 
   EventService() {
     dispatch(StartEvent());
   }
+
+  Stream<IEvent> getGlobalEventStream() {
+    return getEventStream("global");
+  }
+
+  Stream<IEvent> getEventStream(String audience) => _behaviorSubject.stream
+    .where(
+      (event) => event.audience == audience,
+    );
 
   void dispatch(IEvent event) {
     Logger().i(event);

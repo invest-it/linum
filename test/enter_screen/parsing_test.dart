@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:linum/screens/enter_screen/utils/parsing/input_parser.dart';
+import 'package:linum/screens/enter_screen/domain/parsing/input_parser.dart';
 
 import '../test_utils/test_translator.dart';
 import 'test_inputs.dart';
@@ -17,7 +17,6 @@ void main() {
         final expected = input;
         expect(result, expected);
       }
-
     });
   });
 }

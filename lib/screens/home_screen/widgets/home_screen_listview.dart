@@ -18,13 +18,9 @@ import 'package:linum/screens/home_screen/widgets/transaction_list_view.dart';
 import 'package:logger/logger.dart';
 
 
-
-
 class HomeScreenListView extends StatelessWidget {
   final bool showSerialTransactions;
   const HomeScreenListView({super.key, this.showSerialTransactions = false});
-
-
 
   @override
   Widget build(BuildContext context) {

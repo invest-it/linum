@@ -12,7 +12,7 @@ class OnboardingSlideShow extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewModel = context.read<OnboardingScreenViewModel>();
     return ScrollConfiguration(
-      behavior: SilentScroll(),
+      behavior: const SilentScroll(),
       child: PageView(
         controller: viewModel.slideController,
         physics: const PageScrollPhysics(),

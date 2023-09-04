@@ -1,9 +1,3 @@
-//  FirebaseWrapper - wraps firebase and provider instances around the Router
-//
-//  Author: damattl
-//  Co-Author: n/a
-//
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +14,10 @@ import 'package:linum/user_independent_services.dart';
 import 'package:provider/provider.dart';
 
 
-
-
+/// Place were all application services are defined.
+/// Differentiates between user dependent services and user independent services
+/// To define user dependent services use the UserDependentServices widget
+/// To define user independent services use the UserIndependentServices widget
 class ApplicationServices extends StatelessWidget {
   final Router router;
   final Store store;

@@ -68,8 +68,7 @@ final mainRoutes = Map<MainRoute, RouteConfiguration>.of({
     builder: <T>(_) {
       return MaterialPage(
         child: const ScreenLayout(currentScreen: ScreenKey.academy),
-        name: MainRoute.academy
-            .toString(), // TODO: Not sure if this is needed anywhere
+        name: MainRoute.academy.toString(),
       );
     },
   ),

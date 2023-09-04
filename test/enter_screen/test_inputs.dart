@@ -1,8 +1,8 @@
 import 'package:linum/core/categories/core/constants/standard_categories.dart';
 import 'package:linum/features/currencies/core/constants/standard_currencies.dart';
-import 'package:linum/screens/enter_screen/models/structured_parsed_data.dart';
-import 'package:linum/screens/enter_screen/utils/parsing/date_parser.dart';
-import 'package:linum/screens/enter_screen/utils/parsing/structured_parsed_data_builder.dart';
+import 'package:linum/screens/enter_screen/domain/models/structured_parsed_data.dart';
+import 'package:linum/screens/enter_screen/domain/parsing/date_parser.dart';
+import 'package:linum/screens/enter_screen/domain/parsing/structured_parsed_data_builder.dart';
 
 
 

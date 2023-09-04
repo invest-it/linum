@@ -1,7 +1,3 @@
-//  Budget Screen - Screen listing all Balances ever made without any filtering (future entries not recognized)
-//  NOTE: THE SCOPE OF THIS SCREEN IS GOING TO CHANGE SOON. //TODO @thebluebaronx pleas change this description once the change has been fulfilled.
-//  Author: NightmindOfficial
-//  Co-Author: SoTBurst
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +11,9 @@ import 'package:linum/screens/home_screen/widgets/home_screen_listview.dart';
 import 'package:provider/provider.dart';
 
 
-/// Page Index: 1
+///  Budget Screen
+///  Screen listing all Balances ever made without any filtering (future entries not recognized).
+///  Page Index: 1
 class BudgetScreen extends StatelessWidget {
   const BudgetScreen({super.key});
 
@@ -57,12 +55,12 @@ class BudgetScreen extends StatelessWidget {
               ),
             ],
           ),
-          Expanded(
+          const Expanded(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+              padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
               child: ScrollConfiguration(
                 behavior: SilentScroll(),
-                child: const HomeScreenListView(),
+                child: HomeScreenListView(),
               ),
             ),
           ),

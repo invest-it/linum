@@ -138,7 +138,7 @@ const translationKeys = (
     error: (notFound: 'currency.error.not-found'),
     name: (
       aud: 'currency.name.aud',
-      blr: 'currency.name.blr',
+      brl: 'currency.name.brl',
       cad: 'currency.name.cad',
       chf: 'currency.name.chf',
       cny: 'currency.name.cny',

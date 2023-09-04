@@ -24,7 +24,6 @@ class BodySection extends StatelessWidget {
 
     return isInverted
         ? Expanded(
-            // TODO look at this
             // ignore: use_colored_box
             child: Container(
               color: Theme.of(context).colorScheme.primary,
@@ -32,7 +31,6 @@ class BodySection extends StatelessWidget {
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(64),
                 ),
-                // TODO look at this
                 // ignore: use_colored_box
                 child: Container(
                   color: Theme.of(context).colorScheme.background,

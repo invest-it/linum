@@ -1,17 +1,14 @@
-//  Repeated Balance Data - Model for defining information used by a card that is a repeated "copy" of an "original" Transaction to be repeated in a given timeframe
-//
-//  Author: SoTBurst
-//  Co-Author: n/a //TODO @SoTBurst teach someone else how to maintain this, might be important in the future
-//
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:linum/common/utils/date_time_map.dart';
 import 'package:linum/core/balance/models/changed_transaction.dart';
 import 'package:linum/core/repeating/enums/repeat_duration_type_enum.dart';
 import 'package:linum/core/repeating/enums/repeat_interval.dart';
-import 'package:linum/screens/enter_screen/utils/get_repeat_interval.dart';
+import 'package:linum/screens/enter_screen/presentation/utils/get_repeat_interval.dart';
 import 'package:uuid/uuid.dart';
 
+///  Repeated Balance Data
+///  Model for defining information used by a card that is a repeated "copy" of an "original" Transaction to be repeated in a given timeframe
 class SerialTransaction {
   final num amount;
   final String? category;

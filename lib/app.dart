@@ -1,9 +1,3 @@
-//  LinumApp - here the main app is defined and configured
-//
-//  Author: damattl
-//  Co-Author: n/a
-//
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/core/design/theme/constants/main_theme_data.dart';
@@ -13,11 +7,11 @@ import 'package:linum/core/navigation/main_routes.dart';
 import 'package:linum/generated/objectbox/objectbox.g.dart';
 import 'package:linum/services.dart';
 
-class LinumApp extends StatelessWidget {
+class Linum extends StatelessWidget {
   final bool? testing;
   final Store store;
 
-  const LinumApp(this.store, {this.testing});
+  const Linum(this.store, {this.testing});
 
   @override
   Widget build(BuildContext context) {

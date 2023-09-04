@@ -1,7 +1,3 @@
-//  Layout Screen - Basic Screen Switcher
-//  NOTE: THIS SCREEN IS GOING TO BE REPLACED BY A NEW NAVIGATION SYSTEM SOON. //TODO @NightmindOfficial change this description once this has been performed.
-//  Author: thebluebaronx
-//  Co-Author: SoTBurst, NightmindOfficial, damattl
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
@@ -14,11 +10,13 @@ import 'package:linum/core/design/layout/widgets/bottom_app_bar.dart';
 import 'package:linum/core/navigation/get_delegate.dart';
 import 'package:linum/core/navigation/main_routes.dart';
 import 'package:linum/core/navigation/screen_routes.dart';
-import 'package:linum/screens/enter_screen/utils/ui/show_enter_screen.dart';
+import 'package:linum/screens/enter_screen/presentation/utils/show_enter_screen.dart';
 import 'package:linum/screens/lock_screen/services/pin_code_service.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
+/// The Layout for every main screen in Linum.
+/// The app bar and floating action button are defined here.
 class ScreenLayout extends StatefulWidget {
   final ScreenKey currentScreen;
   final dynamic settings;
@@ -141,28 +139,4 @@ class _ScreenLayoutState extends State<ScreenLayout>
       ),
     );
   }
-
-  Future<void> createRandomData(BuildContext context) async {
-    final BalanceDataService balanceDataProvider =
-        context.read<BalanceDataService>();
-    const List<String> categories = ["food", "clothing", "computer games"];
-    final Random rand = Random();
-    for (int i = 0; i < 365 * 5 * 4; i++) {
-      final Timestamp date = Timestamp.fromDate(
-        DateTime.now().subtract(Duration(days: rand.nextInt(365 * 5))),
-      );
-      balanceDataProvider.addTransaction(
-        Transaction(
-          amount: ((rand.nextDouble() * -10000).round()) / 100.0,
-          category: categories[rand.nextInt(categories.length)],
-          currency: "EUR",
-          name: "Random Item Number: $i",
-          date: date,
-        ),
-      );
-      logger.v("$i. Hochgeladen");
-      await Future.delayed(const Duration(milliseconds: 200));
-    }
-  }
 }
-// TODO: Refactor

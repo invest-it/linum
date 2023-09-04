@@ -142,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                   child: ScrollConfiguration(
-                    behavior: SilentScroll(),
+                    behavior: const SilentScroll(),
                     child: HomeScreenListView(
                       showSerialTransactions: showRepeatables,
                     ),

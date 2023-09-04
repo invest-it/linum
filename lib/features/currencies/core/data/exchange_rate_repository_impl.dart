@@ -27,6 +27,7 @@ class ExchangeRateRepositoryImpl implements IExchangeRateRepository {
         rates = await fetchExchangeRatesForDate(date);
         _storage.put(rates);
       } catch(e) {
+        _logger.e(e);
         // TODO: Handle error
       }
     }

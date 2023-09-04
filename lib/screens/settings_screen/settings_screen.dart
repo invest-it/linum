@@ -29,7 +29,7 @@ class SettingsScreen extends StatelessWidget {
       screenKey: ScreenKey.settings,
       initialActionLipBody: Container(),
       body: ScrollConfiguration(
-        behavior: SilentScroll(),
+        behavior: const SilentScroll(),
         child: ListView(
           key: const Key("accountListView"),
           padding: const EdgeInsets.symmetric(

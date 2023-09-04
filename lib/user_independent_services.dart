@@ -7,6 +7,7 @@ import 'package:linum/core/balance/services/algorithm_service.dart';
 import 'package:linum/core/events/event_service.dart';
 import 'package:provider/provider.dart';
 
+/// All services that do not depend on a signed in user are defined here.
 class UserIndependentServices extends StatelessWidget {
   final Widget child;
   const UserIndependentServices({super.key, required this.child});

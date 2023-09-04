@@ -32,7 +32,7 @@ class ExchangeRateSynchronizer {
   }
 
   ExchangeRatesForDate _findLastEntry(List<ExchangeRatesForDate> rates) {
-    rates.sort((a, b) => a.date.compareTo(b.date)); // TODO: Direction Ascending or Descending?
+    rates.sort((a, b) => a.date.compareTo(b.date));
     return rates.last;
   }
 

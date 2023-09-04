@@ -4,9 +4,9 @@ import 'package:linum/core/balance/enums/serial_transaction_change_type_enum.dar
 import 'package:linum/core/balance/models/serial_transaction.dart';
 import 'package:linum/core/balance/models/transaction.dart';
 import 'package:linum/core/balance/services/balance_data_service.dart';
-import 'package:linum/screens/enter_screen/actions/enter_screen_actions.dart';
-import 'package:linum/screens/enter_screen/viewmodels/enter_screen_view_model.dart';
-import 'package:linum/screens/enter_screen/widgets/enter_screen_flow.dart';
+import 'package:linum/screens/enter_screen/presentation/actions/enter_screen_actions.dart';
+import 'package:linum/screens/enter_screen/presentation/view_models/enter_screen_view_model.dart';
+import 'package:linum/screens/enter_screen/presentation/widgets/enter_screen_flow.dart';
 import 'package:provider/provider.dart';
 
 class EnterScreen extends StatelessWidget {
@@ -142,7 +142,6 @@ class EnterScreen extends StatelessWidget {
         SerialTransaction? serialTransaction,
         SerialTransactionChangeMode? changeMode,
       }) {
-        // TODO: This might not be necessary in this way.
         if (transaction != null) {
           balanceDataService.updateTransaction(transaction);
         } else if (serialTransaction != null && changeMode != null) {
@@ -160,7 +159,6 @@ class EnterScreen extends StatelessWidget {
         SerialTransaction? serialTransaction,
         SerialTransactionChangeMode? changeMode,
       }) {
-        // TODO: This might not be necessary in this way.
         if (transaction != null && changeMode == null) {
           balanceDataService.removeTransaction(transaction);
         } else if (serialTransaction != null && changeMode != null) {

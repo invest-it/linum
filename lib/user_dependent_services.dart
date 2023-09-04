@@ -27,6 +27,7 @@ import 'package:linum/generated/objectbox/objectbox.g.dart';
 import 'package:linum/screens/lock_screen/services/pin_code_service.dart';
 import 'package:provider/provider.dart';
 
+/// All services that depend on a signed in user are defined here.
 class UserDependentServices extends StatelessWidget {
   final Store store;
   final Widget child;

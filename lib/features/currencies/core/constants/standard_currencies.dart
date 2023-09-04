@@ -90,7 +90,7 @@ final standardCurrencies = Map<String, Currency>.unmodifiable({
     symbol: 'Íkr',
   ),
   "TRY": Currency(
-    label: translationKeys.currency.name.tyr, // TODO: fix key name
+    label: translationKeys.currency.name.tyr, // Typo is needed to differentiate from reserved keyword try
     name: 'TRY',
     symbol: '₺',
   ),
@@ -125,7 +125,7 @@ final standardCurrencies = Map<String, Currency>.unmodifiable({
     symbol: '₪',
   ),
   "BRL": Currency(
-    label: translationKeys.currency.name.blr, // TODO: fix key name
+    label: translationKeys.currency.name.brl,
     name: 'BRL',
     symbol: 'R\$',
   ),

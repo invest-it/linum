@@ -23,10 +23,9 @@ Future<void> main({bool? testing}) async {
     await preferences.clear();
   }
 
-  /// Force Portrait Mode
+  // Force Portrait Mode
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   SharedPreferences.getInstance().then((pref) {
-    // LinumApp.currentLocalLanguageCode = pref.getString("languageCode");
     runApp(
       LifecycleWatcher(store: store, testing: testing),
     );
@@ -34,7 +33,7 @@ Future<void> main({bool? testing}) async {
 
 }
 
-//
+/// Wrapper to handle global lifecycle changes, for example the app closing.
 class LifecycleWatcher extends StatefulWidget {
   final Store store;
   final bool? testing;
@@ -51,7 +50,7 @@ class _LifecycleWatcherState extends State<LifecycleWatcher> {
       supportedLocales: supportedLocales,
       path: 'assets/lang',
       fallbackLocale: const Locale('de', 'DE'),
-      child: LinumApp(widget.store, testing: widget.testing),
+      child: Linum(widget.store, testing: widget.testing),
     );
   }
 

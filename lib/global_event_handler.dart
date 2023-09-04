@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 
 typedef AppEventListener = void Function(IEvent event, BuildContext context);
 
+/// Listens for all events with a global audience.
+/// Passes the event information to the registered listeners.
 class GlobalEventListener extends StatelessWidget {
   final Widget child;
   final List<AppEventListener> listeners;
@@ -18,7 +20,7 @@ class GlobalEventListener extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<IEvent>(
-      stream: context.read<EventService>().eventStream,
+      stream: context.read<EventService>().getEventStream("global"),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           for (final listener in listeners) {
