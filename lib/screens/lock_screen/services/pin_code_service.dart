@@ -4,9 +4,6 @@
 //  Co-Author: SoTBurst
 //  (Partly refactored by damattl)
 
-
-
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -33,7 +30,8 @@ class PinCodeService extends ChangeNotifier {
   bool _pinSetStillLoading = true;
   bool _lastEmailStillLoading = true;
 
-  PinCodeService(AuthenticationService authenticationService, BuildContext context) {
+  PinCodeService(
+      AuthenticationService authenticationService, BuildContext context) {
     _initializeLastEmail();
     initializeIsPINSet();
     _auth = authenticationService;
@@ -58,7 +56,6 @@ class PinCodeService extends ChangeNotifier {
     _lastEmail = await _getLastEmail();
     _lastEmailStillLoading = false;
   }
-
 
   // If the intent of the PIN lock is not set before the screen is called, assume that we want to check whether user knows the code (classic recall)
   PINLockIntent _intent = PINLockIntent.recall;
@@ -161,24 +158,24 @@ class PinCodeService extends ChangeNotifier {
               message: translationKeys.alertdialog.killswitchInitialize.message,
               actions: [
                 DialogAction(
-                  actionTitle: translationKeys.alertdialog.killswitchInitialize.action,
-                  function: () {
+                  actionTitle:
+                      translationKeys.alertdialog.killswitchInitialize.action,
+                  callback: () {
                     _emptyCode();
                     _removePIN();
                     _pinSet = false;
                     Navigator.of(_context, rootNavigator: true).pop();
                     _context.getMainRouterDelegate().popRoute();
                   },
-                  popDialog: true, // TODO: What does this thing do even?
                 ),
                 DialogAction(
-                  actionTitle: translationKeys.alertdialog.killswitchInitialize.cancel,
+                  actionTitle:
+                      translationKeys.alertdialog.killswitchInitialize.cancel,
                   //If this is empty, UserAlert will use its own context to pop the dialog
-                  function: () {
+                  callback: () {
                     Navigator.of(_context, rootNavigator: true).pop();
                   },
                   dialogPurpose: DialogPurpose.secondary,
-                  popDialog: true,
                 ),
               ],
               title: translationKeys.alertdialog.killswitchInitialize.title,
@@ -195,8 +192,9 @@ class PinCodeService extends ChangeNotifier {
               message: translationKeys.alertdialog.killswitchChange.message,
               actions: [
                 DialogAction(
-                  actionTitle: translationKeys.alertdialog.killswitchChange.action,
-                  function: () {
+                  actionTitle:
+                      translationKeys.alertdialog.killswitchChange.action,
+                  callback: () {
                     _emptyCode();
                     Navigator.of(_context, rootNavigator: true).pop();
                     _context.getMainRouterDelegate().popRoute();
@@ -204,14 +202,14 @@ class PinCodeService extends ChangeNotifier {
                   },
                 ),
                 DialogAction(
-                  actionTitle: translationKeys.alertdialog.killswitchChange.cancel,
+                  actionTitle:
+                      translationKeys.alertdialog.killswitchChange.cancel,
                   //If this is empty, UserAlert will use its own context to pop the dialog
-                  function: () {
+                  callback: () {
                     Navigator.of(_context, rootNavigator: true).pop();
                     // Navigator.of(_context).pop();
                   },
                   dialogPurpose: DialogPurpose.secondary,
-                  popDialog: true,
                 ),
               ],
               title: translationKeys.alertdialog.killswitchChange.title,
@@ -228,8 +226,9 @@ class PinCodeService extends ChangeNotifier {
               message: translationKeys.alertdialog.killswitchRecall.message,
               actions: [
                 DialogAction(
-                  actionTitle: translationKeys.alertdialog.killswitchRecall.action,
-                  function: () {
+                  actionTitle:
+                      translationKeys.alertdialog.killswitchRecall.action,
+                  callback: () {
                     Navigator.of(_context, rootNavigator: true).pop();
                     _pinSet = false;
                     _removePIN();
@@ -239,13 +238,13 @@ class PinCodeService extends ChangeNotifier {
                   },
                 ),
                 DialogAction(
-                  actionTitle: translationKeys.alertdialog.killswitchRecall.cancel,
+                  actionTitle:
+                      translationKeys.alertdialog.killswitchRecall.cancel,
                   //If this is empty, UserAlert will use its own context to pop the dialog
-                  function: () {
+                  callback: () {
                     Navigator.of(_context, rootNavigator: true).pop();
                   },
                   dialogPurpose: DialogPurpose.secondary,
-                  popDialog: true,
                 ),
               ],
               title: translationKeys.alertdialog.killswitchRecall.title,
@@ -274,16 +273,22 @@ class PinCodeService extends ChangeNotifier {
               _storePIN(_code);
               toastFromTranslationKey(translationKeys.lockScreen.toastPinSet);
             } else {
-              toastFromTranslationKey(translationKeys.lockScreen.errors.lastMailMissing);
+              toastFromTranslationKey(
+                translationKeys.lockScreen.errors.lastMailMissing,
+              );
             }
             _context.getMainRouterDelegate().popRoute();
             _emptyCode();
           case PINLockIntent.change:
             if (_lastEmail != 'Error!') {
               _storePIN(_code);
-              toastFromTranslationKey(translationKeys.lockScreen.toastPinChanged);
+              toastFromTranslationKey(
+                translationKeys.lockScreen.toastPinChanged,
+              );
             } else {
-              toastFromTranslationKey(translationKeys.lockScreen.errors.lastMailMissing);
+              toastFromTranslationKey(
+                translationKeys.lockScreen.errors.lastMailMissing,
+              );
             }
 
             _context.getMainRouterDelegate().popRoute();

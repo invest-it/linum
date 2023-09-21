@@ -1,9 +1,15 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/common/components/dialogs/dialog_action.dart';
+import 'package:linum/common/components/dialogs/show_action_dialog.dart';
+import 'package:linum/common/components/dialogs/show_alert_dialog.dart';
 import 'package:linum/common/widgets/loading_spinner.dart';
 import 'package:linum/core/balance/enums/serial_transaction_change_type_enum.dart';
 import 'package:linum/core/balance/models/serial_transaction.dart';
 import 'package:linum/core/balance/models/transaction.dart';
 import 'package:linum/core/balance/services/balance_data_service.dart';
+import 'package:linum/core/navigation/get_delegate.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/enter_screen/presentation/actions/enter_screen_actions.dart';
 import 'package:linum/screens/enter_screen/presentation/view_models/enter_screen_view_model.dart';
 import 'package:linum/screens/enter_screen/presentation/widgets/enter_screen_flow.dart';
@@ -20,23 +26,23 @@ class EnterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     Future<SerialTransaction?> fetchParentSerialTransaction(
       BalanceDataService balanceDataService,
     ) async {
       if (transaction?.repeatId != null) {
-        return balanceDataService.findSerialTransactionWithId(transaction!.repeatId!);
+        return balanceDataService
+            .findSerialTransactionWithId(transaction!.repeatId!);
       }
       return null;
     }
+
     return FutureBuilder<SerialTransaction?>(
       future: fetchParentSerialTransaction(
-          context.read<BalanceDataService>(),
+        context.read<BalanceDataService>(),
       ),
       builder: (context, snapshot) {
-        if (!snapshot.hasData
-            && snapshot.connectionState == ConnectionState.waiting
-        ) {
+        if (!snapshot.hasData &&
+            snapshot.connectionState == ConnectionState.waiting) {
           return const LoadingSpinner();
         }
         return ChangeNotifierProvider(
@@ -49,13 +55,10 @@ class EnterScreen extends StatelessWidget {
     );
   }
 
-
-
   EnterScreenViewModel _createViewModel(
     BuildContext context,
     AsyncSnapshot<SerialTransaction?> snapshot,
   ) {
-
     if (transaction != null) {
       return EnterScreenViewModel.fromTransaction(
         transaction: transaction!,
@@ -75,7 +78,7 @@ class EnterScreen extends StatelessWidget {
   }
 
   EnterScreenActions _setupEmptyActions(BuildContext context) {
-    final balanceDataService  = context.read<BalanceDataService>();
+    final balanceDataService = context.read<BalanceDataService>();
 
     return EnterScreenActions(
       onSave: ({
@@ -93,8 +96,36 @@ class EnterScreen extends StatelessWidget {
     );
   }
 
+  //TODO consider moving this to another file, refactor where necessary
+
+  _showDeleteConfirmationActionDialog(
+    BuildContext context,
+    Function() callbackFunction,
+  ) {
+    showActionDialog(
+      context,
+      message: tr(translationKeys.enterScreen.deleteEntry.dialogLabelDelete),
+      title: tr(translationKeys.enterScreen.deleteEntry.dialogLabelTitle),
+      userMustDismissWithButton: false,
+      actions: <DialogAction>[
+        DialogAction(
+          actionTitle: tr(
+            translationKeys.enterScreen.deleteEntry.dialogButtonCancel,
+          ),
+        ),
+        DialogAction(
+          actionTitle: tr(
+            translationKeys.enterScreen.deleteEntry.dialogButtonDelete,
+          ),
+          callback: callbackFunction,
+          dialogPurpose: DialogPurpose.danger,
+        ),
+      ],
+    );
+  }
+
   EnterScreenActions _setupTransactionActions(BuildContext context) {
-    final balanceDataService  = context.read<BalanceDataService>();
+    final balanceDataService = context.read<BalanceDataService>();
 
     return EnterScreenActions(
       onSave: ({
@@ -119,22 +150,24 @@ class EnterScreen extends StatelessWidget {
         SerialTransaction? serialTransaction,
         SerialTransactionChangeMode? changeMode,
       }) {
-        if (transaction != null && changeMode == null) {
-          balanceDataService.removeTransaction(transaction);
-        } else if (serialTransaction != null && changeMode != null) {
-          balanceDataService.removeSerialTransaction(
-            serialTransaction: serialTransaction,
-            removeType: changeMode,
-            date: transaction?.date,
-          );
-        }
-        Navigator.pop(context);
+        _showDeleteConfirmationActionDialog(context, () {
+          if (transaction != null && changeMode == null) {
+            balanceDataService.removeTransaction(transaction);
+          } else if (serialTransaction != null && changeMode != null) {
+            balanceDataService.removeSerialTransaction(
+              serialTransaction: serialTransaction,
+              removeType: changeMode,
+              date: transaction?.date,
+            );
+          }
+          Navigator.pop(context);
+        });
       },
     );
   }
 
   EnterScreenActions _setupSerialTransactionActions(BuildContext context) {
-    final balanceDataService  = context.read<BalanceDataService>();
+    final balanceDataService = context.read<BalanceDataService>();
 
     return EnterScreenActions(
       onSave: ({
@@ -159,15 +192,17 @@ class EnterScreen extends StatelessWidget {
         SerialTransaction? serialTransaction,
         SerialTransactionChangeMode? changeMode,
       }) {
-        if (transaction != null && changeMode == null) {
-          balanceDataService.removeTransaction(transaction);
-        } else if (serialTransaction != null && changeMode != null) {
-          balanceDataService.removeSerialTransaction(
-            serialTransaction: serialTransaction,
-            removeType: changeMode,
-            date: transaction?.date,
-          );
-        }
+        _showDeleteConfirmationActionDialog(context, () {
+          if (transaction != null && changeMode == null) {
+            balanceDataService.removeTransaction(transaction);
+          } else if (serialTransaction != null && changeMode != null) {
+            balanceDataService.removeSerialTransaction(
+              serialTransaction: serialTransaction,
+              removeType: changeMode,
+              date: transaction?.date,
+            );
+          }
+        });
       },
     );
   }

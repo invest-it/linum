@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:linum/common/components/dialogs/dialog_action.dart';
 
 Future<bool?> showActionDialog(
-    BuildContext context, {
-      required String message,
-      required List<DialogAction> actions,
-      String title = 'alertdialog.error.title-standard',
-      bool userMustDismissWithButton = true,
-    }) async {
+  BuildContext context, {
+  required String message,
+  required List<DialogAction> actions,
+  String title = 'alertdialog.error.title-standard',
+  bool userMustDismissWithButton = true,
+}) async {
   return showDialog<bool?>(
     context: context,
     barrierDismissible:
-    !userMustDismissWithButton, // user must tap button if userMustDismissWithButton is true
+        !userMustDismissWithButton, // user must tap button if userMustDismissWithButton is true
     builder: (BuildContext context) {
       return AlertDialog(
         title: Text(
@@ -28,7 +28,7 @@ Future<bool?> showActionDialog(
         ),
         actions: <Widget>[
           ...actions.map<Widget>(
-                (DialogAction item) {
+            (DialogAction item) {
               Color buttonColor;
               switch (item.dialogPurpose) {
                 case DialogPurpose.primary:
@@ -42,17 +42,20 @@ Future<bool?> showActionDialog(
                 child: Text(
                   item.actionTitle.tr(),
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    // color: item.primaryButton
-                    //     ? Theme.of(context).colorScheme.primary
-                    //     : Theme.of(context).colorScheme.background)),
-                    color: buttonColor,
-                  ),
+                        // color: item.primaryButton
+                        //     ? Theme.of(context).colorScheme.primary
+                        //     : Theme.of(context).colorScheme.background)),
+                        color: buttonColor,
+                      ),
                 ),
                 // ignore: avoid_dynamic_calls
-                onPressed: () => item.function(),
+                onPressed: () {
+                  item.callback?.call();
+                  Navigator.of(context, rootNavigator: true).pop();
+                },
               );
             },
-          )
+          ),
         ],
       );
     },

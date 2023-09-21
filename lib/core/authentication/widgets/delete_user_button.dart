@@ -8,7 +8,6 @@ import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 import 'package:provider/provider.dart';
 
-
 class DeleteUserButton extends StatelessWidget {
   const DeleteUserButton({super.key});
 
@@ -25,24 +24,28 @@ class DeleteUserButton extends StatelessWidget {
             message: tr(translationKeys.alertdialog.deleteAccount.message),
             actions: <DialogAction>[
               DialogAction(
-                actionTitle: tr(translationKeys.alertdialog.deleteAccount.cancel),
+                actionTitle:
+                    tr(translationKeys.alertdialog.deleteAccount.cancel),
                 dialogPurpose: DialogPurpose.secondary,
-                function: () =>
+                callback: () =>
                     {Navigator.of(context, rootNavigator: true).pop()},
               ),
               DialogAction(
-                actionTitle: tr(translationKeys.alertdialog.deleteAccount.action),
+                actionTitle:
+                    tr(translationKeys.alertdialog.deleteAccount.action),
                 dialogPurpose: DialogPurpose.danger,
-                function: () {
+                callback: () {
                   context.read<AuthenticationService>().deleteUserAccount(
-                    onError: (message) => showAlertDialog(
-                      context,
-                      message: message,
-                      title: translationKeys.alertdialog.resetPassword.title,
-                      actionTitle: translationKeys.alertdialog.resetPassword.action,
-                      userMustDismissWithButton: true,
-                    ),
-                  );
+                        onError: (message) => showAlertDialog(
+                          context,
+                          message: message,
+                          title:
+                              translationKeys.alertdialog.resetPassword.title,
+                          actionTitle:
+                              translationKeys.alertdialog.resetPassword.action,
+                          userMustDismissWithButton: true,
+                        ),
+                      );
                   Navigator.of(context, rootNavigator: true).pop();
                 },
               ),
@@ -68,7 +71,9 @@ class DeleteUserButton extends StatelessWidget {
         ),
         child: Text(
           tr(translationKeys.settingsScreen.systemSettings.buttonDeleteUser),
-          style: Theme.of(context).textTheme.labelLarge
+          style: Theme.of(context)
+              .textTheme
+              .labelLarge
               ?.copyWith(color: Theme.of(context).colorScheme.error),
         ),
       ),
