@@ -228,11 +228,14 @@
         },
         "enter-note-hint": "Introduzca aquí las notas",
         "change-mode-selection": {
-            "title": "Modificar entradas periódicas",
             "all": "Todas las entradas",
             "this-and-all-after": "Esta entrada y todas las posteriores",
             "only-this-one": "Esta entrada",
-            "this-and-all-before": "Esta entrada y todas las anteriores"
+            "this-and-all-before": "Esta entrada y todas las anteriores",
+            "title": {
+                "delete": "Borrar entradas recurrentes",
+                "save": "Modificar entradas periódicas"
+            }
         },
         "entry-type-selection": {
             "title": "Seleccione el tipo de transacción"

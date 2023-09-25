@@ -310,8 +310,12 @@ const translationKeys = (
           'enter_screen.delete-entry.dialog-label-title' // Bestätigen
     ),
     changeModeSelection: (
-      title:
-          'enter_screen.change-mode-selection.title', // Wiederkehrende Einträge ändern
+      title: (
+        delete:
+            'enter_screen.change-mode-selection.title.delete', // Wiederkehrende Einträge löschen
+        save:
+            'enter_screen.change-mode-selection.title.save' // Wiederkehrende Einträge ändern
+      ),
       all: 'enter_screen.change-mode-selection.all', // Alle Einträge
       thisAndAllAfter:
           'enter_screen.change-mode-selection.this-and-all-after', // Diesen Eintrag und alle folgenden

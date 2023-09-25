@@ -40,6 +40,7 @@ class EnterScreenViewModel extends ChangeNotifier {
   }
 
   EditIntention _intention = EditIntention.save;
+  EditIntention get intention => _intention;
 
 
   EnterScreenData? _data;

@@ -231,11 +231,14 @@
         },
         "enter-note-hint": "Inscrire des notes ici",
         "change-mode-selection": {
-            "title": "Modifier les entrées récurrentes",
             "all": "Toutes les entrées",
             "this-and-all-after": "Cette entrée et toutes les suivantes",
             "only-this-one": "Cette entrée",
-            "this-and-all-before": "Cette entrée et toutes les précédentes"
+            "this-and-all-before": "Cette entrée et toutes les précédentes",
+            "title": {
+                "delete": "Supprimer les entrées récurrentes",
+                "save": "Modifier les entrées récurrentes"
+            }
         },
         "entry-type-selection": {
             "title": "Choisis le type de transaction"
