@@ -60,7 +60,7 @@ class SignInWithGoogleButton extends StatelessWidget {
                   fontFamily: 'Roboto',
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

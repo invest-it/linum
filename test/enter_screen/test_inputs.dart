@@ -1,4 +1,3 @@
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:linum/core/categories/core/constants/standard_categories.dart';
 import 'package:linum/core/categories/core/data/models/category.dart';
 import 'package:linum/features/currencies/core/constants/standard_currencies.dart';
@@ -73,5 +72,3 @@ Map<String, Category?> getCategoryParserTestData(String? filterType) {
 
   return {};
 }
-
-

@@ -41,7 +41,7 @@ class HomeScreenCardRow extends StatelessWidget {
         children: [
           if (isIncome) ...[
             upwardArrow,
-            SizedBox(width: context.proportionateScreenWidth(10))
+            SizedBox(width: context.proportionateScreenWidth(10)),
           ],
           Column(
             crossAxisAlignment:
@@ -106,7 +106,7 @@ class HomeScreenCardRow extends StatelessWidget {
           ),
           if (!isIncome) ...[
             SizedBox(width: context.proportionateScreenWidth(10)),
-            downwardArrow
+            downwardArrow,
           ],
         ],
       ),
@@ -125,7 +125,7 @@ class HomeScreenCardRow extends StatelessWidget {
             fit: BoxFit.scaleDown,
           ),
         ),
-        _buildIncomeExpensesInfo(context)
+        _buildIncomeExpensesInfo(context),
       ],
     );
   }

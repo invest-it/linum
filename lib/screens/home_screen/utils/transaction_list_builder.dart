@@ -38,7 +38,7 @@ List<Widget> generateTransactionList({
         ? monthFormatter.format(shownMonth)
         : monthAndYearFormatter.format(shownMonth),
     isTranslated: true,
-  )];
+  ),];
 
   final List<Widget> pastList = [
     TimeWidget(
@@ -52,31 +52,31 @@ List<Widget> generateTransactionList({
   final List<Widget> todayList = [
     const TimeWidget(
       timeWidgetDate: TimeWidgetDate.today,
-    )
+    ),
   ];
 
   final List<Widget> yesterdayList = [
     const TimeWidget(
       timeWidgetDate: TimeWidgetDate.yesterday,
-    )
+    ),
   ];
 
   final List<Widget> lastWeekList = [
     const TimeWidget(
       timeWidgetDate: TimeWidgetDate.lastWeek,
-    )
+    ),
   ];
 
   final List<Widget> thisMonthList = [
     const TimeWidget(
       timeWidgetDate: TimeWidgetDate.thisMonth,
-    )
+    ),
   ];
 
 
   if (transactions.isEmpty) {
     return [
-      const TimeWidget(timeWidgetDate: TimeWidgetDate.none)
+      const TimeWidget(timeWidgetDate: TimeWidgetDate.none),
     ];
   } else {
     for (final transaction in transactions) {

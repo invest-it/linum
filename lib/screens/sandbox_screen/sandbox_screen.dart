@@ -29,7 +29,7 @@ class SandboxScreen extends StatelessWidget {
                 currency: 'EUR',
                 date: Timestamp.fromDate(DateTime.now()),
               ),
-            )
+            ),
           ],
         ),
       ),

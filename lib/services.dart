@@ -51,7 +51,7 @@ class ApplicationServices extends StatelessWidget {
               store: store,
               child: GlobalEventListener(
                 listeners: [
-                  _handleLanguageChangeEvent
+                  _handleLanguageChangeEvent,
                 ],
                 child: router,
               ),

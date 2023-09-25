@@ -78,7 +78,7 @@ class _SingleSlideState extends State<SingleSlide> {
               ),
         SizedBox(
           height: context.proportionateScreenHeight(230),
-        )
+        ),
       ],
     );
 

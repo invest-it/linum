@@ -10,7 +10,7 @@ final parsableDateMap = <ParsableDate, String>{
   ParsableDate.saturday: "enter_screen.date.saturday",
   ParsableDate.yesterday: "enter_screen.special_date.yesterday",
   ParsableDate.tomorrow: "enter_screen.special_date.tomorrow",
-  ParsableDate.today: "enter_screen.special_date.today"
+  ParsableDate.today: "enter_screen.special_date.today",
 };
 
 final dateTimeWeekDayMap = <ParsableDate, int>{

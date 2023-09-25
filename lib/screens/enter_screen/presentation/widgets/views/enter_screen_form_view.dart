@@ -79,7 +79,7 @@ class EnterScreenFormView extends StatelessWidget {
                   children: [
                     EnterScreenDeleteButton(),
                     EnterScreenEntryTypeSwitch(),
-                    EnterScreenContinueButton()
+                    EnterScreenContinueButton(),
                   ],
                 ),
               ),

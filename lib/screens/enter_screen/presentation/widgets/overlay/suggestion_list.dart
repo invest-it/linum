@@ -142,7 +142,7 @@ class _SubSuggestionsList extends StatelessWidget {
                 );
               },
             ),
-          )
+          ),
         ],
       ),
     );

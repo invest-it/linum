@@ -5,5 +5,5 @@ const supportedLocales = <Locale> [
   Locale('de', 'DE'),
   Locale('nl', 'NL'),
   Locale('es', 'ES'),
-  Locale('fr', 'FR')
+  Locale('fr', 'FR'),
 ];

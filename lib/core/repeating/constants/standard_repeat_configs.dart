@@ -59,7 +59,7 @@ final repeatConfigurations = <RepeatInterval, RepeatConfiguration>{
     icon: Icons.build_rounded,
     duration: null,
     durationType: null,
-  )
+  ),
 
   // TODO implement custom range picker
   // {

@@ -112,7 +112,7 @@ class SerialTransactionRemover {
     final changed = serialTransaction.changed ?? DateTimeMap();
 
     changed.addAll({
-      date.millisecondsSinceEpoch.toString(): ChangedTransaction(deleted: true)
+      date.millisecondsSinceEpoch.toString(): ChangedTransaction(deleted: true),
     });
 
     data.serialTransactions[index] =

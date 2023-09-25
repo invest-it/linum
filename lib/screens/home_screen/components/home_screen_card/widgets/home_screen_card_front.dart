@@ -181,7 +181,7 @@ class HomeScreenCardFront extends StatelessWidget {
                     arrow: Preset.arrowDown,
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ],

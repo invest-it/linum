@@ -63,7 +63,7 @@ class SerialTransactionTile extends StatelessWidget {
             color: Theme.of(context).colorScheme.secondary,
           ),
           onPressed: () => {
-            showEnterScreen(context, serialTransaction: serialTransaction)
+            showEnterScreen(context, serialTransaction: serialTransaction),
           },
         ),
       ),

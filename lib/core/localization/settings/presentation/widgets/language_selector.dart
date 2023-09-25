@@ -45,7 +45,7 @@ class LanguageSelector extends StatelessWidget {
                 languageSettingsService.isCurrentLanguageCode('en-US'),
                 languageSettingsService.isCurrentLanguageCode('nl-NL'),
                 languageSettingsService.isCurrentLanguageCode('es-ES'),
-                languageSettingsService.isCurrentLanguageCode('fr-FR')
+                languageSettingsService.isCurrentLanguageCode('fr-FR'),
               ],
               onPressed: _selectLanguage(languageSettingsService),
               borderRadius: BorderRadius.circular(32),

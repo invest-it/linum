@@ -70,13 +70,29 @@ final standardCategories = <String, Category>{
     id: "misc-income",
     icon: Icons.inventory_2,
     entryType: EntryType.income,
+    suggestable: false,
   ),
   "misc-expense": Category(
     label: translationKeys.settingsScreen.standardExpenseSelector.misc,
     id: "misc-expense",
     icon: Icons.inventory_2,
+    suggestable: false,
+  ),
+  "none-income": Category(
+    label: translationKeys.settingsScreen.standardsSelectorNone,
+    id: "none-income",
+    icon: Icons.check_box_outline_blank_rounded,
+    entryType: EntryType.income,
+    suggestable: false,
+  ),
+  "none-expense": Category(
+    label: translationKeys.settingsScreen.standardsSelectorNone,
+    id: "none-expense",
+    icon: Icons.check_box_outline_blank_rounded,
+    suggestable: false,
   ),
 };
+
 
 
 Category? getCategory(String? name, {EntryType? entryType}) {

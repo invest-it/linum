@@ -31,7 +31,7 @@ class PinCodeService extends ChangeNotifier {
   bool _lastEmailStillLoading = true;
 
   PinCodeService(
-      AuthenticationService authenticationService, BuildContext context) {
+      AuthenticationService authenticationService, BuildContext context,) {
     _initializeLastEmail();
     initializeIsPINSet();
     _auth = authenticationService;

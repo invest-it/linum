@@ -85,7 +85,7 @@ class _LoginFormState extends State<LoginForm> {
                     LoginPasswordField(
                         controller: _passController,
                         validated: _passValidated,
-                    )
+                    ),
                   ],
                 ),
               ),

@@ -71,7 +71,7 @@ class BalanceDataRepository {
         .set(
       docDataNullSafe
         ..addAll({
-          _userId: [ref.id]
+          _userId: [ref.id],
         }),
     );
     return [ref.id];

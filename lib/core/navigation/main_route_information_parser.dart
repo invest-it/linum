@@ -10,7 +10,7 @@ import 'package:linum/core/navigation/main_routes_extensions.dart';
 class MainRouteInformationParser extends RouteInformationParser<MainRoute> {
   @override
   Future<MainRoute> parseRouteInformation(RouteInformation routeInformation) async {
-    final uri = Uri.parse(routeInformation.location ?? "");
+    final uri = routeInformation.uri;
 
     if (uri.pathSegments.isEmpty) {
       return MainRoute.home;

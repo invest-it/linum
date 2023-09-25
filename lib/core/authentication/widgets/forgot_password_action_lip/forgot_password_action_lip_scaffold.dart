@@ -54,7 +54,7 @@ class ForgotPasswordActionLipScaffold extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    inputField
+                    inputField,
                   ],
                 ),
               ),
@@ -84,7 +84,7 @@ class ForgotPasswordActionLipScaffold extends StatelessWidget {
               ),
             ],
           ),
-        )
+        ),
       ],
     );
   }

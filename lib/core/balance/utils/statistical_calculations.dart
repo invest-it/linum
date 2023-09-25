@@ -170,7 +170,7 @@ class StatisticalCalculations {
              Timestamp.fromDate(startDate),
              Timestamp.fromDate(endDate),
           ),
-        )
+        ),
       ];
 
       final List<Transaction> allThisMonthData =

@@ -146,7 +146,7 @@ class QuickTagMenu extends StatelessWidget {
             content: const NotesView(),
           );
         },
-      )
+      ),
     ];
   }
 

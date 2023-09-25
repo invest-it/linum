@@ -30,7 +30,7 @@ class LoadingSpinner extends StatelessWidget {
               loadingTitle,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
-          ]
+          ],
         ],
       ),
     );

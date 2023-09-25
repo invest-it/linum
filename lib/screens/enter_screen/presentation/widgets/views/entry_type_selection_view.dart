@@ -49,7 +49,7 @@ class EntryTypeSelectionView extends StatelessWidget {
                       iconData: Icons.arrow_circle_up_rounded,
                       iconColor: Theme.of(context).colorScheme.primary,
                       onTap: () => viewModel.selectEntryType(EntryType.income),
-                  )
+                  ),
                 ],
               ),
             ),

@@ -23,7 +23,7 @@ class ScreenCardSide extends StatelessWidget {
                 blurRadius: 16.0,
                 spreadRadius: 1.0,
                 offset: const Offset(0, 4),
-              )
+              ),
             ],
           ),
           child: ClipRRect(

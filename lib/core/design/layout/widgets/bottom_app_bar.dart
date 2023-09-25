@@ -110,7 +110,7 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                   ),
-                )
+                ),
               ],
             ),
           ),

@@ -86,7 +86,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     RegisterPasswordField(
                       controller: _passController,
                       validated: _passValidated,
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -126,7 +126,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   onPressed: context.read<AuthenticationService>()
                       .signInWithApple,
                   text: tr(translationKeys.onboardingScreen.appleButton),
-                )
+                ),
               ],
               SizedBox(
                 height: context.proportionateScreenHeight(32),
