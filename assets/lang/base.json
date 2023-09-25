@@ -237,7 +237,10 @@
         },
 
         "change-mode-selection":{
-            "title": "Wiederkehrende Einträge ändern",
+            "title": {
+                "delete": "Wiederkehrende Einträge löschen",
+                "save": "Wiederkehrende Einträge ändern"
+            },
             "all": "Alle Einträge",
             "this-and-all-after": "Diesen Eintrag und alle folgenden",
             "only-this-one": "Diesen Eintrag",

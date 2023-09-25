@@ -231,11 +231,14 @@
         },
         "enter-note-hint": "Voer hier notities in",
         "change-mode-selection": {
-            "title": "Terugkerende boekingen wijzigen",
             "all": "Alle inzendingen",
             "this-and-all-after": "Dit item en alle volgende",
             "only-this-one": "Dit bericht",
-            "this-and-all-before": "Dit bericht en alle voorgaande"
+            "this-and-all-before": "Dit bericht en alle voorgaande",
+            "title": {
+                "delete": "Terugkerende items verwijderen",
+                "save": "Terugkerende boekingen wijzigen"
+            }
         },
         "entry-type-selection": {
             "title": "Selecteer het type transactie"

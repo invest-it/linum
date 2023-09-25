@@ -231,11 +231,14 @@
         },
         "enter-note-hint": "Notizen hier eintragen",
         "change-mode-selection": {
-            "title": "Wiederkehrende Einträge ändern",
             "all": "Alle Einträge",
             "this-and-all-after": "Diesen Eintrag und alle folgenden",
             "only-this-one": "Diesen Eintrag",
-            "this-and-all-before": "Diesen Eintrag und alle vorherigen"
+            "this-and-all-before": "Diesen Eintrag und alle vorherigen",
+            "title": {
+                "delete": "Wiederkehrende Einträge löschen",
+                "save": "Wiederkehrende Einträge ändern"
+            }
         },
         "entry-type-selection": {
             "title": "Wähle die Art der Transaktion"
