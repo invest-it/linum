@@ -23,63 +23,77 @@ class ActionLip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ActionLipViewModel>(
       builder: (context, viewModel, _) {
+
         final status = viewModel.getActionLipStatus(screenKey);
-        return AnimatedContainer(
-          curve: Curves.fastLinearToSlowEaseIn,
-          duration: const Duration(milliseconds: 1000),
-          transform: Matrix4.translationValues(
-            0,
-            ActionLipYOffset(context).forStatus(status),
-            1,
-          ),
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.background,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(32),
-              topRight: Radius.circular(32),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Theme.of(context).colorScheme.onSurface.withAlpha(80),
-                blurRadius: 16,
+        final close = () {
+          FocusManager.instance.primaryFocus?.unfocus();
+          viewModel.setActionLipStatus(
+            context: context,
+            screenKey: screenKey,
+            status: ActionLipVisibility.hidden,
+          );
+        };
+
+        return Stack(
+          children: [
+            GestureDetector(
+              onTap: close,
+              child: Container(
+                height: status == ActionLipVisibility.onviewport ? double.infinity : 0,
+                color: Colors.transparent,
               ),
-            ],
-          ),
-          child: SizedBox(
-            width: double.infinity,
-            height: context
-                .proportionateScreenHeightFraction(ScreenFraction.threefifths),
-            child: Column(
-              children: [
-                AppBar(
-                  primary: false,
-                  automaticallyImplyLeading: false,
-                  title: Text(
-                    viewModel.getActionLipTitle(screenKey),
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                  centerTitle: true,
-                  actions: [
-                    IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () {
-                        FocusManager.instance.primaryFocus?.unfocus();
-                        viewModel.setActionLipStatus(
-                          context: context,
-                          screenKey: screenKey,
-                          status: ActionLipVisibility.hidden,
-                        );
-                      },
-                    ),
-                  ],
-                  iconTheme: const IconThemeData(color: Colors.black),
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                ),
-                viewModel.getActionLipBody(screenKey),
-              ],
             ),
-          ),
+            AnimatedContainer(
+              curve: Curves.fastLinearToSlowEaseIn,
+              duration: const Duration(milliseconds: 1000),
+              transform: Matrix4.translationValues(
+                0,
+                ActionLipYOffset(context).forStatus(status),
+                1,
+              ),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.background,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(32),
+                  topRight: Radius.circular(32),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Theme.of(context).colorScheme.onSurface.withAlpha(80),
+                    blurRadius: 16,
+                  ),
+                ],
+              ),
+              child: SizedBox(
+                width: double.infinity,
+                height: context
+                    .proportionateScreenHeightFraction(ScreenFraction.threefifths),
+                child: Column(
+                  children: [
+                    AppBar(
+                      primary: false,
+                      automaticallyImplyLeading: false,
+                      title: Text(
+                        viewModel.getActionLipTitle(screenKey),
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                      centerTitle: true,
+                      actions: [
+                        IconButton(
+                          icon: const Icon(Icons.close),
+                          onPressed: close,
+                        ),
+                      ],
+                      iconTheme: const IconThemeData(color: Colors.black),
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                    ),
+                    viewModel.getActionLipBody(screenKey),
+                  ],
+                ),
+              ),
+            ),
+          ],
         );
       },
     );
