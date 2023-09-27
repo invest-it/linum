@@ -20,14 +20,6 @@ class EnterScreenTextField extends StatelessWidget {
       textBaseline: TextBaseline.alphabetic,
     );
 
-    String? validateInput(String? value){
-      if(value == null || value.isEmpty) return null;
-      if(!value.startsWith(RegExp(r'\d'))) {
-        return tr(translationKeys.enterScreen.addAmount.parserStartWithAmountError);
-      }
-      return null;
-    }
-
     return ChangeNotifierProxyProvider<
         EnterScreenFormViewModel,
         EnterScreenTextFieldViewModel
@@ -51,7 +43,7 @@ class EnterScreenTextField extends StatelessWidget {
             border: InputBorder.none,
             errorMaxLines: 2,
           ),
-          validator:validateInput,
+          validator: _validateInput,
           keyboardType: TextInputType.multiline,
           maxLines: 6,
           autofocus: true,
@@ -63,6 +55,14 @@ class EnterScreenTextField extends StatelessWidget {
         );
       },
     );
+  }
+
+  String? _validateInput(String? value){
+    if(value == null || value.isEmpty) return null;
+    if(!value.startsWith(RegExp(r'\d'))) {
+      return tr(translationKeys.enterScreen.addAmount.parserStartWithAmountError);
+    }
+    return null;
   }
 }
 // TODO maybe use another provider for this
