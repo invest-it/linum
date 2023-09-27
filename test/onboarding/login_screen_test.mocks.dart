@@ -8,7 +8,7 @@ import 'dart:developer' as _i9;
 import 'dart:ui' as _i3;
 
 import 'package:firebase_auth/firebase_auth.dart' as _i8;
-import 'package:linum/core/authentication/services/authentication_service.dart' as _i6;
+import 'package:linum/core/authentication/domain/services/authentication_service.dart' as _i6;
 import 'package:linum/screens/onboarding_screen/enums/onboarding_page_state.dart';
 import 'package:linum/screens/onboarding_screen/viewmodels/onboarding_screen_viewmodel.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;

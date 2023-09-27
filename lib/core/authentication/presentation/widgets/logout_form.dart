@@ -7,7 +7,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
-import 'package:linum/core/authentication/services/authentication_service.dart';
+import 'package:linum/core/authentication/domain/services/authentication_service.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/core/navigation/get_delegate.dart';
 import 'package:linum/generated/translation_keys.g.dart';

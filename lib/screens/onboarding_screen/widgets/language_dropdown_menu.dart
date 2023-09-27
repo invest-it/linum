@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/core/authentication/services/authentication_service.dart';
+import 'package:linum/core/authentication/domain/services/authentication_service.dart';
 import 'package:linum/core/localization/settings/utils/country_flag_generator.dart';
 import 'package:linum/screens/onboarding_screen/constants/country_codes.dart';
 import 'package:provider/provider.dart';

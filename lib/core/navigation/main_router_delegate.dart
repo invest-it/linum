@@ -4,7 +4,7 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:linum/core/authentication/services/authentication_service.dart';
+import 'package:linum/core/authentication/domain/services/authentication_service.dart';
 import 'package:linum/core/design/layout/loading_scaffold.dart';
 import 'package:linum/core/navigation/main_routes.dart';
 import 'package:linum/core/navigation/main_routes_extensions.dart';

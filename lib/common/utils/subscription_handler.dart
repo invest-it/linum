@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+
+/// Classes that implement the subscription handler,
+/// can listen to a single stream without the need to handle stream cancellation
 class SubscriptionHandler with ChangeNotifier {
   final List<StreamSubscription> _subscriptions = [];
 

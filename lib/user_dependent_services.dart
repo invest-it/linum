@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/core/authentication/services/authentication_service.dart';
+import 'package:linum/core/authentication/domain/services/authentication_service.dart';
 import 'package:linum/core/balance/services/balance_data_service.dart';
 import 'package:linum/core/categories/settings/data/category_settings.dart';
 import 'package:linum/core/categories/settings/data/category_settings_mapper.dart';
