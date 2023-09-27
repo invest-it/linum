@@ -13,4 +13,5 @@ analyzer:
   exclude:
     - lib/models/*.g.dart
     - lib/*.g.dart
+    - lib/firebase/*.g.dart
     - lib/generated/**/*.g.dart
