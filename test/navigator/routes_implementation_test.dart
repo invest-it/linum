@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:linum/navigation/main_routes.dart';
-import 'package:linum/navigation/route_configuration.dart';
+import 'package:linum/core/navigation/main_routes.dart';
+import 'package:linum/core/navigation/route_configuration.dart';
 
 
 void main() {

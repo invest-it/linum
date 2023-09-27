@@ -8,9 +8,9 @@ import 'dart:developer' as _i9;
 import 'dart:ui' as _i3;
 
 import 'package:firebase_auth/firebase_auth.dart' as _i8;
-import 'package:flutter/material.dart' as _i5;
-import 'package:linum/providers/authentication_service.dart' as _i6;
-import 'package:linum/providers/onboarding_screen_provider.dart' as _i2;
+import 'package:linum/core/authentication/services/authentication_service.dart' as _i6;
+import 'package:linum/screens/onboarding_screen/enums/onboarding_page_state.dart';
+import 'package:linum/screens/onboarding_screen/viewmodels/onboarding_screen_viewmodel.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -28,7 +28,7 @@ import 'package:mockito/mockito.dart' as _i1;
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockOnboardingScreenProvider extends _i1.Mock
-    implements _i2.OnboardingScreenProvider {
+    implements _i2.OnboardingScreenViewModel {
   @override
   bool get hasPageChanged => (super.noSuchMethod(
         Invocation.getter(#hasPageChanged),
@@ -36,11 +36,11 @@ class MockOnboardingScreenProvider extends _i1.Mock
         returnValueForMissingStub: false,
       ) as bool);
   @override
-  _i2.OnboardingPageState get pageState => (super.noSuchMethod(
+  OnboardingPageState get pageState => (super.noSuchMethod(
         Invocation.getter(#pageState),
-        returnValue: _i2.OnboardingPageState.none,
-        returnValueForMissingStub: _i2.OnboardingPageState.none,
-      ) as _i2.OnboardingPageState);
+        returnValue: OnboardingPageState.none,
+        returnValueForMissingStub: OnboardingPageState.none,
+      ) as OnboardingPageState);
   @override
   String get mailInput => (super.noSuchMethod(
         Invocation.getter(#mailInput),
@@ -54,7 +54,7 @@ class MockOnboardingScreenProvider extends _i1.Mock
         returnValueForMissingStub: false,
       ) as bool);
   @override
-  void setPageState(_i2.OnboardingPageState? newState) => super.noSuchMethod(
+  void setPageState(OnboardingPageState? newState) => super.noSuchMethod(
         Invocation.method(
           #setPageState,
           [newState],
@@ -128,11 +128,11 @@ class MockAuthenticationService extends _i1.Mock
         returnValueForMissingStub: false,
       ) as bool);
   @override
-  String get uid => (super.noSuchMethod(
+  _i8.User get currentUser => (super.noSuchMethod(
         Invocation.getter(#uid),
         returnValue: '',
         returnValueForMissingStub: '',
-      ) as String);
+      ) as _i8.User);
   @override
   String get userEmail => (super.noSuchMethod(
         Invocation.getter(#userEmail),
@@ -140,17 +140,7 @@ class MockAuthenticationService extends _i1.Mock
         returnValueForMissingStub: '',
       ) as String);
   @override
-  String get displayName => (super.noSuchMethod(
-        Invocation.getter(#displayName),
-        returnValue: '',
-        returnValueForMissingStub: '',
-      ) as String);
-  @override
-  bool get isEmailVerified => (super.noSuchMethod(
-        Invocation.getter(#isEmailVerified),
-        returnValue: false,
-        returnValueForMissingStub: false,
-      ) as bool);
+
   @override
   bool get hasListeners => (super.noSuchMethod(
         Invocation.getter(#hasListeners),
@@ -333,10 +323,10 @@ class MockAuthenticationService extends _i1.Mock
         returnValueForMissingStub: _i7.Future<void>.value(),
       ) as _i7.Future<void>);
   @override
-  void updateLanguageCode(_i5.BuildContext? context) => super.noSuchMethod(
+  void updateLanguageCode(String? languageCode) => super.noSuchMethod(
         Invocation.method(
           #updateLanguageCode,
-          [context],
+          [languageCode],
         ),
         returnValueForMissingStub: null,
       );

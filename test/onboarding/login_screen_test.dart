@@ -1,24 +1,21 @@
-///
-///
-///
-/// generate Mockfile command:
-/// flutter pub run build_runner build
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:linum/providers/action_lip_status_provider.dart';
-import 'package:linum/providers/authentication_service.dart';
-import 'package:linum/providers/onboarding_screen_provider.dart';
-import 'package:linum/widgets/auth/login_form.dart';
-import 'package:linum/widgets/onboarding/login_screen.dart';
+import 'package:linum/common/components/action_lip/viewmodels/action_lip_viewmodel.dart';
+import 'package:linum/core/authentication/services/authentication_service.dart';
+import 'package:linum/screens/onboarding_screen/enums/onboarding_page_state.dart';
+import 'package:linum/screens/onboarding_screen/viewmodels/onboarding_screen_viewmodel.dart';
+import 'package:linum/screens/onboarding_screen/widgets/login_form/login_form.dart';
+import 'package:linum/screens/onboarding_screen/widgets/views/login_view.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 
-@GenerateNiceMocks([MockSpec<OnboardingScreenProvider>()])
+@GenerateNiceMocks([MockSpec<OnboardingScreenViewModel>()])
 @GenerateNiceMocks([MockSpec<AuthenticationService>()])
 import 'login_screen_test.mocks.dart';
 
+/// generate Mockfile command:
+/// flutter pub run build_runner build
 void main() {
   group('LoginScreen', () {
     late MockOnboardingScreenProvider mockOnboardingScreenProvider;
@@ -34,17 +31,17 @@ void main() {
 
       baseMultiProvider = MultiProvider(
         providers: [
-          ChangeNotifierProvider<OnboardingScreenProvider>(
+          ChangeNotifierProvider<OnboardingScreenViewModel>(
             create: (_) => mockOnboardingScreenProvider,
           ),
           ChangeNotifierProvider<AuthenticationService>(
             create: (_) => mockAuthenticationService,
           ),
-          ChangeNotifierProvider<ActionLipStatusProvider>(
-            create: (_) => ActionLipStatusProvider(),
+          ChangeNotifierProvider<ActionLipViewModel>(
+            create: (_) => ActionLipViewModel(),
           ),
         ],
-        child: const LoginScreen(),
+        child: const LoginView(),
       );
     });
 

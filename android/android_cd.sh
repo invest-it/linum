@@ -1,19 +1,16 @@
 #!/bin/bash
 
-cd ./android
+cd ./android || exit
 
 gem install bundler:1.17.2
 bundle install
 
-ls
-
-openssl aes-256-cbc -d -in .encrypted -k $KEY_STORE_ENCRYPTION_KEY >> ./app/upload_keystore.jks
 echo $(echo "$KEY_PROPERTIES" | base64 --decode) > key.properties
 
 flutter build appbundle
 
-cd ./android
-if [$1 -eq "release"]
+cd ./android || exit
+if [ "$1" = "release" ]
 then
   bundle exec fastlane release
 else
