@@ -41,7 +41,7 @@ jobs:
         dart pub global activate flutterfire_cli
         ls
         flutterfire --version
-        flutterfire configure -o lib/auth/firebase_options.dart -p linum-5d9f6 -y --platforms="android,ios" -i de.investitacademy.linum -a de.investitacademy.linum -m de.investitacademy.linum 
+        flutterfire configure -o lib/firebase/firebase_options.dart -p linum-5d9f6 -y --platforms="android,ios" -i de.investitacademy.linum -a de.investitacademy.linum -m de.investitacademy.linum 
 
     - name: Delete previous Builds
       run: flutter clean
