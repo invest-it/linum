@@ -4,6 +4,7 @@ import 'package:linum/core/events/models/start_event.dart';
 import 'package:logger/logger.dart';
 import 'package:rxdart/rxdart.dart';
 
+
 class EventService extends ChangeNotifier {
   final BehaviorSubject<IEvent> _behaviorSubject = BehaviorSubject();
 
@@ -11,6 +12,7 @@ class EventService extends ChangeNotifier {
     dispatch(StartEvent());
   }
 
+  /// Get the all events with the "global" audience
   Stream<IEvent> getGlobalEventStream() {
     return getEventStream("global");
   }
@@ -20,6 +22,10 @@ class EventService extends ChangeNotifier {
       (event) => event.audience == audience,
     );
 
+  /// Dispatches an event to the EventStream,
+  /// will notify all listeners of the events audience
+  /// Can be used to pass messages between components
+  /// without them knowing about each other
   void dispatch(IEvent event) {
     Logger().i(event);
     _behaviorSubject.add(event);
