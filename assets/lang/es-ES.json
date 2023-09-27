@@ -172,7 +172,8 @@
         "add-amount": {
             "dialog-label-title": "Ok!",
             "dialog-label-title-expenses": "¡Por favor, añada una cantidad a su gasto!",
-            "dialog-label-title-income": "Por favor, añada una cantidad a sus ingresos."
+            "dialog-label-title-income": "Por favor, añada una cantidad a sus ingresos.",
+            "parser-start-with-amount-error": "Escriba primero el importe"
         },
         "delete-entry": {
             "dialog-button-cancel": "Cancelar",

@@ -172,7 +172,8 @@
         "add-amount": {
             "dialog-label-title": "OK",
             "dialog-label-title-expenses": "Voeg een bedrag toe aan uw uitgave!",
-            "dialog-label-title-income": "Voeg een bedrag toe aan uw inkomen!"
+            "dialog-label-title-income": "Voeg een bedrag toe aan uw inkomen!",
+            "parser-start-with-amount-error": "Voer eerst het bedrag in"
         },
         "change-entry": {
             "dialog-label-change": "Welk item wilt u veranderen?"

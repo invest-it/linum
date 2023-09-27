@@ -172,7 +172,8 @@
         "add-amount": {
             "dialog-label-title": "Okay!",
             "dialog-label-title-expenses": "Please add an amount to your expense!",
-            "dialog-label-title-income": "Please add an amount to your income!"
+            "dialog-label-title-income": "Please add an amount to your income!",
+            "parser-start-with-amount-error": "Please type in the amount first"
         },
         "change-entry": {
             "dialog-label-change": "Which entry do you want to change?"

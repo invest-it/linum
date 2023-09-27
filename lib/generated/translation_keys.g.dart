@@ -277,7 +277,9 @@ const translationKeys = (
       dialogLabelTitleExpenses:
           'enter_screen.add-amount.dialog-label-title-expenses', // Bitte füge einen Betrag zu deiner Ausgabe hinzu!
       dialogLabelTitleIncome:
-          'enter_screen.add-amount.dialog-label-title-income' // Bitte füge einen Betrag zu deinem Einkommen hinzu!
+          'enter_screen.add-amount.dialog-label-title-income', // Bitte füge einen Betrag zu deinem Einkommen hinzu!
+      parserStartWithAmountError:
+          'enter_screen.add-amount.parser-start-with-amount-error' // Bitte tippe zuerst den Betrag ein
     ),
     button: (
       expensesLabel: 'enter_screen.button.expenses-label', // Ausgabe

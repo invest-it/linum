@@ -172,7 +172,8 @@
         "add-amount": {
             "dialog-label-title": "Okay!",
             "dialog-label-title-expenses": "Bitte füge einen Betrag zu deiner Ausgabe hinzu!",
-            "dialog-label-title-income": "Bitte füge einen Betrag zu deinem Einkommen hinzu!"
+            "dialog-label-title-income": "Bitte füge einen Betrag zu deinem Einkommen hinzu!",
+            "parser-start-with-amount-error": "Bitte tippe zuerst den Betrag ein"
         },
         "change-entry": {
             "dialog-label-change": "Welchen Eintrag möchtest du ändern?"
