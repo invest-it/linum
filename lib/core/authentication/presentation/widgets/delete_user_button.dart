@@ -44,7 +44,6 @@ class DeleteUserButton extends StatelessWidget {
                     userMustDismissWithButton: true,
                   );
                   authService.deleteUserAccount(onError: onError);
-                  Navigator.of(context, rootNavigator: true).pop();
                 },
               ),
             ],

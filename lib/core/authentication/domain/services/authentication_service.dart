@@ -259,9 +259,6 @@ class AuthenticationService extends SubscriptionHandler {
     onError ??= logger.e;
     try {
       await _firebaseAuth.currentUser?.delete();
-      setUser(_firebaseAuth.currentUser);
-
-      onComplete("Successfully deleted Account");
     } on FirebaseAuthException catch (e) {
       if (e.code == "requires-recent-login") {
         onError("auth.${e.code}");
@@ -269,6 +266,8 @@ class AuthenticationService extends SubscriptionHandler {
       }
       onError("auth.${e.code}");
     }
+    setUser(null);
+    onComplete("Successfully deleted Account");
   }
 
   Future<void> setUser(User? user) async {
