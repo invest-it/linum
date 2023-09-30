@@ -50,7 +50,6 @@ Future<bool?> showActionDialog(
                         color: buttonColor,
                       ),
                 ),
-                // ignore: avoid_dynamic_calls
                 onPressed: () {
                   item.callback?.call();
                   Navigator.of(context, rootNavigator: true).pop();
