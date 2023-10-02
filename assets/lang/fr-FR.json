@@ -130,7 +130,8 @@
         "user-disabled": "L'utilisateur a été désactivé par le système. Si vous pensez qu'il s'agit d'une erreur, veuillez contacter support@investit-academy.de.",
         "user-not-found": "Votre adresse électronique ou votre mot de passe n'est pas correct. Vérifier les fautes d'orthographe ?",
         "weak-password": "The password you entered is too weak. Please choose a stronger password.",
-        "wrong-password": "Votre adresse électronique ou votre mot de passe n'est pas correct. Vérifier les fautes d'orthographe ?"
+        "wrong-password": "Votre adresse électronique ou votre mot de passe n'est pas correct. Vérifier les fautes d'orthographe ?",
+        "user-deleted": "L'utilisateur a été supprimé avec succès !"
     },
     "budget_screen": {
         "button-filter": "Filtre",

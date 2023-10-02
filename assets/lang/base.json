@@ -128,6 +128,7 @@
         "unauthorized-continue-uri": "Deine Anmeldeanfrage konnte nicht verarbeitet werden. Bitte melde dich bei support@investit-academy.de",
         "unknown": "Es ist ein unbekannter Fehler aufgetreten. Bitte kontaktieren Sie support@investit-academy.de",
         "user-disabled": "Der Benutzer wurde vom System deaktiviert. Falls du denkst, dass dies ein Fehler ist, wende dich bitte an support@investit-academy.de",
+        "user-deleted": "Der Benutzer wurde erfolgreich gelöscht!",
         "user-not-found": "Deine E-Mail oder dein Passwort sind nicht korrekt. Vielleicht hast du dich vertippt?",
         "weak-password": "Das eingegebene Passwort ist zu schwach. Bitte wähle ein stärkeres Passwort.",
         "wrong-password": "Deine E-Mail oder dein Passwort sind nicht korrekt. Vielleicht hast du dich vertippt?"

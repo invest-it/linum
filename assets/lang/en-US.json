@@ -130,7 +130,8 @@
         "user-disabled": "The user has been deactivated by the system. If you think this is an error, please contact support@investit-academy.de.",
         "user-not-found": "Your email or password is not correct. Check for spelling errors?",
         "weak-password": "The password you entered is too weak. Please choose a stronger password.",
-        "wrong-password": "Your email or password is not correct. Check for spelling errors?"
+        "wrong-password": "Your email or password is not correct. Check for spelling errors?",
+        "user-deleted": "The user was successfully deleted!"
     },
     "budget_screen": {
         "button-filter": "Filter",

@@ -130,7 +130,8 @@
         "user-disabled": "De gebruiker is gedeactiveerd door het systeem. Als u denkt dat dit een fout is, neem dan contact op met support@investit-academy.de.",
         "user-not-found": "Uw e-mail of wachtwoord is niet correct. Controleer op spelfouten?",
         "weak-password": "Het wachtwoord dat u hebt ingevoerd is te zwak. Kies een sterker wachtwoord.",
-        "wrong-password": "Uw e-mail of wachtwoord is niet correct. Controleer op spelfouten?"
+        "wrong-password": "Uw e-mail of wachtwoord is niet correct. Controleer op spelfouten?",
+        "user-deleted": "De gebruiker is succesvol verwijderd!"
     },
     "budget_screen": {
         "button-filter": "Filter",

@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:linum/common/utils/subscription_handler.dart';
 import 'package:linum/core/authentication/domain/utils/apple_utils.dart';
@@ -9,6 +11,7 @@ import 'package:linum/core/authentication/domain/utils/firebase_auth_extensions.
 import 'package:linum/core/authentication/domain/utils/google_utils.dart';
 import 'package:linum/core/events/event_service.dart';
 import 'package:linum/core/events/event_types.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -255,6 +258,10 @@ class AuthenticationService extends SubscriptionHandler {
       return onError("auth.${e.code}");
     }
     await handleUserChange();
+    Fluttertoast.showToast(
+      msg: tr(translationKeys.auth.userDeleted),
+      toastLength: Toast.LENGTH_LONG,
+    );
     onComplete("Successfully deleted Account");
   }
 

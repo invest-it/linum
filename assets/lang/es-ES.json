@@ -130,7 +130,8 @@
         "user-disabled": "El usuario ha sido desactivado por el sistema. Si cree que se trata de un error, póngase en contacto con support@investit-academy.de.",
         "user-not-found": "Su correo electrónico o su contraseña no son correctos. ¿Comprobar errores ortográficos?",
         "weak-password": "La contraseña que has introducido es demasiado débil. Por favor, elija una contraseña más fuerte.",
-        "wrong-password": "Su correo electrónico o su contraseña no son correctos. ¿Comprobar errores ortográficos?"
+        "wrong-password": "Su correo electrónico o su contraseña no son correctos. ¿Comprobar errores ortográficos?",
+        "user-deleted": "El usuario se ha eliminado correctamente."
     },
     "budget_screen": {
         "button-filter": "Filtro",

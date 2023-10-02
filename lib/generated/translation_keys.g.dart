@@ -192,6 +192,8 @@ const translationKeys = (
         'auth.unknown', // Es ist ein unbekannter Fehler aufgetreten. Bitte kontaktieren Sie support@investit-academy.de
     userDisabled:
         'auth.user-disabled', // Der Benutzer wurde vom System deaktiviert. Falls du denkst, dass dies ein Fehler ist, wende dich bitte an support@investit-academy.de
+    userDeleted:
+        'auth.user-deleted', // Der Benutzer wurde erfolgreich gelöscht!
     userNotFound:
         'auth.user-not-found', // Deine E-Mail oder dein Passwort sind nicht korrekt. Vielleicht hast du dich vertippt?
     weakPassword:
