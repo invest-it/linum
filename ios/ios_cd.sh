@@ -10,6 +10,7 @@ export GIT_BASIC_AUTH_TOKEN
 
 gcloud secrets versions access latest --secret=linum-ios-auth-file --project=658687609050 > ./AuthKey.p8
 
+cd ../
 flutter build ios --release --no-codesign
 
 export GIT_TERMINAL_PROMPT=1
