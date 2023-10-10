@@ -25,7 +25,6 @@ jobs:
   build-project-artifact:
     name: Build Project Artifact
     runs-on: ubuntu-latest
-    environment: Staging
     timeout-minutes: 30
     steps:
       - uses: geekyeggo/delete-artifact@v2
@@ -40,21 +39,6 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: ${{ env.FLUTTER_CHANNEL }}
-
-      - id: Auth
-        name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v1
-        with:
-          credentials_json: ${{ secrets.GCLOUD_KEY }}
-
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v1
-
-      - name: Get gcloud secrets
-        run: |
-          gcloud secrets versions access latest --secret=linum-android-release-keystore-file --project=658687609050
-          gcloud secrets versions access latest --secret=linum-ios-auth-file --project=658687609050
-
 
       - name: Prepare Firebase Option Configuration
         run: |
@@ -116,12 +100,20 @@ jobs:
         with:
           channel: ${{ env.FLUTTER_CHANNEL }}
 
+      - id: Auth
+        name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCLOUD_KEY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+
       - name: Make script executable
         run: chmod +x ./android/android_cd.sh
 
       - name: Run Android CD script
         env:
-          KEY_STORE_ENCRYPTION_KEY: ${{ secrets.KEY_STORE_ENCRYPTION_KEY }}
           KEY_PROPERTIES: ${{ secrets.KEY_PROPERTIES }}
           ANDROID_SECRET_JSON: ${{ secrets.ANDROID_SECRET_JSON }}
         run: ./android/android_cd.sh
@@ -150,6 +142,15 @@ jobs:
         with:
           channel: ${{ env.FLUTTER_CHANNEL }}
 
+      - id: Auth
+        name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCLOUD_KEY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+
       - name: Make script executable
         run: chmod +x ./ios/ios_cd.sh
 
@@ -157,7 +158,6 @@ jobs:
         env:
           GIT_USER_NAME: ${{ secrets.GIT_USER_NAME }}
           GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
-          AUTH_KEY_ENCRYPTION_KEY: ${{ secrets.AUTH_KEY_ENCRYPTION_KEY }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           MATCH_KEYCHAIN_NAME: ${{ secrets.MATCH_KEYCHAIN_NAME }}
           MATCH_KEYCHAIN_PASSWORD: ${{ secrets.MATCH_KEYCHAIN_PASSWORD }}
