@@ -9,7 +9,7 @@ echo $(echo "$KEY_PROPERTIES" | base64 --decode) > key.properties
 
 cat key.properties
 
-gcloud secrets versions access latest --secret=linum-android-release-keystore-file --project=658687609050 > upload_keystore.jks
+gcloud secrets versions access latest --secret=linum-android-release-keystore-file --project=658687609050 > ./app/upload_keystore.jks
 cd ../
 flutter build appbundle
 
