@@ -27,6 +27,12 @@
         },
         "standard-currency": {
             "label-title": "Moneda"
+        },
+        "change-email": {
+            "button-submit": "Cambiar dirección de correo electrónico ahora",
+            "label-description": "Introduzca la nueva dirección de correo electrónico.",
+            "label-title": "Cambiar la dirección de correo electrónico",
+            "hint-label": "Nueva dirección de correo electrónico"
         }
     },
     "alertdialog": {
@@ -82,6 +88,11 @@
             "action": "Okay",
             "message": "Su contraseña ha sido actualizada.",
             "title": "¡Listo!"
+        },
+        "update-email": {
+            "action": "Vale",
+            "message": "Su dirección de correo electrónico ha sido actualizada.",
+            "title": "¡Listos!"
         }
     },
     "auth": {
@@ -131,7 +142,8 @@
         "user-not-found": "Su correo electrónico o su contraseña no son correctos. ¿Comprobar errores ortográficos?",
         "weak-password": "La contraseña que has introducido es demasiado débil. Por favor, elija una contraseña más fuerte.",
         "wrong-password": "Su correo electrónico o su contraseña no son correctos. ¿Comprobar errores ortográficos?",
-        "user-deleted": "El usuario se ha eliminado correctamente."
+        "user-deleted": "El usuario se ha eliminado correctamente.",
+        "not-logged-in-to-update-email": "Para cambiar su dirección de correo electrónico, debe iniciar sesión."
     },
     "budget_screen": {
         "button-filter": "Filtro",
@@ -415,7 +427,8 @@
             "button-forgot-password": "Cambiar contraseña",
             "button-forgot-password-tooltip": "Puede solicitar un restablecimiento de la contraseña aquí si ha olvidado su antigua contraseña.",
             "button-signout": "Firmar la salida",
-            "label-title": "Su cuenta"
+            "label-title": "Su cuenta",
+            "button-change-email": "Cambiar la dirección de correo electrónico"
         }
     }
 }

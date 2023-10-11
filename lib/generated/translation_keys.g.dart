@@ -6,6 +6,15 @@ const translationKeys = (
     labelTitle: 'academy_screen.label-title' // Finanzen einfach erklärt.
   ),
   actionLip: (
+    changeEmail: (
+      buttonSubmit:
+          'action_lip.change-email.button-submit', // E-Mail-Adresse jetzt ändern
+      labelDescription:
+          'action_lip.change-email.label-description', // Bitte trage die neue E-Mail-Adresse ein.
+      labelTitle:
+          'action_lip.change-email.label-title', // E-Mail-Adresse ändern
+      hintLabel: 'action_lip.change-email.hint-label' // Neue E-Mail-Adresse
+    ),
     forgotPassword: (
       loggedIn: (
         buttonSubmit:
@@ -103,6 +112,12 @@ const translationKeys = (
       message:
           'alertdialog.update-password.message', // Dein Passwort wurde aktualisiert.
       title: 'alertdialog.update-password.title' // Fertig!
+    ),
+    updateEmail: (
+      action: 'alertdialog.update-email.action', // Okay
+      message:
+          'alertdialog.update-email.message', // Deine E-Mail-Adresse wurde aktualisiert.
+      title: 'alertdialog.update-email.title' // Fertig!
     )
   ),
   auth: (
@@ -168,6 +183,8 @@ const translationKeys = (
         'auth.network-request-failed', // Der Server konnte nicht kontaktiert werden (Timeout).
     notLoggedInToUpdatePassword:
         'auth.not-logged-in-to-update-password', // Um dein Passwort zu ändern, musst du angemeldet sein. Wenn du dein Passwort vergessen hast, kannst du stattdessen eine E-Mail zum Zurücksetzen deines Passworts anfordern.
+    notLoggedInToUpdateEmail:
+        'auth.not-logged-in-to-update-email', // Um deine E-Mmail-Adresse zu ändern, musst du angemeldet sein.
     notLoggedInToVerify:
         'auth.not-logged-in-to-verify', // Um eine Verifikations-Email anzufordern, musst du angemeldet sein.
     operationNotAllowed:
@@ -562,6 +579,8 @@ const translationKeys = (
     standardsSelectorNone:
         'settings_screen.standards-selector-none', // Unkategorisiert
     systemSettings: (
+      buttonChangeEmail:
+          'settings_screen.system-settings.button-change-email', // E-Mail-Adresse ändern
       buttonDeleteUser:
           'settings_screen.system-settings.button-delete-user', // Account löschen
       buttonForgotPassword:

@@ -27,6 +27,12 @@
         },
         "standard-currency": {
             "label-title": "Valuta"
+        },
+        "change-email": {
+            "button-submit": "Wijzig e-mailadres nu",
+            "label-description": "Voer het nieuwe e-mailadres in.",
+            "label-title": "E-mailadres wijzigen",
+            "hint-label": "Nieuw e-mailadres"
         }
     },
     "alertdialog": {
@@ -82,6 +88,11 @@
             "action": "Okay",
             "message": "Uw wachtwoord is bijgewerkt.",
             "title": "Klaar!"
+        },
+        "update-email": {
+            "action": "Oké",
+            "message": "Je e-mailadres is bijgewerkt.",
+            "title": "Klaar!"
         }
     },
     "auth": {
@@ -131,7 +142,8 @@
         "user-not-found": "Uw e-mail of wachtwoord is niet correct. Controleer op spelfouten?",
         "weak-password": "Het wachtwoord dat u hebt ingevoerd is te zwak. Kies een sterker wachtwoord.",
         "wrong-password": "Uw e-mail of wachtwoord is niet correct. Controleer op spelfouten?",
-        "user-deleted": "De gebruiker is succesvol verwijderd!"
+        "user-deleted": "De gebruiker is succesvol verwijderd!",
+        "not-logged-in-to-update-email": "Om je e-mailadres te wijzigen, moet je ingelogd zijn."
     },
     "budget_screen": {
         "button-filter": "Filter",
@@ -418,7 +430,8 @@
             "button-forgot-password": "Wijzig Wachtwoord",
             "button-forgot-password-tooltip": "U kunt hier een nieuw wachtwoord aanvragen als u uw oude wachtwoord bent vergeten.",
             "button-signout": "Uitschrijven",
-            "label-title": "Uw rekening"
+            "label-title": "Uw rekening",
+            "button-change-email": "E-mailadres wijzigen"
         }
     }
 }

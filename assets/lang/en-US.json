@@ -27,6 +27,12 @@
         },
         "standard-currency": {
             "label-title": "Currency"
+        },
+        "change-email": {
+            "button-submit": "Change email address now",
+            "label-description": "Please enter the new e-mail address.",
+            "label-title": "Change email address",
+            "hint-label": "New email address"
         }
     },
     "alertdialog": {
@@ -82,6 +88,11 @@
             "action": "Okay",
             "message": "Your password has been updated.",
             "title": "Done!"
+        },
+        "update-email": {
+            "action": "Okay",
+            "message": "Your email address has been updated.",
+            "title": "Ready!"
         }
     },
     "auth": {
@@ -131,7 +142,8 @@
         "user-not-found": "Your email or password is not correct. Check for spelling errors?",
         "weak-password": "The password you entered is too weak. Please choose a stronger password.",
         "wrong-password": "Your email or password is not correct. Check for spelling errors?",
-        "user-deleted": "The user was successfully deleted!"
+        "user-deleted": "The user was successfully deleted!",
+        "not-logged-in-to-update-email": "To change your email address, you must be logged in."
     },
     "budget_screen": {
         "button-filter": "Filter",
@@ -418,7 +430,8 @@
             "button-forgot-password": "Change Password",
             "button-forgot-password-tooltip": "You can request a password reset here if you forgot your old password.",
             "button-signout": "Sign out",
-            "label-title": "Your account"
+            "label-title": "Your account",
+            "button-change-email": "Change email address"
         }
     }
 }

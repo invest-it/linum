@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/common/utils/silent_scroll.dart';
 import 'package:linum/common/widgets/list_divider.dart';
 import 'package:linum/common/widgets/list_header.dart';
+import 'package:linum/core/authentication/presentation/widgets/change_email_button.dart';
 import 'package:linum/core/authentication/presentation/widgets/delete_user_button.dart';
 import 'package:linum/core/authentication/presentation/widgets/forgot_password.dart';
 import 'package:linum/core/authentication/presentation/widgets/logout_form.dart';
@@ -72,6 +73,8 @@ class SettingsScreen extends StatelessWidget {
                 // All Authentication Actions (including logOut will be handled via widgets/auth from now on.)
                 LogoutForm(),
                 const ForgotPasswordButton(ScreenKey.settings),
+                const SizedBox(height: 4),
+                const ChangeEmailButton(ScreenKey.settings),
                 const DeleteUserButton(),
               ],
             ),

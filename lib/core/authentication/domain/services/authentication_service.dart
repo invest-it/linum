@@ -187,6 +187,33 @@ class AuthenticationService extends SubscriptionHandler {
     notifyListeners();
   }
 
+  Future<void> updateEmail(
+      String newEmail, {
+        void Function(String)? onComplete,
+        void Function(String)? onError,
+      }) async {
+    onComplete ??= logger.i;
+    onError ??= logger.e;
+    try {
+      if (_firebaseAuth.currentUser != null) {
+        await _firebaseAuth.currentUser!.updateEmail(newEmail);
+      } else {
+        return onError("auth.not-logged-in-to-update-email");
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "requires-recent-login") {
+        onError("auth.${e.code}");
+        return signOut(onError: onError);
+      }
+      if (e.code == "email-already-in-use") {
+        return onError("auth.email-already-exists");
+      }
+      return onError("auth.${e.code}");
+    }
+    onComplete("alertdialog.update-email.message");
+    notifyListeners();
+  }
+
   /// Sends a verification email to the current users email address.
   /// Fails if there is no user currently logged in.
   Future<void> sendVerificationEmail(
