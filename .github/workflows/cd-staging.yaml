@@ -116,7 +116,7 @@ jobs:
         env:
           KEY_PROPERTIES: ${{ secrets.KEY_PROPERTIES }}
           ANDROID_SECRET_JSON: ${{ secrets.ANDROID_SECRET_JSON }}
-        run: ./android/android_cd.sh
+        run: ./android/android_cd.sh $KEY_PROPERTIES
 
   ios:
     name: iOS Beta Deployment
