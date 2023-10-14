@@ -100,15 +100,6 @@ jobs:
         with:
           channel: ${{ env.FLUTTER_CHANNEL }}
 
-      - id: Auth
-        name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v1
-        with:
-          credentials_json: ${{ secrets.GCLOUD_KEY }}
-
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v1
-
       - name: Make script executable
         run: chmod +x ./android/android_cd.sh
 
