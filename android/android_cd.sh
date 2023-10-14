@@ -13,7 +13,7 @@ bundle install
 echo "$KEY_PROPERTIES" | base64 --decode > ./key.properties
 echo "$KEYSTORE_GPG"
 
-echo "$KEYSTORE_GPG" > ./app/upload_keystore.jks.asc
+echo "$KEYSTORE_GPG" | base64 --decode > ./app/upload_keystore.jks.asc
 
 cat ./app/upload_keystore.jks.asc
 
