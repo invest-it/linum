@@ -10,11 +10,8 @@ bundle install
 
 echo "$KEY_PROPERTIES" | base64 --decode > ./key.properties
 
-cat ./key.properties
-
-
-echo $(gcloud secrets versions access latest --secret=linum-android-release-keystore-file --project=658687609050 --format "json" | jq -r .payload.data)
-gcloud secrets versions access latest --secret=linum-android-release-keystore-file --project=658687609050 --format "json" | jq -r .payload.data | base64 --decode > ./app/upload_keystore.jks
+KEY_STORE_BASE64=$(gcloud secrets versions access latest --secret=linum-android-release-keystore-file --project=658687609050 --format "json" | jq -r .payload.data)
+echo "$KEY_STORE_BASE64"==== fold -w 4 | sed '$ d' | tr -d '\n' | base64 --decode > ./app/upload_keystore.jks
 
 
 cd ../
