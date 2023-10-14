@@ -116,7 +116,9 @@ jobs:
         env:
           KEY_PROPERTIES: ${{ secrets.KEY_PROPERTIES }}
           ANDROID_SECRET_JSON: ${{ secrets.ANDROID_SECRET_JSON }}
-        run: ./android/android_cd.sh $KEY_PROPERTIES
+          KEYSTORE_GPG: ${{ secrets.KEYSTORE_GPG }}
+          KEYSTORE_GPG_PASS: ${{ secrets.KEYSTORE_GPG_PASS }}
+        run: ./android/android_cd.sh $KEY_PROPERTIES $KEYSTORE_GPG $KEYSTORE_GPG_PASS
 
   ios:
     name: iOS Beta Deployment

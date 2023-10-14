@@ -3,27 +3,17 @@
 cd ./android || exit
 
 KEY_PROPERTIES=$1
+KEYSTORE_GPG=$2
+KEYSTORE_GPG_PASS=$3
 
 
 gem install bundler:1.17.2
 bundle install
 
 echo "$KEY_PROPERTIES" | base64 --decode > ./key.properties
+echo "$KEYSTORE_GPG" > ./app/upload_keystore.jks.asc
 
-KEY_STORE_BASE64=$(gcloud secrets versions access latest --secret=linum-android-release-keystore-file --project=658687609050 --format "json" | jq -r .payload.data)
-
-echo ${#KEY_STORE_BASE64}
-COUNT=$((${#KEY_STORE_BASE64}  % 4))
-echo $COUNT
-
-pad=""
-for ((i=1;i<=COUNT;i++))
-do
- pad=$pad"="
-done
-
-echo "$KEY_STORE_BASE64$pad" | base64 -D > ./app/upload_keystore.jks
-
+gpg -d --passphrase "$KEYSTORE_GPG_PASS" --batch ./app/upload_keystore.jks.asc > ./app/upload_keystore.jks
 
 cd ../
 flutter build appbundle
