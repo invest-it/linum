@@ -27,6 +27,7 @@ class SandboxScreen extends StatelessWidget {
                 name: 'Test',
                 amount: 30,
                 currency: 'EUR',
+                category: 'none-income',
                 date: Timestamp.fromDate(DateTime.now()),
               ),
             ),

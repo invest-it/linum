@@ -35,12 +35,12 @@ class CategorySettingsServiceImpl
   }
 
   @override
-  Category? getExpenseEntryCategory() {
+  Category getExpenseEntryCategory() {
     return _repository.settings.expenseCategory;
   }
 
   @override
-  Category? getIncomeEntryCategory() {
+  Category getIncomeEntryCategory() {
     return _repository.settings.incomeCategory;
   }
 

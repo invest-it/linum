@@ -11,7 +11,7 @@ import 'package:uuid/uuid.dart';
 ///  Model for defining information used by a card that is a repeated "copy" of an "original" Transaction to be repeated in a given timeframe
 class SerialTransaction {
   final num amount;
-  final String? category;
+  final String category;
   final String currency;
   final String id;
   final String name;
@@ -28,7 +28,7 @@ class SerialTransaction {
 
   SerialTransaction({
     required this.amount,
-    this.category,
+    required this.category,
     required this.currency,
     String? id,
     required this.name,
@@ -92,9 +92,20 @@ class SerialTransaction {
         valueMapper: (value) => ChangedTransaction.fromMap(value as Map<String, dynamic>),
     );
 
+    var category = map['category'] as String?;
+    final amount = map['amount'] as num;
+
+    if (category == null) {
+      if (amount < 0) {
+        category = "none-expense";
+      } else {
+        category = "none-income";
+      }
+    }
+
     return SerialTransaction(
-      amount: map['amount'] as num,
-      category: map['category'] as String?,
+      amount: amount,
+      category: category,
       currency: map['currency'] as String,
       id: map['id'] as String,
       name: map['name'] as String,
