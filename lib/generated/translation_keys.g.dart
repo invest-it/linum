@@ -13,7 +13,13 @@ const translationKeys = (
           'action_lip.change-email.label-description', // Bitte trage die neue E-Mail-Adresse ein.
       labelTitle:
           'action_lip.change-email.label-title', // E-Mail-Adresse ändern
-      hintLabel: 'action_lip.change-email.hint-label' // Neue E-Mail-Adresse
+      hintLabel: 'action_lip.change-email.hint-label', // Neue E-Mail-Adresse
+      hintLabelRepeat:
+          'action_lip.change-email.hint-label-repeat', // Neue E-Mail-Adresse wiederholen
+      emailRepeatMismatchError:
+          'action_lip.change-email.email-repeat-mismatch-error', // Die E-Mail-Adressen stimmen nicht überein
+      emailNotValid:
+          'action_lip.change-email.email-not-valid' // Bitte gib eine valide E-Mail-Adressen ein
     ),
     forgotPassword: (
       loggedIn: (

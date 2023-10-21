@@ -32,7 +32,10 @@
             "button-submit": "E-Mail-Adresse jetzt ändern",
             "label-description": "Bitte trage die neue E-Mail-Adresse ein.",
             "label-title": "E-Mail-Adresse ändern",
-            "hint-label": "Neue E-Mail-Adresse"
+            "hint-label": "Neue E-Mail-Adresse",
+            "hint-label-repeat": "Neue E-Mail-Adresse wiederholen",
+            "email-repeat-mismatch-error": "Die E-Mail-Adressen stimmen nicht überein",
+            "email-not-valid": "Bitte gib eine valide E-Mail-Adressen ein"
         }
     },
     "alertdialog": {

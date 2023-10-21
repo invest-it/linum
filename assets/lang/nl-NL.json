@@ -32,7 +32,10 @@
             "button-submit": "Wijzig e-mailadres nu",
             "label-description": "Voer het nieuwe e-mailadres in.",
             "label-title": "E-mailadres wijzigen",
-            "hint-label": "Nieuw e-mailadres"
+            "hint-label": "Nieuw e-mailadres",
+            "hint-label-repeat": "Herhaal nieuw e-mailadres",
+            "email-repeat-mismatch-error": "De e-mailadressen komen niet overeen",
+            "email-not-valid": "Voer een geldig e-mailadres in"
         }
     },
     "alertdialog": {

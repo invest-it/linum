@@ -9,17 +9,13 @@ import 'package:provider/provider.dart';
 
 void showChangeEmailActionLip(BuildContext context, ScreenKey screenKey) {
   final viewModel = context.read<ActionLipViewModel>();
-  final TextEditingController inputController = TextEditingController();
 
-    viewModel.setActionLip(
-      context: context,
-      screenKey: screenKey,
-      actionLipBody: ChangeEmailActionLip(
-          controller: inputController,
-      ),
-      actionLipStatus: ActionLipVisibility.onviewport,
-      actionLipTitle:
-      tr(translationKeys.actionLip.changeEmail.labelTitle),
-    );
+  viewModel.setActionLip(
+    context: context,
+    screenKey: screenKey,
+    actionLipBody: const ChangeEmailActionLip(),
+    actionLipStatus: ActionLipVisibility.onviewport,
+    actionLipTitle: tr(translationKeys.actionLip.changeEmail.labelTitle),
+  );
 
 }

@@ -1,14 +1,16 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/generated/translation_keys.g.dart';
 
 class EmailInputField extends StatelessWidget {
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final Function() onEditingComplete;
+  final String hintLabel;
+  final String? Function(String?)? validator;
   const EmailInputField({
     super.key,
-    required this.controller,
+    this.controller,
     required this.onEditingComplete,
+    required this.hintLabel,
+    this.validator,
   });
 
   @override
@@ -20,15 +22,14 @@ class EmailInputField extends StatelessWidget {
           bottom: BorderSide(color: Colors.grey.shade100),
         ),
       ),
-      child: TextField(
+      child: TextFormField(
+        validator: validator,
         controller: controller,
         keyboardType: TextInputType.emailAddress,
-        onEditingComplete: ()=>onEditingComplete(),
+        onEditingComplete: onEditingComplete,
         decoration: InputDecoration(
           border: InputBorder.none,
-          hintText: tr(
-            translationKeys.actionLip.changeEmail.hintLabel,
-          ),
+          hintText: hintLabel,
           hintStyle: Theme.of(context).textTheme.bodyLarge
               ?.copyWith(color: Theme.of(context).colorScheme.secondary),
         ),

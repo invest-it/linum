@@ -32,7 +32,10 @@
             "button-submit": "Change email address now",
             "label-description": "Please enter the new e-mail address.",
             "label-title": "Change email address",
-            "hint-label": "New email address"
+            "hint-label": "New email address",
+            "hint-label-repeat": "Repeat new email address",
+            "email-repeat-mismatch-error": "The email addresses do not match",
+            "email-not-valid": "Please enter a valid email address"
         }
     },
     "alertdialog": {

@@ -32,7 +32,10 @@
             "button-submit": "Cambiar dirección de correo electrónico ahora",
             "label-description": "Introduzca la nueva dirección de correo electrónico.",
             "label-title": "Cambiar la dirección de correo electrónico",
-            "hint-label": "Nueva dirección de correo electrónico"
+            "hint-label": "Nueva dirección de correo electrónico",
+            "hint-label-repeat": "Repita la nueva dirección de correo electrónico",
+            "email-repeat-mismatch-error": "Las direcciones de correo electrónico no coinciden",
+            "email-not-valid": "Introduzca una dirección de correo electrónico válida"
         }
     },
     "alertdialog": {
