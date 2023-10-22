@@ -2,6 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/components/dialogs/dialog_action.dart';
 
+// Displays an ActionDialog
+// Will automatically be dismissed after completing an action
 Future<bool?> showActionDialog(
   BuildContext context, {
   required String message,
@@ -48,7 +50,6 @@ Future<bool?> showActionDialog(
                         color: buttonColor,
                       ),
                 ),
-                // ignore: avoid_dynamic_calls
                 onPressed: () {
                   item.callback?.call();
                   Navigator.of(context, rootNavigator: true).pop();

@@ -27,6 +27,15 @@
         },
         "standard-currency": {
             "label-title": "Monnaie"
+        },
+        "change-email": {
+            "button-submit": "Changer d'adresse e-mail maintenant",
+            "label-description": "Veuillez saisir votre nouvelle adresse e-mail.",
+            "label-title": "Modifier l'adresse e-mail",
+            "hint-label": "Nouvelle adresse e-mail",
+            "hint-label-repeat": "Répéter la nouvelle adresse e-mail",
+            "email-repeat-mismatch-error": "Les adresses e-mail ne correspondent pas",
+            "email-not-valid": "Veuillez saisir une adresse e-mail valide"
         }
     },
     "alertdialog": {
@@ -82,6 +91,11 @@
             "action": "Okay",
             "message": "Ton mot de passe a été mis à jour.",
             "title": "Prêt!"
+        },
+        "update-email": {
+            "action": "Ok",
+            "message": "Ton adresse e-mail a été mise à jour.",
+            "title": "Prêt !"
         }
     },
     "auth": {
@@ -130,7 +144,9 @@
         "user-disabled": "L'utilisateur a été désactivé par le système. Si vous pensez qu'il s'agit d'une erreur, veuillez contacter support@investit-academy.de.",
         "user-not-found": "Votre adresse électronique ou votre mot de passe n'est pas correct. Vérifier les fautes d'orthographe ?",
         "weak-password": "The password you entered is too weak. Please choose a stronger password.",
-        "wrong-password": "Votre adresse électronique ou votre mot de passe n'est pas correct. Vérifier les fautes d'orthographe ?"
+        "wrong-password": "Votre adresse électronique ou votre mot de passe n'est pas correct. Vérifier les fautes d'orthographe ?",
+        "user-deleted": "L'utilisateur a été supprimé avec succès !",
+        "not-logged-in-to-update-email": "Pour modifier ton adresse e-mail, tu dois être connecté(e)."
     },
     "budget_screen": {
         "button-filter": "Filtre",
@@ -417,7 +433,8 @@
             "button-forgot-password": "Modifier le mot de passe",
             "button-forgot-password-tooltip": "Vous pouvez demander une réinitialisation du mot de passe ici si vous avez oublié votre ancien mot de passe.",
             "button-signout": "Se déconnecter",
-            "label-title": "Ton compte"
+            "label-title": "Ton compte",
+            "button-change-email": "Modifier l'adresse e-mail"
         }
     }
 }

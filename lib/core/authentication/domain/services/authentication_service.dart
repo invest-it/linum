@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:linum/common/utils/subscription_handler.dart';
 import 'package:linum/core/authentication/domain/utils/apple_utils.dart';
@@ -9,8 +11,8 @@ import 'package:linum/core/authentication/domain/utils/firebase_auth_extensions.
 import 'package:linum/core/authentication/domain/utils/google_utils.dart';
 import 'package:linum/core/events/event_service.dart';
 import 'package:linum/core/events/event_types.dart';
+import 'package:linum/generated/translation_keys.g.dart';
 import 'package:logger/logger.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -35,7 +37,6 @@ class AuthenticationService extends SubscriptionHandler {
       }
     });
 
-    _user.add(_firebaseAuth.currentUser);
     updateLanguageCode(languageCode);
   }
 
@@ -48,12 +49,8 @@ class AuthenticationService extends SubscriptionHandler {
       .toString()
       .contains("localhost");
 
-  final BehaviorSubject<User?> _user = BehaviorSubject();
 
-
-  Stream<User?> get user => _user.stream;
-
-  User? get currentUser => _user.value;
+  User? get currentUser => _firebaseAuth.currentUser;
   String get userEmail => _firebaseAuth.userEmail;
 
   Future<void> signIn(
@@ -73,7 +70,7 @@ class AuthenticationService extends SubscriptionHandler {
       );
 
       if (_firebaseAuth.isEmailVerified) {
-        setUser(_firebaseAuth.currentUser);
+        await handleUserChange();
 
         onComplete("Successfully signed in to Firebase");
       } else {
@@ -110,7 +107,7 @@ class AuthenticationService extends SubscriptionHandler {
       );
 
       if (_firebaseAuth.isEmailVerified) {
-        setUser(_firebaseAuth.currentUser);
+        await handleUserChange();
 
         onComplete("Successfully signed up to Firebase");
       } else {
@@ -134,15 +131,13 @@ class AuthenticationService extends SubscriptionHandler {
     try {
       final credentials = await acquireGoogleCredentials();
       await _firebaseAuth.signInWithCredential(credentials);
-
-      setUser(_firebaseAuth.currentUser);
-
-      notifyListeners();
-      onComplete("Successfully signed in to Firebase");
     } on FirebaseAuthException catch (e) {
       logger.e(e.message);
-      onError("auth.${e.code}");
+      return onError("auth.${e.code}");
     }
+
+    onComplete("Successfully signed in to Firebase");
+    await handleUserChange();
   }
 
   Future<void> signInWithApple({
@@ -155,20 +150,20 @@ class AuthenticationService extends SubscriptionHandler {
     try {
       final credentials = await acquireAppleCredentials();
       await _firebaseAuth.signInWithCredential(credentials);
-
-      setUser(_firebaseAuth.currentUser);
-
-      onComplete("Successfully signed in to Firebase");
     } on FirebaseAuthException catch (e) {
       logger.e(e.message);
-      onError("auth.${e.code}");
+      return onError("auth.${e.code}");
     } on SignInWithAppleAuthorizationException catch (e) {
       if (e.code == AuthorizationErrorCode.canceled) {
         logger.w("Sign in with Apple was aborted");
       } else {
-        rethrow;
+        rethrow; // TODO: This is quite ugly
       }
+      return;
     }
+
+    onComplete("Successfully signed in to Firebase");
+    await handleUserChange();
   }
 
   Future<void> updatePassword(
@@ -181,17 +176,42 @@ class AuthenticationService extends SubscriptionHandler {
     try {
       if (_firebaseAuth.currentUser != null) {
         await _firebaseAuth.currentUser!.updatePassword(newPassword);
-
-        onComplete("alertdialog.update-password.message");
-
-        notifyListeners();
       } else {
-        onError("auth.not-logged-in-to-update-password");
-        return;
+        return onError("auth.not-logged-in-to-update-password");
       }
     } on FirebaseAuthException catch (e) {
-      onError("auth.${e.code}");
+      return onError("auth.${e.code}");
     }
+
+    onComplete("alertdialog.update-password.message");
+    notifyListeners();
+  }
+
+  Future<void> updateEmail(
+      String newEmail, {
+        void Function(String)? onComplete,
+        void Function(String)? onError,
+      }) async {
+    onComplete ??= logger.i;
+    onError ??= logger.e;
+    try {
+      if (_firebaseAuth.currentUser != null) {
+        await _firebaseAuth.currentUser!.updateEmail(newEmail);
+      } else {
+        return onError("auth.not-logged-in-to-update-email");
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "requires-recent-login") {
+        onError("auth.${e.code}");
+        return signOut(onError: onError);
+      }
+      if (e.code == "email-already-in-use") {
+        return onError("auth.email-already-exists");
+      }
+      return onError("auth.${e.code}");
+    }
+    onComplete("alertdialog.update-email.message");
+    notifyListeners();
   }
 
   /// Sends a verification email to the current users email address.
@@ -210,7 +230,7 @@ class AuthenticationService extends SubscriptionHandler {
       }
       logger.i("Successfully send Verification Mail request to Firebase");
     } on FirebaseAuthException catch (e) {
-      onError("auth.${e.code}");
+      return onError("auth.${e.code}");
     }
   }
 
@@ -224,10 +244,10 @@ class AuthenticationService extends SubscriptionHandler {
     onError ??= logger.e;
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
-      onComplete("alertdialog.reset-password.message");
     } on FirebaseAuthException catch (e) {
-      onError("auth.${e.code}");
+      return onError("auth.${e.code}");
     }
+    onComplete("alertdialog.reset-password.message");
   }
 
   Future<void> signOut({
@@ -242,13 +262,11 @@ class AuthenticationService extends SubscriptionHandler {
         await GoogleSignIn().signOut();
       }
       await _firebaseAuth.signOut();
-
-      setUser(_firebaseAuth.currentUser);
-
-      onComplete("Successfully signed out from Firebase");
     } on FirebaseAuthException catch (e) {
-      onError("auth.${e.code}");
+      return onError("auth.${e.code}");
     }
+    await handleUserChange();
+    onComplete("Successfully signed out from Firebase");
   }
 
   Future<void> deleteUserAccount({
@@ -259,23 +277,26 @@ class AuthenticationService extends SubscriptionHandler {
     onError ??= logger.e;
     try {
       await _firebaseAuth.currentUser?.delete();
-      setUser(_firebaseAuth.currentUser);
-
-      onComplete("Successfully deleted Account");
     } on FirebaseAuthException catch (e) {
       if (e.code == "requires-recent-login") {
         onError("auth.${e.code}");
         return signOut(onComplete: onComplete, onError: onError);
       }
-      onError("auth.${e.code}");
+      return onError("auth.${e.code}");
     }
+    await handleUserChange();
+    Fluttertoast.showToast(
+      msg: tr(translationKeys.auth.userDeleted),
+      toastLength: Toast.LENGTH_LONG,
+    );
+    onComplete("Successfully deleted Account");
   }
 
-  Future<void> setUser(User? user) async {
+  Future<void> handleUserChange() async {
+    final user = _firebaseAuth.currentUser;
     if (user != null) {
-      await setLastMail(_firebaseAuth.currentUser!.email);
+      await setLastMail(user.email);
     }
-    _user.add(user);
     notifyListeners();
   }
 

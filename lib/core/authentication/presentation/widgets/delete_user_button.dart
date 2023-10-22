@@ -27,8 +27,6 @@ class DeleteUserButton extends StatelessWidget {
                 actionTitle:
                     tr(translationKeys.alertdialog.deleteAccount.cancel),
                 dialogPurpose: DialogPurpose.secondary,
-                callback: () =>
-                    {Navigator.of(context, rootNavigator: true).pop()},
               ),
               DialogAction(
                 actionTitle:
@@ -44,7 +42,6 @@ class DeleteUserButton extends StatelessWidget {
                     userMustDismissWithButton: true,
                   );
                   authService.deleteUserAccount(onError: onError);
-                  Navigator.of(context, rootNavigator: true).pop();
                 },
               ),
             ],

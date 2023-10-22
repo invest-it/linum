@@ -6,6 +6,21 @@ const translationKeys = (
     labelTitle: 'academy_screen.label-title' // Finanzen einfach erklärt.
   ),
   actionLip: (
+    changeEmail: (
+      buttonSubmit:
+          'action_lip.change-email.button-submit', // E-Mail-Adresse jetzt ändern
+      labelDescription:
+          'action_lip.change-email.label-description', // Bitte trage die neue E-Mail-Adresse ein.
+      labelTitle:
+          'action_lip.change-email.label-title', // E-Mail-Adresse ändern
+      hintLabel: 'action_lip.change-email.hint-label', // Neue E-Mail-Adresse
+      hintLabelRepeat:
+          'action_lip.change-email.hint-label-repeat', // Neue E-Mail-Adresse wiederholen
+      emailRepeatMismatchError:
+          'action_lip.change-email.email-repeat-mismatch-error', // Die E-Mail-Adressen stimmen nicht überein
+      emailNotValid:
+          'action_lip.change-email.email-not-valid' // Bitte gib eine valide E-Mail-Adressen ein
+    ),
     forgotPassword: (
       loggedIn: (
         buttonSubmit:
@@ -103,6 +118,12 @@ const translationKeys = (
       message:
           'alertdialog.update-password.message', // Dein Passwort wurde aktualisiert.
       title: 'alertdialog.update-password.title' // Fertig!
+    ),
+    updateEmail: (
+      action: 'alertdialog.update-email.action', // Okay
+      message:
+          'alertdialog.update-email.message', // Deine E-Mail-Adresse wurde aktualisiert.
+      title: 'alertdialog.update-email.title' // Fertig!
     )
   ),
   auth: (
@@ -168,6 +189,8 @@ const translationKeys = (
         'auth.network-request-failed', // Der Server konnte nicht kontaktiert werden (Timeout).
     notLoggedInToUpdatePassword:
         'auth.not-logged-in-to-update-password', // Um dein Passwort zu ändern, musst du angemeldet sein. Wenn du dein Passwort vergessen hast, kannst du stattdessen eine E-Mail zum Zurücksetzen deines Passworts anfordern.
+    notLoggedInToUpdateEmail:
+        'auth.not-logged-in-to-update-email', // Um deine E-Mmail-Adresse zu ändern, musst du angemeldet sein.
     notLoggedInToVerify:
         'auth.not-logged-in-to-verify', // Um eine Verifikations-Email anzufordern, musst du angemeldet sein.
     operationNotAllowed:
@@ -192,6 +215,8 @@ const translationKeys = (
         'auth.unknown', // Es ist ein unbekannter Fehler aufgetreten. Bitte kontaktieren Sie support@investit-academy.de
     userDisabled:
         'auth.user-disabled', // Der Benutzer wurde vom System deaktiviert. Falls du denkst, dass dies ein Fehler ist, wende dich bitte an support@investit-academy.de
+    userDeleted:
+        'auth.user-deleted', // Der Benutzer wurde erfolgreich gelöscht!
     userNotFound:
         'auth.user-not-found', // Deine E-Mail oder dein Passwort sind nicht korrekt. Vielleicht hast du dich vertippt?
     weakPassword:
@@ -560,6 +585,8 @@ const translationKeys = (
     standardsSelectorNone:
         'settings_screen.standards-selector-none', // Unkategorisiert
     systemSettings: (
+      buttonChangeEmail:
+          'settings_screen.system-settings.button-change-email', // E-Mail-Adresse ändern
       buttonDeleteUser:
           'settings_screen.system-settings.button-delete-user', // Account löschen
       buttonForgotPassword:

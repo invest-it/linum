@@ -5,6 +5,15 @@
         "label-title": "Finanzen einfach erklärt."
     },
     "action_lip": {
+        "change-email": {
+            "button-submit": "E-Mail-Adresse jetzt ändern",
+            "label-description": "Bitte trage die neue E-Mail-Adresse ein.",
+            "label-title": "E-Mail-Adresse ändern",
+            "hint-label": "Neue E-Mail-Adresse",
+            "hint-label-repeat": "Neue E-Mail-Adresse wiederholen",
+            "email-repeat-mismatch-error": "Die E-Mail-Adressen stimmen nicht überein",
+            "email-not-valid": "Bitte gib eine valide E-Mail-Adressen ein"
+        },
         "forgot-password": {
             "logged-in": {
                 "button-submit": "Passwort jetzt ändern",
@@ -82,6 +91,11 @@
             "action": "Okay",
             "message": "Dein Passwort wurde aktualisiert.",
             "title": "Fertig!"
+        },
+        "update-email": {
+            "action": "Okay",
+            "message": "Deine E-Mail-Adresse wurde aktualisiert.",
+            "title": "Fertig!"
         }
     },
     "auth": {
@@ -116,6 +130,7 @@
         "missing-uid": "Deine User-ID konnte nicht geladen werden. Bitte starte die App neu. Wenn das Problem weiterhin besteht, melde dich bei support@investit-academy.de",
         "network-request-failed": "Der Server konnte nicht kontaktiert werden (Timeout).",
         "not-logged-in-to-update-password": "Um dein Passwort zu ändern, musst du angemeldet sein. Wenn du dein Passwort vergessen hast, kannst du stattdessen eine E-Mail zum Zurücksetzen deines Passworts anfordern.",
+        "not-logged-in-to-update-email": "Um deine E-Mmail-Adresse zu ändern, musst du angemeldet sein.",
         "not-logged-in-to-verify": "Um eine Verifikations-Email anzufordern, musst du angemeldet sein.",
         "operation-not-allowed": "Der Anmeldedienst ist derzeit deaktiviert. Bitte versuche es später noch einmal.",
         "phone-number-already-exists": "Diese Telefonnummer existiert bereits.",
@@ -128,6 +143,7 @@
         "unauthorized-continue-uri": "Deine Anmeldeanfrage konnte nicht verarbeitet werden. Bitte melde dich bei support@investit-academy.de",
         "unknown": "Es ist ein unbekannter Fehler aufgetreten. Bitte kontaktieren Sie support@investit-academy.de",
         "user-disabled": "Der Benutzer wurde vom System deaktiviert. Falls du denkst, dass dies ein Fehler ist, wende dich bitte an support@investit-academy.de",
+        "user-deleted": "Der Benutzer wurde erfolgreich gelöscht!",
         "user-not-found": "Deine E-Mail oder dein Passwort sind nicht korrekt. Vielleicht hast du dich vertippt?",
         "weak-password": "Das eingegebene Passwort ist zu schwach. Bitte wähle ein stärkeres Passwort.",
         "wrong-password": "Deine E-Mail oder dein Passwort sind nicht korrekt. Vielleicht hast du dich vertippt?"
@@ -420,6 +436,7 @@
         },
         "standards-selector-none": "Unkategorisiert",
         "system-settings": {
+            "button-change-email": "E-Mail-Adresse ändern",
             "button-delete-user": "Account löschen",
             "button-forgot-password": "Passwort ändern",
             "button-forgot-password-tooltip": "Falls du dein Passwort vergessen hast, kannst du hier ein neues einstellen.",

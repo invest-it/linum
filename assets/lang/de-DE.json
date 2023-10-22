@@ -27,6 +27,15 @@
         },
         "standard-currency": {
             "label-title": "Währung"
+        },
+        "change-email": {
+            "button-submit": "E-Mail-Adresse jetzt ändern",
+            "label-description": "Bitte trage die neue E-Mail-Adresse ein.",
+            "label-title": "E-Mail-Adresse ändern",
+            "hint-label": "Neue E-Mail-Adresse",
+            "hint-label-repeat": "Neue E-Mail-Adresse wiederholen",
+            "email-repeat-mismatch-error": "Die E-Mail-Adressen stimmen nicht überein",
+            "email-not-valid": "Bitte gib eine valide E-Mail-Adressen ein"
         }
     },
     "alertdialog": {
@@ -82,6 +91,11 @@
             "action": "Okay",
             "message": "Dein Passwort wurde aktualisiert.",
             "title": "Fertig!"
+        },
+        "update-email": {
+            "action": "Okay",
+            "message": "Deine E-Mail-Adresse wurde aktualisiert.",
+            "title": "Fertig!"
         }
     },
     "auth": {
@@ -130,7 +144,9 @@
         "user-disabled": "Der Benutzer wurde vom System deaktiviert. Falls du denkst, dass dies ein Fehler ist, wende dich bitte an support@investit-academy.de",
         "user-not-found": "Deine E-Mail oder dein Passwort sind nicht korrekt. Vielleicht hast du dich vertippt?",
         "weak-password": "Das eingegebene Passwort ist zu schwach. Bitte wähle ein stärkeres Passwort.",
-        "wrong-password": "Deine E-Mail oder dein Passwort sind nicht korrekt. Vielleicht hast du dich vertippt?"
+        "wrong-password": "Deine E-Mail oder dein Passwort sind nicht korrekt. Vielleicht hast du dich vertippt?",
+        "user-deleted": "Der Benutzer wurde erfolgreich gelöscht!",
+        "not-logged-in-to-update-email": "Um deine E-Mmail-Adresse zu ändern, musst du angemeldet sein."
     },
     "budget_screen": {
         "button-filter": "Filter",
@@ -417,7 +433,8 @@
             "button-forgot-password": "Passwort ändern",
             "button-forgot-password-tooltip": "Falls du dein Passwort vergessen hast, kannst du hier ein neues einstellen.",
             "button-signout": "Ausloggen",
-            "label-title": "Dein Account"
+            "label-title": "Dein Account",
+            "button-change-email": "E-Mail-Adresse ändern"
         }
     }
 }
