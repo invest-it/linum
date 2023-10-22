@@ -9,8 +9,8 @@ class CategorySettingsMapper implements ISettingsMapper<CategorySettings> {
     final incomeId = model.incomeCategory.id;
 
     return {
-      "StandardCategoryIncome": incomeId ?? "none-income",
-      "StandardCategoryExpense": expenseId ?? "none-expense",
+      "StandardCategoryIncome": incomeId,
+      "StandardCategoryExpense": expenseId,
     };
   }
 

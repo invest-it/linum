@@ -111,7 +111,7 @@ class QuickTagMenu extends StatelessWidget {
       ),
       TagSelectorButton(
         title: translateCategory(category),
-        icon: category?.icon,
+        icon: category.icon,
         onTap: () {
           showEnterScreenMenu(
             context: context,
