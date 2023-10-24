@@ -96,6 +96,12 @@
             "action": "Oké",
             "message": "Je e-mailadres is bijgewerkt.",
             "title": "Klaar!"
+        },
+        "delete-transaction": {
+            "dialog-button-cancel": "Annuleren",
+            "dialog-button-delete": "Verwijder",
+            "dialog-label-delete": "Wil je dit bericht echt verwijderen?",
+            "dialog-label-title": "Bevestig"
         }
     },
     "auth": {

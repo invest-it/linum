@@ -96,6 +96,12 @@
             "action": "Okay",
             "message": "Deine E-Mail-Adresse wurde aktualisiert.",
             "title": "Fertig!"
+        },
+        "delete-transaction": {
+            "dialog-button-cancel": "Abbrechen",
+            "dialog-button-delete": "Löschen",
+            "dialog-label-delete": "Möchtest du diesen Eintrag wirklich löschen?",
+            "dialog-label-title": "Bestätigen"
         }
     },
     "auth": {

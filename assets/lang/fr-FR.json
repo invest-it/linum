@@ -96,6 +96,12 @@
             "action": "Ok",
             "message": "Ton adresse e-mail a été mise à jour.",
             "title": "Prêt !"
+        },
+        "delete-transaction": {
+            "dialog-button-cancel": "Annuler",
+            "dialog-button-delete": "Supprimer",
+            "dialog-label-delete": "Tu veux vraiment supprimer cette entrée ?",
+            "dialog-label-title": "Confirmer"
         }
     },
     "auth": {
