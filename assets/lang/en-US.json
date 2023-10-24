@@ -200,13 +200,6 @@
         "change-entry": {
             "dialog-label-change": "Which entry do you want to change?"
         },
-        "delete-entry": {
-            "dialog-button-cancel": "Cancel",
-            "dialog-button-delete": "Delete",
-            "dialog-label-delete": "Do you really want to delete this entry?",
-            "dialog-label-deleterep": "Which entry do you want to delete?",
-            "dialog-label-title": "Confirm"
-        },
         "expenses-textfield-title": "What did you purchase?",
         "income-textfield-title": "How is this income called?",
         "title": {

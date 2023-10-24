@@ -334,18 +334,6 @@ const translationKeys = (
       notes: 'enter_screen.menu.notes' // Notizen
     ),
     enterNoteHint: 'enter_screen.enter-note-hint', // Notizen hier eintragen
-    deleteEntry: (
-      dialogButtonCancel:
-          'enter_screen.delete-entry.dialog-button-cancel', // Abbrechen
-      dialogButtonDelete:
-          'enter_screen.delete-entry.dialog-button-delete', // Löschen
-      dialogLabelDelete:
-          'enter_screen.delete-entry.dialog-label-delete', // Möchtest du diesen Eintrag wirklich löschen?
-      dialogLabelDeleterep:
-          'enter_screen.delete-entry.dialog-label-deleterep', // Welchen Eintrag möchtest du löschen?
-      dialogLabelTitle:
-          'enter_screen.delete-entry.dialog-label-title' // Bestätigen
-    ),
     changeModeSelection: (
       title: (
         delete:

@@ -200,13 +200,6 @@
         "change-entry": {
             "dialog-label-change": "Welk item wilt u veranderen?"
         },
-        "delete-entry": {
-            "dialog-button-cancel": "Annuleren",
-            "dialog-button-delete": "Verwijderen",
-            "dialog-label-delete": "Wil je dit bericht echt verwijderen?",
-            "dialog-label-deleterep": "Welk item wilt u verwijderen?",
-            "dialog-label-title": "Bevestig"
-        },
         "expenses-textfield-title": "Wat heb je gekocht?",
         "income-textfield-title": "Hoe wordt dit inkomen genoemd?",
         "title": {

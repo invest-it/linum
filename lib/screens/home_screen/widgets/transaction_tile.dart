@@ -1,14 +1,22 @@
+import 'dart:async';
+
 import 'package:badges/badges.dart' as badge;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/common/components/action_lip/viewmodels/action_lip_viewmodel.dart';
 import 'package:linum/common/components/dialogs/show_transaction_delete_dialog.dart';
+import 'package:linum/core/authentication/presentation/utils/show_change_email_action_lip.dart';
 import 'package:linum/core/balance/models/transaction.dart';
 import 'package:linum/core/balance/services/balance_data_service.dart';
 import 'package:linum/core/balance/utils/transaction_amount_formatter.dart';
 import 'package:linum/core/categories/core/constants/standard_categories.dart';
 import 'package:linum/core/categories/core/utils/translate_category.dart';
+import 'package:linum/core/design/layout/enums/screen_key.dart';
+import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/enter_screen/presentation/utils/show_enter_screen.dart';
+import 'package:linum/screens/enter_screen/presentation/widgets/views/change_mode_selection_view.dart';
+import 'package:linum/screens/home_screen/widgets/change_mode_selection_view.dart';
 import 'package:linum/screens/home_screen/widgets/transaction_amount_display.dart';
 import 'package:provider/provider.dart';
 
@@ -30,7 +38,7 @@ class TransactionTile extends StatelessWidget {
     final String langCode = context.locale.languageCode;
     final DateFormat formatter = DateFormat('EEEE, dd. MMMM yyyy', langCode);
     final balanceDataService = context.read<BalanceDataService>();
-
+    final viewModel = context.read<ActionLipViewModel>();
 
     return GestureDetector(
       onTap: () {
@@ -68,11 +76,22 @@ class TransactionTile extends StatelessWidget {
         dismissThresholds: const {
           DismissDirection.endToStart: 0.5,
         },
-        confirmDismiss: (DismissDirection direction) async {
-          showTransactionDeleteDialog(context, () {
-            balanceDataService.removeTransaction(transaction);
-          });
-          return null;
+        confirmDismiss: (DismissDirection direction)  {
+          if(transaction.repeatId != null){
+              viewModel.setActionLip(
+                context: context,
+                screenKey: ScreenKey.home,
+                actionLipBody: SerialDeleteSelectionView(transaction: transaction,),
+                actionLipStatus: ActionLipVisibility.onviewport,
+                actionLipTitle:
+                tr(translationKeys.enterScreen.changeModeSelection.title.delete),
+              );
+          } else {
+            showTransactionDeleteDialog(context, () async {
+              balanceDataService.removeTransaction(transaction);
+            });
+          }
+          return Future.value(false);
         },
         child: ListTile(
           leading: badge.Badge(
