@@ -5,12 +5,12 @@ import 'package:linum/core/settings/data/settings_mapper_interface.dart';
 class CategorySettingsMapper implements ISettingsMapper<CategorySettings> {
   @override
   Map<String, dynamic> toMap(CategorySettings model) {
-    final expenseId = model.expenseCategory?.id;
-    final incomeId = model.incomeCategory?.id;
+    final expenseId = model.expenseCategory.id;
+    final incomeId = model.incomeCategory.id;
 
     return {
-      "StandardCategoryIncome": incomeId ?? "None",
-      "StandardCategoryExpense": expenseId ?? "None",
+      "StandardCategoryIncome": incomeId,
+      "StandardCategoryExpense": expenseId,
     };
   }
 
@@ -20,8 +20,8 @@ class CategorySettingsMapper implements ISettingsMapper<CategorySettings> {
     final incomeId = map["StandardCategoryIncome"] as String?;
 
     return CategorySettings(
-        expenseCategory: standardCategories[expenseId],
-        incomeCategory: standardCategories[incomeId],
+        expenseCategory: standardCategories[expenseId] ?? standardCategories["none-expense"]!,
+        incomeCategory: standardCategories[incomeId] ?? standardCategories["none-income"]!,
     );
   }
 

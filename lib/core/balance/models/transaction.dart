@@ -10,7 +10,7 @@ import 'package:uuid/uuid.dart';
 
 class Transaction {
   final num amount;
-  final String? category;
+  final String category;
   final String currency;
   final String id;
   final String name;
@@ -22,7 +22,7 @@ class Transaction {
 
   Transaction({
     required this.amount,
-    this.category,
+    required this.category,
     required this.currency,
     String? id,
     required this.name,
@@ -73,9 +73,21 @@ class Transaction {
   }
 
   factory Transaction.fromMap(Map<String, dynamic> map) {
+    var category = map['category'] as String?;
+    final amount = map['amount'] as num;
+
+    if (category == null) {
+      if (amount < 0) {
+        category = "none-expense";
+      } else {
+        category = "none-income";
+      }
+    }
+
+
     return Transaction(
-      amount: map['amount'] as num,
-      category: map['category'] as String?,
+      amount: amount,
+      category: category,
       currency: map['currency'] as String,
       id: map['id'] as String,
       name: map['name'] as String,

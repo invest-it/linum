@@ -336,10 +336,11 @@ class StatisticalCalculations {
     final Set<String> result = {};
 
     for (final transaction in data) {
-      if (transaction.category == null) {
+      // TODO: Do not hardcode these strings
+      if (transaction.category == "none-expense" || transaction.category == "none-income") {
         continue;
       }
-      result.add(transaction.category!);
+      result.add(transaction.category);
     }
 
     return result.toList();

@@ -6,8 +6,8 @@ class DefaultValues{
   final num amount;
   final String name;
   final Currency currency;
-  final Category? expenseCategory;
-  final Category? incomeCategory;
+  final Category expenseCategory;
+  final Category incomeCategory;
   final String date;
   final RepeatConfiguration repeatConfiguration;
   

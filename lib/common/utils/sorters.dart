@@ -51,11 +51,11 @@ class Sorters {
   }
 
   static int categoryAlphabetically(Transaction a, Transaction b) {
-    return (a.category ?? "").compareTo(b.category ?? "");
+    return (a.category).compareTo(b.category);
   }
 
   static int categoryAlphabeticallyReversed(Transaction a, Transaction b) {
-    return (a.category ?? "").compareTo(b.category ?? "");
+    return (a.category).compareTo(b.category);
   }
 
   static int nameAlphabetically(dynamic a, dynamic b) {

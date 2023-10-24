@@ -44,7 +44,7 @@ class EnterScreenActions {
       final serialTransaction = SerialTransaction(
         id: existingSerialId,
         amount: amount,
-        category: category?.id,
+        category: category.id,
         currency: data.currency?.name ?? defaultData.currency.name,
         name: data.name ?? defaultData.name,
         note: data.notes,
@@ -67,7 +67,7 @@ class EnterScreenActions {
       date:  Timestamp.fromDate(
         DateTime.parse(data.date ?? defaultData.date),
       ),
-      category: category?.id,
+      category: category.id,
       note: data.notes,
     );
     _onSave(transaction: transaction);

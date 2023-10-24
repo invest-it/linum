@@ -1,8 +1,8 @@
 import 'package:linum/core/categories/core/data/models/category.dart';
 
 class CategorySettings {
-  final Category? expenseCategory;
-  final Category? incomeCategory;
+  final Category expenseCategory;
+  final Category incomeCategory;
 
   CategorySettings({
     required this.expenseCategory,
