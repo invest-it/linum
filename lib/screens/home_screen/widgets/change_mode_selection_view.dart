@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/components/action_lip/viewmodels/action_lip_viewmodel.dart';
+import 'package:linum/common/components/dialogs/show_transaction_delete_dialog.dart';
 import 'package:linum/core/balance/enums/serial_transaction_change_type_enum.dart';
 import 'package:linum/core/balance/models/serial_transaction.dart';
 import 'package:linum/core/balance/models/transaction.dart';
@@ -18,29 +19,26 @@ class SerialDeleteSelectionView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final balanceDataService = context.read<BalanceDataService>();
-    final actionLip = context.read<ActionLipViewModel>();
 
     Future<void> callback(SerialTransactionChangeMode changeMode) async {
       final SerialTransaction? serialTransaction =  await balanceDataService.findSerialTransactionWithId(transaction.repeatId!);
       if(serialTransaction != null){
-        balanceDataService.removeSerialTransaction(
-          serialTransaction: serialTransaction,
-          removeType: changeMode,
-          date: transaction.date,
-        );
-      }
-      if(context.mounted){
-        actionLip.setActionLipStatus(
-          context: context,
-          screenKey: ScreenKey.home,
-          status: ActionLipVisibility.hidden,
-        );
+        if(context.mounted){
+          showTransactionDeleteDialog(context, () async {
+            balanceDataService.removeSerialTransaction(
+              serialTransaction: serialTransaction,
+              removeType: changeMode,
+              date: transaction.date,
+            );
+            Navigator.pop(context);
+          });
+        }
       }
     }
 
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 10),
-        child: Container(
+        child: SizedBox(
           height: 200,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,7 +46,6 @@ class SerialDeleteSelectionView extends StatelessWidget {
               ChangeModeButton(
                 label: tr(translationKeys.enterScreen.changeModeSelection.onlyThisOne),
                 onPressed: () async {
-
                   await callback(SerialTransactionChangeMode.onlyThisOne);
                 },
               ),
@@ -56,6 +53,7 @@ class SerialDeleteSelectionView extends StatelessWidget {
                   label: tr(translationKeys.enterScreen.changeModeSelection.thisAndAllBefore),
                 onPressed: () async {
                   await callback(SerialTransactionChangeMode.thisAndAllBefore);
+
                 },
               ),
               ChangeModeButton(

@@ -77,15 +77,19 @@ class TransactionTile extends StatelessWidget {
           DismissDirection.endToStart: 0.5,
         },
         confirmDismiss: (DismissDirection direction)  {
+          // TODO refactor! SerialDeleteSelectionView has duplicated code from the enterscreen's serial transaction change mode selection.
           if(transaction.repeatId != null){
-              viewModel.setActionLip(
-                context: context,
-                screenKey: ScreenKey.home,
-                actionLipBody: SerialDeleteSelectionView(transaction: transaction,),
-                actionLipStatus: ActionLipVisibility.onviewport,
-                actionLipTitle:
-                tr(translationKeys.enterScreen.changeModeSelection.title.delete),
-              );
+            const radius = Radius.circular(16.0);
+            showModalBottomSheet(
+              context: context,
+              builder: (context) {
+                return SerialDeleteSelectionView(transaction: transaction,);
+              },
+              isDismissible: true,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(topLeft: radius, topRight: radius),
+              ),
+            );
           } else {
             showTransactionDeleteDialog(context, () async {
               balanceDataService.removeTransaction(transaction);
