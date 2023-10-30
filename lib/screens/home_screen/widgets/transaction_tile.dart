@@ -11,7 +11,7 @@ import 'package:linum/core/categories/core/constants/standard_categories.dart';
 import 'package:linum/core/categories/core/utils/translate_category.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/enter_screen/presentation/utils/show_enter_screen.dart';
-import 'package:linum/screens/home_screen/widgets/change_mode_selection_view.dart';
+import 'package:linum/screens/home_screen/widgets/serial_delete_mode_selection_view.dart';
 import 'package:linum/screens/home_screen/widgets/transaction_amount_display.dart';
 import 'package:provider/provider.dart';
 
@@ -77,7 +77,7 @@ class TransactionTile extends StatelessWidget {
             showModalBottomSheet(
               context: context,
               builder: (context) {
-                return SerialDeleteSelectionView(transaction: transaction,);
+                return SerialDeleteModeSelectionView(transaction: transaction,);
               },
               isDismissible: true,
               shape: const RoundedRectangleBorder(

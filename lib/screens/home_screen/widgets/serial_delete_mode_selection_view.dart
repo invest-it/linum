@@ -9,9 +9,9 @@ import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/enter_screen/presentation/widgets/buttons/change_mode_button.dart';
 import 'package:provider/provider.dart';
 
-class SerialDeleteSelectionView extends StatelessWidget {
+class SerialDeleteModeSelectionView extends StatelessWidget {
   final Transaction transaction;
-  const SerialDeleteSelectionView({super.key, required this.transaction});
+  const SerialDeleteModeSelectionView({super.key, required this.transaction});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class SerialDeleteSelectionView extends StatelessWidget {
     }
 
     return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 40),
         child: SizedBox(
           height: 200,
           child: Column(
