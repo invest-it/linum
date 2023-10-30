@@ -16,10 +16,10 @@ class CategoryParser implements IParser<Category> {
 
   @override
   Category? parse(String input) {
+
     final lowercase = input.trim().toLowerCase();
     final filteredCategories = standardCategories.entries
         .where((element) => filter == null || filter!(element.value));
-
 
     for (final entry in filteredCategories) {
       if (lowercase == entry.key) {

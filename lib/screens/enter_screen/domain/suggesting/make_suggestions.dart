@@ -1,6 +1,7 @@
 import 'package:linum/common/interfaces/translator.dart';
 import 'package:linum/core/categories/core/data/models/category.dart';
 import 'package:linum/core/repeating/enums/repeat_interval.dart';
+import 'package:linum/screens/enter_screen/domain/constants/input_flag_map.dart';
 import 'package:linum/screens/enter_screen/domain/enums/input_flag.dart';
 import 'package:linum/screens/enter_screen/domain/enums/parsable_date.dart';
 import 'package:linum/screens/enter_screen/domain/models/suggestion.dart';
@@ -34,11 +35,14 @@ Map<String, Suggestion> makeSuggestions({
     filter: categoryFilter,
   );
   final dateGuesser = DateGuesser(filter: dateFilter);
-  final flagGuesser = FlagGuesser();
+  final flagGuesser = FlagGuesser(getInputFlagMap(translator));
   final repeatGuesser = RepeatConfigGuesser(filter: repeatFilter);
 
 
-  final parsed = TagParser().parse(preCursorText);
+
+
+  final parsed = TagParser(getInputFlagMap(translator)).parse(preCursorText);
+
   if (parsed.flag == null) {
     final suggestions = flagGuesser.guess(parsed.text);
     if (suggestions.isNotEmpty) {
@@ -64,6 +68,7 @@ Map<String, Suggestion> makeSuggestions({
     }
     return {};
   }
+
 
   switch (parsed.flag) {
     case InputFlag.category:

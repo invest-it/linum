@@ -1,8 +1,8 @@
-
 import 'package:linum/common/interfaces/translator.dart';
 import 'package:linum/common/types/filter_function.dart';
 import 'package:linum/core/categories/core/data/models/category.dart';
 import 'package:linum/core/repeating/enums/repeat_interval.dart';
+import 'package:linum/screens/enter_screen/domain/constants/input_flag_map.dart';
 import 'package:linum/screens/enter_screen/domain/enums/input_flag.dart';
 import 'package:linum/screens/enter_screen/domain/enums/parsable_date.dart';
 import 'package:linum/screens/enter_screen/domain/models/structured_parsed_data.dart';
@@ -64,7 +64,7 @@ class InputParser {
 
   void _interpretTag(String tag, String fullInput) {
     final trimmedTag = tag.replaceAll(trimTagRegex, "");
-    final parsedTag = TagParser().parse(trimmedTag);
+    final parsedTag = TagParser(getInputFlagMap(translator)).parse(trimmedTag);
     return _handleFlag(
         flag: parsedTag.flag,
         tag: tag,
@@ -122,6 +122,7 @@ class InputParser {
       filter: categoryFilter,
       translator: translator,
     ).parse(parsedTag.text);
+
 
     if (result != null) {
       _parsedDataBuilder?.setCategory(

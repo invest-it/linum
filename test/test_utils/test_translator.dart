@@ -44,4 +44,9 @@ class TestTranslator implements ITranslator {
     }
     return tr(key);
   }
+
+  @override
+  String languageCode() {
+    return locale;
+  }
 }

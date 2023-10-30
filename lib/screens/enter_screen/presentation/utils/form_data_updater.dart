@@ -1,3 +1,9 @@
+import 'dart:developer';
+
+import 'package:linum/common/interfaces/translator.dart';
+import 'package:linum/screens/enter_screen/domain/constants/suggestion_defaults.dart';
+import 'package:linum/screens/enter_screen/domain/enums/input_flag.dart';
+import 'package:linum/screens/enter_screen/domain/formatting/date_formatter.dart';
 import 'package:linum/screens/enter_screen/domain/models/parsed_input.dart';
 import 'package:linum/screens/enter_screen/domain/models/structured_parsed_data.dart';
 import 'package:linum/screens/enter_screen/presentation/models/enter_screen_form_data.dart';
@@ -7,6 +13,8 @@ import 'package:linum/screens/enter_screen/presentation/models/selected_options.
 class FormDataUpdater {
   final EnterScreenFormData oldData;
   final EnterScreenFormData newData;
+  final ITranslator translator;
+  final dateFormatter = const DateFormatter();
 
   EnterScreenFormData? updatedData;
 
@@ -15,6 +23,7 @@ class FormDataUpdater {
   FormDataUpdater({
     required this.oldData,
     required this.newData,
+    required this.translator,
   }) {
     _optionsChanged = _detectOptionChanges(
         oldOptions: oldData.options,
@@ -24,10 +33,10 @@ class FormDataUpdater {
 
   EnterScreenFormData update() {
     if (_optionsChanged.changed) {
-      _handleChangedOptions();
+      updatedData = _handleChangedOptions();
     }
 
-    // TODO: Carefull this might override previous changes
+    // TODO: Careful this might override previous changes
     if (oldData.parsed != newData.parsed) {
       updatedData ??= newData;
       updatedData = updatedData?.copyWith(
@@ -41,34 +50,43 @@ class FormDataUpdater {
     return updatedData!;
   }
 
-  void _handleChangedOptions() {
+  EnterScreenFormData _handleChangedOptions() {
     StructuredParsedData parsedData = newData.parsed;
 
     if (_optionsChanged.currency) {
-      parsedData = _removeParsedCurrency(parsedData);
+      parsedData = _replaceParsedCurrency(parsedData);
     }
     if (_optionsChanged.category) {
-      parsedData = _removeParsedCategory(parsedData);
+      parsedData = _replaceParsedCategory(parsedData);
     }
     if (_optionsChanged.date) {
-      parsedData = _removeParsedDate(parsedData);
+      parsedData = _replaceParsedDate(parsedData);
+
     }
     if (_optionsChanged.repeatInfo) {
-      parsedData = _removeParsedRepeatInfo(parsedData);
+      parsedData = _replaceParsedRepeatInfo(parsedData);
+
     }
-    updatedData = newData.copyWith(
+    return newData.copyWith(
       parsed: parsedData,
     );
   }
 
-  StructuredParsedData _removeParsedCurrency(
+  StructuredParsedData _replaceParsedCurrency(
       StructuredParsedData parsedData,
-  ) {
+      ) {
     final parsedInput = parsedData.currency;
     if (parsedInput == null) {
       return parsedData;
     }
-    final raw = _replaceParsedInput(parsedInput, parsedData.raw);
+
+    var replacement = "";
+    final label = newData.options.currency?.name;
+    if (label != null) {
+      replacement = translator.translate(label);
+    }
+
+    final raw = _replaceParsedInput(parsedInput, parsedData.raw, replacement: replacement);
     return StructuredParsedData(
       raw,
       amount: parsedData.amount,
@@ -79,14 +97,25 @@ class FormDataUpdater {
     );
   }
 
-  StructuredParsedData _removeParsedCategory(
+  StructuredParsedData _replaceParsedCategory(
       StructuredParsedData parsedData,
       ) {
     final parsedInput = parsedData.category;
     if (parsedInput == null) {
       return parsedData;
     }
-    final raw = _replaceParsedInput(parsedInput, parsedData.raw);
+
+    var replacement = "";
+    final label = newData.options.category?.label;
+    if (label != null) {
+      replacement = "#${translator.translate(flagSuggestionDefaults[InputFlag.category]!)}:${translator.translate(label)}";
+    }
+
+    log(newData.toString());
+
+    log(label.toString());
+
+    final raw = _replaceParsedInput(parsedInput, parsedData.raw, replacement: replacement);
     return StructuredParsedData(
       raw,
       amount: parsedData.amount,
@@ -97,14 +126,22 @@ class FormDataUpdater {
     );
   }
 
-  StructuredParsedData _removeParsedDate(
+  StructuredParsedData _replaceParsedDate(
       StructuredParsedData parsedData,
       ) {
     final parsedInput = parsedData.date;
     if (parsedInput == null) {
       return parsedData;
     }
-    final raw = _replaceParsedInput(parsedInput, parsedData.raw);
+
+    var replacement = "";
+    final label = newData.options.date;
+    if (label != null) {
+      replacement = "#${translator.translate(flagSuggestionDefaults[InputFlag.date]!)}:${translator.translate(dateFormatter.format(label) ?? label)}";
+    }
+
+
+    final raw = _replaceParsedInput(parsedInput, parsedData.raw, replacement: replacement);
     return StructuredParsedData(
       raw,
       amount: parsedData.amount,
@@ -115,14 +152,25 @@ class FormDataUpdater {
     );
   }
 
-  StructuredParsedData _removeParsedRepeatInfo(
+  StructuredParsedData _replaceParsedRepeatInfo(
       StructuredParsedData parsedData,
   ) {
     final parsedInput = parsedData.repeatInfo;
     if (parsedInput == null) {
       return parsedData;
     }
-    final raw = _replaceParsedInput(parsedInput, parsedData.raw);
+
+    var replacement = "";
+    final label = newData.options.repeatConfiguration?.label;
+    if (label != null) {
+      replacement = "#${translator.translate(flagSuggestionDefaults[InputFlag.repeatInfo]!)}:${translator.translate(label)}";
+    }
+
+    log(newData.toString());
+
+    log(label.toString());
+
+    final raw = _replaceParsedInput(parsedInput, parsedData.raw, replacement: replacement);
     return StructuredParsedData(
       raw,
       amount: parsedData.amount,
@@ -133,14 +181,14 @@ class FormDataUpdater {
     );
   }
 
-  String _replaceParsedInput(ParsedInput parsedInput, String raw) {
+  String _replaceParsedInput(ParsedInput parsedInput, String raw, {String replacement = ""}) {
     if (parsedInput.indices.end > raw.length) {
       return raw;
     }
     return raw.replaceRange(
       parsedInput.indices.start,
       parsedInput.indices.end,
-      "",
+      replacement,
     );
   }
 }
