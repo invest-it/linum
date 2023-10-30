@@ -20,17 +20,19 @@ class EnterScreenTextField extends StatelessWidget {
       textBaseline: TextBaseline.alphabetic,
     );
 
+    final locale = context.locale;
+
     return ChangeNotifierProxyProvider<
         EnterScreenFormViewModel,
         EnterScreenTextFieldViewModel
     >(
       create: (context) => EnterScreenTextFieldViewModel(
-          context, BaseTranslator(),
+          context, BaseTranslator(locale.languageCode),
       ),
       update: (context, formViewModel, textFieldViewModel) {
         if (textFieldViewModel == null) {
           return EnterScreenTextFieldViewModel(
-            context, BaseTranslator(),
+            context, BaseTranslator(locale.languageCode),
           );
         }
         textFieldViewModel.handleUpdate(context);

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/utils/base_translator.dart';
 import 'package:linum/core/design/layout/utils/media_query_accessors.dart';
@@ -21,14 +22,14 @@ class EnterScreenFormView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    final locale = context.locale;
 
 
     return ChangeNotifierProxyProvider<EnterScreenViewModel, EnterScreenFormViewModel>(
-      create: (context) => _createViewModel(context),
+      create: (context) => _createViewModel(context, locale.languageCode),
       update: (context, viewModel, formViewModel) {
         if (formViewModel == null) {
-          return _createViewModel(context);
+          return _createViewModel(context, locale.languageCode);
         }
         formViewModel.handleUpdate(
           viewModel.entryType,
@@ -93,11 +94,12 @@ class EnterScreenFormView extends StatelessWidget {
     );
   }
 
-  EnterScreenFormViewModel _createViewModel(BuildContext context) {
+  EnterScreenFormViewModel _createViewModel(BuildContext context, String languageCode) {
+
     final builder = InitialFormDataBuilder(
       currencies: standardCurrencies,
       repeatConfigurations: repeatConfigurations,
-      translator: BaseTranslator(),
+      translator: BaseTranslator(languageCode),
     );
     final screenViewModel = context.read<EnterScreenViewModel>();
     builder
