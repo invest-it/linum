@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:linum/common/enums/entry_type.dart';
+import 'package:linum/common/interfaces/translator.dart';
 import 'package:linum/screens/enter_screen/presentation/models/default_values.dart';
 import 'package:linum/screens/enter_screen/presentation/models/enter_screen_form_data.dart';
 import 'package:linum/screens/enter_screen/presentation/utils/form_data_updater.dart';
 
 class EnterScreenFormViewModel extends ChangeNotifier {
   final DefaultValues defaultValues;
+  final ITranslator _translator;
   // late final bool withExistingData; // TODO: ????
   final _streamController = StreamController<EnterScreenFormData>();
   late Stream<EnterScreenFormData> stream = _streamController.stream;
@@ -16,7 +18,7 @@ class EnterScreenFormViewModel extends ChangeNotifier {
 
   EnterScreenFormData get data => _data;
   set data(EnterScreenFormData data) {
-    _data = FormDataUpdater(oldData: _data, newData: data).update();
+    _data = FormDataUpdater(oldData: _data, newData: data, translator: _translator).update();
     _streamController.add(_data);
     notifyListeners();
   }
@@ -34,7 +36,8 @@ class EnterScreenFormViewModel extends ChangeNotifier {
     required this.defaultValues,
     required EntryType entryType,
     required EnterScreenFormData initialData,
-  }) : _data = initialData, _entryType = entryType;
+    required ITranslator translator,
+  }) : _data = initialData, _entryType = entryType, _translator = translator;
 
 
   void handleUpdate(EntryType entryType) {

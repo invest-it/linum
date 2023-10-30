@@ -95,11 +95,11 @@ class EnterScreenFormView extends StatelessWidget {
   }
 
   EnterScreenFormViewModel _createViewModel(BuildContext context, String languageCode) {
-
+    final translator = BaseTranslator(languageCode);
     final builder = InitialFormDataBuilder(
       currencies: standardCurrencies,
       repeatConfigurations: repeatConfigurations,
-      translator: BaseTranslator(languageCode),
+      translator: translator,
     );
     final screenViewModel = context.read<EnterScreenViewModel>();
     builder
@@ -117,6 +117,7 @@ class EnterScreenFormView extends StatelessWidget {
       defaultValues: getDefaultValues(context),
       initialData: initialData,
       entryType: screenViewModel.entryType,
+      translator: translator,
     );
   }
 }
