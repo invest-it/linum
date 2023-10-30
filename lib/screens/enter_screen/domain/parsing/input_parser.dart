@@ -1,4 +1,3 @@
-
 import 'package:linum/common/interfaces/translator.dart';
 import 'package:linum/common/types/filter_function.dart';
 import 'package:linum/core/categories/core/data/models/category.dart';
@@ -123,6 +122,7 @@ class InputParser {
       filter: categoryFilter,
       translator: translator,
     ).parse(parsedTag.text);
+
 
     if (result != null) {
       _parsedDataBuilder?.setCategory(

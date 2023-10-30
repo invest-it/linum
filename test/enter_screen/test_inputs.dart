@@ -35,6 +35,14 @@ List<StructuredParsedData> generateInputParserData() {
     ..setCategory("#cat:Food & Drinks", getCategory("food")!);
   testInputs.add(builder.build());
 
+  builder = StructuredParsedDataBuilder("4200 JPY Sushi #tdy #cat:Food & Drinks")
+    ..setAmount("4200", 4200)
+    ..setCurrency("JPY", standardCurrencies["JPY"]!)
+    ..setName("Sushi")
+    ..setDate("#tdy", dateParser.parse("tdy") ?? "null")
+    ..setCategory("#cat:Food & Drinks", getCategory("food")!);
+  testInputs.add(builder.build());
+
   return testInputs;
 }
 

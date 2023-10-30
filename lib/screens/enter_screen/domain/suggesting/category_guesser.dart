@@ -20,7 +20,7 @@ class CategoryGuesser implements IGuesser {
     final lowercase = text.toLowerCase();
 
     for (final entry in getSuggestableCategories()) {
-      if (filter != null && filter!(entry.value)) {
+      if (filter != null && !filter!(entry.value)) {
         continue;
       }
       String? valueSubstring;
