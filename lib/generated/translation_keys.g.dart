@@ -124,6 +124,16 @@ const translationKeys = (
       message:
           'alertdialog.update-email.message', // Deine E-Mail-Adresse wurde aktualisiert.
       title: 'alertdialog.update-email.title' // Fertig!
+    ),
+    deleteTransaction: (
+      dialogButtonCancel:
+          'alertdialog.delete-transaction.dialog-button-cancel', // Abbrechen
+      dialogButtonDelete:
+          'alertdialog.delete-transaction.dialog-button-delete', // Löschen
+      dialogLabelDelete:
+          'alertdialog.delete-transaction.dialog-label-delete', // Möchtest du diesen Eintrag wirklich löschen?
+      dialogLabelTitle:
+          'alertdialog.delete-transaction.dialog-label-title' // Bestätigen
     )
   ),
   auth: (
@@ -324,18 +334,6 @@ const translationKeys = (
       notes: 'enter_screen.menu.notes' // Notizen
     ),
     enterNoteHint: 'enter_screen.enter-note-hint', // Notizen hier eintragen
-    deleteEntry: (
-      dialogButtonCancel:
-          'enter_screen.delete-entry.dialog-button-cancel', // Abbrechen
-      dialogButtonDelete:
-          'enter_screen.delete-entry.dialog-button-delete', // Löschen
-      dialogLabelDelete:
-          'enter_screen.delete-entry.dialog-label-delete', // Möchtest du diesen Eintrag wirklich löschen?
-      dialogLabelDeleterep:
-          'enter_screen.delete-entry.dialog-label-deleterep', // Welchen Eintrag möchtest du löschen?
-      dialogLabelTitle:
-          'enter_screen.delete-entry.dialog-label-title' // Bestätigen
-    ),
     changeModeSelection: (
       title: (
         delete:

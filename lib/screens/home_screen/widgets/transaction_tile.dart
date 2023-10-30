@@ -1,13 +1,19 @@
+import 'dart:async';
+
 import 'package:badges/badges.dart' as badge;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/common/components/dialogs/show_transaction_delete_dialog.dart';
 import 'package:linum/core/balance/models/transaction.dart';
+import 'package:linum/core/balance/services/balance_data_service.dart';
 import 'package:linum/core/balance/utils/transaction_amount_formatter.dart';
 import 'package:linum/core/categories/core/constants/standard_categories.dart';
 import 'package:linum/core/categories/core/utils/translate_category.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/enter_screen/presentation/utils/show_enter_screen.dart';
+import 'package:linum/screens/home_screen/widgets/serial_delete_mode_selection_view.dart';
 import 'package:linum/screens/home_screen/widgets/transaction_amount_display.dart';
+import 'package:provider/provider.dart';
 
 class TransactionTile extends StatelessWidget {
   final Transaction transaction;
@@ -26,6 +32,7 @@ class TransactionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final String langCode = context.locale.languageCode;
     final DateFormat formatter = DateFormat('EEEE, dd. MMMM yyyy', langCode);
+    final balanceDataService = context.read<BalanceDataService>();
 
     return GestureDetector(
       onTap: () {
@@ -63,14 +70,26 @@ class TransactionTile extends StatelessWidget {
         dismissThresholds: const {
           DismissDirection.endToStart: 0.5,
         },
-        confirmDismiss: (DismissDirection direction) async {
-          return null;
-          // TODO: Reimplement
-          /*return generateDeleteDialogFromTransaction(
-            context,
-            // balanceDataProvider,
-            transaction,
-          ); */
+        confirmDismiss: (DismissDirection direction)  {
+          // TODO refactor! SerialDeleteSelectionView has duplicated code from the enterscreen's serial transaction change mode selection.
+          if(transaction.repeatId != null){
+            const radius = Radius.circular(16.0);
+            showModalBottomSheet(
+              context: context,
+              builder: (context) {
+                return SerialDeleteModeSelectionView(transaction: transaction,);
+              },
+              isDismissible: true,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(topLeft: radius, topRight: radius),
+              ),
+            );
+          } else {
+            showTransactionDeleteDialog(context, () async {
+              balanceDataService.removeTransaction(transaction);
+            });
+          }
+          return Future.value(false);
         },
         child: ListTile(
           leading: badge.Badge(
