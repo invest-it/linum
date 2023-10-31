@@ -4,18 +4,18 @@
 #   Author: NightmindOfficial
 #   Co-Author: n/a
 
-name: Continuous Release
+name: Release
 
 on:
-  push:
+  pull_request:
+    types: [ opened ]
     branches: [ release ]
   workflow_dispatch:
 
-
 env:
   FLUTTER_CHANNEL: 'stable' # 'stable', 'beta', or 'master', default to: 'stable'
-  FLUTTER_VERSION: '3.3.10'
-  XCODE_VERSION: '13.3.1'
+  FLUTTER_VERSION: '3.13.8'
+  XCODE_VERSION: '15.0'
   PATH_TO_AAB: 'build/app/outputs/bundle/release/app-release.aab'
   ANDROID_PACKAGE_NAME: 'de.investitacademy.linum'
   FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
@@ -45,7 +45,7 @@ jobs:
           dart pub global activate flutterfire_cli
           ls
           flutterfire --version
-          flutterfire configure -o lib/auth/firebase_options.dart -p linum-5d9f6 -y --platforms="android,ios" -i de.investitacademy.linum -a de.investitacademy.linum -m de.investitacademy.linum 
+          flutterfire configure -o lib/firebase/firebase_options.g.dart -p linum-5d9f6 -y --platforms="android,ios" -i de.investitacademy.linum -a de.investitacademy.linum -m de.investitacademy.linum 
 
 
       - name: Upload Artifact
@@ -81,6 +81,7 @@ jobs:
     name: Android Release Deployment
     needs: code-analysis-and-testing
     runs-on: ubuntu-latest
+    environment: Production
     timeout-minutes: 30
     steps:
       - name: Download a single artifact
@@ -104,16 +105,18 @@ jobs:
 
       - name: Run Android CD script
         env:
-          KEY_STORE_ENCRYPTION_KEY: ${{ secrets.KEY_STORE_ENCRYPTION_KEY }}
           KEY_PROPERTIES: ${{ secrets.KEY_PROPERTIES }}
           ANDROID_SECRET_JSON: ${{ secrets.ANDROID_SECRET_JSON }}
-        run: ./android/android_cd.sh release
+          KEYSTORE_GPG: ${{ secrets.KEYSTORE_GPG }}
+          KEYSTORE_GPG_PASS: ${{ secrets.KEYSTORE_GPG_PASS }}
+        run: ./android/android_cd.sh $KEY_PROPERTIES $KEYSTORE_GPG $KEYSTORE_GPG_PASS release
 
   ios:
     name: iOS Release Deployment
     needs: code-analysis-and-testing
     runs-on: macos-latest
-    timeout-minutes: 50
+    environment: Production
+    timeout-minutes: 70
 
     steps:
       - name: Download a single artifact
@@ -132,14 +135,24 @@ jobs:
         with:
           channel: ${{ env.FLUTTER_CHANNEL }}
 
+      - id: Auth
+        name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCLOUD_KEY }}
+
+      # Not sure if needed anymore
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+
       - name: Make script executable
         run: chmod +x ./ios/ios_cd.sh
+      # End of uncertainty
 
       - name: Run iOS CD script
         env:
           GIT_USER_NAME: ${{ secrets.GIT_USER_NAME }}
           GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
-          AUTH_KEY_ENCRYPTION_KEY: ${{ secrets.AUTH_KEY_ENCRYPTION_KEY }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           MATCH_KEYCHAIN_NAME: ${{ secrets.MATCH_KEYCHAIN_NAME }}
           MATCH_KEYCHAIN_PASSWORD: ${{ secrets.MATCH_KEYCHAIN_PASSWORD }}

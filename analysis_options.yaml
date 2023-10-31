@@ -7,10 +7,11 @@ linter:
     prefer_function_declarations_over_variables: false
     no_logic_in_create_state: false
     avoid_classes_with_only_static_members: false
-    line_longer_than_80_chars: false
+    lines_longer_than_80_chars: false
 
 analyzer:
   exclude:
     - lib/models/*.g.dart
     - lib/*.g.dart
-    - translation-script
+    - lib/firebase/*.g.dart
+    - lib/generated/**/*.g.dart

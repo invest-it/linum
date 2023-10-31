@@ -8,6 +8,9 @@
 .buildlog/
 .history
 .svn/
+*.p8
+*.asc
+*.jks
 
 # IntelliJ related
 *.iml
@@ -69,5 +72,10 @@ translator-config.json
 
 # FIREBASE NEW INTEGRATION
 firebase_options.dart
+firebase_options.g.dart
 /android/app/google-services.json
 firebase_app_id_file.json
+
+# Mocks for Testing
+# TODO ignore mocks again
+#*.mocks.dart

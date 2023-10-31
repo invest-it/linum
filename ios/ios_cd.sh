@@ -1,20 +1,23 @@
 #!/bin/bash
 
-cd ./ios
+cd ./ios || exit
 
 gem install bundler:1.17.2
 bundle install
 
-export GIT_BASIC_AUTH_TOKEN=$(echo -n "$GIT_USER_NAME:$GIT_ACCESS_TOKEN" | base64 | tr -d \\n)
-openssl aes-256-cbc -d -in .encrypted -k $AUTH_KEY_ENCRYPTION_KEY >> ./AuthKey.p8
+GIT_BASIC_AUTH_TOKEN=$(echo -n "$GIT_USER_NAME:$GIT_ACCESS_TOKEN" | base64 | tr -d \\n)
+export GIT_BASIC_AUTH_TOKEN
 
+gcloud secrets versions access latest --secret=linum-ios-auth-key-file --project=658687609050 > ./AuthKey.p8
+
+cd ../
 flutter build ios --release --no-codesign
 
 export GIT_TERMINAL_PROMPT=1
 
-cd ./ios
+cd ./ios || exit
 
-if [$1 -eq "release"]
+if [ "$1" = "release" ]
 then
   bundle exec fastlane release
 else

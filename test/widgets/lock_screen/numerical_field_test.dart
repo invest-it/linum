@@ -6,9 +6,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:linum/widgets/lock_screen/numeric_field.dart';
+import 'package:linum/screens/lock_screen/widgets/numeric_field.dart';
 
 import '../../../integration_test/robots/general/general_robot.dart';
+
 
 void main() {
   group('NumericField', () {

@@ -4,7 +4,7 @@
 #   Co-Author: n/a
 #
 
-name: Continuous Integration - Full Integration Checks
+name: CI Full Integration Checks
 
 # Triggered when PR request with development base is opened
 
@@ -64,7 +64,7 @@ jobs:
         dart pub global activate flutterfire_cli
         ls
         flutterfire --version
-        flutterfire configure -o lib/auth/firebase_options.dart -p linum-5d9f6 -y --platforms="android,ios" -i de.investitacademy.linum -a de.investitacademy.linum -m de.investitacademy.linum 
+        flutterfire configure -o lib/firebase/firebase_options.g.dart -p linum-5d9f6 -y --platforms="android,ios" -i de.investitacademy.linum -a de.investitacademy.linum -m de.investitacademy.linum 
 
     - name: "Run Flutter Driver tests"
       run: "flutter drive --target=test_driver/app.dart"
