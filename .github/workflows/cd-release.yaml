@@ -116,7 +116,7 @@ jobs:
     needs: code-analysis-and-testing
     runs-on: macos-latest
     environment: Production
-    timeout-minutes: 50
+    timeout-minutes: 70
 
     steps:
       - name: Download a single artifact
@@ -141,8 +141,13 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCLOUD_KEY }}
 
+      # Not sure if needed anymore
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+
       - name: Make script executable
         run: chmod +x ./ios/ios_cd.sh
+      # End of uncertainty
 
       - name: Run iOS CD script
         env:
