@@ -22,7 +22,7 @@ class ToggleButtonElement extends StatelessWidget {
     this.verticalPadding,
   }) {
     if (horizontalPadding == null) {
-      _horizontalNotProportionatePadding = 20.0;
+      _horizontalNotProportionatePadding = 0;
     }
     if (verticalPadding == null) {
       _verticalNotProportionatePadding = 16.0;
