@@ -40,11 +40,6 @@ class FormDataUpdater {
     // TODO: Careful this might override previous changes
     if (oldData.parsed != newData.parsed) {
       updatedData ??= newData;
-      /*
-      if (updatedData == null) {
-        updatedData = newData;
-      }
-      */
 
       var updatedCurrency = updatedData?.options.currency;
       // If currency input was just deleted
