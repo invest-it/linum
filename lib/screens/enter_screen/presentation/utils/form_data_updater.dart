@@ -36,12 +36,66 @@ class FormDataUpdater {
       updatedData = _handleChangedOptions();
     }
 
+
     // TODO: Careful this might override previous changes
     if (oldData.parsed != newData.parsed) {
       updatedData ??= newData;
+      /*
+      if (updatedData == null) {
+        updatedData = newData;
+      }
+      */
+
+      var updatedCurrency = updatedData?.options.currency;
+      // If currency input was just deleted
+      if (updatedData?.parsed.currency == null && oldData.parsed.currency != null) {
+        updatedCurrency = null;
+      }
+      // If currency was parsed from user input
+      if (updatedData?.parsed.currency != null) {
+        updatedCurrency = updatedData?.parsed.currency?.value;
+      }
+
+      var updatedCategory = updatedData?.options.category;
+      // If category input was just deleted
+      if (updatedData?.parsed.category == null && oldData.parsed.category != null) {
+        updatedCategory = null;
+      }
+      // If category was parsed from user input
+      if (updatedData?.parsed.category != null) {
+        updatedCategory = updatedData?.parsed.category?.value;
+      }
+
+      var updatedDate = updatedData?.options.date;
+      // If date input was just deleted
+      if (updatedData?.parsed.date == null && oldData.parsed.date != null) {
+        updatedDate = null;
+      }
+      // If date was parsed from user input
+      if (updatedData?.parsed.date != null) {
+        updatedDate = updatedData?.parsed.date?.value;
+      }
+
+      var updatedRepeatInfo = updatedData?.options.repeatConfiguration;
+      // If repeatInfo input was just deleted
+      if (updatedData?.parsed.repeatInfo == null && oldData.parsed.repeatInfo != null) {
+        updatedRepeatInfo = null;
+      }
+      // If repeatInfo was parsed from user input
+      if (updatedData?.parsed.repeatInfo != null) {
+        updatedRepeatInfo = updatedData?.parsed.repeatInfo?.value;
+      }
+
+
       updatedData = updatedData?.copyWith(
-        options: SelectedOptions.fromParsedData(newData.parsed),
+        options: SelectedOptions(
+          currency: updatedCurrency,
+          category: updatedCategory,
+          date: updatedDate,
+          repeatConfiguration: updatedRepeatInfo,
+        ),
       );
+
     }
 
     if (updatedData == null) {
