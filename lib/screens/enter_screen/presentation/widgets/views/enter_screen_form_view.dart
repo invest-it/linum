@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/utils/base_translator.dart';
@@ -24,7 +26,9 @@ class EnterScreenFormView extends StatelessWidget {
   Widget build(BuildContext context) {
     final locale = context.locale;
 
-
+    final availableSpace = useScreenHeight(context) - 400 - 30;
+    final adjustedKeyboardHeight = min(useKeyBoardHeight(context), availableSpace);
+    
     return ChangeNotifierProxyProvider<EnterScreenViewModel, EnterScreenFormViewModel>(
       create: (context) => _createViewModel(context, locale.languageCode),
       update: (context, viewModel, formViewModel) {
@@ -37,7 +41,7 @@ class EnterScreenFormView extends StatelessWidget {
         return formViewModel;
       },
       child: EnterScreenScaffold(
-        bodyHeight: 400 + useKeyBoardHeight(context),
+        bodyHeight: 400 + adjustedKeyboardHeight,
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 24),
           child: Column(
@@ -85,7 +89,7 @@ class EnterScreenFormView extends StatelessWidget {
                 ),
               ),
               Container(
-                height: useKeyBoardHeight(context),
+                height: adjustedKeyboardHeight,
               ),
             ],
           ),
