@@ -4,8 +4,6 @@
 //  Co-Author: SoTBurst
 //  Partly refactored: damattl and TheBlueBaron
 
-import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/core/localization/settings/presentation/language_settings_service.dart';
