@@ -37,8 +37,6 @@ class HighlightTextEditingController extends TextEditingController {
 
   int offsetCounter = 0;
 
-  TextSpan? currentTextSpan;
-
 
   @override
   set value(TextEditingValue newValue) {
@@ -104,7 +102,7 @@ class HighlightTextEditingController extends TextEditingController {
     _addRemainingChars(builder, counter);
     _addExampleString(builder);
 
-    return currentTextSpan =  TextSpan(
+    return TextSpan(
       children: builder.build(),
     );
   }
