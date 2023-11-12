@@ -1,7 +1,6 @@
 # linum
 
 [![CI Core Checks](https://github.com/invest-it/linum/actions/workflows/ci-core.yaml/badge.svg)](https://github.com/invest-it/linum/actions/workflows/ci-core.yaml)
-[![CI Checks](https://github.com/invest-it/linum/actions/workflows/ci-ext.yaml/badge.svg)](https://github.com/invest-it/linum/actions/workflows/ci-ext.yaml)
 [![Stage](https://github.com/invest-it/linum/actions/workflows/cd-staging.yaml/badge.svg?branch=development)](https://github.com/invest-it/linum/actions/workflows/cd-staging.yaml)
 
 Get your money under control before your money has you under control.
