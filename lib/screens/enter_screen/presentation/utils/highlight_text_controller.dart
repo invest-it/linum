@@ -20,6 +20,7 @@ class HighlightTextEditingController extends TextEditingController {
   final ExampleStringBuilder exampleStringBuilder;
   final ParsingFilters? parsingFilters;
   final ITranslator translator;
+  final GlobalKey cursorRefKey = GlobalKey(debugLabel: "TextEditingFieldCursorRef");
 
   HighlightTextEditingController({
     required this.exampleStringBuilder,
@@ -78,6 +79,8 @@ class HighlightTextEditingController extends TextEditingController {
   }
 
 
+
+
   @override
   TextSpan buildTextSpan({required BuildContext context, TextStyle? style , required bool withComposing}) {
     assert(!value.composing.isValid || !withComposing || value.isComposingRangeValid);
@@ -91,6 +94,8 @@ class HighlightTextEditingController extends TextEditingController {
         verticalMargin: verticalMargin,
         borderRadius: const Radius.circular(5.0),
         baseStyle: style,
+        cursorRefKey: cursorRefKey,
+        cursor: selection.base.offset,
     );
 
     var counter = 0; // Current position in Text
