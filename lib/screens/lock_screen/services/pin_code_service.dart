@@ -23,7 +23,6 @@ class PinCodeService extends ChangeNotifier {
   int _pinSlot = 0;
   Color _ringColor = RingColors.green;
   bool _sessionIsSafe = false;
-  late BuildContext _context;
   late AuthenticationService _auth;
   late bool _pinSet;
   String? _lastEmail;
@@ -31,11 +30,11 @@ class PinCodeService extends ChangeNotifier {
   bool _lastEmailStillLoading = true;
 
   PinCodeService(
-      AuthenticationService authenticationService, BuildContext context,) {
+    AuthenticationService authenticationService,
+  ) {
     _initializeLastEmail();
     initializeIsPINSet();
     _auth = authenticationService;
-    _context = context;
   }
 
   Future<void> initializeIsPINSet() async {
@@ -64,13 +63,13 @@ class PinCodeService extends ChangeNotifier {
 
   ///Activates - Deactivates the PIN Lock
   //TODO - change the switch condition of _pinSet into one that relies on whether _lastEmail + '.code' has a value in sharedPreferences
-  void togglePINLock() {
+  void togglePINLock(BuildContext context) {
     if (pinSet == false) {
       _sessionIsSafe = true;
       _pinSet = true;
       //Force the user to initialize their PIN number every time the PIN is (re-)activated.
       _setPINLockIntent(intent: PINLockIntent.initialize);
-      _context.getMainRouterDelegate().pushRoute(MainRoute.lock);
+      context.getMainRouterDelegate().pushRoute(MainRoute.lock);
     } else {
       _pinSet = false; // TODO: Re-Enter pin?
       _removePIN();
@@ -105,9 +104,9 @@ class PinCodeService extends ChangeNotifier {
   }
 
   /// Toggles a PIN change request
-  void triggerPINChange() {
+  void triggerPINChange(BuildContext context) {
     _setPINLockIntent(intent: PINLockIntent.change);
-    _context.getMainRouterDelegate().pushRoute(MainRoute.lock);
+    context.getMainRouterDelegate().pushRoute(MainRoute.lock);
   }
 
   /*
@@ -164,17 +163,14 @@ class PinCodeService extends ChangeNotifier {
                     _emptyCode();
                     _removePIN();
                     _pinSet = false;
-                    Navigator.of(_context, rootNavigator: true).pop();
-                    _context.getMainRouterDelegate().popRoute();
+                    // Navigator.of(context, rootNavigator: true).pop();
+                    context.getMainRouterDelegate().popRoute();
                   },
                 ),
                 DialogAction(
                   actionTitle:
                       translationKeys.alertdialog.killswitchInitialize.cancel,
                   //If this is empty, UserAlert will use its own context to pop the dialog
-                  callback: () {
-                    Navigator.of(_context, rootNavigator: true).pop();
-                  },
                   dialogPurpose: DialogPurpose.secondary,
                 ),
               ],
@@ -196,8 +192,7 @@ class PinCodeService extends ChangeNotifier {
                       translationKeys.alertdialog.killswitchChange.action,
                   callback: () {
                     _emptyCode();
-                    Navigator.of(_context, rootNavigator: true).pop();
-                    _context.getMainRouterDelegate().popRoute();
+                    context.getMainRouterDelegate().popRoute();
                     // Navigator.of(_context).pop();
                   },
                 ),
@@ -205,10 +200,6 @@ class PinCodeService extends ChangeNotifier {
                   actionTitle:
                       translationKeys.alertdialog.killswitchChange.cancel,
                   //If this is empty, UserAlert will use its own context to pop the dialog
-                  callback: () {
-                    Navigator.of(_context, rootNavigator: true).pop();
-                    // Navigator.of(_context).pop();
-                  },
                   dialogPurpose: DialogPurpose.secondary,
                 ),
               ],
@@ -229,21 +220,16 @@ class PinCodeService extends ChangeNotifier {
                   actionTitle:
                       translationKeys.alertdialog.killswitchRecall.action,
                   callback: () {
-                    Navigator.of(_context, rootNavigator: true).pop();
                     _pinSet = false;
                     _removePIN();
                     _auth.signOut().then((_) {
-                      _context.getMainRouterDelegate().rebuild();
+                      context.getMainRouterDelegate().rebuild();
                     });
                   },
                 ),
                 DialogAction(
                   actionTitle:
                       translationKeys.alertdialog.killswitchRecall.cancel,
-                  //If this is empty, UserAlert will use its own context to pop the dialog
-                  callback: () {
-                    Navigator.of(_context, rootNavigator: true).pop();
-                  },
                   dialogPurpose: DialogPurpose.secondary,
                 ),
               ],
@@ -257,7 +243,7 @@ class PinCodeService extends ChangeNotifier {
   // RECALL - Handles the Code Check
 
   /// Adds the desired digit to the [_code] variable and checks automatically if the [_code] matches the stored PIN when 4 digits are reached.
-  void addDigit(int digit) {
+  void addDigit(int digit, BuildContext context) {
     if (_code.length < 4) {
       _code = _code + digit.toString();
 
@@ -277,7 +263,7 @@ class PinCodeService extends ChangeNotifier {
                 translationKeys.lockScreen.errors.lastMailMissing,
               );
             }
-            _context.getMainRouterDelegate().popRoute();
+            context.getMainRouterDelegate().popRoute();
             _emptyCode();
           case PINLockIntent.change:
             if (_lastEmail != 'Error!') {
@@ -291,7 +277,7 @@ class PinCodeService extends ChangeNotifier {
               );
             }
 
-            _context.getMainRouterDelegate().popRoute();
+            context.getMainRouterDelegate().popRoute();
             _emptyCode();
           case PINLockIntent.recall:
             _checkCode(_code);

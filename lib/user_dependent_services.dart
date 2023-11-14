@@ -100,7 +100,7 @@ class UserDependentServices extends StatelessWidget {
           ),
         ),
         ChangeNotifierProvider<PinCodeService>(
-          create: (context) => PinCodeService(authService, context),
+          create: (context) => PinCodeService(authService),
         ),
       ],
       child: child,
