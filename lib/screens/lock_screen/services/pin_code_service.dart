@@ -30,7 +30,8 @@ class PinCodeService extends ChangeNotifier {
   bool _lastEmailStillLoading = true;
 
   PinCodeService(
-      AuthenticationService authenticationService) {
+    AuthenticationService authenticationService,
+  ) {
     _initializeLastEmail();
     initializeIsPINSet();
     _auth = authenticationService;
@@ -151,7 +152,6 @@ class PinCodeService extends ChangeNotifier {
           screenTitle: translationKeys.lockScreen.initialize.labelTitle,
           actionTitle: translationKeys.lockScreen.initialize.labelButton,
           function: () {
-            BuildContext dialogContext;
             showActionDialog(
               context,
               message: translationKeys.alertdialog.killswitchInitialize.message,
