@@ -16,7 +16,7 @@ class PeripheralsField extends StatelessWidget {
           Expanded(
             child: Column(
               children: [
-                ..._generateNumericFields([1, 4, 7], pinCodeService),
+                ..._generateNumericFields([1, 4, 7], pinCodeService, context),
                 //Backspace
                 Expanded(
                   child: ConstrainedBox(
@@ -43,13 +43,13 @@ class PeripheralsField extends StatelessWidget {
           Expanded(
             child: Column(
               children:
-              _generateNumericFields([2, 5, 8, 0], pinCodeService),
+              _generateNumericFields([2, 5, 8, 0], pinCodeService, context),
             ),
           ),
           Expanded(
             child: Column(
               children: [
-                ..._generateNumericFields([3, 6, 9], pinCodeService),
+                ..._generateNumericFields([3, 6, 9], pinCodeService, context),
                 // If Fingerprint is enabled, trigger dialog here
                 Expanded(
                   child: ConstrainedBox(
@@ -75,10 +75,13 @@ class PeripheralsField extends StatelessWidget {
   List<NumericField> _generateNumericFields(
       List<int> numbers,
       PinCodeService pinCodeProvider,
+      BuildContext context,
   ) {
     final fields = <NumericField>[];
     for (final number in numbers) {
-      final field = NumericField(number, pinCodeProvider.addDigit);
+      final field = NumericField(number, (digit) {
+        pinCodeProvider.addDigit(digit, context);
+      });
       fields.add(field);
     }
     return fields;
