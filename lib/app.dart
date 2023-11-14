@@ -16,7 +16,7 @@ class Linum extends StatelessWidget {
     required this.store,
     required this.routerDelegate,
     required this.routeInformationParser,
-    this.testing
+    this.testing,
   });
 
   @override
