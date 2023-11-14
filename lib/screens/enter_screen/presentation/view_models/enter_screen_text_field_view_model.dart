@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/common/interfaces/translator.dart';
@@ -103,34 +102,63 @@ class EnterScreenTextFieldViewModel extends ChangeNotifier {
 
 
   void _rebuildSuggestionList() {
-    final keyContext = textFieldKey.currentContext;
-    if (keyContext == null) {
+    final textFieldRef = textFieldKey.currentContext;
+    final cursorRef = textController.cursorRefKey.currentContext;
+
+    if (textFieldRef == null || cursorRef == null) {
       return;
     }
-    final renderBox = keyContext.findRenderObject() as RenderBox?;
-    final size = renderBox?.size;
-    final position = renderBox?.localToGlobal(Offset.zero);
-    if (size == null || position == null) {
+    final textFieldRenderBox = textFieldRef.findRenderObject() as RenderBox?;
+    final textFieldSize = textFieldRenderBox?.size;
+    final textFieldPosition = textFieldRenderBox?.localToGlobal(Offset.zero);
+
+    final cursorRenderBox = cursorRef.findRenderObject() as RenderBox?;
+    final cursorSize = cursorRenderBox?.size;
+    final cursorPosition = cursorRenderBox?.localToGlobal(Offset.zero);
+
+    if (textFieldSize == null
+        || textFieldPosition == null
+        || cursorSize == null
+        || cursorPosition == null
+    ) {
       return;
     }
 
-    _formViewModel.setOverlayEntry(_overlayEntryBuilder(_context, size, position));
+    _formViewModel.setOverlayEntry(_overlayEntryBuilder(
+        _context,
+        textFieldSize: textFieldSize,
+        textFieldPosition: textFieldPosition,
+        cursorPosition: cursorPosition,
+        cursorSize: cursorSize,
+    ),);
     Overlay.of(_context).insert(_formViewModel.currentOverlay!);
   }
 
   OverlayEntry _overlayEntryBuilder(
       BuildContext context,
-      Size size,
-      Offset position,
-      ) {
+  {
+    required Size textFieldSize,
+    required Offset textFieldPosition,
+    required Size cursorSize,
+    required Offset cursorPosition,
+  }) {
     return OverlayEntry(builder: (context) {
+      final maxHeight = (useScreenHeight(context)
+          - cursorPosition.dy 
+          - useKeyBoardHeight(context)
+          - 6*cursorSize.height).abs();
+      
       return Positioned(
-        bottom: useScreenHeight(context) - position.dy,
-        left: position.dx,
-        width: size.width,
+        top: cursorPosition.dy + cursorSize.height + 3.0,
+        // bottom: useScreenHeight(context) - position.dy - 2*size.height,
+        // bottom: useScreenHeight(context) - position.dy,
+        left: textFieldPosition.dx,
+        width: textFieldSize.width,
+
         child: Material(
           borderRadius: const BorderRadius.all(Radius.circular(5)),
           child: SuggestionList(
+            maxHeight: maxHeight,
             suggestions: textController.suggestions,
             onSelection: (tag, flag) {
               textController.useSuggestion(tag, flag);

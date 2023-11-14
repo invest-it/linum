@@ -11,7 +11,7 @@ class EnterScreenContinueButton extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(5)),
+        borderRadius: const BorderRadius.all(Radius.circular(5000)),
         color: Theme.of(context).colorScheme.primary,
       ),
       child: const Icon(

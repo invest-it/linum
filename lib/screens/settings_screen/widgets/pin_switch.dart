@@ -34,7 +34,7 @@ class PinSwitch extends StatelessWidget {
           onChanged: pinCodeService.pinSetStillLoading
               ? null
               : (_) {
-                  pinCodeService.togglePINLock();
+                  pinCodeService.togglePINLock(context);
                 },
         ),
         if (pinCodeService.pinSet)
@@ -47,7 +47,7 @@ class PinSwitch extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             onTap: () {
-              pinCodeService.triggerPINChange();
+              pinCodeService.triggerPINChange(context);
             },
           ),
       ],

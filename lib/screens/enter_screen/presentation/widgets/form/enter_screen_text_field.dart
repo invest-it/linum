@@ -48,6 +48,7 @@ class EnterScreenTextField extends StatelessWidget {
           validator: _validateInput,
           keyboardType: TextInputType.multiline,
           maxLines: 6,
+          cursorHeight: baseTextStyle.fontSize! + textFieldViewModel.textController.cursorHeightOffset,
           autofocus: true,
           style: baseTextStyle,
           key: textFieldViewModel.textFieldKey,

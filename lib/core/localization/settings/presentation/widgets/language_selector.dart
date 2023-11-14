@@ -3,7 +3,6 @@
 //  Author: NightmindOfficial
 //  Co-Author: SoTBurst
 //  Partly refactored: damattl and TheBlueBaron
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/core/localization/settings/presentation/language_settings_service.dart';
@@ -36,28 +35,33 @@ class LanguageSelector extends StatelessWidget {
             languageSettingsService.setUseSystemLanguage(value);
           },
         ),
-        Flex(
-          direction: Axis.horizontal,
-          children: [
-            ToggleButtons(
-              isSelected: [
-                languageSettingsService.isCurrentLanguageCode('de-DE'),
-                languageSettingsService.isCurrentLanguageCode('en-US'),
-                languageSettingsService.isCurrentLanguageCode('nl-NL'),
-                languageSettingsService.isCurrentLanguageCode('es-ES'),
-                languageSettingsService.isCurrentLanguageCode('fr-FR'),
-              ],
-              onPressed: _selectLanguage(languageSettingsService),
-              borderRadius: BorderRadius.circular(32),
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final itemWidth = constraints.maxWidth / 5 - 2;
+            return Flex(
+              direction: Axis.horizontal,
               children: [
-                ToggleButtonElement(countryFlag('de')),
-                ToggleButtonElement(countryFlag('gb')),
-                ToggleButtonElement(countryFlag('nl')),
-                ToggleButtonElement(countryFlag('es')),
-                ToggleButtonElement(countryFlag('fr')),
+                ToggleButtons(
+                  isSelected: [
+                    languageSettingsService.isCurrentLanguageCode('de-DE'),
+                    languageSettingsService.isCurrentLanguageCode('en-US'),
+                    languageSettingsService.isCurrentLanguageCode('nl-NL'),
+                    languageSettingsService.isCurrentLanguageCode('es-ES'),
+                    languageSettingsService.isCurrentLanguageCode('fr-FR'),
+                  ],
+                  onPressed: _selectLanguage(languageSettingsService),
+                  borderRadius: BorderRadius.circular(32),
+                  children: [
+                    ToggleButtonElement(countryFlag('de'), fixedWidth: itemWidth),
+                    ToggleButtonElement(countryFlag('gb'), fixedWidth: itemWidth),
+                    ToggleButtonElement(countryFlag('nl'), fixedWidth: itemWidth),
+                    ToggleButtonElement(countryFlag('es'), fixedWidth: itemWidth),
+                    ToggleButtonElement(countryFlag('fr'), fixedWidth: itemWidth),
+                  ],
+                ),
               ],
-            ),
-          ],
+            );
+          },
         ),
       ],
     );

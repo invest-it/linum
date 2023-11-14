@@ -24,13 +24,13 @@ class TagSelectorButton extends StatelessWidget {
     final List<Widget> iconWidgets = [];
     if (symbol != null) {
       iconWidgets.add(
-          Padding(
-            padding: const EdgeInsets.only(right: 5),
-            child: Text(
-              symbol ?? "",
-              style: TextStyle(color: textColor),
-            ),
+        Padding(
+          padding: const EdgeInsets.only(right: 5),
+          child: Text(
+            symbol ?? "",
+            style: TextStyle(color: textColor),
           ),
+        ),
       );
     }
     if (icon != null) {
@@ -51,16 +51,18 @@ class TagSelectorButton extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: const Color(0xFFd2d2d2)),
-          borderRadius: const BorderRadius.all(Radius.circular(5)),
+          borderRadius: const BorderRadius.all(Radius.circular(5000)),
         ),
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-        child: Row(mainAxisSize: MainAxisSize.min, children: [
-          ...iconWidgets,
-          Text(
-            title,
-            style: TextStyle(color: textColor, fontSize: 14),
-          ),
-        ],
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ...iconWidgets,
+            Text(
+              title,
+              style: TextStyle(color: textColor, fontSize: 14),
+            ),
+          ],
         ),
       ),
     );

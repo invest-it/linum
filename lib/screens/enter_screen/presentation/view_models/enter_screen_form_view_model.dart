@@ -3,14 +3,17 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/common/interfaces/translator.dart';
+import 'package:linum/common/utils/keyboard_state_listener.dart';
 import 'package:linum/screens/enter_screen/presentation/models/default_values.dart';
 import 'package:linum/screens/enter_screen/presentation/models/enter_screen_form_data.dart';
 import 'package:linum/screens/enter_screen/presentation/utils/form_data_updater.dart';
 
 class EnterScreenFormViewModel extends ChangeNotifier {
+  final KeyboardStateListener keyboardStateListener = KeyboardStateListener();
   final DefaultValues defaultValues;
   final ITranslator _translator;
   // late final bool withExistingData; // TODO: ????
+
   final _streamController = StreamController<EnterScreenFormData>();
   late Stream<EnterScreenFormData> stream = _streamController.stream;
 
@@ -37,7 +40,11 @@ class EnterScreenFormViewModel extends ChangeNotifier {
     required EntryType entryType,
     required EnterScreenFormData initialData,
     required ITranslator translator,
-  }) : _data = initialData, _entryType = entryType, _translator = translator;
+  }) : _data = initialData, _entryType = entryType, _translator = translator {
+    keyboardStateListener.subscribe(KeyboardStateEvent.changed, () {
+      setOverlayEntry(null);
+    });
+  }
 
 
   void handleUpdate(EntryType entryType) {
