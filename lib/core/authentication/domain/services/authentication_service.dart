@@ -246,7 +246,7 @@ class AuthenticationService extends SubscriptionHandler {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
       if(e.code == "user-not-found"){
-        return onError("auth.email-not-found");
+        return onComplete("alertdialog.reset-password.message");
       }
       if(e.code == "invalid-email"){
         return onError("auth.invalid-email");
