@@ -15,11 +15,11 @@ class FinderType extends Finder {
 
   @override
   Iterable<Element> apply(Iterable<Element> candidates) {
-    return finder.apply(candidates);
+    return finder.findInCandidates(candidates);
   }
-
+  
   @override
-  String get description => finder.description;
+  String get description => finder.describeMatch(Plurality.many);
 
   Finder get title => find.descendant(of: this, matching: find.byKey(key));
 }
