@@ -35,10 +35,15 @@ class UnregisteredUserForgotPasswordActionLip extends StatelessWidget {
 
     authService.resetPassword(
       controller.text,
-      onError: (message) => showAlertDialog(
-        context,
-        message:message,
-      ),
+      onError: (message)
+      {
+        showAlertDialog(
+          context,
+          title: translationKeys.alertdialog.error.titleStandard,
+          message: message,
+          actionTitle: translationKeys.alertdialog.error.actionStandard,
+        );
+      },
       onComplete: (String message) {
         showAlertDialog(
           context,

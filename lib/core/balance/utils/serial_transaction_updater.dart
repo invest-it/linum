@@ -81,7 +81,7 @@ class SerialTransactionUpdater {
       isEdited = true;
     } else if (newDate != null && oldDate != null) {
       updatedInitialTime =  Timestamp.fromDate(
-        (serialTransaction.startDate).toDate().subtract(
+        serialTransaction.startDate.toDate().subtract(
               oldDate.toDate().difference(newDate.toDate()),
             ),
       );

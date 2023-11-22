@@ -37,7 +37,7 @@ class Sorters {
     // maybe filter is used on maps
     // if can be deleted later
     if (a is Transaction && b is Transaction) {
-      return (a.amount).compareTo(b.amount);
+      return a.amount.compareTo(b.amount);
     }
 
     return (a["amount"] as num).compareTo(b["amount"] as num);
@@ -45,36 +45,36 @@ class Sorters {
 
   static int amountMostToLeast(dynamic b, dynamic a) {
     if (a is Transaction && b is Transaction) {
-      return (a.amount).compareTo(b.amount);
+      return a.amount.compareTo(b.amount);
     }
     return (a["amount"] as num).compareTo(b["amount"] as num);
   }
 
   static int categoryAlphabetically(Transaction a, Transaction b) {
-    return (a.category).compareTo(b.category);
+    return a.category.compareTo(b.category);
   }
 
   static int categoryAlphabeticallyReversed(Transaction a, Transaction b) {
-    return (a.category).compareTo(b.category);
+    return a.category.compareTo(b.category);
   }
 
   static int nameAlphabetically(dynamic a, dynamic b) {
     if (a is Transaction && b is Transaction) {
-      return (a.name).compareTo(b.name);
+      return a.name.compareTo(b.name);
     }
     return (a["name"] as String).compareTo(b["name"] as String);
   }
 
   static int nameAlphabeticallyReversed(dynamic b, dynamic a) {
     if (a is Transaction && b is Transaction) {
-      return (a.name).compareTo(b.name);
+      return a.name.compareTo(b.name);
     }
     return (a["name"] as String).compareTo(b["name"] as String);
   }
 
   static int dateNewToOld(dynamic a, dynamic b) {
     if (a is Transaction && b is Transaction) {
-      return (b.date).compareTo(a.date);
+      return b.date.compareTo(a.date);
     }
     return (b["time"] as Timestamp)
         .compareTo(a["time"] as Timestamp);
@@ -82,7 +82,7 @@ class Sorters {
 
   static int dateOldToNew(dynamic b, dynamic a) {
     if (a is Transaction && b is Transaction) {
-      return (a.date).compareTo(b.date);
+      return a.date.compareTo(b.date);
     }
     return (a["time"] as Timestamp)
         .compareTo(b["time"] as Timestamp);
