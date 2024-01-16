@@ -38,8 +38,8 @@ class DeleteUserButton extends StatelessWidget {
                 actionTitle:
                     tr(translationKeys.alertdialog.deleteAccount.action),
                 dialogPurpose: DialogPurpose.danger,
-                callback: () {
-                  showDialog(
+                callback: () async {
+                  final closed = showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
@@ -47,13 +47,13 @@ class DeleteUserButton extends StatelessWidget {
                           actions: [
                             TextButton(
                               onPressed: () {
-
+                                Navigator.of(context, rootNavigator: true).pop();
                               },
                               child: const Text("Ok"),
                             ),
                             TextButton(
                                 onPressed: () {
-
+                                  Navigator.of(context, rootNavigator: true).pop();
                                 },
                                 child: const Text("Abort"),
                             )
@@ -61,6 +61,8 @@ class DeleteUserButton extends StatelessWidget {
                         );
                       },
                   );
+                  await closed;
+                  Navigator.of(context, rootNavigator: true).pop();
                 },
               ),
             ],
