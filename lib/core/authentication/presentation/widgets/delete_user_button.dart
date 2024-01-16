@@ -8,7 +8,6 @@ import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 import 'package:provider/provider.dart';
 
-import 'package:flutter/material.dart';
 
 
 class DeleteUserButton extends StatelessWidget {
