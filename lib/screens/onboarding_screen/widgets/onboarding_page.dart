@@ -13,6 +13,7 @@ import 'package:linum/screens/onboarding_screen/widgets/onboarding_slide_show.da
 import 'package:linum/screens/onboarding_screen/widgets/views/login_view.dart';
 import 'package:linum/screens/onboarding_screen/widgets/views/register_view.dart';
 import 'package:provider/provider.dart';
+import 'package:linum/screens/settings_screen/widgets/version_number.dart';
 
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({super.key});
@@ -39,6 +40,14 @@ class OnboardingPage extends StatelessWidget {
               right: 0,
               child: SafeArea(
                 child: LanguageDropDownMenu(),
+              ),
+            ),
+            Positioned(
+              top: 20,
+              right: 122,
+              child: Saemulator -avd Pixel_3a_API_34_extension_level_7_x86_64feArea(
+                child: VersionNumber(),
+
               ),
             ),
             Positioned(

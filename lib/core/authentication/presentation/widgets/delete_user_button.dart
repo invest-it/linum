@@ -8,6 +8,9 @@ import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 import 'package:provider/provider.dart';
 
+import 'package:flutter/material.dart';
+
+
 class DeleteUserButton extends StatelessWidget {
   const DeleteUserButton({super.key});
 
@@ -33,6 +36,37 @@ class DeleteUserButton extends StatelessWidget {
                     tr(translationKeys.alertdialog.deleteAccount.action),
                 dialogPurpose: DialogPurpose.danger,
                 callback: () {
+                  showActionDialog(
+                    context,
+                    message: tr(translationKeys.alertdialog.deleteAccount_passwortConfirmation.labelDescription),
+                    child: TextField(
+                      key: const Key("loginPasswordField"),
+                      obscureText: true,
+                      controller: controller,
+                      keyboardType: TextInputType.visiblePassword,
+                      //onSubmitted: (_) =>
+                      //    logIn(_mailController!.text, _passController.text),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText:
+                        tr(translationKeys.onboardingScreen.loginPasswordHintlabel),
+                        errorText: _errorText(validated),
+                        hintStyle: theme.textTheme.bodyLarge?.copyWith(
+                          color: theme.colorScheme.secondary,
+                        ),
+                      ),
+                    ),
+                    actions: <DialogAction>[
+                  DialogAction(
+                    actionTitle:
+                    tr(translationKeys.alertdialog.deleteAccount_passwortConfirmation.cancel),
+                    dialogPurpose: DialogPurpose.secondary,
+                  ),
+                  DialogAction(
+                    actionTitle:
+                    tr(translationKeys.alertdialog.deleteAccount_passwortConfirmation.action),
+                    dialogPurpose: DialogPurpose.danger,
+                  callback: () {
                   final authService = context.read<AuthenticationService>();
                   final onError = (String message) => showAlertDialog(
                     context,
@@ -44,6 +78,10 @@ class DeleteUserButton extends StatelessWidget {
                   authService.deleteUserAccount(onError: onError);
                 },
               ),
+            ],
+            ),
+            },
+            ),
             ],
             title: tr(translationKeys.alertdialog.deleteAccount.title),
           );
