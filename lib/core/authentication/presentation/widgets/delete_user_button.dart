@@ -24,63 +24,45 @@ class DeleteUserButton extends StatelessWidget {
           showActionDialog(
             context,
             message: tr(translationKeys.alertdialog.deleteAccount.message),
+            disablePopOnPressed: true,
             actions: <DialogAction>[
               DialogAction(
                 actionTitle:
                     tr(translationKeys.alertdialog.deleteAccount.cancel),
                 dialogPurpose: DialogPurpose.secondary,
+                callback: () {
+                  Navigator.of(context, rootNavigator: true).pop();
+                }
               ),
               DialogAction(
                 actionTitle:
                     tr(translationKeys.alertdialog.deleteAccount.action),
                 dialogPurpose: DialogPurpose.danger,
                 callback: () {
-                  showActionDialog(
-                    context,
-                    message: tr(translationKeys.alertdialog.deleteAccount_passwortConfirmation.labelDescription),
-                    child: TextField(
-                      key: const Key("loginPasswordField"),
-                      obscureText: true,
-                      controller: controller,
-                      keyboardType: TextInputType.visiblePassword,
-                      //onSubmitted: (_) =>
-                      //    logIn(_mailController!.text, _passController.text),
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText:
-                        tr(translationKeys.onboardingScreen.loginPasswordHintlabel),
-                        errorText: _errorText(validated),
-                        hintStyle: theme.textTheme.bodyLarge?.copyWith(
-                          color: theme.colorScheme.secondary,
-                        ),
-                      ),
-                    ),
-                    actions: <DialogAction>[
-                  DialogAction(
-                    actionTitle:
-                    tr(translationKeys.alertdialog.deleteAccount_passwortConfirmation.cancel),
-                    dialogPurpose: DialogPurpose.secondary,
-                  ),
-                  DialogAction(
-                    actionTitle:
-                    tr(translationKeys.alertdialog.deleteAccount_passwortConfirmation.action),
-                    dialogPurpose: DialogPurpose.danger,
-                  callback: () {
-                  final authService = context.read<AuthenticationService>();
-                  final onError = (String message) => showAlertDialog(
-                    context,
-                    message: message,
-                    title: translationKeys.alertdialog.resetPassword.title,
-                    actionTitle: translationKeys.alertdialog.resetPassword.action,
-                    userMustDismissWithButton: true,
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text("Hello world"),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+
+                              },
+                              child: const Text("Ok"),
+                            ),
+                            TextButton(
+                                onPressed: () {
+
+                                },
+                                child: const Text("Abort"),
+                            )
+                          ],
+                        );
+                      },
                   );
-                  authService.deleteUserAccount(onError: onError);
                 },
               ),
-            ],
-            ),
-            },
-            ),
             ],
             title: tr(translationKeys.alertdialog.deleteAccount.title),
           );

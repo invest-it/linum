@@ -10,6 +10,7 @@ Future<bool?> showActionDialog(
   required List<DialogAction> actions,
   String title = 'alertdialog.error.title-standard',
   bool userMustDismissWithButton = true,
+  bool disablePopOnPressed = false,
 }) async {
   return showDialog<bool?>(
     context: context,
@@ -52,7 +53,9 @@ Future<bool?> showActionDialog(
                 ),
                 onPressed: () {
                   item.callback?.call();
-                  Navigator.of(context, rootNavigator: true).pop();
+                  if (!disablePopOnPressed) {
+                    Navigator.of(context, rootNavigator: true).pop();
+                  }
                 },
               );
             },
