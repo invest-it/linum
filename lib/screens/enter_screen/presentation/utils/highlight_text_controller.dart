@@ -20,13 +20,16 @@ class HighlightTextEditingController extends TextEditingController {
   final ExampleStringBuilder exampleStringBuilder;
   final ParsingFilters? parsingFilters;
   final ITranslator translator;
+  final GlobalKey cursorRefKey = GlobalKey(debugLabel: "TextEditingFieldCursorRef");
 
   HighlightTextEditingController({
     required this.exampleStringBuilder,
     required this.translator,
     this.parsingFilters,
     super.text,
-  });
+  }) {
+    cursorHeightOffset = verticalPadding*2 + verticalMargin*2 + 2;
+  }
 
   Map<String, Suggestion> _suggestions = {};
   List<Suggestion> get suggestions => _suggestions.values.toList();
@@ -35,6 +38,10 @@ class HighlightTextEditingController extends TextEditingController {
   StructuredParsedData? _parsed;
 
   int offsetCounter = 0;
+
+  final double verticalPadding = 2.5;
+  final double verticalMargin = 1;
+  late final double cursorHeightOffset;
 
 
   @override
@@ -72,6 +79,8 @@ class HighlightTextEditingController extends TextEditingController {
   }
 
 
+
+
   @override
   TextSpan buildTextSpan({required BuildContext context, TextStyle? style , required bool withComposing}) {
     assert(!value.composing.isValid || !withComposing || value.isComposingRangeValid);
@@ -80,11 +89,13 @@ class HighlightTextEditingController extends TextEditingController {
     parsedInputList.sortByCompare((element) => element.indices.start, (a, b) => a.compareTo(b));
 
     final builder = SpanListBuilder(
-        verticalPadding: 2.5, 
+        verticalPadding: verticalPadding,
         horizontalPadding: 2.5,
-        verticalMargin: 1.0,
+        verticalMargin: verticalMargin,
         borderRadius: const Radius.circular(5.0),
         baseStyle: style,
+        cursorRefKey: cursorRefKey,
+        cursor: selection.base.offset,
     );
 
     var counter = 0; // Current position in Text

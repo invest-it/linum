@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 
@@ -10,12 +9,18 @@ class SpanListBuilder {
   final double verticalMargin;
   final Radius borderRadius;
   final TextStyle? baseStyle;
+  final GlobalKey cursorRefKey;
+  final int cursor;
+
+  int _charCount = 0;
 
   SpanListBuilder({
     required this.verticalPadding,
     required this.horizontalPadding,
     required this.borderRadius,
     required this.verticalMargin,
+    required this.cursorRefKey,
+    required this.cursor,
     this.baseStyle,
   });
 
@@ -38,11 +43,14 @@ class SpanListBuilder {
       style = style?.copyWith(color: textColor);
     }
 
+    _charCount += 1;
+
     spans.add(
       WidgetSpan(
         child: Container(
           margin: EdgeInsets.symmetric(vertical: verticalMargin),
           padding: EdgeInsets.symmetric(vertical: verticalPadding),
+          key: _charCount == cursor ? cursorRefKey : null,
           child: Text(
             char,
             style: style,
@@ -50,6 +58,7 @@ class SpanListBuilder {
         ),
       ),
     );
+
   }
 
   EdgeInsets _getCorrectHighlightPadding(bool isStart, bool isEnd) {
@@ -105,8 +114,12 @@ class SpanListBuilder {
     List<InlineSpan>? spanList,
   }) {
     assert(char.isNotEmpty);
+
+    _charCount += 1;
+
     final span = WidgetSpan(
       child: Container(
+        key: _charCount == cursor ? cursorRefKey : null,
         margin: EdgeInsets.symmetric(vertical: verticalMargin),
         decoration: BoxDecoration(
           color: _highlightColor,
@@ -121,6 +134,8 @@ class SpanListBuilder {
         ),
       ),
     );
+
+
 
     if (spanList != null) {
       spanList.add(span);
@@ -160,6 +175,7 @@ class SpanListBuilder {
         addHighlightedChar(char: char, isEnd: true, spanList: spanList);
         continue;
       }
+
       addHighlightedChar(char: char, spanList: spanList);
     }
 

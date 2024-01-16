@@ -12,6 +12,9 @@
 | 1.0.4   | :x:                |
 | 1.1.0   | :heavy_check_mark: |
 | 1.1.1   | :white_check_mark: |
+| 1.2.0   | :white_check_mark: |
+| 1.2.1   | :white_check_mark: | Apple
+| 1.2.2   | :white_check_mark: | Android
 
 ## Reporting a Vulnerability
 

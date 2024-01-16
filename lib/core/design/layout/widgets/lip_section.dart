@@ -49,7 +49,7 @@ class LipSection extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleLarge,
 
                       /// Headlines are considered decorative elements and should therefore not be affected by system accessibility modifications - fixes #47
-                      textScaleFactor: 1.0,
+                      textScaler: TextScaler.noScaling,
                     ),
                   ),
                 ),
@@ -90,7 +90,7 @@ class LipSection extends StatelessWidget {
                       lipTitle,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.titleLarge,
-                      textScaleFactor: 1.0,
+                      textScaler: TextScaler.noScaling,
                     ),
                   ),
                 ),

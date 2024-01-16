@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/utils/base_translator.dart';
@@ -23,8 +25,7 @@ class EnterScreenFormView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final locale = context.locale;
-
-
+    
     return ChangeNotifierProxyProvider<EnterScreenViewModel, EnterScreenFormViewModel>(
       create: (context) => _createViewModel(context, locale.languageCode),
       update: (context, viewModel, formViewModel) {
@@ -36,61 +37,7 @@ class EnterScreenFormView extends StatelessWidget {
         );
         return formViewModel;
       },
-      child: EnterScreenScaffold(
-        bodyHeight: 400 + useKeyBoardHeight(context),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 24),
-          child: Column(
-            children: [
-              Flex(
-                direction: Axis.horizontal,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 40,
-                          vertical: 10,
-                        ),
-
-                        child: const EnterScreenTextField(),
-                      ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(
-                      right: 55,
-                      top: 18,
-                      bottom: 10,
-                    ),
-                    child: EnterScreenAbortButton(),
-                  ),
-                ],
-              ),
-              const Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                  child: QuickTagMenu(),
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.fromLTRB(40, 20, 40, 10),
-                child: const Flex(
-                  direction: Axis.horizontal,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    EnterScreenDeleteButton(),
-                    EnterScreenEntryTypeSwitch(),
-                    EnterScreenContinueButton(),
-                  ],
-                ),
-              ),
-              Container(
-                height: useKeyBoardHeight(context),
-              ),
-            ],
-          ),
-        ),
-      ),
+      child: const _EnterScreenFormView(),
     );
   }
 
@@ -118,6 +65,77 @@ class EnterScreenFormView extends StatelessWidget {
       initialData: initialData,
       entryType: screenViewModel.entryType,
       translator: translator,
+    );
+  }
+}
+
+class _EnterScreenFormView extends StatelessWidget {
+  const _EnterScreenFormView();
+
+
+  @override
+  Widget build(BuildContext context) {
+    final keyboardHeight = useKeyBoardHeight(context);
+    context.read<EnterScreenFormViewModel>()
+        .keyboardStateListener.inform(keyboardHeight);
+
+    final availableSpace = useScreenHeight(context) - 400 - 30;
+    final adjustedKeyboardHeight = min(keyboardHeight, availableSpace);
+
+    return EnterScreenScaffold(
+      bodyHeight: 400 + adjustedKeyboardHeight,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 24),
+        child: Column(
+          children: [
+            Flex(
+              direction: Axis.horizontal,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 40,
+                      vertical: 10,
+                    ),
+
+                    child: const EnterScreenTextField(),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(
+                    right: 55,
+                    top: 18,
+                    bottom: 10,
+                  ),
+                  child: EnterScreenAbortButton(),
+                ),
+              ],
+            ),
+            const Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                child: QuickTagMenu(),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 20, 40, 10),
+              child: const Flex(
+                direction: Axis.horizontal,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  EnterScreenDeleteButton(),
+                  EnterScreenEntryTypeSwitch(),
+                  EnterScreenContinueButton(),
+                ],
+              ),
+            ),
+            Container(
+              height: adjustedKeyboardHeight,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

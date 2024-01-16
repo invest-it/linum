@@ -229,6 +229,8 @@ const translationKeys = (
         'auth.user-deleted', // Der Benutzer wurde erfolgreich gelöscht!
     userNotFound:
         'auth.user-not-found', // Deine E-Mail oder dein Passwort sind nicht korrekt. Vielleicht hast du dich vertippt?
+    emailNotFound:
+        'auth.email-not-found', // Wir konnten keinen Benutzer mit der von dir angegebenen E-Mail-Adresse finden. Vielleicht hast du dich vertippt?
     weakPassword:
         'auth.weak-password', // Das eingegebene Passwort ist zu schwach. Bitte wähle ein stärkeres Passwort.
     wrongPassword:

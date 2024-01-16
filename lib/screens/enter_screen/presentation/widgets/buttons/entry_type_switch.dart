@@ -30,22 +30,34 @@ class EnterScreenEntryTypeSwitch extends StatelessWidget {
               value: EntryType.expense,
               label: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text(tr(translationKeys.enterScreen.button.expensesLabel), style: style?.copyWith(
-                  color: viewModel.entryType == EntryType.expense
-                      ? Theme.of(context).colorScheme.error
-                      : Colors.black26,
-                ),),
+                child: Text(
+                  tr(translationKeys.enterScreen.button.expensesLabel),
+                  style: style?.copyWith(
+                    color: viewModel.entryType == EntryType.expense
+                        ? Theme.of(context).colorScheme.error
+                        : Colors.black26,
+
+                    //TODO remove hardcoded textStyle once Material You is implemented
+                    fontSize: 12,
+                  ),
+                ),
               ),
             ),
             ButtonSegment(
               value: EntryType.income,
               label: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: Text(tr(translationKeys.enterScreen.button.incomeLabel), style: style?.copyWith(
+                child: Text(
+                  tr(translationKeys.enterScreen.button.incomeLabel),
+                  style: style?.copyWith(
                     color: viewModel.entryType == EntryType.income
                         ? Theme.of(context).colorScheme.primary
                         : Colors.black26,
-                ),),
+
+                    //TODO remove hardcoded textStyle once Material You is implemented
+                    fontSize: 12,
+                  ),
+                ),
               ),
             ),
           ],
