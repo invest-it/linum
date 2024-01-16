@@ -43,7 +43,8 @@
             "action": "Sí, eliminar cuenta",
             "cancel": "Cancelar",
             "message": "Esta acción no tiene marcha atrás.",
-            "title": "¿De verdad quieres borrar tu cuenta?"
+            "title": "¿De verdad quieres borrar tu cuenta?",
+            "password-input": "Por razones de seguridad, introduzca su contraseña."
         },
         "error": {
             "action-standard": "Okay",

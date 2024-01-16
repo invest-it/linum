@@ -43,7 +43,8 @@
             "action": "Ja, Account löschen",
             "cancel": "Abbrechen",
             "message": "Diese Aktion kann nicht rückgängig gemacht werden!",
-            "title": "Möchtest du deinen Account wirklich löschen?"
+            "title": "Möchtest du deinen Account wirklich löschen?",
+            "password-input": "Zur Sicherheit gebe bitte dein Passwort ein."
         },
         "error": {
             "action-standard": "Okay",

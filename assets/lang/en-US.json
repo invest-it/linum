@@ -43,7 +43,8 @@
             "action": "Yes, delete account",
             "cancel": "Cancel",
             "message": "This action cannot be reversed!",
-            "title": "Do you really want to delete your account?"
+            "title": "Do you really want to delete your account?",
+            "password-input": "For security reasons, please enter your password."
         },
         "error": {
             "action-standard": "Okay",

@@ -60,17 +60,10 @@ const translationKeys = (
       message:
           'alertdialog.delete-account.message', // Diese Aktion kann nicht rückgängig gemacht werden!
       title:
-          'alertdialog.delete-account.title' // Möchtest du deinen Account wirklich löschen?
+          'alertdialog.delete-account.title', // Möchtest du deinen Account wirklich löschen?
+      passwordInput:
+          'alertdialog.delete-account.password-input' // Zur Sicherheit gebe bitte dein Passwort ein.
     ),
-    deleteAccount_passwortConfirmation: (
-      labelDescription:
-       'alertdialog.delete-account-passwort.label-description', //Bitte trage dein Passwort ein
-      action: 'alertdialog.delete-account-passwort.action', // Account löschen
-      cancel: 'alertdialog.delete-account-passwort.cancel', // Abbrechen
-    ),
-
-
-
     error: (
       actionStandard: 'alertdialog.error.action-standard', // Okay
       messageStandard:

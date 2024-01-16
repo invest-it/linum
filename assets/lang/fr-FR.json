@@ -43,7 +43,8 @@
             "action": "Oui, supprimer le compte",
             "cancel": "Annuler",
             "message": "Cette action ne peut pas être annulée !",
-            "title": "Tu veux vraiment supprimer ton compte ?"
+            "title": "Tu veux vraiment supprimer ton compte ?",
+            "password-input": "Pour plus de sécurité, saisis ton mot de passe."
         },
         "error": {
             "action-standard": "Okay",

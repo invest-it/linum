@@ -43,7 +43,8 @@
             "action": "Ja, account verwijderen",
             "cancel": "Annuleren",
             "message": "Deze actie kan niet worden teruggedraaid!",
-            "title": "Wil je echt je account verwijderen?"
+            "title": "Wil je echt je account verwijderen?",
+            "password-input": "Voer om veiligheidsredenen je wachtwoord in."
         },
         "error": {
             "action-standard": "Okay",
