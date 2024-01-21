@@ -97,78 +97,26 @@ class TransactionTile extends StatelessWidget {
             toAnimate: false,
             position: const badge.BadgePosition(bottom: 23, start: 23),
             elevation: 1,
-            badgeColor: isFutureItem && transaction.repeatId != null
-                ? Theme.of(context).colorScheme.tertiaryContainer
-            //badgeColor for current transactions
-                : transaction.amount > 0
-            //badgeColor for future transactions
-                ? transaction.repeatId != null
-                ? Theme.of(context).colorScheme.tertiary
-            // ignore: use_full_hex_values_for_flutter_colors
-                : const Color(0x000000)
-                : transaction.repeatId != null
-                ? Theme.of(context).colorScheme.errorContainer
-            // ignore: use_full_hex_values_for_flutter_colors
-                : const Color(0x000000),
-            //cannot use the suggestion as it produces an unwanted white point
+            badgeColor: _selectBatchColor(context),
             badgeContent: transaction.repeatId != null
                 ? Icon(
               Icons.autorenew_rounded,
               color: isFutureItem
                   ? transaction.amount > 0
-                  ? Theme.of(context).colorScheme.tertiary
-                  : Theme.of(context).colorScheme.errorContainer
+                    ? Theme.of(context).colorScheme.tertiary
+                    : Theme.of(context).colorScheme.errorContainer
                   : Theme.of(context).colorScheme.secondaryContainer,
               size: 18,
             )
                 : const SizedBox(),
-            child: CircleAvatar(
-              backgroundColor: isFutureItem
-                  ? transaction.amount > 0
-                  ? Theme.of(context).colorScheme.tertiary
-              // FUTURE INCOME BACKGROUND
-                  : Theme.of(context).colorScheme.errorContainer
-              // FUTURE EXPENSE BACKGROUND
-                  : transaction.amount > 0
-                  ? Theme.of(context).colorScheme.secondary
-              // PRESENT INCOME BACKGROUND
-                  : Theme.of(context).colorScheme.secondary,
-              // PRESENT EXPENSE BACKGROUND
-              child: transaction.amount > 0
-                  ? Icon(
-                standardCategories[transaction.category]?.icon ??
-                    Icons.error,
-                color: isFutureItem
-                    ? Theme.of(context).colorScheme.onPrimary
-                // FUTURE INCOME ICON
-                    : Theme.of(context).colorScheme.tertiary,
-                // PRESENT INCOME ICON
-              )
-                  : Icon(
-                standardCategories[transaction.category]?.icon ??
-                    Icons.error,
-                color: isFutureItem
-                    ? Theme.of(context)
-                    .colorScheme
-                    .onPrimary // FUTURE EXPENSE ICON
-                    : Theme.of(context)
-                    .colorScheme
-                    .errorContainer, // PRESENT EXPENSE ICON
-              ),
+            child: TransactionTileIcon(
+              transaction: transaction,
+              isFutureItem: isFutureItem,
             ),
           ),
-          title: Text(
-            transaction.name != ""
-                ? transaction.name
-                : translateCategoryId(
-                    transaction.category,
-                    isExpense: transaction.amount <= 0,
-                  ),
-            style: isFutureItem
-                ? Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  fontStyle: FontStyle.italic,
-                  color: Theme.of(context).colorScheme.onSurface,
-                ) : Theme.of(context).textTheme.bodyLarge,
+          title: TransactionTileTitle(
+            transaction: transaction,
+            isFutureItem: isFutureItem,
           ),
           subtitle: Text(
             formatter.format(
@@ -186,6 +134,124 @@ class TransactionTile extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Color _selectBatchColor(BuildContext context) {
+    if (isFutureItem && transaction.repeatId != null) {
+      return Theme.of(context).colorScheme.tertiaryContainer;
+    }
+
+    if (transaction.repeatId != null && transaction.amount > 0) {
+      return Theme.of(context).colorScheme.tertiary;
+    }
+
+    if (transaction.repeatId != null) {
+      return Theme.of(context).colorScheme.errorContainer;
+    }
+
+    // ignore: use_full_hex_values_for_flutter_colors
+    return const Color(0x000000);
+    //cannot use the suggestion as it produces an unwanted white point
+  }
+}
+
+class TransactionTileTitle extends StatelessWidget {
+  final Transaction transaction;
+  final bool isFutureItem;
+
+  const TransactionTileTitle({
+    super.key,
+    required this.transaction,
+    required this.isFutureItem,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final titleText = transaction.name != ""
+        ? transaction.name
+        : translateCategoryId(
+            transaction.category,
+            isExpense: transaction.amount <= 0,
+          );
+
+    return Row(
+      children: [
+        Text(
+          titleText,
+          style: isFutureItem
+              ? Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  fontStyle: FontStyle.italic,
+                  color: Theme.of(context).colorScheme.onSurface,
+                )
+              : Theme.of(context).textTheme.bodyLarge,
+        ),
+        const SizedBox(width: 10,),
+        transaction.note != null
+            ? Badge(
+                largeSize: 20,
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                label: const Icon(
+                  Icons.edit_outlined,
+                  size: 12,
+                  color: Colors.white,
+                ),
+              )
+            : Container(),
+
+      ],
+    );
+  }
+}
+
+
+class TransactionTileIcon extends StatelessWidget {
+  final Transaction transaction;
+  final bool isFutureItem;
+  const TransactionTileIcon({
+    super.key,
+    required this.transaction,
+    required this.isFutureItem,
+  });
+
+  // TODO: Get rid of these ternaries
+  @override
+  Widget build(BuildContext context) {
+    return CircleAvatar(
+      backgroundColor: isFutureItem
+          ? transaction.amount > 0
+            ? Theme.of(context).colorScheme.tertiary
+      // FUTURE INCOME BACKGROUND
+            : Theme.of(context).colorScheme.errorContainer
+      // FUTURE EXPENSE BACKGROUND
+          : transaction.amount > 0
+            ? Theme.of(context).colorScheme.secondary
+      // PRESENT INCOME BACKGROUND
+            : Theme.of(context).colorScheme.secondary,
+      // PRESENT EXPENSE BACKGROUND
+      child: _selectIcon(context),
+    );
+  }
+
+  Icon _selectIcon(BuildContext context) {
+    if (transaction.amount > 0) {
+      return Icon(
+        standardCategories[transaction.category]?.icon ?? Icons.error,
+        color: isFutureItem
+          ? Theme.of(context).colorScheme.onPrimary
+      // FUTURE INCOME ICON
+          : Theme.of(context).colorScheme.tertiary,
+        // PRESENT INCOME ICON
+      );
+    }
+
+    return Icon(
+      standardCategories[transaction.category]?.icon ?? Icons.error,
+      color: isFutureItem
+          ? Theme.of(context).colorScheme.onPrimary
+      // FUTURE EXPENSE ICON
+          : Theme.of(context).colorScheme.errorContainer,
+      // PRESENT EXPENSE ICON
     );
   }
 }

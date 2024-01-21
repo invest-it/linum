@@ -7,6 +7,7 @@ class TagSelectorButton extends StatelessWidget {
   final String? symbol;
   final IconData? icon;
   final Color textColor;
+  final bool showBadge;
   final void Function() onTap;
   const TagSelectorButton({
     super.key,
@@ -15,6 +16,7 @@ class TagSelectorButton extends StatelessWidget {
     this.icon,
     this.textColor = Colors.black,
     this.onTap = _onTap,
+    this.showBadge = false,
   });
 
   @override
@@ -46,6 +48,21 @@ class TagSelectorButton extends StatelessWidget {
       );
     }
 
+    final badges = <Widget>[];
+    if (showBadge) {
+      badges.add(
+        Positioned(
+          top: -8,
+          right: -16,
+          child: Badge.count(
+            count: 1,
+            textColor: Colors.white,
+            largeSize: 14,
+          ),
+        )
+      );
+    }
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -54,14 +71,20 @@ class TagSelectorButton extends StatelessWidget {
           borderRadius: const BorderRadius.all(Radius.circular(5000)),
         ),
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
+        child: Stack(
+          clipBehavior: Clip.none,
           children: [
-            ...iconWidgets,
-            Text(
-              title,
-              style: TextStyle(color: textColor, fontSize: 14),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ...iconWidgets,
+                Text(
+                  title,
+                  style: TextStyle(color: textColor, fontSize: 14),
+                ),
+              ],
             ),
+            ...badges,
           ],
         ),
       ),
