@@ -13,6 +13,7 @@ class NotesView extends StatelessWidget {
   Widget build(BuildContext context) {
     final formViewModel = context.read<EnterScreenFormViewModel>();
     final notes = formViewModel.data.options.notes;
+    print(notes);
     final textController = TextEditingController(
       text: (notes != null && notes != "") ? notes : null,
     );
@@ -45,7 +46,7 @@ class NotesView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 24.0),
             onPressed: () {
               formViewModel.data = formViewModel.data.copyWithOptions(
-                notes: notes,
+                notes: textController.text,
               );
               Navigator.pop(context);
             },
