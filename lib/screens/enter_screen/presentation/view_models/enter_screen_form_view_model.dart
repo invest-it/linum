@@ -50,7 +50,6 @@ class EnterScreenFormViewModel extends ChangeNotifier {
   void handleUpdate(EntryType entryType) {
     if (entryType != _entryType) {
       _entryType = entryType;
-      // TODO: Check if this is enough
       notifyListeners();
     }
   }
