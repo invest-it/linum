@@ -319,5 +319,48 @@ class AuthenticationService extends SubscriptionHandler {
     _firebaseAuth.setLanguageCode(languageCode);
   }
 
+  Future<void> reauthenticate(
+      String password, {
+        void Function(String)? onComplete,
+        void Function(String)? onError,
+        void Function()? onNotVerified,
+      }) async {
+    onComplete ??= logger.i;
+    onError ??= logger.e;
+
+    try {
+      final user = _firebaseAuth.currentUser;
+      if (user == null) {
+        onError("No current user");
+        return;
+      }
+      // TODO: What about Goolge and Apple SignIn?
+      await user.reauthenticateWithCredential(
+          EmailAuthProvider.credential(
+              email: user.email!, password: password,
+          ),
+      );
+
+    } on FirebaseAuthException catch (e) {
+      logger.e(e.message);
+      onError("auth.${e.code}");
+    }
+  }
+
+
+
+  int add(int a, int b) {
+    return a + b;
+  }
+
+  num subtract({required num a, required num b}) {
+    return a - b;
+  }
+
+  void call() {
+    add(1, 2); // Returns 3
+    subtract(a: 1, b: 2); // Returns -1
+    subtract(b: 2, a: 1); // Returns -1
+  }
 
 }
