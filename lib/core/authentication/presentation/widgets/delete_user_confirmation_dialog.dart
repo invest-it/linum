@@ -9,16 +9,32 @@ class DeleteUserConfirmationDialog extends StatefulWidget {
   State<DeleteUserConfirmationDialog> createState() => _DeleteUserConfirmationDialogState();
 }
 
+TextEditingController _textEditingController = TextEditingController();
 class _DeleteUserConfirmationDialogState extends State<DeleteUserConfirmationDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Hello world"),
+      title: Text("Please write your password"),
       // TODO: Add password input field
+      content: TextField(
+        onChanged: (value){},
+        controller: _textEditingController,
+        decoration: InputDecoration(hintText: "Enter Password"),
+      ),
       actions: [
         TextButton(
           onPressed: () {
             // TODO: Read out password and print to console
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  // Retrieve the text that the user has entered by using the
+                  // TextEditingController.
+                  content: Text(_textEditingController.text),
+                );
+              },
+            );
             Navigator.of(context, rootNavigator: true).pop();
           },
           child: const Text("Ok"),
