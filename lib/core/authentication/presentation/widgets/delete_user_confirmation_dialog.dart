@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/generated/translation_keys.g.dart';
+import 'package:logger/logger.dart';
 
 class DeleteUserConfirmationDialog extends StatefulWidget {
   const DeleteUserConfirmationDialog({super.key});
@@ -14,28 +15,23 @@ class _DeleteUserConfirmationDialogState extends State<DeleteUserConfirmationDia
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Please write your password"),
+      title: Text(
+        "Please write your password",
+        style: Theme.of(context).textTheme.headlineSmall,
+      ),
       // TODO: Add password input field
       content: TextField(
         onChanged: (value){},
         controller: _textEditingController,
-        decoration: InputDecoration(hintText: "Enter Password"),
+        decoration: const InputDecoration(hintText: "Enter Password"),
+        keyboardType: TextInputType.visiblePassword,
+        obscureText: true,
       ),
       actions: [
         TextButton(
-          onPressed: () {
+          onPressed: () async {
             // TODO: Read out password and print to console
-            showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  // Retrieve the text that the user has entered by using the
-                  // TextEditingController.
-                  content: Text(_textEditingController.text),
-                );
-              },
-            );
-            Navigator.of(context, rootNavigator: true).pop();
+            print(_textEditingController.text);
           },
           child: const Text("Ok"),
         ),
