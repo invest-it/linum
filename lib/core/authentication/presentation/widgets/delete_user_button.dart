@@ -43,7 +43,7 @@ class DeleteUserButton extends StatelessWidget {
                     },
                   );
                   await closed;
-                  Navigator.of(context, rootNavigator: true).pop();
+                  if (context.mounted) Navigator.of(context, rootNavigator: true).pop();
                 },
               ),
             ],
