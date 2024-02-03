@@ -2,11 +2,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/core/authentication/domain/services/authentication_service.dart';
 import 'package:linum/generated/translation_keys.g.dart';
-import 'package:logger/logger.dart';
-import 'package:provider/provider.dart';
+
 
 class DeleteUserConfirmationDialog extends StatefulWidget {
-  const DeleteUserConfirmationDialog({super.key});
+  final AuthenticationService authService;
+  const DeleteUserConfirmationDialog({super.key, required this.authService});
 
   @override
   State<DeleteUserConfirmationDialog> createState() => _DeleteUserConfirmationDialogState();
@@ -18,10 +18,9 @@ class _DeleteUserConfirmationDialogState extends State<DeleteUserConfirmationDia
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
-        "Please write your password",
+        "Please enter your password",
         style: Theme.of(context).textTheme.headlineSmall,
       ),
-      // TODO: Add password input field
       content: TextField(
         onChanged: (value){},
         controller: _textEditingController,
@@ -32,10 +31,8 @@ class _DeleteUserConfirmationDialogState extends State<DeleteUserConfirmationDia
       actions: [
         TextButton(
           onPressed: () async {
-            // TODO: Read out password and print to console
-            print(_textEditingController.text);
-            final authService = context.read<AuthenticationService>();
-
+            widget.authService.reauthenticate(_textEditingController.text);
+            // TODO: Handle authentication result
           },
           child: const Text("Ok"),
         ),
