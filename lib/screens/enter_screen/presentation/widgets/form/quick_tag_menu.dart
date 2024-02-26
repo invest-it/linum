@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/enums/entry_type.dart';
+import 'package:linum/core/balance/services/algorithm_service.dart';
 import 'package:linum/core/categories/core/constants/standard_categories.dart';
 import 'package:linum/core/categories/core/utils/translate_category.dart';
 import 'package:linum/generated/translation_keys.g.dart';
@@ -46,6 +47,8 @@ class QuickTagMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AlgorithmService algorithmService =
+    context.watch<AlgorithmService>();
     return Flex(
       crossAxisAlignment: CrossAxisAlignment.start,
       direction: Axis.horizontal,
@@ -53,6 +56,12 @@ class QuickTagMenu extends StatelessWidget {
         Expanded(
           child: Consumer<EnterScreenFormViewModel>(
             builder: (context, formViewModel, _,) {
+              if(algorithmService.state.shownMonth.year != DateTime.now().year
+                  || algorithmService.state.shownMonth.month != DateTime.now().month){
+                formViewModel.data = formViewModel.data.copyWithOptions(
+                  date: algorithmService.state.shownMonth.toIso8601String(),
+                );
+              }
               return Wrap(
                 spacing: 5,
                 runSpacing: 5,
