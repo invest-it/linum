@@ -48,6 +48,7 @@ class EnterScreenFormView extends StatelessWidget {
       repeatConfigurations: repeatConfigurations,
       translator: translator,
     );
+
     final screenViewModel = context.read<EnterScreenViewModel>();
     builder
       ..useTransaction(
@@ -58,6 +59,7 @@ class EnterScreenFormView extends StatelessWidget {
         screenViewModel.initialSerialTransaction,
       )
       ..entryType = screenViewModel.entryType;
+
 
     final initialData = builder.build();
     return EnterScreenFormViewModel(
