@@ -13,7 +13,6 @@ class NotesView extends StatelessWidget {
   Widget build(BuildContext context) {
     final formViewModel = context.read<EnterScreenFormViewModel>();
     final notes = formViewModel.data.options.notes;
-    print(notes);
     final textController = TextEditingController(
       text: (notes != null && notes != "") ? notes : null,
     );

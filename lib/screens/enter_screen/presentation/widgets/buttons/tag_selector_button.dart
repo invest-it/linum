@@ -59,7 +59,7 @@ class TagSelectorButton extends StatelessWidget {
             textColor: Colors.white,
             largeSize: 14,
           ),
-        )
+        ),
       );
     }
 

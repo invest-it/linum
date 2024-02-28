@@ -141,8 +141,3 @@ class TransactionTile extends StatelessWidget {
     return Future.value(false);
   }
 }
-
-
-
-
-
