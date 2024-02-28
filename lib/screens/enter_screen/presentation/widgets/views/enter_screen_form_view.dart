@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/utils/base_translator.dart';
+import 'package:linum/core/balance/services/algorithm_service.dart';
 import 'package:linum/core/design/layout/utils/media_query_accessors.dart';
 import 'package:linum/core/repeating/constants/standard_repeat_configs.dart';
 import 'package:linum/features/currencies/core/constants/standard_currencies.dart';
@@ -48,6 +49,7 @@ class EnterScreenFormView extends StatelessWidget {
       repeatConfigurations: repeatConfigurations,
       translator: translator,
     );
+
     final screenViewModel = context.read<EnterScreenViewModel>();
     builder
       ..useTransaction(
@@ -58,6 +60,7 @@ class EnterScreenFormView extends StatelessWidget {
         screenViewModel.initialSerialTransaction,
       )
       ..entryType = screenViewModel.entryType;
+
 
     final initialData = builder.build();
     return EnterScreenFormViewModel(

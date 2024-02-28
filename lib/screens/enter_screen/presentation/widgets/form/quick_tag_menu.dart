@@ -47,8 +47,6 @@ class QuickTagMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AlgorithmService algorithmService =
-    context.watch<AlgorithmService>();
     return Flex(
       crossAxisAlignment: CrossAxisAlignment.start,
       direction: Axis.horizontal,
@@ -56,12 +54,6 @@ class QuickTagMenu extends StatelessWidget {
         Expanded(
           child: Consumer<EnterScreenFormViewModel>(
             builder: (context, formViewModel, _,) {
-              if(algorithmService.state.shownMonth.year != DateTime.now().year
-                  || algorithmService.state.shownMonth.month != DateTime.now().month){
-                formViewModel.data = formViewModel.data.copyWithOptions(
-                  date: algorithmService.state.shownMonth.toIso8601String(),
-                );
-              }
               return Wrap(
                 spacing: 5,
                 runSpacing: 5,
