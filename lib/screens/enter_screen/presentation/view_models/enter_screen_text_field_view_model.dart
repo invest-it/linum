@@ -74,7 +74,6 @@ class EnterScreenTextFieldViewModel extends ChangeNotifier {
 
     textController.text = _formViewModel.data.parsed.raw;
 
-    // TODO Get rid of this
 
     textController.addListener(() {
       final parsedData = textController.parsed;

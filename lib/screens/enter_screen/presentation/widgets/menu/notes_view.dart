@@ -45,7 +45,7 @@ class NotesView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 24.0),
             onPressed: () {
               formViewModel.data = formViewModel.data.copyWithOptions(
-                notes: notes,
+                notes: textController.text,
               );
               Navigator.pop(context);
             },

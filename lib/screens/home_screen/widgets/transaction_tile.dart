@@ -7,12 +7,12 @@ import 'package:linum/common/components/dialogs/show_transaction_delete_dialog.d
 import 'package:linum/core/balance/models/transaction.dart';
 import 'package:linum/core/balance/services/balance_data_service.dart';
 import 'package:linum/core/balance/utils/transaction_amount_formatter.dart';
-import 'package:linum/core/categories/core/constants/standard_categories.dart';
-import 'package:linum/core/categories/core/utils/translate_category.dart';
-import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/enter_screen/presentation/utils/show_enter_screen.dart';
 import 'package:linum/screens/home_screen/widgets/serial_delete_mode_selection_view.dart';
 import 'package:linum/screens/home_screen/widgets/transaction_amount_display.dart';
+import 'package:linum/screens/home_screen/widgets/transaction_tile_background.dart';
+import 'package:linum/screens/home_screen/widgets/transaction_tile_icon.dart';
+import 'package:linum/screens/home_screen/widgets/transaction_tile_title.dart';
 import 'package:provider/provider.dart';
 
 class TransactionTile extends StatelessWidget {
@@ -32,143 +32,42 @@ class TransactionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final String langCode = context.locale.languageCode;
     final DateFormat formatter = DateFormat('EEEE, dd. MMMM yyyy', langCode);
-    final balanceDataService = context.read<BalanceDataService>();
+
 
     return GestureDetector(
       onTap: () {
         showEnterScreen(context, transaction: transaction);
       },
       child: Dismissible(
-        background: ColoredBox(
-          color: Colors.red,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 30),
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 16.0,
-                  children: [
-                    Text(
-                      tr(translationKeys.listview.dismissible.labelDelete),
-                      style: Theme.of(context).textTheme.labelLarge,
-                    ),
-                    Icon(
-                      Icons.delete,
-                      color: Theme.of(context).colorScheme.secondaryContainer,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
+        background: const TransactionTileBackground(),
         key: Key(transaction.id),
         direction: DismissDirection.endToStart,
         dismissThresholds: const {
           DismissDirection.endToStart: 0.5,
         },
-        confirmDismiss: (DismissDirection direction)  {
-          // TODO refactor! SerialDeleteSelectionView has duplicated code from the enterscreen's serial transaction change mode selection.
-          if(transaction.repeatId != null){
-            const radius = Radius.circular(16.0);
-            showModalBottomSheet(
-              context: context,
-              builder: (context) {
-                return SerialDeleteModeSelectionView(transaction: transaction,);
-              },
-              isDismissible: true,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(topLeft: radius, topRight: radius),
-              ),
-            );
-          } else {
-            showTransactionDeleteDialog(context, () async {
-              balanceDataService.removeTransaction(transaction);
-            });
-          }
-          return Future.value(false);
-        },
+        confirmDismiss: (DismissDirection dismissDirection) => _confirmDismiss(context),
         child: ListTile(
           leading: badge.Badge(
             padding: const EdgeInsets.all(2),
             toAnimate: false,
             position: const badge.BadgePosition(bottom: 23, start: 23),
             elevation: 1,
-            badgeColor: isFutureItem && transaction.repeatId != null
-                ? Theme.of(context).colorScheme.tertiaryContainer
-            //badgeColor for current transactions
-                : transaction.amount > 0
-            //badgeColor for future transactions
-                ? transaction.repeatId != null
-                ? Theme.of(context).colorScheme.tertiary
-            // ignore: use_full_hex_values_for_flutter_colors
-                : const Color(0x000000)
-                : transaction.repeatId != null
-                ? Theme.of(context).colorScheme.errorContainer
-            // ignore: use_full_hex_values_for_flutter_colors
-                : const Color(0x000000),
-            //cannot use the suggestion as it produces an unwanted white point
+            badgeColor: _selectBadgeColor(context),
             badgeContent: transaction.repeatId != null
                 ? Icon(
               Icons.autorenew_rounded,
-              color: isFutureItem
-                  ? transaction.amount > 0
-                  ? Theme.of(context).colorScheme.tertiary
-                  : Theme.of(context).colorScheme.errorContainer
-                  : Theme.of(context).colorScheme.secondaryContainer,
+              color: _selectBadgeContentColor(context),
               size: 18,
             )
                 : const SizedBox(),
-            child: CircleAvatar(
-              backgroundColor: isFutureItem
-                  ? transaction.amount > 0
-                  ? Theme.of(context).colorScheme.tertiary
-              // FUTURE INCOME BACKGROUND
-                  : Theme.of(context).colorScheme.errorContainer
-              // FUTURE EXPENSE BACKGROUND
-                  : transaction.amount > 0
-                  ? Theme.of(context).colorScheme.secondary
-              // PRESENT INCOME BACKGROUND
-                  : Theme.of(context).colorScheme.secondary,
-              // PRESENT EXPENSE BACKGROUND
-              child: transaction.amount > 0
-                  ? Icon(
-                standardCategories[transaction.category]?.icon ??
-                    Icons.error,
-                color: isFutureItem
-                    ? Theme.of(context).colorScheme.onPrimary
-                // FUTURE INCOME ICON
-                    : Theme.of(context).colorScheme.tertiary,
-                // PRESENT INCOME ICON
-              )
-                  : Icon(
-                standardCategories[transaction.category]?.icon ??
-                    Icons.error,
-                color: isFutureItem
-                    ? Theme.of(context)
-                    .colorScheme
-                    .onPrimary // FUTURE EXPENSE ICON
-                    : Theme.of(context)
-                    .colorScheme
-                    .errorContainer, // PRESENT EXPENSE ICON
-              ),
+            child: TransactionTileIcon(
+              transaction: transaction,
+              isFutureItem: isFutureItem,
             ),
           ),
-          title: Text(
-            transaction.name != ""
-                ? transaction.name
-                : translateCategoryId(
-                    transaction.category,
-                    isExpense: transaction.amount <= 0,
-                  ),
-            style: isFutureItem
-                ? Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  fontStyle: FontStyle.italic,
-                  color: Theme.of(context).colorScheme.onSurface,
-                ) : Theme.of(context).textTheme.bodyLarge,
+          title: TransactionTileTitle(
+            transaction: transaction,
+            isFutureItem: isFutureItem,
           ),
           subtitle: Text(
             formatter.format(
@@ -176,9 +75,10 @@ class TransactionTile extends StatelessWidget {
             ).toUpperCase(),
             style: isFutureItem
                 ? Theme.of(context).textTheme.labelSmall!.copyWith(
-                  fontStyle: FontStyle.italic,
-                  color: Theme.of(context).colorScheme.onSurface,
-                ) : Theme.of(context).textTheme.labelSmall,
+                    fontStyle: FontStyle.italic,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  )
+                : Theme.of(context).textTheme.labelSmall,
           ),
           trailing: TransactionAmountDisplay(
             transaction: transaction,
@@ -187,5 +87,57 @@ class TransactionTile extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Color _selectBadgeColor(BuildContext context) {
+    if (isFutureItem && transaction.repeatId != null) {
+      return Theme.of(context).colorScheme.tertiaryContainer;
+    }
+
+    if (transaction.repeatId != null && transaction.amount > 0) {
+      return Theme.of(context).colorScheme.tertiary;
+    }
+
+    if (transaction.repeatId != null) {
+      return Theme.of(context).colorScheme.errorContainer;
+    }
+
+    // ignore: use_full_hex_values_for_flutter_colors
+    return const Color(0x000000);
+    //cannot use the suggestion as it produces an unwanted white point
+  }
+
+  Color _selectBadgeContentColor(BuildContext context) {
+    if (!isFutureItem) {
+      return Theme.of(context).colorScheme.secondaryContainer;
+    }
+
+    return transaction.amount > 0
+        ? Theme.of(context).colorScheme.tertiary
+        : Theme.of(context).colorScheme.errorContainer;
+  }
+
+  Future<bool?> _confirmDismiss(BuildContext context) async {
+    // TODO refactor! SerialDeleteSelectionView has duplicated code from the enterscreen's serial transaction change mode selection.
+    final balanceDataService = context.read<BalanceDataService>();
+
+    if(transaction.repeatId != null){
+      const radius = Radius.circular(16.0);
+      showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return SerialDeleteModeSelectionView(transaction: transaction,);
+        },
+        isDismissible: true,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(topLeft: radius, topRight: radius),
+        ),
+      );
+    } else {
+      showTransactionDeleteDialog(context, () async {
+        balanceDataService.removeTransaction(transaction);
+      });
+    }
+    return Future.value(false);
   }
 }
