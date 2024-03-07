@@ -95,6 +95,7 @@ class _ScreenLayoutState extends State<ScreenLayout>
           showEnterScreen(context);
         },
         elevation: 2.0,
+        shape: const CircleBorder(),
         backgroundColor: Theme.of(context).colorScheme.secondary,
         child: const Icon(Icons.add),
       ),
