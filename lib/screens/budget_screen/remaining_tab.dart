@@ -12,7 +12,7 @@ class RemainingTab extends StatelessWidget {
         children: [
           MainBudgetChart(
             maxBudget: 1000,
-            currentExpenses: 500,
+            currentExpenses: 300,
           ),
         ],
       ),

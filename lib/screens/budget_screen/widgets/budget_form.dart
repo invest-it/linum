@@ -34,8 +34,8 @@ class BudgetForm extends StatelessWidget {
           dropdownMenuEntries: const [
             DropdownMenuEntry(value: "monthly", label: "Monatlich"),
             DropdownMenuEntry(value: "yearly", label: "Jährlich"),
-          ]
-        )
+          ],
+        ),
       ],
     );
   }
