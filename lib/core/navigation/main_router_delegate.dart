@@ -86,7 +86,7 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
       _pageStack.add(mainRoutes.pageFromRoute(MainRoute.sandbox));
     }
     if (_pageStack.isEmpty) {
-      _pageStack.add(mainRoutes.pageFromRoute(MainRoute.home));
+      _pageStack.add(mainRoutes.pageFromRoute(MainRoute.budget)); // TODO: Change back to home
     }
     if (pinCodeService.pinSet && !pinCodeService.sessionIsSafe) {
       return _buildPinCodeStack(pinCodeService);
