@@ -54,6 +54,7 @@ class BalanceDataStreamConsumer2<S1, T> extends SingleChildStatelessWidget {
     super.key,
     required this.builder,
     required this.transformer,
+    super.child,
   });
 
   @override
@@ -89,6 +90,7 @@ class BalanceDataStreamConsumer3<S1, S2, T> extends SingleChildStatelessWidget {
     super.key,
     required this.builder,
     required this.transformer,
+    super.child,
   });
 
   @override
