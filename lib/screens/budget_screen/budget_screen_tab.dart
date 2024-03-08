@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linum/common/utils/silent_scroll.dart';
 
 class BudgetScreenTab extends StatelessWidget {
   final Widget child;
@@ -8,7 +9,10 @@ class BudgetScreenTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: child,
+      child: ScrollConfiguration(
+        behavior: const SilentScroll(),
+        child: SingleChildScrollView(child: child),
+      ),
     );
   }
 }

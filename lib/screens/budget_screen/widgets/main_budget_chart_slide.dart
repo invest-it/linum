@@ -18,7 +18,6 @@ class MainBudgetChartSlide extends StatelessWidget {
     final viewModel = context.read<BudgetScreenViewModel>();
 
     return Column(
-
       children: [
         Row(
           children: [
@@ -46,7 +45,7 @@ class MainBudgetChartSlide extends StatelessWidget {
             ),
           ],
         ),
-        Text(dateFormat.format(algorithms.state.shownMonth))
+        Text(dateFormat.format(algorithms.state.shownMonth)),
       ],
     );
   }
