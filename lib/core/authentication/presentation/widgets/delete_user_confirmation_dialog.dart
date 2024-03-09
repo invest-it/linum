@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:linum/core/authentication/domain/services/authentication_service.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 
+import '../../../../common/components/dialogs/dialog_action.dart';
+import '../../../../common/components/dialogs/show_alert_dialog.dart';
+
 
 class DeleteUserConfirmationDialog extends StatefulWidget {
   final AuthenticationService authService;
@@ -12,8 +15,10 @@ class DeleteUserConfirmationDialog extends StatefulWidget {
   State<DeleteUserConfirmationDialog> createState() => _DeleteUserConfirmationDialogState();
 }
 
-TextEditingController _textEditingController = TextEditingController();
+
 class _DeleteUserConfirmationDialogState extends State<DeleteUserConfirmationDialog> {
+  final _textEditingController = TextEditingController();
+  bool? _reauthenticateResult = null; //null, da Variabel nicht inisalisiert ist
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -21,18 +26,33 @@ class _DeleteUserConfirmationDialogState extends State<DeleteUserConfirmationDia
         "Please enter your password",
         style: Theme.of(context).textTheme.headlineSmall,
       ),
-      content: TextField(
+      content: TextFormField(
         onChanged: (value){},
         controller: _textEditingController,
         decoration: const InputDecoration(hintText: "Enter Password"),
         keyboardType: TextInputType.visiblePassword,
         obscureText: true,
+        autovalidateMode: AutovalidateMode.always,
+        validator: (String? value) {
+          if (_reauthenticateResult == false){
+            return 'The password is not correct';
+          }
+          return null;
+        }
       ),
       actions: [
         TextButton(
           onPressed: () async {
-            widget.authService.reauthenticate(_textEditingController.text);
+            final result = await widget.authService.reauthenticate(_textEditingController.text);
             // TODO: Handle authentication result
+            if(result){
+              if (context.mounted) Navigator.of(context, rootNavigator: true).pop();
+              widget.authService.deleteUserAccount();
+              return;
+            }
+            setState((){
+              _reauthenticateResult = result;
+            });
           },
           child: const Text("Ok"),
         ),
