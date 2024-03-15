@@ -2,14 +2,16 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/utils/base_translator.dart';
 import 'package:linum/generated/translation_keys.g.dart';
+import 'package:linum/screens/enter_screen/domain/models/suggestion_filters.dart';
 import 'package:linum/screens/enter_screen/presentation/view_models/enter_screen_form_view_model.dart';
 import 'package:linum/screens/enter_screen/presentation/view_models/enter_screen_text_field_view_model.dart';
 import 'package:provider/provider.dart';
 
 class EnterScreenTextField extends StatelessWidget {
-
+  final ParsingFilters? parsingFilters;
   const EnterScreenTextField({
     super.key,
+    this.parsingFilters,
   });
 
   @override
@@ -27,12 +29,16 @@ class EnterScreenTextField extends StatelessWidget {
         EnterScreenTextFieldViewModel
     >(
       create: (context) => EnterScreenTextFieldViewModel(
-          context, BaseTranslator(locale.languageCode),
+          context,
+          BaseTranslator(locale.languageCode),
+          parsingFilters: parsingFilters,
       ),
       update: (context, formViewModel, textFieldViewModel) {
         if (textFieldViewModel == null) {
           return EnterScreenTextFieldViewModel(
-            context, BaseTranslator(locale.languageCode),
+            context,
+            BaseTranslator(locale.languageCode),
+            parsingFilters: parsingFilters,
           );
         }
         textFieldViewModel.handleUpdate(context);
