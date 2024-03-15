@@ -22,19 +22,19 @@ class ExpenseTab extends StatelessWidget {
                 color: Colors.redAccent,
               ),
               CategoryStatistics(
-                categoryId: "rent",
+                categoryId: "house",
                 type: EntryType.expense,
                 amount: 600,
                 color: Colors.green,
               ),
               CategoryStatistics(
-                categoryId: "travel",
+                categoryId: "freetime",
                 type: EntryType.expense,
                 amount: 1000,
                 color: Colors.indigo,
               ),
               CategoryStatistics(
-                categoryId: "entertainment",
+                categoryId: "lifestyle",
                 type: EntryType.expense,
                 amount: 200,
                 color: Colors.lightBlue,

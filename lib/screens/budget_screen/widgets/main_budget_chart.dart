@@ -142,8 +142,6 @@ class RadialProgressPainter extends CustomPainter {
       // TODO: This is not ready set, but will probably be removed anyways
       final r = radius + 6.0;
       final labelSize = _calculateTextSize(progressLabel!, labelStyle, direction: ui.TextDirection.rtl);
-      print(progressSweepAngle + startAngle);
-      print(cos(progressSweepAngle + startAngle));
       canvas.drawParagraph(
         _buildParagraph(size, progressLabel!, TextAlign.end, labelStyle, direction: ui.TextDirection.rtl)
           ..layout(ui.ParagraphConstraints(width: labelSize.width)),
