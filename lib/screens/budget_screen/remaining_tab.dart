@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:linum/screens/budget_screen/budget_screen_tab.dart';
+import 'package:linum/common/widgets/screen_tab.dart';
 import 'package:linum/screens/budget_screen/widgets/category_budget_chart.dart';
 import 'package:linum/screens/budget_screen/widgets/main_budget_chart_slide.dart';
 
@@ -8,7 +8,7 @@ class RemainingTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const BudgetScreenTab(
+    return const ScreenTab(
       child: Column(
         children: [
           Padding(

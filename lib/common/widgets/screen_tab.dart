@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:linum/common/utils/silent_scroll.dart';
 
-class BudgetScreenTab extends StatelessWidget {
+/// Use this widget if you need to embed an entire screen inside an Material Tab
+class ScreenTab extends StatelessWidget {
   final Widget child;
-  const BudgetScreenTab({super.key, required this.child});
+  const ScreenTab({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

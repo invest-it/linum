@@ -105,7 +105,7 @@ class _BudgetScreenState extends State<BudgetScreen> with TickerProviderStateMix
             ),
           ),
         ],
-      )
+      ),
     );
   }
 }

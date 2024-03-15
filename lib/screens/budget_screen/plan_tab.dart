@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:linum/screens/budget_screen/budget_screen_tab.dart';
+import 'package:linum/common/widgets/screen_tab.dart';
 
 class PlanTab extends StatelessWidget {
   const PlanTab({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const BudgetScreenTab(
+    return const ScreenTab(
       child: Column(),
     );
   }

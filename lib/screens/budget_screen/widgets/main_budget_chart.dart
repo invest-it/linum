@@ -55,7 +55,7 @@ class RadialProgressPainter extends CustomPainter {
       String content,
       TextAlign align,
       TextStyle? style,
-      {ui.TextDirection? direction = ui.TextDirection.ltr}
+      {ui.TextDirection? direction = ui.TextDirection.ltr,}
   ) {
     final paragraphBuilder = ui.ParagraphBuilder(
       ui.ParagraphStyle(

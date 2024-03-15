@@ -49,7 +49,7 @@ class CategoryBudgetChart extends StatelessWidget {
                     child: Text(label, style: theme.textTheme.headlineSmall,),
                   ),
                 ),
-                Text(formatter.format(budget - expenses), style: theme.textTheme.headlineMedium)
+                Text(formatter.format(budget - expenses), style: theme.textTheme.headlineMedium),
               ],
             ),
             Padding(
