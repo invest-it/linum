@@ -3,12 +3,15 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:linum/common/components/dialogs/show_action_dialog.dart';
 import 'package:linum/common/utils/subscription_handler.dart';
 import 'package:linum/core/authentication/domain/utils/apple_utils.dart';
 import 'package:linum/core/authentication/domain/utils/firebase_auth_extensions.dart';
 import 'package:linum/core/authentication/domain/utils/google_utils.dart';
+import 'package:linum/core/authentication/presentation/widgets/forgot_password_action_lip/registered_user_input_field.dart';
 import 'package:linum/core/events/event_service.dart';
 import 'package:linum/core/events/event_types.dart';
 import 'package:linum/generated/translation_keys.g.dart';
@@ -90,6 +93,80 @@ class AuthenticationService extends SubscriptionHandler {
     }
   }
 
+  Future<void> reAuthenticateWithProvider({
+    void Function(String)? onComplete,
+    void Function(String)? onError,
+    required BuildContext context,
+  }) async {
+    onComplete ??= logger.i;
+    onError ??= logger.e;
+    final user = _firebaseAuth.currentUser;
+    if (user != null) {
+      final String providerId = _firebaseAuth.currentUser!.providerData[0].providerId;
+
+      if (providerId == 'google.com') {
+        reAuthenticateWithGoogle(onComplete: onComplete, onError: onError);
+      } else if (providerId == 'apple.com') {
+        reAuthenticateWithApple(onComplete: onComplete, onError: onError);
+      } else if (providerId == 'password') {
+        final TextEditingController passwordController = TextEditingController();
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(tr(translationKeys.alertdialog.reauthenticate.title), style: Theme.of(context).textTheme.headlineMedium),
+              content: TextField(
+                controller: passwordController,
+                decoration: InputDecoration(hintText: tr(translationKeys.alertdialog.reauthenticate.message)),
+                obscureText: true,
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: Text(tr(translationKeys.alertdialog.reauthenticate.cancel)),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
+                  child: Text(tr(translationKeys.alertdialog.reauthenticate.action)),
+                  onPressed: () async {
+                    Navigator.of(context).pop();
+                    reAuthenticateWithEmail(passwordController.text, onComplete: onComplete, onError: onError);
+                  },
+                ),
+              ],
+            );
+          },
+        );
+        //onError("Signed in with email");
+      } else {
+        onError("Signed in with another provider");
+      }
+    } else {
+      onError("No user is currently signed in");
+    }
+  }
+
+  Future<void> reAuthenticateWithEmail(String password, {
+    void Function(String)? onComplete,
+    void Function(String)? onError,
+  }) async {
+    onComplete ??= logger.i;
+    onError ??= logger.e;
+    if(_firebaseAuth.currentUser == null){
+      return onError("No user is currently signed in");
+    }
+    final String email = _firebaseAuth.currentUser!.email!;
+    try {
+      final AuthCredential credential = EmailAuthProvider.credential(email: email, password: password);
+      await _firebaseAuth.currentUser!.reauthenticateWithCredential(credential);
+      onComplete("Successfully re-authenticated with Firebase using Email and Password.");
+    } on FirebaseAuthException catch (e) {
+      onError("Failed to re-authenticate: ${e.code}");
+    }
+  }
+
+
   Future<void> signUp(
     String email,
     String password, {
@@ -140,6 +217,34 @@ class AuthenticationService extends SubscriptionHandler {
     await handleUserChange();
   }
 
+  Future<void> reAuthenticateWithGoogle({
+    void Function(String)? onComplete,
+    void Function(String)? onError,
+  }) async {
+    onComplete ??= logger.i;
+    onError ??= logger.e;
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    try {
+      final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+
+      if (googleSignInAccount != null) {
+        final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
+        final OAuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleSignInAuthentication.accessToken,
+          idToken: googleSignInAuthentication.idToken,
+        );
+        await FirebaseAuth.instance.currentUser!.reauthenticateWithCredential(credential);
+      }
+      onComplete("Successfully signed in to Firebase");
+      await handleUserChange();
+    }on FirebaseAuthException catch (e) {
+      logger.e(e.message);
+      onError("auth.${e.code}");
+    }catch (e) {
+      onError("An unexpected error occurred: $e");
+    }
+  }
+
   Future<void> signInWithApple({
     void Function(String)? onComplete,
     void Function(String)? onError,
@@ -164,6 +269,45 @@ class AuthenticationService extends SubscriptionHandler {
 
     onComplete("Successfully signed in to Firebase");
     await handleUserChange();
+  }
+
+
+  Future<void> reAuthenticateWithApple({
+    void Function(String)? onComplete,
+    void Function(String)? onError,
+  }) async {
+    onComplete ??= logger.i;
+    onError ??= logger.e;
+
+    try {
+      final appleCredential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+      );
+
+      final oauthCredential = OAuthProvider("apple.com").credential(
+        idToken: appleCredential.identityToken,
+        accessToken: appleCredential.authorizationCode, // This might not be necessary for reauthentication
+      );
+
+      await FirebaseAuth.instance.currentUser!.reauthenticateWithCredential(oauthCredential);
+      onComplete("Successfully re-authenticated with Firebase using Apple Sign-In.");
+    } on FirebaseAuthException catch (e) {
+      logger.e(e.message);
+      return onError("auth.${e.code}");
+    } on SignInWithAppleAuthorizationException catch (e) {
+      if (e.code == AuthorizationErrorCode.canceled) {
+        logger.w("Sign in with Apple was aborted");
+      } else {
+        logger.w("Sign in with Apple not successful: $e");
+      }
+    } on SignInWithAppleException catch (e) {
+      logger.w("There was an error during apple sign in: $e");
+    } catch (e) {
+      onError("An unexpected error occurred: $e");
+    }
   }
 
   Future<void> updatePassword(

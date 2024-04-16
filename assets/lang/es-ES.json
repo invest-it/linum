@@ -102,6 +102,12 @@
             "dialog-button-delete": "Borrar",
             "dialog-label-delete": "¿De verdad quieres borrar esta entrada?",
             "dialog-label-title": "Confirme"
+        },
+        "reauthenticate": {
+            "action": "¡Hecho!",
+            "cancel": "Cancelar",
+            "message": "Introduzca su contraseña",
+            "title": "Comprobar contraseña"
         }
     },
     "auth": {

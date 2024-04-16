@@ -134,6 +134,12 @@ const translationKeys = (
           'alertdialog.delete-transaction.dialog-label-delete', // Möchtest du diesen Eintrag wirklich löschen?
       dialogLabelTitle:
           'alertdialog.delete-transaction.dialog-label-title' // Bestätigen
+    ),
+    reauthenticate: (
+      action: 'alertdialog.reauthenticate.action', // Fertig!
+      cancel: 'alertdialog.reauthenticate.cancel', // Abbrechen
+      message: 'alertdialog.reauthenticate.message', // Gib dein Passwort ein!
+      title: 'alertdialog.reauthenticate.title' // Passwort prüfen
     )
   ),
   auth: (

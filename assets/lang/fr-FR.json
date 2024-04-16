@@ -102,6 +102,12 @@
             "dialog-button-delete": "Supprimer",
             "dialog-label-delete": "Tu veux vraiment supprimer cette entrée ?",
             "dialog-label-title": "Confirmer"
+        },
+        "reauthenticate": {
+            "action": "Prêt !",
+            "cancel": "Annuler",
+            "message": "Saisis ton mot de passe !",
+            "title": "Vérifier le mot de passe"
         }
     },
     "auth": {

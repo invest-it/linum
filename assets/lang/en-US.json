@@ -102,6 +102,12 @@
             "dialog-button-delete": "Delete",
             "dialog-label-delete": "Do you really want to delete this entry?",
             "dialog-label-title": "Confirm"
+        },
+        "reauthenticate": {
+            "action": "Done!",
+            "cancel": "Cancel",
+            "message": "Enter your password!",
+            "title": "Check password"
         }
     },
     "auth": {

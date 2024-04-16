@@ -102,6 +102,12 @@
             "dialog-button-delete": "Löschen",
             "dialog-label-delete": "Möchtest du diesen Eintrag wirklich löschen?",
             "dialog-label-title": "Bestätigen"
+        },
+        "reauthenticate": {
+            "action": "Fertig!",
+            "cancel": "Abbrechen",
+            "message": "Gib dein Passwort ein!",
+            "title": "Passwort prüfen"
         }
     },
     "auth": {

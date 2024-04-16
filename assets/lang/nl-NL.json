@@ -102,6 +102,12 @@
             "dialog-button-delete": "Verwijder",
             "dialog-label-delete": "Wil je dit bericht echt verwijderen?",
             "dialog-label-title": "Bevestig"
+        },
+        "reauthenticate": {
+            "action": "Klaar!",
+            "cancel": "Annuleren",
+            "message": "Voer je wachtwoord in!",
+            "title": "Wachtwoord controleren"
         }
     },
     "auth": {
