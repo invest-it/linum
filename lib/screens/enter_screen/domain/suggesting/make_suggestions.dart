@@ -38,11 +38,7 @@ Map<String, Suggestion> makeSuggestions({
   final flagGuesser = FlagGuesser(getInputFlagMap(translator));
   final repeatGuesser = RepeatConfigGuesser(filter: repeatFilter);
 
-
-
-
   final parsed = TagParser(getInputFlagMap(translator)).parse(preCursorText);
-
   if (parsed.flag == null) {
     final suggestions = flagGuesser.guess(parsed.text);
     if (suggestions.isNotEmpty) {
@@ -66,10 +62,9 @@ Map<String, Suggestion> makeSuggestions({
     if (repeatSuggestions.isNotEmpty) {
       return repeatSuggestions;
     }
+
     return {};
   }
-
-
   switch (parsed.flag) {
     case InputFlag.category:
       return categoryGuesser.suggest(parsed.text);

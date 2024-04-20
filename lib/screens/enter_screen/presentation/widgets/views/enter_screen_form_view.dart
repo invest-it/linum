@@ -6,6 +6,8 @@ import 'package:linum/common/utils/base_translator.dart';
 import 'package:linum/core/design/layout/utils/media_query_accessors.dart';
 import 'package:linum/core/repeating/constants/standard_repeat_configs.dart';
 import 'package:linum/features/currencies/core/constants/standard_currencies.dart';
+import 'package:linum/screens/enter_screen/domain/models/suggestion_filters.dart';
+import 'package:linum/screens/enter_screen/presentation/utils/context_extensions.dart';
 import 'package:linum/screens/enter_screen/presentation/utils/get_default_values.dart';
 import 'package:linum/screens/enter_screen/presentation/utils/initial_form_data_builder.dart';
 import 'package:linum/screens/enter_screen/presentation/view_models/enter_screen_form_view_model.dart';
@@ -101,7 +103,11 @@ class _EnterScreenFormView extends StatelessWidget {
                       vertical: 10,
                     ),
 
-                    child: const EnterScreenTextField(),
+                    child: EnterScreenTextField(
+                      parsingFilters: ParsingFilters(
+                        categoryFilter: (category) => category.entryType == context.getEntryType(),
+                      ),
+                    ),
                   ),
                 ),
                 const Padding(
