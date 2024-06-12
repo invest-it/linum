@@ -29,7 +29,7 @@ class Linum extends StatelessWidget {
 
     return MaterialApp(
       title: 'Linum',
-      theme: MainThemeData.lightTheme,
+      theme: MainTheme.light(context),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,

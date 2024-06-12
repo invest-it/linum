@@ -30,7 +30,6 @@ class LanguageSelector extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyLarge,
           ).tr(),
           value: languageSettingsService.useSystemLanguage,
-          activeColor: Theme.of(context).colorScheme.primary,
           onChanged: (bool value) {
             languageSettingsService.setUseSystemLanguage(value);
           },
