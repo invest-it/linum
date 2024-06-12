@@ -9,7 +9,7 @@ import 'package:linum/core/design/theme/constants/main_text_theme.dart';
 
 class MainThemeData {
   static final ThemeData lightTheme = ThemeData(
-    useMaterial3: false,
+    useMaterial3: true,
     brightness: Brightness.light,
 
     //use like this: Theme.of(context).colorScheme.NAME_OF_COLOR_STYLE
