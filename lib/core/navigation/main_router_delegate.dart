@@ -19,8 +19,9 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
   @override
   late final GlobalKey<NavigatorState> navigatorKey;
   late final Logger logger;
+  final MainRoute defaultRoute;
 
-  MainRouterDelegate() {
+  MainRouterDelegate({required this.defaultRoute}) {
     navigatorKey = GlobalKey<NavigatorState>();
     logger = Logger();
   }
@@ -86,7 +87,7 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
       _pageStack.add(mainRoutes.pageFromRoute(MainRoute.sandbox));
     }
     if (_pageStack.isEmpty) {
-      _pageStack.add(mainRoutes.pageFromRoute(MainRoute.home));
+      _pageStack.add(mainRoutes.pageFromRoute(defaultRoute));
     }
     if (pinCodeService.pinSet && !pinCodeService.sessionIsSafe) {
       return _buildPinCodeStack(pinCodeService);

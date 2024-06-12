@@ -14,6 +14,8 @@ import 'package:linum/core/navigation/main_router_delegate.dart';
 import 'package:linum/generated/objectbox/objectbox.g.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'core/navigation/main_routes.dart';
+
 Future<void> main({bool? testing}) async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
@@ -48,7 +50,9 @@ class LifecycleWatcher extends StatefulWidget {
 class _LifecycleWatcherState extends State<LifecycleWatcher> {
   @override
   Widget build(BuildContext context) {
-    final MainRouterDelegate routerDelegate = MainRouterDelegate();
+    final MainRouterDelegate routerDelegate = MainRouterDelegate(
+      defaultRoute: MainRoute.settings,
+    );
     final MainRouteInformationParser routeInformationParser = MainRouteInformationParser();
 
     return EasyLocalization(
