@@ -16,14 +16,14 @@ void main() {
     testWidgets('Test the initial state of the widget', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          theme: MainThemeData.lightTheme,
+          theme: LinumTheme.light(),
           home: const Scaffold(
             body: PinField(1, 0, RingColors.green, key: key),
           ),
         ),
       );
       final Finder ring = find.byKey(key);
-      final colorScheme = MainThemeData.lightTheme.colorScheme;
+      final colorScheme = LinumTheme.light().colorScheme;
       final bool Function(Widget) hasWidgetBoxDecoration = (Widget widget) =>
           widget is Container && widget.decoration is BoxDecoration;
 
@@ -54,14 +54,14 @@ void main() {
     testWidgets('Test when Pin is already written', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          theme: MainThemeData.lightTheme,
+          theme: LinumTheme.light(),
           home: const Scaffold(
             body: PinField(1, 2, RingColors.green, key: key),
           ),
         ),
       );
       final Finder ring = find.byKey(key);
-      final colorScheme = MainThemeData.lightTheme.colorScheme;
+      final colorScheme = LinumTheme.light().colorScheme;
       final bool Function(Widget) hasWidgetBoxDecoration = (Widget widget) =>
           widget is Container && widget.decoration is BoxDecoration;
 

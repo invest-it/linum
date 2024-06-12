@@ -7,9 +7,9 @@
 import 'package:flutter/material.dart';
 import 'package:linum/core/design/theme/constants/main_text_theme.dart';
 
-class MainTheme {
+class LinumTheme {
 
-  static ThemeData light(BuildContext context) {
+  static ThemeData light() {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
@@ -47,7 +47,7 @@ class MainTheme {
     );
   }
 
-  ThemeData dark(BuildContext context) {
+  static ThemeData dark() {
     return ThemeData(
       useMaterial3: false,
       brightness: Brightness.dark,
