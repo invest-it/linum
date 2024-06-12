@@ -27,29 +27,23 @@ class CategoryBudgetChart extends StatelessWidget {
     );
 
     return Card(
+      elevation: 0,
       margin: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
       color: theme.colorScheme.background,
+      shape: RoundedRectangleBorder(
+        side: const BorderSide(
+          color: Colors.grey,
+          width: 0.5,
+        ),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Row(
+            Column(
               children: [
-                Container(
-                  width: 30,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: color,
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Text(label, style: theme.textTheme.headlineSmall,),
-                  ),
-                ),
-                Text(formatter.format(budget - expenses), style: theme.textTheme.headlineMedium),
+                Text(label, style: theme.textTheme.headlineSmall,),
               ],
             ),
             Padding(
@@ -61,6 +55,15 @@ class CategoryBudgetChart extends StatelessWidget {
                 borderRadius:
                 const BorderRadius.all(Radius.circular(10.0)),
               ),
+            ),
+            const SizedBox(height: 10,),
+            Row(
+              children: [
+                Expanded(
+                  child: Text("${formatter.format(budget - expenses)} remaining", style: theme.textTheme.labelMedium),
+                ),
+                Text(formatter.format(budget), style: theme.textTheme.labelMedium),
+              ],
             ),
           ],
         ),
