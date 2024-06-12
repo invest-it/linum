@@ -27,6 +27,7 @@ class BudgetScreen extends StatelessWidget {
     }
     return ScreenSkeleton(
       head: 'Budget',
+      isInverted: true,
       leadingAction: AppBarAction.fromPreset(DefaultAction.academy),
       body: Column(
         children: [

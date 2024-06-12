@@ -27,6 +27,7 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenSkeleton(
       head: 'Account',
+      isInverted: true,
       screenKey: ScreenKey.settings,
       initialActionLipBody: Container(),
       body: ScrollConfiguration(
