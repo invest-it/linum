@@ -75,6 +75,7 @@ class HighlightTextEditingController extends TextEditingController {
       dateFilter: parsingFilters?.dateFilter,
     );
 
+
     super.value = newValue;
   }
 

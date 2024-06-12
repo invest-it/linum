@@ -23,6 +23,7 @@ class CategoryGuesser implements IGuesser {
       if (filter != null && !filter!(entry.value)) {
         continue;
       }
+
       String? valueSubstring;
       final translatedLabel = translator
           .translate(entry.value.label)

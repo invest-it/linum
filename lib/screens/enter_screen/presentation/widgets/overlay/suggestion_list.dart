@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/screens/enter_screen/domain/models/suggestion.dart';
+import 'package:linum/screens/enter_screen/domain/models/suggestion_filters.dart';
 import 'package:linum/screens/enter_screen/domain/suggesting/get_sub_suggestions.dart';
 import 'package:linum/screens/enter_screen/presentation/widgets/overlay/suggestion_list_item.dart';
 
@@ -12,6 +13,7 @@ void _onSelection(
 class SuggestionList extends StatelessWidget {
   final List<Suggestion> suggestions;
   final double maxHeight;
+  final ParsingFilters? parsingFilters;
   final void Function(
     Suggestion suggestion,
     Suggestion? flagSuggestion,
@@ -22,6 +24,7 @@ class SuggestionList extends StatelessWidget {
     required this.suggestions,
     this.onSelection = _onSelection,
     this.maxHeight = 200,
+    this.parsingFilters,
   });
 
   @override
@@ -34,6 +37,7 @@ class SuggestionList extends StatelessWidget {
         flagSuggestion: suggestions.first,
         onSelection: onSelection,
         maxHeight: maxHeight,
+        parsingFilters: parsingFilters,
       );
     }
 
@@ -82,6 +86,7 @@ class _SubSuggestionsList extends StatelessWidget {
   final List<BoxShadow>? boxShadow;
   final Suggestion flagSuggestion;
   final double maxHeight;
+  final ParsingFilters? parsingFilters;
   final void Function(
     Suggestion suggestion,
     Suggestion? parentSuggestion,
@@ -92,11 +97,15 @@ class _SubSuggestionsList extends StatelessWidget {
     this.onSelection = _onSelection,
     this.maxHeight = 200,
     this.boxShadow,
+    this.parsingFilters,
   });
 
   @override
   Widget build(BuildContext context) {
-    final subSuggestions = getSubSuggestions(flagSuggestion.flag!); // TODO: HIDE FROM PRESENTATION
+    final subSuggestions = getSubSuggestions(
+        flagSuggestion.flag!,
+        filters: parsingFilters,
+    ); // TODO: HIDE FROM PRESENTATION
 
     return DecoratedBox(
       decoration: BoxDecoration(
