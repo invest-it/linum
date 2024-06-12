@@ -19,29 +19,20 @@ class ChangeEmailButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return OutlinedButton(
       key: const Key("changeEmailButton"),
       onPressed: () => showChangeEmailActionLip(context, screenKey),
       style: OutlinedButton.styleFrom(
-        elevation: 8,
-        shadowColor: Theme.of(context).colorScheme.onBackground,
-        minimumSize: Size(
-          double.infinity,
-          context.proportionateScreenHeight(48),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.background,
         side: BorderSide(
-          width: 2,
-          color: Theme.of(context).colorScheme.primary,
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+          color: theme.colorScheme.primary,
         ),
       ),
       child: Text(
         tr(translationKeys.settingsScreen.systemSettings.buttonChangeEmail),
-        style: Theme.of(context).textTheme.labelLarge
-            ?.copyWith(color: Theme.of(context).colorScheme.onSurface),
+        style: theme.textTheme.labelMedium
+            ?.copyWith(color: theme.colorScheme.primary),
       ),
     );
   }

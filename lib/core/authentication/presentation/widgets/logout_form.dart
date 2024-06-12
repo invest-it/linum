@@ -23,6 +23,8 @@ class LogoutForm extends StatefulWidget {
 class _LogoutFormState extends State<LogoutForm> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Column(
       children: [
         Padding(
@@ -33,38 +35,11 @@ class _LogoutFormState extends State<LogoutForm> {
             builder: (context, authService, _) {
               return Text(
                 tr(translationKeys.logoutForm.labelCurrentEmail) + authService.userEmail,
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: theme.textTheme.bodyLarge,
                 textAlign: TextAlign.center,
               );
             },
           ),
-        ),
-        GradientButton(
-          key: const Key("logoutButton"),
-          increaseHeightBy: context.proportionateScreenHeight(16),
-          callback: () => context.read<AuthenticationService>()
-              .signOut()
-              .then((_) {
-                context.getMainRouterDelegate().rebuild();
-                context.read<PinCodeService>()
-                    .resetOnLogout();
-              }),
-          gradient: LinearGradient(
-            colors: [
-              Theme.of(context).colorScheme.primary,
-              Theme.of(context).colorScheme.surface,
-            ],
-          ),
-          elevation: 0,
-          increaseWidthBy: double.infinity,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          child: Text(
-            tr(translationKeys.settingsScreen.systemSettings.buttonSignout),
-            style: Theme.of(context).textTheme.labelLarge,
-          ),
-        ),
-        SizedBox(
-          height: context.proportionateScreenHeight(8),
         ),
       ],
     );
