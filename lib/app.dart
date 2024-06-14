@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/core/design/theme/constants/main_theme_data.dart';
+import 'package:linum/core/design/theme/theme_data.dart';
 import 'package:linum/core/navigation/main_router_delegate.dart';
 import 'package:linum/core/navigation/main_routes.dart';
 import 'package:linum/generated/objectbox/objectbox.g.dart';

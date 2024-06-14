@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:linum/core/authentication/presentation/widgets/change_email_action_lip/change_email_form.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 
-class ChangeEmailActionLip extends StatelessWidget {
-  const ChangeEmailActionLip({
+class ChangeEmailBottomSheet extends StatelessWidget {
+  const ChangeEmailBottomSheet({
     super.key,
   });
 

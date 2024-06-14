@@ -4,7 +4,6 @@ import 'package:linum/common/components/dialogs/dialog_action.dart';
 import 'package:linum/common/components/dialogs/show_action_dialog.dart';
 import 'package:linum/common/components/dialogs/show_alert_dialog.dart';
 import 'package:linum/core/authentication/domain/services/authentication_service.dart';
-import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 import 'package:provider/provider.dart';
 

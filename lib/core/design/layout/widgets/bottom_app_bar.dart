@@ -72,27 +72,7 @@ class LinumNavigationBar extends StatelessWidget {
       color: backgroundColor,
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: items
-      ),
-    );
-  }
-
-  Widget _buildMiddleTabItem(BuildContext context) {
-    return Expanded(
-      child: SizedBox(
-        height: context
-            .proportionateScreenHeight(notproportionateHeight),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(height: iconSize),
-            Text(
-              centerItemText,
-              style: TextStyle(color: iconColor),
-            ),
-          ],
-        ),
+          children: items,
       ),
     );
   }
@@ -132,4 +112,3 @@ class LinumNavigationBar extends StatelessWidget {
     );
   }
 }
-

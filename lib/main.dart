@@ -11,10 +11,9 @@ import 'package:linum/app.dart';
 import 'package:linum/core/localization/settings/constants/supported_locales.dart';
 import 'package:linum/core/navigation/main_route_information_parser.dart';
 import 'package:linum/core/navigation/main_router_delegate.dart';
+import 'package:linum/core/navigation/main_routes.dart';
 import 'package:linum/generated/objectbox/objectbox.g.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'core/navigation/main_routes.dart';
 
 Future<void> main({bool? testing}) async {
   WidgetsFlutterBinding.ensureInitialized();

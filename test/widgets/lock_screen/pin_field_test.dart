@@ -6,8 +6,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:linum/core/design/theme/constants/main_theme_data.dart';
-import 'package:linum/core/design/theme/constants/ring_colors.dart';
+import 'package:linum/core/design/theme/theme_data.dart';
+import 'package:linum/core/design/theme/ring_colors.dart';
 import 'package:linum/screens/lock_screen/widgets/pin_field.dart';
 
 void main() {

@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:linum/core/authentication/domain/services/authentication_service.dart';
 import 'package:linum/core/authentication/presentation/utils/show_forgot_password_action_lip.dart';
 import 'package:linum/core/design/layout/enums/screen_key.dart';
-import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +28,7 @@ class ForgotPasswordButton extends StatelessWidget {
 
     return OutlinedButton(
       key: const Key("forgotPasswordButton"),
-      onPressed: () => showForgotPasswordActionLip(context, screenKey),
+      onPressed: () => showForgotPasswordBottomSheet(context, screenKey),
       style: OutlinedButton.styleFrom(
         side: BorderSide(
           color: theme.colorScheme.primary,
