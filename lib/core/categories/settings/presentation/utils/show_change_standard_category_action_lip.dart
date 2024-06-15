@@ -15,6 +15,7 @@ void showChangeStandardCategoryBottomSheet(BuildContext context, {
 
   void onCategorySelection(Category category) {
     categorySettings.setEntryCategory(category);
+    Navigator.pop(context);
   }
 
   final categoryList = standardCategories.values
