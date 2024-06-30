@@ -7,7 +7,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gradient_widgets/gradient_widgets.dart';
+import 'package:linum/common/widgets/elevated_gradient_button.dart';
 
 import '../general/general_robot.dart';
 
@@ -23,7 +23,7 @@ class OnboardingOpenSignInRobot extends GeneralRobot {
   }
 
   Future<void> pressSignIn() async {
-    await pressVisibleButtonByString("Sign in", buttonType: GradientButton);
+    await pressVisibleButtonByString("Sign in", buttonType: ElevatedGradientButton);
 
     sleep(const Duration(milliseconds: 500));
   }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gradient_widgets/gradient_widgets.dart';
-import 'package:linum/core/design/layout/utils/layout_helpers.dart';
+import 'package:linum/common/widgets/elevated_gradient_button.dart';
 
 
 
@@ -16,19 +15,13 @@ class SignInSignUpButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GradientButton(
-      increaseHeightBy: context.proportionateScreenHeight(16),
-      callback: callback,
+    return ElevatedGradientButton(
+      onPressed: callback,
       gradient: LinearGradient(
         colors: [
           Theme.of(context).colorScheme.primary,
           Theme.of(context).colorScheme.tertiary,
         ],
-      ),
-      elevation: 0,
-      increaseWidthBy: double.infinity,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
         text,

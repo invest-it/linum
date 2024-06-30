@@ -62,6 +62,7 @@ app.*.map.json
 /ios/Podfile.lock
 /ios/Runner.ipa
 /ios/Runner.app.dSYM.zip
+/ios/build
 
 #Fastlane
 /android/fastlane/metadata
