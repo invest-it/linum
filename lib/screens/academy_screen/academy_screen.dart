@@ -14,16 +14,14 @@ import 'package:linum/core/navigation/get_delegate.dart';
 import 'package:linum/core/navigation/url_handler.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 
-
 /// Page Index: 4
 class AcademyScreen extends StatelessWidget {
   const AcademyScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     return ScreenSkeleton(
-      head: 'Academy',
+      head: 'YouTube',
       leadingAction: (BuildContext context) => AppBarAction.fromParameters(
         icon: Icons.arrow_back_rounded,
         ontap: () => context.getMainRouterDelegate().popRoute(),
