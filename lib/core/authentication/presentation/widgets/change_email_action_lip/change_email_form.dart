@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/common/components/dialogs/show_alert_dialog.dart';
 import 'package:linum/core/authentication/domain/services/authentication_service.dart';
 import 'package:linum/core/authentication/presentation/widgets/change_email_action_lip/email_input_field.dart';
+import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 import 'package:provider/provider.dart';
 
@@ -53,19 +54,19 @@ class _ChangeEmailFormState extends State<ChangeEmailForm> {
                   onEditingComplete: () => _callback(context),
                   hintLabel: tr(translationKeys.actionLip.changeEmail.hintLabelRepeat),
                 ),
+                FilledButton(
+                  onPressed: () {
+                    final bool valid = _formKey.currentState!.validate();
+                    if (valid) {
+                      _callback(context);
+                    }
+                  },
+                  child: Text(
+                    tr(translationKeys.actionLip.changeEmail.buttonSubmit),
+                    style: Theme.of(context).textTheme.labelLarge,
+                  ),
+                ),
               ],
-            ),
-          ),
-          FilledButton(
-            onPressed: () {
-              final bool valid = _formKey.currentState!.validate();
-              if (valid) {
-                _callback(context);
-              }
-            },
-            child: Text(
-              tr(translationKeys.actionLip.changeEmail.buttonSubmit),
-              style: Theme.of(context).textTheme.labelLarge,
             ),
           ),
         ],

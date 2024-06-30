@@ -6,8 +6,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:linum/core/design/theme/theme_data.dart';
 import 'package:linum/core/design/theme/ring_colors.dart';
+import 'package:linum/core/design/theme/theme_data.dart';
 import 'package:linum/screens/lock_screen/widgets/pin_field.dart';
 
 void main() {
@@ -33,7 +33,7 @@ void main() {
           (Widget widget) =>
               hasWidgetBoxDecoration(widget) &&
               ((widget as Container).decoration! as BoxDecoration).color ==
-                  colorScheme.background,
+                  colorScheme.surface,
         ),
         findsOneWidget,
       );

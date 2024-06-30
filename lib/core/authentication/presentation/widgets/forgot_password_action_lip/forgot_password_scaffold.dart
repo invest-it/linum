@@ -17,6 +17,8 @@ class ForgotPasswordScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Column(
       children: [
         Padding(
@@ -28,7 +30,7 @@ class ForgotPasswordScaffold extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Text(
               label,
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: theme.textTheme.bodyLarge,
               textAlign: TextAlign.center,
             ),
           ),
@@ -40,7 +42,7 @@ class ForgotPasswordScaffold extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(5.0),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.onSecondary,
+                  color: theme.colorScheme.onSecondary,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Column(
@@ -55,6 +57,7 @@ class ForgotPasswordScaffold extends StatelessWidget {
                 onPressed: callback,
                 child: Text(
                   buttonLabel,
+                  style: theme.textTheme.labelLarge,
                 ),
               ),
             ],

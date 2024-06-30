@@ -65,6 +65,7 @@ class _LoginFormState extends State<LoginForm> {
             children: [
               Material(
                 elevation: 1,
+                borderRadius: BorderRadius.circular(8),
                 child: Container(
                   padding: const EdgeInsets.all(5.0),
                   child: Column(

@@ -129,7 +129,6 @@ class TransactionTile extends StatelessWidget {
         builder: (context) {
           return SerialDeleteModeSelectionView(transaction: transaction,);
         },
-        isDismissible: true,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(topLeft: radius, topRight: radius),
         ),

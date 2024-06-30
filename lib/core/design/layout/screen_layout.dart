@@ -132,7 +132,7 @@ class _ScreenLayoutState extends State<ScreenLayout>
         backgroundColor: Theme.of(context).colorScheme.primary,
         useInlineAB: true,
         centerItemText: '',
-        iconColor: Theme.of(context).colorScheme.background,
+        iconColor: Theme.of(context).colorScheme.surface,
         selectedColor: Theme.of(context).colorScheme.secondary,
         notchedShape: const CircularNotchedRectangle(),
         onABPressed: handleActionButton, // TODO: Remove if decision is made to use the FAB
