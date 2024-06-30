@@ -6,11 +6,11 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/common/widgets/list_divider.dart';
 import 'package:linum/core/authentication/domain/services/authentication_service.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 import 'package:provider/provider.dart';
-
 
 class LogoutForm extends StatefulWidget {
   @override
@@ -25,17 +25,27 @@ class _LogoutFormState extends State<LogoutForm> {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: context.proportionateScreenHeight(16),
+          padding: EdgeInsets.only(
+            top: context.proportionateScreenHeight(16),
           ),
-          child: Consumer<AuthenticationService>(
-            builder: (context, authService, _) {
-              return Text(
-                tr(translationKeys.logoutForm.labelCurrentEmail) + authService.userEmail,
-                style: theme.textTheme.bodyLarge,
-                textAlign: TextAlign.center,
-              );
-            },
+          child: Column(
+            children: [
+              Consumer<AuthenticationService>(
+                builder: (context, authService, _) {
+                  return Text(
+                    tr(translationKeys.logoutForm.labelCurrentEmail) +
+                        authService.userEmail,
+                    style: theme.textTheme.bodyLarge,
+                    textAlign: TextAlign.center,
+                  );
+                },
+              ),
+              const ListDivider(
+                L: 32,
+                R: 32,
+                B: 0,
+              ),
+            ],
           ),
         ),
       ],
