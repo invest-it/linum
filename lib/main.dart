@@ -50,7 +50,7 @@ class _LifecycleWatcherState extends State<LifecycleWatcher> {
   @override
   Widget build(BuildContext context) {
     final MainRouterDelegate routerDelegate = MainRouterDelegate(
-      defaultRoute: MainRoute.settings,
+      defaultRoute: MainRoute.home,
     );
     final MainRouteInformationParser routeInformationParser = MainRouteInformationParser();
 
