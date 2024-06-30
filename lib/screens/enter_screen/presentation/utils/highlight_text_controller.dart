@@ -8,7 +8,7 @@ import 'package:linum/screens/enter_screen/domain/models/suggestion_filters.dart
 import 'package:linum/screens/enter_screen/domain/parsing/input_parser.dart';
 import 'package:linum/screens/enter_screen/domain/suggesting/insert_suggestion.dart';
 import 'package:linum/screens/enter_screen/domain/suggesting/make_suggestions.dart';
-import 'package:linum/screens/enter_screen/presentation/constants/hightlight_colors.dart';
+import 'package:linum/screens/enter_screen/presentation/constants/highlight_colors.dart';
 import 'package:linum/screens/enter_screen/presentation/utils/example_string_builder.dart';
 import 'package:linum/screens/enter_screen/presentation/utils/span_list_builder.dart';
 
@@ -20,7 +20,8 @@ class HighlightTextEditingController extends TextEditingController {
   final ExampleStringBuilder exampleStringBuilder;
   final ParsingFilters? parsingFilters;
   final ITranslator translator;
-  final GlobalKey cursorRefKey = GlobalKey(debugLabel: "TextEditingFieldCursorRef");
+  final GlobalKey cursorRefKey =
+      GlobalKey(debugLabel: "TextEditingFieldCursorRef");
 
   HighlightTextEditingController({
     required this.exampleStringBuilder,
@@ -28,7 +29,7 @@ class HighlightTextEditingController extends TextEditingController {
     this.parsingFilters,
     super.text,
   }) {
-    cursorHeightOffset = verticalPadding*2 + verticalMargin*2 + 2;
+    cursorHeightOffset = verticalPadding * 2 + verticalMargin * 2 + 2;
   }
 
   Map<String, Suggestion> _suggestions = {};
@@ -43,7 +44,6 @@ class HighlightTextEditingController extends TextEditingController {
   final double verticalMargin = 1;
   late final double cursorHeightOffset;
 
-
   @override
   set value(TextEditingValue newValue) {
     final newCursor = newValue.selection.base.offset;
@@ -51,18 +51,16 @@ class HighlightTextEditingController extends TextEditingController {
     final oldText = value.text;
     final newText = newValue.text;
 
-
     if (oldText == newText) {
       super.value = newValue;
       return;
     }
 
     final parser = InputParser(translator)
-        ..categoryFilter = parsingFilters?.categoryFilter
-        ..repeatFilter = parsingFilters?.repeatFilter
-        ..dateFilter = parsingFilters?.dateFilter;
+      ..categoryFilter = parsingFilters?.categoryFilter
+      ..repeatFilter = parsingFilters?.repeatFilter
+      ..dateFilter = parsingFilters?.dateFilter;
     final parsed = parser.parse(newText);
-
 
     exampleStringBuilder.rebuild(parsed);
     _parsed = parsed;
@@ -75,28 +73,30 @@ class HighlightTextEditingController extends TextEditingController {
       dateFilter: parsingFilters?.dateFilter,
     );
 
-
     super.value = newValue;
   }
 
-
-
-
   @override
-  TextSpan buildTextSpan({required BuildContext context, TextStyle? style , required bool withComposing}) {
-    assert(!value.composing.isValid || !withComposing || value.isComposingRangeValid);
+  TextSpan buildTextSpan(
+      {required BuildContext context,
+      TextStyle? style,
+      required bool withComposing}) {
+    assert(!value.composing.isValid ||
+        !withComposing ||
+        value.isComposingRangeValid);
 
     final parsedInputList = _parsed?.toList() ?? [];
-    parsedInputList.sortByCompare((element) => element.indices.start, (a, b) => a.compareTo(b));
+    parsedInputList.sortByCompare(
+        (element) => element.indices.start, (a, b) => a.compareTo(b));
 
     final builder = SpanListBuilder(
-        verticalPadding: verticalPadding,
-        horizontalPadding: 2.5,
-        verticalMargin: verticalMargin,
-        borderRadius: const Radius.circular(5.0),
-        baseStyle: style,
-        cursorRefKey: cursorRefKey,
-        cursor: selection.base.offset,
+      verticalPadding: verticalPadding,
+      horizontalPadding: 2.5,
+      verticalMargin: verticalMargin,
+      borderRadius: const Radius.circular(5.0),
+      baseStyle: style,
+      cursorRefKey: cursorRefKey,
+      cursor: selection.base.offset,
     );
 
     var counter = 0; // Current position in Text
@@ -114,7 +114,6 @@ class HighlightTextEditingController extends TextEditingController {
     );
   }
 
-
   void useSuggestion(Suggestion suggestion, Suggestion? flagSuggestion) {
     value = insertSuggestion(
       suggestion: suggestion,
@@ -123,7 +122,6 @@ class HighlightTextEditingController extends TextEditingController {
       flagSuggestion: flagSuggestion,
     );
   }
-
 
   void _addRemainingChars(SpanListBuilder builder, int counter) {
     if (counter < text.length) {
@@ -142,7 +140,8 @@ class HighlightTextEditingController extends TextEditingController {
     }
   }
 
-  void _addParsedInputToSpan(ParsedInput parsedInput, SpanListBuilder builder, int counter) {
+  void _addParsedInputToSpan(
+      ParsedInput parsedInput, SpanListBuilder builder, int counter) {
     final start = parsedInput.indices.start;
 
     if (counter < start) {
