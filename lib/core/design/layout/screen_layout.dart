@@ -95,13 +95,13 @@ class _ScreenLayoutState extends State<ScreenLayout>
           },
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+/*      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton.large(
         onPressed: handleActionButton,
         elevation: 2.0,
         backgroundColor: Colors.white,
         child: const Icon(Icons.add, color: Colors.black87),
-      ),
+      ),*/
       bottomNavigationBar: LinumNavigationBar(
         items: [
           BottomAppBarItem(
@@ -130,6 +130,7 @@ class _ScreenLayoutState extends State<ScreenLayout>
           ),
         ],
         backgroundColor: Theme.of(context).colorScheme.primary,
+        useInlineAB: true,
         centerItemText: '',
         iconColor: Theme.of(context).colorScheme.background,
         selectedColor: Theme.of(context).colorScheme.secondary,

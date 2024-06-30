@@ -10,7 +10,7 @@ import 'package:linum/common/widgets/list_divider.dart';
 import 'package:linum/common/widgets/list_header.dart';
 import 'package:linum/core/authentication/presentation/widgets/change_email_button.dart';
 import 'package:linum/core/authentication/presentation/widgets/delete_user_button.dart';
-import 'package:linum/core/authentication/presentation/widgets/forgot_password.dart';
+import 'package:linum/core/authentication/presentation/widgets/forgot_password_button.dart';
 import 'package:linum/core/authentication/presentation/widgets/logout_button.dart';
 import 'package:linum/core/authentication/presentation/widgets/logout_form.dart';
 import 'package:linum/core/categories/settings/presentation/widgets/standard_category_selectors.dart';

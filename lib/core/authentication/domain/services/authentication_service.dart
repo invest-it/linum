@@ -196,7 +196,7 @@ class AuthenticationService extends SubscriptionHandler {
     onError ??= logger.e;
     try {
       if (_firebaseAuth.currentUser != null) {
-        await _firebaseAuth.currentUser!.updateEmail(newEmail);
+        await _firebaseAuth.currentUser!.verifyBeforeUpdateEmail(newEmail);
       } else {
         return onError("auth.not-logged-in-to-update-email");
       }

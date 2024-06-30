@@ -56,7 +56,7 @@ class LinumNavigationBar extends StatelessWidget {
 
     if (useInlineAB) {
       final actionButton = Padding(
-        padding: const EdgeInsets.only(left: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: FloatingActionButton(
           onPressed: onABPressed,
           elevation: 0,
@@ -65,7 +65,7 @@ class LinumNavigationBar extends StatelessWidget {
         ),
       );
 
-      items.add(actionButton);
+      items.insert(2, actionButton);
     }
 
     return BottomAppBar(

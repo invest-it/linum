@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gradient_widgets/gradient_widgets.dart';
-import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 
 class ForgotPasswordScaffold extends StatelessWidget {
   final String label;

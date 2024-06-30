@@ -23,7 +23,7 @@ class OnboardingRegisterButton extends StatelessWidget {
           gradient: LinearGradient(
             colors: [
               Theme.of(context).colorScheme.primary,
-              Theme.of(context).colorScheme.surface,
+              Theme.of(context).colorScheme.tertiary,
             ],
           ),
           elevation: 0,

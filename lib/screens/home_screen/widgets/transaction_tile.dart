@@ -48,11 +48,12 @@ class TransactionTile extends StatelessWidget {
         confirmDismiss: (DismissDirection dismissDirection) => _confirmDismiss(context),
         child: ListTile(
           leading: badge.Badge(
-            padding: const EdgeInsets.all(2),
-            toAnimate: false,
-            position: const badge.BadgePosition(bottom: 23, start: 23),
-            elevation: 1,
-            badgeColor: _selectBadgeColor(context),
+            badgeStyle: badge.BadgeStyle(
+              padding: const EdgeInsets.all(2),
+              elevation: 1,
+              badgeColor: _selectBadgeColor(context),
+            ),
+            position: badge.BadgePosition.custom(bottom: 23, start: 23),
             badgeContent: transaction.repeatId != null
                 ? Icon(
               Icons.autorenew_rounded,

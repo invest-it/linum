@@ -36,7 +36,7 @@ class LinumTheme {
       ),
 
 
-      filledButtonTheme: LinumFilledButtonTheme.light()
+      filledButtonTheme: LinumFilledButtonTheme.light(),
 
     );
   }
