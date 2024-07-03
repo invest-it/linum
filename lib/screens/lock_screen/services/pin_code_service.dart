@@ -11,7 +11,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:linum/common/components/dialogs/dialog_action.dart';
 import 'package:linum/common/components/dialogs/show_action_dialog.dart';
 import 'package:linum/core/authentication/domain/services/authentication_service.dart';
-import 'package:linum/core/design/theme/constants/ring_colors.dart';
+import 'package:linum/core/design/theme/ring_colors.dart';
 import 'package:linum/core/navigation/get_delegate.dart';
 import 'package:linum/core/navigation/main_routes.dart';
 import 'package:linum/generated/translation_keys.g.dart';

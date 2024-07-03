@@ -103,7 +103,7 @@ class StatisticalCalculations {
           if (t is Transaction) {
             return t.repeatId == null;
           }
-          log.wtf(
+          log.f(
             "Somehow in a list of Transaction an item wasn't a Transaction",
           );
           return true;

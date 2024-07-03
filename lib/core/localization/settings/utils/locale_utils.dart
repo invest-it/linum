@@ -21,7 +21,7 @@ extension LocaleExtensions on BuildContext {
         setLocale(fallbackLocale!);
       }
     } catch (e) {
-      Logger().v("known life cycle error ");
+      Logger().t("known life cycle error ");
     }
   }
 }

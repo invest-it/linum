@@ -6,7 +6,7 @@ class LanguageSettingsMapper implements ISettingsMapper<LanguageSettings> {
   Map<String, dynamic> toMap(LanguageSettings model) {
     final Map<String, dynamic> map = {};
     final systemLanguage = model.useSystemLanguage;
-    final languageCode = model.languageCode;
+    final languageCode = model.languageTag;
 
     if (languageCode != null) {
       map["languageCode"] = languageCode;
@@ -25,7 +25,7 @@ class LanguageSettingsMapper implements ISettingsMapper<LanguageSettings> {
 
     return LanguageSettings(
         useSystemLanguage: useSystemLanguage,
-        languageCode: languageCode,
+        languageTag: languageCode,
     );
   }
 }

@@ -20,80 +20,73 @@ class BottomAppBarItem {
   });
 }
 
-class FABBottomAppBar extends StatefulWidget {
-  const FABBottomAppBar({
+
+class LinumNavigationBar extends StatelessWidget {
+  const LinumNavigationBar({
     required this.items,
     required this.centerItemText,
     required this.backgroundColor,
-    required this.color,
+    required this.iconColor,
     required this.selectedColor,
     required this.notchedShape,
+    this.useInlineAB = false,
+    this.onABPressed,
   });
+  final void Function()? onABPressed;
+  final bool useInlineAB;
   final List<BottomAppBarItem> items;
   final String centerItemText;
   double get notproportionateHeight => 64;
   double get minHeight => 64.0;
   double get iconSize => 26;
   final Color backgroundColor;
-  final Color color;
+  final Color iconColor;
   final Color selectedColor;
   final NotchedShape notchedShape;
 
   @override
-  State<StatefulWidget> createState() => FABBottomAppBarState();
-}
-
-class FABBottomAppBarState extends State<FABBottomAppBar> {
-  @override
   Widget build(BuildContext context) {
-    final List<Widget> items = List.generate(widget.items.length, (int index) {
+    final List<Widget> items = List.generate(this.items.length, (int index) {
       return _buildTabItem(
-        item: widget.items[index],
+        context,
+        item: this.items[index],
         index: index,
       );
     });
-    items.insert(items.length >> 1, _buildMiddleTabItem());
+
+    if (useInlineAB) {
+      final actionButton = Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: FloatingActionButton(
+          onPressed: onABPressed,
+          elevation: 0,
+          backgroundColor: Colors.white,
+          child: const Icon(Icons.add, color: Colors.black87),
+        ),
+      );
+
+      items.insert(2, actionButton);
+    }
 
     return BottomAppBar(
-      shape: widget.notchedShape,
-      color: widget.backgroundColor,
+      color: backgroundColor,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: items,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: items,
       ),
     );
   }
 
-  Widget _buildMiddleTabItem() {
-    return Expanded(
-      child: SizedBox(
-        height: context
-            .proportionateScreenHeight(widget.notproportionateHeight),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(height: widget.iconSize),
-            Text(
-              widget.centerItemText,
-              style: TextStyle(color: widget.color),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTabItem({
+  Widget _buildTabItem(BuildContext context, {
     required BottomAppBarItem item,
     required int index,
   }) {
-    final Color color = item.selected ? widget.selectedColor : widget.color;
+    final Color color = item.selected ? selectedColor : iconColor;
     return Expanded(
       child: Container(
         height: context
-            .proportionateScreenHeight(widget.notproportionateHeight),
-        constraints: BoxConstraints(minHeight: widget.minHeight),
+            .proportionateScreenHeight(notproportionateHeight),
+        constraints: BoxConstraints(minHeight: minHeight),
         child: Material(
           type: MaterialType.transparency,
           child: InkWell(
@@ -102,7 +95,7 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Icon(item.iconData, color: color, size: widget.iconSize),
+                Icon(item.iconData, color: color, size: iconSize),
                 Text(
                   item.text,
                   style: TextStyle(

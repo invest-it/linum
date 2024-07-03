@@ -16,8 +16,9 @@ import 'package:provider/provider.dart';
 
 class ForgotPasswordButton extends StatelessWidget {
   final ScreenKey screenKey;
+  final bool m3;
 
-  const ForgotPasswordButton(this.screenKey);
+  const ForgotPasswordButton(this.screenKey, {this.m3 = true});
 
 
   @override
@@ -25,17 +26,36 @@ class ForgotPasswordButton extends StatelessWidget {
     final AuthenticationService authenticationService =
         context.read<AuthenticationService>();
 
+    final theme = Theme.of(context);
+
+    if (m3) {
+      return OutlinedButton(
+        key: const Key("forgotPasswordButton"),
+        onPressed: () => showForgotPasswordBottomSheet(context, screenKey),
+        style: OutlinedButton.styleFrom(
+          side: BorderSide(
+            color: theme.colorScheme.primary,
+          ),
+        ),
+        child: Text(
+          authenticationService.isLoggedIn
+              ? tr(translationKeys.settingsScreen.systemSettings.buttonForgotPassword)
+              : tr(translationKeys.onboardingScreen.loginLipForgotPasswordButton),
+          style: theme.textTheme.labelMedium
+              ?.copyWith(color: theme.colorScheme.primary),
+        ),
+      );
+    }
+
     return OutlinedButton(
       key: const Key("forgotPasswordButton"),
-      onPressed: () => showForgotPasswordActionLip(context, screenKey),
+      onPressed: () => showForgotPasswordBottomSheet(context, screenKey),
       style: OutlinedButton.styleFrom(
-        elevation: 8,
-        shadowColor: Theme.of(context).colorScheme.onBackground,
         minimumSize: Size(
           double.infinity,
           context.proportionateScreenHeight(48),
         ),
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         side: BorderSide(
           width: 2,
           color: Theme.of(context).colorScheme.primary,

@@ -35,7 +35,7 @@ class RegisterView extends StatelessWidget {
         duration: const Duration(milliseconds: 800),
         transform: Matrix4.translationValues(0, _yOffset(context, pageState), 0),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.background,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(32),
             topRight: Radius.circular(32),

@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:gradient_widgets/gradient_widgets.dart';
-import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 
-class ForgotPasswordActionLipScaffold extends StatelessWidget {
+class ForgotPasswordScaffold extends StatelessWidget {
   final String label;
   final Widget inputField;
   final VoidCallback callback;
   final String buttonLabel;
   final TextEditingController controller;
-  const ForgotPasswordActionLipScaffold({
+  const ForgotPasswordScaffold({
     super.key,
     required this.label,
     required this.inputField,
@@ -19,6 +17,8 @@ class ForgotPasswordActionLipScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Column(
       children: [
         Padding(
@@ -30,7 +30,7 @@ class ForgotPasswordActionLipScaffold extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Text(
               label,
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: theme.textTheme.bodyLarge,
               textAlign: TextAlign.center,
             ),
           ),
@@ -42,15 +42,8 @@ class ForgotPasswordActionLipScaffold extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(5.0),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.onSecondary,
+                  color: theme.colorScheme.onSecondary,
                   borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Theme.of(context).colorScheme.onBackground,
-                      blurRadius: 20.0,
-                      offset: const Offset(0, 10),
-                    ),
-                  ],
                 ),
                 child: Column(
                   children: [
@@ -58,28 +51,13 @@ class ForgotPasswordActionLipScaffold extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
-                height: context.proportionateScreenHeight(32),
-              ),
-              GradientButton(
-                increaseHeightBy:
-                context.proportionateScreenHeight(16),
+
+              FilledButton(
                 // Logged Out onPressed
-                callback: callback,
-                gradient: LinearGradient(
-                  colors: [
-                    Theme.of(context).colorScheme.primary,
-                    Theme.of(context).colorScheme.surface,
-                  ],
-                ),
-                elevation: 0,
-                increaseWidthBy: double.infinity,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
+                onPressed: callback,
                 child: Text(
                   buttonLabel,
-                  style: Theme.of(context).textTheme.labelLarge,
+                  style: theme.textTheme.labelLarge,
                 ),
               ),
             ],

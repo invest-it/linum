@@ -28,10 +28,8 @@ class EmailInputField extends StatelessWidget {
         keyboardType: TextInputType.emailAddress,
         onEditingComplete: onEditingComplete,
         decoration: InputDecoration(
-          border: InputBorder.none,
-          hintText: hintLabel,
-          hintStyle: Theme.of(context).textTheme.bodyLarge
-              ?.copyWith(color: Theme.of(context).colorScheme.secondary),
+          border: const OutlineInputBorder(),
+          labelText: hintLabel,
         ),
       ),
     );

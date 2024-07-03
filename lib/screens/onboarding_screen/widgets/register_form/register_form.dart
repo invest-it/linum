@@ -64,30 +64,23 @@ class _RegisterFormState extends State<RegisterForm> {
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
             children: [
-              Container(
-                padding: const EdgeInsets.all(5.0),
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.onSecondary,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: theme.colorScheme.onBackground,
-                      blurRadius: 20.0,
-                      offset: const Offset(0, 10),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    RegisterEmailField(
-                      controller: _mailController,
-                      validated: _mailValidated,
-                    ),
-                    RegisterPasswordField(
-                      controller: _passController,
-                      validated: _passValidated,
-                    ),
-                  ],
+              Material(
+                elevation: 1,
+                borderRadius: BorderRadius.circular(8),
+                child: Container(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Column(
+                    children: [
+                      RegisterEmailField(
+                        controller: _mailController,
+                        validated: _mailValidated,
+                      ),
+                      RegisterPasswordField(
+                        controller: _passController,
+                        validated: _passValidated,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
@@ -126,6 +119,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   onPressed: context.read<AuthenticationService>()
                       .signInWithApple,
                   text: tr(translationKeys.onboardingScreen.appleButton),
+                  height: context.proportionateScreenHeight(40),
                 ),
               ],
               SizedBox(

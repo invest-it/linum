@@ -27,14 +27,14 @@ class _StandardCategorySelectorsState extends State<StandardCategorySelectors> {
           icon: Icons.north_east,
           iconColor: Colors.green,
           buttonTitle: tr(translationKeys.settingsScreen.standardIncomeSelector.labelTitle),
-          lipTitle: tr(translationKeys.actionLip.standardCategory.income.labelTitle),
+          title: tr(translationKeys.actionLip.standardCategory.income.labelTitle),
         ),
         StandardCategorySelector(
           entryType: EntryType.expense,
           icon: Icons.south_east,
           iconColor: Colors.redAccent,
           buttonTitle: tr(translationKeys.settingsScreen.standardExpenseSelector.labelTitle),
-          lipTitle: tr(translationKeys.actionLip.standardCategory.expenses.labelTitle),
+          title: tr(translationKeys.actionLip.standardCategory.expenses.labelTitle),
         ),
       ],
     );

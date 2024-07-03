@@ -113,7 +113,7 @@ class BalanceDataRepository {
 
       return doc;
     } else {
-      Logger().wtf("no data found in documentToUser");
+      Logger().f("no data found in documentToUser");
     }
     return null;
   }

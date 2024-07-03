@@ -6,8 +6,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:linum/core/design/theme/constants/main_theme_data.dart';
-import 'package:linum/core/design/theme/constants/ring_colors.dart';
+import 'package:linum/core/design/theme/ring_colors.dart';
+import 'package:linum/core/design/theme/theme_data.dart';
 import 'package:linum/screens/lock_screen/widgets/pin_field.dart';
 
 void main() {
@@ -16,14 +16,14 @@ void main() {
     testWidgets('Test the initial state of the widget', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          theme: MainThemeData.lightTheme,
+          theme: LinumTheme.light(),
           home: const Scaffold(
             body: PinField(1, 0, RingColors.green, key: key),
           ),
         ),
       );
       final Finder ring = find.byKey(key);
-      final colorScheme = MainThemeData.lightTheme.colorScheme;
+      final colorScheme = LinumTheme.light().colorScheme;
       final bool Function(Widget) hasWidgetBoxDecoration = (Widget widget) =>
           widget is Container && widget.decoration is BoxDecoration;
 
@@ -33,7 +33,7 @@ void main() {
           (Widget widget) =>
               hasWidgetBoxDecoration(widget) &&
               ((widget as Container).decoration! as BoxDecoration).color ==
-                  colorScheme.background,
+                  colorScheme.surface,
         ),
         findsOneWidget,
       );
@@ -54,14 +54,14 @@ void main() {
     testWidgets('Test when Pin is already written', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          theme: MainThemeData.lightTheme,
+          theme: LinumTheme.light(),
           home: const Scaffold(
             body: PinField(1, 2, RingColors.green, key: key),
           ),
         ),
       );
       final Finder ring = find.byKey(key);
-      final colorScheme = MainThemeData.lightTheme.colorScheme;
+      final colorScheme = LinumTheme.light().colorScheme;
       final bool Function(Widget) hasWidgetBoxDecoration = (Widget widget) =>
           widget is Container && widget.decoration is BoxDecoration;
 

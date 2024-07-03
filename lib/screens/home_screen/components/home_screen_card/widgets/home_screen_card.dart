@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:linum/common/components/screen_card/widgets/screen_card_side.dart';
 import 'package:linum/common/components/screen_card/widgets/screen_card_skeleton.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
-import 'package:linum/screens/home_screen/components/home_screen_card/widgets/home_screen_card_back.dart';
 import 'package:linum/screens/home_screen/components/home_screen_card/widgets/home_screen_card_front.dart';
 
 class HomeScreenCard extends StatelessWidget {
@@ -27,11 +26,11 @@ class HomeScreenCard extends StatelessWidget {
         cardWidth: cardWidth,
         cardHeight: cardHeight,
       ),
-      backSide: ScreenCardSide(
+      /* backSide: ScreenCardSide(
         content: HomeScreenCardBack(),
         cardWidth: cardWidth,
         cardHeight: cardHeight,
-      ),
+      ),*/
       flipCardController: controller,
     );
   }

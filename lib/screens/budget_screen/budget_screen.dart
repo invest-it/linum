@@ -1,4 +1,3 @@
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/utils/filters.dart';
@@ -10,7 +9,6 @@ import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/home_screen/widgets/home_screen_listview.dart';
 import 'package:provider/provider.dart';
 
-
 ///  Budget Screen
 ///  Screen listing all Balances ever made without any filtering (future entries not recognized).
 ///  Page Index: 1
@@ -19,8 +17,7 @@ class BudgetScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AlgorithmService algorithmService =
-        context.watch<AlgorithmService>();
+    final AlgorithmService algorithmService = context.watch<AlgorithmService>();
 
     if (algorithmService.state.filter != Filters.noFilter) {
       algorithmService.setCurrentFilterAlgorithm(Filters.noFilter);

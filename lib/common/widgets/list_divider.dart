@@ -12,7 +12,7 @@ class ListDivider extends StatelessWidget {
   final double B;
   final double L;
 
-  const ListDivider({this.T = 16.0, this.R = 0, this.B = 16.0, this.L = 0});
+  const ListDivider({this.T = 8.0, this.R = 0, this.B = 8.0, this.L = 0});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class ListDivider extends StatelessWidget {
       padding: EdgeInsets.only(top: T, right: R, bottom: B, left: L),
       child: Divider(
         thickness: 1.0,
-        color: Theme.of(context).colorScheme.surface,
+        color: Theme.of(context).colorScheme.tertiary,
       ),
     );
   }

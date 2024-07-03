@@ -30,7 +30,6 @@ class LanguageSelector extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyLarge,
           ).tr(),
           value: languageSettingsService.useSystemLanguage,
-          activeColor: Theme.of(context).colorScheme.primary,
           onChanged: (bool value) {
             languageSettingsService.setUseSystemLanguage(value);
           },
@@ -43,11 +42,11 @@ class LanguageSelector extends StatelessWidget {
               children: [
                 ToggleButtons(
                   isSelected: [
-                    languageSettingsService.isCurrentLanguageCode('de-DE'),
-                    languageSettingsService.isCurrentLanguageCode('en-US'),
-                    languageSettingsService.isCurrentLanguageCode('nl-NL'),
-                    languageSettingsService.isCurrentLanguageCode('es-ES'),
-                    languageSettingsService.isCurrentLanguageCode('fr-FR'),
+                    languageSettingsService.isCurrentLanguageTag('de-DE'),
+                    languageSettingsService.isCurrentLanguageTag('en-US'),
+                    languageSettingsService.isCurrentLanguageTag('nl-NL'),
+                    languageSettingsService.isCurrentLanguageTag('es-ES'),
+                    languageSettingsService.isCurrentLanguageTag('fr-FR'),
                   ],
                   onPressed: _selectLanguage(languageSettingsService),
                   borderRadius: BorderRadius.circular(32),
@@ -88,7 +87,7 @@ class LanguageSelector extends StatelessWidget {
         default:
           langSelector = 'en-US';
       }
-      languageSettingsService.setLanguageCode(langSelector);
+      languageSettingsService.setLanguageTag(langSelector);
     };
   }
 }
