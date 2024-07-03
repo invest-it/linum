@@ -60,7 +60,7 @@ class _UserDependentServicesState extends State<UserDependentServices> {
 
   @override
   void didUpdateWidget(UserDependentServices oldWidget) {
-    print("didUpdateWidget");
+    // print("didUpdateWidget");
     if (oldWidget.user != widget.user) {
       settingsStorage?.dispose();
       settingsStorage = SettingsStorageImpl(FirebaseFirestore.instance, widget.user?.uid);
@@ -72,8 +72,8 @@ class _UserDependentServicesState extends State<UserDependentServices> {
   @override
   Widget build(BuildContext context) {
     final eventService = context.read<EventService>();
-    print("Rebuild: ");
-    print(widget.user?.uid);
+    // print("Rebuild: ");
+    // print(widget.user?.uid);
 
 
     final languageSettingsRepository = SettingsRepositoryImpl<LanguageSettings>(

@@ -16,10 +16,10 @@ class SettingsStorageImpl implements ISettingsStorage {
     _controller.onListen = () {
       final docRef = _getDocRef();
 
-      print("Subscribing now");
+      // print("Subscribing now");
 
       _streamSubscription = docRef.snapshots().map((event) => event.data() ?? {}).listen((event) {
-        print("Snapshots: $event");
+        // print("Snapshots: $event");
         _controller.add(event);
       });
 
@@ -57,7 +57,7 @@ class SettingsStorageImpl implements ISettingsStorage {
   }
 
   void dispose() {
-    print("Disposed of SettingsStorage");
+    // print("Disposed of SettingsStorage");
     _streamSubscription?.cancel();
     _controller.close();
   }

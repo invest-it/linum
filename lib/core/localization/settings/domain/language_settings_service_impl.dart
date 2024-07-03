@@ -14,9 +14,9 @@ class LanguageSettingsServiceImpl extends SubscriptionHandler implements ILangua
 
 
   LanguageSettingsServiceImpl(this._repository, this._eventService) {
-    print("Constructor called");
+    // print("Constructor called");
     super.subscribe(_repository.settingsStream, (event) {
-      print(event);
+      // print(event);
       _eventService.dispatch(LanguageChangeEvent(
         message: event.languageTag,
         sender: (LanguageSettingsServiceImpl).toString(),

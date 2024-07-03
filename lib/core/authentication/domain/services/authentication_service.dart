@@ -303,7 +303,7 @@ class AuthenticationService extends SubscriptionHandler {
     if (user != null) {
       await setLastMail(user.email);
     }
-    print("User changed");
+    // print("User changed");
     notifyListeners();
   }
 
