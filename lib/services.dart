@@ -80,8 +80,8 @@ class ApplicationServices extends StatelessWidget {
     final languageSettingsService = context.read<ILanguageSettingsService>();
     final String? localeStr = event.message;
     final locale = supportedLocales.firstWhereOrNull((l) => l.toLanguageTag() == localeStr);
-    // print(localeStr);
-    // print(languageSettingsService.useSystemLanguage);
+    print(localeStr);
+    print(languageSettingsService.useSystemLanguage);
 
 
     if (context.locale.toLanguageTag() == localeStr && !languageSettingsService.useSystemLanguage) {
@@ -89,7 +89,7 @@ class ApplicationServices extends StatelessWidget {
     }
 
     if (localeStr != null && locale != null && !languageSettingsService.useSystemLanguage) {
-      // print("Set App Locale");
+      print("Set App Locale");
       context.setAppLocale(locale);
     } else {
       context.setLocaleToDeviceLocale();

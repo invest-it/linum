@@ -16,17 +16,9 @@ class SettingsRepositoryImpl<TSettings> extends ISettingsRepository<TSettings> {
     required ISettingsMapper<TSettings> mapper,
     IPrefAdapter<TSettings>? prefAdapter,
   }): _adapter = adapter, _mapper = mapper, _prefAdapter = prefAdapter {
-    _init();
-  }
-
-  Future<void> _init() async {
     var defaultVal = _prefAdapter?.load();
 
     // TODO: This might cause stream state errors, but for now it seems to work
-    final settings = await _adapter.getDataForUser();
-    if (settings != null) {
-      defaultVal = _mapper.toModel(settings);
-    }
     _settings.add(defaultVal ?? _mapper.toModel({}));
 
     var previous = _settings.value;
@@ -40,6 +32,8 @@ class SettingsRepositoryImpl<TSettings> extends ISettingsRepository<TSettings> {
 
     _settings.addStream(modifiedStream);
   }
+
+
 
   @override
   Stream<TSettings> get settingsStream => _settings.stream;
