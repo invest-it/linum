@@ -21,6 +21,8 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
   late final Logger logger;
   final MainRoute defaultRoute;
 
+  String? lastUid;
+
   MainRouterDelegate({required this.defaultRoute}) {
     navigatorKey = GlobalKey<NavigatorState>();
     logger = Logger();
@@ -96,9 +98,7 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
     return List.of(_pageStack);
   }
 
-  List<Page> _buildPageStack(BuildContext context) {
-    final AuthenticationService auth =
-        context.watch<AuthenticationService>();
+  List<Page> _buildPageStack(BuildContext context, AuthenticationService auth) {
     if (auth.isLoggedIn) {
       return _buildPageStackAuthorized(context);
     } else {
@@ -106,12 +106,12 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
     }
   }
 
-  Navigator _buildNavigator(BuildContext context) {
+  Navigator _buildNavigator(BuildContext context, AuthenticationService auth) {
     final transitionDelegate = MainTransitionDelegate();
     return Navigator(
       key: navigatorKey,
       // Add TransitionDelegate here
-      pages: _buildPageStack(context),
+      pages: _buildPageStack(context, auth),
       transitionDelegate: transitionDelegate,
       onPopPage: _onPopPage,
     );
@@ -119,6 +119,13 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
 
   @override
   Widget build(BuildContext context) {
+    final AuthenticationService auth = context.watch<AuthenticationService>();
+
+    if (lastUid == null && auth.currentUser?.uid != null) {
+      _pageStack.clear();
+    }
+    lastUid = auth.currentUser?.uid;
+
     final pinCodeProvider =
         context.read<PinCodeService>();
     if (pinCodeProvider.pinSetStillLoading) {
@@ -126,13 +133,13 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
         future: pinCodeProvider.initializeIsPINSet(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return _buildNavigator(context);
+            return _buildNavigator(context, auth);
           }
           return const LoadingScaffold();
         },
       );
     } else {
-      return _buildNavigator(context);
+      return _buildNavigator(context, auth);
     }
   }
 

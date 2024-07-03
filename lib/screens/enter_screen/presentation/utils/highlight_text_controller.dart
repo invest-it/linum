@@ -80,14 +80,14 @@ class HighlightTextEditingController extends TextEditingController {
   TextSpan buildTextSpan(
       {required BuildContext context,
       TextStyle? style,
-      required bool withComposing}) {
+      required bool withComposing,}) {
     assert(!value.composing.isValid ||
         !withComposing ||
-        value.isComposingRangeValid);
+        value.isComposingRangeValid,);
 
     final parsedInputList = _parsed?.toList() ?? [];
     parsedInputList.sortByCompare(
-        (element) => element.indices.start, (a, b) => a.compareTo(b));
+        (element) => element.indices.start, (a, b) => a.compareTo(b),);
 
     final builder = SpanListBuilder(
       verticalPadding: verticalPadding,
@@ -141,7 +141,7 @@ class HighlightTextEditingController extends TextEditingController {
   }
 
   void _addParsedInputToSpan(
-      ParsedInput parsedInput, SpanListBuilder builder, int counter) {
+      ParsedInput parsedInput, SpanListBuilder builder, int counter,) {
     final start = parsedInput.indices.start;
 
     if (counter < start) {

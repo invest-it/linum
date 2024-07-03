@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 
 abstract class ILanguageSettingsService with ChangeNotifier {
-  String? getLanguageCode();
-  Future<void> setLanguageCode(String? languageCode);
+  String? getLanguageTag();
+  Future<void> setLanguageTag(String? languageCode);
   Future<void> setUseSystemLanguage(bool value);
   bool get useSystemLanguage;
 
-  bool isCurrentLanguageCode(String code);
+  bool isCurrentLanguageTag(String code);
 }

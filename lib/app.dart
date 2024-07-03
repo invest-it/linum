@@ -5,17 +5,20 @@ import 'package:linum/core/navigation/main_router_delegate.dart';
 import 'package:linum/core/navigation/main_routes.dart';
 import 'package:linum/generated/objectbox/objectbox.g.dart';
 import 'package:linum/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Linum extends StatelessWidget {
   final bool? testing;
   final Store store;
   final MainRouterDelegate routerDelegate;
   final RouteInformationParser<MainRoute> routeInformationParser;
+  final SharedPreferences preferences;
 
   const Linum({
     required this.store,
     required this.routerDelegate,
     required this.routeInformationParser,
+    required this.preferences,
     this.testing,
   });
 
@@ -36,6 +39,7 @@ class Linum extends StatelessWidget {
       locale: context.locale,
       home: ApplicationServices(
         store: store,
+        preferences: preferences,
         router: Router<MainRoute>(
           routerDelegate: routerDelegate,
           routeInformationParser: routeInformationParser,

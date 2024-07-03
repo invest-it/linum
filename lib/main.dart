@@ -30,7 +30,7 @@ Future<void> main({bool? testing}) async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   SharedPreferences.getInstance().then((pref) {
     runApp(
-      LifecycleWatcher(store: store, testing: testing),
+      LifecycleWatcher(store: store, testing: testing, preferences: pref),
     );
   });
 
@@ -40,7 +40,8 @@ Future<void> main({bool? testing}) async {
 class LifecycleWatcher extends StatefulWidget {
   final Store store;
   final bool? testing;
-  const LifecycleWatcher({super.key, required this.store, this.testing});
+  final SharedPreferences preferences;
+  const LifecycleWatcher({super.key, required this.store, this.testing, required this.preferences});
 
   @override
   State<LifecycleWatcher> createState() => _LifecycleWatcherState();
@@ -52,6 +53,7 @@ class _LifecycleWatcherState extends State<LifecycleWatcher> {
     final MainRouterDelegate routerDelegate = MainRouterDelegate(
       defaultRoute: MainRoute.home,
     );
+
     final MainRouteInformationParser routeInformationParser = MainRouteInformationParser();
 
     return EasyLocalization(
@@ -63,6 +65,7 @@ class _LifecycleWatcherState extends State<LifecycleWatcher> {
           routerDelegate: routerDelegate,
           routeInformationParser: routeInformationParser,
           testing: widget.testing,
+          preferences: widget.preferences,
       ),
     );
   }

@@ -9,8 +9,8 @@ import 'package:provider/provider.dart';
 
 /// All services that do not depend on a signed in user are defined here.
 class UserIndependentServices extends StatelessWidget {
-  final Widget child;
-  const UserIndependentServices({super.key, required this.child});
+  final Widget Function(BuildContext context, User? user, Widget? child) builder;
+  const UserIndependentServices({super.key, required this.builder});
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +34,13 @@ class UserIndependentServices extends StatelessWidget {
         ChangeNotifierProvider<ActionLipViewModel>(
           create: (_) => ActionLipViewModel(),
         ),
-
       ],
-      child: child,
+      child: Selector<AuthenticationService, User?>(
+        builder: (BuildContext context, User? user, Widget? child) {
+          return builder(context, user, child);
+        },
+        selector: (context, authService) => authService.currentUser,
+      ),
     );
   }
 }

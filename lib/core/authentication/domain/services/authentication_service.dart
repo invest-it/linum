@@ -22,16 +22,17 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 class AuthenticationService extends SubscriptionHandler {
   /// The FirebaseAuth Object of the Project
   final FirebaseAuth _firebaseAuth;
+  final EventService _eventService;
   late Logger logger;
 
 
   AuthenticationService(this._firebaseAuth, {
     String? languageCode,
     required EventService eventService,
-  }) {
+  }) : _eventService = eventService {
     logger = Logger();
 
-    super.subscribe(eventService.getGlobalEventStream(), (event) {
+    super.subscribe(_eventService.getGlobalEventStream(), (event) {
       if (event.type == EventType.languageChange) {
         updateLanguageCode(event.message);
       }
@@ -83,7 +84,6 @@ class AuthenticationService extends SubscriptionHandler {
           logger.i("Your mail is not verified.");
         }
       }
-
     } on FirebaseAuthException catch (e) {
       logger.e(e.message);
       onError("auth.${e.code}");
@@ -303,6 +303,7 @@ class AuthenticationService extends SubscriptionHandler {
     if (user != null) {
       await setLastMail(user.email);
     }
+    print("User changed");
     notifyListeners();
   }
 
