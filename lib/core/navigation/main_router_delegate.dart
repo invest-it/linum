@@ -3,6 +3,8 @@
 //  Author: damattl
 //
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:linum/common/interfaces/service_interface.dart';
 import 'package:linum/core/authentication/domain/services/authentication_service.dart';
@@ -165,6 +167,10 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
     }
     lastUid = auth.currentUser?.uid;
 
+    if (_showLoadingScreen) {
+      return const LoadingScaffold();
+    }
+
     final pinCodeProvider =
         context.read<PinCodeService>();
     if (pinCodeProvider.pinSetStillLoading) {
@@ -224,6 +230,16 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
       return Future.value(true);
     }
     return Future.value(true);
+  }
+
+  bool _showLoadingScreen = false;
+
+  Future<void> showLoadingScreen({Duration duration = const Duration(seconds: 2)}) async {
+    _showLoadingScreen = true;
+    notifyListeners();
+    await Future.delayed(duration);
+    _showLoadingScreen = false;
+    notifyListeners();
   }
 
   /// Push a route to the MainRouter's Stack.
