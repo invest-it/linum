@@ -22,7 +22,7 @@ class ServiceContainer {
     services.add((
       service: service,
       provider: null,
-    ));
+    ),);
   }
 
   void clear() {

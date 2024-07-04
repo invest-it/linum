@@ -56,7 +56,7 @@ class _UserDependentServicesState extends State<UserDependentServices> {
 
   @override
   void initState() {
-    print("State init");
+    // print("State init");
     settingsStorage = SettingsStorageImpl(FirebaseFirestore.instance, widget.user?.uid);
     _buildServices(context.read<EventService>());
     super.initState();

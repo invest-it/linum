@@ -55,7 +55,7 @@ class _LifecycleWatcherState extends State<LifecycleWatcher> {
     );
 
     final MainRouteInformationParser routeInformationParser = MainRouteInformationParser();
-    print("Rebuild LifecycleWatcher");
+    // print("Rebuild LifecycleWatcher");
     return EasyLocalization(
       supportedLocales: supportedLocales,
       path: 'assets/lang',
