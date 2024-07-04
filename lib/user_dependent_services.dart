@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/common/utils/service_container.dart';
 import 'package:linum/core/authentication/domain/services/authentication_service.dart';
 import 'package:linum/core/balance/services/balance_data_service.dart';
 import 'package:linum/core/categories/settings/data/category_settings.dart';
@@ -49,12 +50,15 @@ class UserDependentServices extends StatefulWidget {
 }
 
 class _UserDependentServicesState extends State<UserDependentServices> {
-
   SettingsStorageImpl? settingsStorage;
+  final ServiceContainer _container = ServiceContainer();
+  late Widget _serviceWidget;
 
   @override
   void initState() {
+    print("State init");
     settingsStorage = SettingsStorageImpl(FirebaseFirestore.instance, widget.user?.uid);
+    _buildServices(context.read<EventService>());
     super.initState();
   }
 
@@ -64,17 +68,13 @@ class _UserDependentServicesState extends State<UserDependentServices> {
     if (oldWidget.user != widget.user) {
       settingsStorage?.dispose();
       settingsStorage = SettingsStorageImpl(FirebaseFirestore.instance, widget.user?.uid);
+      _buildServices(context.read<EventService>());
       super.didUpdateWidget(oldWidget);
     }
   }
 
-
-  @override
-  Widget build(BuildContext context) {
-    final eventService = context.read<EventService>();
-    // print("Rebuild: ");
-    // print(widget.user?.uid);
-
+  void _buildServices(EventService eventService) {
+    _container.clear();
 
     final languageSettingsRepository = SettingsRepositoryImpl<LanguageSettings>(
       adapter: settingsStorage!,
@@ -103,7 +103,6 @@ class _UserDependentServicesState extends State<UserDependentServices> {
       exchangeRateRepository,
     );
 
-
     final currencySettingsService = CurrencySettingsServiceImpl(
       currencySettingsRepository,
     );
@@ -126,36 +125,30 @@ class _UserDependentServicesState extends State<UserDependentServices> {
       exchangeRateFetcher,
     );
 
+
     final pinCodeService = PinCodeService(context.read<AuthenticationService>());
 
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<ICurrencySettingsService>.value(
-          value: currencySettingsService,
-        ),
-        ChangeNotifierProvider<ICategorySettingsService>.value(
-          value: categorySettingsService,
-        ),
-        ChangeNotifierProvider<ILanguageSettingsService>.value(
-          value: languageSettingsService,
-        ),
-        ChangeNotifierProvider<BalanceDataService>.value(
-          value: balanceDataService,
-        ),
-        ChangeNotifierProvider<IExchangeRateService>.value(
-          value: exchangeRateService,
-        ),
-        ChangeNotifierProvider<PinCodeService>.value(
-          value: pinCodeService,
-        ),
-      ],
-      child: widget.child,
-    );
+    _container.registerProvidableService<ICurrencySettingsService>(currencySettingsService);
+    _container.registerProvidableService<ICategorySettingsService>(categorySettingsService);
+    _container.registerProvidableService<ILanguageSettingsService>(languageSettingsService);
+    _container.registerProvidableService<BalanceDataService>(balanceDataService);
+    _container.registerProvidableService<IExchangeRateService>(exchangeRateService);
+    _container.registerProvidableService<PinCodeService>(pinCodeService);
+
+    _serviceWidget = _container.build(context, widget.child);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // print("Rebuild: ");
+    // print(widget.user?.uid);
+    return _serviceWidget;
   }
 
   @override
   void dispose() {
     settingsStorage?.dispose();
+    _container.dispose();
     super.dispose();
   }
 }

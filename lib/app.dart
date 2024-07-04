@@ -29,6 +29,7 @@ class Linum extends StatelessWidget {
     } else {
       return app;
     } */
+    print("rebuild linum app");
 
     return MaterialApp(
       title: 'Linum',
