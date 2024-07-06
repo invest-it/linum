@@ -27,13 +27,14 @@ class ScreenDashboardSkeleton extends StatelessWidget {
     return ConstrainedBox(
       constraints: BoxConstraints(
         maxHeight: context.proportionateScreenHeightFraction(
-          ScreenFraction.onefifth,
+          ScreenFraction.onethird,
         ), //TODO make this an argument
       ),
-      child: IntrinsicHeight(
+      child: DecoratedBox(
+        decoration: BoxDecoration(border: Border.all(color: Colors.red)),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: screenDashboardElements,
         ),
       ),

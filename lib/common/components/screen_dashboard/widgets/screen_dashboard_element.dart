@@ -1,3 +1,9 @@
+//  Screen Dashboard Element - Primary Platform for an Item within a Screen Dashboard
+//
+//  Author: NightmindOfficial
+//  Co-Author: n/a
+//
+
 import 'package:flutter/material.dart';
 import 'package:linum/common/components/screen_dashboard/enums/bgkey.dart';
 import 'package:linum/common/components/screen_dashboard/widgets/screen_dashboard_decoration.dart';
@@ -14,6 +20,7 @@ class ScreenDashboardElement extends StatelessWidget {
     required Widget content,
     required double height,
     required ColorScheme colorScheme,
+    List<double> paddingTB = const [8, 8],
     BGKey bgKey = BGKey.solid,
     double cardBorderRadius = 16.0,
   }) {
@@ -25,6 +32,7 @@ class ScreenDashboardElement extends StatelessWidget {
           colors: colorScheme,
           cardBorderRadius: cardBorderRadius,
           child: content,
+          paddingTB: paddingTB,
         ),
       ),
     );
@@ -34,6 +42,7 @@ class ScreenDashboardElement extends StatelessWidget {
     //* FLEXIBLE LAYOUT - Only takes as much space as its children need (flexible object).
     required Widget content,
     required ColorScheme colorScheme,
+    List<double> paddingTB = const [8, 8],
     BGKey bgKey = BGKey.solid,
     double cardBorderRadius = 16.0,
   }) {
@@ -44,6 +53,7 @@ class ScreenDashboardElement extends StatelessWidget {
           colors: colorScheme,
           cardBorderRadius: cardBorderRadius,
           child: content,
+          paddingTB: paddingTB,
         ),
       ),
     );
@@ -53,16 +63,19 @@ class ScreenDashboardElement extends StatelessWidget {
     //* EXPANDING LAYOUT - Takes as much space as there is available (constrained by the maximum height constraint imposed by the ScreenDashboardSkeleton).
     required Widget content,
     required ColorScheme colorScheme,
+    List<double> paddingTB = const [8, 8],
     BGKey bgKey = BGKey.solid,
     double cardBorderRadius = 16.0,
   }) {
     return ScreenDashboardElement._(
       element: Expanded(
         child: ScreenDashboardDecoration(
-            bgKey: bgKey,
-            colors: colorScheme,
-            cardBorderRadius: cardBorderRadius,
-            child: content),
+          bgKey: bgKey,
+          colors: colorScheme,
+          cardBorderRadius: cardBorderRadius,
+          child: content,
+          paddingTB: paddingTB,
+        ),
       ),
     );
   }
