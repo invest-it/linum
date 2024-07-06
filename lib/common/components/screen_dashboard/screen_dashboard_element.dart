@@ -18,7 +18,7 @@ class ScreenDashboardElement extends StatelessWidget {
     return ScreenDashboardElement._(
       element: SizedBox(
         height: height,
-        child: buildDecoration(
+        child: _buildDecoration(
           bgKey: bgKey,
           colors: colorScheme,
           cardBorderRadius: cardBorderRadius,
@@ -37,7 +37,7 @@ class ScreenDashboardElement extends StatelessWidget {
   }) {
     return ScreenDashboardElement._(
       element: Flexible(
-        child: buildDecoration(
+        child: _buildDecoration(
           bgKey: bgKey,
           colors: colorScheme,
           cardBorderRadius: cardBorderRadius,
@@ -56,7 +56,7 @@ class ScreenDashboardElement extends StatelessWidget {
   }) {
     return ScreenDashboardElement._(
       element: Expanded(
-        child: buildDecoration(
+        child: _buildDecoration(
           bgKey: bgKey,
           colors: colorScheme,
           cardBorderRadius: cardBorderRadius,
@@ -66,7 +66,8 @@ class ScreenDashboardElement extends StatelessWidget {
     );
   }
 
-  Widget buildDecoration({
+  static Widget _buildDecoration({
+    //TODO Refactor to Widget "ScreenDashboardDecoration"
     required BGKey bgKey,
     required ColorScheme colors,
     required double cardBorderRadius,
