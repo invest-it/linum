@@ -29,7 +29,7 @@ class CategoryBudgetChart extends StatelessWidget {
     return Card(
       elevation: 0,
       margin: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
-      color: theme.colorScheme.background,
+      color: theme.colorScheme.surface,
       shape: RoundedRectangleBorder(
         side: const BorderSide(
           color: Colors.grey,

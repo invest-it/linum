@@ -73,7 +73,7 @@ class CategoryStatsDetailsViewItem extends StatelessWidget {
 
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 16.0),
-      color: theme.colorScheme.background,
+      color: theme.colorScheme.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(100),
       ),

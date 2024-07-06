@@ -14,7 +14,7 @@ class MainBudgetChartSlide extends StatelessWidget {
     return StatSlide(
       child: MainBudgetChart(
         maxBudget: 1000,
-        currentExpenses: -viewModel.calculations.sumCosts.toDouble()
+        currentExpenses: -viewModel.calculations.sumCosts.toDouble(),
       ),
     );
   }

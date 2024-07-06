@@ -28,7 +28,7 @@ class BudgetForm extends StatelessWidget {
         DropdownMenu(
           initialSelection: "monthly",
           menuStyle: MenuStyle(
-            backgroundColor: MaterialStateProperty.all(theme.colorScheme.background),
+            backgroundColor: WidgetStateProperty.all(theme.colorScheme.surface),
             // TODO: Change the color
           ),
           dropdownMenuEntries: const [
