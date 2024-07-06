@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/core/balance/models/transaction.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
 import 'package:linum/screens/enter_screen/enter_screen.dart';
+import 'package:linum/screens/home_screen/components/home_screen_card/widgets/home_screen_card.dart';
 
 /// Page Index: 2
 class SandboxScreen extends StatelessWidget {

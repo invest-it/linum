@@ -7,8 +7,17 @@ import 'package:linum/features/currencies/core/utils/currency_formatter.dart';
 import 'package:linum/features/currencies/settings/presentation/currency_settings_service.dart';
 import 'package:provider/provider.dart';
 
+class GradientInfo {
+  final List<double> stops;
+  final List<ui.Color> colors;
+
+  GradientInfo({required this.stops, required this.colors});
+
+}
+
 class RadialProgressPainter extends CustomPainter {
-  final Color progressColor;
+  final Color? progressColor;
+  final GradientInfo? progressGradientInfo;
   final startAngle = 4/5*pi;
   final maxSweepAngle = 7/5*pi;
   final TextStyle? labelStyle;
@@ -23,7 +32,8 @@ class RadialProgressPainter extends CustomPainter {
   
 
   RadialProgressPainter({
-    required this.progressColor, 
+    this.progressColor,
+    this.progressGradientInfo,
     required this.progress,
     this.progressLabel,
     required this.labelStyle,
@@ -33,7 +43,7 @@ class RadialProgressPainter extends CustomPainter {
     required this.centerStyle,
     required this.centerSub,
     required this.centerSubStyle,
-  });
+  }) : assert(progressColor != null || progressGradientInfo != null);
 
   Paint _createBasePaint() {
     return Paint()
@@ -113,14 +123,28 @@ class RadialProgressPainter extends CustomPainter {
     final backgroundPaint = _createBasePaint()
       ..color = Colors.black12;
 
-    final progressPaint = _createBasePaint()
-      ..color = progressColor;
 
     // TODO: add gradient
 
     const paragraphMarginTop = 8.0;
     
     final progressSweepAngle = _calculateProgressSweepAngle();
+    final progressPaint = _createBasePaint();
+
+    if (progressColor != null) {
+      progressPaint.color = progressColor!;
+    }
+
+    if (progressGradientInfo != null) {
+      progressPaint.shader = SweepGradient(
+        startAngle: startAngle,
+        endAngle: maxSweepAngle,
+        colors: progressGradientInfo!.colors,
+        stops: progressGradientInfo!.stops,
+        transform: const GradientRotation(pi / 2),
+      ).createShader(boundingRect);
+    }
+
 
     canvas.drawArc(boundingRect, startAngle,  maxSweepAngle, false, backgroundPaint);
     canvas.drawArc(boundingRect, startAngle, progressSweepAngle, false, progressPaint);
@@ -193,6 +217,15 @@ class MainBudgetChart extends StatelessWidget {
             child: CustomPaint(
               painter: RadialProgressPainter(
                 progressColor: theme.primaryColor,
+                progressGradientInfo: GradientInfo(
+                  colors: [
+                    theme.primaryColor,
+                    Colors.red,
+                  ],
+                  stops: [
+                    0.8, 1.0,
+                  ],
+                ),
                 progress: currentExpenses / maxBudget,
                 labelStyle: theme.textTheme.labelMedium?.copyWith(color: Colors.black),
                 labelRight: formatter.format(maxBudget),
