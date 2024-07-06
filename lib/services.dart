@@ -18,7 +18,6 @@ import 'package:linum/user_independent_services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 /// Place were all application services are defined.
 /// Differentiates between user dependent services and user independent services
 /// To define user dependent services use the UserDependentServices widget
@@ -27,7 +26,12 @@ class ApplicationServices extends StatelessWidget {
   final Router router;
   final Store store;
   final SharedPreferences preferences;
-  ApplicationServices({super.key, required this.store, required this.router, required this.preferences});
+  ApplicationServices({
+    super.key,
+    required this.store,
+    required this.router,
+    required this.preferences,
+  });
 
   final Future<FirebaseApp> _initializedApp = Firebase.initializeApp(
     name: "Linum",
@@ -41,7 +45,6 @@ class ApplicationServices extends StatelessWidget {
       ),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -80,24 +83,26 @@ class ApplicationServices extends StatelessWidget {
   Future _handleLanguageChangeEvent(IEvent event, BuildContext context) async {
     final languageSettingsService = context.read<ILanguageSettingsService>();
     final String? localeStr = event.message;
-    final locale = supportedLocales.firstWhereOrNull((l) => l.toLanguageTag() == localeStr);
+    final locale = supportedLocales
+        .firstWhereOrNull((l) => l.toLanguageTag() == localeStr);
     // print(localeStr);
     // print(languageSettingsService.useSystemLanguage);
 
-
-    if (context.locale.toLanguageTag() == localeStr && !languageSettingsService.useSystemLanguage) {
+    if (context.locale.toLanguageTag() == localeStr &&
+        !languageSettingsService.useSystemLanguage) {
       return;
     }
 
     final delegate = router.routerDelegate as MainRouterDelegate;
-    delegate.showLoadingScreen(duration: const Duration(seconds: 1));
+    delegate.showLoadingScreen(duration: const Duration(milliseconds: 465));
 
-    if (localeStr != null && locale != null && !languageSettingsService.useSystemLanguage) {
+    if (localeStr != null &&
+        locale != null &&
+        !languageSettingsService.useSystemLanguage) {
       // print("Set App Locale");
       context.setAppLocale(locale);
     } else {
       context.setLocaleToDeviceLocale();
     }
   }
-
 }
