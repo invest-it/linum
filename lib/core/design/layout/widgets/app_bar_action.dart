@@ -9,6 +9,10 @@ import 'package:linum/core/navigation/get_delegate.dart';
 import 'package:linum/core/navigation/main_routes.dart';
 import 'package:logger/logger.dart';
 
+const Color lipContextColor = Color(
+  0xFFC1E695,
+); //FUTURE TODO: We should not hardcode things. This should be drawn from the colorTheme in the future.
+
 abstract class AppBarAction {
   static Logger logger = Logger();
 
@@ -43,16 +47,16 @@ abstract class AppBarAction {
             ),
       );
     },
-    // TODO: Are these guys even used?
-    DefaultAction.back: (BuildContext context) => const BackButton(),
+    DefaultAction.back: (BuildContext context) => const BackButton(
+          color: lipContextColor,
+        ),
     DefaultAction.close: (BuildContext context) => const CloseButton(),
   };
 
   static IconButton fromParameters({
     required IconData icon,
     required void Function() ontap,
-    Color iconColor =
-        const Color(0xFFC1E695), //TODO: We should not hardcode things.
+    Color iconColor = lipContextColor,
     bool active = true,
     Key? key,
   }) {
