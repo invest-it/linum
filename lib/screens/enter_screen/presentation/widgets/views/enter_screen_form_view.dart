@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:linum/common/utils/base_translator.dart';
 import 'package:linum/core/design/layout/utils/media_query_accessors.dart';
 import 'package:linum/core/repeating/constants/standard_repeat_configs.dart';
@@ -83,58 +84,57 @@ class _EnterScreenFormView extends StatelessWidget {
     context.read<EnterScreenFormViewModel>()
         .keyboardStateListener.inform(keyboardHeight);
 
-    final availableSpace = useScreenHeight(context) - 400 - 30;
+    const fixedHeight = 500;
+    final availableSpace = useScreenHeight(context) - fixedHeight - 30;
     final adjustedKeyboardHeight = min(keyboardHeight, availableSpace);
 
     return EnterScreenScaffold(
-      bodyHeight: 400 + adjustedKeyboardHeight,
+      bodyHeight: fixedHeight + adjustedKeyboardHeight,
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 24),
         child: Column(
           children: [
-            Flex(
-              direction: Axis.horizontal,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 40,
-                      vertical: 10,
-                    ),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 40,
+                          vertical: 10,
+                        ),
 
-                    child: EnterScreenTextField(
-                      parsingFilters: ParsingFilters(
-                        categoryFilter: (category) => category.entryType == context.getEntryType(),
+                        child: EnterScreenTextField(
+                          parsingFilters: ParsingFilters(
+                            categoryFilter: (category) => category.entryType == context.getEntryType(),
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(
-                    right: 55,
-                    top: 18,
-                    bottom: 10,
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                        child: QuickTagMenu(),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(40, 20, 40, 10),
+                        child: const Flex(
+                          direction: Axis.horizontal,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            EnterScreenDeleteButton(),
+                            EnterScreenEntryTypeSwitch(),
+                            EnterScreenContinueButton(),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  child: EnterScreenAbortButton(),
-                ),
-              ],
-            ),
-            const Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                child: QuickTagMenu(),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.fromLTRB(40, 20, 40, 10),
-              child: const Flex(
-                direction: Axis.horizontal,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  EnterScreenDeleteButton(),
-                  EnterScreenEntryTypeSwitch(),
-                  EnterScreenContinueButton(),
                 ],
               ),
             ),

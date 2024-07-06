@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
@@ -8,9 +9,10 @@ class SpanListBuilder {
   final double horizontalPadding;
   final double verticalMargin;
   final Radius borderRadius;
-  final TextStyle? baseStyle;
+  late final TextStyle? baseStyle;
   final GlobalKey cursorRefKey;
   final int cursor;
+  late final double lineHeight;
 
   int _charCount = 0;
 
@@ -22,7 +24,9 @@ class SpanListBuilder {
     required this.cursorRefKey,
     required this.cursor,
     this.baseStyle,
-  });
+  }) {
+    lineHeight = baseStyle?.height ?? 1.0;
+  }
 
   Color _highlightColor = Colors.black;
   Color _highlightTextColor = Colors.white;
@@ -46,16 +50,11 @@ class SpanListBuilder {
     _charCount += 1;
 
     spans.add(
-      WidgetSpan(
-        child: Container(
-          margin: EdgeInsets.symmetric(vertical: verticalMargin),
-          padding: EdgeInsets.symmetric(vertical: verticalPadding),
-          key: _charCount == cursor ? cursorRefKey : null,
-          child: Text(
-            char,
-            style: style,
-          ),
-        ),
+      PaddedSpan(
+        padding: EdgeInsets.symmetric(vertical: verticalPadding),
+        content: char,
+        key: _charCount == cursor ? cursorRefKey : null,
+        textStyle: style,
       ),
     );
 
@@ -117,24 +116,20 @@ class SpanListBuilder {
 
     _charCount += 1;
 
-    final span = WidgetSpan(
-      child: Container(
-        key: _charCount == cursor ? cursorRefKey : null,
-        margin: EdgeInsets.symmetric(vertical: verticalMargin),
-        decoration: BoxDecoration(
-          color: _highlightColor,
-          borderRadius: _getCorrectHighlightBorderRadius(isStart, isEnd),
-        ),
-        padding: _getCorrectHighlightPadding(isStart, isEnd),
-        child: Text(
-          char,
-          style: baseStyle?.copyWith(
-            color: _highlightTextColor,
-          ),
-        ),
+
+    final span = PaddedSpan(
+      key: _charCount == cursor ? cursorRefKey : null,
+      margin: EdgeInsets.symmetric(vertical: verticalMargin),
+      padding:  _getCorrectHighlightPadding(isStart, isEnd),
+      content: char,
+      decoration: BoxDecoration(
+        color: _highlightColor,
+        borderRadius: _getCorrectHighlightBorderRadius(isStart, isEnd),
+      ),
+      textStyle: baseStyle?.copyWith(
+        color: _highlightTextColor,
       ),
     );
-
 
 
     if (spanList != null) {
@@ -204,4 +199,46 @@ class SpanListBuilder {
   List<InlineSpan> build() {
     return spans;
   }
+}
+
+class PaddedSpan extends WidgetSpan {
+  final TextStyle? textStyle;
+  final EdgeInsets margin;
+  final EdgeInsets padding;
+  final Key? key;
+  final String content;
+  final BoxDecoration? decoration;
+
+  PaddedSpan({
+    this.textStyle,
+    this.margin = EdgeInsets.zero,
+    required this.padding,
+    required this.content,
+    this.decoration,
+    super.alignment = PlaceholderAlignment.middle,
+    this.key,
+  }): super(
+    child: SizedBox(
+      height: (textStyle?.fontSize ?? 16) * (textStyle?.height ?? 1.0),
+      child: Padding(
+        padding: margin,
+        child: Container(
+          key: key,
+          decoration: decoration,
+          padding: padding,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                content,
+                style: textStyle?.copyWith(
+                  height: 1.0,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
 }
