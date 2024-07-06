@@ -80,4 +80,9 @@ class LanguageSettingsServiceImpl extends SubscriptionHandler implements ILangua
     return code == getLanguageTag();
   }
 
+  @override
+  Future<bool> ready() async {
+    return _repository.ready();
+  }
+
 }

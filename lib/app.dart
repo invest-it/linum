@@ -29,7 +29,9 @@ class Linum extends StatelessWidget {
     } else {
       return app;
     } */
+    // print("rebuild linum app");
 
+    // TODO: Check if its better to wrap the app inside the application services
     return MaterialApp(
       title: 'Linum',
       theme: LinumTheme.light(),

@@ -8,6 +8,7 @@ import 'package:linum/core/events/event_types.dart';
 import 'package:linum/core/localization/settings/constants/supported_locales.dart';
 import 'package:linum/core/localization/settings/presentation/language_settings_service.dart';
 import 'package:linum/core/localization/settings/utils/locale_utils.dart';
+import 'package:linum/core/navigation/main_router_delegate.dart';
 import 'package:linum/firebase/firebase_options.g.dart';
 import 'package:linum/generated/objectbox/objectbox.g.dart';
 import 'package:linum/generated/translation_keys.g.dart';
@@ -88,6 +89,10 @@ class ApplicationServices extends StatelessWidget {
       return;
     }
 
+    final delegate = router.routerDelegate as MainRouterDelegate;
+    delegate.showLoadingScreen(duration: const Duration(milliseconds: 750));
+    delegate.resetServicesLoadingState();
+    
     if (localeStr != null && locale != null && !languageSettingsService.useSystemLanguage) {
       // print("Set App Locale");
       context.setAppLocale(locale);

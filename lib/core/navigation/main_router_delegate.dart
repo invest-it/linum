@@ -3,22 +3,33 @@
 //  Author: damattl
 //
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:linum/common/interfaces/service_interface.dart';
 import 'package:linum/core/authentication/domain/services/authentication_service.dart';
+import 'package:linum/core/categories/settings/presentation/category_settings_service.dart';
 import 'package:linum/core/design/layout/loading_scaffold.dart';
+import 'package:linum/core/localization/settings/presentation/language_settings_service.dart';
 import 'package:linum/core/navigation/main_routes.dart';
 import 'package:linum/core/navigation/main_routes_extensions.dart';
 import 'package:linum/core/navigation/main_transition_delegate.dart';
+import 'package:linum/features/currencies/settings/presentation/currency_settings_service.dart';
 import 'package:linum/screens/lock_screen/services/pin_code_service.dart';
 import 'package:linum/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
+
+Future notifyReady(List<NotifyReady> service) {
+  return Future.wait(service.map((service) => service.ready()));
+}
 
 class MainRouterDelegate extends RouterDelegate<MainRoute>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<MainRoute> {
   @override
   late final GlobalKey<NavigatorState> navigatorKey;
   late final Logger logger;
+  bool _servicesReady = false;
   final MainRoute defaultRoute;
 
   String? lastUid;
@@ -95,6 +106,9 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
       return _buildPinCodeStack(pinCodeService);
     }
 
+    // TODO: Wait for services to finish
+
+
     return List.of(_pageStack);
   }
 
@@ -106,14 +120,38 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
     }
   }
 
-  Navigator _buildNavigator(BuildContext context, AuthenticationService auth) {
+  Widget _buildNavigator(BuildContext context) {
+
     final transitionDelegate = MainTransitionDelegate();
+
     return Navigator(
       key: navigatorKey,
       // Add TransitionDelegate here
-      pages: _buildPageStack(context, auth),
+      pages: _buildPageStack(context, context.read<AuthenticationService>()),
       transitionDelegate: transitionDelegate,
       onPopPage: _onPopPage,
+    );
+
+  }
+
+  Widget _awaitServicesReady(BuildContext context, Widget Function(BuildContext context) callback) {
+    if (_servicesReady) {
+      return callback(context);
+    }
+
+    return FutureBuilder(
+      future: notifyReady([
+        context.read<ICurrencySettingsService>(),
+        context.read<ILanguageSettingsService>(),
+        context.read<ICategorySettingsService>(),
+      ]),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          _servicesReady = true;
+          return callback(context);
+        }
+        return const LoadingScaffold();
+      },
     );
   }
 
@@ -124,7 +162,14 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
     if (lastUid == null && auth.currentUser?.uid != null) {
       _pageStack.clear();
     }
+    if (lastUid != auth.currentUser?.uid) {
+      _servicesReady = false;
+    }
     lastUid = auth.currentUser?.uid;
+
+    if (_showLoadingScreen) {
+      return const LoadingScaffold();
+    }
 
     final pinCodeProvider =
         context.read<PinCodeService>();
@@ -133,13 +178,13 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
         future: pinCodeProvider.initializeIsPINSet(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return _buildNavigator(context, auth);
+            return _awaitServicesReady(context, _buildNavigator);
           }
           return const LoadingScaffold();
         },
       );
     } else {
-      return _buildNavigator(context, auth);
+      return _awaitServicesReady(context, _buildNavigator);
     }
   }
 
@@ -187,6 +232,16 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
     return Future.value(true);
   }
 
+  bool _showLoadingScreen = false;
+
+  Future<void> showLoadingScreen({Duration duration = const Duration(seconds: 2)}) async {
+    _showLoadingScreen = true;
+    notifyListeners();
+    await Future.delayed(duration);
+    _showLoadingScreen = false;
+    notifyListeners();
+  }
+
   /// Push a route to the MainRouter's Stack.
   /// Notifies all listening widgets.
   void pushRoute<T>(MainRoute route, {T? settings}) {
@@ -209,6 +264,10 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
   /// (For example after the user signed out)
   void rebuild() {
     notifyListeners();
+  }
+
+  void resetServicesLoadingState() {
+    _servicesReady = false;
   }
 
   @override

@@ -1,14 +1,17 @@
+import 'dart:async';
+
 import 'package:linum/core/settings/data/pref_adapter.dart';
 import 'package:linum/core/settings/data/settings_mapper_interface.dart';
 import 'package:linum/core/settings/domain/settings_repository.dart';
 import 'package:linum/core/settings/domain/settings_storage.dart';
+import 'package:logger/logger.dart';
 import 'package:rxdart/rxdart.dart';
 
 class SettingsRepositoryImpl<TSettings> extends ISettingsRepository<TSettings> {
   final ISettingsStorage _adapter;
   final ISettingsMapper<TSettings> _mapper;
   final IPrefAdapter<TSettings>? _prefAdapter;
-
+  final Completer<bool> _isReady = Completer();
   final BehaviorSubject<TSettings> _settings = BehaviorSubject();
 
   SettingsRepositoryImpl({
@@ -19,11 +22,17 @@ class SettingsRepositoryImpl<TSettings> extends ISettingsRepository<TSettings> {
     _init();
   }
 
-  Future<void> _init() async {
+
+  Future _init() async {
     var defaultVal = _prefAdapter?.load();
 
     // TODO: This might cause stream state errors, but for now it seems to work
-    final settings = await _adapter.getDataForUser();
+    Map<String, dynamic>? settings;
+    try {
+      settings = await _adapter.getDataForUser();
+    } on Exception catch (e) {
+      Logger().w(e);
+    }
     if (settings != null) {
       defaultVal = _mapper.toModel(settings);
     }
@@ -39,7 +48,10 @@ class SettingsRepositoryImpl<TSettings> extends ISettingsRepository<TSettings> {
     });
 
     _settings.addStream(modifiedStream);
+    _isReady.complete(true);
   }
+
+
 
   @override
   Stream<TSettings> get settingsStream => _settings.stream;
@@ -51,5 +63,10 @@ class SettingsRepositoryImpl<TSettings> extends ISettingsRepository<TSettings> {
     _prefAdapter?.store(settings);
     final map = _mapper.toMap(settings);
     await _adapter.updateUserData(map);
+  }
+
+  @override
+  Future<bool> ready() {
+    return _isReady.future;
   }
 }

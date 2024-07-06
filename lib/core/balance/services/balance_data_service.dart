@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
-import 'package:flutter/cupertino.dart';
+import 'package:linum/common/interfaces/service_interface.dart';
 import 'package:linum/core/balance/enums/serial_transaction_change_type_enum.dart';
 import 'package:linum/core/balance/models/balance_document.dart';
 import 'package:linum/core/balance/models/serial_transaction.dart';
@@ -11,7 +11,7 @@ import 'package:linum/core/balance/utils/serial_transaction_manager.dart';
 import 'package:linum/core/balance/utils/transaction_manager.dart';
 import 'package:logger/logger.dart';
 
-class BalanceDataService extends ChangeNotifier {
+class BalanceDataService extends IProvidableService {
   final String userId;
 
   BalanceDataService(this.userId) {
