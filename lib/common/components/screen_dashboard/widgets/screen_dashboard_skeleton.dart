@@ -5,7 +5,7 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:linum/common/components/screen_dashboard/screen_dashboard_element.dart';
+import 'package:linum/common/components/screen_dashboard/widgets/screen_dashboard_element.dart';
 import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 
@@ -33,11 +33,8 @@ class ScreenDashboardSkeleton extends StatelessWidget {
       child: IntrinsicHeight(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: screenDashboardElements.map((child) {
-            return Flexible(
-              child: child,
-            );
-          }).toList(),
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: screenDashboardElements,
         ),
       ),
     );

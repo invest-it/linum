@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:linum/common/components/screen_dashboard/enums/bgkey.dart';
+import 'package:linum/common/components/screen_dashboard/widgets/screen_dashboard_decoration.dart';
 
 class ScreenDashboardElement extends StatelessWidget {
   final Widget element;
@@ -18,7 +20,7 @@ class ScreenDashboardElement extends StatelessWidget {
     return ScreenDashboardElement._(
       element: SizedBox(
         height: height,
-        child: _buildDecoration(
+        child: ScreenDashboardDecoration(
           bgKey: bgKey,
           colors: colorScheme,
           cardBorderRadius: cardBorderRadius,
@@ -37,7 +39,7 @@ class ScreenDashboardElement extends StatelessWidget {
   }) {
     return ScreenDashboardElement._(
       element: Flexible(
-        child: _buildDecoration(
+        child: ScreenDashboardDecoration(
           bgKey: bgKey,
           colors: colorScheme,
           cardBorderRadius: cardBorderRadius,
@@ -56,50 +58,11 @@ class ScreenDashboardElement extends StatelessWidget {
   }) {
     return ScreenDashboardElement._(
       element: Expanded(
-        child: _buildDecoration(
-          bgKey: bgKey,
-          colors: colorScheme,
-          cardBorderRadius: cardBorderRadius,
-          child: content,
-        ),
-      ),
-    );
-  }
-
-  static Widget _buildDecoration({
-    //TODO Refactor to Widget "ScreenDashboardDecoration"
-    required BGKey bgKey,
-    required ColorScheme colors,
-    required double cardBorderRadius,
-    required Widget child,
-  }) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: colors.onSurface.withAlpha(64),
-            blurRadius: 12.0,
-            spreadRadius: 1.0,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(cardBorderRadius),
-        child: Material(
-          child: Container(
-            decoration: BoxDecoration(
-              color: bgKey == BGKey.solid ? Colors.white : null,
-              image: bgKey == BGKey.hexagon
-                  ? const DecorationImage(
-                      image: AssetImage("assets/images/cubes.png"),
-                      fit: BoxFit.cover,
-                    )
-                  : null,
-            ),
-            child: child,
-          ),
-        ),
+        child: ScreenDashboardDecoration(
+            bgKey: bgKey,
+            colors: colorScheme,
+            cardBorderRadius: cardBorderRadius,
+            child: content),
       ),
     );
   }
@@ -108,10 +71,4 @@ class ScreenDashboardElement extends StatelessWidget {
   Widget build(BuildContext context) {
     return element;
   }
-}
-
-enum BGKey {
-  solid, // Solid color (currently white)
-  hexagon,
-  //FUTURE Add more options if needed
 }
