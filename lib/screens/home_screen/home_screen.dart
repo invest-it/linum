@@ -80,9 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
         AppBarAction.fromPreset(DefaultAction.settings),
       ],
-      screenCard: HomeScreenCard(
-        controller: _flipCardController!,
-      ),
+      //TODO Screen Card here
       body: Stack(
         children: [
           Column(
