@@ -266,6 +266,9 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
     notifyListeners();
   }
 
+  void resetServicesLoadingState() {
+    _servicesReady = false;
+  }
 
   @override
   Future<void> setNewRoutePath(MainRoute route) async {}

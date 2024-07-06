@@ -90,8 +90,9 @@ class ApplicationServices extends StatelessWidget {
     }
 
     final delegate = router.routerDelegate as MainRouterDelegate;
-    delegate.showLoadingScreen(duration: const Duration(seconds: 1));
-
+    delegate.showLoadingScreen(duration: const Duration(milliseconds: 750));
+    delegate.resetServicesLoadingState();
+    
     if (localeStr != null && locale != null && !languageSettingsService.useSystemLanguage) {
       // print("Set App Locale");
       context.setAppLocale(locale);
