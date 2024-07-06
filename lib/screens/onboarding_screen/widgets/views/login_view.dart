@@ -43,7 +43,7 @@ class LoginView extends StatelessWidget {
         ),
         // padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom / 10000),
         decoration: BoxDecoration(
-          color: theme.colorScheme.background
+          color: theme.colorScheme.surface
               .withOpacity(_opacity(pageState)),
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(32),

@@ -30,7 +30,6 @@ class PinSwitch extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           value: pinCodeService.pinSet,
-          activeColor: Theme.of(context).colorScheme.primaryContainer,
           onChanged: pinCodeService.pinSetStillLoading
               ? null
               : (_) {

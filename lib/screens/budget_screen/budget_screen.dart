@@ -45,8 +45,7 @@ class _BudgetScreenState extends State<BudgetScreen> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    final AlgorithmService algorithmService =
-        context.watch<AlgorithmService>();
+    final AlgorithmService algorithmService = context.watch<AlgorithmService>();
 
     if (algorithmService.state.filter == Filters.noFilter) {
       algorithmService.resetCurrentShownMonth();

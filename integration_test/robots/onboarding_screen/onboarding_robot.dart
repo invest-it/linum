@@ -6,7 +6,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gradient_widgets/gradient_widgets.dart';
+import 'package:linum/common/widgets/gradient_button.dart';
 
 import '../general/general_robot.dart';
 

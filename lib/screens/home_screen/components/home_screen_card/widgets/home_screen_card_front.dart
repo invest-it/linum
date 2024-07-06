@@ -89,7 +89,7 @@ class HomeScreenCardFront extends StatelessWidget {
                               : Theme.of(context).textTheme.displaySmall,
                         ),
                       ),
-                      Expanded(
+                      /*Expanded(
                         child: Align(
                           alignment: Alignment.topRight,
                           child: IconButton(
@@ -104,7 +104,8 @@ class HomeScreenCardFront extends StatelessWidget {
                             ),
                           ),
                         ),
-                      ),
+                      ),*/
+                      const Spacer(),
                     ],
                   ),
                   Text(

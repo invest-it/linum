@@ -10,7 +10,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/components/dialogs/show_alert_dialog.dart';
 import 'package:linum/core/authentication/domain/services/authentication_service.dart';
-import 'package:linum/core/authentication/presentation/widgets/forgot_password.dart';
+import 'package:linum/core/authentication/presentation/widgets/forgot_password_button.dart';
 import 'package:linum/core/authentication/presentation/widgets/sign_in_sign_up_button.dart';
 import 'package:linum/core/authentication/presentation/widgets/sign_in_with_google_button.dart';
 import 'package:linum/core/design/layout/enums/screen_key.dart';
@@ -63,30 +63,23 @@ class _LoginFormState extends State<LoginForm> {
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
             children: [
-              Container(
-                padding: const EdgeInsets.all(5.0),
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.onSecondary,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: theme.colorScheme.onBackground,
-                      blurRadius: 20.0,
-                      offset: const Offset(0, 10),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    LoginEmailField(
-                        controller: _mailController!,
-                        validated: _mailValidated,
-                    ),
-                    LoginPasswordField(
-                        controller: _passController,
-                        validated: _passValidated,
-                    ),
-                  ],
+              Material(
+                elevation: 1,
+                borderRadius: BorderRadius.circular(8),
+                child: Container(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Column(
+                    children: [
+                      LoginEmailField(
+                          controller: _mailController!,
+                          validated: _mailValidated,
+                      ),
+                      LoginPasswordField(
+                          controller: _passController,
+                          validated: _passValidated,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
@@ -99,7 +92,7 @@ class _LoginFormState extends State<LoginForm> {
               SizedBox(
                 height: context.proportionateScreenHeight(8),
               ),
-              const ForgotPasswordButton(ScreenKey.onboarding),
+              const ForgotPasswordButton(ScreenKey.onboarding, m3: false,),
               SizedBox(
                 height: context.proportionateScreenHeight(8),
               ),

@@ -21,56 +21,54 @@ environment:
   sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
-  badges: ^2.0.2
-  cloud_firestore: ^4.8.0
+  badges: ^3.1.2
+  cloud_firestore: ^5.0.2
   code_builder: ^4.1.0
   collection: ^1.17.1
   crypto: ^3.0.1
   cupertino_icons: ^1.0.2
   dart_style: ^2.2.3
   easy_localization: ^3.0.2
-  easy_localization_loader: ^1.0.1+1
+  easy_localization_loader: ^2.0.2
   enum_to_string: ^2.0.1
 
-  firebase_auth: ^4.6.2
-  firebase_core: ^2.14.0
-  fl_chart: ^0.66.2
-  flat_buffers: ^2.0.5
-  flip_card: ^0.5.0 # Don't update to 0.6.0
+  firebase_auth: ^5.1.1
+  firebase_core: ^3.1.1
+  flat_buffers: ^23.5.26
+  flip_card: ^0.7.0 # Don't update to 0.6.0
 
   flutter:
     sdk: flutter
   
   flutter_spinkit: ^5.1.0
-  flutter_svg: ^1.0.0
+  flutter_svg: ^2.0.10+1
   fluttertoast: ^8.0.8
-  google_fonts: ^4.0.4
-  google_sign_in: ^5.2.4
-  gradient_widgets: ^0.6.0
-  http: ^0.13.6
-  intl: ^0.18.0
+  google_fonts: ^6.2.1
+  google_sign_in: ^6.2.1
+  http: ^1.2.1
+  intl: ^0.19.0
   json_annotation: ^4.7.0
-  logger: ^1.1.0
+  logger: ^2.3.0
   mockito: ^5.3.2
-  objectbox: 2.1.0
-  objectbox_flutter_libs: 2.1.0
-  objectbox_generator: 2.1.0
-  package_info_plus: ^4.0.2
+  objectbox: ^4.0.1
+  objectbox_flutter_libs: ^4.0.1
+  objectbox_generator: ^4.0.1
+  package_info_plus: ^8.0.0
   path: ^1.8.2
   provider: ^6.0.2
-  rxdart: ^0.27.7
+  rxdart: ^0.28.0
   shared_preferences: ^2.0.13
-  sign_in_with_apple: ^4.2.0
+  sign_in_with_apple: ^6.1.1
   tuple: ^2.0.0
   url_launcher: ^6.1.2
   url_launcher_ios: ^6.0.15
-  uuid: ^3.0.5
+  uuid: ^4.4.0
 
   
 
 dev_dependencies:
   build_runner: ^2.2.1
-  flutter_launcher_icons: ^0.11.0
+  flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.2.14
   flutter_test: 
     sdk: flutter

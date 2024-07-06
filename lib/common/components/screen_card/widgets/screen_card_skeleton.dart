@@ -50,6 +50,7 @@ class _ScreenCardSkeletonState<TData> extends State<ScreenCardSkeleton> {
             controller: _flipCardController,
             front: widget.frontSide,
             back: widget.backSide!,
+
           ),
     );
   }

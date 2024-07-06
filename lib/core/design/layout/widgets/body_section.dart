@@ -33,7 +33,7 @@ class BodySection extends StatelessWidget {
                 ),
                 // ignore: use_colored_box
                 child: Container(
-                  color: Theme.of(context).colorScheme.background,
+                  color: Theme.of(context).colorScheme.surface,
                   child: Padding(
                     padding: hasScreenCard
                         ? EdgeInsets.only(

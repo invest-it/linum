@@ -11,6 +11,7 @@ import 'package:linum/app.dart';
 import 'package:linum/core/localization/settings/constants/supported_locales.dart';
 import 'package:linum/core/navigation/main_route_information_parser.dart';
 import 'package:linum/core/navigation/main_router_delegate.dart';
+import 'package:linum/core/navigation/main_routes.dart';
 import 'package:linum/generated/objectbox/objectbox.g.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,7 +30,7 @@ Future<void> main({bool? testing}) async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   SharedPreferences.getInstance().then((pref) {
     runApp(
-      LifecycleWatcher(store: store, testing: testing),
+      LifecycleWatcher(store: store, testing: testing, preferences: pref),
     );
   });
 
@@ -39,7 +40,8 @@ Future<void> main({bool? testing}) async {
 class LifecycleWatcher extends StatefulWidget {
   final Store store;
   final bool? testing;
-  const LifecycleWatcher({super.key, required this.store, this.testing});
+  final SharedPreferences preferences;
+  const LifecycleWatcher({super.key, required this.store, this.testing, required this.preferences});
 
   @override
   State<LifecycleWatcher> createState() => _LifecycleWatcherState();
@@ -48,9 +50,12 @@ class LifecycleWatcher extends StatefulWidget {
 class _LifecycleWatcherState extends State<LifecycleWatcher> {
   @override
   Widget build(BuildContext context) {
-    final MainRouterDelegate routerDelegate = MainRouterDelegate();
-    final MainRouteInformationParser routeInformationParser = MainRouteInformationParser();
+    final MainRouterDelegate routerDelegate = MainRouterDelegate(
+      defaultRoute: MainRoute.home,
+    );
 
+    final MainRouteInformationParser routeInformationParser = MainRouteInformationParser();
+    // print("Rebuild LifecycleWatcher");
     return EasyLocalization(
       supportedLocales: supportedLocales,
       path: 'assets/lang',
@@ -60,6 +65,7 @@ class _LifecycleWatcherState extends State<LifecycleWatcher> {
           routerDelegate: routerDelegate,
           routeInformationParser: routeInformationParser,
           testing: widget.testing,
+          preferences: widget.preferences,
       ),
     );
   }

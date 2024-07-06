@@ -6,14 +6,11 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:gradient_widgets/gradient_widgets.dart';
+import 'package:linum/common/widgets/list_divider.dart';
 import 'package:linum/core/authentication/domain/services/authentication_service.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
-import 'package:linum/core/navigation/get_delegate.dart';
 import 'package:linum/generated/translation_keys.g.dart';
-import 'package:linum/screens/lock_screen/services/pin_code_service.dart';
 import 'package:provider/provider.dart';
-
 
 class LogoutForm extends StatefulWidget {
   @override
@@ -23,48 +20,33 @@ class LogoutForm extends StatefulWidget {
 class _LogoutFormState extends State<LogoutForm> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: context.proportionateScreenHeight(16),
+          padding: EdgeInsets.only(
+            top: context.proportionateScreenHeight(16),
           ),
-          child: Consumer<AuthenticationService>(
-            builder: (context, authService, _) {
-              return Text(
-                tr(translationKeys.logoutForm.labelCurrentEmail) + authService.userEmail,
-                style: Theme.of(context).textTheme.bodyLarge,
-                textAlign: TextAlign.center,
-              );
-            },
-          ),
-        ),
-        GradientButton(
-          key: const Key("logoutButton"),
-          increaseHeightBy: context.proportionateScreenHeight(16),
-          callback: () => context.read<AuthenticationService>()
-              .signOut()
-              .then((_) {
-                context.getMainRouterDelegate().rebuild();
-                context.read<PinCodeService>()
-                    .resetOnLogout();
-              }),
-          gradient: LinearGradient(
-            colors: [
-              Theme.of(context).colorScheme.primary,
-              Theme.of(context).colorScheme.surface,
+          child: Column(
+            children: [
+              Consumer<AuthenticationService>(
+                builder: (context, authService, _) {
+                  return Text(
+                    tr(translationKeys.logoutForm.labelCurrentEmail) +
+                        authService.userEmail,
+                    style: theme.textTheme.bodyLarge,
+                    textAlign: TextAlign.center,
+                  );
+                },
+              ),
+              const ListDivider(
+                L: 32,
+                R: 32,
+                B: 0,
+              ),
             ],
           ),
-          elevation: 0,
-          increaseWidthBy: double.infinity,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          child: Text(
-            tr(translationKeys.settingsScreen.systemSettings.buttonSignout),
-            style: Theme.of(context).textTheme.labelLarge,
-          ),
-        ),
-        SizedBox(
-          height: context.proportionateScreenHeight(8),
         ),
       ],
     );

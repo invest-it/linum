@@ -10,7 +10,7 @@ class StandardCategorySelector extends StatelessWidget {
   final EntryType entryType;
   final IconData icon;
   final Color iconColor;
-  final String lipTitle;
+  final String title;
   final String buttonTitle;
 
   const StandardCategorySelector({
@@ -18,7 +18,7 @@ class StandardCategorySelector extends StatelessWidget {
     required this.entryType,
     required this.icon,
     required this.iconColor,
-    required this.lipTitle,
+    required this.title,
     required this.buttonTitle,
   });
 
@@ -26,10 +26,10 @@ class StandardCategorySelector extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        showChangeStandardCategoryActionLip(
+        showChangeStandardCategoryBottomSheet(
             context,
             entryType: entryType,
-            lipTitle: lipTitle,
+            title: title,
         );
       },
       child: Selector<ICategorySettingsService, Category?>(

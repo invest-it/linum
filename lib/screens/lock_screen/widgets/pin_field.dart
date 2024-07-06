@@ -27,7 +27,7 @@ class PinField extends StatelessWidget {
       decoration: BoxDecoration(
         color: selectedIndex >= index
             ? Theme.of(context).colorScheme.tertiary
-            : Theme.of(context).colorScheme.background,
+            : Theme.of(context).colorScheme.surface,
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(

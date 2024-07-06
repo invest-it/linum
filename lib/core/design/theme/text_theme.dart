@@ -10,7 +10,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class MainTextTheme {
+class LinumTextTheme {
   static final TextTheme lightTheme = TextTheme(
     displayLarge: GoogleFonts.dmSans(
       fontSize: 39.81,

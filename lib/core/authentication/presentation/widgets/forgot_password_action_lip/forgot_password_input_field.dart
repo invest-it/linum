@@ -5,9 +5,9 @@ import 'package:linum/core/authentication/domain/services/authentication_service
 import 'package:linum/generated/translation_keys.g.dart';
 import 'package:provider/provider.dart';
 
-class RegisteredUserInputField extends StatelessWidget {
+class ForgotPasswordInputField extends StatelessWidget {
   final TextEditingController controller;
-  const RegisteredUserInputField({
+  const ForgotPasswordInputField({
     super.key,
     required this.controller,
   });
@@ -23,11 +23,10 @@ class RegisteredUserInputField extends StatelessWidget {
         ),
       ),
       child: TextField(
-        obscureText: true,
         controller: controller,
-        keyboardType: TextInputType.visiblePassword,
+        keyboardType: TextInputType.emailAddress,
         onEditingComplete: () => {
-          authService.updatePassword(
+          authService.resetPassword(
             controller.text,
             onError: (message) => showAlertDialog(
               context,
@@ -36,19 +35,17 @@ class RegisteredUserInputField extends StatelessWidget {
             onComplete: (message) => showAlertDialog(
               context,
               message: message,
-              title: translationKeys.alertdialog.updatePassword.title,
-              actionTitle: translationKeys.alertdialog.updatePassword.action,
+              title: translationKeys.alertdialog.resetPassword.title,
+              actionTitle: translationKeys.alertdialog.resetPassword.action,
               userMustDismissWithButton: true,
             ),
           ),
         },
         decoration: InputDecoration(
-          border: InputBorder.none,
-          hintText: tr(
-            translationKeys.onboardingScreen.loginPasswordHintlabel,
+          border: const OutlineInputBorder(),
+          labelText: tr(
+            translationKeys.onboardingScreen.loginEmailHintlabel,
           ),
-          hintStyle: Theme.of(context).textTheme.bodyLarge
-              ?.copyWith(color: Theme.of(context).colorScheme.secondary),
         ),
       ),
     );

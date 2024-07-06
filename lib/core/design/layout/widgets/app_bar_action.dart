@@ -30,17 +30,17 @@ abstract class AppBarAction {
       return AppBarAction.fromParameters(
         icon: Icons.video_library_rounded,
         ontap: () => context.getMainRouterDelegate().pushRoute(
-          MainRoute.academy,
-        ), // TODO: Find out why app closes on back-navigation
+              MainRoute.academy,
+            ),
       );
     },
     DefaultAction.settings: (BuildContext context) {
       return AppBarAction.fromParameters(
         icon: Icons.settings_rounded,
         ontap: () => context.getMainRouterDelegate().replaceLastRoute(
-          MainRoute.settings,
-          rememberReplacedRoute: true,
-        ),
+              MainRoute.settings,
+              rememberReplacedRoute: true,
+            ),
       );
     },
     // TODO: Are these guys even used?
@@ -51,6 +51,8 @@ abstract class AppBarAction {
   static IconButton fromParameters({
     required IconData icon,
     required void Function() ontap,
+    Color iconColor =
+        const Color(0xFFC1E695), //TODO: We should not hardcode things.
     bool active = true,
     Key? key,
   }) {
@@ -58,6 +60,7 @@ abstract class AppBarAction {
       icon: Icon(icon),
       onPressed: () => active ? ontap() : {},
       key: key,
+      color: iconColor,
     );
   }
 

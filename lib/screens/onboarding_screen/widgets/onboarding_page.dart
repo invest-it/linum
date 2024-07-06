@@ -12,6 +12,7 @@ import 'package:linum/screens/onboarding_screen/widgets/onboarding_slide_indicat
 import 'package:linum/screens/onboarding_screen/widgets/onboarding_slide_show.dart';
 import 'package:linum/screens/onboarding_screen/widgets/views/login_view.dart';
 import 'package:linum/screens/onboarding_screen/widgets/views/register_view.dart';
+import 'package:linum/screens/settings_screen/widgets/version_number.dart';
 import 'package:provider/provider.dart';
 
 class OnboardingPage extends StatelessWidget {
@@ -20,7 +21,7 @@ class OnboardingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final OnboardingScreenViewModel viewModel =
-      context.read<OnboardingScreenViewModel>();
+        context.read<OnboardingScreenViewModel>();
 
     return ScreenSkeleton(
       head: '', // will not be displayed anyways
@@ -56,6 +57,10 @@ class OnboardingPage extends StatelessWidget {
                     height: context.proportionateScreenHeight(10),
                   ),
                   const OnboardingLoginButton(),
+                  SizedBox(
+                    height: context.proportionateScreenHeight(10),
+                  ),
+                  VersionNumber(),
                 ],
               ),
             ),
@@ -68,5 +73,4 @@ class OnboardingPage extends StatelessWidget {
       ),
     );
   }
-
 }
