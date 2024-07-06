@@ -27,13 +27,14 @@ Future<void> main({bool? testing}) async {
   }
 
   // Force Portrait Mode
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  SystemChrome.setPreferredOrientations(
+    [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
+  );
   SharedPreferences.getInstance().then((pref) {
     runApp(
       LifecycleWatcher(store: store, testing: testing, preferences: pref),
     );
   });
-
 }
 
 /// Wrapper to handle global lifecycle changes, for example the app closing.
@@ -41,7 +42,12 @@ class LifecycleWatcher extends StatefulWidget {
   final Store store;
   final bool? testing;
   final SharedPreferences preferences;
-  const LifecycleWatcher({super.key, required this.store, this.testing, required this.preferences});
+  const LifecycleWatcher({
+    super.key,
+    required this.store,
+    this.testing,
+    required this.preferences,
+  });
 
   @override
   State<LifecycleWatcher> createState() => _LifecycleWatcherState();
@@ -54,18 +60,19 @@ class _LifecycleWatcherState extends State<LifecycleWatcher> {
       defaultRoute: MainRoute.home,
     );
 
-    final MainRouteInformationParser routeInformationParser = MainRouteInformationParser();
+    final MainRouteInformationParser routeInformationParser =
+        MainRouteInformationParser();
     // print("Rebuild LifecycleWatcher");
     return EasyLocalization(
       supportedLocales: supportedLocales,
       path: 'assets/lang',
       fallbackLocale: const Locale('de', 'DE'),
       child: Linum(
-          store: widget.store,
-          routerDelegate: routerDelegate,
-          routeInformationParser: routeInformationParser,
-          testing: widget.testing,
-          preferences: widget.preferences,
+        store: widget.store,
+        routerDelegate: routerDelegate,
+        routeInformationParser: routeInformationParser,
+        testing: widget.testing,
+        preferences: widget.preferences,
       ),
     );
   }
