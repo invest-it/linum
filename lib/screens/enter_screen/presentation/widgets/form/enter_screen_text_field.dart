@@ -20,7 +20,7 @@ class EnterScreenTextField extends StatelessWidget {
       fontSize: 16,
       letterSpacing: 1.0,
       textBaseline: TextBaseline.alphabetic,
-      height: 2.0
+      height: 2.0,
     );
 
     final locale = context.locale;

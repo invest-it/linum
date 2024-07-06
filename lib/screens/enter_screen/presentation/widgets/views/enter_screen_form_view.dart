@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:linum/common/utils/base_translator.dart';
 import 'package:linum/core/design/layout/utils/media_query_accessors.dart';
 import 'package:linum/core/repeating/constants/standard_repeat_configs.dart';
@@ -13,7 +12,6 @@ import 'package:linum/screens/enter_screen/presentation/utils/get_default_values
 import 'package:linum/screens/enter_screen/presentation/utils/initial_form_data_builder.dart';
 import 'package:linum/screens/enter_screen/presentation/view_models/enter_screen_form_view_model.dart';
 import 'package:linum/screens/enter_screen/presentation/view_models/enter_screen_view_model.dart';
-import 'package:linum/screens/enter_screen/presentation/widgets/buttons/abort_button.dart';
 import 'package:linum/screens/enter_screen/presentation/widgets/buttons/continue_button.dart';
 import 'package:linum/screens/enter_screen/presentation/widgets/buttons/delete_button.dart';
 import 'package:linum/screens/enter_screen/presentation/widgets/buttons/entry_type_switch.dart';
