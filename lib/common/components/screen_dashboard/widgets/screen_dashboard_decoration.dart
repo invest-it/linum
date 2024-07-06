@@ -14,26 +14,28 @@ class ScreenDashboardDecoration extends StatelessWidget {
     required this.colors,
     required this.cardBorderRadius,
     required this.child,
-    required this.paddingLTRB,
+    required this.paddingTB,
+    required this.paddingLR,
   }) : assert(
-          paddingLTRB.length == 4,
-          "Assigning more than 4 doubles in paddingLTRB does not make any sense, only the first two items will be evaluated.",
+          paddingTB.length == 2,
+          "Assigning more than 2 doubles in paddingLTRB does not make any sense, only the first two items will be evaluated.",
         );
 
   final BGKey bgKey;
   final ColorScheme colors;
   final double cardBorderRadius;
   final Widget child;
-  final List<double> paddingLTRB;
+  final List<double> paddingTB;
+  final double paddingLR;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(
-        paddingLTRB[0],
-        paddingLTRB[1],
-        paddingLTRB[2],
-        paddingLTRB[3],
+      padding: EdgeInsets.only(
+        top: paddingTB[0],
+        bottom: paddingTB[1],
+        left: paddingLR,
+        right: paddingLR,
       ),
       child: DecoratedBox(
         decoration: BoxDecoration(

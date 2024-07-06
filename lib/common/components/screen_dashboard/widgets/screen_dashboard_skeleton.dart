@@ -7,6 +7,7 @@
 import 'package:flutter/material.dart';
 import 'package:linum/common/components/screen_dashboard/widgets/screen_dashboard_element.dart';
 import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
+import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 
 class ScreenDashboardSkeleton extends StatelessWidget {
   final List<ScreenDashboardElement> screenDashboardElements;
@@ -21,8 +22,8 @@ class ScreenDashboardSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: const BoxConstraints(
-        maxHeight: 231, //context.proportionateScreenHeightFraction(maxHeight),
+      constraints: BoxConstraints(
+        maxHeight: context.proportionateScreenHeightFraction(maxHeight),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -20,7 +20,8 @@ class ScreenDashboardElement extends StatelessWidget {
     required Widget content,
     required double height,
     required ColorScheme colorScheme,
-    List<double> paddingLTRB = const [8, 0, 8, 8],
+    required double paddingLR,
+    List<double> paddingTB = const [0, 8],
     BGKey bgKey = BGKey.solid,
     double cardBorderRadius = 16.0,
   }) {
@@ -31,7 +32,8 @@ class ScreenDashboardElement extends StatelessWidget {
           bgKey: bgKey,
           colors: colorScheme,
           cardBorderRadius: cardBorderRadius,
-          paddingLTRB: paddingLTRB,
+          paddingTB: paddingTB,
+          paddingLR: paddingLR,
           child: content,
         ),
       ),
@@ -42,7 +44,8 @@ class ScreenDashboardElement extends StatelessWidget {
     //* FLEXIBLE LAYOUT - Only takes as much space as its children need (regular box).
     required Widget content,
     required ColorScheme colorScheme,
-    List<double> paddingLTRB = const [8, 0, 8, 8],
+    required double paddingLR,
+    List<double> paddingTB = const [0, 8],
     BGKey bgKey = BGKey.solid,
     double cardBorderRadius = 16.0,
   }) {
@@ -51,7 +54,8 @@ class ScreenDashboardElement extends StatelessWidget {
         bgKey: bgKey,
         colors: colorScheme,
         cardBorderRadius: cardBorderRadius,
-        paddingLTRB: paddingLTRB,
+        paddingTB: paddingTB,
+        paddingLR: paddingLR,
         child: content,
       ),
     );
@@ -61,7 +65,8 @@ class ScreenDashboardElement extends StatelessWidget {
     //* EXPANDING LAYOUT - Takes as much space as there is available (constrained by the maximum height constraint imposed by the ScreenDashboardSkeleton).
     required Widget content,
     required ColorScheme colorScheme,
-    List<double> paddingLTRB = const [8, 0, 8, 8],
+    required double paddingLR,
+    List<double> paddingTB = const [0, 8],
     BGKey bgKey = BGKey.solid,
     double cardBorderRadius = 16.0,
   }) {
@@ -71,7 +76,8 @@ class ScreenDashboardElement extends StatelessWidget {
           bgKey: bgKey,
           colors: colorScheme,
           cardBorderRadius: cardBorderRadius,
-          paddingLTRB: paddingLTRB,
+          paddingTB: paddingTB,
+          paddingLR: paddingLR,
           child: content,
         ),
       ),

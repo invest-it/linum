@@ -26,17 +26,20 @@ class HomeScreenDashboard extends StatelessWidget {
             "TIME WIDGET (CLD)",
           ),
           colorScheme: colors,
+          paddingLR: hP,
         ),
         ScreenDashboardElement.expanding(
           bgKey: BGKey.hexagon,
           content: const Text(
             "PRIMARY (EXP)",
           ),
+          paddingLR: hP,
           colorScheme: colors,
         ),
         ScreenDashboardElement.flexible(
           content: const Text("Context (CLD)"),
-          paddingLTRB: [hP, 0, hP, 0],
+          paddingLR: hP,
+          paddingTB: const [0, 0],
           colorScheme: colors,
         ),
       ],
