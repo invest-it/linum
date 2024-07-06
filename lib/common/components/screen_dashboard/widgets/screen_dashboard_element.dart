@@ -20,7 +20,7 @@ class ScreenDashboardElement extends StatelessWidget {
     required Widget content,
     required double height,
     required ColorScheme colorScheme,
-    List<double> paddingTB = const [8, 8],
+    List<double> paddingLTRB = const [8, 0, 8, 8],
     BGKey bgKey = BGKey.solid,
     double cardBorderRadius = 16.0,
   }) {
@@ -31,30 +31,28 @@ class ScreenDashboardElement extends StatelessWidget {
           bgKey: bgKey,
           colors: colorScheme,
           cardBorderRadius: cardBorderRadius,
+          paddingLTRB: paddingLTRB,
           child: content,
-          paddingTB: paddingTB,
         ),
       ),
     );
   }
 
   factory ScreenDashboardElement.flexible({
-    //* FLEXIBLE LAYOUT - Only takes as much space as its children need (flexible object).
+    //* FLEXIBLE LAYOUT - Only takes as much space as its children need (regular box).
     required Widget content,
     required ColorScheme colorScheme,
-    List<double> paddingTB = const [8, 8],
+    List<double> paddingLTRB = const [8, 0, 8, 8],
     BGKey bgKey = BGKey.solid,
     double cardBorderRadius = 16.0,
   }) {
     return ScreenDashboardElement._(
-      element: Flexible(
-        child: ScreenDashboardDecoration(
-          bgKey: bgKey,
-          colors: colorScheme,
-          cardBorderRadius: cardBorderRadius,
-          child: content,
-          paddingTB: paddingTB,
-        ),
+      element: ScreenDashboardDecoration(
+        bgKey: bgKey,
+        colors: colorScheme,
+        cardBorderRadius: cardBorderRadius,
+        paddingLTRB: paddingLTRB,
+        child: content,
       ),
     );
   }
@@ -63,7 +61,7 @@ class ScreenDashboardElement extends StatelessWidget {
     //* EXPANDING LAYOUT - Takes as much space as there is available (constrained by the maximum height constraint imposed by the ScreenDashboardSkeleton).
     required Widget content,
     required ColorScheme colorScheme,
-    List<double> paddingTB = const [8, 8],
+    List<double> paddingLTRB = const [8, 0, 8, 8],
     BGKey bgKey = BGKey.solid,
     double cardBorderRadius = 16.0,
   }) {
@@ -73,8 +71,8 @@ class ScreenDashboardElement extends StatelessWidget {
           bgKey: bgKey,
           colors: colorScheme,
           cardBorderRadius: cardBorderRadius,
+          paddingLTRB: paddingLTRB,
           child: content,
-          paddingTB: paddingTB,
         ),
       ),
     );

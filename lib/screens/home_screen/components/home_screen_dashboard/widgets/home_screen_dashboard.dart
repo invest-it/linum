@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:linum/common/components/screen_dashboard/enums/bgkey.dart';
 import 'package:linum/common/components/screen_dashboard/widgets/screen_dashboard_element.dart';
 import 'package:linum/common/components/screen_dashboard/widgets/screen_dashboard_skeleton.dart';
+import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
+import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 
 class HomeScreenDashboard extends StatelessWidget {
   const HomeScreenDashboard({super.key});
@@ -14,24 +16,27 @@ class HomeScreenDashboard extends StatelessWidget {
   @override
   ScreenDashboardSkeleton build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
+    final hP =
+        context.proportionateScreenWidthFraction(ScreenFraction.quantile) * 5;
 
     return ScreenDashboardSkeleton(
       screenDashboardElements: [
-        ScreenDashboardElement.expanding(
+        ScreenDashboardElement.flexible(
           content: const Text(
-              "Expanded - takes as much space as available, even if not needed"),
-          bgKey: BGKey.hexagon,
+            "TIME WIDGET (CLD)",
+          ),
           colorScheme: colors,
         ),
-        ScreenDashboardElement.fixed(
+        ScreenDashboardElement.expanding(
+          bgKey: BGKey.hexagon,
           content: const Text(
-              "Fixed Height - takes as much space as needed, limited"),
-          height: 64,
+            "PRIMARY (EXP)",
+          ),
           colorScheme: colors,
         ),
         ScreenDashboardElement.flexible(
-          content: const Text(
-              "Flexible - takes as much space as needed, without limits"),
+          content: const Text("Context (CLD)"),
+          paddingLTRB: [hP, 0, hP, 0],
           colorScheme: colors,
         ),
       ],
