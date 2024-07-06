@@ -26,7 +26,7 @@ class ServiceContainer {
   }
 
   void clear() {
-    for (final entry in services) {
+    for (final entry in services.reversed) {
       entry.service.dispose();
     }
     services.clear();

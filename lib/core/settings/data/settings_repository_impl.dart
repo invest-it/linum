@@ -31,7 +31,7 @@ class SettingsRepositoryImpl<TSettings> extends ISettingsRepository<TSettings> {
     try {
       settings = await _adapter.getDataForUser();
     } on Exception catch (e) {
-      Logger().e(e);
+      Logger().w(e);
     }
     if (settings != null) {
       defaultVal = _mapper.toModel(settings);
