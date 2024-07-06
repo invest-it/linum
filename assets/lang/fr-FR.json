@@ -100,8 +100,9 @@
         "delete-transaction": {
             "dialog-button-cancel": "Annuler",
             "dialog-button-delete": "Supprimer",
-            "dialog-label-delete": "Tu veux vraiment supprimer cette entrée ?",
-            "dialog-label-title": "Confirmer"
+            "dialog-label-title": "Confirmer la suppression",
+            "dialog-message": "Tu veux vraiment supprimer cette entrée ?",
+            "dialog-message-serial": "Tu veux vraiment supprimer ce contrat ?\n Cela supprimera toutes les transactions enregistrées via ce contrat."
         }
     },
     "auth": {
