@@ -34,7 +34,7 @@ class _BudgetScreenState extends State<BudgetScreen> with TickerProviderStateMix
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    _tabController.index = 1;
+    _tabController.index = 0;
   }
 
   @override

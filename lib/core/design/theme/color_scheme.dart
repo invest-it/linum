@@ -10,7 +10,7 @@ class LinumColorScheme {
       secondaryContainer: Colors.white,
       tertiary: Color(0xFFC1E695),
       tertiaryContainer: Color(0xFF808080),
-      surface: Color(0xFFFAFAFA),
+      surface: Color(0xFFFFFFFF),
       // background: const Color(0xFFe6e0e9),
       error: Color(0xFFEB5757),
       errorContainer: Color.fromARGB(255, 250, 171, 171),
@@ -19,6 +19,8 @@ class LinumColorScheme {
       onSurface: Color(0xFF505050),
       // onBackground: const Color(0xFF79747E),
       onError: Colors.teal,
+      outline: Color(0xFFE6E6E6),
+      outlineVariant: Color(0xFFE6E6E6),
     );
   }
 }

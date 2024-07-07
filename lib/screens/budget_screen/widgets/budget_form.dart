@@ -1,42 +1,71 @@
 import 'package:flutter/material.dart';
-import 'package:linum/common/widgets/text_icon.dart';
-import 'package:linum/features/currencies/settings/presentation/currency_settings_service.dart';
-import 'package:provider/provider.dart';
 
-class BudgetForm extends StatelessWidget {
+class BudgetForm extends StatefulWidget {
   const BudgetForm({super.key});
+
+  @override
+  State<BudgetForm> createState() => _BudgetFormState();
+}
+
+class _BudgetFormState extends State<BudgetForm> {
+  late final TextEditingController _controller = TextEditingController(
+    text: "249,95 €",
+  );
+  @override
+  void initState() {
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final currencySettings = context.read<ICurrencySettingsService>();
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text("Budget setzen", style: theme.textTheme.headlineMedium,),
-        Text("Wie viel Geld möchtest du maximal ausgeben?", style: theme.textTheme.bodyMedium),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: TextFormField(
-            decoration: InputDecoration(
-              prefixIcon: TextIcon(currencySettings.getStandardCurrency().symbol),
-              border: const OutlineInputBorder(),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextFormField(
+            controller: _controller,
+            style: theme.textTheme.displayLarge,
+            textAlign: TextAlign.center,
+            decoration: const InputDecoration(
+              border: InputBorder.none,
             ),
           ),
-        ),
-        DropdownMenu(
-          initialSelection: "monthly",
-          menuStyle: MenuStyle(
-            backgroundColor: WidgetStateProperty.all(theme.colorScheme.surface),
-            // TODO: Change the color
+          Align(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: SegmentedButton(
+                  segments: [
+                    ButtonSegment(
+                      value: "expense",
+                      label: Text(
+                        "Ausgaben",
+                        style: theme.textTheme.labelMedium,
+                      ),
+                    ),
+                    ButtonSegment(
+                      value: "income",
+                      label: Text(
+                        "Einnahmen",
+                        style: theme.textTheme.labelMedium,
+                      ),
+                    ),
+                  ],
+                  selected: const {"income",},
+              ),
+            ),
           ),
-          dropdownMenuEntries: const [
-            DropdownMenuEntry(value: "monthly", label: "Monatlich"),
-            DropdownMenuEntry(value: "yearly", label: "Jährlich"),
-          ],
-        ),
-      ],
+        ],
+      ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }
