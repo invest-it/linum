@@ -28,7 +28,7 @@ class _BudgetFormState extends State<BudgetForm> {
         children: [
           TextFormField(
             controller: _controller,
-            style: theme.textTheme.displayLarge,
+            style: theme.textTheme.displayMedium,
             textAlign: TextAlign.center,
             decoration: const InputDecoration(
               border: InputBorder.none,

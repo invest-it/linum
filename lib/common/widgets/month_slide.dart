@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:linum/core/balance/services/algorithm_service.dart';
 import 'package:provider/provider.dart';
 
-class StatSlide extends StatelessWidget {
+class MonthSlide extends StatelessWidget {
   final Widget child;
-  const StatSlide({
+  const MonthSlide({
     super.key,
     required this.child,
   });

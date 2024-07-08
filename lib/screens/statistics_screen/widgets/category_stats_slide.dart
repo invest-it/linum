@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:linum/common/widgets/stat_slide.dart';
+import 'package:linum/common/widgets/month_slide.dart';
 import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/screens/statistics_screen/widgets/category_stats_details_view.dart';
@@ -11,7 +11,7 @@ class CategoryStatsSlide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StatSlide(
+    return MonthSlide(
       child: LayoutBuilder(
         builder: (context, constraints) {
           return SizedBox(
