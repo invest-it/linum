@@ -17,6 +17,7 @@ void showForgotPasswordBottomSheet(BuildContext context, ScreenKey screenKey) {
   if (!authService.isLoggedIn) {
     showModalBottomSheet(
         context: context,
+        isScrollControlled: true,
         builder: (BuildContext context) {
             return LinumBottomSheet(
               title: tr(translationKeys.actionLip.forgotPassword.loggedOut.labelTitle),
@@ -31,6 +32,7 @@ void showForgotPasswordBottomSheet(BuildContext context, ScreenKey screenKey) {
   else {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       builder: (BuildContext context) {
         return LinumBottomSheet(
           title: tr(translationKeys.actionLip.forgotPassword.loggedIn.labelTitle),

@@ -12,28 +12,34 @@ class LinumBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        AppBar(
-          primary: false,
-          automaticallyImplyLeading: false,
-          title: Text(
-            title,
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
-          centerTitle: true,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.close),
-              onPressed: Navigator.of(context).pop,
+    return Padding(
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AppBar(
+              primary: false,
+              automaticallyImplyLeading: false,
+              title: Text(
+                title,
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              centerTitle: true,
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.close),
+                  onPressed: Navigator.of(context).pop,
+                ),
+              ],
+              iconTheme: const IconThemeData(color: Colors.black),
+              backgroundColor: Colors.transparent,
+              elevation: 0,
             ),
+            body,
           ],
-          iconTheme: const IconThemeData(color: Colors.black),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
         ),
-        body,
-      ],
+      ),
     );
   }
 }

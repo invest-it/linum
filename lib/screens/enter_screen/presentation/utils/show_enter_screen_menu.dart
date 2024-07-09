@@ -9,14 +9,24 @@ void showEnterScreenMenu({
       required Widget content,
 }) {
   final viewModel = context.read<EnterScreenViewModel>();
+  final mediaQuery = MediaQuery.of(context);
+  final view = View.of(context);
   final controller = showBottomSheet(
-    backgroundColor: Colors.transparent,
+    constraints: BoxConstraints(
+        maxHeight: mediaQuery.size.height - view.viewPadding.top / view.devicePixelRatio,
+    ),
     context: context,
     builder: (context) {
-      return EnterScreenMenuScaffold(title: title, content: content);
+      return Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+          child: EnterScreenMenuScaffold(title: title, content: content)
+      );
     },
+    enableDrag: true,
+    showDragHandle: true,
   );
   viewModel.isBottomSheetOpened = true;
-
   controller.closed.then((value) => viewModel.isBottomSheetOpened = false);
 }
