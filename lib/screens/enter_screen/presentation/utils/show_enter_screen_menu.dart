@@ -21,7 +21,7 @@ void showEnterScreenMenu({
         padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
-          child: EnterScreenMenuScaffold(title: title, content: content)
+          child: EnterScreenMenuScaffold(title: title, content: content),
       );
     },
     enableDrag: true,
