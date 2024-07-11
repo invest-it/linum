@@ -20,6 +20,7 @@ env:
   PATH_TO_AAB: 'build/app/outputs/bundle/release/app-release.aab'
   ANDROID_PACKAGE_NAME: 'de.investitacademy.linum'
   FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+  DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
 
 jobs:
   build-project-artifact:
