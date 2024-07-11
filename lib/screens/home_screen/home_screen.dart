@@ -21,8 +21,6 @@ import 'package:linum/screens/home_screen/widgets/home_screen_listview.dart';
 import 'package:linum/screens/lock_screen/services/pin_code_service.dart';
 import 'package:provider/provider.dart';
 
-
-
 /// Page Index: 0
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -42,8 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void resetAlgorithmProvider() {
     // TODO: read how the Widget is re-rendered here
-    final AlgorithmService algorithmProvider =
-        context.read<AlgorithmService>();
+    final AlgorithmService algorithmProvider = context.read<AlgorithmService>();
 
     if (algorithmProvider.state.filter == Filters.noFilter) {
       algorithmProvider.resetCurrentShownMonth();
@@ -57,8 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final PinCodeService pinCodeProvider =
-        context.watch<PinCodeService>();
+    final PinCodeService pinCodeProvider = context.watch<PinCodeService>();
 
     resetAlgorithmProvider();
 
@@ -77,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 key: const Key("pinRecallButton"),
               ),
         AppBarAction.fromPreset(DefaultAction.settings),
+        AppBarAction.fromPreset(DefaultAction.bugreport),
       ],
       screenCard: HomeScreenCard(
         controller: _flipCardController!,
@@ -98,13 +95,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           DropdownMenuItem<bool>(
                             value: false,
                             child: Text(
-                              tr(translationKeys.homeScreen.labelRecentTransactions),
+                              tr(translationKeys
+                                  .homeScreen.labelRecentTransactions),
                             ),
                           ),
                           DropdownMenuItem<bool>(
                             value: true,
                             child: Text(
-                              tr(translationKeys.homeScreen.labelActiveSerialcontracts),
+                              tr(translationKeys
+                                  .homeScreen.labelActiveSerialcontracts),
                             ),
                           ),
                         ],
@@ -125,12 +124,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     TextButton(
                       onPressed: () {
-                        context.getMainRouterDelegate().pushRoute(MainRoute.filter);
+                        context
+                            .getMainRouterDelegate()
+                            .pushRoute(MainRoute.filter);
                       },
                       child: Text(
                         showRepeatables
-                            ? tr(translationKeys.homeScreen.buttonShowAll).toUpperCase()
-                            : tr(translationKeys.homeScreen.buttonShowMore).toUpperCase(),
+                            ? tr(translationKeys.homeScreen.buttonShowAll)
+                                .toUpperCase()
+                            : tr(translationKeys.homeScreen.buttonShowMore)
+                                .toUpperCase(),
                         style: Theme.of(context).textTheme.labelSmall?.copyWith(
                               color: Theme.of(context).colorScheme.primary,
                               fontSize: 14,
