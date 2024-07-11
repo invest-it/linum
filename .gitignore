@@ -80,3 +80,9 @@ firebase_app_id_file.json
 # Mocks for Testing
 # TODO ignore mocks again
 #*.mocks.dart
+
+# DOTENV Integration
+.env*
+.flaskenv*
+!.env.project
+!.env.vault
