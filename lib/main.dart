@@ -68,6 +68,13 @@ class _LifecycleWatcherState extends State<LifecycleWatcher> {
         MainRouteInformationParser();
     // print("Rebuild LifecycleWatcher");
     return Wiredash(
+      feedbackOptions: const WiredashFeedbackOptions(
+        labels: [
+          Label(id: 'label-ztqz1iic2d', title: 'Bug'),
+          Label(id: 'label-vc1hsuuyj3', title: 'Improvement'),
+          Label(id: 'label-eobuukbzgi', title: 'Praise'),
+        ],
+      ),
       projectId: dotenv.env['WIREDASH_PROJECT_ID']!,
       secret: dotenv.env['WIREDASH_SECRET']!,
       child: EasyLocalization(
