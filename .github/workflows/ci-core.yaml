@@ -15,6 +15,7 @@ on:
 
 env:
   FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+  DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
 
 jobs:
   code-analysis-and-testing:
