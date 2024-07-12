@@ -24,7 +24,7 @@ jobs:
     timeout-minutes: 30
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     # - name: Set up Dart SDK
     #   uses: dart-lang/setup-dart@v1.3
@@ -37,7 +37,7 @@ jobs:
         channel: 'stable'
 
     - name: Set up node
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: 16
         
