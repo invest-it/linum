@@ -126,4 +126,12 @@ extension LayoutHelpers on BuildContext {
 
     return fontSize * ratio;
   }
+
+  double scaledHeight(double height, {double defaultHeight = 852.0}) {
+    final screenHeight = MediaQuery.of(this).size.height;
+
+    final ratio = screenHeight / defaultHeight;
+
+    return height * ratio;
+  }
 }
