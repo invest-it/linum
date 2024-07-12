@@ -43,7 +43,10 @@ class CategoryListView extends StatelessWidget {
               },
             ),
           ),
-          const LinumCloseButton(),
+          const LinumCloseButton(
+            padding: EdgeInsets.symmetric(vertical: 8),
+          ),
+          const SizedBox(height: 24,),
         ],
       ),
     );

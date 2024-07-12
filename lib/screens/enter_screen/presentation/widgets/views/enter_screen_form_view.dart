@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/utils/base_translator.dart';
+import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/core/design/layout/utils/media_query_accessors.dart';
 import 'package:linum/core/repeating/constants/standard_repeat_configs.dart';
 import 'package:linum/features/currencies/core/constants/standard_currencies.dart';
@@ -82,7 +83,7 @@ class _EnterScreenFormView extends StatelessWidget {
     context.read<EnterScreenFormViewModel>()
         .keyboardStateListener.inform(keyboardHeight);
 
-    const fixedHeight = 500;
+    final fixedHeight = context.scaledHeight(400);
     final availableSpace = useScreenHeight(context) - fixedHeight - 30;
     final adjustedKeyboardHeight = min(keyboardHeight, availableSpace);
 
@@ -100,7 +101,7 @@ class _EnterScreenFormView extends StatelessWidget {
                     child: SingleChildScrollView(
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 40,
+                          horizontal: 20,
                           vertical: 10,
                         ),
 
@@ -116,13 +117,12 @@ class _EnterScreenFormView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                         child: QuickTagMenu(),
                       ),
                       Container(
-                        padding: const EdgeInsets.fromLTRB(40, 20, 40, 10),
-                        child: const Flex(
-                          direction: Axis.horizontal,
+                        padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
+                        child: const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             EnterScreenDeleteButton(),

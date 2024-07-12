@@ -8,6 +8,7 @@ import 'package:linum/generated/translation_keys.g.dart';
 void showChangeEmailBottomSheet(BuildContext context, ScreenKey screenKey) {
   showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       builder: (BuildContext context) {
         return LinumBottomSheet(
             title: tr(translationKeys.actionLip.changeEmail.labelTitle),
