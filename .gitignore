@@ -86,3 +86,7 @@ firebase_app_id_file.json
 .flaskenv*
 !.env.project
 !.env.vault
+
+
+# Don't upload Node Modules
+/node_modules/
