@@ -83,7 +83,7 @@ class _EnterScreenFormView extends StatelessWidget {
     context.read<EnterScreenFormViewModel>()
         .keyboardStateListener.inform(keyboardHeight);
 
-    final fixedHeight = context.scaledHeight(500);
+    final fixedHeight = context.scaledHeight(400);
     final availableSpace = useScreenHeight(context) - fixedHeight - 30;
     final adjustedKeyboardHeight = min(keyboardHeight, availableSpace);
 
@@ -101,7 +101,7 @@ class _EnterScreenFormView extends StatelessWidget {
                     child: SingleChildScrollView(
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 40,
+                          horizontal: 20,
                           vertical: 10,
                         ),
 
@@ -117,11 +117,11 @@ class _EnterScreenFormView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                         child: QuickTagMenu(),
                       ),
                       Container(
-                        padding: const EdgeInsets.fromLTRB(40, 20, 40, 10),
+                        padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
                         child: const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
