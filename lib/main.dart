@@ -90,7 +90,8 @@ class _LifecycleWatcherState extends State<LifecycleWatcher> {
           Label(id: 'label-eobuukbzgi', title: 'Praise'),
         ],
       ),
-      projectId: dotenv.env['WIREDASH_PROJECT_ID']!,
+      projectId: dotenv.env[
+          'WIREDASH_PROJECT_ID']!, //FUTURE Check if the null checks can cause issues and rewrite if necessary
       secret: dotenv.env['WIREDASH_SECRET']!,
       child: EasyLocalization(
         supportedLocales: supportedLocales,

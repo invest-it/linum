@@ -26,3 +26,4 @@ console.log('.env file written');
 
 
 console.log(`Three Words. Thirteen letters. Say it, and I'm yours: ${process.env.HELLOWORLD}`)
+console.log(`Sentry: ${process.env.SENTRY}`) // Remove after check
