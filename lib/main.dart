@@ -14,6 +14,7 @@ import 'package:linum/core/navigation/main_route_information_parser.dart';
 import 'package:linum/core/navigation/main_router_delegate.dart';
 import 'package:linum/core/navigation/main_routes.dart';
 import 'package:linum/generated/objectbox/objectbox.g.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wiredash/wiredash.dart';
 
@@ -34,11 +35,25 @@ Future<void> main({bool? testing}) async {
   // Load .env
   await dotenv.load();
 
-  SharedPreferences.getInstance().then((pref) {
-    runApp(
-      LifecycleWatcher(store: store, testing: testing, preferences: pref),
-    );
-  });
+  final pref = await SharedPreferences.getInstance();
+
+  FlutterError.onError = (details) async {
+    await Sentry.captureException(details.exception, stackTrace: details.stack);
+    FlutterError.presentError(details);
+  };
+
+  await SentryFlutter.init(
+    (options) {
+      options.dsn = dotenv.env['SENTRY_DSN'];
+      options.tracesSampleRate = 1.0;
+      options.profilesSampleRate = 1.0;
+      options.diagnosticLevel = SentryLevel.warning;
+    },
+  );
+
+  runApp(
+    LifecycleWatcher(store: store, testing: testing, preferences: pref),
+  );
 }
 
 /// Wrapper to handle global lifecycle changes, for example the app closing.
