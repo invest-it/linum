@@ -18,18 +18,6 @@ env:
 
 jobs:
 
-  build-env:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 16
-    - run: npm install
-    - run: npm run build
-      env:
-        DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
-        
   code-analysis-and-testing:
     name: Code Analysis and Testing
     runs-on: ubuntu-latest
@@ -47,6 +35,19 @@ jobs:
       uses: subosito/flutter-action@v2
       with:
         channel: 'stable'
+
+    - name: Set up node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        
+    - name: Install npm
+      run: npm install
+      
+    - name: Run build file
+      run: npm run build
+      env:
+        DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
 
     - name: Prepare Firebase Option Configuration
       run: |
