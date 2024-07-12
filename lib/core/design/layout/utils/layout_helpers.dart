@@ -116,4 +116,14 @@ extension LayoutHelpers on BuildContext {
     // on EVERY device.
     return (inputWidth / LayoutReference.screenWidth) * useScreenWidth(this);
   }
+
+
+  // The Iphone 15 Pro Max has an defaultWidth of 430.0
+  double scaledFontSize(double fontSize, {double defaultWidth = 430.0}) {
+    final screenWidth = MediaQuery.of(this).size.width;
+
+    final ratio = screenWidth / defaultWidth;
+
+    return fontSize * ratio;
+  }
 }

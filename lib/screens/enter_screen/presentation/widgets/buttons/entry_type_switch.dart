@@ -1,10 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/enums/entry_type.dart';
+import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/enter_screen/presentation/view_models/enter_screen_form_view_model.dart';
 import 'package:linum/screens/enter_screen/presentation/view_models/enter_screen_view_model.dart';
 import 'package:provider/provider.dart';
+
+
 
 class EnterScreenEntryTypeSwitch extends StatelessWidget {
   const EnterScreenEntryTypeSwitch({super.key});
@@ -38,7 +41,7 @@ class EnterScreenEntryTypeSwitch extends StatelessWidget {
                         : Colors.black26,
 
                     //TODO remove hardcoded textStyle once Material You is implemented
-                    fontSize: 12,
+                    fontSize: context.scaledFontSize(12),
                   ),
                 ),
               ),
@@ -55,7 +58,7 @@ class EnterScreenEntryTypeSwitch extends StatelessWidget {
                         : Colors.black26,
 
                     //TODO remove hardcoded textStyle once Material You is implemented
-                    fontSize: 12,
+                    fontSize: context.scaledFontSize(12),
                   ),
                 ),
               ),
