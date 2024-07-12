@@ -21,7 +21,7 @@ const envPath = path.join(__dirname, '.env');
 
 // Write the .env file
 fs.writeFileSync(envPath, envContent);
-console.log('Environment variables have been written to .env file');
+console.log('.env file written');
 
 
 
