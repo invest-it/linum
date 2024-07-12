@@ -27,6 +27,7 @@ jobs:
     name: Build Project Artifact
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    environment: Staging-Prep
     steps:
       - uses: geekyeggo/delete-artifact@v2
         with:
@@ -41,6 +42,19 @@ jobs:
         with:
           channel: ${{ env.FLUTTER_CHANNEL }}
 
+      - name: Set up node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 16
+        
+      - name: Install npm
+        run: npm install
+      
+      - name: Run build file
+        run: npm run build
+        env:
+          DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
+
       - name: Prepare Firebase Option Configuration
         run: |
           curl -sL https://firebase.tools | bash
@@ -48,7 +62,6 @@ jobs:
           ls
           flutterfire --version
           flutterfire configure -o lib/firebase/firebase_options.g.dart -p linum-5d9f6 -y --platforms="android,ios" -i de.investitacademy.linum -a de.investitacademy.linum -m de.investitacademy.linum 
-
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
