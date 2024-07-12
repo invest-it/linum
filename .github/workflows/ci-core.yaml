@@ -15,9 +15,21 @@ on:
 
 env:
   FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-  DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
 
 jobs:
+
+  build-env:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+    - run: npm install
+    - run: npm run build
+      env:
+        DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
+        
   code-analysis-and-testing:
     name: Code Analysis and Testing
     runs-on: ubuntu-latest
