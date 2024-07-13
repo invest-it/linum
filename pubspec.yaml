@@ -40,6 +40,7 @@ dependencies:
   flutter:
     sdk: flutter
   
+  flutter_dotenv: ^5.1.0
   flutter_spinkit: ^5.1.0
   flutter_svg: ^2.0.10+1
   fluttertoast: ^8.0.8
@@ -57,12 +58,14 @@ dependencies:
   path: ^1.8.2
   provider: ^6.0.2
   rxdart: ^0.28.0
+  sentry_flutter: ^8.3.0
   shared_preferences: ^2.0.13
   sign_in_with_apple: ^6.1.1
   tuple: ^2.0.0
   url_launcher: ^6.1.2
   url_launcher_ios: ^6.0.15
   uuid: ^4.4.0
+  wiredash: ^2.2.0
 
   
 
@@ -115,6 +118,7 @@ flutter:
     - assets/images/
     - assets/svg/
     - assets/lang/
+    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

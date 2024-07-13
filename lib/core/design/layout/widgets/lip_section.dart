@@ -8,9 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 
-
-
-
 class LipSection extends StatelessWidget {
   final String lipTitle;
   final bool isInverted;
@@ -64,7 +61,7 @@ class LipSection extends StatelessWidget {
                       elevation: 0,
                       automaticallyImplyLeading: false,
                       backgroundColor: Colors.transparent,
-                      leading: leadingAction!(context),
+                      leading: leadingAction?.call(context),
                       actions: _actionHelper(actions, context),
                     ),
                   ),
@@ -84,8 +81,7 @@ class LipSection extends StatelessWidget {
                   color: Theme.of(context).colorScheme.primary,
                   child: Baseline(
                     baselineType: TextBaseline.alphabetic,
-                    baseline:
-                        context.proportionateScreenHeight(164) - 12,
+                    baseline: context.proportionateScreenHeight(164) - 12,
                     child: Text(
                       lipTitle,
                       textAlign: TextAlign.center,
@@ -106,7 +102,7 @@ class LipSection extends StatelessWidget {
                       elevation: 0,
                       automaticallyImplyLeading: false,
                       backgroundColor: Colors.transparent,
-                      leading: leadingAction!(context),
+                      leading: leadingAction?.call(context),
                       actions: _actionHelper(actions, context),
                     ),
                   ),

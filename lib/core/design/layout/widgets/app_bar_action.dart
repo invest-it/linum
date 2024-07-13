@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/core/navigation/get_delegate.dart';
 import 'package:linum/core/navigation/main_routes.dart';
 import 'package:logger/logger.dart';
+import 'package:wiredash/wiredash.dart';
 
 const Color lipContextColor = Color(
   0xFFC1E695,
@@ -36,6 +37,12 @@ abstract class AppBarAction {
         ontap: () => context.getMainRouterDelegate().pushRoute(
               MainRoute.academy,
             ),
+      );
+    },
+    DefaultAction.bugreport: (BuildContext context) {
+      return AppBarAction.fromParameters(
+        icon: Icons.bug_report_rounded,
+        ontap: () => Wiredash.of(context).show(inheritMaterialTheme: true),
       );
     },
     DefaultAction.settings: (BuildContext context) {
@@ -75,6 +82,7 @@ abstract class AppBarAction {
 
 enum DefaultAction {
   academy,
+  bugreport,
   notification,
   filter,
   back,

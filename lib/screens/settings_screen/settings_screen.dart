@@ -15,6 +15,7 @@ import 'package:linum/core/authentication/presentation/widgets/logout_button.dar
 import 'package:linum/core/authentication/presentation/widgets/logout_form.dart';
 import 'package:linum/core/categories/settings/presentation/widgets/standard_category_selectors.dart';
 import 'package:linum/core/design/layout/enums/screen_key.dart';
+import 'package:linum/core/design/layout/widgets/app_bar_action.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
 import 'package:linum/core/localization/settings/presentation/widgets/language_selector.dart';
 import 'package:linum/features/currencies/settings/presentation/widgets/standard_currency_selector.dart';
@@ -31,6 +32,9 @@ class SettingsScreen extends StatelessWidget {
       isInverted: true,
       screenKey: ScreenKey.settings,
       initialActionLipBody: Container(),
+      actions: [
+        AppBarAction.fromPreset(DefaultAction.bugreport),
+      ],
       body: Column(
         children: [
           LogoutForm(),
@@ -44,11 +48,11 @@ class SettingsScreen extends StatelessWidget {
                   vertical: 24.0,
                 ),
                 children: [
-
                   /// STANDARD CATEGORY
                   const ListHeader(
                     'settings_screen.standard-category.label-title',
-                    tooltipMessage: 'settings_screen.standard-category.label-tooltip',
+                    tooltipMessage:
+                        'settings_screen.standard-category.label-tooltip',
                   ),
                   const StandardCategorySelectors(),
                   const ListDivider(),
@@ -61,7 +65,9 @@ class SettingsScreen extends StatelessWidget {
                   const PinSwitch(),
                   const ListDivider(),
 
-                  const ListHeader('settings_screen.standard-currency.label-title'),
+                  const ListHeader(
+                    'settings_screen.standard-currency.label-title',
+                  ),
                   const StandardCurrencySelector(),
                   const ListDivider(),
 
@@ -73,14 +79,19 @@ class SettingsScreen extends StatelessWidget {
                   const ListDivider(),
 
                   /// YOUR ACCOUNT
-                  const ListHeader('settings_screen.system-settings.label-title'),
-                  const SizedBox(height: 16.0,),
+                  const ListHeader(
+                    'settings_screen.system-settings.label-title',
+                  ),
+                  const SizedBox(
+                    height: 16.0,
+                  ),
                   const Wrap(
                     spacing: 8.0,
                     children: [
                       LogoutButton(),
                       ForgotPasswordButton(ScreenKey.settings),
                       ChangeEmailButton(ScreenKey.settings),
+                      //TODO add ReportBugButton(),
                       DeleteUserButton(),
                     ],
                   ),
