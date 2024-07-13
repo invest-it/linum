@@ -21,5 +21,6 @@ Please contact support@investit-academy.de if you have identified security vulne
 
 ## Deleting your account
 
-> **Linum Version 1.2.3 or higher:** You can trigger an account deletion request directly in the app. Navigate to the settings screen, click on "Delete Account" and confirm your indend to delete the account. For security you might be asked to logout and sign in again.
+> **Linum Version 1.2.3 or higher:** You can trigger an account deletion request directly in the app. Navigate to the settings screen, click on "Delete Account" and confirm your intent to delete the account. For security you might be asked to log out and sign in again.
+
 Requesting deletion of your account is possible by writing an e-mail to support@investit-academy.de - after we receive a request, your data will be permanently removed from our servers within 3-5 business days.
