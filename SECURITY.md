@@ -7,11 +7,13 @@
 | 0.9.x   | :x:                |         |
 | 1.0.x   | :x:                | Update to the latest version ASAP to avoid data loss! |
 | 1.1.x   | :heavy_check_mark: |         |
-| 1.2.0   | :white_check_mark: |         |
-| 1.2.1   | :white_check_mark: | Apple   |
-| 1.2.2   | :white_check_mark: | Android |
+| 1.2.0   | :heavy_check_mark: |         |
+| 1.2.1   | :heavy_check_mark: | Apple   |
+| 1.2.2   | :heavy_check_mark: | Android |
 | 1.2.3   | :white_check_mark: |         |
 | 1.3.0   | :white_check_mark: |         |
+
+Symbol Key: Legacy Support ✔️ | Full Support _(recommended)_ ✅ | Not supported ❌
 
 > **07/2024 IMPORTANT NOTICE**: Towards the end of 2024, the dev team at Linum will implement a new database structure. When this will eventually go live, support for all previous versions will end, and all users will be forced to update.
 
