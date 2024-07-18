@@ -22,7 +22,7 @@ platform :ios do
 
   lane :localBeta do
     update_code_signing_settings(
-        use_automatic_code_signing: false,
+        use_automatic_signing: false,
         path: "Runner.xcodeproj"
     )
     match(readonly: true)
@@ -36,7 +36,7 @@ platform :ios do
 
   lane :beta do
     update_code_signing_settings(
-        use_automatic_code_signing: false,
+        use_automatic_signing: false,
         path: "Runner.xcodeproj"
     )
 
