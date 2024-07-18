@@ -5,8 +5,7 @@ cd ./ios || exit
 gem install bundler:1.17.2
 bundle install
 
-GIT_BASIC_AUTH_TOKEN=$(echo -n "$GIT_USER_NAME:$GIT_ACCESS_TOKEN" | base64 | tr -d \\n)
-export GIT_BASIC_AUTH_TOKEN
+echo "${{ FASTLANE_CERTS_REPO_KEY }}" >> ./repo_key
 
 gcloud secrets versions access latest --secret=linum-ios-auth-key-file --project=658687609050 > ./AuthKey.p8
 
