@@ -15,7 +15,9 @@ flutter build ios --release --no-codesign
 
 export GIT_TERMINAL_PROMPT=1
 
+echo "Hello world"
 echo "$MATCH_PASSWORD"
+echo "Hello world end"
 
 cd ./ios || exit
 

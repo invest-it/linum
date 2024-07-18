@@ -21,7 +21,10 @@ platform :ios do
   end
 
   lane :localBeta do
-    disable_automatic_code_signing(path: "Runner.xcodeproj")
+    update_code_signing_settings(
+        use_automatic_code_signing: false,
+        path: "Runner.xcodeproj"
+    )
     match(readonly: true)
     gym(
       configuration: "Release",
@@ -32,7 +35,10 @@ platform :ios do
   end
 
   lane :beta do
-    disable_automatic_code_signing(path: "Runner.xcodeproj")
+    update_code_signing_settings(
+        use_automatic_code_signing: false,
+        path: "Runner.xcodeproj"
+    )
 
     create_keychain(
         name: ENV['MATCH_KEYCHAIN_NAME'],
