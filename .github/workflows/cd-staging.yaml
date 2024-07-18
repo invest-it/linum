@@ -8,7 +8,7 @@ name: Stage
 
 on:
   pull_request:
-    types: [opened]
+    types: [opened, reopened]
     branches: [staging]
   workflow_dispatch:
 
