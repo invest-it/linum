@@ -1,4 +1,4 @@
-git_url("https://github.com/invest-it/linum-certs.git")
+git_url("git@github.com:invest-it/linum-certs.git")
 
 storage_mode("git")
 
