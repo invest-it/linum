@@ -15,11 +15,13 @@ flutter build ios --release --no-codesign
 
 export GIT_TERMINAL_PROMPT=1
 
+echo "$MATCH_PASSWORD"
+
 cd ./ios || exit
 
 if [ "$1" = "release" ]
 then
-  bundle exec fastlane release
+  MATCH_PASSWORD=${MATCH_PASSWORD} bundle exec fastlane release
 else
-  bundle exec fastlane beta
+  MATCH_PASSWORD=${MATCH_PASSWORD} bundle exec fastlane beta
 fi
