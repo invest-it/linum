@@ -59,6 +59,7 @@ jobs:
           curl -sL https://firebase.tools | bash
           dart pub global activate flutterfire_cli
           ls
+          ls ios
           flutterfire --version
           flutterfire configure -out=lib/firebase/firebase_options.g.dart \
           --project=linum-5d9f6 -y --platforms="android,ios" \
@@ -67,7 +68,7 @@ jobs:
           -w de.investitacademy.linum \
           -m de.investitacademy.linum \
           --windows-app-id de.investitacademy.linum
-          --ios-out=ios/Runner/GoogleService-Info.plist
+          --ios-out=ios/Runner/
 
       - name: Check if files exist
         run: |
