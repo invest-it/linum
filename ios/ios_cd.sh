@@ -10,6 +10,9 @@ chmod 600 ./repo_key
 
 gcloud secrets versions access latest --secret=linum-ios-auth-key-file --project=658687609050 > ./AuthKey.p8
 
+pod repo update
+pod install
+
 cd ../
 flutter build ios --release --no-codesign
 
