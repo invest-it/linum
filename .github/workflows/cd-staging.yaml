@@ -68,7 +68,7 @@ jobs:
           -a de.investitacademy.linum \
           -w de.investitacademy.linum \
           -m de.investitacademy.linum \
-          --windows-app-id de.investitacademy.linum
+          --windows-app-id de.investitacademy.linum \
           --ios-out=ios/Runner/GoogleServices-Info.plist
 
       - name: Check if files exist
