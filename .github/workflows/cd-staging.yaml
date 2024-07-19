@@ -65,7 +65,7 @@ jobs:
           -a de.investitacademy.linum \
           -w de.investitacademy.linum \
           -m de.investitacademy.linum \
-          --windows-app-id de.investitacademy.linum
+          --windows-app-id de.investitacademy.linum \
           --overwrite-firebase-options
 
       - name: Check if files exist
