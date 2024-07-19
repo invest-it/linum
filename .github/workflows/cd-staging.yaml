@@ -60,7 +60,9 @@ jobs:
           dart pub global activate flutterfire_cli
           ls
           flutterfire --version
-          flutterfire configure -o lib/firebase/firebase_options.g.dart -p linum-dev -y --platforms="android,ios"
+          flutterfire configure -out=lib/firebase/firebase_options.g.dart \
+          --project=linum-5d9f6 \
+          --yes
 
       - name: Check if files exist
         run: |
