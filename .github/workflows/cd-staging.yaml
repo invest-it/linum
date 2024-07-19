@@ -60,6 +60,7 @@ jobs:
           dart pub global activate flutterfire_cli
           ls
           ls ios
+          ls ios/Runner
           flutterfire --version
           flutterfire configure -out=lib/firebase/firebase_options.g.dart \
           --project=linum-5d9f6 -y --platforms="android,ios" \
