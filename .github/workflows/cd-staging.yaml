@@ -61,7 +61,7 @@ jobs:
           ls
           flutterfire --version
           flutterfire configure -out=lib/firebase/firebase_options.g.dart \
-          --project=linum-5d9f6 \
+          --project=linum-5d9f6 --platforms="android,ios" \
           --yes
 
       - name: Check if files exist
