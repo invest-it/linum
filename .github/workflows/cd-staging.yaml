@@ -67,7 +67,11 @@ jobs:
           -w de.investitacademy.linum \
           -m de.investitacademy.linum \
           --windows-app-id de.investitacademy.linum
-          
+
+      - name: Check if files exist
+        run: |
+          ls ./ios
+          ls ./ios/Runner
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
