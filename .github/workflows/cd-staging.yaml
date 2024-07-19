@@ -60,13 +60,7 @@ jobs:
           dart pub global activate flutterfire_cli
           ls
           flutterfire --version
-          flutterfire configure -o lib/firebase/firebase_options.g.dart \
-          -p linum-5d9f6 -y --platforms="android,ios" \
-          -i de.investitacademy.linum \
-          -a de.investitacademy.linum \
-          -w de.investitacademy.linum \
-          -m de.investitacademy.linum \
-          --windows-app-id de.investitacademy.linum
+          flutterfire configure -o lib/firebase/firebase_options.g.dart -p linum-dev -y --platforms="android,ios"
 
       - name: Check if files exist
         run: |
