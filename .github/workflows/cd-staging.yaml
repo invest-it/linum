@@ -69,7 +69,6 @@ jobs:
           -w de.investitacademy.linum \
           -m de.investitacademy.linum \
           --windows-app-id de.investitacademy.linum
-          --ios-out=ios/Runner/
 
       - name: Check if files exist
         run: |
