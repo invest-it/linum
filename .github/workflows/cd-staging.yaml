@@ -72,6 +72,7 @@ jobs:
 
       - name: Check if files exist
         run: |
+          ls
           ls ./ios
           ls ./ios/Runner
       - name: Upload Artifact
