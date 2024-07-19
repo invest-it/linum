@@ -62,13 +62,14 @@ jobs:
           ls ios
           ls ios/Runner
           flutterfire --version
-          flutterfire configure -out=lib/firebase/firebase_options.g.dart \
+          flutterfire configure --out=lib/firebase/firebase_options.g.dart \
           --project=linum-5d9f6 -y --platforms="android,ios" \
           -i de.investitacademy.linum \
           -a de.investitacademy.linum \
           -w de.investitacademy.linum \
           -m de.investitacademy.linum \
           --windows-app-id de.investitacademy.linum
+          --ios-out=ios/Runner/GoogleServices-Info.plist
 
       - name: Check if files exist
         run: |
