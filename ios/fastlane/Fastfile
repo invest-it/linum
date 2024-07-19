@@ -76,7 +76,10 @@ platform :ios do
   end
 
   lane :release do
-    disable_automatic_code_signing(path: "Runner.xcodeproj")
+    update_code_signing_settings(
+        use_automatic_signing: false,
+        path: "Runner.xcodeproj"
+    )
 
     create_keychain(
         name: ENV['MATCH_KEYCHAIN_NAME'],
