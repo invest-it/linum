@@ -62,6 +62,8 @@ jobs:
           flutterfire --version
           flutterfire configure -out=lib/firebase/firebase_options.g.dart \
           --project=linum-5d9f6 --platforms="android,ios" \
+          -i de.investitacademy.linum \
+          -a de.investitacademy.linum \
           --yes
 
       - name: Check if files exist
