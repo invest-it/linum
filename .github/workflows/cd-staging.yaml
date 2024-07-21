@@ -181,6 +181,7 @@ jobs:
 
       - name: Run iOS CD script
         env:
+          GOOGLE_SERVICE_INFO: ${{secrets.GOOGLE_SERVICE_INFO}}
           FASTLANE_CERTS_REPO_KEY: ${{ secrets.FASTLANE_CERTS_REPO_KEY }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           MATCH_KEYCHAIN_NAME: ${{ secrets.MATCH_KEYCHAIN_NAME }}

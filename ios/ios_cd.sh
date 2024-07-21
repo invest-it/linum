@@ -8,6 +8,9 @@ bundle install
 echo "$FASTLANE_CERTS_REPO_KEY" > ./repo_key
 chmod 600 ./repo_key
 
+echo "$GOOGLE_SERVICE_INFO" | base64 --decode > ./Runner/GoogleService-Info.plist
+# This line must be removed as soon as the firebase tools start working again
+
 gcloud secrets versions access latest --secret=linum-ios-auth-key-file --project=658687609050 > ./AuthKey.p8
 
 pod repo update
