@@ -19,7 +19,7 @@ Using Linum is very straightforward. All you need is a valid e-mail address or a
 
 | Android | iOS | Web | Other OS |
 | --------| --- | --- | -------- |
-|[<img src="https://raw.githubusercontent.com/invest-it/linum/development/.github/assets/google_play_badge.png" height="100">](https://play.google.com/store/apps/details?id=de.investitacademy.linum)|[<img src="https://raw.githubusercontent.com/invest-it/linum/development/.github/assets/app_store_badge.png" height="100">](https://apps.apple.com/us/app/linum-budgeting-by-invest-it/id1612518920)| not supported | not supported |
+|[<img src="https://raw.githubusercontent.com/invest-it/linum/development/.github/assets/google_play_badge.png" height="60">](https://play.google.com/store/apps/details?id=de.investitacademy.linum)|[<img src="https://raw.githubusercontent.com/invest-it/linum/development/.github/assets/app_store_badge.png" height="60">](https://apps.apple.com/us/app/linum-budgeting-by-invest-it/id1612518920)| not supported | not supported |
 
 
 ## Docs
