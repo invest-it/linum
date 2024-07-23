@@ -88,6 +88,7 @@ class FormDataUpdater {
           category: updatedCategory,
           date: updatedDate,
           repeatConfiguration: updatedRepeatInfo,
+          notes: newData.options.notes,
         ),
       );
 
@@ -96,6 +97,7 @@ class FormDataUpdater {
     if (updatedData == null) {
       return newData;
     }
+
     return updatedData!;
   }
 

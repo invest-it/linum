@@ -100,8 +100,9 @@
         "delete-transaction": {
             "dialog-button-cancel": "Cancel",
             "dialog-button-delete": "Delete",
-            "dialog-label-delete": "Do you really want to delete this entry?",
-            "dialog-label-title": "Confirm"
+            "dialog-label-title": "Confirm deletion",
+            "dialog-message": "Do you really want to delete this entry?",
+            "dialog-message-serial": "Do you really want to delete this contract?\n This will delete all transactions booked via the contract."
         }
     },
     "auth": {
@@ -119,7 +120,7 @@
         "invalid-credential": "The login information cannot be used for registration. Please contact support@investit-academy.de.",
         "invalid-disabled-field": "If you see this error, we have done something completely wrong. Please contact support@investit-academy.de.",
         "invalid-display-name": "Your username is invalid.",
-        "invalid-email": "Your email or password is not correct. Check for spelling errors?",
+        "invalid-email": "Your email address is invalid. Perhaps you have mistyped it?",
         "invalid-email-verified": "Your email address could not be verified. Look our for spelling errors!",
         "invalid-id-token": "The connection to the server malfunctioned. Please contact support@investit-academy.de.",
         "invalid-last-sign-in-time": "The server could not validate your time zone. Please check if the time is set correctly on your mobile phone.",
@@ -152,7 +153,8 @@
         "weak-password": "The password you entered is too weak. Please choose a stronger password.",
         "wrong-password": "Your email or password is not correct. Check for spelling errors?",
         "user-deleted": "The user was successfully deleted!",
-        "not-logged-in-to-update-email": "To change your email address, you must be logged in."
+        "not-logged-in-to-update-email": "To change your email address, you must be logged in.",
+        "email-not-found": "We couldn't find a user with the email address you entered. Perhaps you have mistyped?"
     },
     "budget_screen": {
         "button-filter": "Filter",

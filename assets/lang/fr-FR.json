@@ -100,8 +100,9 @@
         "delete-transaction": {
             "dialog-button-cancel": "Annuler",
             "dialog-button-delete": "Supprimer",
-            "dialog-label-delete": "Tu veux vraiment supprimer cette entrée ?",
-            "dialog-label-title": "Confirmer"
+            "dialog-label-title": "Confirmer la suppression",
+            "dialog-message": "Tu veux vraiment supprimer cette entrée ?",
+            "dialog-message-serial": "Tu veux vraiment supprimer ce contrat ?\n Cela supprimera toutes les transactions enregistrées via ce contrat."
         }
     },
     "auth": {
@@ -119,7 +120,7 @@
         "invalid-credential": "Les informations de connexion ne peuvent pas être utilisées pour l'inscription. Veuillez vous inscrire auprès de support@investit-academy.de.",
         "invalid-disabled-field": "Si tu vois cette erreur, c'est que nous avons fait quelque chose de complètement faux. Veuillez vous inscrire auprès de support@investit-academy.de.",
         "invalid-display-name": "Ton nom d'utilisateur n'est pas valide.",
-        "invalid-email": "Votre adresse électronique ou votre mot de passe n'est pas correct. Vérifier les fautes d'orthographe ?",
+        "invalid-email": "Ton adresse e-mail n'est pas valide. Tu as peut-être fait une erreur de frappe ?",
         "invalid-email-verified": "Ton adresse e-mail n'a pas pu être vérifiée. Tu as peut-être fait une erreur de frappe ?",
         "invalid-id-token": "La connexion au serveur était erronée. Veuillez contacter support@investit-academy.de.",
         "invalid-last-sign-in-time": "Le serveur n'a pas pu valider ton fuseau horaire. Veuillez vérifier si l'heure est correctement réglée sur votre téléphone.",
@@ -152,7 +153,8 @@
         "weak-password": "The password you entered is too weak. Please choose a stronger password.",
         "wrong-password": "Votre adresse électronique ou votre mot de passe n'est pas correct. Vérifier les fautes d'orthographe ?",
         "user-deleted": "L'utilisateur a été supprimé avec succès !",
-        "not-logged-in-to-update-email": "Pour modifier ton adresse e-mail, tu dois être connecté(e)."
+        "not-logged-in-to-update-email": "Pour modifier ton adresse e-mail, tu dois être connecté(e).",
+        "email-not-found": "Nous n'avons pas trouvé d'utilisateur avec l'adresse e-mail que tu as indiquée. Tu as peut-être fait une erreur de frappe ?"
     },
     "budget_screen": {
         "button-filter": "Filtre",

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:linum/common/components/action_lip/viewmodels/action_lip_viewmodel.dart';
 import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
-import 'package:linum/core/design/layout/enums/screen_key.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
-import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
 import 'package:linum/features/currencies/core/constants/standard_currencies.dart';
 import 'package:linum/features/currencies/core/presentation/widgets/currency_list_tile.dart';
 import 'package:linum/features/currencies/settings/presentation/currency_settings_service.dart';
@@ -34,11 +31,7 @@ class CurrencyListView extends StatelessWidget {
                 selected: currency.name == settings.getStandardCurrency().name,
                 onTap: () {
                   settings.setStandardCurrency(currencies[index]);
-                  context.read<ActionLipViewModel>().setActionLipStatus(
-                    context: context,
-                    screenKey: ScreenKey.settings,
-                    status: ActionLipVisibility.hidden,
-                  );
+                  Navigator.pop(context);
                 },
               );
             },

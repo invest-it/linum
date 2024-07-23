@@ -19,7 +19,7 @@ class ListHeader extends StatelessWidget {
     if (tooltipMessage == null) {
       return Text(
         tr(title).toUpperCase(),
-        style: Theme.of(context).textTheme.labelSmall,
+        style: Theme.of(context).textTheme.labelMedium,
       );
     } else {
       return Wrap(
@@ -28,7 +28,7 @@ class ListHeader extends StatelessWidget {
         children: [
           Text(
             tr(title).toUpperCase(),
-            style: Theme.of(context).textTheme.labelSmall,
+            style: Theme.of(context).textTheme.labelMedium,
           ),
           Tooltip(
             message: tooltipMessage?.tr(),

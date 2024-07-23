@@ -8,9 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 
-
-
-
 class LipSection extends StatelessWidget {
   final String lipTitle;
   final bool isInverted;
@@ -49,7 +46,7 @@ class LipSection extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleLarge,
 
                       /// Headlines are considered decorative elements and should therefore not be affected by system accessibility modifications - fixes #47
-                      textScaleFactor: 1.0,
+                      textScaler: TextScaler.noScaling,
                     ),
                   ),
                 ),
@@ -64,7 +61,7 @@ class LipSection extends StatelessWidget {
                       elevation: 0,
                       automaticallyImplyLeading: false,
                       backgroundColor: Colors.transparent,
-                      leading: leadingAction!(context),
+                      leading: leadingAction?.call(context),
                       actions: _actionHelper(actions, context),
                     ),
                   ),
@@ -84,13 +81,12 @@ class LipSection extends StatelessWidget {
                   color: Theme.of(context).colorScheme.primary,
                   child: Baseline(
                     baselineType: TextBaseline.alphabetic,
-                    baseline:
-                        context.proportionateScreenHeight(164) - 12,
+                    baseline: context.proportionateScreenHeight(164) - 12,
                     child: Text(
                       lipTitle,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.titleLarge,
-                      textScaleFactor: 1.0,
+                      textScaler: TextScaler.noScaling,
                     ),
                   ),
                 ),
@@ -106,7 +102,7 @@ class LipSection extends StatelessWidget {
                       elevation: 0,
                       automaticallyImplyLeading: false,
                       backgroundColor: Colors.transparent,
-                      leading: leadingAction!(context),
+                      leading: leadingAction?.call(context),
                       actions: _actionHelper(actions, context),
                     ),
                   ),

@@ -10,15 +10,16 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:linum/common/components/dialogs/dialog_action.dart';
 import 'package:linum/common/components/dialogs/show_action_dialog.dart';
+import 'package:linum/common/interfaces/service_interface.dart';
 import 'package:linum/core/authentication/domain/services/authentication_service.dart';
-import 'package:linum/core/design/theme/constants/ring_colors.dart';
+import 'package:linum/core/design/theme/ring_colors.dart';
 import 'package:linum/core/navigation/get_delegate.dart';
 import 'package:linum/core/navigation/main_routes.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/lock_screen/models/lock_screen_action.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class PinCodeService extends ChangeNotifier {
+class PinCodeService extends IProvidableService {
   String _code = '';
   int _pinSlot = 0;
   Color _ringColor = RingColors.green;

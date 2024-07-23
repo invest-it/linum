@@ -28,12 +28,17 @@ class EnterScreenTextFieldViewModel extends ChangeNotifier {
   late StreamSubscription _streamSubscription;
 
   final ITranslator _translator;
+  final ParsingFilters? parsingFilters;
 
   HighlightTextEditingController get textController => _textController;
 
   final GlobalKey textFieldKey = LabeledGlobalKey("text_field");
 
-  EnterScreenTextFieldViewModel(BuildContext context, this._translator) {
+  EnterScreenTextFieldViewModel(
+      BuildContext context,
+      this._translator, {
+        this.parsingFilters,
+      }) {
     _context = context;
     _formViewModel = context.read<EnterScreenFormViewModel>();
 
@@ -67,14 +72,11 @@ class EnterScreenTextFieldViewModel extends ChangeNotifier {
         translator: _translator,
       ),
       translator: _translator,
-      parsingFilters: ParsingFilters(
-        categoryFilter: (category) => category.entryType == _entryType,
-      ),
+      parsingFilters: parsingFilters,
     );
 
     textController.text = _formViewModel.data.parsed.raw;
 
-    // TODO Get rid of this
 
     textController.addListener(() {
       final parsedData = textController.parsed;
@@ -163,6 +165,7 @@ class EnterScreenTextFieldViewModel extends ChangeNotifier {
             onSelection: (tag, flag) {
               textController.useSuggestion(tag, flag);
             },
+            parsingFilters: parsingFilters,
           ),
         ),
       );

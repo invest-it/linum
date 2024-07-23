@@ -130,10 +130,12 @@ const translationKeys = (
           'alertdialog.delete-transaction.dialog-button-cancel', // Abbrechen
       dialogButtonDelete:
           'alertdialog.delete-transaction.dialog-button-delete', // Löschen
-      dialogLabelDelete:
-          'alertdialog.delete-transaction.dialog-label-delete', // Möchtest du diesen Eintrag wirklich löschen?
+      dialogMessage:
+          'alertdialog.delete-transaction.dialog-message', // Möchtest du diesen Eintrag wirklich löschen?
+      dialogMessageSerial:
+          'alertdialog.delete-transaction.dialog-message-serial', // Möchtest du diesen Vertrag wirklich löschen? Dadurch werden alle über den Vertrag gebuchten Transaktionen gelöscht.
       dialogLabelTitle:
-          'alertdialog.delete-transaction.dialog-label-title' // Bestätigen
+          'alertdialog.delete-transaction.dialog-label-title' // Löschen bestätigen
     )
   ),
   auth: (
@@ -229,6 +231,8 @@ const translationKeys = (
         'auth.user-deleted', // Der Benutzer wurde erfolgreich gelöscht!
     userNotFound:
         'auth.user-not-found', // Deine E-Mail oder dein Passwort sind nicht korrekt. Vielleicht hast du dich vertippt?
+    emailNotFound:
+        'auth.email-not-found', // Wir konnten keinen Benutzer mit der von dir angegebenen E-Mail-Adresse finden. Vielleicht hast du dich vertippt?
     weakPassword:
         'auth.weak-password', // Das eingegebene Passwort ist zu schwach. Bitte wähle ein stärkeres Passwort.
     wrongPassword:

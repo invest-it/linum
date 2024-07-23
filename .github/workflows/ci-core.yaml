@@ -17,13 +17,14 @@ env:
   FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
 
 jobs:
+
   code-analysis-and-testing:
     name: Code Analysis and Testing
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     # - name: Set up Dart SDK
     #   uses: dart-lang/setup-dart@v1.3
@@ -35,13 +36,32 @@ jobs:
       with:
         channel: 'stable'
 
+    - name: Set up node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 16
+        
+    - name: Install npm
+      run: npm install
+      
+    - name: Run build file
+      run: npm run build
+      env:
+        DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
+
     - name: Prepare Firebase Option Configuration
       run: |
         curl -sL https://firebase.tools | bash
         dart pub global activate flutterfire_cli
         ls
         flutterfire --version
-        flutterfire configure -o lib/firebase/firebase_options.g.dart -p linum-5d9f6 -y --platforms="android,ios" -i de.investitacademy.linum -a de.investitacademy.linum -m de.investitacademy.linum 
+        flutterfire configure -o lib/firebase/firebase_options.g.dart \
+          -p linum-5d9f6 -y --platforms="android,ios" \
+          -i de.investitacademy.linum \
+          -a de.investitacademy.linum \
+          -w de.investitacademy.linum \
+          -m de.investitacademy.linum \
+          --windows-app-id de.investitacademy.linum 
 
     - name: Delete previous Builds
       run: flutter clean

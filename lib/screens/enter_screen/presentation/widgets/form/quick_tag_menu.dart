@@ -78,6 +78,9 @@ class QuickTagMenu extends StatelessWidget {
         formViewModel.data.options.repeatConfiguration ?? formViewModel.defaultValues.repeatConfiguration;
     final date = formViewModel.data.options.date ?? formViewModel.defaultValues.date;
 
+    final hasNote = formViewModel.data.options.notes != null;
+
+
     return [
       TagSelectorButton(
         title: tr(formatter.format(date) ?? ""),
@@ -140,6 +143,7 @@ class QuickTagMenu extends StatelessWidget {
       TagSelectorButton(
         title: tr(translationKeys.enterScreen.menu.notes),
         icon: Icons.edit_outlined,
+        showBadge: hasNote,
         onTap: () {
           showEnterScreenMenu(
             context: context,

@@ -100,8 +100,9 @@
         "delete-transaction": {
             "dialog-button-cancel": "Annuleren",
             "dialog-button-delete": "Verwijder",
-            "dialog-label-delete": "Wil je dit bericht echt verwijderen?",
-            "dialog-label-title": "Bevestig"
+            "dialog-label-title": "Verwijdering bevestigen",
+            "dialog-message": "Wil je dit bericht echt verwijderen?",
+            "dialog-message-serial": "Wil je dit contract echt verwijderen?\n Hiermee verwijder je alle transacties die via het contract zijn geboekt."
         }
     },
     "auth": {
@@ -119,7 +120,7 @@
         "invalid-credential": "De inloggegevens kunnen niet worden gebruikt voor registratie. Neem contact op met support@investit-academy.de.",
         "invalid-disabled-field": "Als je deze fout ziet, hebben we iets helemaal verkeerd gedaan. Neem contact op met support@investit-academy.de.",
         "invalid-display-name": "Uw gebruikersnaam is ongeldig.",
-        "invalid-email": "Uw e-mail of wachtwoord is niet correct. Controleer op spelfouten?",
+        "invalid-email": "Uw e-mailadres is ongeldig. Misschien heb je het verkeerd getypt?",
         "invalid-email-verified": "Uw e-mailadres kon niet worden geverifieerd. Misschien heb je het verkeerd getypt?",
         "invalid-id-token": "De verbinding met de server was defect. Neem contact op met support@investit-academy.de.",
         "invalid-last-sign-in-time": "De server kon uw tijdzone niet valideren. Controleer of de tijd correct is ingesteld op uw mobiele telefoon.",
@@ -152,7 +153,8 @@
         "weak-password": "Het wachtwoord dat u hebt ingevoerd is te zwak. Kies een sterker wachtwoord.",
         "wrong-password": "Uw e-mail of wachtwoord is niet correct. Controleer op spelfouten?",
         "user-deleted": "De gebruiker is succesvol verwijderd!",
-        "not-logged-in-to-update-email": "Om je e-mailadres te wijzigen, moet je ingelogd zijn."
+        "not-logged-in-to-update-email": "Om je e-mailadres te wijzigen, moet je ingelogd zijn.",
+        "email-not-found": "We konden geen gebruiker vinden met het e-mailadres dat je hebt opgegeven. Misschien heeft u een typefout gemaakt?"
     },
     "budget_screen": {
         "button-filter": "Filter",

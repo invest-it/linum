@@ -20,7 +20,7 @@ class EnterScreenScaffold extends StatelessWidget {
 
     return ConstrainedBox(
       constraints: BoxConstraints(
-        maxHeight: context.proportionateScreenHeightFraction(ScreenFraction.threefifths) + useKeyBoardHeight(context),
+        maxHeight: context.proportionateScreenHeightFraction(ScreenFraction.half) + useKeyBoardHeight(context),
       ),
 
       child: Scaffold(

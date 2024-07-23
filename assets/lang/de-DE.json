@@ -100,8 +100,9 @@
         "delete-transaction": {
             "dialog-button-cancel": "Abbrechen",
             "dialog-button-delete": "Löschen",
-            "dialog-label-delete": "Möchtest du diesen Eintrag wirklich löschen?",
-            "dialog-label-title": "Bestätigen"
+            "dialog-label-title": "Löschen bestätigen",
+            "dialog-message": "Möchtest du diesen Eintrag wirklich löschen?",
+            "dialog-message-serial": "Möchtest du diesen Vertrag wirklich löschen? Dadurch werden alle über den Vertrag gebuchten Transaktionen gelöscht."
         }
     },
     "auth": {
@@ -152,7 +153,8 @@
         "weak-password": "Das eingegebene Passwort ist zu schwach. Bitte wähle ein stärkeres Passwort.",
         "wrong-password": "Deine E-Mail oder dein Passwort sind nicht korrekt. Vielleicht hast du dich vertippt?",
         "user-deleted": "Der Benutzer wurde erfolgreich gelöscht!",
-        "not-logged-in-to-update-email": "Um deine E-Mmail-Adresse zu ändern, musst du angemeldet sein."
+        "not-logged-in-to-update-email": "Um deine E-Mmail-Adresse zu ändern, musst du angemeldet sein.",
+        "email-not-found": "Wir konnten keinen Benutzer mit der von dir angegebenen E-Mail-Adresse finden. Vielleicht hast du dich vertippt?"
     },
     "budget_screen": {
         "button-filter": "Filter",

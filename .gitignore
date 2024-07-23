@@ -62,6 +62,7 @@ app.*.map.json
 /ios/Podfile.lock
 /ios/Runner.ipa
 /ios/Runner.app.dSYM.zip
+/ios/build
 
 #Fastlane
 /android/fastlane/metadata
@@ -79,3 +80,13 @@ firebase_app_id_file.json
 # Mocks for Testing
 # TODO ignore mocks again
 #*.mocks.dart
+
+# DOTENV Integration
+.env*
+.flaskenv*
+!.env.project
+!.env.vault
+
+
+# Don't upload Node Modules
+/node_modules/

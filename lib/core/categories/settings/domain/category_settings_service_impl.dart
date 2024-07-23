@@ -66,4 +66,9 @@ class CategorySettingsServiceImpl
     return _repository.update(update);
   }
 
+  @override
+  Future<bool> ready() async {
+    return _repository.ready();
+  }
+
 }

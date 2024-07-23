@@ -100,8 +100,9 @@
         "delete-transaction": {
             "dialog-button-cancel": "Cancelar",
             "dialog-button-delete": "Borrar",
-            "dialog-label-delete": "¿De verdad quieres borrar esta entrada?",
-            "dialog-label-title": "Confirme"
+            "dialog-label-title": "Confirmar eliminación",
+            "dialog-message": "¿De verdad quieres borrar esta entrada?",
+            "dialog-message-serial": "¿Realmente desea eliminar este contrato?\n Esto eliminará todas las transacciones reservadas a través del contrato."
         }
     },
     "auth": {
@@ -119,7 +120,7 @@
         "invalid-credential": "Los datos de acceso no pueden utilizarse para el registro. Póngase en contacto con support@investit-academy.de.",
         "invalid-disabled-field": "Si ve este error, es que hemos hecho algo completamente mal. Póngase en contacto con support@investit-academy.de.",
         "invalid-display-name": "Su nombre de usuario no es válido.",
-        "invalid-email": "Su correo electrónico o su contraseña no son correctos. ¿Comprobar errores ortográficos?",
+        "invalid-email": "Su dirección de correo electrónico no es válida. Tal vez la haya escrito mal.",
         "invalid-email-verified": "Su dirección de correo electrónico no ha podido ser verificada. ¿Quizás lo has escrito mal?",
         "invalid-id-token": "La conexión con el servidor era defectuosa. Póngase en contacto con support@investit-academy.de.",
         "invalid-last-sign-in-time": "El servidor no ha podido validar su zona horaria. Por favor, compruebe si la hora está correctamente ajustada en su teléfono móvil.",
@@ -152,7 +153,8 @@
         "weak-password": "La contraseña que has introducido es demasiado débil. Por favor, elija una contraseña más fuerte.",
         "wrong-password": "Su correo electrónico o su contraseña no son correctos. ¿Comprobar errores ortográficos?",
         "user-deleted": "El usuario se ha eliminado correctamente.",
-        "not-logged-in-to-update-email": "Para cambiar su dirección de correo electrónico, debe iniciar sesión."
+        "not-logged-in-to-update-email": "Para cambiar su dirección de correo electrónico, debe iniciar sesión.",
+        "email-not-found": "No hemos podido encontrar ningún usuario con la dirección de correo electrónico que has introducido. ¿Quizás has escrito mal?"
     },
     "budget_screen": {
         "button-filter": "Filtro",

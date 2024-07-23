@@ -1,24 +1,24 @@
 class LanguageSettings {
   final bool? useSystemLanguage;
-  final String? languageCode;
+  final String? languageTag;
 
   LanguageSettings({
     required this.useSystemLanguage,
-    required this.languageCode,
+    required this.languageTag,
   });
 
   LanguageSettings copyWith({
     bool? useSystemLanguage,
-    String? languageCode,
+    String? languageTag,
   }) {
     return LanguageSettings(
       useSystemLanguage: useSystemLanguage ?? this.useSystemLanguage,
-      languageCode: languageCode ?? this.languageCode,
+      languageTag: languageTag ?? this.languageTag,
     );
   }
 
   @override
   String toString() {
-    return 'LanguageSettings(useSystemLanguage: $useSystemLanguage, languageCode: $languageCode})';
+    return 'LanguageSettings(useSystemLanguage: $useSystemLanguage, languageCode: $languageTag})';
   }
 }

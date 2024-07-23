@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:gradient_widgets/gradient_widgets.dart';
+import 'package:linum/common/widgets/gradient_button.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/onboarding_screen/enums/onboarding_page_state.dart';
@@ -18,20 +18,17 @@ class OnboardingRegisterButton extends StatelessWidget {
       child: SizedBox(
         width: double.infinity,
         child: GradientButton(
-          callback: () => viewModel
+          onPressed: () => viewModel
               .setPageState(OnboardingPageState.register),
           gradient: LinearGradient(
             colors: [
               Theme.of(context).colorScheme.primary,
-              Theme.of(context).colorScheme.surface,
+              Theme.of(context).colorScheme.tertiary,
             ],
           ),
-          elevation: 0,
-          increaseHeightBy: context
-              .proportionateScreenHeight(56 - 24),
-          increaseWidthBy: double.infinity,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+          minimumSize: Size(
+            double.infinity,
+            context.proportionateScreenHeight(48),
           ),
           child: Text(
             tr(translationKeys.onboardingScreen.registerButton),

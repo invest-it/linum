@@ -1,10 +1,11 @@
+import 'package:collection/collection.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/core/authentication/domain/services/authentication_service.dart';
+import 'package:linum/core/localization/settings/constants/supported_locales.dart';
+import 'package:linum/core/localization/settings/presentation/language_settings_service.dart';
 import 'package:linum/core/localization/settings/utils/country_flag_generator.dart';
 import 'package:linum/screens/onboarding_screen/constants/country_codes.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LanguageDropDownMenu extends StatelessWidget {
   const LanguageDropDownMenu({super.key});
@@ -32,25 +33,14 @@ class LanguageDropDownMenu extends StatelessWidget {
     );
   }
 
-  void _handleOnDropdownChanged(BuildContext context, String? value) {
+  Future _handleOnDropdownChanged(BuildContext context, String? value) async {
     if (value != null) {
-      SharedPreferences.getInstance().then((pref) {
-        pref.setString(
-          "languageCode",
-          countryFlagsToCountryCode[value] ?? "en",
-        );
-      });
-      final String langString = countryFlagsToCountryCode[value] ?? "en";
-      context.setLocale(
-        Locale(
-          langString,
-          langString != "en" ? langString.toUpperCase() : "US",
-        ),
-      );
+      final String langCode = countryFlagsToCountryCode[value] ?? "en";
 
-      context.read<AuthenticationService>().updateLanguageCode(
-          context.locale.languageCode,
-      );
+      final languageTag = supportedLocales.firstWhereOrNull((l) => l.languageCode == langCode)?.toLanguageTag();
+
+      await context.read<ILanguageSettingsService>().setLanguageTag(languageTag);
+
     }
   }
 }

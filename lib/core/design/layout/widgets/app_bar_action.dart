@@ -8,6 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:linum/core/navigation/get_delegate.dart';
 import 'package:linum/core/navigation/main_routes.dart';
 import 'package:logger/logger.dart';
+import 'package:wiredash/wiredash.dart';
+
+const Color lipContextColor = Color(
+  0xFFC1E695,
+); //FUTURE TODO: We should not hardcode things. This should be drawn from the colorTheme in the future.
 
 abstract class AppBarAction {
   static Logger logger = Logger();
@@ -30,27 +35,35 @@ abstract class AppBarAction {
       return AppBarAction.fromParameters(
         icon: Icons.video_library_rounded,
         ontap: () => context.getMainRouterDelegate().pushRoute(
-          MainRoute.academy,
-        ), // TODO: Find out why app closes on back-navigation
+              MainRoute.academy,
+            ),
+      );
+    },
+    DefaultAction.bugreport: (BuildContext context) {
+      return AppBarAction.fromParameters(
+        icon: Icons.bug_report_rounded,
+        ontap: () => Wiredash.of(context).show(inheritMaterialTheme: true),
       );
     },
     DefaultAction.settings: (BuildContext context) {
       return AppBarAction.fromParameters(
         icon: Icons.settings_rounded,
         ontap: () => context.getMainRouterDelegate().replaceLastRoute(
-          MainRoute.settings,
-          rememberReplacedRoute: true,
-        ),
+              MainRoute.settings,
+              rememberReplacedRoute: true,
+            ),
       );
     },
-    // TODO: Are these guys even used?
-    DefaultAction.back: (BuildContext context) => const BackButton(),
+    DefaultAction.back: (BuildContext context) => const BackButton(
+          color: lipContextColor,
+        ),
     DefaultAction.close: (BuildContext context) => const CloseButton(),
   };
 
   static IconButton fromParameters({
     required IconData icon,
     required void Function() ontap,
+    Color iconColor = lipContextColor,
     bool active = true,
     Key? key,
   }) {
@@ -58,6 +71,7 @@ abstract class AppBarAction {
       icon: Icon(icon),
       onPressed: () => active ? ontap() : {},
       key: key,
+      color: iconColor,
     );
   }
 
@@ -68,6 +82,7 @@ abstract class AppBarAction {
 
 enum DefaultAction {
   academy,
+  bugreport,
   notification,
   filter,
   back,

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
@@ -45,7 +46,10 @@ class CurrencyListView extends StatelessWidget {
               },
             ),
           ),
-          const LinumCloseButton(),
+          const LinumCloseButton(
+            padding: EdgeInsets.symmetric(vertical: 8),
+          ),
+          const SizedBox(height: 24,),
         ],
       ),
     );

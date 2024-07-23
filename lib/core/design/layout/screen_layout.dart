@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 
 /// The Layout for every main screen in Linum.
 /// The app bar and floating action button are defined here.
+// TODO: This is Layout and ViewModel in one Widget. Consider separation
 class ScreenLayout extends StatefulWidget {
   final ScreenKey currentScreen;
   final dynamic settings;
@@ -59,13 +60,18 @@ class _ScreenLayoutState extends State<ScreenLayout>
     }
   }
 
+  void handleActionButton() {
+    // TODO: Move this code somewhere else where its contents can be changed
+
+    showEnterScreen(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final CollectionReference balance =
-        FirebaseFirestore.instance.collection('balance');
+      FirebaseFirestore.instance.collection('balance');
 
     final routerDelegate = context.getMainRouterDelegate();
-
 
     // ignore: unused_local_variable
     final Widget loadingIndicator = Container(
@@ -89,16 +95,14 @@ class _ScreenLayoutState extends State<ScreenLayout>
           },
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showEnterScreen(context);
-        },
+/*      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: FloatingActionButton.large(
+        onPressed: handleActionButton,
         elevation: 2.0,
-        backgroundColor: Theme.of(context).colorScheme.secondary,
-        child: const Icon(Icons.add),
-      ),
-      bottomNavigationBar: FABBottomAppBar(
+        backgroundColor: Colors.white,
+        child: const Icon(Icons.add, color: Colors.black87),
+      ),*/
+      bottomNavigationBar: LinumNavigationBar(
         items: [
           BottomAppBarItem(
             iconData: Icons.home,
@@ -126,10 +130,12 @@ class _ScreenLayoutState extends State<ScreenLayout>
           ),
         ],
         backgroundColor: Theme.of(context).colorScheme.primary,
+        useInlineAB: true,
         centerItemText: '',
-        color: Theme.of(context).colorScheme.background,
+        iconColor: Theme.of(context).colorScheme.surface,
         selectedColor: Theme.of(context).colorScheme.secondary,
         notchedShape: const CircularNotchedRectangle(),
+        onABPressed: handleActionButton, // TODO: Remove if decision is made to use the FAB
         //gives the pageIndex the value (the current selected index in the
         //bottom navigation bar)
       ),

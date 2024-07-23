@@ -24,4 +24,9 @@ class CurrencySettingsServiceImpl extends SubscriptionHandler implements ICurren
     final update = _repository.settings.copyWith(currency: currency);
     await _repository.update(update);
   }
+
+  @override
+  Future<bool> ready() async {
+    return _repository.ready();
+  }
 }

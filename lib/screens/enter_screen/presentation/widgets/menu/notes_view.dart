@@ -17,40 +17,43 @@ class NotesView extends StatelessWidget {
       text: (notes != null && notes != "") ? notes : null,
     );
     return Expanded(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
-            child: Flex(
-              direction: Axis.horizontal,
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: textController,
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: tr(translationKeys.enterScreen.enterNoteHint),
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 24),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
+              child: Flex(
+                direction: Axis.horizontal,
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: textController,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: tr(translationKeys.enterScreen.enterNoteHint),
+                      ),
                     ),
                   ),
-                ),
-                const EnterScreenAbortButton(),
-              ],
+                  const EnterScreenAbortButton(),
+                ],
+              ),
             ),
-          ),
-          MenuActionButton(
-            label: tr(translationKeys.enterScreen.button.saveNote),
-            padding: const EdgeInsets.symmetric(vertical: 24.0),
-            onPressed: () {
-              formViewModel.data = formViewModel.data.copyWithOptions(
-                notes: notes,
-              );
-              Navigator.pop(context);
-            },
-          ),
-        ],
+            MenuActionButton(
+              label: tr(translationKeys.enterScreen.button.saveNote),
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              onPressed: () {
+                formViewModel.data = formViewModel.data.copyWithOptions(
+                  notes: textController.text,
+                );
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

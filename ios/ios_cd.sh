@@ -5,10 +5,16 @@ cd ./ios || exit
 gem install bundler:1.17.2
 bundle install
 
-GIT_BASIC_AUTH_TOKEN=$(echo -n "$GIT_USER_NAME:$GIT_ACCESS_TOKEN" | base64 | tr -d \\n)
-export GIT_BASIC_AUTH_TOKEN
+echo "$FASTLANE_CERTS_REPO_KEY" > ./repo_key
+chmod 600 ./repo_key
+
+echo "$GOOGLE_SERVICE_INFO" | base64 --decode > ./Runner/GoogleService-Info.plist
+# This line must be removed as soon as the firebase tools start working again
 
 gcloud secrets versions access latest --secret=linum-ios-auth-key-file --project=658687609050 > ./AuthKey.p8
+
+pod repo update
+pod install
 
 cd ../
 flutter build ios --release --no-codesign
@@ -19,7 +25,7 @@ cd ./ios || exit
 
 if [ "$1" = "release" ]
 then
-  bundle exec fastlane release
+  MATCH_PASSWORD=${MATCH_PASSWORD} bundle exec fastlane release
 else
-  bundle exec fastlane beta
+  MATCH_PASSWORD=${MATCH_PASSWORD} bundle exec fastlane beta
 fi

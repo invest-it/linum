@@ -10,10 +10,8 @@ import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/core/design/layout/widgets/app_bar_action.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
-import 'package:linum/core/navigation/get_delegate.dart';
 import 'package:linum/core/navigation/url_handler.dart';
 import 'package:linum/generated/translation_keys.g.dart';
-
 
 /// Page Index: 4
 class AcademyScreen extends StatelessWidget {
@@ -21,14 +19,9 @@ class AcademyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return ScreenSkeleton(
-      head: 'Academy',
-      leadingAction: (BuildContext context) => AppBarAction.fromParameters(
-        icon: Icons.arrow_back_rounded,
-        ontap: () => context.getMainRouterDelegate().popRoute(),
-        // TODO: Maybe use another method, animation does not look good.
-      ),
+      head: 'YouTube',
+      leadingAction: AppBarAction.fromPreset(DefaultAction.back),
       isInverted: true,
       body: Center(
         child: Column(
