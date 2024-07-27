@@ -34,6 +34,7 @@ dependencies:
 
   firebase_auth: ^5.1.2
   firebase_core: ^3.2.0
+  fl_chart: ^0.68.0
   flat_buffers: ^23.5.26
   flip_card: ^0.7.0 # Don't update to 0.6.0
 
