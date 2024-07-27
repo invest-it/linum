@@ -60,6 +60,7 @@ class ForgotPasswordScaffold extends StatelessWidget {
                   style: theme.textTheme.labelLarge,
                 ),
               ),
+              const SizedBox(height: 32,),
             ],
           ),
         ),

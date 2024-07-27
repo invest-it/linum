@@ -100,8 +100,9 @@
         "delete-transaction": {
             "dialog-button-cancel": "Cancel",
             "dialog-button-delete": "Delete",
-            "dialog-label-delete": "Do you really want to delete this entry?",
-            "dialog-label-title": "Confirm"
+            "dialog-label-title": "Confirm deletion",
+            "dialog-message": "Do you really want to delete this entry?",
+            "dialog-message-serial": "Do you really want to delete this contract?\n This will delete all transactions booked via the contract."
         }
     },
     "auth": {

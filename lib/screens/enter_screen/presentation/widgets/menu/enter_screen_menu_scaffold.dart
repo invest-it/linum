@@ -33,7 +33,6 @@ class EnterScreenMenuScaffold extends StatelessWidget {
         Container(
           width: double.infinity,
           alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(vertical: 32.0),
           child: Text(
             title!,
             style: Theme.of(context).textTheme.headlineSmall,

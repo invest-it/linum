@@ -100,8 +100,9 @@
         "delete-transaction": {
             "dialog-button-cancel": "Annuleren",
             "dialog-button-delete": "Verwijder",
-            "dialog-label-delete": "Wil je dit bericht echt verwijderen?",
-            "dialog-label-title": "Bevestig"
+            "dialog-label-title": "Verwijdering bevestigen",
+            "dialog-message": "Wil je dit bericht echt verwijderen?",
+            "dialog-message-serial": "Wil je dit contract echt verwijderen?\n Hiermee verwijder je alle transacties die via het contract zijn geboekt."
         }
     },
     "auth": {

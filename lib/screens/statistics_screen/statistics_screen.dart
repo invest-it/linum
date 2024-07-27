@@ -7,6 +7,7 @@ import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/core/design/layout/widgets/app_bar_action.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
 import 'package:linum/core/design/layout/widgets/top_bar_action_item.dart';
 import 'package:linum/generated/translation_keys.g.dart';
@@ -18,6 +19,9 @@ class StatisticsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenSkeleton(
+      actions: [
+        AppBarAction.fromPreset(DefaultAction.bugreport),
+      ],
       head: 'Stats',
       body: Center(
         child: Column(

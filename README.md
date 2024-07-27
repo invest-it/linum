@@ -1,39 +1,41 @@
-# linum
+# Linum - Budgeting by Invest it!
 
+![License](https://img.shields.io/github/license/invest-it/linum)
+![Latest Release](https://img.shields.io/github/v/release/invest-it/linum)
 [![CI Core Checks](https://github.com/invest-it/linum/actions/workflows/ci-core.yaml/badge.svg)](https://github.com/invest-it/linum/actions/workflows/ci-core.yaml)
 [![Stage](https://github.com/invest-it/linum/actions/workflows/cd-staging.yaml/badge.svg?branch=development)](https://github.com/invest-it/linum/actions/workflows/cd-staging.yaml)
+
+![Play Store Availability](https://img.shields.io/badge/Play_Store-Available-3aaa35)
+![App Store Availability](https://img.shields.io/badge/App_Store-Available-lightblue)
+![Beta Tesging Availability](https://img.shields.io/badge/Beta_Testing-Open_on_Android,_Closed_on_iOS-white)
+
 
 Get your money under control before your money has you under control.
 This budget tracker is designed to teach young people how to keep track of spendings and how to budget effectively.
 
-## Setup (for intern Developers)
+## Using Linum
 
-Follow
-[this](https://docs.flutter.dev/get-started/install)
-tutorial to setup flutter on your machine.
+Using Linum is very straightforward. All you need is a valid e-mail address or a Google Account, or an Apple ID to log in, and you can get started immediately using our mobile apps. Depending on your OS, you can get the apps here:
 
-Before running the application for the first time you'll need to generate the *firebase_options.dart* file.
+| Android | iOS | Web | Other OS |
+| --------| --- | --- | -------- |
+|[<img src="https://raw.githubusercontent.com/invest-it/linum/development/.github/assets/google_play_badge.png" height="60">](https://play.google.com/store/apps/details?id=de.investitacademy.linum)|[<img src="https://raw.githubusercontent.com/invest-it/linum/development/.github/assets/app_store_badge.png" height="60">](https://apps.apple.com/us/app/linum-budgeting-by-invest-it/id1612518920)| not supported | not supported |
 
-To do this you'll need to install **firebase-tools**: <br>
-With npm: <br> `npm install -g firebase-tools`
 
-With brew (MacOS): <br> `brew install firebase-cli`
+## Docs
 
-Afterwards run: <br>
-`firebase login` <br>
+View the [project wiki](https://github.com/invest-it/linum/wiki) for details on how to contribute if you are new to the team or if you are unsure about certain processes and conventions used throughout the project.
 
-A login screen will appear, please register with your InvestIt Account. <br>
+## License
 
-Then run: <br>
-```shell
-dart pub global activate flutterfire_cli
-``` 
-and <br>
-```shell
-flutterfire configure -o lib/firebase/firebase_options.g.dart -p linum-dev -y --platforms="android,ios"
-```
-alternatively use the _get-firebase-options.sh_ or _get-firebase-options.bat_
+This project is currently under the [GPL 3.0 License](https://github.com/invest-it/linum/blob/development/LICENSE).
 
-Now you can start the application with `flutter run`
+## Contributors
 
-For everything else, please turn to our [wiki](https://github.com/invest-it/linum/wiki).
+Special thanks for everyone that have contributed to this project over the last years!
+
+<a href="https://github.com/invest-it/linum/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=invest-it/linum" />
+</a>
+
+Made with [contrib.rocks](https://contrib.rocks).

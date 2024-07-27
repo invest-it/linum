@@ -8,24 +8,25 @@ name: Stage
 
 on:
   pull_request:
-    types: [opened]
+    types: [opened, reopened]
     branches: [staging]
   workflow_dispatch:
 
 
 env:
   FLUTTER_CHANNEL: 'stable' # 'stable', 'beta', or 'master', default to: 'stable'
-  FLUTTER_VERSION: '3.13.8' 
   XCODE_VERSION: '15.0'
   PATH_TO_AAB: 'build/app/outputs/bundle/release/app-release.aab'
   ANDROID_PACKAGE_NAME: 'de.investitacademy.linum'
   FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+  DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
 
 jobs:
   build-project-artifact:
     name: Build Project Artifact
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    environment: Staging-Prep
     steps:
       - uses: geekyeggo/delete-artifact@v2
         with:
@@ -40,15 +41,38 @@ jobs:
         with:
           channel: ${{ env.FLUTTER_CHANNEL }}
 
+      - name: Set up node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+        
+      - name: Install npm
+        run: npm install
+      
+      - name: Run build file
+        run: npm run build
+        env:
+          DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
+
       - name: Prepare Firebase Option Configuration
         run: |
-          curl -sL https://firebase.tools | bash
+          npm install -g firebase-tools
           dart pub global activate flutterfire_cli
-          ls
           flutterfire --version
-          flutterfire configure -o lib/firebase/firebase_options.g.dart -p linum-5d9f6 -y --platforms="android,ios" -i de.investitacademy.linum -a de.investitacademy.linum -m de.investitacademy.linum 
+          flutterfire configure --out=lib/firebase/firebase_options.g.dart \
+          --project=linum-5d9f6 -y --platforms="android,ios" \
+          -i de.investitacademy.linum \
+          -a de.investitacademy.linum \
+          -w de.investitacademy.linum \
+          -m de.investitacademy.linum \
+          --windows-app-id de.investitacademy.linum \
+          --overwrite-firebase-options
 
-
+      - name: Check if files exist
+        run: |
+          ls
+          ls ./ios
+          ls ./ios/Runner
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -56,7 +80,7 @@ jobs:
           path: ./
 
   code-analysis-and-testing:
-    name: Code Analysis and Testing
+    name: Pre-CD Code Analysis and Testing
     needs: build-project-artifact
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -94,6 +118,12 @@ jobs:
         with:
           ruby-version: '3.0'
           bundler-cache: true
+
+      - name: Set up Java Version
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '17'
 
       - name: Set up Flutter SDK
         uses: subosito/flutter-action@v2
@@ -151,8 +181,8 @@ jobs:
 
       - name: Run iOS CD script
         env:
-          GIT_USER_NAME: ${{ secrets.GIT_USER_NAME }}
-          GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
+          GOOGLE_SERVICE_INFO: ${{secrets.GOOGLE_SERVICE_INFO}}
+          FASTLANE_CERTS_REPO_KEY: ${{ secrets.FASTLANE_CERTS_REPO_KEY }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           MATCH_KEYCHAIN_NAME: ${{ secrets.MATCH_KEYCHAIN_NAME }}
           MATCH_KEYCHAIN_PASSWORD: ${{ secrets.MATCH_KEYCHAIN_PASSWORD }}

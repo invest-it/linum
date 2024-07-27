@@ -144,10 +144,10 @@ class EnterScreen extends StatelessWidget {
       }) {
         if (transaction != null) {
           balanceDataService.updateTransaction(transaction);
-        } else if (serialTransaction != null && changeMode != null) {
+        } else if (serialTransaction != null) {
           balanceDataService.updateSerialTransaction(
             serialTransaction: serialTransaction,
-            changeMode: changeMode,
+            changeMode: SerialTransactionChangeMode.all,
             oldDate: this.transaction?.formerDate ?? this.transaction?.date,
             newDate: serialTransaction.startDate,
           );
@@ -162,14 +162,15 @@ class EnterScreen extends StatelessWidget {
         showTransactionDeleteDialog(context, () {
           if (transaction != null && changeMode == null) {
             balanceDataService.removeTransaction(transaction);
-          } else if (serialTransaction != null && changeMode != null) {
+          } else if (serialTransaction != null) {
             balanceDataService.removeSerialTransaction(
               serialTransaction: serialTransaction,
-              removeType: changeMode,
+              removeType: SerialTransactionChangeMode.all,
               date: transaction?.date,
             );
           }
-        });
+          Navigator.pop(context);
+        }, isSerialTransaction: true,);
       },
     );
   }

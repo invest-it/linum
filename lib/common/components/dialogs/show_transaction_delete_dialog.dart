@@ -7,10 +7,15 @@ import 'package:linum/generated/translation_keys.g.dart';
 void showTransactionDeleteDialog(
     BuildContext context,
     Function() callbackFunction,
-    ) {
+    {bool isSerialTransaction = false,}) {
+
+
+
   showActionDialog(
     context,
-    message: tr(translationKeys.alertdialog.deleteTransaction.dialogLabelDelete),
+    message: isSerialTransaction
+        ? tr(translationKeys.alertdialog.deleteTransaction.dialogMessageSerial)
+        : tr(translationKeys.alertdialog.deleteTransaction.dialogMessage),
     title: tr(translationKeys.alertdialog.deleteTransaction.dialogLabelTitle),
     userMustDismissWithButton: false,
     actions: <DialogAction>[

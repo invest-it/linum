@@ -24,6 +24,7 @@ class _StandardCurrencySelectorState extends State<StandardCurrencySelector> {
         GestureDetector(
           onTap: () {
             showModalBottomSheet(
+              useSafeArea: true,
               context: context,
               builder: (BuildContext context) {
                 return LinumBottomSheet(

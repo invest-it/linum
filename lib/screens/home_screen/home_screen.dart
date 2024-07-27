@@ -79,6 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
             ),
         AppBarAction.fromPreset(DefaultAction.settings),
+        AppBarAction.fromPreset(DefaultAction.bugreport),
       ],
       screenCard: const HomeScreenDashboard(),
       body: Stack(
@@ -99,14 +100,18 @@ class _HomeScreenState extends State<HomeScreen> {
                             value: false,
                             child: Text(
                               tr(translationKeys
-                                  .homeScreen.labelRecentTransactions),
+                                  .homeScreen.labelRecentTransactions,
+                              ),
+
                             ),
                           ),
                           DropdownMenuItem<bool>(
                             value: true,
                             child: Text(
                               tr(translationKeys
-                                  .homeScreen.labelActiveSerialcontracts),
+                                  .homeScreen.labelActiveSerialcontracts,
+                              ),
+
                             ),
                           ),
                         ],
