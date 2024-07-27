@@ -25,8 +25,7 @@ import 'package:provider/provider.dart';
 class HomeScreenCardBack extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final AlgorithmService algorithmService =
-        context.watch<AlgorithmService>();
+    final AlgorithmService algorithmService = context.watch<AlgorithmService>();
     final String langCode = context.locale.languageCode;
     final DateFormat dateFormat = DateFormat("MMM ''yy", langCode);
     final DateTime now = DateTime.now();
@@ -43,7 +42,7 @@ class HomeScreenCardBack extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: () => onFlipCardTap(
-            context.read<ScreenCardViewModel>().controller!,
+          context.read<ScreenCardViewModel>().controller!,
         ),
         onHorizontalDragEnd: (DragEndDetails details) =>
             onHorizontalDragEnd(details, context),
@@ -128,9 +127,10 @@ class HomeScreenCardBack extends StatelessWidget {
                       //KPI COLUMN
                       Expanded(
                         //STREAM INSERT
-                        child: BalanceDataStreamConsumer3<
-                            IExchangeRateService, AlgorithmService, HomeScreenCardData>(
-                          transformer: (snapshot, exchangeRateService, algorithmService) async {
+                        child: BalanceDataStreamConsumer3<IExchangeRateService,
+                            AlgorithmService, HomeScreenCardData>(
+                          transformer: (snapshot, exchangeRateService,
+                              algorithmService) async {
                             final statData = await generateStatistics(
                               snapshot: snapshot,
                               algorithms: algorithmService.state,
@@ -162,7 +162,9 @@ class HomeScreenCardBack extends StatelessWidget {
                                           child: Column(
                                             children: [
                                               Text(
-                                                tr(translationKeys.homeScreenCard.labelMtdBalance)
+                                                tr(translationKeys
+                                                        .homeScreenCard
+                                                        .labelMtdBalance)
                                                     .toUpperCase(),
                                                 style: Theme.of(context)
                                                     .textTheme
@@ -172,7 +174,8 @@ class HomeScreenCardBack extends StatelessWidget {
                                                 child: FittedBox(
                                                   fit: BoxFit.scaleDown,
                                                   child: StyledAmount(
-                                                    value: snapshot.data?.mtdBalance ??
+                                                    value: snapshot
+                                                            .data?.mtdBalance ??
                                                         0.00,
                                                     locale: context.locale,
                                                     symbol: currencySettings
@@ -192,7 +195,9 @@ class HomeScreenCardBack extends StatelessWidget {
                                               FittedBox(
                                                 fit: BoxFit.fitWidth,
                                                 child: Text(
-                                                  tr(translationKeys.homeScreenCard.labelContracts)
+                                                  tr(translationKeys
+                                                          .homeScreenCard
+                                                          .labelContracts)
                                                       .toUpperCase(),
                                                   style: Theme.of(context)
                                                       .textTheme
@@ -211,7 +216,8 @@ class HomeScreenCardBack extends StatelessWidget {
                                                           value: snapshot.data
                                                                   ?.eomFutureSerialIncome ??
                                                               0.00,
-                                                          locale: context.locale,
+                                                          locale:
+                                                              context.locale,
                                                           symbol: currencySettings
                                                               .getStandardCurrency()
                                                               .symbol,
@@ -230,7 +236,8 @@ class HomeScreenCardBack extends StatelessWidget {
                                                           value: snapshot.data
                                                                   ?.eomFutureSerialExpenses ??
                                                               0.00,
-                                                          locale: context.locale,
+                                                          locale:
+                                                              context.locale,
                                                           symbol: currencySettings
                                                               .getStandardCurrency()
                                                               .symbol,
@@ -257,7 +264,8 @@ class HomeScreenCardBack extends StatelessWidget {
                                         child: Column(
                                           children: [
                                             Text(
-                                              tr(translationKeys.homeScreenCard.labelEomProjectedBalance)
+                                              tr(translationKeys.homeScreenCard
+                                                      .labelEomProjectedBalance)
                                                   .toUpperCase(),
                                               style: Theme.of(context)
                                                   .textTheme
@@ -267,7 +275,8 @@ class HomeScreenCardBack extends StatelessWidget {
                                               child: FittedBox(
                                                 fit: BoxFit.scaleDown,
                                                 child: StyledAmount(
-                                                  value: snapshot.data?.eomBalance ??
+                                                  value: snapshot
+                                                          .data?.eomBalance ??
                                                       0.00,
                                                   locale: context.locale,
                                                   symbol: currencySettings
@@ -292,7 +301,8 @@ class HomeScreenCardBack extends StatelessWidget {
                                         CrossAxisAlignment.stretch,
                                     children: [
                                       Text(
-                                        tr(translationKeys.homeScreenCard.labelAccountPositionMonth)
+                                        tr(translationKeys.homeScreenCard
+                                                .labelAccountPositionMonth)
                                             .toUpperCase(),
                                         textAlign: TextAlign.center,
                                         style: Theme.of(context)
