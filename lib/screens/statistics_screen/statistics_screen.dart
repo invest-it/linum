@@ -4,6 +4,7 @@
 //  Co-Author: n/a
 
 import 'package:flutter/material.dart';
+import 'package:linum/core/design/layout/widgets/app_bar_action.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
 import 'package:linum/screens/statistics_screen/expense_tab.dart';
 import 'package:linum/screens/statistics_screen/income_tab.dart';
@@ -36,6 +37,9 @@ class _StatisticsScreenState extends State<StatisticsScreen> with TickerProvider
   @override
   Widget build(BuildContext context) {
     return ScreenSkeleton(
+      actions: [
+        AppBarAction.fromPreset(DefaultAction.bugreport),
+      ],
       head: 'Stats',
       body: Column(
         children: [

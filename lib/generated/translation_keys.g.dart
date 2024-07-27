@@ -130,10 +130,12 @@ const translationKeys = (
           'alertdialog.delete-transaction.dialog-button-cancel', // Abbrechen
       dialogButtonDelete:
           'alertdialog.delete-transaction.dialog-button-delete', // Löschen
-      dialogLabelDelete:
-          'alertdialog.delete-transaction.dialog-label-delete', // Möchtest du diesen Eintrag wirklich löschen?
+      dialogMessage:
+          'alertdialog.delete-transaction.dialog-message', // Möchtest du diesen Eintrag wirklich löschen?
+      dialogMessageSerial:
+          'alertdialog.delete-transaction.dialog-message-serial', // Möchtest du diesen Vertrag wirklich löschen? Dadurch werden alle über den Vertrag gebuchten Transaktionen gelöscht.
       dialogLabelTitle:
-          'alertdialog.delete-transaction.dialog-label-title' // Bestätigen
+          'alertdialog.delete-transaction.dialog-label-title' // Löschen bestätigen
     )
   ),
   auth: (

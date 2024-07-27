@@ -20,6 +20,7 @@ class EnterScreenTextField extends StatelessWidget {
       fontSize: 16,
       letterSpacing: 1.0,
       textBaseline: TextBaseline.alphabetic,
+      height: 2.0,
     );
 
     final locale = context.locale;
@@ -53,8 +54,8 @@ class EnterScreenTextField extends StatelessWidget {
           ),
           validator: _validateInput,
           keyboardType: TextInputType.multiline,
-          maxLines: 6,
-          cursorHeight: baseTextStyle.fontSize! + textFieldViewModel.textController.cursorHeightOffset,
+          maxLines: null,
+          cursorHeight: baseTextStyle.fontSize! + textFieldViewModel.textController.cursorHeight,
           autofocus: true,
           style: baseTextStyle,
           key: textFieldViewModel.textFieldKey,

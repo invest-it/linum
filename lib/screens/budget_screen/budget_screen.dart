@@ -57,6 +57,11 @@ class _BudgetScreenState extends State<BudgetScreen> with TickerProviderStateMix
     return ScreenSkeleton(
       head: 'Budget',
       leadingAction: AppBarAction.fromPreset(DefaultAction.academy),
+      actions: [
+        AppBarAction.fromPreset(
+          DefaultAction.bugreport,
+        ),
+      ],
       isInverted: true,
       body: Column(
         children: [

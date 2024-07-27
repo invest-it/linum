@@ -29,7 +29,7 @@ class HighlightTextEditingController extends TextEditingController {
     this.parsingFilters,
     super.text,
   }) {
-    cursorHeightOffset = verticalPadding * 2 + verticalMargin * 2 + 2;
+    cursorHeight = verticalPadding * 2 + verticalMargin * 2;
   }
 
   Map<String, Suggestion> _suggestions = {};
@@ -41,8 +41,8 @@ class HighlightTextEditingController extends TextEditingController {
   int offsetCounter = 0;
 
   final double verticalPadding = 2.5;
-  final double verticalMargin = 1;
-  late final double cursorHeightOffset;
+  final double verticalMargin = 2;
+  late final double cursorHeight;
 
   @override
   set value(TextEditingValue newValue) {
