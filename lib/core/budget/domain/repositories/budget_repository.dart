@@ -1,3 +1,3 @@
-class IBudgetRepository {
-  
+abstract class IBudgetRepository {
+
 }
