@@ -1,7 +1,7 @@
 import 'package:linum/common/interfaces/mappable.dart';
 import 'package:linum/core/budget/domain/models/budget_cap.dart';
 import 'package:uuid/uuid.dart';
-s
+
 class Budget implements IMappable<Budget> {
   final String id;
   final BudgetCap cap;
