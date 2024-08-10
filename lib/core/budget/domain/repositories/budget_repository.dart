@@ -13,4 +13,10 @@ abstract class IBudgetRepository {
 
   // TODO: Document possible exceptions
   void updateMainBudget(MainBudget budget);
+
+  // TODO: Document possible exceptions
+  void removeBudget(Budget budget);
+
+  // TODO: Document possible exceptions
+  void removeMainBudget(MainBudget budget);
 }
