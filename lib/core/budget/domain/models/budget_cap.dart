@@ -35,6 +35,11 @@ class BudgetCap implements IMappable<BudgetCap> {
       type: CapType.fromDynamic(map["type"]),
     );
   }
+
+  @override
+  String toString() {
+    return 'BudgetCap(value: $value, type: $type)';
+  }
 }
 
 class BudgetCapFactory implements IMappableFactory<BudgetCap> {

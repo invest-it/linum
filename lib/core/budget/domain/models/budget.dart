@@ -4,23 +4,27 @@ import 'package:linum/core/budget/domain/models/time_span.dart';
 import 'package:uuid/uuid.dart';
 
 class Budget implements TimeSpan<Budget>, IMappable<Budget> {
+  final String seriesId;
   final String id;
+  // TODO: Discuss if name is needed
   final BudgetCap cap;
   final List<String> categories;
   final DateTime start;
   final DateTime? end;
 
   Budget({
+    String? seriesId,
     String? id,
     required this.cap,
     required this.categories,
     required this.start,
     this.end,
-  }): id = id ?? const Uuid().v4(), assert(categories.isNotEmpty);
+  }): seriesId = seriesId ?? const Uuid().v4(), id = id ?? TimeSpan.newId(), assert(categories.isNotEmpty);
 
   @override
   Map<String, dynamic> toMap() {
     return {
+      "seriesId": seriesId,
       "id": id,
       "cap": cap.toMap(),
       "categories": categories,
@@ -33,6 +37,7 @@ class Budget implements TimeSpan<Budget>, IMappable<Budget> {
     final end = map["end"] as String?;
 
     return Budget(
+      seriesId: map["seriesId"] as String,
       id: map["id"] as String,
       cap: BudgetCap.fromMap(map["cap"] as Map<String, dynamic>),
       categories: map["categories"] as List<String>,
@@ -42,13 +47,15 @@ class Budget implements TimeSpan<Budget>, IMappable<Budget> {
   }
 
   Budget copyWith({
+    String? id,
     BudgetCap? cap,
     List<String>? categories,
     DateTime? start,
     DateTime? end,
   }) {
     return Budget(
-      id: id,
+      seriesId: seriesId,
+      id: id ?? this.id,
       cap: cap ?? this.cap,
       categories: categories ?? this.categories,
       start: start ?? this.start,
@@ -57,11 +64,26 @@ class Budget implements TimeSpan<Budget>, IMappable<Budget> {
   }
 
   @override
-  Budget copySpanWith({DateTime? start, DateTime? end}) {
+  Budget copySpanWith({DateTime? start, DateTime? end, String? id}) {
     return copyWith(
       start: start,
       end: end,
+      id: id,
     );
+  }
+
+  @override
+  DateTime? getEnd() => end;
+
+  @override
+  DateTime getStart() => start;
+
+  @override
+  String getId() => id;
+
+  @override
+  String toString() {
+    return 'Budget(seriesId: $seriesId, id: $id, cap: $cap, categories: $categories, start: $start, end: $end)';
   }
 }
 

@@ -1,12 +1,13 @@
 import 'package:linum/core/budget/domain/models/budget.dart';
 import 'package:linum/core/budget/domain/models/main_budget.dart';
 
+// The repository should never be used directly, only through use cases
 abstract class IBudgetRepository {
   // TODO: Document possible exceptions
   Budget createBudget(Budget budget);
 
   // TODO: Document possible exceptions
-  Budget createMainBudget(MainBudget budget);
+  MainBudget createMainBudget(MainBudget budget);
 
   // TODO: Document possible exceptions
   void updateBudget(Budget budget);
@@ -19,4 +20,6 @@ abstract class IBudgetRepository {
 
   // TODO: Document possible exceptions
   void removeMainBudget(MainBudget budget);
+
+
 }

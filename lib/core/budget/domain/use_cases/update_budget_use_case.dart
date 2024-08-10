@@ -10,11 +10,10 @@ abstract class UpdateBudgetUseCase {
 }
 
 class UpdateBudgetUseCaseImpl implements UpdateBudgetUseCase {
-  final IBudgetRepository repository;
   final UpdateTimeSpanUseCase<Budget> updateTimeSpanUseCase;
 
   UpdateBudgetUseCaseImpl({
-    required this.repository,
+    required IBudgetRepository repository,
   }): updateTimeSpanUseCase = UpdateTimeSpanUseCase(
       createSpan: repository.createBudget, updateSpan: repository.updateBudget,
   );

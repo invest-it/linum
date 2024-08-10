@@ -29,6 +29,7 @@ class UpdateTimeSpanUseCase<T extends TimeSpan<T>> {
     _createSpan(
       update.copySpanWith(
         start: selectedDate,
+        id: TimeSpan.newId(),
       ),
     );
     
@@ -43,13 +44,14 @@ class UpdateTimeSpanUseCase<T extends TimeSpan<T>> {
   void changeThisAndAllBefore(T old, T update, DateTime selectedDate) {
     _updateSpan(
       update.copySpanWith(
-        end: Jiffy.parseFromDateTime(selectedDate).subtract(months: 1).dateTime,
+        end: Jiffy.parseFromDateTime(selectedDate).dateTime,
       ),
     );
     
     _createSpan(
       old.copySpanWith(
-        start: selectedDate,
+        id: TimeSpan.newId(),
+        start: Jiffy.parseFromDateTime(selectedDate).add(months: 1).dateTime,
       ),
     );
   }
@@ -70,6 +72,7 @@ class UpdateTimeSpanUseCase<T extends TimeSpan<T>> {
 
     _createSpan(
       update.copySpanWith(
+        id: TimeSpan.newId(),
         start: selectedDate,
         end: selectedDate,
       ),
@@ -78,6 +81,7 @@ class UpdateTimeSpanUseCase<T extends TimeSpan<T>> {
     // After
     _createSpan(
       old.copySpanWith(
+        id: TimeSpan.newId(),
         start: Jiffy.parseFromDateTime(selectedDate).add(months: 1).dateTime,
       ),
     );

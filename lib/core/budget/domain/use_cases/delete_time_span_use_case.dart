@@ -28,6 +28,7 @@ class DeleteTimeSpanUseCase<T extends TimeSpan<T>> {
     // All before deletion date
     _createSpan(
       item.copySpanWith(
+        id: TimeSpan.newId(),
         end:  Jiffy.parseFromDateTime(selectedDate).subtract(months: 1).dateTime,
       ),
     );
@@ -42,6 +43,7 @@ class DeleteTimeSpanUseCase<T extends TimeSpan<T>> {
     // All after deletion date
     _createSpan(
       item.copySpanWith(
+        id: TimeSpan.newId(),
         start: Jiffy.parseFromDateTime(selectedDate).add(months: 1).dateTime,
       ),
     );
@@ -63,6 +65,7 @@ class DeleteTimeSpanUseCase<T extends TimeSpan<T>> {
     // Before deletion start date
     _createSpan(
       item.copySpanWith(
+        id: TimeSpan.newId(),
         end: Jiffy.parseFromDateTime(selectedDate).subtract(months: 1).dateTime,
       ),
     );
@@ -75,6 +78,7 @@ class DeleteTimeSpanUseCase<T extends TimeSpan<T>> {
     // After deletion end date
     _createSpan(
       item.copySpanWith(
+        id: TimeSpan.newId(),
         start: Jiffy.parseFromDateTime(selectedDate).add(months: 1).dateTime,
       ),
     );
