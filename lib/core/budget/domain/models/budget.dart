@@ -3,7 +3,7 @@ import 'package:linum/core/budget/domain/models/budget_cap.dart';
 import 'package:linum/core/budget/domain/models/time_span.dart';
 import 'package:uuid/uuid.dart';
 
-class Budget extends TimeSpan<Budget> implements IMappable<Budget> {
+class Budget implements TimeSpan<Budget>, IMappable<Budget> {
   final String id;
   final BudgetCap cap;
   final List<String> categories;

@@ -1,7 +1,7 @@
 import 'package:linum/common/interfaces/mappable.dart';
 import 'package:linum/core/budget/domain/models/time_span.dart';
 
-class MainBudget extends TimeSpan<MainBudget> implements IMappable<MainBudget> {
+class MainBudget implements TimeSpan<MainBudget>, IMappable<MainBudget> {
   final double? amount;
   final DateTime start;
   final DateTime? end;
