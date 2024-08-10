@@ -4,7 +4,7 @@ import 'package:linum/core/budget/domain/repositories/budget_repository.dart';
 
 
 
-class BudgetRepository implements IBudgetRepository {
+class BudgetRepository /*implements IBudgetRepository*/ {
   final IBudgetAdapter adapter;
 
   BudgetRepository({required this.adapter});

@@ -1,6 +1,7 @@
 import 'package:linum/common/interfaces/mappable.dart';
+import 'package:linum/core/budget/domain/models/time_span.dart';
 
-class MainBudget implements IMappable<MainBudget> {
+class MainBudget extends TimeSpan<MainBudget> implements IMappable<MainBudget> {
   final double? amount;
   final DateTime start;
   final DateTime? end;
@@ -22,6 +23,26 @@ class MainBudget implements IMappable<MainBudget> {
         amount: map["amount"] as double?,
         start: DateTime.parse(map["start"] as String),
         end: end != null ? DateTime.parse(end) : null,
+    );
+  }
+
+  MainBudget copyWith({
+    double? amount,
+    DateTime? start,
+    DateTime? end,
+  }) {
+    return MainBudget(
+        amount: amount ?? this.amount,
+        start: start ?? this.start,
+        end: end ?? this.end,
+    );
+  }
+
+  @override
+  MainBudget copySpanWith({DateTime? start, DateTime? end}) {
+    return copyWith(
+      start: start,
+      end: end,
     );
   }
 }

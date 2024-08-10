@@ -1,8 +1,9 @@
 import 'package:linum/common/interfaces/mappable.dart';
 import 'package:linum/core/budget/domain/models/budget_cap.dart';
+import 'package:linum/core/budget/domain/models/time_span.dart';
 import 'package:uuid/uuid.dart';
 
-class Budget implements IMappable<Budget> {
+class Budget extends TimeSpan<Budget> implements IMappable<Budget> {
   final String id;
   final BudgetCap cap;
   final List<String> categories;
@@ -37,6 +38,29 @@ class Budget implements IMappable<Budget> {
       categories: map["categories"] as List<String>,
       start: DateTime.parse(map["start"] as String),
       end: end != null ? DateTime.parse(end) : null,
+    );
+  }
+
+  Budget copyWith({
+    BudgetCap? cap,
+    List<String>? categories,
+    DateTime? start,
+    DateTime? end,
+  }) {
+    return Budget(
+      id: id,
+      cap: cap ?? this.cap,
+      categories: categories ?? this.categories,
+      start: start ?? this.start,
+      end: end ?? this.end,
+    );
+  }
+
+  @override
+  Budget copySpanWith({DateTime? start, DateTime? end}) {
+    return copyWith(
+      start: start,
+      end: end,
     );
   }
 }
