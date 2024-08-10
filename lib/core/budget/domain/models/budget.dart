@@ -7,6 +7,7 @@ class Budget implements TimeSpan<Budget>, IMappable<Budget> {
   final String seriesId;
   final String id;
   // TODO: Discuss if name is needed
+  final String name;
   final BudgetCap cap;
   final List<String> categories;
   final DateTime start;
@@ -15,6 +16,7 @@ class Budget implements TimeSpan<Budget>, IMappable<Budget> {
   Budget({
     String? seriesId,
     String? id,
+    String this.name,
     required this.cap,
     required this.categories,
     required this.start,
@@ -26,6 +28,7 @@ class Budget implements TimeSpan<Budget>, IMappable<Budget> {
     return {
       "seriesId": seriesId,
       "id": id,
+      "name": name,
       "cap": cap.toMap(),
       "categories": categories,
       "start": start.toIso8601String(),
@@ -39,6 +42,7 @@ class Budget implements TimeSpan<Budget>, IMappable<Budget> {
     return Budget(
       seriesId: map["seriesId"] as String,
       id: map["id"] as String,
+      name: map["name"] as String,
       cap: BudgetCap.fromMap(map["cap"] as Map<String, dynamic>),
       categories: map["categories"] as List<String>,
       start: DateTime.parse(map["start"] as String),
@@ -48,6 +52,7 @@ class Budget implements TimeSpan<Budget>, IMappable<Budget> {
 
   Budget copyWith({
     String? id,
+    String? name,
     BudgetCap? cap,
     List<String>? categories,
     DateTime? start,
@@ -56,6 +61,7 @@ class Budget implements TimeSpan<Budget>, IMappable<Budget> {
     return Budget(
       seriesId: seriesId,
       id: id ?? this.id,
+      name: name?? this.name,
       cap: cap ?? this.cap,
       categories: categories ?? this.categories,
       start: start ?? this.start,
@@ -83,7 +89,7 @@ class Budget implements TimeSpan<Budget>, IMappable<Budget> {
 
   @override
   String toString() {
-    return 'Budget(seriesId: $seriesId, id: $id, cap: $cap, categories: $categories, start: $start, end: $end)';
+    return 'Budget(seriesId: $seriesId, id: $id, name: $name, cap: $cap, categories: $categories, start: $start, end: $end)';
   }
 }
 
