@@ -1,6 +1,5 @@
 import 'package:linum/common/interfaces/mappable.dart';
 import 'package:linum/core/budget/domain/models/time_span.dart';
-import 'package:uuid/uuid.dart';
 
 class MainBudget implements TimeSpan<MainBudget>, IMappable<MainBudget> {
   final String id;
