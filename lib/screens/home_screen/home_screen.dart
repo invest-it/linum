@@ -5,6 +5,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:linum/common/components/screen_card/utils/flip_card_controller_extensions.dart';
 import 'package:linum/common/utils/filters.dart';
 import 'package:linum/common/utils/in_between_timestamps.dart';
@@ -72,12 +73,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 key: const Key("pinRecallButton"),
               ),
-        (BuildContext context) => AppBarAction.fromParameters(
-              icon: Icons.castle_rounded,
-              ontap: () => context.getMainRouterDelegate().pushRoute(
-                    MainRoute.sandbox,
-                  ),
-            ),
+        if (dotenv.env['SCOPE'] == "development")
+          (BuildContext context) => AppBarAction.fromParameters(
+                icon: Icons.castle_rounded,
+                ontap: () => context.getMainRouterDelegate().pushRoute(
+                      MainRoute.sandbox,
+                    ),
+              ),
         AppBarAction.fromPreset(DefaultAction.settings),
         AppBarAction.fromPreset(DefaultAction.bugreport),
       ],
@@ -99,19 +101,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           DropdownMenuItem<bool>(
                             value: false,
                             child: Text(
-                              tr(translationKeys
-                                  .homeScreen.labelRecentTransactions,
+                              tr(
+                                translationKeys
+                                    .homeScreen.labelRecentTransactions,
                               ),
-
                             ),
                           ),
                           DropdownMenuItem<bool>(
                             value: true,
                             child: Text(
-                              tr(translationKeys
-                                  .homeScreen.labelActiveSerialcontracts,
+                              tr(
+                                translationKeys
+                                    .homeScreen.labelActiveSerialcontracts,
                               ),
-
                             ),
                           ),
                         ],
