@@ -1,7 +1,6 @@
 import 'dart:collection';
-
 import 'package:linum/core/budget/domain/models/budget.dart';
-import 'package:linum/core/budget/domain/models/budget_change.dart';
+import 'package:linum/core/budget/domain/models/changes.dart';
 import 'package:linum/core/budget/domain/models/main_budget.dart';
 import 'package:linum/core/budget/domain/models/time_span.dart';
 import 'package:linum/core/budget/domain/repositories/budget_repository.dart';
@@ -84,15 +83,31 @@ class BudgetRepositoryDummy implements IBudgetRepository {
   }
 
   @override
-  Future<void> executeBudgetChanges(List<BudgetChange> changes) {
-    // TODO: implement executeBudgetChanges
-    throw UnimplementedError();
+  Future<void> executeBudgetChanges(List<ModelChange<Budget>> changes) async {
+    for (final change in changes) {
+      switch (change.type) {
+        case ChangeType.create:
+          await createBudget(change.model);
+        case ChangeType.update:
+          await updateBudget(change.model);
+        case ChangeType.delete:
+          await removeBudget(change.model);
+      }
+    }
   }
 
   @override
-  Future<void> executeMainBudgetChanges(List<MainBudgetChange> changes) {
-    // TODO: implement executeMainBudgetChanges
-    throw UnimplementedError();
+  Future<void> executeMainBudgetChanges(List<ModelChange<MainBudget>> changes) async {
+    for (final change in changes) {
+      switch (change.type) {
+        case ChangeType.create:
+          await createMainBudget(change.model);
+        case ChangeType.update:
+          await updateMainBudget(change.model);
+        case ChangeType.delete:
+          await removeMainBudget(change.model);
+      }
+    }
   }
 
   @override

@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:linum/core/budget/domain/models/budget.dart';
-import 'package:linum/core/budget/domain/models/budget_change.dart';
+import 'package:linum/core/budget/domain/models/changes.dart';
 import 'package:linum/core/budget/domain/models/main_budget.dart';
 
 
@@ -33,9 +33,9 @@ abstract class IBudgetRepository {
   Future<void> removeMainBudget(MainBudget budget);
 
   // TODO: Document possible exceptions
-  Future<void> executeBudgetChanges(List<BudgetChange> changes);
+  Future<void> executeBudgetChanges(List<ModelChange<Budget>> changes);
   // TODO: Document possible exceptions
-  Future<void> executeMainBudgetChanges(List<MainBudgetChange> changes);
+  Future<void> executeMainBudgetChanges(List<ModelChange<MainBudget>> changes);
 
   // This is only for testing purposes
   UnmodifiableListView<Budget> testingGetBudgetForSeriesId(String serialId);

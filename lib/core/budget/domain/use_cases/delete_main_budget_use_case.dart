@@ -8,17 +8,16 @@ abstract class DeleteMainBudgetUseCase {
 }
 
 class DeleteMainBudgetUseCaseImpl implements DeleteMainBudgetUseCase {
-  final IBudgetRepository repository;
-  final DeleteTimeSpanUseCase<MainBudget> deleteTimeSpanUseCase;
+  final IBudgetRepository _repository;
+  final DeleteTimeSpanUseCase<MainBudget> _deleteTimeSpanUseCase;
 
   DeleteMainBudgetUseCaseImpl({
-    required this.repository,
-  }): deleteTimeSpanUseCase = DeleteTimeSpanUseCase(
-    deleteSpan: repository.removeMainBudget, createSpan: repository.createMainBudget,
-  );
+    required IBudgetRepository repository,
+  }): _repository = repository, _deleteTimeSpanUseCase = DeleteTimeSpanUseCase();
 
   @override
   Future<void> execute(MainBudget budget, DateTime selectedDate, BudgetChangeMode changeMode) async {
-    await deleteTimeSpanUseCase.execute(budget, selectedDate, changeMode);
+    final changes = await _deleteTimeSpanUseCase.execute(budget, selectedDate, changeMode);
+    return _repository.executeMainBudgetChanges(changes);
   }
 }

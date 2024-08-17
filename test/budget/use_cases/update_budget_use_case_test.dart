@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:linum/core/budget/domain/models/budget_cap.dart';
+import 'package:linum/core/budget/domain/models/time_span.dart';
 import 'package:linum/core/budget/domain/repositories/budget_repository_dummy.dart';
 import 'package:linum/core/budget/domain/use_cases/update_budget_use_case.dart';
 import 'package:linum/core/budget/enums/budget_change_mode.dart';
@@ -15,9 +16,9 @@ void main() {
       final repository = BudgetRepositoryDummy();
       final updateUseCase = UpdateBudgetUseCaseImpl(repository: repository);
 
-      test("single_change", () {
+      test("single_change", () async {
         final budget = BudgetDummyGenerator().generateBudget(openEnded: true);
-        repository.createBudget(
+        await repository.createBudget(
           budget,
         );
 
@@ -26,10 +27,20 @@ void main() {
         );
 
         final selectedDate = Jiffy.parseFromDateTime(budget.start).add(months: Random().nextInt(100)).dateTime;
-        updateUseCase.execute(budget, update, selectedDate, BudgetChangeMode.onlyOne);
+
+        if (!budget.containsDate(selectedDate)) {
+          expect(() async {
+            await updateUseCase.execute(budget, update, selectedDate, BudgetChangeMode.onlyOne);
+          }, throwsException,);
+          return;
+        }
+
+        await updateUseCase.execute(budget, update, selectedDate, BudgetChangeMode.onlyOne);
 
         final list = repository.testingGetBudgetForSeriesId(budget.seriesId);
         expect(list.length, 3);
+
+        print(list);
 
         expect(list[1].start, selectedDate);
         expect(list.last.end, budget.end);
@@ -42,9 +53,9 @@ void main() {
       final repository = BudgetRepositoryDummy();
       final updateUseCase = UpdateBudgetUseCaseImpl(repository: repository);
 
-      test("single_change", () {
+      test("single_change", () async {
         final budget = BudgetDummyGenerator().generateBudget(openEnded: true);
-        repository.createBudget(
+        await repository.createBudget(
           budget,
         );
 
@@ -52,8 +63,7 @@ void main() {
           cap: BudgetCap(value: 500, type: CapType.amount),
         );
 
-        final selectedDate = Jiffy.parseFromDateTime(budget.start).add(months: 4).dateTime;
-        updateUseCase.execute(budget, update, selectedDate, BudgetChangeMode.all);
+        await updateUseCase.execute(budget, update, null, BudgetChangeMode.all);
 
         final list = repository.testingGetBudgetForSeriesId(budget.seriesId);
         expect(list.length, 1);
@@ -69,9 +79,9 @@ void main() {
       final updateUseCase = UpdateBudgetUseCaseImpl(repository: repository);
 
 
-      test("single_change", () {
+      test("single_change", () async {
         final budget = BudgetDummyGenerator().generateBudget(openEnded: true);
-        repository.createBudget(
+        await repository.createBudget(
           budget,
         );
 
@@ -80,7 +90,15 @@ void main() {
         );
 
         final selectedDate = Jiffy.parseFromDateTime(budget.start).add(months: 4).dateTime;
-        updateUseCase.execute(budget, update, selectedDate, BudgetChangeMode.thisAndAllAfter);
+
+        if (!budget.containsDate(selectedDate)) {
+          expect(() async {
+            await updateUseCase.execute(budget, update, selectedDate, BudgetChangeMode.thisAndAllAfter);
+          }, throwsException,);
+          return;
+        }
+
+        await updateUseCase.execute(budget, update, selectedDate, BudgetChangeMode.thisAndAllAfter);
 
         final list = repository.testingGetBudgetForSeriesId(budget.seriesId);
         expect(list.length, 2);
@@ -96,9 +114,9 @@ void main() {
       final updateUseCase = UpdateBudgetUseCaseImpl(repository: repository);
 
 
-      test("single_change", () {
+      test("single_change", () async {
         final budget = BudgetDummyGenerator().generateBudget(openEnded: true);
-        repository.createBudget(
+        await repository.createBudget(
           budget,
         );
 
@@ -107,7 +125,15 @@ void main() {
         );
 
         final selectedDate = Jiffy.parseFromDateTime(budget.start).add(months: 4).dateTime;
-        updateUseCase.execute(budget, update, selectedDate, BudgetChangeMode.thisAndAllBefore);
+
+        if (!budget.containsDate(selectedDate)) {
+          expect(() async {
+            await updateUseCase.execute(budget, update, selectedDate, BudgetChangeMode.thisAndAllBefore);
+          }, throwsException,);
+          return;
+        }
+
+        await updateUseCase.execute(budget, update, selectedDate, BudgetChangeMode.thisAndAllBefore);
 
         final list = repository.testingGetBudgetForSeriesId(budget.seriesId);
         expect(list.length, 2);

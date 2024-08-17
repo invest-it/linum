@@ -1,90 +1,116 @@
 import 'package:jiffy/jiffy.dart';
+import 'package:linum/core/budget/domain/models/changes.dart';
 import 'package:linum/core/budget/domain/models/time_span.dart';
 import 'package:linum/core/budget/enums/budget_change_mode.dart';
 
 class UpdateTimeSpanUseCase<T extends TimeSpan<T>> {
-  final Future<void> Function(T value) _updateSpan;
-  final Future<void> Function(T value) _createSpan;
-  
-  UpdateTimeSpanUseCase({
-    required Future<void> Function(T) createSpan,
-    required Future<void> Function(T) updateSpan,
-  }) : _createSpan = createSpan, _updateSpan = updateSpan;
 
-  Future<void> execute(T old, T update, DateTime selectedDate, BudgetChangeMode changeMode) async {
+  UpdateTimeSpanUseCase();
+
+  Future<List<ModelChange<T>>> execute(T old, T update, DateTime? selectedDate, BudgetChangeMode changeMode) async {
+    assert(selectedDate != null || changeMode == BudgetChangeMode.all);
+
     switch (changeMode) {
       case BudgetChangeMode.all:
-        await changeAll(update);
+        return changeAll(update);
       case BudgetChangeMode.onlyOne:
-        await changeOnlyOne(old, update, selectedDate);
+        return changeOnlyOne(old, update, selectedDate!);
       case BudgetChangeMode.thisAndAllAfter:
-        await changeThisAndAllAfter(old, update, selectedDate);
+        return changeThisAndAllAfter(old, update, selectedDate!);
       case BudgetChangeMode.thisAndAllBefore:
-        await changeThisAndAllBefore(old, update, selectedDate);
+        return changeThisAndAllBefore(old, update, selectedDate!);
     }
   }
 
   // TODO: Decide on how to handle await
-  Future<void> changeThisAndAllAfter(T old, T update, DateTime selectedDate) async {
-    // This and all after
-    await _createSpan(
-      update.copySpanWith(
-        start: selectedDate,
-        id: TimeSpan.newId(),
-      ),
-    );
-    
-    // Before
-    await _updateSpan(
-      old.copySpanWith(
-        end: Jiffy.parseFromDateTime(selectedDate).subtract(months: 1).dateTime,
-      ),
-    );
-  }
-  
-  Future<void> changeThisAndAllBefore(T old, T update, DateTime selectedDate) async {
-    await _updateSpan(
-      update.copySpanWith(
-        end: Jiffy.parseFromDateTime(selectedDate).dateTime,
-      ),
-    );
-    
-    await _createSpan(
-      old.copySpanWith(
-        id: TimeSpan.newId(),
-        start: Jiffy.parseFromDateTime(selectedDate).add(months: 1).dateTime,
-      ),
-    );
-  }
-  
-  Future<void> changeAll(T update) async {
-    await _updateSpan(
-      update,
-    );
-  }
-  
-  Future<void> changeOnlyOne(T old, T update, DateTime selectedDate) async {
-    // Before
-    await _updateSpan(
-      old.copySpanWith(
-        end: Jiffy.parseFromDateTime(selectedDate).subtract(months: 1).dateTime,
-      ),
-    );
+  Future<List<ModelChange<T>>> changeThisAndAllAfter(T old, T update, DateTime selectedDate) async {
+    if (!old.containsDate(selectedDate)) {
+      throw Exception("Date is outside of TimeSpans range");
+    }
 
-    await _createSpan(
-      update.copySpanWith(
-        id: TimeSpan.newId(),
-        start: selectedDate,
-        end: selectedDate,
+    return [
+      // This and all after
+      ModelChange(
+        ChangeType.create,
+        update.copySpanWith(
+          start: selectedDate,
+          id: TimeSpan.newId(),
+        ),
       ),
-    );
 
-    // After
-    await _createSpan(
-      old.copySpanWith(
-        id: TimeSpan.newId(),
-        start: Jiffy.parseFromDateTime(selectedDate).add(months: 1).dateTime,
+      // Before
+      ModelChange(
+        ChangeType.update,
+        old.copySpanWith(
+          end: Jiffy.parseFromDateTime(selectedDate).subtract(months: 1).dateTime,
+        ),
       ),
-    );
+    ];
+  }
+  
+  Future<List<ModelChange<T>>> changeThisAndAllBefore(T old, T update, DateTime selectedDate) async {
+    if (!old.containsDate(selectedDate)) {
+      throw Exception("Date is outside of TimeSpans range");
+    }
+
+    return [
+      // This and all after
+      ModelChange(
+        ChangeType.update,
+        update.copySpanWith(
+          end: Jiffy.parseFromDateTime(selectedDate).dateTime,
+        ),
+      ),
+
+      // Before
+      ModelChange(
+        ChangeType.create,
+        old.copySpanWith(
+          id: TimeSpan.newId(),
+          start: Jiffy.parseFromDateTime(selectedDate).add(months: 1).dateTime,
+        ),
+      ),
+    ];
+
+  }
+  
+  Future<List<ModelChange<T>>> changeAll(T update) async {
+    return [
+      ModelChange(ChangeType.update, update),
+    ];
+  }
+  
+  Future<List<ModelChange<T>>> changeOnlyOne(T old, T update, DateTime selectedDate) async {
+    if (!old.containsDate(selectedDate)) {
+      throw Exception("Date is outside of TimeSpans range");
+    }
+
+    return [
+      // Before
+      ModelChange(
+        ChangeType.update,
+        old.copySpanWith(
+          end: Jiffy.parseFromDateTime(selectedDate).subtract(months: 1).dateTime,
+        ),
+      ),
+
+      ModelChange(
+        ChangeType.create,
+        update.copySpanWith(
+          id: TimeSpan.newId(),
+          start: selectedDate,
+          end: selectedDate,
+        ),
+      ),
+
+      // After
+      ModelChange(
+        ChangeType.create,
+        old.copySpanWith(
+          id: TimeSpan.newId(),
+          start: Jiffy.parseFromDateTime(selectedDate).add(months: 1).dateTime,
+        ),
+      ),
+    ];
   }
 }
