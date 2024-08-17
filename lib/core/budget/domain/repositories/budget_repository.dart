@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:linum/core/budget/domain/models/budget.dart';
 import 'package:linum/core/budget/domain/models/main_budget.dart';
 
@@ -21,5 +23,6 @@ abstract class IBudgetRepository {
   // TODO: Document possible exceptions
   Future<void> removeMainBudget(MainBudget budget);
 
-
+  // This is only for testing purposes
+  UnmodifiableListView<Budget> testingGetBudgetForSeriesId(String serialId);
 }

@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:linum/core/budget/domain/models/budget.dart';
 import 'package:linum/core/budget/domain/models/main_budget.dart';
 import 'package:linum/core/budget/domain/models/time_span.dart';
@@ -75,4 +77,8 @@ class BudgetRepositoryDummy implements IBudgetRepository {
     mainBudgets[index] = budget;
   }
 
+  @override
+  UnmodifiableListView<Budget> testingGetBudgetForSeriesId(String seriesId) {
+    return UnmodifiableListView(budgets[seriesId] ?? <Budget>[]);
+  }
 }
