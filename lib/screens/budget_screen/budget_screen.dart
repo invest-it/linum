@@ -1,20 +1,9 @@
 
 import 'package:flutter/material.dart';
-import 'package:linum/common/utils/filters.dart';
-import 'package:linum/common/utils/in_between_timestamps.dart';
-import 'package:linum/common/widgets/loading_spinner.dart';
-import 'package:linum/core/balance/services/algorithm_service.dart';
-import 'package:linum/core/balance/utils/balance_data_processors.dart';
-import 'package:linum/core/balance/utils/statistical_calculations.dart';
-import 'package:linum/core/balance/widgets/balance_data_stream_consumer.dart';
 import 'package:linum/core/budget/domain/repositories/budget_repository_dummy.dart';
 import 'package:linum/core/budget/presentation/budget_service_impl.dart';
-import 'package:linum/core/design/layout/widgets/app_bar_action.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
-import 'package:linum/features/currencies/core/presentation/exchange_rate_service.dart';
 import 'package:linum/screens/budget_screen/budget_screen_viewmodel.dart';
-import 'package:linum/screens/budget_screen/plan_tab.dart';
-import 'package:linum/screens/budget_screen/remaining_tab.dart';
 import 'package:provider/provider.dart';
 
 

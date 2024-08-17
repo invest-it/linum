@@ -9,8 +9,6 @@
 enum RepeatDurationType {
   seconds,
   months,
-
-
 }
 
 RepeatDurationType? repeatDurationTypeFromString(String enumStr) {
