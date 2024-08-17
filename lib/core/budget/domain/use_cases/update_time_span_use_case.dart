@@ -3,30 +3,31 @@ import 'package:linum/core/budget/domain/models/time_span.dart';
 import 'package:linum/core/budget/enums/budget_change_mode.dart';
 
 class UpdateTimeSpanUseCase<T extends TimeSpan<T>> {
-  final void Function(T value) _updateSpan;
-  final void Function(T value) _createSpan;
+  final Future<void> Function(T value) _updateSpan;
+  final Future<void> Function(T value) _createSpan;
   
   UpdateTimeSpanUseCase({
-    required void Function(T) createSpan,
-    required void Function(T) updateSpan,
+    required Future<void> Function(T) createSpan,
+    required Future<void> Function(T) updateSpan,
   }) : _createSpan = createSpan, _updateSpan = updateSpan;
 
-  void execute(T old, T update, DateTime selectedDate, BudgetChangeMode changeMode) {
+  Future<void> execute(T old, T update, DateTime selectedDate, BudgetChangeMode changeMode) async {
     switch (changeMode) {
       case BudgetChangeMode.all:
-        changeAll(update);
+        await changeAll(update);
       case BudgetChangeMode.onlyOne:
-        changeOnlyOne(old, update, selectedDate);
+        await changeOnlyOne(old, update, selectedDate);
       case BudgetChangeMode.thisAndAllAfter:
-        changeThisAndAllAfter(old, update, selectedDate);
+        await changeThisAndAllAfter(old, update, selectedDate);
       case BudgetChangeMode.thisAndAllBefore:
-        changeThisAndAllBefore(old, update, selectedDate);
+        await changeThisAndAllBefore(old, update, selectedDate);
     }
   }
-  
-  void changeThisAndAllAfter(T old, T update, DateTime selectedDate) {
+
+  // TODO: Decide on how to handle await
+  Future<void> changeThisAndAllAfter(T old, T update, DateTime selectedDate) async {
     // This and all after
-    _createSpan(
+    await _createSpan(
       update.copySpanWith(
         start: selectedDate,
         id: TimeSpan.newId(),
@@ -34,21 +35,21 @@ class UpdateTimeSpanUseCase<T extends TimeSpan<T>> {
     );
     
     // Before
-    _updateSpan(
+    await _updateSpan(
       old.copySpanWith(
         end: Jiffy.parseFromDateTime(selectedDate).subtract(months: 1).dateTime,
       ),
     );
   }
   
-  void changeThisAndAllBefore(T old, T update, DateTime selectedDate) {
-    _updateSpan(
+  Future<void> changeThisAndAllBefore(T old, T update, DateTime selectedDate) async {
+    await _updateSpan(
       update.copySpanWith(
         end: Jiffy.parseFromDateTime(selectedDate).dateTime,
       ),
     );
     
-    _createSpan(
+    await _createSpan(
       old.copySpanWith(
         id: TimeSpan.newId(),
         start: Jiffy.parseFromDateTime(selectedDate).add(months: 1).dateTime,
@@ -56,21 +57,21 @@ class UpdateTimeSpanUseCase<T extends TimeSpan<T>> {
     );
   }
   
-  void changeAll(T update) {
-    _updateSpan(
+  Future<void> changeAll(T update) async {
+    await _updateSpan(
       update,
     );
   }
   
-  void changeOnlyOne(T old, T update, DateTime selectedDate) {
+  Future<void> changeOnlyOne(T old, T update, DateTime selectedDate) async {
     // Before
-    _updateSpan(
+    await _updateSpan(
       old.copySpanWith(
         end: Jiffy.parseFromDateTime(selectedDate).subtract(months: 1).dateTime,
       ),
     );
 
-    _createSpan(
+    await _createSpan(
       update.copySpanWith(
         id: TimeSpan.newId(),
         start: selectedDate,
@@ -79,7 +80,7 @@ class UpdateTimeSpanUseCase<T extends TimeSpan<T>> {
     );
 
     // After
-    _createSpan(
+    await _createSpan(
       old.copySpanWith(
         id: TimeSpan.newId(),
         start: Jiffy.parseFromDateTime(selectedDate).add(months: 1).dateTime,

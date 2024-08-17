@@ -6,7 +6,7 @@ import 'package:linum/core/budget/enums/budget_change_mode.dart';
 
 
 abstract class UpdateBudgetUseCase {
-  void execute(Budget old, Budget update, DateTime selectedDate, BudgetChangeMode changeMode);
+  Future<void> execute(Budget old, Budget update, DateTime selectedDate, BudgetChangeMode changeMode);
 }
 
 class UpdateBudgetUseCaseImpl implements UpdateBudgetUseCase {
@@ -19,8 +19,7 @@ class UpdateBudgetUseCaseImpl implements UpdateBudgetUseCase {
   );
 
   @override
-  void execute(Budget old, Budget update, DateTime selectedDate, BudgetChangeMode changeMode) {
-    updateTimeSpanUseCase.execute(old, update, selectedDate, changeMode);
+  Future<void> execute(Budget old, Budget update, DateTime selectedDate, BudgetChangeMode changeMode) async {
+    return updateTimeSpanUseCase.execute(old, update, selectedDate, changeMode);
   }
 }
-

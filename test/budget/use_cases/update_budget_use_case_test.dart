@@ -8,6 +8,7 @@ import 'package:linum/core/budget/domain/use_cases/update_budget_use_case.dart';
 import 'package:linum/core/budget/enums/budget_change_mode.dart';
 
 import '../utils/budget_generator.dart';
+import '../utils/expect_same_month.dart';
 
 void main() {
   group("update_budget_use_case_test", () {
@@ -31,6 +32,7 @@ void main() {
         final list = repository.testingGetBudgetForSeriesId(budget.seriesId);
         expect(list.length, 3);
 
+        expectSameMonth(list[1].start, selectedDate);
         expect(list[1].start, selectedDate);
         expect(list.last.end, budget.end);
         expect(list[1].cap, update.cap);
@@ -120,5 +122,4 @@ void main() {
     });
 
   });
-
 }

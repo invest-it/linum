@@ -11,13 +11,13 @@ class BudgetDummyGenerator {
   final List<String> availableCategories = ["food", "drink", "rent", "sports", "entertainment"];
 
   Budget generateBudget({bool openEnded = false}) {
-    final start = Jiffy.now().subtract(months: Random().nextInt(30));
+    final start = Jiffy.now().subtract(months: Random().nextInt(100));
     return Budget(
       name: const Uuid().v4(),
       cap: randomCap(),
       categories: availableCategories..shuffle()..getRange(0, Random().nextInt(availableCategories.length)),
       start: start.dateTime,
-      end: openEnded ? start.add(months: Random().nextInt(30)).dateTime : null,
+      end: openEnded ? start.add(months: Random().nextInt(100)).dateTime : null,
     );
   }
 

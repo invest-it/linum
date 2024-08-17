@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:linum/core/budget/domain/models/budget.dart';
+import 'package:linum/core/budget/domain/models/budget_change.dart';
 import 'package:linum/core/budget/domain/models/main_budget.dart';
 import 'package:linum/core/budget/domain/models/time_span.dart';
 import 'package:linum/core/budget/domain/repositories/budget_repository.dart';
@@ -8,13 +9,13 @@ import 'package:linum/core/budget/domain/repositories/budget_repository.dart';
 
 
 class BudgetRepositoryDummy implements IBudgetRepository {
-  final Map<String, List<Budget>> budgets = {};
-  final List<MainBudget> mainBudgets = [];
+  final Map<String, List<Budget>> _budgets = {};
+  final List<MainBudget> _mainBudgets = [];
 
   @override
   Future<Budget> createBudget(Budget budget) async {
-    budgets.putIfAbsent(budget.seriesId, () => []);
-    final list = budgets[budget.seriesId]!;
+    _budgets.putIfAbsent(budget.seriesId, () => []);
+    final list = _budgets[budget.seriesId]!;
 
     if (list.isNotEmpty && list.last.end == null && budget.end == null) {
       // TODO: Use Lukas' exceptions
@@ -32,53 +33,88 @@ class BudgetRepositoryDummy implements IBudgetRepository {
 
   @override
   Future<MainBudget> createMainBudget(MainBudget budget) async {
-    if (mainBudgets.isNotEmpty && mainBudgets.last.end == null && budget.end == null) {
+    if (_mainBudgets.isNotEmpty && _mainBudgets.last.end == null && budget.end == null) {
       throw Exception("There can only be one open ended main budget");
     }
 
-    mainBudgets.add(budget);
-    mainBudgets.sort(timeSpanComparer);
+    _mainBudgets.add(budget);
+    _mainBudgets.sort(timeSpanComparer);
     return budget;
   }
 
   @override
   Future<void> removeBudget(Budget budget) async {
-    final list = budgets[budget.seriesId];
+    final list = _budgets[budget.seriesId];
     if (list == null) {
       return;
     }
 
     list.removeWhere((b) => b.id == budget.id);
     if (list.isEmpty) {
-      budgets.remove(budget.seriesId);
+      _budgets.remove(budget.seriesId);
     }
   }
 
   @override
   Future<void> removeMainBudget(MainBudget budget) async {
-    mainBudgets.removeWhere((b) => b.id == budget.id);
+    _mainBudgets.removeWhere((b) => b.id == budget.id);
   }
 
   @override
   Future<void> updateBudget(Budget budget) async {
-    final index = budgets[budget.seriesId]?.indexWhere((b) => b.id == budget.id);
+    final index = _budgets[budget.seriesId]?.indexWhere((b) => b.id == budget.id);
     if (index == null || index == -1) {
       throw Exception("budget not in list");
     }
-    budgets[budget.seriesId]![index] = budget;
+    _budgets[budget.seriesId]![index] = budget;
   }
 
   @override
   Future<void> updateMainBudget(MainBudget budget) async {
-    final index = mainBudgets.indexWhere((b) => b.id == budget.id);
+    final index = _mainBudgets.indexWhere((b) => b.id == budget.id);
     if (index == -1) {
       throw Exception("main budget not in list");
     }
-    mainBudgets[index] = budget;
+    _mainBudgets[index] = budget;
   }
 
   @override
   UnmodifiableListView<Budget> testingGetBudgetForSeriesId(String seriesId) {
-    return UnmodifiableListView(budgets[seriesId] ?? <Budget>[]);
+    return UnmodifiableListView(_budgets[seriesId] ?? <Budget>[]);
+  }
+
+  @override
+  Future<void> executeBudgetChanges(List<BudgetChange> changes) {
+    // TODO: implement executeBudgetChanges
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> executeMainBudgetChanges(List<MainBudgetChange> changes) {
+    // TODO: implement executeMainBudgetChanges
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Budget>> getBudgetsForDate(DateTime date) async {
+    final filtered = <Budget>[];
+    _budgets.forEach((key, value) {
+      for (final b in value) {
+        if (b.containsDate(date)) {
+          filtered.add(b);
+        }
+      }
+    });
+    return filtered;
+  }
+
+  @override
+  Future<MainBudget?> getMainBudgetForDate(DateTime date) async {
+    for (final b in _mainBudgets) {
+      if (b.containsDate(date)) {
+        return b;
+      }
+    }
+    return null;
   }
 }

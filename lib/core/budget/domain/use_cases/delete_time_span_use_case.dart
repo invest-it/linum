@@ -3,30 +3,31 @@ import 'package:linum/core/budget/domain/models/time_span.dart';
 import 'package:linum/core/budget/enums/budget_change_mode.dart';
 
 class DeleteTimeSpanUseCase<T extends TimeSpan<T>> {
-  final void Function(T value) _deleteSpan;
-  final void Function(T value) _createSpan;
+  final Future<void> Function(T value) _deleteSpan;
+  final Future<void> Function(T value) _createSpan;
 
   DeleteTimeSpanUseCase({
-    required void Function(T) createSpan,
-    required void Function(T) deleteSpan,
+    required Future<void> Function(T) createSpan,
+    required Future<void> Function(T) deleteSpan,
   }) : _createSpan = createSpan, _deleteSpan = deleteSpan;
 
-  void execute(T item, DateTime selectedDate, BudgetChangeMode changeMode) {
+  Future<void> execute(T item, DateTime selectedDate, BudgetChangeMode changeMode) async {
     switch (changeMode) {
       case BudgetChangeMode.all:
-        deleteAll(item);
+        await deleteAll(item);
       case BudgetChangeMode.onlyOne:
-        deleteOnlyOne(item, selectedDate);
+        await deleteOnlyOne(item, selectedDate);
       case BudgetChangeMode.thisAndAllAfter:
-        deleteThisAndAllAfter(item, selectedDate);
+        await deleteThisAndAllAfter(item, selectedDate);
       case BudgetChangeMode.thisAndAllBefore:
-        deleteThisAndAllBefore(item, selectedDate);
+        await deleteThisAndAllBefore(item, selectedDate);
     }
   }
 
-  void deleteThisAndAllAfter(T item, DateTime selectedDate) {
+  // TODO: Decide on how to handle await
+  Future<void> deleteThisAndAllAfter(T item, DateTime selectedDate) async {
     // All before deletion date
-    _createSpan(
+    await _createSpan(
       item.copySpanWith(
         id: TimeSpan.newId(),
         end:  Jiffy.parseFromDateTime(selectedDate).subtract(months: 1).dateTime,
@@ -34,14 +35,14 @@ class DeleteTimeSpanUseCase<T extends TimeSpan<T>> {
     );
 
     // This and all after
-    _deleteSpan(
+    await _deleteSpan(
       item,
     );
   }
 
-  void deleteThisAndAllBefore(T item, DateTime selectedDate) {
+  Future<void> deleteThisAndAllBefore(T item, DateTime selectedDate) async {
     // All after deletion date
-    _createSpan(
+    await _createSpan(
       item.copySpanWith(
         id: TimeSpan.newId(),
         start: Jiffy.parseFromDateTime(selectedDate).add(months: 1).dateTime,
@@ -49,21 +50,21 @@ class DeleteTimeSpanUseCase<T extends TimeSpan<T>> {
     );
 
     //This and all before
-    _deleteSpan(
+    await _deleteSpan(
       item,
     );
   }
 
-  void deleteAll(T item) {
+  Future<void> deleteAll(T item) async {
     //All
-    _deleteSpan(
+    await _deleteSpan(
       item,
     );
   }
 
-  void deleteOnlyOne(T item, DateTime selectedDate) {
+  Future<void> deleteOnlyOne(T item, DateTime selectedDate) async {
     // Before deletion start date
-    _createSpan(
+    await _createSpan(
       item.copySpanWith(
         id: TimeSpan.newId(),
         end: Jiffy.parseFromDateTime(selectedDate).subtract(months: 1).dateTime,
@@ -71,12 +72,12 @@ class DeleteTimeSpanUseCase<T extends TimeSpan<T>> {
     );
 
     // Selected Date
-    _deleteSpan(
+    await _deleteSpan(
       item,
     );
 
     // After deletion end date
-    _createSpan(
+    await _createSpan(
       item.copySpanWith(
         id: TimeSpan.newId(),
         start: Jiffy.parseFromDateTime(selectedDate).add(months: 1).dateTime,

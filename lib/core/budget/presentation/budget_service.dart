@@ -8,5 +8,8 @@ abstract class IBudgetService {
   Future<void> updateBudget(Budget old, Budget update, DateTime selectedDate, BudgetChangeMode changeMode);
   Future<void> deleteBudget(Budget budget, DateTime selectedDate, BudgetChangeMode changeMode);
 
-  Future<MainBudget> getMainBudgetForDate(DateTime date);
+  Future<MainBudget?> getMainBudgetForDate(DateTime date);
+  Future<MainBudget> createMainBudget(MainBudget budget);
+  Future<void> updateMainBudget(MainBudget old, MainBudget update, DateTime selectedDate, BudgetChangeMode changeMode);
+  Future<void> deleteMainBudget(MainBudget budget, DateTime selectedDate, BudgetChangeMode changeMode);
 }

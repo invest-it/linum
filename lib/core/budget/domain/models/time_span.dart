@@ -24,3 +24,28 @@ int timeSpanComparer<T>(TimeSpan<T> a, TimeSpan<T> b) {
 
   return a.getEnd()!.compareTo(b.getEnd()!);
 }
+
+extension TimeSpanUtils<T> on TimeSpan<T> {
+  bool containsDate(DateTime date) {
+    final start = getStart();
+    final end = getEnd();
+
+    final dateSanitized = DateTime(date.year, date.month);
+    final startSanitized = DateTime(start.year, start.month);
+
+    if (dateSanitized.isBefore(startSanitized)) {
+      return false;
+    }
+
+    if (end == null) {
+      return true;
+    }
+
+    final endSanitized = DateTime(end.year, end.month);
+    if (dateSanitized.isAfter(endSanitized)) {
+      return false;
+    }
+
+    return true;
+  }
+}

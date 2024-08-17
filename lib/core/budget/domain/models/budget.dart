@@ -90,6 +90,7 @@ class Budget implements TimeSpan<Budget>, IMappable<Budget> {
   String toString() {
     return 'Budget(seriesId: $seriesId, id: $id, name: $name, cap: $cap, categories: $categories, start: $start, end: $end)';
   }
+
 }
 
 class BudgetFactory implements IMappableFactory<Budget> {

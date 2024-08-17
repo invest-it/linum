@@ -4,7 +4,7 @@ import 'package:linum/core/budget/domain/use_cases/delete_time_span_use_case.dar
 import 'package:linum/core/budget/enums/budget_change_mode.dart';
 
 abstract class DeleteBudgetUseCase {
-  void execute(Budget budget, DateTime selectedDate, BudgetChangeMode changeMode);
+  Future<void> execute(Budget budget, DateTime selectedDate, BudgetChangeMode changeMode);
 }
 
 class DeleteBudgetUseCaseImpl implements DeleteBudgetUseCase {
@@ -18,7 +18,7 @@ class DeleteBudgetUseCaseImpl implements DeleteBudgetUseCase {
   );
 
   @override
-  void execute(Budget budget, DateTime selectedDate, BudgetChangeMode changeMode) {
-      deleteTimeSpanUseCase.execute(budget, selectedDate, changeMode);
+  Future<void> execute(Budget budget, DateTime selectedDate, BudgetChangeMode changeMode) async {
+      await deleteTimeSpanUseCase.execute(budget, selectedDate, changeMode);
   }
 }
