@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:linum/core/budget/domain/models/budget.dart';
 import 'package:linum/core/budget/domain/models/main_budget.dart';
 import 'package:linum/core/budget/domain/models/time_span.dart';
@@ -11,7 +10,7 @@ class BudgetRepositoryDummy implements IBudgetRepository {
   final List<MainBudget> mainBudgets = [];
 
   @override
-  Budget createBudget(Budget budget) {
+  Future<Budget> createBudget(Budget budget) async {
     budgets.putIfAbsent(budget.seriesId, () => []);
     final list = budgets[budget.seriesId]!;
 
@@ -30,7 +29,7 @@ class BudgetRepositoryDummy implements IBudgetRepository {
   }
 
   @override
-  MainBudget createMainBudget(MainBudget budget) {
+  Future<MainBudget> createMainBudget(MainBudget budget) async {
     if (mainBudgets.isNotEmpty && mainBudgets.last.end == null && budget.end == null) {
       throw Exception("There can only be one open ended main budget");
     }
@@ -41,7 +40,7 @@ class BudgetRepositoryDummy implements IBudgetRepository {
   }
 
   @override
-  void removeBudget(Budget budget) {
+  Future<void> removeBudget(Budget budget) async {
     final list = budgets[budget.seriesId];
     if (list == null) {
       return;
@@ -54,12 +53,12 @@ class BudgetRepositoryDummy implements IBudgetRepository {
   }
 
   @override
-  void removeMainBudget(MainBudget budget) {
+  Future<void> removeMainBudget(MainBudget budget) async {
     mainBudgets.removeWhere((b) => b.id == budget.id);
   }
 
   @override
-  void updateBudget(Budget budget) {
+  Future<void> updateBudget(Budget budget) async {
     final index = budgets[budget.seriesId]?.indexWhere((b) => b.id == budget.id);
     if (index == null || index == -1) {
       throw Exception("budget not in list");
@@ -68,7 +67,7 @@ class BudgetRepositoryDummy implements IBudgetRepository {
   }
 
   @override
-  void updateMainBudget(MainBudget budget) {
+  Future<void> updateMainBudget(MainBudget budget) async {
     final index = mainBudgets.indexWhere((b) => b.id == budget.id);
     if (index == -1) {
       throw Exception("main budget not in list");
