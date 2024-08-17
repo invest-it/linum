@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:linum/core/budget/domain/models/budget_cap.dart';
@@ -23,10 +25,9 @@ void main() {
           cap: BudgetCap(value: 500, type: CapType.amount),
         );
 
-        final selectedDate = Jiffy.parseFromDateTime(budget.start).add(months: 4).dateTime;
+        final selectedDate = Jiffy.parseFromDateTime(budget.start).add(months: Random().nextInt(100)).dateTime;
         updateUseCase.execute(budget, update, selectedDate, BudgetChangeMode.onlyOne);
 
-        expect(repository.budgets[budget.seriesId] == null, false);
         expect(repository.budgets[budget.seriesId]?.length, 3);
 
         final list = repository.budgets[budget.seriesId]!;
@@ -54,7 +55,6 @@ void main() {
         final selectedDate = Jiffy.parseFromDateTime(budget.start).add(months: 4).dateTime;
         updateUseCase.execute(budget, update, selectedDate, BudgetChangeMode.all);
 
-        expect(repository.budgets[budget.seriesId] == null, false);
         expect(repository.budgets[budget.seriesId]?.length, 1);
 
         final list = repository.budgets[budget.seriesId]!;
@@ -83,7 +83,6 @@ void main() {
         final selectedDate = Jiffy.parseFromDateTime(budget.start).add(months: 4).dateTime;
         updateUseCase.execute(budget, update, selectedDate, BudgetChangeMode.thisAndAllAfter);
 
-        expect(repository.budgets[budget.seriesId] == null, false);
         expect(repository.budgets[budget.seriesId]?.length, 2);
 
         final list = repository.budgets[budget.seriesId]!;
@@ -112,7 +111,6 @@ void main() {
         final selectedDate = Jiffy.parseFromDateTime(budget.start).add(months: 4).dateTime;
         updateUseCase.execute(budget, update, selectedDate, BudgetChangeMode.thisAndAllBefore);
 
-        expect(repository.budgets[budget.seriesId] == null, false);
         expect(repository.budgets[budget.seriesId]?.length, 2);
 
         final list = repository.budgets[budget.seriesId]!;
