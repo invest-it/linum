@@ -6,21 +6,21 @@ import 'package:linum/core/budget/enums/budget_change_mode.dart';
 
 
 abstract class UpdateBudgetUseCase {
-  void execute(Budget old, Budget update, DateTime selectedDate, BudgetChangeMode changeMode);
+  Future<void> execute(Budget old, Budget update, DateTime? selectedDate, BudgetChangeMode changeMode);
 }
 
 class UpdateBudgetUseCaseImpl implements UpdateBudgetUseCase {
-  final UpdateTimeSpanUseCase<Budget> updateTimeSpanUseCase;
+  final UpdateTimeSpanUseCase<Budget> _updateTimeSpanUseCase;
+  final IBudgetRepository _repository;
 
   UpdateBudgetUseCaseImpl({
     required IBudgetRepository repository,
-  }): updateTimeSpanUseCase = UpdateTimeSpanUseCase(
-      createSpan: repository.createBudget, updateSpan: repository.updateBudget,
-  );
+  }): _updateTimeSpanUseCase = UpdateTimeSpanUseCase(), _repository = repository;
+
 
   @override
-  void execute(Budget old, Budget update, DateTime selectedDate, BudgetChangeMode changeMode) {
-    updateTimeSpanUseCase.execute(old, update, selectedDate, changeMode);
+  Future<void> execute(Budget old, Budget update, DateTime? selectedDate, BudgetChangeMode changeMode) async {
+    final changes = await _updateTimeSpanUseCase.execute(old, update, selectedDate, changeMode);
+    return _repository.executeBudgetChanges(changes);
   }
 }
-

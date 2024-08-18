@@ -11,10 +11,10 @@ class MainBudgetChartSlide extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewModel = context.read<BudgetScreenViewModel>();
 
-    return MonthSlide(
+    return const MonthSlide(
       child: MainBudgetChart(
         maxBudget: 1000,
-        currentExpenses: -viewModel.calculations.sumCosts.toDouble(),
+        currentExpenses: 500.0, // -viewModel.calculations.sumCosts.toDouble(),
       ),
     );
   }

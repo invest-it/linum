@@ -1,21 +1,41 @@
 
 import 'package:flutter/material.dart';
-import 'package:linum/common/utils/filters.dart';
-import 'package:linum/common/utils/in_between_timestamps.dart';
-import 'package:linum/common/widgets/loading_spinner.dart';
-import 'package:linum/core/balance/services/algorithm_service.dart';
-import 'package:linum/core/balance/utils/balance_data_processors.dart';
-import 'package:linum/core/balance/utils/statistical_calculations.dart';
-import 'package:linum/core/balance/widgets/balance_data_stream_consumer.dart';
-import 'package:linum/core/design/layout/widgets/app_bar_action.dart';
+import 'package:linum/core/budget/domain/repositories/budget_repository_dummy.dart';
+import 'package:linum/core/budget/presentation/budget_service_impl.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
-import 'package:linum/features/currencies/core/presentation/exchange_rate_service.dart';
 import 'package:linum/screens/budget_screen/budget_screen_viewmodel.dart';
-import 'package:linum/screens/budget_screen/plan_tab.dart';
-import 'package:linum/screens/budget_screen/remaining_tab.dart';
 import 'package:provider/provider.dart';
 
-enum BudgetSubScreens { plan, remaining }
+
+
+class BudgetScreen extends StatelessWidget {
+  const BudgetScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<BudgetScreenViewModel>(
+      create: (context) {
+        return BudgetScreenViewModel(
+          service: BudgetServiceImpl(
+            repository: BudgetRepositoryDummy(),
+          ),
+        );
+      },
+      builder: (context, child) {
+        return ScreenSkeleton(
+          head: 'Budget',
+          body: Navigator(
+            key: context.read<BudgetScreenViewModel>().navigatorKey,
+          ),
+        );
+      },
+    );
+  }
+
+}
+
+
+/*enum BudgetSubScreens { plan, remaining }
 
 ///  Budget Screen
 ///  Screen listing all Balances ever made without any filtering (future entries not recognized).
@@ -112,4 +132,4 @@ class _BudgetScreenState extends State<BudgetScreen> with TickerProviderStateMix
       ),
     );
   }
-}
+}*/

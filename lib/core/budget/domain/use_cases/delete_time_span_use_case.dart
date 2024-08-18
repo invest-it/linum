@@ -1,86 +1,110 @@
 import 'package:jiffy/jiffy.dart';
+import 'package:linum/core/budget/domain/models/changes.dart';
 import 'package:linum/core/budget/domain/models/time_span.dart';
 import 'package:linum/core/budget/enums/budget_change_mode.dart';
 
 class DeleteTimeSpanUseCase<T extends TimeSpan<T>> {
-  final void Function(T value) _deleteSpan;
-  final void Function(T value) _createSpan;
+  DeleteTimeSpanUseCase();
 
-  DeleteTimeSpanUseCase({
-    required void Function(T) createSpan,
-    required void Function(T) deleteSpan,
-  }) : _createSpan = createSpan, _deleteSpan = deleteSpan;
+  Future<List<ModelChange<T>>> execute(T item, DateTime? selectedDate, BudgetChangeMode changeMode) async {
+    assert(selectedDate != null || changeMode == BudgetChangeMode.all);
 
-  void execute(T item, DateTime selectedDate, BudgetChangeMode changeMode) {
     switch (changeMode) {
       case BudgetChangeMode.all:
-        deleteAll(item);
+        return deleteAll(item);
       case BudgetChangeMode.onlyOne:
-        deleteOnlyOne(item, selectedDate);
+        return deleteOnlyOne(item, selectedDate!);
       case BudgetChangeMode.thisAndAllAfter:
-        deleteThisAndAllAfter(item, selectedDate);
+        return deleteThisAndAllAfter(item, selectedDate!);
       case BudgetChangeMode.thisAndAllBefore:
-        deleteThisAndAllBefore(item, selectedDate);
+        return deleteThisAndAllBefore(item, selectedDate!);
     }
   }
 
-  void deleteThisAndAllAfter(T item, DateTime selectedDate) {
-    // All before deletion date
-    _createSpan(
-      item.copySpanWith(
-        id: TimeSpan.newId(),
-        end:  Jiffy.parseFromDateTime(selectedDate).subtract(months: 1).dateTime,
-      ),
-    );
+  // TODO: Decide on how to handle await
+  Future<List<ModelChange<T>>> deleteThisAndAllAfter(T item, DateTime selectedDate) async {
+    if (!item.containsDate(selectedDate)) {
+      throw Exception("Date is outside of TimeSpans range");
+    }
 
-    // This and all after
-    _deleteSpan(
-      item,
-    );
+    return [
+      // All before deletion date
+      ModelChange(
+        ChangeType.create,
+        item.copySpanWith(
+          id: TimeSpan.newId(),
+          end:  Jiffy.parseFromDateTime(selectedDate).subtract(months: 1).dateTime,
+        ),
+      ),
+
+      // This and all after
+      ModelChange(
+        ChangeType.delete,
+        item,
+      ),
+    ];
   }
 
-  void deleteThisAndAllBefore(T item, DateTime selectedDate) {
-    // All after deletion date
-    _createSpan(
-      item.copySpanWith(
-        id: TimeSpan.newId(),
-        start: Jiffy.parseFromDateTime(selectedDate).add(months: 1).dateTime,
-      ),
-    );
+  Future<List<ModelChange<T>>> deleteThisAndAllBefore(T item, DateTime selectedDate) async {
+    if (!item.containsDate(selectedDate)) {
+      throw Exception("Date is outside of TimeSpans range");
+    }
 
-    //This and all before
-    _deleteSpan(
-      item,
-    );
+    return [
+      // All after deletion date
+      ModelChange(
+        ChangeType.create,
+        item.copySpanWith(
+          id: TimeSpan.newId(),
+          start: Jiffy.parseFromDateTime(selectedDate).add(months: 1).dateTime,
+        ),
+      ),
+
+      // This and all before
+      ModelChange(
+        ChangeType.delete,
+        item,
+      ),
+    ];
   }
 
-  void deleteAll(T item) {
-    //All
-    _deleteSpan(
-      item,
-    );
+  Future<List<ModelChange<T>>> deleteAll(T item) async {
+    return [
+      // All
+      ModelChange(
+        ChangeType.delete,
+        item,
+      ),
+    ];
   }
 
-  void deleteOnlyOne(T item, DateTime selectedDate) {
-    // Before deletion start date
-    _createSpan(
-      item.copySpanWith(
-        id: TimeSpan.newId(),
-        end: Jiffy.parseFromDateTime(selectedDate).subtract(months: 1).dateTime,
-      ),
-    );
+  Future<List<ModelChange<T>>> deleteOnlyOne(T item, DateTime selectedDate) async {
+    if (!item.containsDate(selectedDate)) {
+      throw Exception("Date is outside of TimeSpans range");
+    }
 
-    // Selected Date
-    _deleteSpan(
-      item,
-    );
-
-    // After deletion end date
-    _createSpan(
-      item.copySpanWith(
-        id: TimeSpan.newId(),
-        start: Jiffy.parseFromDateTime(selectedDate).add(months: 1).dateTime,
+    return [
+      // Before deletion start date
+      ModelChange(
+        ChangeType.create,
+        item.copySpanWith(
+          id: TimeSpan.newId(),
+          end: Jiffy.parseFromDateTime(selectedDate).subtract(months: 1).dateTime,
+        ),
       ),
-    );
+      // Selected Date
+      ModelChange(
+        ChangeType.delete,
+        item,
+      ),
+      // After deletion end date
+      ModelChange(
+        ChangeType.create,
+        item.copySpanWith(
+          id: TimeSpan.newId(),
+          start: Jiffy.parseFromDateTime(selectedDate).add(months: 1).dateTime,
+        ),
+      ),
+    ];
   }
 }

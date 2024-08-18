@@ -6,7 +6,6 @@ import 'package:uuid/uuid.dart';
 class Budget implements TimeSpan<Budget>, IMappable<Budget> {
   final String seriesId;
   final String id;
-  // TODO: Discuss if name is needed
   final String name;
   final BudgetCap cap;
   final List<String> categories;
@@ -16,7 +15,7 @@ class Budget implements TimeSpan<Budget>, IMappable<Budget> {
   Budget({
     String? seriesId,
     String? id,
-    String this.name,
+    required this.name,
     required this.cap,
     required this.categories,
     required this.start,
@@ -91,6 +90,7 @@ class Budget implements TimeSpan<Budget>, IMappable<Budget> {
   String toString() {
     return 'Budget(seriesId: $seriesId, id: $id, name: $name, cap: $cap, categories: $categories, start: $start, end: $end)';
   }
+
 }
 
 class BudgetFactory implements IMappableFactory<Budget> {

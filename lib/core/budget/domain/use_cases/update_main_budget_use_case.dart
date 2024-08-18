@@ -4,21 +4,20 @@ import 'package:linum/core/budget/domain/use_cases/update_time_span_use_case.dar
 import 'package:linum/core/budget/enums/budget_change_mode.dart';
 
 abstract class UpdateMainBudgetUseCase {
-  void execute(MainBudget old, MainBudget update, DateTime selectedDate, BudgetChangeMode changeMode);
+  Future<void> execute(MainBudget old, MainBudget update, DateTime selectedDate, BudgetChangeMode changeMode);
 }
 
 class UpdateMainBudgetUseCaseImpl implements UpdateMainBudgetUseCase {
-  final IBudgetRepository repository;
-  final UpdateTimeSpanUseCase<MainBudget> updateTimeSpanUseCase;
+  final IBudgetRepository _repository;
+  final UpdateTimeSpanUseCase<MainBudget> _updateTimeSpanUseCase;
 
   UpdateMainBudgetUseCaseImpl({
-    required this.repository,
-  }): updateTimeSpanUseCase = UpdateTimeSpanUseCase(
-    createSpan: repository.createMainBudget, updateSpan: repository.updateMainBudget,
-  );
+    required IBudgetRepository repository,
+  }): _updateTimeSpanUseCase = UpdateTimeSpanUseCase(), _repository = repository;
 
   @override
-  void execute(MainBudget old, MainBudget update, DateTime selectedDate, BudgetChangeMode changeMode) {
-    updateTimeSpanUseCase.execute(old, update, selectedDate, changeMode);
+  Future<void> execute(MainBudget old, MainBudget update, DateTime selectedDate, BudgetChangeMode changeMode) async {
+    final changes = await _updateTimeSpanUseCase.execute(old, update, selectedDate, changeMode);
+    return _repository.executeMainBudgetChanges(changes);
   }
 }

@@ -1,25 +1,42 @@
+import 'dart:collection';
+
 import 'package:linum/core/budget/domain/models/budget.dart';
+import 'package:linum/core/budget/domain/models/changes.dart';
 import 'package:linum/core/budget/domain/models/main_budget.dart';
+
+
 
 // The repository should never be used directly, only through use cases
 abstract class IBudgetRepository {
   // TODO: Document possible exceptions
-  Budget createBudget(Budget budget);
+  Future<List<Budget>> getBudgetsForDate(DateTime date);
 
   // TODO: Document possible exceptions
-  MainBudget createMainBudget(MainBudget budget);
+  Future<MainBudget?> getMainBudgetForDate(DateTime date);
 
   // TODO: Document possible exceptions
-  void updateBudget(Budget budget);
+  Future<Budget> createBudget(Budget budget);
 
   // TODO: Document possible exceptions
-  void updateMainBudget(MainBudget budget);
+  Future<MainBudget> createMainBudget(MainBudget budget);
 
   // TODO: Document possible exceptions
-  void removeBudget(Budget budget);
+  Future<void> updateBudget(Budget budget);
 
   // TODO: Document possible exceptions
-  void removeMainBudget(MainBudget budget);
+  Future<void> updateMainBudget(MainBudget budget);
 
+  // TODO: Document possible exceptions
+  Future<void> removeBudget(Budget budget);
 
+  // TODO: Document possible exceptions
+  Future<void> removeMainBudget(MainBudget budget);
+
+  // TODO: Document possible exceptions
+  Future<void> executeBudgetChanges(List<ModelChange<Budget>> changes);
+  // TODO: Document possible exceptions
+  Future<void> executeMainBudgetChanges(List<ModelChange<MainBudget>> changes);
+
+  // This is only for testing purposes
+  UnmodifiableListView<Budget> testingGetBudgetForSeriesId(String serialId);
 }
