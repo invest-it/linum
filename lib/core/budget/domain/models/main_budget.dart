@@ -19,8 +19,8 @@ class MainBudget implements TimeSpan<MainBudget>, IMappable<MainBudget> {
     return {
       "id": id,
       "amount": amount,
-      "start": start,
-      "end": end,
+      "start": start.toIso8601String(),
+      "end": end.toIso8601String(),
     };
   }
 
