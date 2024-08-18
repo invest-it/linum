@@ -20,7 +20,7 @@ class MainBudget implements TimeSpan<MainBudget>, IMappable<MainBudget> {
       "id": id,
       "amount": amount,
       "start": start.toIso8601String(),
-      "end": end.toIso8601String(),
+      "end": end?.toIso8601String(),
     };
   }
 
