@@ -5,12 +5,11 @@ import 'package:linum/core/budget/presentation/budget_service_impl.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
 import 'package:linum/screens/budget_screen/budget_routes.dart';
 import 'package:linum/screens/budget_screen/budget_screen_viewmodel.dart';
+import 'package:linum/screens/budget_screen/pages/budget_edit_screen/budget_edit_screen.dart';
+import 'package:linum/screens/budget_screen/pages/budget_splash_screen/budget_splash_screen.dart';
+import 'package:linum/screens/budget_screen/pages/budget_view_screen/budget_view_screen.dart';
+import 'package:linum/screens/budget_screen/pages/budget_wizard_screen/budget_wizard_screen.dart';
 import 'package:provider/provider.dart';
-
-import 'pages/budget_edit_screen/budget_edit_screen.dart';
-import 'pages/budget_splash_screen/budget_splash_screen.dart';
-import 'pages/budget_view_screen/budget_view_screen.dart';
-import 'pages/budget_wizard_screen/budget_wizard_screen.dart';
 
 
 
@@ -47,7 +46,7 @@ class BudgetScreen extends StatelessWidget {
                   builder: (context) {
                     return page;
                   },
-                  settings: settings
+                  settings: settings,
               );
             },
           ),

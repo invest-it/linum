@@ -30,7 +30,7 @@ class BudgetWizardScreen extends StatelessWidget {
                 builder: (context) {
                   return page;
                 },
-                settings: settings
+                settings: settings,
             );
           },
         );
