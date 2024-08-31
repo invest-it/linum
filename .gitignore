@@ -76,6 +76,8 @@ firebase_options.dart
 firebase_options.g.dart
 /android/app/google-services.json
 firebase_app_id_file.json
+GoogleService-Info.plist
+
 
 # Mocks for Testing
 # TODO ignore mocks again
