@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:linum/core/budget/domain/repositories/budget_repository_dummy.dart';
 import 'package:linum/core/budget/presentation/budget_service_impl.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
+import 'package:linum/screens/budget_screen/budget_routes.dart';
 import 'package:linum/screens/budget_screen/budget_screen_viewmodel.dart';
+import 'package:linum/screens/budget_screen/pages/budget_edit_screen/budget_edit_screen.dart';
+import 'package:linum/screens/budget_screen/pages/budget_splash_screen/budget_splash_screen.dart';
+import 'package:linum/screens/budget_screen/pages/budget_view_screen/budget_view_screen.dart';
+import 'package:linum/screens/budget_screen/pages/budget_wizard_screen/budget_wizard_screen.dart';
 import 'package:provider/provider.dart';
 
 
@@ -22,10 +27,28 @@ class BudgetScreen extends StatelessWidget {
         );
       },
       builder: (context, child) {
+        final vm = context.read<BudgetScreenViewModel>();
         return ScreenSkeleton(
           head: 'Budget',
           body: Navigator(
-            key: context.read<BudgetScreenViewModel>().navigatorKey,
+            key: vm.navigatorKey,
+            initialRoute: vm.getInitialRoute(),
+            onGenerateRoute: (settings) {
+              final page = switch(settings.name) {
+                BudgetRoutes.splash => const BudgetSplashScreen(),
+                BudgetRoutes.view => const BudgetViewScreen(),
+                BudgetRoutes.edit => const BudgetEditScreen(),
+                BudgetRoutes.wizard => const BudgetWizardScreen(),
+                _ => throw StateError('Unexpected route name: ${settings.name}!'),
+              };
+
+              return MaterialPageRoute(
+                  builder: (context) {
+                    return page;
+                  },
+                  settings: settings,
+              );
+            },
           ),
         );
       },
