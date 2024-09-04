@@ -14,42 +14,24 @@ class BudgetRepository implements IBudgetRepository {
 
   @override
   Future<Budget> createBudget(Budget budget) async {
-    await adapter.createBudget(budget);
+    await adapter.executeBudgetChanges([ModelChange<Budget>(ChangeType.create, budget)]);
     return Future.value(budget);
   }
 
   @override
   Future<MainBudget> createMainBudget(MainBudget budget) async {
-    await adapter.createMainBudget(budget);
+    await adapter.executeMainBudgetChanges([ModelChange<MainBudget>(ChangeType.create, budget)]);
     return Future.value(budget);
   }
 
   @override
   Future<void> executeBudgetChanges(List<ModelChange<Budget>> changes) async {
-    for(final change in changes){
-      switch(change.type){
-        case ChangeType.create:
-          await adapter.createBudget(change.model);
-        case ChangeType.update:
-          await adapter.updateBudget(change.model);
-        case ChangeType.delete:
-          await adapter.deleteBudget(change.model.id);
-      }
-    }
+    await adapter.executeBudgetChanges(changes);
   }
 
   @override
   Future<void> executeMainBudgetChanges(List<ModelChange<MainBudget>> changes) async {
-    for(final change in changes){
-      switch(change.type){
-        case ChangeType.create:
-          await adapter.createMainBudget(change.model);
-        case ChangeType.update:
-          await adapter.updateMainBudget(change.model);
-        case ChangeType.delete:
-          await adapter.deleteMainBudget(change.model.id);
-      }
-    }
+    await adapter.executeMainBudgetChanges(changes);
   }
 
   @override
@@ -64,12 +46,12 @@ class BudgetRepository implements IBudgetRepository {
 
   @override
   Future<void> removeBudget(Budget budget) async {
-    return adapter.deleteBudget(budget.id);
+    await adapter.executeBudgetChanges([ModelChange<Budget>(ChangeType.delete, budget)]);
   }
 
   @override
   Future<void> removeMainBudget(MainBudget budget) async {
-    return adapter.deleteMainBudget(budget.id);
+    await adapter.executeMainBudgetChanges([ModelChange<MainBudget>(ChangeType.delete, budget)]);
   }
 
   @override
@@ -80,11 +62,11 @@ class BudgetRepository implements IBudgetRepository {
 
   @override
   Future<void> updateBudget(Budget budget) async {
-    return adapter.updateBudget(budget);
+    await adapter.executeBudgetChanges([ModelChange<Budget>(ChangeType.update, budget)]);
   }
 
   @override
   Future<void> updateMainBudget(MainBudget budget) async {
-    return adapter.updateMainBudget(budget);
+    await adapter.executeMainBudgetChanges([ModelChange<MainBudget>(ChangeType.update, budget)]);
   }
 }
