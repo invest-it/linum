@@ -23,24 +23,20 @@ import 'package:linum/screens/home_screen/components/home_screen_card/utils/home
 import 'package:linum/screens/home_screen/components/home_screen_card/widgets/home_screen_card_row.dart';
 import 'package:provider/provider.dart';
 
-
 class HomeScreenCardFront extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
-
     final String langCode = context.locale.languageCode;
     final DateFormat dateFormat = DateFormat('MMMM yyyy', langCode);
     final DateTime now = DateTime.now();
 
-    final AlgorithmService algorithmService =
-      context.watch<AlgorithmService>();
+    final AlgorithmService algorithmService = context.watch<AlgorithmService>();
 
     return GestureDetector(
       onHorizontalDragEnd: (DragEndDetails details) =>
           onHorizontalDragEnd(details, context),
       onTap: () => onFlipCardTap(
-          context.read<ScreenCardViewModel>().controller!,
+        context.read<ScreenCardViewModel>().controller!,
       ),
       onLongPress: () {
         goToCurrentTime(algorithmService);
@@ -50,24 +46,24 @@ class HomeScreenCardFront extends StatelessWidget {
           Align(
             alignment: Alignment.topLeft,
             child: (algorithmService.state.shownMonth !=
-                DateTime(now.year, now.month))
+                    DateTime(now.year, now.month))
                 ? IconButton(
-              constraints: const BoxConstraints(),
-              padding: const EdgeInsets.all(18.0),
-              icon: const Icon(Icons.event_repeat_rounded),
-              onPressed: () {
-                goToCurrentTime(algorithmService);
-              },
-            )
+                    constraints: const BoxConstraints(),
+                    padding: const EdgeInsets.all(18.0),
+                    icon: const Icon(Icons.event_repeat_rounded),
+                    onPressed: () {
+                      goToCurrentTime(algorithmService);
+                    },
+                  )
                 : IconButton(
-              constraints: const BoxConstraints(),
-              padding: const EdgeInsets.all(18.0),
-              icon: const Icon(Icons.error),
-              color: Theme.of(context).colorScheme.onSurface.withAlpha(0),
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onPressed: () {},
-            ),
+                    constraints: const BoxConstraints(),
+                    padding: const EdgeInsets.all(18.0),
+                    icon: const Icon(Icons.error),
+                    color: Theme.of(context).colorScheme.onSurface.withAlpha(0),
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onPressed: () {},
+                  ),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -89,22 +85,24 @@ class HomeScreenCardFront extends StatelessWidget {
                               : Theme.of(context).textTheme.displaySmall,
                         ),
                       ),
-                      /*Expanded(
+                      Expanded(
                         child: Align(
                           alignment: Alignment.topRight,
                           child: IconButton(
                             padding: const EdgeInsets.only(right: 16),
                             constraints: const BoxConstraints(),
                             onPressed: () {
-                              context.read<ScreenCardViewModel>()
-                                  .controller!.toggleCard();
+                              context
+                                  .read<ScreenCardViewModel>()
+                                  .controller!
+                                  .toggleCard();
                             },
                             icon: const Icon(
                               Icons.flip_camera_android_rounded,
                             ),
                           ),
                         ),
-                      ),*/
+                      ),
                       const Spacer(),
                     ],
                   ),
@@ -126,9 +124,10 @@ class HomeScreenCardFront extends StatelessWidget {
                     icon: const Icon(Icons.arrow_back_ios_new_rounded),
                   ),
                   Expanded(
-                    child: BalanceDataStreamConsumer3<
-                        IExchangeRateService, AlgorithmService, HomeScreenCardData>(
-                      transformer: (snapshot, exchangeRateService, algorithmService) async {
+                    child: BalanceDataStreamConsumer3<IExchangeRateService,
+                        AlgorithmService, HomeScreenCardData>(
+                      transformer: (snapshot, exchangeRateService,
+                          algorithmService) async {
                         final statData = await generateStatistics(
                           snapshot: snapshot,
                           algorithms: algorithmService.state,
@@ -146,7 +145,8 @@ class HomeScreenCardFront extends StatelessWidget {
                         return FittedBox(
                           fit: BoxFit.scaleDown,
                           child: Selector<ICurrencySettingsService, Currency>(
-                            selector: (_, currencySettings) => currencySettings.getStandardCurrency(),
+                            selector: (_, currencySettings) =>
+                                currencySettings.getStandardCurrency(),
                             builder: (context, standardCurrency, _) {
                               return StyledAmount(
                                 value: snapshot.data?.mtdBalance ?? 0.00,
