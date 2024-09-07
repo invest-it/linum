@@ -11,6 +11,12 @@ class BudgetRepositoryDummy implements IBudgetRepository {
   final Map<String, List<Budget>> _budgets = {};
   final List<MainBudget> _mainBudgets = [];
 
+  BudgetRepositoryDummy({List<Budget>? initialBudgets}) {
+    initialBudgets?.forEach((budget) {
+      createBudget(budget);
+    });
+  }
+
   @override
   Future<Budget> createBudget(Budget budget) async {
     _budgets.putIfAbsent(budget.seriesId, () => []);

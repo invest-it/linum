@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:linum/core/budget/domain/budget_dummy_data.dart';
 import 'package:linum/core/budget/domain/repositories/budget_repository_dummy.dart';
 import 'package:linum/core/budget/presentation/budget_service_impl.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
@@ -22,7 +23,9 @@ class BudgetScreen extends StatelessWidget {
       create: (context) {
         return BudgetScreenViewModel(
           service: BudgetServiceImpl(
-            repository: BudgetRepositoryDummy(),
+            repository: BudgetRepositoryDummy(
+              initialBudgets: budgetDummyData,
+            ),
           ),
         );
       },

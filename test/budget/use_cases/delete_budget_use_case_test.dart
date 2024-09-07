@@ -26,7 +26,7 @@ void main() {
         if (!budget.containsDate(selectedDate)) {
           expect(() async {
             await deleteUseCase.execute(
-                budget, selectedDate, BudgetChangeMode.onlyOne);
+                budget, selectedDate, BudgetChangeMode.onlyOne,);
           }, throwsException,);
           return;
         }
@@ -121,4 +121,3 @@ void main() {
     });
   });
 }
-

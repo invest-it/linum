@@ -9,7 +9,7 @@ class MainBudgetChartSlide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.read<BudgetScreenViewModel>();
+    context.read<BudgetScreenViewModel>();
 
     return const MonthSlide(
       child: MainBudgetChart(
