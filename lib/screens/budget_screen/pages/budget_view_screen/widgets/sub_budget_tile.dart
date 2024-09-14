@@ -10,11 +10,12 @@ class BudgetViewData {
   final double cap;
   final List<String> categories;
 
-  BudgetViewData(
-      {required this.name,
-      required this.expenses,
-      required this.cap,
-      required this.categories});
+  BudgetViewData({
+    required this.name,
+    required this.expenses,
+    required this.cap,
+    required this.categories,
+  });
 }
 
 class SubBudgetTile extends StatefulWidget {
@@ -27,6 +28,32 @@ class SubBudgetTile extends StatefulWidget {
 
 class _SubBudgetTileState extends State<SubBudgetTile> {
   var isOpen = false;
+  double turns = 0.0;
+  List<String> categories = [];
+
+  final animationDuration = 150;
+  late final stepDuration = animationDuration ~/ widget.budgetData.categories.length;
+
+  Future<void> _showCategories() async {
+    for (final cat in widget.budgetData.categories) {
+      setState(() {
+        categories.add(cat);
+        // categories = [...categories, cat];
+      });
+      await Future.delayed(Duration(milliseconds: stepDuration), (){});
+    }
+  }
+
+  Future<void> _removeCategories() async {
+    for (final _ in widget.budgetData.categories) {
+      setState(() {
+        categories.removeLast();
+      });
+      await Future.delayed(Duration(milliseconds: stepDuration), (){});
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -37,6 +64,9 @@ class _SubBudgetTileState extends State<SubBudgetTile> {
           .getStandardCurrency()
           .symbol,
     );
+
+
+
 
     return Card.outlined(
       child: Padding(
@@ -53,13 +83,29 @@ class _SubBudgetTileState extends State<SubBudgetTile> {
                     color: theme.colorScheme.secondary,
                   ),
                 ),
-                IconButton(
+                AnimatedRotation(
+                  turns: turns,
+                  duration: const Duration(milliseconds: 150),
+                  child: IconButton(
                     onPressed: () {
+                      if (isOpen) {
+                        _removeCategories();
+                      } else {
+                        _showCategories();
+                      }
+
                       setState(() {
                         isOpen = !isOpen;
+                        if (turns == 0.5) {
+                          turns = .0;
+                        } else {
+                          turns = .5;
+                        }
                       });
                     },
-                    icon: const Icon(Icons.expand_more)),
+                    icon: const Icon(Icons.expand_more),
+                  ),
+                ),
               ],
             ),
             Padding(
@@ -81,7 +127,19 @@ class _SubBudgetTileState extends State<SubBudgetTile> {
                     style: theme.textTheme.labelMedium),
               ],
             ),
-            if (isOpen) const Text("Hola mucho gusto"),
+            if (isOpen) const Divider(),
+            AnimatedSize(
+              alignment: Alignment.topLeft,
+              duration: const Duration(milliseconds: 150),
+              child: isOpen ? Column(
+                children: categories.map((item) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Text(item),
+                  );
+                }).toList(),
+              ) : Container(),
+            ),
           ],
         ),
       ),
@@ -89,9 +147,8 @@ class _SubBudgetTileState extends State<SubBudgetTile> {
   }
 }
 
-
 /*
-
-
+Convert Widgets to Stack
+Cut upper Stack Border, but leave the
 
  */
