@@ -11,7 +11,12 @@ import 'package:linum/core/balance/utils/serial_transaction_manager.dart';
 import 'package:linum/core/balance/utils/transaction_manager.dart';
 import 'package:logger/logger.dart';
 
-class BalanceDataService extends IProvidableService {
+abstract class IBalanceDataService {
+  Future<List<SerialTransaction>> getSerialTransactionsForMonth(DateTime month);
+  Future<List<Transaction>> getTransactionsForMonth(DateTime month);
+}
+
+class BalanceDataService extends IProvidableService  {
   final String userId;
 
   BalanceDataService(this.userId) {

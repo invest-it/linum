@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:linum/core/balance/models/transaction.dart';
 import 'package:linum/features/currencies/core/constants/standard_currencies.dart';
-import 'package:linum/features/currencies/core/data/exchange_rate_converter.dart';
 import 'package:linum/features/currencies/core/data/models/currency.dart';
 import 'package:linum/features/currencies/core/utils/currency_formatter.dart';
 
@@ -25,7 +24,7 @@ class TransactionAmountFormatter {
 
     if (rateInfo != null) {
       final formatted = CurrencyFormatter(locale, symbol: standardCurrency.symbol)
-          .format(convertCurrencyAmountWithExchangeRate(transaction.amount, rateInfo));
+          .format(transaction.amountInStandardCurrency);
       if (transaction.rateInfo!.isOtherDate) {
         return "($formatted)";
       }

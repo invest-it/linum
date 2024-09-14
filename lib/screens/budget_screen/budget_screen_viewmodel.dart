@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:linum/core/balance/utils/statistical_calculations.dart';
 import 'package:linum/core/budget/domain/models/budget.dart';
 import 'package:linum/core/budget/domain/models/budget_cap.dart';
 import 'package:linum/core/budget/presentation/budget_service.dart';
@@ -9,8 +10,12 @@ class BudgetScreenViewModel extends ChangeNotifier {
   // final StatisticalCalculations calculations;
   final IBudgetService _service;
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  final StatisticalCalculations _stats;
 
-  BudgetScreenViewModel({required IBudgetService service}) : _service = service;
+  BudgetScreenViewModel({
+    required IBudgetService service,
+    required StatisticalCalculations stats,
+  }) : _service = service, _stats = stats;
 
 
   Future<T?> goTo<T>(String route, {bool replace = false}) async {
@@ -38,13 +43,14 @@ class BudgetScreenViewModel extends ChangeNotifier {
   }
 
   List<BudgetViewData> _mapBudgetToViewData(List<Budget> budgets) {
-    const income = 700.00; // TODO: Must be calculated
+    final income = _stats.sumSerialIncomes; // TODO: Must be calculated
+    print(income);
 
     return budgets.map((budget) {
       return BudgetViewData(
         name: budget.name,
         expenses: 300, // TODO: Must be calculated
-        cap: _calculateBudgetCap(budget.cap, income),
+        cap: _calculateBudgetCap(budget.cap, income.toDouble()),
         categories: budget.categories,
       );
     }).toList();

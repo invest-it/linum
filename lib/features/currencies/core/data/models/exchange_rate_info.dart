@@ -8,5 +8,8 @@ class ExchangeRateInfo {
   bool isOtherDate;
   ExchangeRateInfo(this.rate, this.standardCurrencyRate, this.date, {this.isCustom = false, this.isOtherDate = false});
 
-
+  num convertAmount(num amount) {
+    final amountInEuro = amount / rate;
+    return amountInEuro * standardCurrencyRate;
+  }
 }

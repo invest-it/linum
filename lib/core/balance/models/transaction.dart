@@ -33,6 +33,14 @@ class Transaction {
     this.rateInfo,
   })  : id = id ?? const Uuid().v4();
 
+  bool isIncome() {
+    return amount > 0;
+  }
+
+  num get amountInStandardCurrency {
+    return rateInfo?.convertAmount(amount) ?? amount;
+  }
+
   Transaction copyWith({
     num? amount,
     String? category,

@@ -40,6 +40,10 @@ class SerialTransaction {
     this.repeatDurationType = RepeatDurationType.seconds,
   })  : id = id ?? const Uuid().v4();
 
+  bool isIncome() {
+    return amount > 0;
+  }
+
   SerialTransaction copyWith({
     num? amount,
     String? category,

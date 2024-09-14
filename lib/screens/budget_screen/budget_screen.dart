@@ -1,9 +1,15 @@
 
 import 'package:flutter/material.dart';
+import 'package:linum/common/widgets/loading_spinner.dart';
+import 'package:linum/core/balance/services/algorithm_service.dart';
+import 'package:linum/core/balance/utils/balance_data_processors.dart';
+import 'package:linum/core/balance/utils/statistical_calculations.dart';
+import 'package:linum/core/balance/widgets/balance_data_stream_consumer.dart';
 import 'package:linum/core/budget/domain/budget_dummy_data.dart';
 import 'package:linum/core/budget/domain/repositories/budget_repository_dummy.dart';
-import 'package:linum/core/budget/presentation/budget_service_impl.dart';
+import 'package:linum/core/budget/domain/service_impl/budget_service_impl.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
+import 'package:linum/features/currencies/core/presentation/exchange_rate_service.dart';
 import 'package:linum/screens/budget_screen/budget_routes.dart';
 import 'package:linum/screens/budget_screen/budget_screen_viewmodel.dart';
 import 'package:linum/screens/budget_screen/pages/budget_edit_screen/budget_edit_screen.dart';
@@ -19,42 +25,56 @@ class BudgetScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<BudgetScreenViewModel>(
-      create: (context) {
-        return BudgetScreenViewModel(
-          service: BudgetServiceImpl(
-            repository: BudgetRepositoryDummy(
-              initialBudgets: budgetDummyData,
-            ),
-          ),
-        );
-      },
-      builder: (context, child) {
-        final vm = context.read<BudgetScreenViewModel>();
-        return ScreenSkeleton(
-          head: 'Budget',
-          body: Navigator(
-            key: vm.navigatorKey,
-            initialRoute: vm.getInitialRoute(),
-            onGenerateRoute: (settings) {
-              final page = switch(settings.name) {
-                BudgetRoutes.splash => const BudgetSplashScreen(),
-                BudgetRoutes.view => const BudgetViewScreen(),
-                BudgetRoutes.edit => const BudgetEditScreen(),
-                BudgetRoutes.wizard => const BudgetWizardScreen(),
-                _ => throw StateError('Unexpected route name: ${settings.name}!'),
-              };
-
-              return MaterialPageRoute(
-                  builder: (context) {
-                    return page;
-                  },
-                  settings: settings,
+    return ScreenSkeleton(
+      head: 'Budget',
+      body: BalanceDataStreamConsumer3<IExchangeRateService, AlgorithmService, StatisticalCalculations>(
+        transformer: (snapshot, exchangeRateService, algorithmService) async {
+          return await generateStatistics(
+            snapshot: snapshot,
+            algorithms: algorithmService.state,
+            exchangeRateService: exchangeRateService,
+          );
+        },
+        builder: (context, snapshot, _) {
+          if (!snapshot.hasData) {
+            return const LoadingSpinner();
+          }
+          return ChangeNotifierProvider<BudgetScreenViewModel>(
+            create: (context) {
+              return BudgetScreenViewModel(
+                service: BudgetServiceImpl(
+                  repository: BudgetRepositoryDummy(
+                    initialBudgets: budgetDummyData,
+                  ),
+                ),
+                stats: snapshot.requireData,
               );
             },
-          ),
-        );
-      },
+            builder: (context, child) {
+              final vm = context.read<BudgetScreenViewModel>();
+              return Navigator(
+                key: vm.navigatorKey,
+                initialRoute: vm.getInitialRoute(),
+                onGenerateRoute: (settings) {
+                  final page = switch(settings.name) {
+                    BudgetRoutes.splash => const BudgetSplashScreen(),
+                    BudgetRoutes.view => const BudgetViewScreen(),
+                    BudgetRoutes.edit => const BudgetEditScreen(),
+                    BudgetRoutes.wizard => const BudgetWizardScreen(),
+                    _ => throw StateError('Unexpected route name: ${settings.name}!'),
+                  };
+                  return MaterialPageRoute(
+                    builder: (context) {
+                      return page;
+                    },
+                    settings: settings,
+                  );
+                },
+              );
+            },
+          );
+        },
+      ),
     );
   }
 

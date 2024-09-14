@@ -9,4 +9,4 @@ abstract mixin class NotifyReady  {
 }
 
 
-abstract class IProvidableService extends IService with ChangeNotifier {}
+abstract class IProvidableService with ChangeNotifier implements IService {}

@@ -13,7 +13,6 @@ class BudgetViewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewModel = context.read<BudgetScreenViewModel>();
 
-
     return FutureBuilder(
       future: viewModel.getBudgetViewData(DateTime.now()),
       builder: (context, snapshot) {
