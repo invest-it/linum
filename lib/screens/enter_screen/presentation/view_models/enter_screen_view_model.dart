@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:linum/common/enums/entry_type.dart';
-import 'package:linum/core/balance/enums/serial_transaction_change_type_enum.dart';
-import 'package:linum/core/balance/models/serial_transaction.dart';
-import 'package:linum/core/balance/models/transaction.dart';
+import 'package:linum/core/balance/domain/enums/serial_transaction_change_type_enum.dart';
+import 'package:linum/core/balance/domain/models/serial_transaction.dart';
+import 'package:linum/core/balance/domain/models/transaction.dart';
 import 'package:linum/screens/enter_screen/presentation/actions/enter_screen_actions.dart';
 import 'package:linum/screens/enter_screen/presentation/enums/edit_intention.dart';
 import 'package:linum/screens/enter_screen/presentation/enums/enter_screen_view_state.dart';

@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/core/balance/models/serial_transaction.dart';
+import 'package:linum/core/balance/domain/models/serial_transaction.dart';
 import 'package:linum/core/categories/core/constants/standard_categories.dart';
 import 'package:linum/core/categories/core/utils/translate_category.dart';
 import 'package:linum/core/repeating/enums/repeat_duration_type_enum.dart';
@@ -52,7 +52,7 @@ class SerialTransactionTile extends StatelessWidget {
           style: Theme.of(context).textTheme.bodyLarge,
         ),
         subtitle: Text(
-          "${calculateTimeFrequency(context, serialTransaction)} \nSeit ${serialFormatter.format(serialTransaction.startDate.toDate())}"
+          "${calculateTimeFrequency(context, serialTransaction)} \nSeit ${serialFormatter.format(serialTransaction.startDate)}"
               .toUpperCase(),
           style: Theme.of(context).textTheme.labelSmall,
         ),

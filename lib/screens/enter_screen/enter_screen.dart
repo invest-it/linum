@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:linum/common/components/dialogs/show_transaction_delete_dialog.dart';
 import 'package:linum/common/widgets/loading_spinner.dart';
-import 'package:linum/core/balance/enums/serial_transaction_change_type_enum.dart';
-import 'package:linum/core/balance/models/serial_transaction.dart';
-import 'package:linum/core/balance/models/transaction.dart';
-import 'package:linum/core/balance/services/balance_data_service.dart';
+import 'package:linum/core/balance/domain/enums/serial_transaction_change_type_enum.dart';
+import 'package:linum/core/balance/domain/models/serial_transaction.dart';
+import 'package:linum/core/balance/domain/models/transaction.dart';
+import 'package:linum/core/balance/presentation/balance_data_service.dart';
 import 'package:linum/screens/enter_screen/presentation/actions/enter_screen_actions.dart';
 import 'package:linum/screens/enter_screen/presentation/view_models/enter_screen_view_model.dart';
 import 'package:linum/screens/enter_screen/presentation/widgets/enter_screen_flow.dart';
@@ -22,18 +22,18 @@ class EnterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future<SerialTransaction?> fetchParentSerialTransaction(
-      BalanceDataService balanceDataService,
+      IBalanceDataService balanceDataService,
     ) async {
       if (transaction?.repeatId != null) {
         return balanceDataService
-            .findSerialTransactionWithId(transaction!.repeatId!);
+            .getSerialTransactionById(transaction!.repeatId!);
       }
       return null;
     }
 
     return FutureBuilder<SerialTransaction?>(
       future: fetchParentSerialTransaction(
-        context.read<BalanceDataService>(),
+        context.read<IBalanceDataService>(),
       ),
       builder: (context, snapshot) {
         if (!snapshot.hasData &&
@@ -73,7 +73,7 @@ class EnterScreen extends StatelessWidget {
   }
 
   EnterScreenActions _setupEmptyActions(BuildContext context) {
-    final balanceDataService = context.read<BalanceDataService>();
+    final balanceDataService = context.read<IBalanceDataService>();
 
     return EnterScreenActions(
       onSave: ({
@@ -92,7 +92,7 @@ class EnterScreen extends StatelessWidget {
   }
 
   EnterScreenActions _setupTransactionActions(BuildContext context) {
-    final balanceDataService = context.read<BalanceDataService>();
+    final balanceDataService = context.read<IBalanceDataService>();
 
     return EnterScreenActions(
       onSave: ({
@@ -104,7 +104,7 @@ class EnterScreen extends StatelessWidget {
           balanceDataService.updateTransaction(transaction);
         } else if (serialTransaction != null && changeMode != null) {
           balanceDataService.updateSerialTransaction(
-            serialTransaction: serialTransaction,
+            update: serialTransaction,
             changeMode: changeMode,
             oldDate: this.transaction?.formerDate ?? this.transaction?.date,
             newDate: serialTransaction.startDate,
@@ -134,7 +134,7 @@ class EnterScreen extends StatelessWidget {
   }
 
   EnterScreenActions _setupSerialTransactionActions(BuildContext context) {
-    final balanceDataService = context.read<BalanceDataService>();
+    final balanceDataService = context.read<IBalanceDataService>();
 
     return EnterScreenActions(
       onSave: ({
@@ -146,7 +146,7 @@ class EnterScreen extends StatelessWidget {
           balanceDataService.updateTransaction(transaction);
         } else if (serialTransaction != null) {
           balanceDataService.updateSerialTransaction(
-            serialTransaction: serialTransaction,
+            update: serialTransaction,
             changeMode: SerialTransactionChangeMode.all,
             oldDate: this.transaction?.formerDate ?? this.transaction?.date,
             newDate: serialTransaction.startDate,

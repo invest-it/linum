@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:linum/common/interfaces/time_span.dart';
 import 'package:linum/core/budget/domain/models/budget_cap.dart';
-import 'package:linum/core/budget/domain/models/time_span.dart';
 import 'package:linum/core/budget/domain/repositories/budget_repository_dummy.dart';
 import 'package:linum/core/budget/domain/use_cases/update_budget_use_case.dart';
 import 'package:linum/core/budget/enums/budget_change_mode.dart';
@@ -39,8 +39,6 @@ void main() {
 
         final list = repository.testingGetBudgetForSeriesId(budget.seriesId);
         expect(list.length, 3);
-
-        print(list);
 
         expect(list[1].start, selectedDate);
         expect(list.last.end, budget.end);

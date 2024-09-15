@@ -125,7 +125,7 @@ const translationKeys = (
           'alertdialog.update-email.message', // Deine E-Mail-Adresse wurde aktualisiert.
       title: 'alertdialog.update-email.title' // Fertig!
     ),
-    deleteTransaction: (
+    removeTransaction: (
       dialogButtonCancel:
           'alertdialog.delete-transaction.dialog-button-cancel', // Abbrechen
       dialogButtonDelete:

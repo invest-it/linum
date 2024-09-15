@@ -1,15 +1,14 @@
 //  Statistic Calculations - Retrieves sorted and/or filtered data from FirebaseFirestore
 //
 //  Author: SoTBurst
-//  Co-Author: n/a
+//  Co-Author: damattl
 //
 
-import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 import 'package:linum/common/utils/filters.dart';
-import 'package:linum/core/balance/models/algorithm_state.dart';
-import 'package:linum/core/balance/models/serial_transaction.dart';
-import 'package:linum/core/balance/models/single_month_statistic.dart';
-import 'package:linum/core/balance/models/transaction.dart';
+import 'package:linum/core/balance/domain/models/algorithm_state.dart';
+import 'package:linum/core/balance/domain/models/serial_transaction.dart';
+import 'package:linum/core/balance/domain/models/transaction.dart';
+import 'package:linum/core/stats/single_month_statistic.dart';
 import 'package:logger/logger.dart';
 import 'package:tuple/tuple.dart';
 
@@ -27,12 +26,12 @@ class StatisticalCalculations {
       getDataUsingFilter(_algorithms.filter);
 
   List<Transaction> get _currentTillNowData => getDataUsingFilter(
-        Filters.newerThan(Timestamp.now()),
+        Filters.newerThan(DateTime.now()),
         baseData: _currentData,
       );
 
   List<Transaction> get _allTimeData =>
-      getDataUsingFilter(Filters.newerThan(Timestamp.now()));
+      getDataUsingFilter(Filters.newerThan(DateTime.now()));
 
   late AlgorithmState _algorithms;
 
@@ -131,24 +130,22 @@ class StatisticalCalculations {
       );
 
   List<Transaction> get _futureSerialGeneratedData => getDataUsingFilter(
-        Filters.olderThan(Timestamp.now()),
+        Filters.olderThan(DateTime.now()),
         baseData: _currentSerialGeneratedData,
       );
 
   List<Transaction> get _tillBeginningOfMonthData => getDataUsingFilter(
         Filters.newerThan(
-           Timestamp.fromDate(_algorithms.shownMonth),
+          _algorithms.shownMonth,
         ),
         baseData: _allData,
       );
   List<Transaction> get _tillEndOfMonthData => getDataUsingFilter(
         Filters.newerThan(
-           Timestamp.fromDate(
-            DateTime(
-              _algorithms.shownMonth.year,
-              _algorithms.shownMonth.month + 1,
-              -1,
-            ),
+          DateTime(
+            _algorithms.shownMonth.year,
+            _algorithms.shownMonth.month + 1,
+            -1,
           ),
         ),
         baseData: _allData,
@@ -166,8 +163,8 @@ class StatisticalCalculations {
       final List<bool Function(dynamic)> filterList = [
         Filters.inBetween(
           Tuple2(
-             Timestamp.fromDate(startDate),
-             Timestamp.fromDate(endDate),
+             startDate,
+             endDate,
           ),
         ),
       ];

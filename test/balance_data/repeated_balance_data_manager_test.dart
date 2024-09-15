@@ -8,10 +8,10 @@ import 'dart:math' as math;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:linum/core/balance/domain/models/serial_transaction.dart';
+import 'package:linum/core/balance/domain/utils/date_time_calculation_functions.dart';
 import 'package:linum/core/balance/enums/serial_transaction_change_type_enum.dart';
-import 'package:linum/core/balance/models/balance_document.dart';
-import 'package:linum/core/balance/models/serial_transaction.dart';
-import 'package:linum/core/balance/utils/date_time_calculation_functions.dart';
+import 'package:linum/core/balance/ports/firebase/balance_document.dart';
 import 'package:linum/core/balance/utils/serial_transaction_manager.dart';
 import 'package:linum/core/repeating/enums/repeat_duration_type_enum.dart';
 import 'package:linum/core/repeating/utils/repeated_balance_help_functions.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:linum/core/balance/models/transaction.dart';
+import 'package:linum/core/balance/domain/models/transaction.dart';
 import 'package:linum/features/currencies/core/constants/standard_currencies.dart';
 import 'package:linum/features/currencies/core/data/models/currency.dart';
 import 'package:linum/features/currencies/core/utils/currency_formatter.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:linum/core/balance/utils/statistical_calculations.dart';
 import 'package:linum/core/budget/domain/models/budget.dart';
 import 'package:linum/core/budget/domain/models/budget_cap.dart';
 import 'package:linum/core/budget/presentation/budget_service.dart';
+import 'package:linum/core/stats/statistical_calculations.dart';
 import 'package:linum/screens/budget_screen/budget_routes.dart';
 import 'package:linum/screens/budget_screen/pages/budget_view_screen/widgets/sub_budget_tile.dart';
 
@@ -44,7 +44,6 @@ class BudgetScreenViewModel extends ChangeNotifier {
 
   List<BudgetViewData> _mapBudgetToViewData(List<Budget> budgets) {
     final income = _stats.sumSerialIncomes; // TODO: Must be calculated
-    print(income);
 
     return budgets.map((budget) {
       return BudgetViewData(

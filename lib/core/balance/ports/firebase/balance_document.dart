@@ -1,8 +1,8 @@
 
 
 
-import 'package:linum/core/balance/models/serial_transaction.dart';
-import 'package:linum/core/balance/models/transaction.dart';
+import 'package:linum/core/balance/domain/models/serial_transaction.dart';
+import 'package:linum/core/balance/domain/models/transaction.dart';
 
 class BalanceDocument {
   final List<Transaction> transactions;
@@ -21,9 +21,9 @@ class BalanceDocument {
 
   factory BalanceDocument.fromMap(Map<String, dynamic> map) {
     final rawTransactions = map['balanceData'] as List<dynamic>;
-    final transactions = rawTransactions.map((data) => Transaction.fromMap(data as Map<String, dynamic>)).toList();
+    final transactions = rawTransactions.map((data) => Transaction.fromFirestore(data as Map<String, dynamic>)).toList();
     final rawSerialTransactions = map['repeatedBalance'] as List<dynamic>;
-    final serialTransactions = rawSerialTransactions.map((data) => SerialTransaction.fromMap(data as Map<String, dynamic>)).toList();
+    final serialTransactions = rawSerialTransactions.map((data) => SerialTransaction.fromFirestore(data as Map<String, dynamic>)).toList();
     return BalanceDocument(
       transactions: transactions,
       serialTransactions: serialTransactions,
@@ -33,8 +33,8 @@ class BalanceDocument {
 
   Map<String, dynamic> toMap() {
     return {
-      'balanceData': transactions.map((e) => e.toMap()).toList(),
-      'repeatedBalance': serialTransactions.map((e) => e.toMap()).toList(),
+      'balanceData': transactions.map((e) => e.toFirestore()).toList(),
+      'repeatedBalance': serialTransactions.map((e) => e.toFirestore()).toList(),
       'settings': settings,
     };
   }

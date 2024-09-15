@@ -1,4 +1,4 @@
-import 'package:linum/core/balance/models/transaction.dart';
+import 'package:linum/core/balance/domain/models/transaction.dart';
 import 'package:linum/features/currencies/core/data/models/exchange_rates_for_date.dart';
 import 'package:linum/features/currencies/core/domain/exchange_rate_repository.dart';
 import 'package:linum/features/currencies/core/utils/int_list_extensions.dart';
@@ -13,7 +13,7 @@ class ExchangeRateFetcher {
 
     for (final transaction in transactions) {
 
-      var date = transaction.date.toDate();
+      var date = transaction.date;
 
       final today = DateTime.now();
       final todaySanitized = DateTime(today.year, today.month, today.day);
@@ -40,7 +40,7 @@ class ExchangeRateFetcher {
       List<int> sortedKeys,
       ) async {
 
-    final dateTime = transaction.date.toDate();
+    final dateTime = transaction.date;
     final today = DateTime.now();
     final todaySanitized = DateTime(today.year, today.month, today.day);
     var sanitizedDateTime = DateTime(dateTime.year, dateTime.month, dateTime.day);
@@ -59,7 +59,7 @@ class ExchangeRateFetcher {
     var exchangeRates = ratesMap[key];
 
     // Still necessary, due to the possibility of missing rates;
-    if ((exchangeRates == null || exchangeRates.rates == null) && transaction.date.toDate().isBefore(DateTime.now())) {
+    if ((exchangeRates == null || exchangeRates.rates == null) && transaction.date.isBefore(DateTime.now())) {
       exchangeRates = await _repository.getExchangeRatesForDate(sanitizedDateTime);
     }
 

@@ -1,8 +1,9 @@
 import 'dart:collection';
+
+import 'package:linum/common/interfaces/time_span.dart';
 import 'package:linum/core/budget/domain/models/budget.dart';
 import 'package:linum/core/budget/domain/models/changes.dart';
 import 'package:linum/core/budget/domain/models/main_budget.dart';
-import 'package:linum/core/budget/domain/models/time_span.dart';
 import 'package:linum/core/budget/domain/repositories/budget_repository.dart';
 
 

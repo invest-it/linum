@@ -9,11 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:linum/common/components/screen_card/viewmodels/screen_card_viewmodel.dart';
 import 'package:linum/common/components/screen_card/widgets/home_screen_card_avatar.dart';
 import 'package:linum/common/widgets/loading_spinner.dart';
-import 'package:linum/core/balance/services/algorithm_service.dart';
-import 'package:linum/core/balance/utils/balance_data_processors.dart';
-import 'package:linum/core/balance/widgets/balance_data_stream_consumer.dart';
+import 'package:linum/core/balance/presentation/algorithm_service.dart';
+import 'package:linum/core/stats/statistic_service.dart';
 import 'package:linum/features/currencies/core/data/models/currency.dart';
-import 'package:linum/features/currencies/core/presentation/exchange_rate_service.dart';
 import 'package:linum/features/currencies/core/presentation/widgets/styled_amount.dart';
 import 'package:linum/features/currencies/settings/presentation/currency_settings_service.dart';
 import 'package:linum/generated/translation_keys.g.dart';
@@ -126,36 +124,34 @@ class HomeScreenCardFront extends StatelessWidget {
                     icon: const Icon(Icons.arrow_back_ios_new_rounded),
                   ),
                   Expanded(
-                    child: BalanceDataStreamConsumer3<
-                        IExchangeRateService, AlgorithmService, HomeScreenCardData>(
-                      transformer: (snapshot, exchangeRateService, algorithmService) async {
-                        final statData = await generateStatistics(
-                          snapshot: snapshot,
-                          algorithms: algorithmService.state,
-                          exchangeRateService: exchangeRateService,
-                        );
-                        return HomeScreenCardData.fromStatistics(statData);
-                      },
-                      builder: (context, snapshot, _) {
-                        if (snapshot.connectionState == ConnectionState.none ||
-                            snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                          return const LoadingSpinner();
-                        }
+                    child: Consumer<StatisticService>(
+                      builder: (context, statsService, _) {
+                        return FutureBuilder<HomeScreenCardData>(
+                          future: statsService
+                              .generateStatistics()
+                              .then(HomeScreenCardData.fromStatistics),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState == ConnectionState.none ||
+                                snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                              return const LoadingSpinner();
+                            }
 
-                        return FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Selector<ICurrencySettingsService, Currency>(
-                            selector: (_, currencySettings) => currencySettings.getStandardCurrency(),
-                            builder: (context, standardCurrency, _) {
-                              return StyledAmount(
-                                value: snapshot.data?.mtdBalance ?? 0.00,
-                                locale: context.locale,
-                                symbol: standardCurrency.symbol,
-                                fontSize: StyledFontSize.maximize,
-                              );
-                            },
-                          ),
+                            return FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Selector<ICurrencySettingsService, Currency>(
+                                selector: (_, currencySettings) => currencySettings.getStandardCurrency(),
+                                builder: (context, standardCurrency, _) {
+                                  return StyledAmount(
+                                    value: snapshot.data?.mtdBalance ?? 0.00,
+                                    locale: context.locale,
+                                    symbol: standardCurrency.symbol,
+                                    fontSize: StyledFontSize.maximize,
+                                  );
+                                },
+                              ),
+                            );
+                          },
                         );
                       },
                     ),

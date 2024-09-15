@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:linum/core/balance/models/serial_transaction.dart';
+import 'package:linum/core/balance/domain/models/serial_transaction.dart';
 import 'package:linum/screens/home_screen/widgets/serial_transaction_tile.dart';
 import 'package:linum/screens/home_screen/widgets/time_widget.dart';
 

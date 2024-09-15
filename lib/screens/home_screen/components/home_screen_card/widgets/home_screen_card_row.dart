@@ -7,12 +7,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/components/screen_card/widgets/home_screen_card_avatar.dart';
-import 'package:linum/core/balance/services/algorithm_service.dart';
-import 'package:linum/core/balance/utils/balance_data_processors.dart';
-import 'package:linum/core/balance/widgets/balance_data_stream_consumer.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
+import 'package:linum/core/stats/statistic_service.dart';
 import 'package:linum/features/currencies/core/data/models/currency.dart';
-import 'package:linum/features/currencies/core/presentation/exchange_rate_service.dart';
 import 'package:linum/features/currencies/core/utils/currency_formatter.dart';
 import 'package:linum/features/currencies/settings/presentation/currency_settings_service.dart';
 import 'package:linum/screens/home_screen/components/home_screen_card/models/home_screen_card_data.dart';
@@ -58,45 +55,43 @@ class HomeScreenCardRow extends StatelessWidget {
                     .labelSmall!
                     .copyWith(fontSize: 12),
               ),
-              BalanceDataStreamConsumer3<
-                  IExchangeRateService, AlgorithmService, HomeScreenCardData>(
-                transformer: (snapshot, exchangeRateService, algorithmService) async {
-                  final statData = await generateStatistics(
-                    snapshot: snapshot,
-                    algorithms: algorithmService.state,
-                    exchangeRateService: exchangeRateService,
-                  );
-                  return HomeScreenCardData.fromStatistics(statData);
-                },
-                builder: (context, snapshot, _) {
-                  if (snapshot.connectionState == ConnectionState.none ||
-                      snapshot.connectionState == ConnectionState.waiting) {
-                    return Text(
-                      "--",
-                      style: TextStyle(
-                        color: Colors.grey[700],
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
-                    );
-                  }
-                  return Selector<ICurrencySettingsService, Currency>(
-                    selector: (_, settings) => settings.getStandardCurrency() ,
-                    builder: (context, standardCurrency, _) {
-                      return Text(
-                        CurrencyFormatter(
-                          context.locale,
-                          symbol: standardCurrency.symbol,
-                        ).format(
-                          isIncome
-                              ? snapshot.data?.mtdIncome ?? 0
-                              : snapshot.data?.mtdExpenses ?? 0,
-                        ),
-                        style: TextStyle(
-                          color: Colors.grey[700],
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
+              Consumer<StatisticService>(
+                builder: (context, statsService, _) {
+                  return FutureBuilder<HomeScreenCardData>(
+                    future: statsService
+                        .generateStatistics()
+                        .then(HomeScreenCardData.fromStatistics),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.none ||
+                          snapshot.connectionState == ConnectionState.waiting) {
+                        return Text(
+                          "--",
+                          style: TextStyle(
+                            color: Colors.grey[700],
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                        );
+                      }
+                      return Selector<ICurrencySettingsService, Currency>(
+                        selector: (_, settings) => settings.getStandardCurrency() ,
+                        builder: (context, standardCurrency, _) {
+                          return Text(
+                            CurrencyFormatter(
+                              context.locale,
+                              symbol: standardCurrency.symbol,
+                            ).format(
+                              isIncome
+                                  ? snapshot.data?.mtdIncome ?? 0
+                                  : snapshot.data?.mtdExpenses ?? 0,
+                            ),
+                            style: TextStyle(
+                              color: Colors.grey[700],
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          );
+                        },
                       );
                     },
                   );

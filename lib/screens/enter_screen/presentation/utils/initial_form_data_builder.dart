@@ -1,7 +1,7 @@
 import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/common/interfaces/translator.dart';
-import 'package:linum/core/balance/models/serial_transaction.dart';
-import 'package:linum/core/balance/models/transaction.dart';
+import 'package:linum/core/balance/domain/models/serial_transaction.dart';
+import 'package:linum/core/balance/domain/models/transaction.dart';
 import 'package:linum/core/categories/core/constants/standard_categories.dart';
 import 'package:linum/core/repeating/enums/repeat_interval.dart';
 import 'package:linum/core/repeating/models/repeat_configuration.dart';
@@ -48,7 +48,7 @@ class InitialFormDataBuilder {
     name = transaction.name;
     amount = transaction.amount;
     currency = currencies[transaction.currency];
-    date = transaction.date.toDate().toIso8601String();
+    date = transaction.date.toIso8601String();
     categoryKey = transaction.category;
     repeatConfiguration = repeatConfigurations[repeatInterval];
     notes = transaction.note;
@@ -62,7 +62,7 @@ class InitialFormDataBuilder {
     name = serialTransaction.name;
     amount = serialTransaction.amount;
     currency = currencies[serialTransaction.currency];
-    date = serialTransaction.startDate.toDate().toIso8601String();
+    date = serialTransaction.startDate.toIso8601String();
     categoryKey = serialTransaction.category;
     repeatConfiguration = repeatConfigurations[serialTransaction.repeatInterval];
     notes = serialTransaction.note;

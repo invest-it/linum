@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/common/utils/filters.dart';
 import 'package:linum/common/utils/in_between_timestamps.dart';
 import 'package:linum/common/utils/sorters.dart';
-import 'package:linum/core/balance/models/algorithm_state.dart';
+import 'package:linum/core/balance/domain/models/algorithm_state.dart';
 
 /// gives sort algorithm (later it will probably also have filter algorithm) and
 /// all algorithm will have an active version instead of being static

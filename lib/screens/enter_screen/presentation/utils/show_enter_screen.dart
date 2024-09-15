@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:linum/core/balance/models/serial_transaction.dart';
-import 'package:linum/core/balance/models/transaction.dart';
+import 'package:linum/core/balance/domain/models/serial_transaction.dart';
+import 'package:linum/core/balance/domain/models/transaction.dart';
 import 'package:linum/core/navigation/get_delegate.dart';
 import 'package:linum/screens/enter_screen/enter_screen.dart';
 

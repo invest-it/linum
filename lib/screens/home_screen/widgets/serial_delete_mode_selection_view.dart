@@ -1,10 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/components/dialogs/show_transaction_delete_dialog.dart';
-import 'package:linum/core/balance/enums/serial_transaction_change_type_enum.dart';
-import 'package:linum/core/balance/models/serial_transaction.dart';
-import 'package:linum/core/balance/models/transaction.dart';
-import 'package:linum/core/balance/services/balance_data_service.dart';
+import 'package:linum/core/balance/domain/enums/serial_transaction_change_type_enum.dart';
+import 'package:linum/core/balance/domain/models/serial_transaction.dart';
+import 'package:linum/core/balance/domain/models/transaction.dart';
+import 'package:linum/core/balance/presentation/balance_data_service.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/enter_screen/presentation/widgets/buttons/change_mode_button.dart';
 import 'package:provider/provider.dart';
@@ -15,10 +15,10 @@ class SerialDeleteModeSelectionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final balanceDataService = context.read<BalanceDataService>();
+    final balanceDataService = context.read<IBalanceDataService>();
 
     Future<void> callback(SerialTransactionChangeMode changeMode) async {
-      final SerialTransaction? serialTransaction =  await balanceDataService.findSerialTransactionWithId(transaction.repeatId!);
+      final SerialTransaction? serialTransaction =  await balanceDataService.getSerialTransactionById(transaction.repeatId!);
       if(serialTransaction != null){
         if(context.mounted){
           showTransactionDeleteDialog(context, () async {

@@ -9,8 +9,8 @@ import 'dart:math' as math;
 import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/common/utils/filters.dart';
-import 'package:linum/core/balance/models/transaction.dart';
-import 'package:linum/core/balance/services/algorithm_service.dart';
+import 'package:linum/core/balance/domain/models/transaction.dart';
+import 'package:linum/core/balance/presentation/algorithm_service.dart';
 import 'package:linum/core/balance/utils/statistical_calculations.dart';
 import 'package:uuid/uuid.dart';
 

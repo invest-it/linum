@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/utils/date_time_extensions.dart';
-import 'package:linum/core/balance/models/transaction.dart';
-import 'package:linum/core/balance/utils/transaction_amount_formatter.dart';
+import 'package:linum/core/balance/domain/models/transaction.dart';
+import 'package:linum/core/balance/presentation/transaction_amount_formatter.dart';
 import 'package:linum/screens/home_screen/enums/time_widget_date.dart';
 import 'package:linum/screens/home_screen/widgets/time_widget.dart';
 import 'package:linum/screens/home_screen/widgets/transaction_tile.dart';
@@ -80,7 +80,7 @@ List<Widget> generateTransactionList({
     ];
   } else {
     for (final transaction in transactions) {
-      final date = transaction.date.toDate();
+      final date = transaction.date;
 
       if (date.isInFuture() && date.isAfter(TimeWidgetDate.today.toDate()!)) {
         futureList.add(

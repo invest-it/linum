@@ -4,8 +4,7 @@
 //  Co-Author: n/a
 //
 
-import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
-import 'package:linum/core/balance/models/serial_transaction.dart';
+import 'package:linum/core/balance/domain/models/serial_transaction.dart';
 
 bool isMonthly(SerialTransaction serialTransaction) {
   return serialTransaction.repeatDurationType.name.toUpperCase() ==
@@ -24,12 +23,12 @@ void removeUnusedChangedAttributes(
     if (!DateTime.fromMillisecondsSinceEpoch(
           (num.tryParse(timeStampString) as int?) ?? 0,
         ).isBefore(
-          serialTransaction.startDate.toDate(),
+          serialTransaction.startDate,
         ) &&
         !DateTime.fromMillisecondsSinceEpoch(
           (num.tryParse(timeStampString) as int?) ?? 0,
         ).isAfter(
-          serialTransaction.endDate!.toDate(),
+          serialTransaction.endDate!,
         )) {
       keysToRemove.add(timeStampString);
     }
@@ -40,8 +39,8 @@ void removeUnusedChangedAttributes(
 }
 
 
-Timestamp? changeThisAndAllAfterEndTimeHelpFunction(
-    Timestamp? checkedEndTime,
+DateTime? changeThisAndAllAfterEndTimeHelpFunction(
+    DateTime? checkedEndTime,
     SerialTransaction oldSerialTransaction,
     Duration timeDifference,
 ) {
@@ -49,11 +48,7 @@ Timestamp? changeThisAndAllAfterEndTimeHelpFunction(
     return checkedEndTime;
   }
   if (oldSerialTransaction.endDate != null) {
-    return Timestamp.fromDate(
-      oldSerialTransaction.endDate!
-          .toDate()
-          .subtract(timeDifference),
-    );
+    return oldSerialTransaction.endDate!.subtract(timeDifference);
   } else {
     return null;
   }

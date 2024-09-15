@@ -8,7 +8,7 @@
 // ignore_for_file: avoid_dynamic_calls
 
 import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
-import 'package:linum/core/balance/models/transaction.dart';
+import 'package:linum/core/balance/domain/models/transaction.dart';
 
 class Sorters {
   /// returns a new sort algorithm. It sorts using the first

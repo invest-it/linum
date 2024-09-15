@@ -5,7 +5,7 @@
 //
 
 import 'package:flutter/material.dart';
-import 'package:linum/core/balance/services/algorithm_service.dart';
+import 'package:linum/core/balance/presentation/algorithm_service.dart';
 import 'package:provider/provider.dart';
 
 void goBackInTime(AlgorithmService algorithmService) {

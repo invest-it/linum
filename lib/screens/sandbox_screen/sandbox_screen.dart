@@ -4,9 +4,8 @@
 //  Co-Author: n/a
 
 
-import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 import 'package:flutter/material.dart';
-import 'package:linum/core/balance/models/transaction.dart';
+import 'package:linum/core/balance/domain/models/transaction.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
 import 'package:linum/screens/enter_screen/enter_screen.dart';
 
@@ -28,7 +27,7 @@ class SandboxScreen extends StatelessWidget {
                 amount: 30,
                 currency: 'EUR',
                 category: 'none-income',
-                date: Timestamp.fromDate(DateTime.now()),
+                date: DateTime.now(),
               ),
             ),
           ],
