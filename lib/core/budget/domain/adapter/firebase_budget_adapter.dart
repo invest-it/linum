@@ -80,36 +80,35 @@ class FirebaseBudgetAdapter extends IBudgetAdapter {
       final Budget budget = change.model;
       final budgetDocRef = _budgetCollection.doc(budget.id);
       final budgetSnapshot = await budgetDocRef.get();
-
       switch(change.type){
         case ChangeType.create:
           if(budgetSnapshot.exists){
             Logger().w("Budget with id ${budget.id} does already exist");
-            return;
+            continue;
           }
           final Map<String, dynamic> budgetMap = budget.toMap();
           if(budget.end == null){
             budgetMap['end'] = infiniteDate.toIso8601String();
           }
           budgetMap.remove("id");
-          return await budgetDocRef.set(budgetMap);
+          await budgetDocRef.set(budgetMap);
         case ChangeType.update:
           if(!budgetSnapshot.exists){
             Logger().w("Budget with id ${budget.id} does not exist");
-            return;
+            continue;
           }
           final Map<String, dynamic> budgetMap = budget.toMap();
           if(budget.end == null){
             budgetMap['end'] = infiniteDate.toIso8601String();
           }
           budgetMap.remove("id");
-          return await budgetDocRef.set(budgetMap);
+          await budgetDocRef.set(budgetMap);
         case ChangeType.delete:
           if(!budgetSnapshot.exists){
             Logger().w("Budget with id ${budget.id} does not exist");
-            return;
+            continue;
           }
-          return await budgetDocRef.delete();
+          await budgetDocRef.delete();
       }
     }
   }
@@ -124,7 +123,7 @@ class FirebaseBudgetAdapter extends IBudgetAdapter {
         case ChangeType.create:
           if(mainBudgetSnapshot.exists){
             Logger().w("Main budget with id ${mainBudget.id} does already exist");
-            return;
+            continue;
           }
           final Map<String, dynamic> budgetMap = mainBudget.toMap();
           if(mainBudget.end == null){
@@ -132,14 +131,14 @@ class FirebaseBudgetAdapter extends IBudgetAdapter {
           }
           if(await checkOverlappingBudget(_mainBudgetCollection, mainBudget.start, mainBudget.end)) {
             Logger().i("Time span overlaps with an existing budget");
-            return;
+            continue;
           }
           budgetMap.remove("id");
-          return await mainBudgetDocRef.set(budgetMap);
+          await mainBudgetDocRef.set(budgetMap);
         case ChangeType.update:
           if(!mainBudgetSnapshot.exists){
             Logger().w("Main budget with id ${mainBudget.id} does not exist");
-            return;
+            continue;
           }
           final Map<String, dynamic> budgetMap = mainBudget.toMap();
           if(mainBudget.end == null){
@@ -147,16 +146,16 @@ class FirebaseBudgetAdapter extends IBudgetAdapter {
           }
           if(await checkOverlappingBudget(_mainBudgetCollection, mainBudget.start, mainBudget.end, id: mainBudget.id)) {
             Logger().i("Time span overlaps with an existing budget");
-            return;
+            continue;
           }
           budgetMap.remove("id");
-          return await mainBudgetDocRef.set(budgetMap);
+          await mainBudgetDocRef.set(budgetMap);
         case ChangeType.delete:
           if(!mainBudgetSnapshot.exists){
             Logger().w("Main budget with id ${mainBudget.id} does not exist");
-            return;
+            continue;
           }
-          return await mainBudgetDocRef.delete();
+          await mainBudgetDocRef.delete();
       }
     }
   }
