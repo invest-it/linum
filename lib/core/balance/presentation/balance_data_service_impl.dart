@@ -6,11 +6,6 @@ import 'package:linum/core/balance/domain/use_cases/remove_serial_transaction_us
 import 'package:linum/core/balance/domain/use_cases/update_serial_transaction_use_case.dart';
 import 'package:linum/core/balance/presentation/balance_data_service.dart';
 
-class WrongParameterException implements Exception {
-  final String message;
-
-  WrongParameterException(this.message);
-}
 
 class BalanceDataServiceImpl extends IBalanceDataService {
   final IBalanceDataRepository _repo;
@@ -40,12 +35,10 @@ class BalanceDataServiceImpl extends IBalanceDataService {
   Future<void> addSerialTransaction(SerialTransaction serialTransaction) async {
     // conditions
     if (serialTransaction.category == "") {
-      throw WrongParameterException(
-          "repeatBalanceData.category must be != '' ",);
+      throw ArgumentError("repeatBalanceData.category must be != '' ",);
     }
     if (serialTransaction.currency == "") {
-      throw WrongParameterException(
-          "repeatBalanceData.currency must be != '' ",);
+      throw ArgumentError("repeatBalanceData.currency must be != '' ",);
     }
 
     await _repo.createSerialTransaction(serialTransaction);
@@ -108,10 +101,10 @@ class BalanceDataServiceImpl extends IBalanceDataService {
   Future<void> addTransaction(Transaction transaction) async {
     // conditions
     if (transaction.category == "") {
-      throw WrongParameterException("transaction.category must be != '' ");
+      throw ArgumentError("transaction.category must be != '' ");
     }
     if (transaction.currency == "") {
-      throw WrongParameterException("transaction.currency must be != '' ");
+      throw ArgumentError("transaction.currency must be != '' ");
     }
 
     await _repo.createTransaction(transaction);
@@ -135,13 +128,13 @@ class BalanceDataServiceImpl extends IBalanceDataService {
   Future<void> updateTransaction(Transaction update) async {
     // conditions
     if (update.id == "") {
-      throw WrongParameterException("no id provided");
+      throw ArgumentError("no id provided");
     }
     if (update.category == "") {
-      throw WrongParameterException("category must be != '' ");
+      throw ArgumentError("category must be != '' ");
     }
     if (update.currency == "") {
-      throw WrongParameterException("currency must be != '' ");
+      throw ArgumentError("currency must be != '' ");
     }
     await _repo.updateTransaction(update);
   }

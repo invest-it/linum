@@ -17,7 +17,7 @@ class BalanceDataRepositoryImpl implements IBalanceDataRepository {
   final Map<String, SerialTransaction> _serialTransactionStorage = {};
   final List<TransactionProcessor> _transactionProcessors;
 
-  final previewSpan = Jiffy.now().add(years: 1).dateTime; // TODO: Set previewSpan from outside
+  final previewSpan = Jiffy.now().add(months: 1).dateTime; // TODO: Set previewSpan from outside
 
   final IBalanceDataAdapter _adapter;
 
@@ -42,10 +42,12 @@ class BalanceDataRepositoryImpl implements IBalanceDataRepository {
   String _getStorageKey(DateTime date) => Jiffy.parseFromDateTime(date).yMMM;
 
   Future<void> _setTransactionsStorage(List<Transaction> transactions) async {
+
     for (final processor in _transactionProcessors) {
       processor(transactions);
     }
-
+    print("Set Start ${DateTime.now()}");
+    print(transactions.length);
     for (final transaction in transactions) {
       final key = _getStorageKey(transaction.date);
       if (!_transactionStorage.containsKey(key)) {
@@ -53,6 +55,7 @@ class BalanceDataRepositoryImpl implements IBalanceDataRepository {
       }
       _transactionStorage[key]?[transaction.id] = transaction;
     }
+    print("Set End ${DateTime.now()}");
   }
 
   Future<void> _setSerialTransactionsStorage(List<SerialTransaction> serialTransactions) async {
@@ -207,6 +210,7 @@ class BalanceDataRepositoryImpl implements IBalanceDataRepository {
           _removeTransactionFromStorage(change.model);
       }
     }
+    _adapter.executeTransactionChanges(changes);
   }
 
   @override

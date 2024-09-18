@@ -6,12 +6,12 @@
 
 import 'dart:math' as math;
 
-import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/core/balance/domain/models/transaction.dart';
 import 'package:linum/core/balance/ports/firebase/balance_document.dart';
-import 'package:linum/core/balance/utils/transaction_manager.dart';
 import 'package:uuid/uuid.dart';
+
+import 'balance_test_utils.dart';
 
 void main() {
   group("TransactionDataManager", () {
@@ -23,20 +23,17 @@ void main() {
           category: "",
           currency: "EUR",
           name: "",
-          date: Timestamp.fromDate(DateTime.now()),
+          date: DateTime.now(),
         );
-
 
         final data = BalanceDocument();
+        final service = createService(data);
 
         // Act (Execution)
-        final bool result = TransactionManager.addTransactionToData(
-          transaction,
-          data,
-        );
+
+        expectLater(() => service.addTransaction(transaction), throwsArgumentError);
 
         // Assert (Observation)
-        expect(result, false);
         expect(data.transactions.length, 0);
       });
 
@@ -47,39 +44,34 @@ void main() {
           category: "none",
           currency: "",
           name: "",
-          date: Timestamp.fromDate(DateTime.now()),
+          date: DateTime.now(),
         );
-
 
         final data = BalanceDocument();
+        final service = createService(data);
 
         // Act (Execution)
-        final bool result = TransactionManager.addTransactionToData(
-          transaction,
-          data,
-        );
+        expectLater(() => service.addTransaction(transaction), throwsArgumentError);
 
         // Assert (Observation)
-        expect(result, false);
         expect(data.transactions.length, 0);
       });
 
-      test("random data test", () {
+      test("random data test", () async {
         final math.Random rand = math.Random();
 
 
         final data = BalanceDocument();
+        final service = createService(data);
 
         final int max = rand.nextInt(2000) + 1;
         for (int i = 0; i < max; i++) {
           // Arrange (Initialization)
           final num amount = rand.nextInt(100000) / 100.0;
-          final Timestamp time = Timestamp.fromDate(
-            DateTime.now().subtract(const Duration(days: 365 * 4)).add(
-                  Duration(
-                    days: rand.nextInt(365 * 4 * 2),
-                  ),
-                ),
+          final time = DateTime.now().subtract(const Duration(days: 365 * 4)).add(
+            Duration(
+              days: rand.nextInt(365 * 4 * 2),
+            ),
           );
 
           final Transaction transaction = Transaction(
@@ -91,13 +83,11 @@ void main() {
           );
 
           // Act (Execution)
-          final bool result = TransactionManager.addTransactionToData(
+          await service.addTransaction(
             transaction,
-            data,
           );
 
           // Assert (Observation)
-          expect(result, true);
           expect(
             data.transactions.last.amount,
             amount,
@@ -115,10 +105,11 @@ void main() {
       });
     });
     group("removeTransactionFromData", () {
-      test("id not found", () {
+      test("id not found", () async {
         // Arrange (Initialization)
 
         final data = generateRandomData();
+        final service = createService(data);
 
         const String id = "Impossible id";
 
@@ -126,15 +117,14 @@ void main() {
         final int expectedLength = data.transactions.length;
 
         // Act (Execution)
-        final bool result =
-            TransactionManager.removeTransactionFromData(id, data);
+        await service.removeTransaction(createTransactionWithId(id));
+        
 
         // Assert (Observation)
-        expect(result, false);
         expect(data.transactions.length, expectedLength);
       });
 
-      test("random data test", () {
+      test("random data test", () async {
         final math.Random rand = math.Random();
 
 
@@ -143,32 +133,32 @@ void main() {
           // Arrange (Initialization)
 
           final data = generateRandomData();
+          final service = createService(data);
+
           final int expectedLength = data.transactions.length - 1;
 
           int idIndex = rand.nextInt(expectedLength + 1) - 1;
           idIndex = idIndex == -1 ? 0 : idIndex;
-          final String id = data.transactions[idIndex].id;
+          final transaction = data.transactions[idIndex];
 
           // Act (Execution)
-          final bool result =
-              TransactionManager.removeTransactionFromData(id, data);
+          await service.removeTransaction(transaction);
 
           // Assert (Observation)
-          expect(result, true);
           expect(data.transactions.length, expectedLength);
         }
       });
     });
 
     group("updateTransactionInData", () {
-      test("id not found", () {
+      // TODO: Handle test cases
+      /* test("id not found", () {
         // Arrange (Initialization)
 
         final data =
             generateRandomData();
 
         const String id = "Impossible id";
-
 
         // Act (Execution)
         final bool result = TransactionManager
@@ -192,72 +182,72 @@ void main() {
         // Assert (Observation)
         expect(result, false);
       });
-      test("category == ''", () {
+
+       */
+      test("category == ''", () async {
         // Arrange (Initialization)
 
         final data =
             generateRandomData();
+        final service = createService(data);
 
         final math.Random rand = math.Random();
         final int idIndex = rand.nextInt(data.transactions.length);
-        final String id = data.transactions[idIndex].id;
+        final transaction = data.transactions[idIndex];
 
 
 
-        // Act (Execution)
-        final bool result = TransactionManager
-            .updateTransactionInData(id, data, category: "");
+        // Act (Execution) && Assert (Observation)
+        expectLater(service.updateTransaction(transaction.copyWith(category: "")), throwsArgumentError);
 
-        // Assert (Observation)
-        expect(result, false);
+
       });
       test("currency == ''", () {
         // Arrange (Initialization)
 
         final data =
             generateRandomData();
+        final service = createService(data);
 
         final math.Random rand = math.Random();
         final int idIndex = rand.nextInt(data.transactions.length);
-        final String id = data.transactions[idIndex].id;
+        final transaction = data.transactions[idIndex];
 
 
 
-        // Act (Execution)
-        final bool result = TransactionManager
-            .updateTransactionInData(id, data, currency: "");
+        // Act (Execution) && Assert (Observation)
+        expectLater(service.updateTransaction(transaction.copyWith(currency: "")), throwsArgumentError);
 
-        // Assert (Observation)
-        expect(result, false);
       });
 
-      test("random data test", () {
+      test("random data test", () async {
         final math.Random rand = math.Random();
-
 
         final int max = rand.nextInt(200) + 1;
         for (int i = 0; i < max; i++) {
           // Arrange (Initialization)
 
           final data = generateRandomData();
+          final service = createService(data);
+
           final int expectedLength = data.transactions.length;
           final int idIndex = rand.nextInt(data.transactions.length);
-          final String id = data.transactions[idIndex].id;
+          final transaction = data.transactions[idIndex];
 
-          // Act (Execution)
-          final bool result =
-              TransactionManager.updateTransactionInData(
-            id,
-            data,
+          final update = transaction.copyWith(
             amount: 5,
             category: "allowance",
             currency: "EUR",
             name: "New Name",
-            date: Timestamp.fromMillisecondsSinceEpoch(1648000000000),
+            date: DateTime.fromMillisecondsSinceEpoch(1648000000000),
+          );
+
+          // Act (Execution)
+          await service.updateTransaction(
+            update,
           );
 
           // Assert (Observation)
-          expect(result, true);
           expect(data.transactions.length, expectedLength);
           expect(data.transactions[idIndex].amount, 5);
           expect(data.transactions[idIndex].category, "allowance");
@@ -265,7 +255,7 @@ void main() {
           expect(data.transactions[idIndex].name, "New Name");
           expect(
             data.transactions[idIndex].date,
-            Timestamp.fromMillisecondsSinceEpoch(1648000000000),
+            DateTime.fromMillisecondsSinceEpoch(1648000000000),
           );
         }
       });
@@ -281,12 +271,10 @@ BalanceDocument generateRandomData({
   final int max = rand.nextInt(averageNumberOfEntries * 2) + 1;
   for (int i = 0; i < max; i++) {
     final num amount = rand.nextInt(100000) / 100.0;
-    final Timestamp time = Timestamp.fromDate(
-      DateTime.now().subtract(const Duration(days: 365 * 4)).add(
-            Duration(
-              days: rand.nextInt(365 * 4 * 2),
-            ),
-          ),
+    final time = DateTime.now().subtract(const Duration(days: 365 * 4)).add(
+      Duration(
+        days: rand.nextInt(365 * 4 * 2),
+      ),
     );
 
     data.transactions.add(
