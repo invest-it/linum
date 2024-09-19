@@ -16,6 +16,7 @@ import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';
 import 'package:linum/core/navigation/get_delegate.dart';
 import 'package:linum/core/navigation/main_routes.dart';
 import 'package:linum/generated/translation_keys.g.dart';
+import 'package:linum/screens/home_screen/components/home_screen_card/widgets/home_screen_card.dart';
 import 'package:linum/screens/home_screen/components/home_screen_dashboard/widgets/home_screen_dashboard.dart';
 import 'package:linum/screens/home_screen/widgets/home_screen_listview.dart';
 import 'package:linum/screens/lock_screen/services/pin_code_service.dart';
@@ -81,7 +82,9 @@ class _HomeScreenState extends State<HomeScreen> {
         AppBarAction.fromPreset(DefaultAction.settings),
         AppBarAction.fromPreset(DefaultAction.bugreport),
       ],
-      screenCard: const HomeScreenDashboard(),
+      screenCard: HomeScreenCard(
+        controller: _flipCardController!,
+      ),
       body: Stack(
         children: [
           Column(
