@@ -30,7 +30,7 @@ Future<void> main({bool? testing}) async {
   }
 
   // Force Portrait Mode
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   // Load .env
   await dotenv.load();
