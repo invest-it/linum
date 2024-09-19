@@ -4,7 +4,6 @@
 //  Co-Author: SoTBurst
 //  (No Refactoring pls)
 
-
 import 'package:flutter/material.dart';
 import 'package:linum/common/components/action_lip/action_lip.dart';
 import 'package:linum/common/components/action_lip/viewmodels/action_lip_viewmodel.dart';
@@ -161,7 +160,8 @@ class ScreenSkeleton extends StatelessWidget {
               ),
             ],
           ),
-          screenCard != null
+          screenCard !=
+                  null //TODO make this dynamic depending on how large the screenCard actually is
               ? Positioned(
                   top: context.proportionateScreenHeight(164 - 25),
                   left: 0,

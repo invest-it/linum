@@ -20,7 +20,6 @@ class BottomAppBarItem {
   });
 }
 
-
 class LinumNavigationBar extends StatelessWidget {
   const LinumNavigationBar({
     required this.items,
@@ -71,21 +70,21 @@ class LinumNavigationBar extends StatelessWidget {
     return BottomAppBar(
       color: backgroundColor,
       child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: items,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: items,
       ),
     );
   }
 
-  Widget _buildTabItem(BuildContext context, {
+  Widget _buildTabItem(
+    BuildContext context, {
     required BottomAppBarItem item,
     required int index,
   }) {
     final Color color = item.selected ? selectedColor : iconColor;
     return Expanded(
       child: Container(
-        height: context
-            .proportionateScreenHeight(notproportionateHeight),
+        height: context.proportionateScreenHeight(notproportionateHeight),
         constraints: BoxConstraints(minHeight: minHeight),
         child: Material(
           type: MaterialType.transparency,

@@ -25,8 +25,6 @@ import 'package:provider/provider.dart';
 class HomeScreenCardFront extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
-
     final String langCode = context.locale.languageCode;
     final DateFormat dateFormat = DateFormat('MMMM yyyy', langCode);
     final DateTime now = DateTime.now();

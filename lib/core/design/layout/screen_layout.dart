@@ -44,8 +44,7 @@ class _ScreenLayoutState extends State<ScreenLayout>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    final PinCodeService pinCodeProvider =
-        context.read<PinCodeService>();
+    final PinCodeService pinCodeProvider = context.read<PinCodeService>();
     super.didChangeAppLifecycleState(state);
 
     if (state == AppLifecycleState.inactive ||
@@ -69,7 +68,7 @@ class _ScreenLayoutState extends State<ScreenLayout>
   @override
   Widget build(BuildContext context) {
     final CollectionReference balance =
-      FirebaseFirestore.instance.collection('balance');
+        FirebaseFirestore.instance.collection('balance');
 
     final routerDelegate = context.getMainRouterDelegate();
 
@@ -82,7 +81,6 @@ class _ScreenLayoutState extends State<ScreenLayout>
         child: CircularProgressIndicator(),
       ),
     );
-
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -135,7 +133,8 @@ class _ScreenLayoutState extends State<ScreenLayout>
         iconColor: Theme.of(context).colorScheme.surface,
         selectedColor: Theme.of(context).colorScheme.secondary,
         notchedShape: const CircularNotchedRectangle(),
-        onABPressed: handleActionButton, // TODO: Remove if decision is made to use the FAB
+        onABPressed:
+            handleActionButton, // TODO: Remove if decision is made to use the FAB
         //gives the pageIndex the value (the current selected index in the
         //bottom navigation bar)
       ),
