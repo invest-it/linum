@@ -9,7 +9,7 @@ import 'package:linum/common/components/screen_card/utils/flip_card_controller_e
 import 'package:linum/common/utils/filters.dart';
 import 'package:linum/common/utils/in_between_timestamps.dart';
 import 'package:linum/common/utils/silent_scroll.dart';
-import 'package:linum/core/balance/services/algorithm_service.dart';
+import 'package:linum/core/balance/presentation/algorithm_service.dart';
 import 'package:linum/core/design/layout/enums/screen_key.dart';
 import 'package:linum/core/design/layout/widgets/app_bar_action.dart';
 import 'package:linum/core/design/layout/widgets/screen_skeleton.dart';

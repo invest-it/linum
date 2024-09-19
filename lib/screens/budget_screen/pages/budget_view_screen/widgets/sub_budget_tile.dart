@@ -27,7 +27,7 @@ class SubBudgetTile extends StatefulWidget {
 }
 
 class _SubBudgetTileState extends State<SubBudgetTile> {
-  var isOpen = false;
+  bool isOpen = false;
   double turns = 0.0;
   List<String> categories = [];
 
@@ -122,9 +122,9 @@ class _SubBudgetTileState extends State<SubBudgetTile> {
               children: [
                 Text(
                     "${formatter.format(widget.budgetData.cap - widget.budgetData.expenses)} remaining",
-                    style: theme.textTheme.labelMedium),
+                    style: theme.textTheme.labelMedium,),
                 Text(formatter.format(widget.budgetData.cap),
-                    style: theme.textTheme.labelMedium),
+                    style: theme.textTheme.labelMedium,),
               ],
             ),
             if (isOpen) const Divider(),

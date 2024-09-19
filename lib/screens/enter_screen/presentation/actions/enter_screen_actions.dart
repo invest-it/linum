@@ -1,8 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 import 'package:linum/common/enums/entry_type.dart';
-import 'package:linum/core/balance/enums/serial_transaction_change_type_enum.dart';
-import 'package:linum/core/balance/models/serial_transaction.dart';
-import 'package:linum/core/balance/models/transaction.dart';
+import 'package:linum/core/balance/domain/enums/serial_transaction_change_type_enum.dart';
+import 'package:linum/core/balance/domain/models/serial_transaction.dart';
+import 'package:linum/core/balance/domain/models/transaction.dart';
 import 'package:linum/core/repeating/enums/repeat_interval.dart';
 import 'package:linum/screens/enter_screen/presentation/actions/action_callbacks.dart';
 import 'package:linum/screens/enter_screen/presentation/models/default_values.dart';
@@ -48,9 +47,7 @@ class EnterScreenActions {
         currency: data.currency?.name ?? defaultData.currency.name,
         name: data.name ?? defaultData.name,
         note: data.notes,
-        startDate:  Timestamp.fromDate(
-          DateTime.parse(data.date ?? defaultData.date),
-        ),
+        startDate: DateTime.parse(data.date ?? defaultData.date),
         repeatDuration: data.repeatConfiguration!.duration!,
         repeatDurationType: data.repeatConfiguration!.durationType!,
         // This is not null because only RepeatInterval.none holds a null duration value
@@ -64,9 +61,7 @@ class EnterScreenActions {
       amount: amount,
       currency: data.currency?.name ?? defaultData.currency.name,
       name: data.name ?? defaultData.name,
-      date:  Timestamp.fromDate(
-        DateTime.parse(data.date ?? defaultData.date),
-      ),
+      date:  DateTime.parse(data.date ?? defaultData.date),
       category: category.id,
       note: data.notes,
     );

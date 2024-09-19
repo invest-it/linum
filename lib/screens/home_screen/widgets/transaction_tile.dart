@@ -4,9 +4,9 @@ import 'package:badges/badges.dart' as badge;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/components/dialogs/show_transaction_delete_dialog.dart';
-import 'package:linum/core/balance/models/transaction.dart';
-import 'package:linum/core/balance/services/balance_data_service.dart';
-import 'package:linum/core/balance/utils/transaction_amount_formatter.dart';
+import 'package:linum/core/balance/domain/models/transaction.dart';
+import 'package:linum/core/balance/presentation/balance_data_service.dart';
+import 'package:linum/core/balance/presentation/transaction_amount_formatter.dart';
 import 'package:linum/screens/enter_screen/presentation/utils/show_enter_screen.dart';
 import 'package:linum/screens/home_screen/widgets/serial_delete_mode_selection_view.dart';
 import 'package:linum/screens/home_screen/widgets/transaction_amount_display.dart';
@@ -72,7 +72,7 @@ class TransactionTile extends StatelessWidget {
           ),
           subtitle: Text(
             formatter.format(
-              transaction.date.toDate(),
+              transaction.date,
             ).toUpperCase(),
             style: isFutureItem
                 ? Theme.of(context).textTheme.labelSmall!.copyWith(
@@ -120,7 +120,7 @@ class TransactionTile extends StatelessWidget {
 
   Future<bool?> _confirmDismiss(BuildContext context) async {
     // TODO refactor! SerialDeleteSelectionView has duplicated code from the enterscreen's serial transaction change mode selection.
-    final balanceDataService = context.read<BalanceDataService>();
+    final balanceDataService = context.read<IBalanceDataService>();
 
     if(transaction.repeatId != null){
       const radius = Radius.circular(16.0);

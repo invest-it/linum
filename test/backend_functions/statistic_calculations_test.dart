@@ -6,12 +6,11 @@
 
 import 'dart:math' as math;
 
-import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/common/utils/filters.dart';
-import 'package:linum/core/balance/models/transaction.dart';
-import 'package:linum/core/balance/services/algorithm_service.dart';
-import 'package:linum/core/balance/utils/statistical_calculations.dart';
+import 'package:linum/core/balance/domain/models/transaction.dart';
+import 'package:linum/core/balance/presentation/algorithm_service.dart';
+import 'package:linum/core/stats/statistical_calculations.dart';
 import 'package:uuid/uuid.dart';
 
 final Transaction baseTransaction = Transaction(
@@ -19,8 +18,8 @@ final Transaction baseTransaction = Transaction(
   category: "None",
   currency: "EUR",
   name: "Test Single Balance Data",
-  date: Timestamp.fromMillisecondsSinceEpoch(
-    Timestamp.now().millisecondsSinceEpoch - (3600 * 1000),
+  date: DateTime.fromMillisecondsSinceEpoch(
+    DateTime.now().millisecondsSinceEpoch - (3600 * 1000),
   ),
   id: const Uuid().v4(),
 );

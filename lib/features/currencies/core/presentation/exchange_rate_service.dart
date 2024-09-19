@@ -1,5 +1,5 @@
 import 'package:linum/common/interfaces/service_interface.dart';
-import 'package:linum/core/balance/models/transaction.dart';
+import 'package:linum/core/balance/domain/models/transaction.dart';
 import 'package:linum/features/currencies/core/data/models/currency.dart';
 
 abstract class IExchangeRateService extends IProvidableService {

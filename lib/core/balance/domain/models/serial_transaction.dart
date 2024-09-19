@@ -1,15 +1,19 @@
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
+import 'package:linum/common/interfaces/time_span.dart';
 import 'package:linum/common/utils/date_time_map.dart';
-import 'package:linum/core/balance/models/changed_transaction.dart';
+import 'package:linum/core/balance/domain/models/changed_transaction.dart';
+import 'package:linum/core/balance/domain/models/transaction.dart';
+import 'package:linum/core/balance/domain/utils/date_time_calculation_functions.dart';
 import 'package:linum/core/repeating/enums/repeat_duration_type_enum.dart';
 import 'package:linum/core/repeating/enums/repeat_interval.dart';
+import 'package:linum/core/repeating/utils/repeated_balance_help_functions.dart';
 import 'package:linum/screens/enter_screen/presentation/utils/get_repeat_interval.dart';
 import 'package:uuid/uuid.dart';
 
 ///  Repeated Balance Data
 ///  Model for defining information used by a card that is a repeated "copy" of an "original" Transaction to be repeated in a given timeframe
-class SerialTransaction {
+class SerialTransaction extends TimeSpan<SerialTransaction> {
   final num amount;
   final String category;
   final String currency;
@@ -17,8 +21,8 @@ class SerialTransaction {
   final String name;
   final String? note;
   final DateTimeMap<String, ChangedTransaction>? changed;
-  final Timestamp startDate;
-  final Timestamp? endDate;
+  final DateTime startDate;
+  final DateTime? endDate;
   final int repeatDuration;
   final RepeatDurationType repeatDurationType;
 
@@ -38,7 +42,7 @@ class SerialTransaction {
     this.endDate,
     required this.repeatDuration,
     this.repeatDurationType = RepeatDurationType.seconds,
-  })  : id = id ?? const Uuid().v4();
+  })  : id = id ?? TimeSpan.newId();
 
   bool isIncome() {
     return amount > 0;
@@ -53,8 +57,8 @@ class SerialTransaction {
     String? note,
     DateTimeMap<String, ChangedTransaction>? changed,
     String? repeatId,
-    Timestamp? startDate,
-    Timestamp? endDate,
+    DateTime? startDate, // TODO: Map to datetime in adapter
+    DateTime? endDate,
     int? repeatDuration,
     RepeatDurationType? repeatDurationType,
   }) {
@@ -89,6 +93,22 @@ class SerialTransaction {
     };
   }
 
+  Map<String, dynamic> toFirestore() {
+    return {
+      'amount': amount,
+      'category': category,
+      'currency': currency,
+      'id': id,
+      'name': name,
+      'note': note,
+      'changed': changed?.map((key, value) => MapEntry(key, value.toFirestore())), // TODO: Check if this should be removed when building a map
+      'initialTime': firestore.Timestamp.fromDate(startDate),
+      'endTime': endDate != null ? firestore.Timestamp.fromDate(endDate!) : null,
+      'repeatDuration': repeatDuration,
+      'repeatDurationType': repeatDurationType.name,
+    };
+  }
+
   factory SerialTransaction.fromMap(Map<String, dynamic> map) {
     final changed = DateTimeMap.fromDynamicMap(
         map['changed'],
@@ -115,8 +135,42 @@ class SerialTransaction {
       name: map['name'] as String,
       note: map['note'] as String?,
       changed: changed, // TODO: Might not work
-      startDate: map['initialTime'] as Timestamp,
-      endDate: map['endTime'] as Timestamp?,
+      startDate: map['initialTime'] as DateTime,
+      endDate: map['endTime'] as DateTime?,
+      repeatDuration: map['repeatDuration'] as int,
+      repeatDurationType:  repeatDurationTypeFromString(map['repeatDurationType'] as String) ??
+          RepeatDurationType.seconds,
+    );
+  }
+
+  factory SerialTransaction.fromFirestore(Map<String, dynamic> map) {
+    final changed = DateTimeMap.fromDynamicMap(
+      map['changed'],
+      keyMapper: (key) => key as String,
+      valueMapper: (value) => ChangedTransaction.fromFirestore(value as Map<String, dynamic>),
+    );
+
+    var category = map['category'] as String?;
+    final amount = map['amount'] as num;
+
+    if (category == null) {
+      if (amount < 0) {
+        category = "none-expense";
+      } else {
+        category = "none-income";
+      }
+    }
+
+    return SerialTransaction(
+      amount: amount,
+      category: category,
+      currency: map['currency'] as String,
+      id: map['id'] as String,
+      name: map['name'] as String,
+      note: map['note'] as String?,
+      changed: changed, // TODO: Might not work
+      startDate: (map['initialTime'] as firestore.Timestamp).toDate(),
+      endDate: (map['endTime'] as firestore.Timestamp?)?.toDate(),
       repeatDuration: map['repeatDuration'] as int,
       repeatDurationType:  repeatDurationTypeFromString(map['repeatDurationType'] as String) ??
           RepeatDurationType.seconds,
@@ -160,6 +214,69 @@ class SerialTransaction {
         repeatDuration.hashCode ^
         repeatDurationType.hashCode;
   }
+
+
+  List<Transaction> generateTransactions(DateTime till) {
+    final List<Transaction> transactions = [];
+
+    DateTime currentTime = startDate;
+
+    // while we are before 1 years after today / before endDate
+    while ((endDate == null ||
+        !endDate!.isBefore(currentTime)) &&
+        !till.isBefore(currentTime)) {
+      // if "changed" -> "this  Timestamp" -> deleted exist AND it is true, dont add this balance
+      if (changed == null ||
+          changed!.get(currentTime) == null ||
+          changed!.get(currentTime)!.deleted == null ||
+          !changed!.get(currentTime)!.deleted!) {
+        transactions.add(
+          Transaction(
+            amount: changed?.get(currentTime)?.amount ??
+                amount,
+            category: changed?.get(currentTime)?.category ??
+                category,
+            currency: changed?.get(currentTime)?.currency ??
+                currency,
+            name: changed?.get(currentTime)?.name ??
+                name,
+            date: changed?.get(currentTime)?.date ?? currentTime,
+            repeatId: id,
+            id: const Uuid().v4(),
+            formerDate: (changed?.get(currentTime)?.date != null)
+                ?  currentTime
+                : null,
+          ),
+        );
+      }
+      currentTime = calculateOneTimeStep(
+        repeatDuration,
+        currentTime,
+        // is it a month or second duration type
+        monthly: isMonthly(this),
+        dayOfTheMonth: startDate.day,
+      );
+    }
+    return transactions;
+  }
+
+  @override
+  SerialTransaction copySpanWith({DateTime? start, DateTime? end, String? id}) {
+    return copyWith(
+      startDate: start,
+      endDate: end,
+    );
+  }
+
+  @override
+  DateTime getStart() => startDate;
+
+  @override
+  DateTime? getEnd() => endDate;
+
+  @override
+  String getId() => id;
+
 
 
 }

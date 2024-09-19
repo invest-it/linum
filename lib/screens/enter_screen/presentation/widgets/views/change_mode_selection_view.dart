@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/core/balance/enums/serial_transaction_change_type_enum.dart';
+import 'package:linum/core/balance/domain/enums/serial_transaction_change_type_enum.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/enter_screen/presentation/enums/edit_intention.dart';
 import 'package:linum/screens/enter_screen/presentation/view_models/enter_screen_view_model.dart';

@@ -1,4 +1,4 @@
-import 'package:linum/core/balance/services/balance_data_service.dart';
+import 'package:linum/core/balance/presentation/balance_data_service.dart';
 import 'package:linum/core/budget/presentation/budget_statistics_service.dart';
 
 class BudgetStatisticsService implements IBudgetStatisticsService {

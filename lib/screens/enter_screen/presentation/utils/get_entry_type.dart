@@ -1,6 +1,6 @@
 import 'package:linum/common/enums/entry_type.dart';
-import 'package:linum/core/balance/models/serial_transaction.dart';
-import 'package:linum/core/balance/models/transaction.dart';
+import 'package:linum/core/balance/domain/models/serial_transaction.dart';
+import 'package:linum/core/balance/domain/models/transaction.dart';
 import 'package:linum/core/categories/core/constants/standard_categories.dart';
 
 EntryType getEntryType({

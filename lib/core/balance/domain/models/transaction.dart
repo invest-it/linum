@@ -4,7 +4,7 @@
 //  Co-Author: damattl
 //
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 import 'package:linum/features/currencies/core/data/models/exchange_rate_info.dart';
 import 'package:uuid/uuid.dart';
 
@@ -16,8 +16,8 @@ class Transaction {
   final String name;
   final String? note;
   final String? repeatId;
-  final Timestamp date;
-  final Timestamp? formerDate; // strictly for changed repeatables
+  final DateTime date;
+  final DateTime? formerDate; // strictly for changed repeatables
   ExchangeRateInfo? rateInfo;
 
   Transaction({
@@ -49,8 +49,8 @@ class Transaction {
     String? name,
     String? note,
     String? repeatId,
-    Timestamp? date,
-    Timestamp? formerDate,
+    DateTime? date,
+    DateTime? formerDate,
   }) {
     return Transaction(
       amount: amount ?? this.amount,
@@ -80,6 +80,21 @@ class Transaction {
     };
   }
 
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      'amount': amount,
+      'category': category,
+      'currency': currency,
+      'id': id,
+      'name': name,
+      'note': note,
+      'repeatId': repeatId,
+      'time': Timestamp.fromDate(date),
+      'formerTime': formerDate != null ? Timestamp.fromDate(formerDate!) : null,
+    };
+  }
+
   factory Transaction.fromMap(Map<String, dynamic> map) {
     var category = map['category'] as String?;
     final amount = map['amount'] as num;
@@ -91,8 +106,6 @@ class Transaction {
         category = "none-income";
       }
     }
-
-
     return Transaction(
       amount: amount,
       category: category,
@@ -101,8 +114,32 @@ class Transaction {
       name: map['name'] as String,
       note: map['note'] as String?,
       repeatId: map['repeatId'] as String?,
-      date: map['time'] as Timestamp,
-      formerDate: map['formerTime'] as Timestamp?,
+      date: map['time'] as DateTime,
+      formerDate: map['formerTime'] as DateTime?,
+    );
+  }
+
+  factory Transaction.fromFirestore(Map<String, dynamic> map) {
+    var category = map['category'] as String?;
+    final amount = map['amount'] as num;
+
+    if (category == null) {
+      if (amount < 0) {
+        category = "none-expense";
+      } else {
+        category = "none-income";
+      }
+    }
+    return Transaction(
+      amount: amount,
+      category: category,
+      currency: map['currency'] as String,
+      id: map['id'] as String,
+      name: map['name'] as String,
+      note: map['note'] as String?,
+      repeatId: map['repeatId'] as String?,
+      date: (map['time'] as Timestamp).toDate(),
+      formerDate: (map['formerTime'] as Timestamp?)?.toDate(),
     );
   }
 

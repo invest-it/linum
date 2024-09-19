@@ -1,13 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 class ChangedTransaction {
   num? amount;
   String? category;
   String? currency;
   String? name;
   String? note;
-  Timestamp? date;
+  DateTime? date;
   bool? deleted;
 
   ChangedTransaction({
@@ -27,7 +26,19 @@ class ChangedTransaction {
       currency: map['currency'] as String?,
       name: map['name'] as String?,
       note: map['note'] as String?,
-      date: map['time'] as Timestamp?,
+      date: map['time'] as DateTime?,
+      deleted: map['deleted'] as bool?,
+    );
+  }
+
+  factory ChangedTransaction.fromFirestore(Map<String, dynamic> map) {
+    return ChangedTransaction(
+      amount: map['amount'] as num?,
+      category: map['category'] as String?,
+      currency: map['currency'] as String?,
+      name: map['name'] as String?,
+      note: map['note'] as String?,
+      date: (map['time'] as Timestamp?)?.toDate(),
       deleted: map['deleted'] as bool?,
     );
   }
@@ -40,6 +51,18 @@ class ChangedTransaction {
       'name': name,
       'note': note,
       'time': date,
+      'deleted': deleted,
+    };
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      'amount': amount,
+      'category': category,
+      'currency': currency,
+      'name': name,
+      'note': note,
+      'time': date != null ? Timestamp.fromDate(date!) : null,
       'deleted': deleted,
     };
   }

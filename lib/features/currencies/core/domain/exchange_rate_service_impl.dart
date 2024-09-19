@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:linum/core/balance/models/transaction.dart';
+import 'package:linum/core/balance/domain/models/transaction.dart';
 import 'package:linum/features/currencies/core/data/models/currency.dart';
 import 'package:linum/features/currencies/core/data/models/exchange_rate_info.dart';
 import 'package:linum/features/currencies/core/data/models/exchange_rates_for_date.dart';
@@ -65,7 +65,7 @@ class ExchangeRateServiceImpl extends ChangeNotifier implements IExchangeRateSer
   }
 
   int _getDateInMilliseconds(Transaction transaction) {
-    final dateTime = transaction.date.toDate();
+    final dateTime = transaction.date;
     final sanitizedDateTime = DateTime(dateTime.year, dateTime.month, dateTime.day);
     return sanitizedDateTime.millisecondsSinceEpoch;
   }

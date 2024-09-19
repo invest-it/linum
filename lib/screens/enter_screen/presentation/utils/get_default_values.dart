@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:linum/core/balance/services/algorithm_service.dart';
+import 'package:linum/core/balance/presentation/algorithm_service.dart';
 import 'package:linum/core/categories/settings/presentation/category_settings_service.dart';
 import 'package:linum/core/repeating/constants/standard_repeat_configs.dart';
 import 'package:linum/core/repeating/enums/repeat_interval.dart';

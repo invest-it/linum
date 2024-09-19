@@ -8,6 +8,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:linum/common/interfaces/service_interface.dart';
 import 'package:linum/core/authentication/domain/services/authentication_service.dart';
+import 'package:linum/core/balance/presentation/balance_data_service.dart';
 import 'package:linum/core/categories/settings/presentation/category_settings_service.dart';
 import 'package:linum/core/design/layout/loading_scaffold.dart';
 import 'package:linum/core/localization/settings/presentation/language_settings_service.dart';
@@ -144,6 +145,7 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
         context.read<ICurrencySettingsService>(),
         context.read<ILanguageSettingsService>(),
         context.read<ICategorySettingsService>(),
+        context.read<IBalanceDataService>(),
       ]),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {

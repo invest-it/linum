@@ -6,107 +6,97 @@
 
 import 'dart:math' as math;
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:linum/core/balance/enums/serial_transaction_change_type_enum.dart';
-import 'package:linum/core/balance/models/balance_document.dart';
-import 'package:linum/core/balance/models/serial_transaction.dart';
-import 'package:linum/core/balance/utils/date_time_calculation_functions.dart';
-import 'package:linum/core/balance/utils/serial_transaction_manager.dart';
+import 'package:linum/core/balance/domain/enums/serial_transaction_change_type_enum.dart';
+import 'package:linum/core/balance/domain/models/serial_transaction.dart';
+import 'package:linum/core/balance/domain/use_cases/update_serial_transaction_use_case.dart';
+import 'package:linum/core/balance/domain/utils/date_time_calculation_functions.dart';
+import 'package:linum/core/balance/ports/firebase/balance_document.dart';
 import 'package:linum/core/repeating/enums/repeat_duration_type_enum.dart';
 import 'package:linum/core/repeating/utils/repeated_balance_help_functions.dart';
 import 'package:uuid/uuid.dart';
 
+import 'balance_test_utils.dart';
+
+
+
 void main() {
   group("SerialTransactionManager", () {
     group("addSerialTransactionToData", () {
-      test("serialTransaction.category == ''", () {
+      test("serialTransaction.category == ''", () async {
+        final data = BalanceDocument();
+        final service = await createService(data);
+
         // Arrange (Initialization)
         final SerialTransaction repeatBalanceData = SerialTransaction(
           amount: 5.55,
           category: "",
           currency: "EUR",
           name: "",
-          startDate: Timestamp.fromDate(DateTime.now()),
+          startDate: DateTime.now(),
           repeatDuration: 60 * 60 * 24 * 3,
         );
 
-        final data = BalanceDocument();
-
         // Act (Execution)
-        final bool result = SerialTransactionManager.addSerialTransactionToData(
-          repeatBalanceData,
-          data,
-        );
+        expectLater(() => service.addSerialTransaction(repeatBalanceData), throwsArgumentError);
 
         // Assert (Observation)
-        expect(result, false);
         expect(data.serialTransactions.length, 0);
       });
 
-      test("repeatBalanceData.currency == ''", () {
+      test("repeatBalanceData.currency == ''", () async {
         // Arrange (Initialization)
+        final data = BalanceDocument();
+        final service = await createService(data);
+
         final SerialTransaction repeatBalanceData = SerialTransaction(
           amount: 5.55,
           category: "none",
           currency: "",
           name: "",
-          startDate: Timestamp.fromDate(DateTime.now()),
+          startDate: DateTime.now(),
           repeatDuration: 60 * 60 * 24 * 3,
         );
 
-        final data = BalanceDocument();
 
         // Act (Execution)
-        final bool result = SerialTransactionManager.addSerialTransactionToData(
-          repeatBalanceData,
-          data,
-        );
+        expectLater(() => service.addSerialTransaction(repeatBalanceData), throwsArgumentError);
 
         // Assert (Observation)
-        expect(result, false);
         expect(data.serialTransactions.length, 0);
       });
 
-      test("random data test", () {
+      test("random data test", () async {
         final math.Random rand = math.Random();
 
         final data = BalanceDocument();
+        final service = await createService(data);
 
-        final int max = rand.nextInt(2000) + 1;
+        final int max = rand.nextInt(1000) + 1;
         for (int i = 0; i < max; i++) {
           // Arrange (Initialization)
           final num amount = rand.nextInt(100000) / 100.0;
-          final Timestamp date = Timestamp.fromDate(
-            DateTime.now().subtract(const Duration(days: 365 * 4)).add(
-                  Duration(
-                    days: rand.nextInt(365 * 4 * 2),
-                  ),
-                ),
+          final date = DateTime.now().subtract(const Duration(days: 365 * 4)).add(
+            Duration(
+              days: rand.nextInt(365 * 4 * 2),
+            ),
           );
-          final int repeatDuration = rand.nextInt(100);
-          final RepeatDurationType repeatDurationType = RepeatDurationType
-              .values[rand.nextInt(RepeatDurationType.values.length)];
 
+
+          final interval = randomRepeatInterval();
           final SerialTransaction repeatBalanceData = SerialTransaction(
             amount: amount,
             category: "none",
             currency: "EUR",
             name: "Item Nr $i",
             startDate: date,
-            repeatDuration: repeatDuration,
-            repeatDurationType: repeatDurationType,
+            repeatDuration: interval.duration, // TODO: Use one class for this
+            repeatDurationType: interval.type,
           );
-
           // Act (Execution)
-          final bool result =
-              SerialTransactionManager.addSerialTransactionToData(
-            repeatBalanceData,
-            data,
-          );
-
+          await service.addSerialTransaction(repeatBalanceData);
           // Assert (Observation)
-          expect(result, true);
+
           expect(
             data.serialTransactions.last.amount,
             amount,
@@ -140,35 +130,34 @@ void main() {
       });
     });
 
-    group("removeSerialTransactionFromData", () {
-      test("id not found", () {
+    group("removeSerialTransaction", () {
+      test("id not found", () async {
         // Arrange (Initialization)
         final data = generateRandomData();
+        final service = await createService(data);
 
         const String id = "Impossible id";
 
         final int expectedLength = data.serialTransactions.length;
 
         for (final removeType in SerialTransactionChangeMode.values) {
-          // Act (Execution)
-          final bool result =
-              SerialTransactionManager.removeSerialTransactionFromData(
-            id: id,
-            data: data,
-            removeType: removeType,
-            date: Timestamp.now(),
-          );
 
+          // Act (Execution)
+          await service.removeSerialTransaction(
+            serialTransaction: createSerialTransactionWithId(id),
+            removeType: removeType,
+            date: DateTime.now(),
+          );
           // Assert (Observation)
-          expect(result, false);
         }
 
         expect(data.serialTransactions.length, expectedLength);
       });
 
-      test("removeType == thisAndAllBefore => time != null", () {
+      test("removeType == thisAndAllBefore => time != null", () async {
         // Arrange (Initialization)
         final data = generateRandomData();
+        final service = await createService(data);
 
         const String id = "Impossible id";
 
@@ -178,22 +167,19 @@ void main() {
             SerialTransactionChangeMode.thisAndAllBefore;
 
         // Act (Execution)
-        final bool result =
-            SerialTransactionManager.removeSerialTransactionFromData(
-          id: id,
-          data: data,
-          removeType: removeType,
+        await service.removeSerialTransaction(
+            serialTransaction: createSerialTransactionWithId(id),
+            removeType: removeType,
         );
 
         // Assert (Observation)
-        expect(result, false);
-
         expect(data.serialTransactions.length, expectedLength);
       });
 
-      test("removeType == thisAndAllAfter => time != null", () {
+      test("removeType == thisAndAllAfter => time != null", () async {
         // Arrange (Initialization)
         final data = generateRandomData();
+        final service = await createService(data);
 
         const String id = "Impossible id";
 
@@ -203,22 +189,19 @@ void main() {
             SerialTransactionChangeMode.thisAndAllAfter;
 
         // Act (Execution)
-        final bool result =
-            SerialTransactionManager.removeSerialTransactionFromData(
-          id: id,
-          data: data,
-          removeType: removeType,
+        await service.removeSerialTransaction(
+            serialTransaction: createSerialTransactionWithId(id),
+            removeType: removeType,
         );
 
         // Assert (Observation)
-        expect(result, false);
-
         expect(data.serialTransactions.length, expectedLength);
       });
 
-      test("removeType == onlyThisOne => time != null", () {
+      test("removeType == onlyThisOne => time != null", () async {
         // Arrange (Initialization)
         final data = generateRandomData();
+        final service = await createService(data);
 
         const String id = "Impossible id";
 
@@ -228,20 +211,16 @@ void main() {
             SerialTransactionChangeMode.onlyThisOne;
 
         // Act (Execution)
-        final bool result =
-            SerialTransactionManager.removeSerialTransactionFromData(
-          id: id,
-          data: data,
+        await service.removeSerialTransaction(
+          serialTransaction: createSerialTransactionWithId(id),
           removeType: removeType,
         );
 
         // Assert (Observation)
-        expect(result, false);
-
         expect(data.serialTransactions.length, expectedLength);
       });
 
-      test("random data test removeType=all", () {
+      test("random data test removeType=all", () async {
         final math.Random rand = math.Random();
 
         final int max = rand.nextInt(200) + 1;
@@ -249,25 +228,25 @@ void main() {
           // Arrange (Initialization)
 
           final data = generateRandomData();
+          final service = await createService(data);
+
           final int expectedLength = data.serialTransactions.length - 1;
           final int idIndex = rand.nextInt(expectedLength) + 1;
-          final String id = data.serialTransactions[idIndex].id;
+          final serialTransaction = data.serialTransactions[idIndex];
 
           // Act (Execution)
-          final bool result =
-              SerialTransactionManager.removeSerialTransactionFromData(
-            id: id,
-            data: data,
-            removeType: SerialTransactionChangeMode.all,
+
+          await service.removeSerialTransaction(
+              serialTransaction: serialTransaction,
+              removeType: SerialTransactionChangeMode.all,
           );
 
           // Assert (Observation)
-          expect(result, true);
           expect(data.serialTransactions.length, expectedLength);
         }
       });
 
-      test("random data test removeType=thisAndAllBefore", () {
+      test("random data test removeType=thisAndAllBefore", () async {
         final math.Random rand = math.Random();
 
         final int max = rand.nextInt(200) + 1;
@@ -275,45 +254,40 @@ void main() {
           // Arrange (Initialization)
 
           final data = generateRandomData();
+          final service = await createService(data);
+
           final int expectedLength = data.serialTransactions.length;
           final int idIndex = rand.nextInt(expectedLength);
-          final String id = data.serialTransactions[idIndex].id;
+          final serialTransaction = data.serialTransactions[idIndex];
 
           final DateTime initialTime =
-              data.serialTransactions[idIndex].startDate.toDate();
+              data.serialTransactions[idIndex].startDate ;
 
-          final Timestamp date = Timestamp.fromDate(
-            calculateOneTimeStep(
-              data.serialTransactions[idIndex].repeatDuration,
-              initialTime,
-              monthly: isMonthly(
-                data.serialTransactions[idIndex],
-              ),
+          final date = calculateOneTimeStep(
+            data.serialTransactions[idIndex].repeatDuration,
+            initialTime,
+            monthly: isMonthly(
+              data.serialTransactions[idIndex],
             ),
           );
 
           // Act (Execution)
-          final bool result =
-              SerialTransactionManager.removeSerialTransactionFromData(
-            id: id,
-            data: data,
+          await service.removeSerialTransaction(
+            serialTransaction: serialTransaction,
             removeType: SerialTransactionChangeMode.thisAndAllBefore,
             date: date,
           );
 
           // Assert (Observation)
-          expect(result, true);
           expect(data.serialTransactions.length, expectedLength);
           expect(
-            data.serialTransactions[idIndex].startDate
-                .toDate()
-                .isAfter(initialTime),
+            data.serialTransactions[idIndex].startDate.isAfter(initialTime),
             true,
           );
         }
       });
 
-      test("random data test removeType=thisAndAllAfter", () {
+      test("random data test removeType=thisAndAllAfter", () async {
         final math.Random rand = math.Random();
 
         final int max = rand.nextInt(200) + 1;
@@ -321,39 +295,34 @@ void main() {
           // Arrange (Initialization)
 
           final data = generateRandomData();
+          final service = await createService(data);
+
           final int expectedLength = data.serialTransactions.length;
           final int idIndex = rand.nextInt(expectedLength);
-          final String id = data.serialTransactions[idIndex].id;
+          final serialTransaction = data.serialTransactions[idIndex];
 
-          final Timestamp? endTime = data.serialTransactions[idIndex].endDate;
+          final endTime = data.serialTransactions[idIndex].endDate;
           final DateTime initialTime =
-              data.serialTransactions[idIndex].startDate.toDate();
+              data.serialTransactions[idIndex].startDate;
 
-          final Timestamp date = Timestamp.fromDate(
-            calculateOneTimeStep(
-              data.serialTransactions[idIndex].repeatDuration,
-              initialTime,
-              monthly: isMonthly(data.serialTransactions[idIndex]),
-            ),
+          final date = calculateOneTimeStep(
+            data.serialTransactions[idIndex].repeatDuration,
+            initialTime,
+            monthly: isMonthly(data.serialTransactions[idIndex]),
           );
 
           // Act (Execution)
-          final bool result =
-              SerialTransactionManager.removeSerialTransactionFromData(
-            id: id,
-            data: data,
+          await service.removeSerialTransaction(
+            serialTransaction: serialTransaction,
             removeType: SerialTransactionChangeMode.thisAndAllAfter,
             date: date,
           );
 
           // Assert (Observation)
-          expect(result, true);
           expect(data.serialTransactions.length, expectedLength);
           if (endTime != null) {
             expect(
-              data.serialTransactions[idIndex].endDate!
-                  .toDate()
-                  .isBefore(endTime.toDate()),
+              data.serialTransactions[idIndex].endDate!.isBefore(endTime),
               true,
             );
           } else {
@@ -365,7 +334,7 @@ void main() {
         }
       });
 
-      test("random data test removeType=onlyThisOne", () {
+      test("random data test removeType=onlyThisOne", () async {
         final math.Random rand = math.Random();
 
         final int max = rand.nextInt(200) + 1;
@@ -373,32 +342,30 @@ void main() {
           // Arrange (Initialization)
 
           final data = generateRandomData();
+          final service = await createService(data);
+
           final int expectedLength = data.serialTransactions.length;
           final int idIndex = rand.nextInt(expectedLength);
-          final String id = data.serialTransactions[idIndex].id;
+          final serialTransaction = data.serialTransactions[idIndex];
 
           final DateTime initialTime =
-              data.serialTransactions[idIndex].startDate.toDate();
+              data.serialTransactions[idIndex].startDate ;
 
-          final Timestamp date = Timestamp.fromDate(
-            calculateOneTimeStep(
-              data.serialTransactions[idIndex].repeatDuration,
-              initialTime,
-              monthly: isMonthly(data.serialTransactions[idIndex]),
-            ),
+          final date = calculateOneTimeStep(
+            data.serialTransactions[idIndex].repeatDuration,
+            initialTime,
+            monthly: isMonthly(data.serialTransactions[idIndex]),
           );
 
           // Act (Execution)
-          final bool result =
-              SerialTransactionManager.removeSerialTransactionFromData(
-            id: id,
-            data: data,
-            removeType: SerialTransactionChangeMode.onlyThisOne,
-            date: date,
+          await service.removeSerialTransaction(
+              serialTransaction: serialTransaction,
+              removeType: SerialTransactionChangeMode.onlyThisOne,
+              date: date,
           );
 
+
           // Assert (Observation)
-          expect(result, true);
           expect(data.serialTransactions.length, expectedLength);
           expect(data.serialTransactions[idIndex].changed != null, true);
           expect(
@@ -410,19 +377,18 @@ void main() {
     });
 
     group("updateTransactionInData", () {
-      test("id not found", () {
+      test("id not found", () async {
         // Arrange (Initialization)
 
         final data = generateRandomData();
+        final useCase = UpdateSerialTransactionUseCase(repository: await createRepo(data));
 
         const String id = "Impossible id";
 
         for (final changeType in SerialTransactionChangeMode.values) {
           // Act (Execution)
-          final bool result =
-              SerialTransactionManager.updateSerialTransactionInData(
+          final bool result = await useCase.updateSerialTransaction(
             id: id,
-            data: data,
             changeType: changeType,
             amount: 5,
           );
@@ -432,18 +398,17 @@ void main() {
         }
       });
 
-      test("id = ''", () {
+      test("id = ''", () async {
         // Arrange (Initialization)
         final data = generateRandomData();
+        final useCase = UpdateSerialTransactionUseCase(repository: await createRepo(data));
 
         const String id = "";
 
         for (final changeType in SerialTransactionChangeMode.values) {
           // Act (Execution)
-          final bool result =
-              SerialTransactionManager.updateSerialTransactionInData(
+          final bool result = await useCase.updateSerialTransaction(
             id: id,
-            data: data,
             changeType: changeType,
             amount: 5,
           );
@@ -452,10 +417,11 @@ void main() {
           expect(result, false);
         }
       });
-      test("currency == ''", () {
+      test("currency == ''", () async {
         // Arrange (Initialization)
 
         final data = generateRandomData();
+        final useCase = UpdateSerialTransactionUseCase(repository: await createRepo(data));
 
         final math.Random rand = math.Random();
         final int idIndex = rand.nextInt(data.serialTransactions.length);
@@ -463,10 +429,8 @@ void main() {
 
         for (final changeType in SerialTransactionChangeMode.values) {
           // Act (Execution)
-          final bool result =
-              SerialTransactionManager.updateSerialTransactionInData(
+          final result = await useCase.updateSerialTransaction(
             id: id,
-            data: data,
             changeType: changeType,
             currency: "",
           );
@@ -476,10 +440,12 @@ void main() {
         }
       });
 
-      test("thisAndAllBefore => time != null", () {
+      // TODO: Most of these are unlikely to be ever seen, because the service handles the input values
+      test("thisAndAllBefore => time != null", () async {
         // Arrange (Initialization)
 
         final data = generateRandomData();
+        final useCase = UpdateSerialTransactionUseCase(repository: await createRepo(data));
 
         final math.Random rand = math.Random();
         final int idIndex = rand.nextInt(data.serialTransactions.length);
@@ -488,10 +454,8 @@ void main() {
         const SerialTransactionChangeMode changeType =
             SerialTransactionChangeMode.thisAndAllBefore;
         // Act (Execution)
-        final bool result =
-            SerialTransactionManager.updateSerialTransactionInData(
+        final result = await useCase.updateSerialTransaction(
           id: id,
-          data: data,
           changeType: changeType,
           currency: "EUR",
         );
@@ -500,10 +464,11 @@ void main() {
         expect(result, false);
       });
 
-      test("thisAndAllAfter => time != null", () {
+      test("thisAndAllAfter => time != null", () async {
         // Arrange (Initialization)
 
         final data = generateRandomData();
+        final useCase = UpdateSerialTransactionUseCase(repository: await createRepo(data));
 
         final math.Random rand = math.Random();
         final int idIndex = rand.nextInt(data.serialTransactions.length);
@@ -512,9 +477,8 @@ void main() {
         const SerialTransactionChangeMode changeType =
             SerialTransactionChangeMode.thisAndAllAfter;
         // Act (Execution)
-        final bool result = SerialTransactionManager.updateSerialTransactionInData(
+        final result = await useCase.updateSerialTransaction(
           id: id,
-          data: data,
           changeType: changeType,
           currency: "EUR",
         );
@@ -523,10 +487,11 @@ void main() {
         expect(result, false);
       });
 
-      test("onlyThisOne => time != null", () {
+      test("onlyThisOne => time != null", () async {
         // Arrange (Initialization)
 
         final data = generateRandomData();
+        final useCase = UpdateSerialTransactionUseCase(repository: await createRepo(data));
 
         final math.Random rand = math.Random();
         final int idIndex = rand.nextInt(data.serialTransactions.length);
@@ -535,10 +500,8 @@ void main() {
         const SerialTransactionChangeMode changeType =
             SerialTransactionChangeMode.onlyThisOne;
         // Act (Execution)
-        final bool result =
-            SerialTransactionManager.updateSerialTransactionInData(
+        final result = await useCase.updateSerialTransaction(
           id: id,
-          data: data,
           changeType: changeType,
           currency: "EUR",
         );
@@ -547,7 +510,7 @@ void main() {
         expect(result, false);
       });
 
-      test("random data test changeType=all (all except newTime)", () {
+      test("random data test changeType=all (all except newTime)", () async {
         final math.Random rand = math.Random();
 
         final int max = rand.nextInt(200) + 1;
@@ -555,28 +518,26 @@ void main() {
           // Arrange (Initialization)
 
           final data = generateRandomData();
+          final useCase = UpdateSerialTransactionUseCase(repository: await createRepo(data));
+
           final int expectedLength = data.serialTransactions.length;
           final int idIndex = rand.nextInt(expectedLength);
           final String id = data.serialTransactions[idIndex].id;
 
           num amount = rand.nextInt(100000) / 100.0;
           amount = -1 * math.pow(amount, 2);
-          final Timestamp initialTime = Timestamp.fromDate(
-            DateTime.now().subtract(const Duration(days: 365 * 4)).add(
-                  Duration(
-                    days: rand.nextInt(365 * 4 * 2),
-                  ),
-                ),
+          final initialTime = DateTime.now().subtract(const Duration(days: 365 * 4)).add(
+            Duration(
+              days: rand.nextInt(365 * 4 * 2),
+            ),
           );
           final int repeatDuration = rand.nextInt(500) + 1;
           final RepeatDurationType repeatDurationType = RepeatDurationType
               .values[rand.nextInt(RepeatDurationType.values.length)];
-          Timestamp? endTime = Timestamp.fromDate(
-            initialTime.toDate().add(
-                  Duration(
-                    days: rand.nextInt(365 * 2),
-                  ),
-                ),
+          DateTime? endTime = initialTime.add(
+            Duration(
+              days: rand.nextInt(365 * 2),
+            ),
           );
           if (rand.nextInt(2) == 0) {
             endTime = null;
@@ -584,10 +545,8 @@ void main() {
           var serialTransaction = data.serialTransactions[idIndex];
 
           // Act (Execution)
-          final bool result =
-              SerialTransactionManager.updateSerialTransactionInData(
+          await useCase.updateSerialTransaction(
             id: id,
-            data: data,
             changeType: SerialTransactionChangeMode.all,
             amount: amount,
             category: "food",
@@ -602,7 +561,6 @@ void main() {
           serialTransaction = data.serialTransactions[idIndex];
 
           // Assert (Observation)
-          expect(result, true);
           expect(data.serialTransactions.length, expectedLength);
           expect(serialTransaction.amount, amount);
           expect(serialTransaction.category, "food");
@@ -617,7 +575,7 @@ void main() {
         }
       });
 
-      test("random data test changeType=all (only newTime)", () {
+      test("random data test changeType=all (only newTime)", () async {
         final math.Random rand = math.Random();
 
         final int max = rand.nextInt(200) + 1;
@@ -625,28 +583,26 @@ void main() {
           // Arrange (Initialization)
 
           final data = generateRandomData();
+          final useCase = UpdateSerialTransactionUseCase(repository: await createRepo(data));
+
           final int expectedLength = data.serialTransactions.length;
           final int idIndex = rand.nextInt(expectedLength);
           final String id = data.serialTransactions[idIndex].id;
 
           var serialTransaction = data.serialTransactions[idIndex];
 
-          final Timestamp newTime = Timestamp.fromDate(
-            DateTime.now().subtract(const Duration(days: 365 * 4)).add(
-                  Duration(
-                    days: rand.nextInt(365 * 4 * 2),
-                  ),
-                ),
+          final newTime = DateTime.now().subtract(const Duration(days: 365 * 4)).add(
+            Duration(
+              days: rand.nextInt(365 * 4 * 2),
+            ),
           );
-          final Timestamp formerInitialTime = serialTransaction.startDate;
+          final formerInitialTime = serialTransaction.startDate;
 
-          final Timestamp? formerEndTime = serialTransaction.endDate;
+          final DateTime? formerEndTime = serialTransaction.endDate;
 
           // Act (Execution)
-          final bool result =
-              SerialTransactionManager.updateSerialTransactionInData(
+          await useCase.updateSerialTransaction(
             id: id,
-            data: data,
             changeType: SerialTransactionChangeMode.all,
             newDate: newTime,
             oldDate: formerInitialTime,
@@ -655,16 +611,15 @@ void main() {
           serialTransaction = data.serialTransactions[idIndex];
 
           // Assert (Observation)
-          expect(result, true);
           expect(data.serialTransactions.length, expectedLength);
           if (formerEndTime == null) {
             expect(serialTransaction.endDate, null);
           } else {
             expect(
-              (serialTransaction.endDate!).toDate(),
-              formerEndTime.toDate().subtract(
-                    formerInitialTime.toDate().difference(
-                          newTime.toDate(),
+              serialTransaction.endDate ,
+              formerEndTime .subtract(
+                    formerInitialTime .difference(
+                          newTime ,
                         ),
                   ),
             );
@@ -673,8 +628,7 @@ void main() {
         }
       });
 
-      test("random data test changeType=thisAndAllBefore (all except newTime)",
-          () {
+      test("random data test changeType=thisAndAllBefore (all except newTime)", () async {
         final math.Random rand = math.Random();
 
         final int max = rand.nextInt(200) + 1;
@@ -682,6 +636,8 @@ void main() {
           // Arrange (Initialization)
 
           final data = generateRandomData();
+          final useCase = UpdateSerialTransactionUseCase(repository: await createRepo(data));
+
           final int expectedLength = data.serialTransactions.length + 1;
           final int idIndex = rand.nextInt(expectedLength - 1);
           final String oldId = data.serialTransactions[idIndex].id;
@@ -696,36 +652,30 @@ void main() {
 
           final oldRepeatDurationType = oldSerialTransaction.repeatDurationType;
 
-          final Timestamp? oldEndTime = oldSerialTransaction.endDate;
+          final DateTime? oldEndTime = oldSerialTransaction.endDate;
 
-          final Timestamp oldInitialTime = oldSerialTransaction.startDate;
+          final oldInitialTime = oldSerialTransaction.startDate;
 
           num newAmount = rand.nextInt(100000) / 100.0;
           newAmount = -1 * math.pow(newAmount, 2);
-          final Timestamp newInitialTime = Timestamp.fromDate(
-            DateTime.now().subtract(const Duration(days: 365 * 4)).add(
-                  Duration(
-                    days: rand.nextInt(365 * 4 * 2),
-                  ),
-                ),
+          final newInitialTime = DateTime.now().subtract(const Duration(days: 365 * 4)).add(
+            Duration(
+              days: rand.nextInt(365 * 4 * 2),
+            ),
           );
           final int newRepeatDuration = rand.nextInt(500) + 1;
           final RepeatDurationType newRepeatDurationType = RepeatDurationType
               .values[rand.nextInt(RepeatDurationType.values.length)];
 
-          final Timestamp time = Timestamp.fromDate(
-            calculateOneTimeStep(
-              data.serialTransactions[idIndex].repeatDuration,
-              oldInitialTime.toDate(),
-              monthly: isMonthly(data.serialTransactions[idIndex]),
-            ),
+          final time = calculateOneTimeStep(
+            data.serialTransactions[idIndex].repeatDuration,
+            oldInitialTime ,
+            monthly: isMonthly(data.serialTransactions[idIndex]),
           );
 
           // Act (Execution)
-          final bool result =
-              SerialTransactionManager.updateSerialTransactionInData(
+          await useCase.updateSerialTransaction(
             id: oldId,
-            data: data,
             changeType: SerialTransactionChangeMode.thisAndAllBefore,
             amount: newAmount,
             category: "food",
@@ -740,7 +690,6 @@ void main() {
           oldSerialTransaction = data.serialTransactions[idIndex];
 
           // Assert (Observation)
-          expect(result, true);
           expect(data.serialTransactions.length, expectedLength);
           // old repeated balance
           expect(oldSerialTransaction.amount, oldAmount);
@@ -749,13 +698,11 @@ void main() {
           // the old repeated balance has been moved one time step after this.time
           expect(
             oldSerialTransaction.startDate,
-            Timestamp.fromDate(
-              calculateOneTimeStep(
-                data.serialTransactions[idIndex].repeatDuration,
-                time.toDate(),
-                monthly: isMonthly(data.serialTransactions[idIndex]),
-                dayOfTheMonth: time.toDate().day,
-              ),
+            calculateOneTimeStep(
+              data.serialTransactions[idIndex].repeatDuration,
+              time ,
+              monthly: isMonthly(data.serialTransactions[idIndex]),
+              dayOfTheMonth: time.day,
             ),
           );
           expect(oldSerialTransaction.repeatDuration, oldRepeatDuration);
@@ -778,7 +725,7 @@ void main() {
         }
       });
 
-      test("random data test changeType=thisAndAllBefore (only newTime)", () {
+      test("random data test changeType=thisAndAllBefore (only newTime)", () async {
         final math.Random rand = math.Random();
 
         final int max = rand.nextInt(200) + 1;
@@ -786,44 +733,38 @@ void main() {
           // Arrange (Initialization)
 
           final data = generateRandomData();
+          final useCase = UpdateSerialTransactionUseCase(repository: await createRepo(data));
+
           final int expectedLength = data.serialTransactions.length + 1;
           final int idIndex = rand.nextInt(expectedLength - 1);
           final String oldId = data.serialTransactions[idIndex].id;
 
           var oldSerialTransaction = data.serialTransactions[idIndex];
 
-          final Timestamp? oldEndTime = oldSerialTransaction.endDate;
-          Timestamp oldInitialTime = oldSerialTransaction.startDate;
+          final DateTime? oldEndTime = oldSerialTransaction.endDate;
+          DateTime oldInitialTime = oldSerialTransaction.startDate;
 
-          final Timestamp time = oldInitialTime;
+          final time = oldInitialTime;
 
           final Duration moveDuration = Duration(seconds: rand.nextInt(100));
 
-          final Timestamp newTime = Timestamp.fromDate(
-            time.toDate().add(moveDuration),
-          );
+          final newTime = time.add(moveDuration);
 
           // time gets moved by one time step
-          oldInitialTime = Timestamp.fromDate(
-            oldInitialTime.toDate().add(moveDuration),
+          oldInitialTime = oldInitialTime.add(moveDuration);
+
+          final newInitialTime = calculateOneTimeStep(
+            data.serialTransactions[idIndex].repeatDuration,
+            time ,
+            monthly: isMonthly(data.serialTransactions[idIndex]),
+            dayOfTheMonth: time .day,
           );
 
-          final Timestamp newInitialTime = Timestamp.fromDate(
-            calculateOneTimeStep(
-              data.serialTransactions[idIndex].repeatDuration,
-              time.toDate(),
-              monthly: isMonthly(data.serialTransactions[idIndex]),
-              dayOfTheMonth: time.toDate().day,
-            ),
-          );
-
-          final Timestamp newEndTime = newTime;
+          final newEndTime = newTime;
 
           // Act (Execution)
-          final bool result =
-              SerialTransactionManager.updateSerialTransactionInData(
+          await useCase.updateSerialTransaction(
             id: oldId,
-            data: data,
             changeType: SerialTransactionChangeMode.thisAndAllBefore,
             oldDate: time,
             newDate: newTime,
@@ -833,7 +774,6 @@ void main() {
           oldSerialTransaction = data.serialTransactions[idIndex];
 
           // Assert (Observation)
-          expect(result, true);
           expect(data.serialTransactions.length, expectedLength);
           // old repeated balance
           expect(oldSerialTransaction.endDate, oldEndTime);
@@ -845,7 +785,7 @@ void main() {
       });
 
       test("random data test changeType=thisAndAllAfter (all except newTime)",
-          () {
+          () async {
         final math.Random rand = math.Random();
 
         final int max = rand.nextInt(200) + 1;
@@ -853,6 +793,8 @@ void main() {
           // Arrange (Initialization)
 
           final data = generateRandomData();
+          final useCase = UpdateSerialTransactionUseCase(repository: await createRepo(data));
+
           final int expectedLength = data.serialTransactions.length + 1;
           final int idIndex = rand.nextInt(expectedLength - 1);
           final String oldId = data.serialTransactions[idIndex].id;
@@ -867,15 +809,13 @@ void main() {
 
           final oldRepeatDurationType = oldSerialTransaction.repeatDurationType;
 
-          final Timestamp oldInitialTime = oldSerialTransaction.startDate;
+          final oldInitialTime = oldSerialTransaction.startDate;
 
           num newAmount = rand.nextInt(100000) / 100.0;
           newAmount = -1 * math.pow(newAmount, 2);
-          Timestamp? newEndTime = Timestamp.fromDate(
-            DateTime.now().add(
-              Duration(
-                days: rand.nextInt(365 * 8 * 2),
-              ),
+          DateTime? newEndTime = DateTime.now().add(
+            Duration(
+              days: rand.nextInt(365 * 8 * 2),
             ),
           );
           if (rand.nextInt(2) == 0) {
@@ -885,18 +825,14 @@ void main() {
           final RepeatDurationType newRepeatDurationType = RepeatDurationType
               .values[rand.nextInt(RepeatDurationType.values.length)];
 
-          final Timestamp time = Timestamp.fromDate(
-            calculateOneTimeStep(
-              data.serialTransactions[idIndex].repeatDuration,
-              oldInitialTime.toDate(),
-              monthly: isMonthly(data.serialTransactions[idIndex]),
-            ),
+          final time = calculateOneTimeStep(
+            data.serialTransactions[idIndex].repeatDuration,
+            oldInitialTime ,
+            monthly: isMonthly(data.serialTransactions[idIndex]),
           );
           // Act (Execution)
-          final bool result =
-              SerialTransactionManager.updateSerialTransactionInData(
+          await useCase.updateSerialTransaction(
             id: oldId,
-            data: data,
             changeType: SerialTransactionChangeMode.thisAndAllAfter,
             amount: newAmount,
             category: "food",
@@ -911,7 +847,6 @@ void main() {
           final newSerialTransaction = data.serialTransactions.last;
           oldSerialTransaction = data.serialTransactions[idIndex];
           // Assert (Observation)
-          expect(result, true);
           expect(data.serialTransactions.length, expectedLength);
           // old repeated balance
           expect(oldSerialTransaction.amount, oldAmount);
@@ -927,13 +862,11 @@ void main() {
           );
           expect(
             oldSerialTransaction.endDate,
-            Timestamp.fromDate(
-              calculateOneTimeStepBackwards(
-                data.serialTransactions[idIndex].repeatDuration,
-                time.toDate(),
-                monthly: isMonthly(data.serialTransactions[idIndex]),
-                dayOfTheMonth: time.toDate().day,
-              ),
+            calculateOneTimeStepBackwards(
+              data.serialTransactions[idIndex].repeatDuration,
+              time ,
+              monthly: isMonthly(data.serialTransactions[idIndex]),
+              dayOfTheMonth: time .day,
             ),
           );
           // new repeated balance
@@ -950,7 +883,7 @@ void main() {
         }
       });
 
-      test("random data test changeType=thisAndAllAfter (only newTime)", () {
+      test("random data test changeType=thisAndAllAfter (only newTime)", () async {
         final math.Random rand = math.Random();
 
         final int max = rand.nextInt(200) + 1;
@@ -958,57 +891,51 @@ void main() {
           // Arrange (Initialization)
 
           final data = generateRandomData();
+          final useCase = UpdateSerialTransactionUseCase(repository: await createRepo(data));
+
           final int expectedLength = data.serialTransactions.length + 1;
           final int idIndex = rand.nextInt(expectedLength - 1);
           final String oldId = data.serialTransactions[idIndex].id;
 
           var oldSerialTransaction = data.serialTransactions[idIndex];
 
-          Timestamp? oldEndTime = oldSerialTransaction.endDate;
-          final Timestamp oldInitialTime = oldSerialTransaction.startDate;
+          DateTime? oldEndTime = oldSerialTransaction.endDate;
+          final oldInitialTime = oldSerialTransaction.startDate;
 
-          final Timestamp time = oldInitialTime;
+          final time = oldInitialTime;
 
           final Duration moveDuration = Duration(seconds: rand.nextInt(100));
 
-          final Timestamp newTime = Timestamp.fromDate(
-            time.toDate().add(moveDuration),
-          );
+          final newTime = time.add(moveDuration);
 
-          oldEndTime = oldEndTime != null
-              ? Timestamp.fromDate(oldEndTime.toDate().add(moveDuration))
-              : null;
+          oldEndTime = oldEndTime?.add(moveDuration);
 
-          Timestamp newInitialTime = time;
+          var newInitialTime = time;
           // time gets moved by one time step
-          newInitialTime = Timestamp.fromDate(
-            newInitialTime.toDate().add(moveDuration),
-          );
+          newInitialTime = newInitialTime.add(moveDuration);
 
-          final Timestamp newEndTime = Timestamp.fromDate(
-            calculateOneTimeStepBackwards(
-              data.serialTransactions[idIndex].repeatDuration,
-              time.toDate(),
-              monthly: isMonthly(data.serialTransactions[idIndex]),
-              dayOfTheMonth: time.toDate().day,
-            ),
+          final newEndTime = calculateOneTimeStepBackwards(
+            data.serialTransactions[idIndex].repeatDuration,
+            time ,
+            monthly: isMonthly(data.serialTransactions[idIndex]),
+            dayOfTheMonth: time .day,
           );
 
           // Act (Execution)
-          final bool result =
-              SerialTransactionManager.updateSerialTransactionInData(
+
+          await useCase.updateSerialTransaction(
             id: oldId,
-            data: data,
             changeType: SerialTransactionChangeMode.thisAndAllAfter,
             oldDate: time,
             newDate: newTime,
           );
 
+
+
           final newSerialTransaction = data.serialTransactions.last;
           oldSerialTransaction = data.serialTransactions[idIndex];
 
           // Assert (Observation)
-          expect(result, true);
           expect(data.serialTransactions.length, expectedLength);
           // old repeated balance
           expect(oldSerialTransaction.endDate, newEndTime);
@@ -1019,7 +946,7 @@ void main() {
         }
       });
 
-      test("random data test changeType=onlyThisOne", () {
+      test("random data test changeType=onlyThisOne", () async {
         final math.Random rand = math.Random();
 
         final int max = rand.nextInt(200) + 1;
@@ -1027,6 +954,8 @@ void main() {
           // Arrange (Initialization)
 
           final data = generateRandomData();
+          final useCase = UpdateSerialTransactionUseCase(repository: await createRepo(data));
+
           final int expectedLength = data.serialTransactions.length;
           int idIndex = rand.nextInt(expectedLength) - 1;
           idIndex = idIndex == -1 ? 0 : idIndex;
@@ -1034,30 +963,26 @@ void main() {
 
           var serialTransaction = data.serialTransactions[idIndex];
 
-          final Timestamp initialTime = serialTransaction.startDate;
+          final initialTime = serialTransaction.startDate;
 
           num newAmount = rand.nextInt(100000) / 100.0;
           newAmount = -1 * math.pow(newAmount, 2);
 
-          final Timestamp time = Timestamp.fromDate(
-            calculateOneTimeStep(
-              data.serialTransactions[idIndex].repeatDuration,
-              initialTime.toDate(),
-              monthly: isMonthly(data.serialTransactions[idIndex]),
-            ),
+          final time = calculateOneTimeStep(
+            data.serialTransactions[idIndex].repeatDuration,
+            initialTime ,
+            monthly: isMonthly(data.serialTransactions[idIndex]),
           );
 
           final Duration moveDuration = Duration(seconds: rand.nextInt(100));
 
-          final Timestamp newTime = Timestamp.fromDate(
-            time.toDate().add(moveDuration),
-          );
+          final newTime = time.add(moveDuration);
 
           // Act (Execution)
-          final bool result =
-              SerialTransactionManager.updateSerialTransactionInData(
+
+
+          await useCase.updateSerialTransaction(
             id: id,
-            data: data,
             changeType: SerialTransactionChangeMode.onlyThisOne,
             amount: newAmount,
             category: "food",
@@ -1070,7 +995,6 @@ void main() {
           serialTransaction = data.serialTransactions[idIndex];
 
           // Assert (Observation)
-          expect(result, true);
           expect(data.serialTransactions.length, expectedLength);
           expect(serialTransaction.changed != null, true);
 
@@ -1100,9 +1024,9 @@ void main() {
 
           final DateTime initialTime =
               (data.serialTransactions[idIndex].initialTime)
-                  .toDate();
+                   ;
 
-          final Timestamp time = Timestamp.fromDate(
+          final time = Timestamp.fromDate(
             calculateOneTimeStep(
               data.serialTransactions[idIndex].repeatDuration,
               initialTime,
@@ -1190,22 +1114,16 @@ BalanceDocument generateRandomData({
   final int max = rand.nextInt(averageNumberOfEntries * 2) + 1;
   for (int i = 0; i < max; i++) {
     final num amount = rand.nextInt(100000) / 100.0;
-    final Timestamp time = Timestamp.fromDate(
-      DateTime.now().subtract(const Duration(days: 365 * 4)).add(
-            Duration(
-              days: rand.nextInt(365 * 4 * 2),
-            ),
-          ),
+    final time = DateTime.now().subtract(const Duration(days: 365 * 4)).add(
+      Duration(
+        days: rand.nextInt(365 * 4 * 2),
+      ),
     );
-    final int repeatDuration = rand.nextInt(500) + 1;
-    final RepeatDurationType repeatDurationType = RepeatDurationType
-        .values[rand.nextInt(RepeatDurationType.values.length)];
-    Timestamp? endTime = Timestamp.fromDate(
-      time.toDate().add(
-            Duration(
-              days: rand.nextInt(365 * 2),
-            ),
-          ),
+    final interval = randomRepeatInterval();
+    DateTime? endTime = time.add(
+      Duration(
+        days: rand.nextInt(365 * 2),
+      ),
     );
     if (rand.nextInt(2) == 0) {
       endTime = null;
@@ -1219,8 +1137,8 @@ BalanceDocument generateRandomData({
         id: const Uuid().v4(),
         startDate: time,
         endDate: endTime,
-        repeatDuration: repeatDuration,
-        repeatDurationType: repeatDurationType,
+        repeatDuration: interval.duration,
+        repeatDurationType: interval.type,
       ),
     );
   }

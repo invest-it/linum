@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:linum/core/balance/models/transaction.dart';
+import 'package:linum/core/balance/domain/models/transaction.dart';
 import 'package:linum/core/categories/core/utils/translate_category.dart';
 
 class TransactionTileTitle extends StatelessWidget {

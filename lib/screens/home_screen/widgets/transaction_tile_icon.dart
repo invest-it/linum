@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:linum/core/balance/models/transaction.dart';
+import 'package:linum/core/balance/domain/models/transaction.dart';
 import 'package:linum/core/categories/core/constants/standard_categories.dart';
 
 class TransactionTileIcon extends StatelessWidget {
