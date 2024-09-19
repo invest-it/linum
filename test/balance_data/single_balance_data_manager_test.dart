@@ -16,7 +16,7 @@ import 'balance_test_utils.dart';
 void main() {
   group("TransactionDataManager", () {
     group("addTransactionToData", () {
-      test("transaction.category == ''", () {
+      test("transaction.category == ''", () async {
         // Arrange (Initialization)
         final Transaction transaction = Transaction(
           amount: 5.55,
@@ -27,7 +27,7 @@ void main() {
         );
 
         final data = BalanceDocument();
-        final service = createService(data);
+        final service = await createService(data);
 
         // Act (Execution)
 
@@ -37,7 +37,7 @@ void main() {
         expect(data.transactions.length, 0);
       });
 
-      test("transaction.currency == ''", () {
+      test("transaction.currency == ''", () async {
         // Arrange (Initialization)
         final Transaction transaction = Transaction(
           amount: 5.55,
@@ -48,7 +48,7 @@ void main() {
         );
 
         final data = BalanceDocument();
-        final service = createService(data);
+        final service = await createService(data);
 
         // Act (Execution)
         expectLater(() => service.addTransaction(transaction), throwsArgumentError);
@@ -62,7 +62,7 @@ void main() {
 
 
         final data = BalanceDocument();
-        final service = createService(data);
+        final service = await createService(data);
 
         final int max = rand.nextInt(2000) + 1;
         for (int i = 0; i < max; i++) {
@@ -109,7 +109,7 @@ void main() {
         // Arrange (Initialization)
 
         final data = generateRandomData();
-        final service = createService(data);
+        final service = await createService(data);
 
         const String id = "Impossible id";
 
@@ -133,7 +133,7 @@ void main() {
           // Arrange (Initialization)
 
           final data = generateRandomData();
-          final service = createService(data);
+          final service = await createService(data);
 
           final int expectedLength = data.transactions.length - 1;
 
@@ -189,7 +189,7 @@ void main() {
 
         final data =
             generateRandomData();
-        final service = createService(data);
+        final service = await createService(data);
 
         final math.Random rand = math.Random();
         final int idIndex = rand.nextInt(data.transactions.length);
@@ -202,12 +202,12 @@ void main() {
 
 
       });
-      test("currency == ''", () {
+      test("currency == ''", () async {
         // Arrange (Initialization)
 
         final data =
             generateRandomData();
-        final service = createService(data);
+        final service = await createService(data);
 
         final math.Random rand = math.Random();
         final int idIndex = rand.nextInt(data.transactions.length);
@@ -228,7 +228,7 @@ void main() {
           // Arrange (Initialization)
 
           final data = generateRandomData();
-          final service = createService(data);
+          final service = await createService(data);
 
           final int expectedLength = data.transactions.length;
           final int idIndex = rand.nextInt(data.transactions.length);

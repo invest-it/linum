@@ -17,18 +17,18 @@ class BalanceDataServiceImpl extends IBalanceDataService {
   }) : _repo = repo;
 
   @override
-  Future<List<SerialTransaction>> getSerialTransactionsForMonth(DateTime month) {
-    return _repo.getSerialTransactionsForMonth(month);
+  Future<List<SerialTransaction>> getSerialTransactionsForMonth(DateTime month) async {
+    return await _repo.getSerialTransactionsForMonth(month);
   }
 
   @override
-  Future<List<Transaction>> getTransactionsForMonth(DateTime month) {
-    return _repo.getTransactionsForMonth(month);
+  Future<List<Transaction>> getTransactionsForMonth(DateTime month) async {
+    return await _repo.getTransactionsForMonth(month);
   }
 
   @override
-  Future<SerialTransaction?> getSerialTransactionById(String id) {
-    return _repo.getSerialTransactionById(id);
+  Future<SerialTransaction?> getSerialTransactionById(String id) async {
+    return await _repo.getSerialTransactionById(id);
   }
 
   @override
@@ -143,11 +143,11 @@ class BalanceDataServiceImpl extends IBalanceDataService {
   Future<bool> ready() => _repo.ready();
 
   @override
-  Future<List<SerialTransaction>> getAllSerialTransactions()
+  Future<List<SerialTransaction>> getAllSerialTransactions() async
     => _repo.getAllSerialTransactions();
 
 
   @override
-  Future<List<Transaction>> getAllTransactions()
+  Future<List<Transaction>> getAllTransactions() async
     => _repo.getAllTransactions();
 }

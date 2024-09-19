@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:linum/core/balance/domain/balance_data_repository.dart';
 import 'package:linum/core/balance/domain/models/serial_transaction.dart';
 import 'package:linum/core/balance/domain/models/transaction.dart';
@@ -6,19 +8,24 @@ import 'package:linum/core/balance/ports/firebase/balance_document.dart';
 import 'package:linum/core/balance/ports/firebase/firebase_test_balance_adapter.dart';
 import 'package:linum/core/balance/presentation/balance_data_service.dart';
 import 'package:linum/core/balance/presentation/balance_data_service_impl.dart';
+import 'package:linum/core/repeating/enums/repeat_duration_type_enum.dart';
 
-IBalanceDataRepository createRepo(BalanceDocument doc) {
-  return BalanceDataRepositoryImpl(
+Future<IBalanceDataRepository> createRepo(BalanceDocument doc) async {
+  final repo = BalanceDataRepositoryImpl(
     adapter: FirebaseTestBalanceAdapter(
       doc: doc,
     ),
   );
+  await repo.ready();
+  return repo;
 }
 
-IBalanceDataService createService(BalanceDocument doc) {
-  return BalanceDataServiceImpl(
-    repo: createRepo(doc),
+Future<IBalanceDataService> createService(BalanceDocument doc) async {
+  final service = BalanceDataServiceImpl(
+    repo: await createRepo(doc),
   );
+  await service.ready();
+  return service;
 }
 
 SerialTransaction createSerialTransactionWithId(String id) {
@@ -40,5 +47,19 @@ Transaction createTransactionWithId(String id) {
     currency: "EUR",
     name: "Test",
     date: DateTime.now(),
+  );
+}
+
+({RepeatDurationType type, int duration}) randomRepeatInterval() {
+  final rand = math.Random();
+  final RepeatDurationType repeatDurationType = RepeatDurationType
+      .values[rand.nextInt(RepeatDurationType.values.length)];
+  int repeatDuration = rand.nextInt(99) + 1;
+  if (repeatDurationType == RepeatDurationType.seconds) {
+    repeatDuration *= 10000;
+  }
+  return (
+    type: repeatDurationType,
+    duration: repeatDuration,
   );
 }

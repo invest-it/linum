@@ -10,14 +10,14 @@ import 'package:linum/core/balance/domain/models/transaction.dart';
 import 'package:linum/core/balance/domain/utils/transaction_generation.dart';
 import 'package:linum/core/budget/domain/models/changes.dart';
 
-typedef TransactionProcessor = void Function(List<Transaction>);
+typedef TransactionProcessor = FutureOr<void> Function(List<Transaction>);
 
 class BalanceDataRepositoryImpl implements IBalanceDataRepository {
   final Map<String, Map<String, Transaction>> _transactionStorage = {};
   final Map<String, SerialTransaction> _serialTransactionStorage = {};
   final List<TransactionProcessor> _transactionProcessors;
 
-  final previewSpan = Jiffy.now().add(months: 1).dateTime; // TODO: Set previewSpan from outside
+  final previewSpan = Jiffy.now().add(years: 1).dateTime; // TODO: Set previewSpan from outside
 
   final IBalanceDataAdapter _adapter;
 
@@ -29,7 +29,7 @@ class BalanceDataRepositoryImpl implements IBalanceDataRepository {
   }): _adapter = adapter, _transactionProcessors = transactionProcessors ?? [] {
     Future.wait([
       _adapter.getAllSerialTransactions().then((data) async {
-        return await _setSerialTransactionsStorage(data);
+        return _setSerialTransactionsStorage(data);
       }),
       _adapter.getAllTransactions().then((data) async {
         return await _setTransactionsStorage(data);
@@ -44,10 +44,8 @@ class BalanceDataRepositoryImpl implements IBalanceDataRepository {
   Future<void> _setTransactionsStorage(List<Transaction> transactions) async {
 
     for (final processor in _transactionProcessors) {
-      processor(transactions);
+      await processor(transactions);
     }
-    print("Set Start ${DateTime.now()}");
-    print(transactions.length);
     for (final transaction in transactions) {
       final key = _getStorageKey(transaction.date);
       if (!_transactionStorage.containsKey(key)) {
@@ -55,11 +53,11 @@ class BalanceDataRepositoryImpl implements IBalanceDataRepository {
       }
       _transactionStorage[key]?[transaction.id] = transaction;
     }
-    print("Set End ${DateTime.now()}");
   }
 
-  Future<void> _setSerialTransactionsStorage(List<SerialTransaction> serialTransactions) async {
+  void _setSerialTransactionsStorage(List<SerialTransaction> serialTransactions) {
     final transactions = generateTransactions(serialTransactions, previewSpan);
+
 
     _setTransactionsStorage(transactions);
     for (final serialTransaction in serialTransactions) {
@@ -112,30 +110,30 @@ class BalanceDataRepositoryImpl implements IBalanceDataRepository {
   }
 
   @override
-  Future<List<SerialTransaction>> getAllSerialTransactions() async {
+  List<SerialTransaction> getAllSerialTransactions() {
     return List.of(_serialTransactionStorage.values);
   }
 
   @override
-  Future<List<Transaction>> getAllTransactions() async {
+  List<Transaction> getAllTransactions() {
     final listOfLists = _transactionStorage.values.map((values) => values.values);
     return List.of(listOfLists.flattened);
   }
 
   @override
-  Future<List<SerialTransaction>> getSerialTransactionsForMonth(DateTime month) async {
+  List<SerialTransaction> getSerialTransactionsForMonth(DateTime month) {
     return _serialTransactionStorage.values.where((s) => s.containsDate(month)).toList();
   }
 
   @override
-  Future<List<Transaction>> getTransactionsForMonth(DateTime month) async {
+  List<Transaction> getTransactionsForMonth(DateTime month) {
     return _transactionStorage[_getStorageKey(month)]?.values.toList() ?? [];
   }
 
   @override
   Future<void> removeSerialTransaction(SerialTransaction serialTransaction) async {
     _removeSerialTransactionFromStorage(serialTransaction);
-    _adapter.executeSerialTransactionChanges([
+    await _adapter.executeSerialTransactionChanges([
       ModelChange(ChangeType.delete, serialTransaction),
     ]);
   }
@@ -144,10 +142,9 @@ class BalanceDataRepositoryImpl implements IBalanceDataRepository {
   Future<void> removeTransaction(Transaction transaction) async {
     _removeTransactionFromStorage(transaction);
 
-    _adapter.executeTransactionChanges([
+    await _adapter.executeTransactionChanges([
       ModelChange(ChangeType.delete, transaction),
     ]);
-    return;
   }
 
   @override
@@ -195,7 +192,7 @@ class BalanceDataRepositoryImpl implements IBalanceDataRepository {
       }
     }
 
-    _adapter.executeSerialTransactionChanges(changes);
+    return _adapter.executeSerialTransactionChanges(changes);
   }
 
   @override
@@ -210,16 +207,16 @@ class BalanceDataRepositoryImpl implements IBalanceDataRepository {
           _removeTransactionFromStorage(change.model);
       }
     }
-    _adapter.executeTransactionChanges(changes);
+    return _adapter.executeTransactionChanges(changes);
   }
 
   @override
-  Future<SerialTransaction?> getSerialTransactionById(String id) async {
+  SerialTransaction? getSerialTransactionById(String id) {
     return _serialTransactionStorage[id];
   }
 
   @override
-  Future<Transaction?> getTransactionById(String id) async {
+  Transaction? getTransactionById(String id) {
     for (final dateMap in _transactionStorage.values) {
       final transaction = dateMap[id];
       if (transaction != null) {

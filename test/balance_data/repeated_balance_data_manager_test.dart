@@ -25,7 +25,7 @@ void main() {
     group("addSerialTransactionToData", () {
       test("serialTransaction.category == ''", () async {
         final data = BalanceDocument();
-        final service = createService(data);
+        final service = await createService(data);
 
         // Arrange (Initialization)
         final SerialTransaction repeatBalanceData = SerialTransaction(
@@ -47,7 +47,7 @@ void main() {
       test("repeatBalanceData.currency == ''", () async {
         // Arrange (Initialization)
         final data = BalanceDocument();
-        final service = createService(data);
+        final service = await createService(data);
 
         final SerialTransaction repeatBalanceData = SerialTransaction(
           amount: 5.55,
@@ -70,12 +70,11 @@ void main() {
         final math.Random rand = math.Random();
 
         final data = BalanceDocument();
-        final service = createService(data);
+        final service = await createService(data);
 
         final int max = rand.nextInt(1000) + 1;
         for (int i = 0; i < max; i++) {
           // Arrange (Initialization)
-          print("Init Start ${DateTime.now()}");
           final num amount = rand.nextInt(100000) / 100.0;
           final date = DateTime.now().subtract(const Duration(days: 365 * 4)).add(
             Duration(
@@ -83,32 +82,20 @@ void main() {
             ),
           );
 
-          final RepeatDurationType repeatDurationType = RepeatDurationType
-              .values[rand.nextInt(RepeatDurationType.values.length)];
-          int repeatDuration = rand.nextInt(100);
-          if (repeatDurationType == RepeatDurationType.seconds) {
-            repeatDuration *= 10000;
-          }
 
-          print(date);
-          print(repeatDuration);
+          final interval = randomRepeatInterval();
           final SerialTransaction repeatBalanceData = SerialTransaction(
             amount: amount,
             category: "none",
             currency: "EUR",
             name: "Item Nr $i",
             startDate: date,
-            repeatDuration: repeatDuration, // TODO: Use one class for this
-            repeatDurationType: repeatDurationType,
+            repeatDuration: interval.duration, // TODO: Use one class for this
+            repeatDurationType: interval.type,
           );
-          print("Init End ${DateTime.now()}");
-
-          print("Add Start ${DateTime.now()}");
           // Act (Execution)
           await service.addSerialTransaction(repeatBalanceData);
           // Assert (Observation)
-
-          print("Add End ${DateTime.now()}");
 
           expect(
             data.serialTransactions.last.amount,
@@ -143,17 +130,18 @@ void main() {
       });
     });
 
-    group("removeSerialTransactionFromData", () {
+    group("removeSerialTransaction", () {
       test("id not found", () async {
         // Arrange (Initialization)
         final data = generateRandomData();
-        final service = createService(data);
+        final service = await createService(data);
 
         const String id = "Impossible id";
 
         final int expectedLength = data.serialTransactions.length;
 
         for (final removeType in SerialTransactionChangeMode.values) {
+
           // Act (Execution)
           await service.removeSerialTransaction(
             serialTransaction: createSerialTransactionWithId(id),
@@ -169,7 +157,7 @@ void main() {
       test("removeType == thisAndAllBefore => time != null", () async {
         // Arrange (Initialization)
         final data = generateRandomData();
-        final service = createService(data);
+        final service = await createService(data);
 
         const String id = "Impossible id";
 
@@ -191,7 +179,7 @@ void main() {
       test("removeType == thisAndAllAfter => time != null", () async {
         // Arrange (Initialization)
         final data = generateRandomData();
-        final service = createService(data);
+        final service = await createService(data);
 
         const String id = "Impossible id";
 
@@ -213,7 +201,7 @@ void main() {
       test("removeType == onlyThisOne => time != null", () async {
         // Arrange (Initialization)
         final data = generateRandomData();
-        final service = createService(data);
+        final service = await createService(data);
 
         const String id = "Impossible id";
 
@@ -240,7 +228,7 @@ void main() {
           // Arrange (Initialization)
 
           final data = generateRandomData();
-          final service = createService(data);
+          final service = await createService(data);
 
           final int expectedLength = data.serialTransactions.length - 1;
           final int idIndex = rand.nextInt(expectedLength) + 1;
@@ -266,7 +254,7 @@ void main() {
           // Arrange (Initialization)
 
           final data = generateRandomData();
-          final service = createService(data);
+          final service = await createService(data);
 
           final int expectedLength = data.serialTransactions.length;
           final int idIndex = rand.nextInt(expectedLength);
@@ -307,7 +295,7 @@ void main() {
           // Arrange (Initialization)
 
           final data = generateRandomData();
-          final service = createService(data);
+          final service = await createService(data);
 
           final int expectedLength = data.serialTransactions.length;
           final int idIndex = rand.nextInt(expectedLength);
@@ -354,7 +342,7 @@ void main() {
           // Arrange (Initialization)
 
           final data = generateRandomData();
-          final service = createService(data);
+          final service = await createService(data);
 
           final int expectedLength = data.serialTransactions.length;
           final int idIndex = rand.nextInt(expectedLength);
@@ -393,7 +381,7 @@ void main() {
         // Arrange (Initialization)
 
         final data = generateRandomData();
-        final useCase = UpdateSerialTransactionUseCase(repository: createRepo(data));
+        final useCase = UpdateSerialTransactionUseCase(repository: await createRepo(data));
 
         const String id = "Impossible id";
 
@@ -413,7 +401,7 @@ void main() {
       test("id = ''", () async {
         // Arrange (Initialization)
         final data = generateRandomData();
-        final useCase = UpdateSerialTransactionUseCase(repository: createRepo(data));
+        final useCase = UpdateSerialTransactionUseCase(repository: await createRepo(data));
 
         const String id = "";
 
@@ -433,7 +421,7 @@ void main() {
         // Arrange (Initialization)
 
         final data = generateRandomData();
-        final useCase = UpdateSerialTransactionUseCase(repository: createRepo(data));
+        final useCase = UpdateSerialTransactionUseCase(repository: await createRepo(data));
 
         final math.Random rand = math.Random();
         final int idIndex = rand.nextInt(data.serialTransactions.length);
@@ -457,7 +445,7 @@ void main() {
         // Arrange (Initialization)
 
         final data = generateRandomData();
-        final useCase = UpdateSerialTransactionUseCase(repository: createRepo(data));
+        final useCase = UpdateSerialTransactionUseCase(repository: await createRepo(data));
 
         final math.Random rand = math.Random();
         final int idIndex = rand.nextInt(data.serialTransactions.length);
@@ -480,7 +468,7 @@ void main() {
         // Arrange (Initialization)
 
         final data = generateRandomData();
-        final useCase = UpdateSerialTransactionUseCase(repository: createRepo(data));
+        final useCase = UpdateSerialTransactionUseCase(repository: await createRepo(data));
 
         final math.Random rand = math.Random();
         final int idIndex = rand.nextInt(data.serialTransactions.length);
@@ -503,7 +491,7 @@ void main() {
         // Arrange (Initialization)
 
         final data = generateRandomData();
-        final useCase = UpdateSerialTransactionUseCase(repository: createRepo(data));
+        final useCase = UpdateSerialTransactionUseCase(repository: await createRepo(data));
 
         final math.Random rand = math.Random();
         final int idIndex = rand.nextInt(data.serialTransactions.length);
@@ -530,7 +518,7 @@ void main() {
           // Arrange (Initialization)
 
           final data = generateRandomData();
-          final useCase = UpdateSerialTransactionUseCase(repository: createRepo(data));
+          final useCase = UpdateSerialTransactionUseCase(repository: await createRepo(data));
 
           final int expectedLength = data.serialTransactions.length;
           final int idIndex = rand.nextInt(expectedLength);
@@ -595,7 +583,7 @@ void main() {
           // Arrange (Initialization)
 
           final data = generateRandomData();
-          final useCase = UpdateSerialTransactionUseCase(repository: createRepo(data));
+          final useCase = UpdateSerialTransactionUseCase(repository: await createRepo(data));
 
           final int expectedLength = data.serialTransactions.length;
           final int idIndex = rand.nextInt(expectedLength);
@@ -628,7 +616,7 @@ void main() {
             expect(serialTransaction.endDate, null);
           } else {
             expect(
-              (serialTransaction.endDate!) ,
+              serialTransaction.endDate ,
               formerEndTime .subtract(
                     formerInitialTime .difference(
                           newTime ,
@@ -648,7 +636,7 @@ void main() {
           // Arrange (Initialization)
 
           final data = generateRandomData();
-          final useCase = UpdateSerialTransactionUseCase(repository: createRepo(data));
+          final useCase = UpdateSerialTransactionUseCase(repository: await createRepo(data));
 
           final int expectedLength = data.serialTransactions.length + 1;
           final int idIndex = rand.nextInt(expectedLength - 1);
@@ -745,7 +733,7 @@ void main() {
           // Arrange (Initialization)
 
           final data = generateRandomData();
-          final useCase = UpdateSerialTransactionUseCase(repository: createRepo(data));
+          final useCase = UpdateSerialTransactionUseCase(repository: await createRepo(data));
 
           final int expectedLength = data.serialTransactions.length + 1;
           final int idIndex = rand.nextInt(expectedLength - 1);
@@ -805,7 +793,7 @@ void main() {
           // Arrange (Initialization)
 
           final data = generateRandomData();
-          final useCase = UpdateSerialTransactionUseCase(repository: createRepo(data));
+          final useCase = UpdateSerialTransactionUseCase(repository: await createRepo(data));
 
           final int expectedLength = data.serialTransactions.length + 1;
           final int idIndex = rand.nextInt(expectedLength - 1);
@@ -903,7 +891,7 @@ void main() {
           // Arrange (Initialization)
 
           final data = generateRandomData();
-          final useCase = UpdateSerialTransactionUseCase(repository: createRepo(data));
+          final useCase = UpdateSerialTransactionUseCase(repository: await createRepo(data));
 
           final int expectedLength = data.serialTransactions.length + 1;
           final int idIndex = rand.nextInt(expectedLength - 1);
@@ -966,7 +954,7 @@ void main() {
           // Arrange (Initialization)
 
           final data = generateRandomData();
-          final useCase = UpdateSerialTransactionUseCase(repository: createRepo(data));
+          final useCase = UpdateSerialTransactionUseCase(repository: await createRepo(data));
 
           final int expectedLength = data.serialTransactions.length;
           int idIndex = rand.nextInt(expectedLength) - 1;
@@ -1131,9 +1119,7 @@ BalanceDocument generateRandomData({
         days: rand.nextInt(365 * 4 * 2),
       ),
     );
-    final int repeatDuration = rand.nextInt(500) + 1;
-    final RepeatDurationType repeatDurationType = RepeatDurationType
-        .values[rand.nextInt(RepeatDurationType.values.length)];
+    final interval = randomRepeatInterval();
     DateTime? endTime = time.add(
       Duration(
         days: rand.nextInt(365 * 2),
@@ -1151,8 +1137,8 @@ BalanceDocument generateRandomData({
         id: const Uuid().v4(),
         startDate: time,
         endDate: endTime,
-        repeatDuration: repeatDuration,
-        repeatDurationType: repeatDurationType,
+        repeatDuration: interval.duration,
+        repeatDurationType: interval.type,
       ),
     );
   }
