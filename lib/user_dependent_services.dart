@@ -8,6 +8,10 @@ import 'package:linum/core/balance/ports/firebase/firebase_balance_adapter.dart'
 import 'package:linum/core/balance/presentation/algorithm_service.dart';
 import 'package:linum/core/balance/presentation/balance_data_service.dart';
 import 'package:linum/core/balance/presentation/balance_data_service_impl.dart';
+import 'package:linum/core/budget/domain/adapter/firebase_budget_adapter.dart';
+import 'package:linum/core/budget/domain/repositories/budget_repository_impl.dart';
+import 'package:linum/core/budget/domain/service_impl/budget_service_impl.dart';
+import 'package:linum/core/budget/presentation/budget_service.dart';
 import 'package:linum/core/categories/settings/data/category_settings.dart';
 import 'package:linum/core/categories/settings/data/category_settings_mapper.dart';
 import 'package:linum/core/categories/settings/domain/category_settings_service_impl.dart';
@@ -146,6 +150,12 @@ class _UserDependentServicesState extends State<UserDependentServices> {
         algorithmService: context.read<AlgorithmService>(),
     );
 
+    final budgetRepository = BudgetRepositoryImpl(
+      adapter: FirebaseBudgetAdapter(widget.user?.uid ?? ""),
+    );
+
+    final budgetService = BudgetServiceImpl(repository: budgetRepository);
+
 
     final pinCodeService = PinCodeService(context.read<AuthenticationService>());
 
@@ -155,6 +165,7 @@ class _UserDependentServicesState extends State<UserDependentServices> {
     _container.registerProvidableService<IBalanceDataService>(balanceDataService);
     _container.registerProvidableService<IExchangeRateService>(exchangeRateService);
     _container.registerProvidableService<StatisticService>(statisticService);
+    _container.registerProvidableService<IBudgetService>(budgetService);
     _container.registerProvidableService<PinCodeService>(pinCodeService);
 
     _serviceWidget = _container.build(context, widget.child);

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:linum/core/budget/domain/models/budget.dart';
 import 'package:linum/core/budget/domain/models/main_budget.dart';
 import 'package:linum/core/budget/domain/repositories/budget_repository.dart';
@@ -8,7 +9,7 @@ import 'package:linum/core/budget/domain/use_cases/update_main_budget_use_case.d
 import 'package:linum/core/budget/enums/budget_change_mode.dart';
 import 'package:linum/core/budget/presentation/budget_service.dart';
 
-class BudgetServiceImpl implements IBudgetService {
+class BudgetServiceImpl with ChangeNotifier implements IBudgetService {
   final IBudgetRepository _repository;
   final UpdateBudgetUseCaseImpl _updateBudgetUseCase;
   final UpdateMainBudgetUseCaseImpl _updateMainBudgetUseCase;

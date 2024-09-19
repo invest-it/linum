@@ -7,10 +7,10 @@ import 'package:linum/core/budget/domain/models/main_budget.dart';
 import 'package:linum/core/budget/domain/repositories/budget_repository.dart';
 
 
-class BudgetRepository implements IBudgetRepository {
+class BudgetRepositoryImpl implements IBudgetRepository {
   final IBudgetAdapter adapter;
 
-  BudgetRepository({required this.adapter});
+  BudgetRepositoryImpl({required this.adapter});
 
   @override
   Future<Budget> createBudget(Budget budget) async {

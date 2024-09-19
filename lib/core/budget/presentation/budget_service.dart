@@ -1,8 +1,9 @@
+import 'package:linum/common/interfaces/service_interface.dart';
 import 'package:linum/core/budget/domain/models/budget.dart';
 import 'package:linum/core/budget/domain/models/main_budget.dart';
 import 'package:linum/core/budget/enums/budget_change_mode.dart';
 
-abstract class IBudgetService {
+abstract class IBudgetService extends IProvidableService {
   Future<List<Budget>> getBudgetsForDate(DateTime date);
   Future<Budget> createBudget(Budget budget);
   Future<void> updateBudget(Budget old, Budget update, DateTime selectedDate, BudgetChangeMode changeMode);
