@@ -8,7 +8,7 @@ import 'package:linum/common/utils/filters.dart';
 import 'package:linum/core/balance/domain/models/algorithm_state.dart';
 import 'package:linum/core/balance/domain/models/serial_transaction.dart';
 import 'package:linum/core/balance/domain/models/transaction.dart';
-import 'package:linum/core/stats/single_month_statistic.dart';
+import 'package:linum/core/stats/domain/models/single_month_statistic.dart';
 import 'package:logger/logger.dart';
 import 'package:tuple/tuple.dart';
 

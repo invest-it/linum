@@ -10,7 +10,7 @@ import 'package:linum/common/components/screen_card/viewmodels/screen_card_viewm
 import 'package:linum/common/components/screen_card/widgets/home_screen_card_avatar.dart';
 import 'package:linum/common/widgets/loading_spinner.dart';
 import 'package:linum/core/balance/presentation/algorithm_service.dart';
-import 'package:linum/core/stats/statistic_service.dart';
+import 'package:linum/core/stats/presentation/statistics_service.dart';
 import 'package:linum/features/currencies/core/data/models/currency.dart';
 import 'package:linum/features/currencies/core/presentation/widgets/styled_amount.dart';
 import 'package:linum/features/currencies/settings/presentation/currency_settings_service.dart';
@@ -122,11 +122,11 @@ class HomeScreenCardFront extends StatelessWidget {
                     icon: const Icon(Icons.arrow_back_ios_new_rounded),
                   ),
                   Expanded(
-                    child: Consumer<StatisticService>(
+                    child: Consumer<IStatisticsService>(
                       builder: (context, statsService, _) {
                         return FutureBuilder<HomeScreenCardData>(
                           future: statsService
-                              .generateStatistics()
+                              .getStatisticalCalculations()
                               .then(HomeScreenCardData.fromStatistics),
                           builder: (context, snapshot) {
                             if (snapshot.connectionState == ConnectionState.none ||

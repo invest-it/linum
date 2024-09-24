@@ -3,7 +3,7 @@
 // Author: NightmindOfficial
 // Co-Author: n/a
 //
-import 'package:linum/core/stats/statistical_calculations.dart';
+import 'package:linum/core/stats/domain/models/statistical_calculations.dart';
 
 class HomeScreenCardData {
   // Front Side

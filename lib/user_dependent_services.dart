@@ -24,7 +24,8 @@ import 'package:linum/core/localization/settings/domain/language_settings_servic
 import 'package:linum/core/localization/settings/presentation/language_settings_service.dart';
 import 'package:linum/core/settings/data/settings_repository_impl.dart';
 import 'package:linum/core/settings/data/settings_storage_impl.dart';
-import 'package:linum/core/stats/statistic_service.dart';
+import 'package:linum/core/stats/domain/service_impl/statistic_service.dart';
+import 'package:linum/core/stats/presentation/statistics_service.dart';
 import 'package:linum/features/currencies/core/data/exchange_rate_repository_impl.dart';
 import 'package:linum/features/currencies/core/data/exchange_rate_storage_impl.dart';
 import 'package:linum/features/currencies/core/data/exchange_rate_synchronizer.dart';
@@ -144,11 +145,12 @@ class _UserDependentServicesState extends State<UserDependentServices> {
     );
 
 
-    final statisticService = StatisticService(
+    final statisticService = StatisticServiceImpl(
         balanceDataService: balanceDataService,
         exchangeRateService: exchangeRateService,
         algorithmService: context.read<AlgorithmService>(),
     );
+
 
     final budgetRepository = BudgetRepositoryImpl(
       adapter: FirebaseBudgetAdapter(widget.user?.uid ?? ""),
@@ -164,7 +166,7 @@ class _UserDependentServicesState extends State<UserDependentServices> {
     _container.registerProvidableService<ILanguageSettingsService>(languageSettingsService);
     _container.registerProvidableService<IBalanceDataService>(balanceDataService);
     _container.registerProvidableService<IExchangeRateService>(exchangeRateService);
-    _container.registerProvidableService<StatisticService>(statisticService);
+    _container.registerProvidableService<IStatisticsService>(statisticService);
     _container.registerProvidableService<IBudgetService>(budgetService);
     _container.registerProvidableService<PinCodeService>(pinCodeService);
 

@@ -8,7 +8,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/components/screen_card/widgets/home_screen_card_avatar.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
-import 'package:linum/core/stats/statistic_service.dart';
+import 'package:linum/core/stats/presentation/statistics_service.dart';
 import 'package:linum/features/currencies/core/data/models/currency.dart';
 import 'package:linum/features/currencies/core/utils/currency_formatter.dart';
 import 'package:linum/features/currencies/settings/presentation/currency_settings_service.dart';
@@ -55,11 +55,11 @@ class HomeScreenCardRow extends StatelessWidget {
                     .labelSmall!
                     .copyWith(fontSize: 12),
               ),
-              Consumer<StatisticService>(
+              Consumer<IStatisticsService>(
                 builder: (context, statsService, _) {
                   return FutureBuilder<HomeScreenCardData>(
                     future: statsService
-                        .generateStatistics()
+                        .getStatisticalCalculations()
                         .then(HomeScreenCardData.fromStatistics),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.none ||

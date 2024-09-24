@@ -1,21 +1,24 @@
 import 'package:flutter/cupertino.dart';
+import 'package:linum/core/balance/presentation/algorithm_service.dart';
 import 'package:linum/core/budget/domain/models/budget.dart';
 import 'package:linum/core/budget/domain/models/budget_cap.dart';
 import 'package:linum/core/budget/presentation/budget_service.dart';
-import 'package:linum/core/stats/statistical_calculations.dart';
+import 'package:linum/core/stats/presentation/statistics_service.dart';
 import 'package:linum/screens/budget_screen/budget_routes.dart';
 import 'package:linum/screens/budget_screen/pages/budget_view_screen/widgets/sub_budget_tile.dart';
 
 class BudgetScreenViewModel extends ChangeNotifier {
   // final StatisticalCalculations calculations;
   final IBudgetService _service;
+  final IStatisticsService _statService;
+  final AlgorithmService _algService;
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-  final StatisticalCalculations _stats;
 
   BudgetScreenViewModel({
-    required IBudgetService service,
-    required StatisticalCalculations stats,
-  }) : _service = service, _stats = stats;
+    required IBudgetService budgetService,
+    required IStatisticsService statService,
+    required AlgorithmService algorithmService,
+  }) : _service = budgetService, _statService = statService, _algService = algorithmService;
 
 
   Future<T?> goTo<T>(String route, {bool replace = false}) async {
@@ -31,7 +34,7 @@ class BudgetScreenViewModel extends ChangeNotifier {
 
   Future<List<BudgetViewData>> getBudgetViewData(DateTime date) async {
     final budgets = await _service.getBudgetsForDate(date);
-    return _mapBudgetToViewData(budgets);
+    return await _mapBudgetToViewData(budgets);
   }
 
 
@@ -42,16 +45,37 @@ class BudgetScreenViewModel extends ChangeNotifier {
     return income * cap.value;
   }
 
-  List<BudgetViewData> _mapBudgetToViewData(List<Budget> budgets) {
-    final income = _stats.sumSerialIncomes; // TODO: Must be calculated
+  Future<List<BudgetViewData>> _mapBudgetToViewData(List<Budget> budgets) async {
+    final month = _algService.state.shownMonth;
+    final income = await _statService.getSerialIncomeForMonth(month);
 
-    return budgets.map((budget) {
-      return BudgetViewData(
+    final iter = budgets.map((budget) async {
+      final expenses = await _statService.getExpensesForCategories(<String>{...budget.categories}, month);
+
+      final upcomingExpenses = expenses.isEmpty ? 0.0 : expenses.values
+          .map((e) => e.upcoming)
+          .reduce((v, e) => v+=e)
+          .toDouble();
+      final currentExpenses = expenses.isEmpty ? 0.0 : expenses.values
+          .map((e) => e.current)
+          .reduce((v, e) => v+=e)
+          .toDouble();
+
+      final catData = expenses.entries
+          .map((entry) => (name: entry.key, expenses: entry.value))
+          .toList();
+
+
+      final viewData = BudgetViewData(
         name: budget.name,
-        expenses: 300, // TODO: Must be calculated
-        cap: _calculateBudgetCap(budget.cap, income.toDouble()),
-        categories: budget.categories,
+        upcomingExpenses: upcomingExpenses,
+        currentExpenses: currentExpenses,
+        cap: _calculateBudgetCap(budget.cap, (income.current + income.upcoming).toDouble()),
+        categories: catData,
       );
-    }).toList();
+      return viewData;
+    });
+    final result = await Future.wait(iter, eagerError: true);
+    return result;
   }
 }

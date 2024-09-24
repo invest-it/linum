@@ -10,8 +10,8 @@ final budgetDummyData = [
       type: CapType.percentage,
     ),
     categories: [
-      "Category 1",
-      "Category 2",
+      "food",
+      "freetime",
     ],
     start: Jiffy.now().subtract(months: 2).dateTime,
   ),
@@ -22,8 +22,8 @@ final budgetDummyData = [
       type: CapType.percentage,
     ),
     categories: [
-      "Category 1",
-      "Category 2",
+      "lifestyle",
+      "car",
     ],
     start: Jiffy.now().subtract(months: 2).dateTime,
   ),

@@ -1,21 +1,29 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/core/categories/core/constants/standard_categories.dart';
+import 'package:linum/core/stats/domain/models/expense_statistic.dart';
 import 'package:linum/features/currencies/core/utils/currency_formatter.dart';
 import 'package:linum/features/currencies/settings/presentation/currency_settings_service.dart';
 import 'package:provider/provider.dart';
 
+typedef CategoryViewData = ({String name, ExpenseStatistics expenses});
+
 class BudgetViewData {
   final String name;
-  final double expenses;
+  final double currentExpenses;
+  final double upcomingExpenses;
   final double cap;
-  final List<String> categories;
+  final List<CategoryViewData> categories;
 
   BudgetViewData({
+    required this.currentExpenses,
+    required this.upcomingExpenses,
     required this.name,
-    required this.expenses,
     required this.cap,
     required this.categories,
   });
+
+  double get totalExpenses => upcomingExpenses + currentExpenses;
 }
 
 class SubBudgetTile extends StatefulWidget {
@@ -29,7 +37,7 @@ class SubBudgetTile extends StatefulWidget {
 class _SubBudgetTileState extends State<SubBudgetTile> {
   bool isOpen = false;
   double turns = 0.0;
-  List<String> categories = [];
+  List<CategoryViewData> categories = [];
 
   final animationDuration = 150;
   late final stepDuration = animationDuration ~/ widget.budgetData.categories.length;
@@ -113,7 +121,7 @@ class _SubBudgetTileState extends State<SubBudgetTile> {
               child: LinearProgressIndicator(
                 backgroundColor: Colors.black12,
                 color: theme.colorScheme.primary,
-                value: widget.budgetData.expenses / widget.budgetData.cap,
+                value: -widget.budgetData.totalExpenses / widget.budgetData.cap,
                 borderRadius: const BorderRadius.all(Radius.circular(10.0)),
               ),
             ),
@@ -121,7 +129,7 @@ class _SubBudgetTileState extends State<SubBudgetTile> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                    "${formatter.format(widget.budgetData.cap - widget.budgetData.expenses)} remaining",
+                    "${formatter.format(widget.budgetData.cap + widget.budgetData.totalExpenses)} remaining",
                     style: theme.textTheme.labelMedium,),
                 Text(formatter.format(widget.budgetData.cap),
                     style: theme.textTheme.labelMedium,),
@@ -135,7 +143,13 @@ class _SubBudgetTileState extends State<SubBudgetTile> {
                 children: categories.map((item) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Text(item),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(standardCategories[item.name]?.label.tr() ?? item.name),
+                        Text(formatter.format(item.expenses.current + item.expenses.upcoming)),
+                      ],
+                    ),
                   );
                 }).toList(),
               ) : Container(),

@@ -42,6 +42,7 @@ class BalanceDataServiceImpl extends IBalanceDataService {
     }
 
     await _repo.createSerialTransaction(serialTransaction);
+    notifyListeners();
   }
 
   @override
@@ -55,6 +56,7 @@ class BalanceDataServiceImpl extends IBalanceDataService {
         removeType: removeType,
         date: date,
     );
+    notifyListeners();
   }
 
   @override
@@ -68,6 +70,7 @@ class BalanceDataServiceImpl extends IBalanceDataService {
       removeType: removeType,
       date: date,
     );
+    notifyListeners();
   }
 
   @override
@@ -94,6 +97,7 @@ class BalanceDataServiceImpl extends IBalanceDataService {
       oldDate: oldDate,
       newDate: newDate,
     );
+    notifyListeners();
   }
 
   
@@ -108,6 +112,7 @@ class BalanceDataServiceImpl extends IBalanceDataService {
     }
 
     await _repo.createTransaction(transaction);
+    notifyListeners();
   }
   
   @override
@@ -117,11 +122,13 @@ class BalanceDataServiceImpl extends IBalanceDataService {
       return;
     }
     await _repo.removeTransaction(transaction);
+    notifyListeners();
   }
 
   @override
   Future<void> removeTransaction(Transaction transaction) async {
     await _repo.removeTransaction(transaction);
+    notifyListeners();
   }
 
   @override
@@ -137,10 +144,15 @@ class BalanceDataServiceImpl extends IBalanceDataService {
       throw ArgumentError("currency must be != '' ");
     }
     await _repo.updateTransaction(update);
+    notifyListeners();
   }
 
   @override
-  Future<bool> ready() => _repo.ready();
+  Future<bool> ready() async {
+    final isReady = await _repo.ready();
+    notifyListeners();
+    return isReady;
+  }
 
   @override
   Future<List<SerialTransaction>> getAllSerialTransactions() async

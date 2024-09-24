@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:linum/common/components/screen_card/viewmodels/screen_card_viewmodel.dart';
 import 'package:linum/common/widgets/loading_spinner.dart';
 import 'package:linum/core/balance/presentation/algorithm_service.dart';
-import 'package:linum/core/stats/statistic_service.dart';
+import 'package:linum/core/stats/presentation/statistics_service.dart';
 import 'package:linum/features/currencies/core/presentation/widgets/styled_amount.dart';
 import 'package:linum/features/currencies/settings/presentation/currency_settings_service.dart';
 import 'package:linum/generated/translation_keys.g.dart';
@@ -126,11 +126,11 @@ class HomeScreenCardBack extends StatelessWidget {
                       //KPI COLUMN
                       Expanded(
                         //STREAM INSERT
-                        child: Consumer<StatisticService>(
+                        child: Consumer<IStatisticsService>(
                           builder: (context, statsService, _) {
                             return FutureBuilder<HomeScreenCardData>(
                               future: statsService
-                                  .generateStatistics()
+                                  .getStatisticalCalculations()
                                   .then(HomeScreenCardData.fromStatistics),
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState ==

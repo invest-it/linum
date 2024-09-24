@@ -23,7 +23,7 @@ class SandboxScreen extends StatelessWidget {
       body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          /* children: [
             // EnterScreen(
             //   transaction: Transaction(
             //     name: 'Test',
@@ -33,7 +33,7 @@ class SandboxScreen extends StatelessWidget {
             //     date: Timestamp.fromDate(DateTime.now()),
             //   ),
             // ),
-          ],
+           ], */
         ),
       ),
       isInverted: true,

@@ -10,7 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:linum/common/utils/filters.dart';
 import 'package:linum/core/balance/domain/models/transaction.dart';
 import 'package:linum/core/balance/presentation/algorithm_service.dart';
-import 'package:linum/core/stats/statistical_calculations.dart';
+import 'package:linum/core/stats/domain/models/statistical_calculations.dart';
 import 'package:uuid/uuid.dart';
 
 final Transaction baseTransaction = Transaction(
