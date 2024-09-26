@@ -1,10 +1,12 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/interfaces/translator.dart';
+import 'package:linum/core/categories/core/domain/types/category_map.dart';
 import 'package:linum/screens/enter_screen/domain/models/parsed_input.dart';
 import 'package:linum/screens/enter_screen/domain/models/structured_parsed_data.dart';
 import 'package:linum/screens/enter_screen/domain/models/suggestion.dart';
 import 'package:linum/screens/enter_screen/domain/models/suggestion_filters.dart';
+import 'package:linum/screens/enter_screen/domain/parsing/category_parser.dart';
 import 'package:linum/screens/enter_screen/domain/parsing/input_parser.dart';
 import 'package:linum/screens/enter_screen/domain/suggesting/insert_suggestion.dart';
 import 'package:linum/screens/enter_screen/domain/suggesting/make_suggestions.dart';
@@ -20,12 +22,16 @@ class HighlightTextEditingController extends TextEditingController {
   final ExampleStringBuilder exampleStringBuilder;
   final ParsingFilters? parsingFilters;
   final ITranslator translator;
+  final CategoryMap categories;
+  final CategoryMapIterable categoriesToSuggest;
   final GlobalKey cursorRefKey =
       GlobalKey(debugLabel: "TextEditingFieldCursorRef");
 
   HighlightTextEditingController({
     required this.exampleStringBuilder,
     required this.translator,
+    required this.categories,
+    required this.categoriesToSuggest,
     this.parsingFilters,
     super.text,
   }) {
@@ -56,8 +62,14 @@ class HighlightTextEditingController extends TextEditingController {
       return;
     }
 
-    final parser = InputParser(translator)
-      ..categoryFilter = parsingFilters?.categoryFilter
+    final parser = InputParser(
+        translator: translator,
+        categoryParser: CategoryParser(
+          filter: parsingFilters?.categoryFilter,
+          translator: translator,
+          categories: categories,
+        ),
+    )
       ..repeatFilter = parsingFilters?.repeatFilter
       ..dateFilter = parsingFilters?.dateFilter;
     final parsed = parser.parse(newText);
@@ -68,6 +80,7 @@ class HighlightTextEditingController extends TextEditingController {
       text: newText,
       cursor: newCursor, // Cursor position
       translator: translator,
+      categoriesToSuggest: categoriesToSuggest,
       categoryFilter: parsingFilters?.categoryFilter,
       repeatFilter: parsingFilters?.repeatFilter,
       dateFilter: parsingFilters?.dateFilter,

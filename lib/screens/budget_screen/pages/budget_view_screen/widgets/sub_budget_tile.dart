@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:linum/core/categories/core/constants/standard_categories.dart';
+import 'package:linum/core/categories/core/presentation/category_service.dart';
 import 'package:linum/core/stats/domain/models/expense_statistic.dart';
 import 'package:linum/features/currencies/core/utils/currency_formatter.dart';
 import 'package:linum/features/currencies/settings/presentation/currency_settings_service.dart';
@@ -73,8 +73,7 @@ class _SubBudgetTileState extends State<SubBudgetTile> {
           .symbol,
     );
 
-
-
+    final categoryService = context.read<ICategoryService>();
 
     return Card.outlined(
       child: Padding(
@@ -146,7 +145,8 @@ class _SubBudgetTileState extends State<SubBudgetTile> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(standardCategories[item.name]?.label.tr() ?? item.name),
+                        Text(
+                            categoryService.getCategoryByKey(item.name)?.label.tr() ?? item.name,),
                         Text(formatter.format(item.expenses.current + item.expenses.upcoming)),
                       ],
                     ),

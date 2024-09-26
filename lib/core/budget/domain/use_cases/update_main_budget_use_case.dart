@@ -1,7 +1,7 @@
+import 'package:linum/core/budget/domain/enums/budget_change_mode.dart';
 import 'package:linum/core/budget/domain/models/main_budget.dart';
 import 'package:linum/core/budget/domain/repositories/budget_repository.dart';
 import 'package:linum/core/budget/domain/use_cases/update_time_span_use_case.dart';
-import 'package:linum/core/budget/enums/budget_change_mode.dart';
 
 abstract class UpdateMainBudgetUseCase {
   Future<void> execute(MainBudget old, MainBudget update, DateTime selectedDate, BudgetChangeMode changeMode);

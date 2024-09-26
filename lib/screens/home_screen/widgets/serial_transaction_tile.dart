@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/core/balance/domain/models/serial_transaction.dart';
-import 'package:linum/core/categories/core/constants/standard_categories.dart';
+import 'package:linum/core/categories/core/presentation/category_service.dart';
 import 'package:linum/core/categories/core/utils/translate_category.dart';
 import 'package:linum/core/repeating/enums/repeat_duration_type_enum.dart';
 import 'package:linum/features/currencies/core/utils/currency_formatter.dart';
@@ -16,6 +16,13 @@ class SerialTransactionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final category = context.read<ICategoryService>()
+        .getCategoryByKey(serialTransaction.category);
+
+    final categoryIdTranslator = CategoryIdTranslator(
+        categories: context.read<ICategoryService>().getAllCategories(),
+    );
+
     final String langCode = context.locale.languageCode;
     final DateFormat serialFormatter = DateFormat('dd.MM.yyyy', langCode);
 
@@ -30,14 +37,14 @@ class SerialTransactionTile extends StatelessWidget {
               : Theme.of(context).colorScheme.errorContainer,
           child: serialTransaction.amount > 0
               ? Icon(
-            standardCategories[serialTransaction.category]?.icon ??
+            category?.icon ??
                 Icons.error,
             color: Theme.of(context)
                 .colorScheme
                 .onPrimary, // PRESENT INCOME ICON
           )
               : Icon(
-            standardCategories[serialTransaction.category]?.icon ??
+            category?.icon ??
                 Icons.error,
             color: Theme.of(context).colorScheme.onPrimary,
           ),
@@ -45,7 +52,7 @@ class SerialTransactionTile extends StatelessWidget {
         title: Text(
           serialTransaction.name != ""
               ? serialTransaction.name
-              : translateCategoryId(
+              : categoryIdTranslator.translate(
             serialTransaction.category,
             isExpense: serialTransaction.amount <= 0,
           ),

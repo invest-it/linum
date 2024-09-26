@@ -1,6 +1,5 @@
 import 'package:linum/common/interfaces/translator.dart';
 import 'package:linum/common/types/filter_function.dart';
-import 'package:linum/core/categories/core/data/models/category.dart';
 import 'package:linum/core/repeating/enums/repeat_interval.dart';
 import 'package:linum/screens/enter_screen/domain/constants/input_flag_map.dart';
 import 'package:linum/screens/enter_screen/domain/enums/input_flag.dart';
@@ -21,13 +20,18 @@ final RegExp trimTagRegex = RegExp("(#)|(@)");
 class InputParser {
   final ITranslator translator;
 
-  Filter<Category>? categoryFilter;
+  CategoryParser categoryParser;
   Filter<RepeatInterval>? repeatFilter;
   Filter<ParsableDate>? dateFilter;
 
   StructuredParsedDataBuilder? _parsedDataBuilder;
 
-  InputParser(this.translator);
+  InputParser({
+    required this.translator,
+    required this.categoryParser,
+    this.repeatFilter,
+    this.dateFilter,
+  });
 
   StructuredParsedData parse(String? input) {
     if (input == null || input.isEmpty) {
@@ -118,10 +122,7 @@ class InputParser {
       String fullInput,
       ParsedTag parsedTag,
   ) {
-    final result = CategoryParser(
-      filter: categoryFilter,
-      translator: translator,
-    ).parse(parsedTag.text);
+    final result = categoryParser.parse(parsedTag.text);
 
 
     if (result != null) {

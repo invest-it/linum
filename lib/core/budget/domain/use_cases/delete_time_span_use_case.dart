@@ -1,7 +1,7 @@
 import 'package:jiffy/jiffy.dart';
 import 'package:linum/common/interfaces/time_span.dart';
+import 'package:linum/core/budget/domain/enums/budget_change_mode.dart';
 import 'package:linum/core/budget/domain/models/changes.dart';
-import 'package:linum/core/budget/enums/budget_change_mode.dart';
 
 class DeleteTimeSpanUseCase<T extends TimeSpan<T>> {
   DeleteTimeSpanUseCase();

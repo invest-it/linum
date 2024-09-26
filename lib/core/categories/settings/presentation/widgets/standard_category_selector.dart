@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:linum/common/enums/entry_type.dart';
-import 'package:linum/core/categories/core/data/models/category.dart';
+import 'package:linum/core/categories/core/domain/models/category.dart';
 import 'package:linum/core/categories/core/presentation/widgets/category_list_tile.dart';
 import 'package:linum/core/categories/settings/presentation/category_settings_service.dart';
 import 'package:linum/core/categories/settings/presentation/utils/show_change_standard_category_action_lip.dart';

@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/core/balance/domain/enums/serial_transaction_change_type_enum.dart';
 import 'package:linum/core/balance/domain/models/serial_transaction.dart';
 import 'package:linum/core/balance/domain/models/transaction.dart';
+import 'package:linum/core/categories/core/presentation/category_service.dart';
 import 'package:linum/screens/enter_screen/presentation/actions/enter_screen_actions.dart';
 import 'package:linum/screens/enter_screen/presentation/enums/edit_intention.dart';
 import 'package:linum/screens/enter_screen/presentation/enums/enter_screen_view_state.dart';
@@ -10,6 +12,7 @@ import 'package:linum/screens/enter_screen/presentation/models/default_values.da
 import 'package:linum/screens/enter_screen/presentation/models/enter_screen_data.dart';
 import 'package:linum/screens/enter_screen/presentation/models/enter_screen_form_data.dart';
 import 'package:linum/screens/enter_screen/presentation/utils/get_entry_type.dart';
+import 'package:provider/provider.dart';
 
 
 class EnterScreenViewModel extends ChangeNotifier {
@@ -17,6 +20,7 @@ class EnterScreenViewModel extends ChangeNotifier {
   final SerialTransaction? initialSerialTransaction;
   final SerialTransaction? parentalSerialTransaction;
   final EnterScreenActions _actions;
+  late final ICategoryService _categoryService;
 
   EntryType _entryType = EntryType.unknown;
   EntryType get entryType => _entryType;
@@ -47,13 +51,16 @@ class EnterScreenViewModel extends ChangeNotifier {
   DefaultValues? _defaultValues;
 
   EnterScreenViewModel._({
-      required EnterScreenActions actions,
-      this.initialTransaction,
-      this.initialSerialTransaction,
-      this.parentalSerialTransaction,
+    required BuildContext context,
+    required EnterScreenActions actions,
+    this.initialTransaction,
+    this.initialSerialTransaction,
+    this.parentalSerialTransaction,
   }) : _actions = actions {
+    _categoryService = context.read<ICategoryService>();
 
     _entryType = getEntryType(
+      categories: _categoryService.getAllCategories(),
       transaction: initialTransaction,
       serialTransaction: initialSerialTransaction,
     );
@@ -69,19 +76,23 @@ class EnterScreenViewModel extends ChangeNotifier {
   factory EnterScreenViewModel.empty(
       {
         required EnterScreenActions actions,
+        required BuildContext context,
   }) {
     return EnterScreenViewModel._(
+      context: context,
       actions: actions,
     );
   }
 
   factory EnterScreenViewModel.fromTransaction(
       {
+        required BuildContext context,
         required Transaction transaction,
         required SerialTransaction? parentalSerialTransaction,
         required EnterScreenActions actions,
   }) {
     return EnterScreenViewModel._(
+      context: context,
       initialTransaction: transaction,
       parentalSerialTransaction: parentalSerialTransaction,
       actions: actions,
@@ -90,10 +101,12 @@ class EnterScreenViewModel extends ChangeNotifier {
 
   factory EnterScreenViewModel.fromSerialTransaction(
       {
+        required BuildContext context,
         required SerialTransaction serialTransaction,
         required EnterScreenActions actions,
   }) {
     return EnterScreenViewModel._(
+      context: context,
       initialSerialTransaction: serialTransaction,
       actions: actions,
     );

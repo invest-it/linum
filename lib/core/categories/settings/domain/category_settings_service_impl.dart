@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/common/utils/subscription_handler.dart';
-import 'package:linum/core/categories/core/data/models/category.dart';
+import 'package:linum/core/categories/core/domain/models/category.dart';
 import 'package:linum/core/categories/settings/data/category_settings.dart';
 import 'package:linum/core/categories/settings/presentation/category_settings_service.dart';
 import 'package:linum/core/settings/domain/settings_repository.dart';

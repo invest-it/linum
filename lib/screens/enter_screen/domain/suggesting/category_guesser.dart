@@ -1,17 +1,19 @@
 import 'package:linum/common/interfaces/translator.dart';
 import 'package:linum/common/types/filter_function.dart';
-import 'package:linum/core/categories/core/data/models/category.dart';
+import 'package:linum/core/categories/core/domain/models/category.dart';
+import 'package:linum/core/categories/core/domain/types/category_map.dart';
 import 'package:linum/screens/enter_screen/domain/models/suggestion.dart';
 import 'package:linum/screens/enter_screen/domain/suggesting/guesser.dart';
-import 'package:linum/screens/enter_screen/domain/suggesting/suggestable_categories.dart';
 
 class CategoryGuesser implements IGuesser {
   final ITranslator translator;
   final Filter<Category>? filter;
+  final CategoryMapIterable categoriesToSuggest;
 
   CategoryGuesser({
     required this.translator,
     required this.filter,
+    required this.categoriesToSuggest,
   });
 
   @override
@@ -19,7 +21,7 @@ class CategoryGuesser implements IGuesser {
     final Map<String, Suggestion> suggestions = {};
     final lowercase = text.toLowerCase();
 
-    for (final entry in getSuggestableCategories()) {
+    for (final entry in categoriesToSuggest) {
       if (filter != null && !filter!(entry.value)) {
         continue;
       }

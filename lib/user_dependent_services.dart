@@ -8,10 +8,12 @@ import 'package:linum/core/balance/ports/firebase/firebase_balance_adapter.dart'
 import 'package:linum/core/balance/presentation/algorithm_service.dart';
 import 'package:linum/core/balance/presentation/balance_data_service.dart';
 import 'package:linum/core/balance/presentation/balance_data_service_impl.dart';
-import 'package:linum/core/budget/domain/adapter/firebase_budget_adapter.dart';
 import 'package:linum/core/budget/domain/repositories/budget_repository_impl.dart';
 import 'package:linum/core/budget/domain/service_impl/budget_service_impl.dart';
+import 'package:linum/core/budget/ports/adapter/firebase_budget_adapter.dart';
 import 'package:linum/core/budget/presentation/budget_service.dart';
+import 'package:linum/core/categories/core/domain/service_impl/category_service_standard_impl.dart';
+import 'package:linum/core/categories/core/presentation/category_service.dart';
 import 'package:linum/core/categories/settings/data/category_settings.dart';
 import 'package:linum/core/categories/settings/data/category_settings_mapper.dart';
 import 'package:linum/core/categories/settings/domain/category_settings_service_impl.dart';
@@ -86,6 +88,8 @@ class _UserDependentServicesState extends State<UserDependentServices> {
   void _buildServices(EventService eventService) {
     _container.clear();
 
+    final categoryService = CategoryServiceStandardImpl();
+
     final languageSettingsRepository = SettingsRepositoryImpl<LanguageSettings>(
       adapter: settingsStorage!,
       mapper: LanguageSettingsMapper(),
@@ -94,7 +98,9 @@ class _UserDependentServicesState extends State<UserDependentServices> {
 
     final categorySettingsRepository = SettingsRepositoryImpl<CategorySettings>(
       adapter: settingsStorage!,
-      mapper: CategorySettingsMapper(),
+      mapper: CategorySettingsMapper(
+        categoryService: categoryService,
+      ),
     );
 
     final currencySettingsRepository = SettingsRepositoryImpl<CurrencySettings>(
@@ -157,10 +163,9 @@ class _UserDependentServicesState extends State<UserDependentServices> {
     );
 
     final budgetService = BudgetServiceImpl(repository: budgetRepository);
-
-
     final pinCodeService = PinCodeService(context.read<AuthenticationService>());
 
+    _container.registerProvidableService<ICategoryService>(categoryService);
     _container.registerProvidableService<ICurrencySettingsService>(currencySettingsService);
     _container.registerProvidableService<ICategorySettingsService>(categorySettingsService);
     _container.registerProvidableService<ILanguageSettingsService>(languageSettingsService);
@@ -169,6 +174,7 @@ class _UserDependentServicesState extends State<UserDependentServices> {
     _container.registerProvidableService<IStatisticsService>(statisticService);
     _container.registerProvidableService<IBudgetService>(budgetService);
     _container.registerProvidableService<PinCodeService>(pinCodeService);
+
 
     _serviceWidget = _container.build(context, widget.child);
   }

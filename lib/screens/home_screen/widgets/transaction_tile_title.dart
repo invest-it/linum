@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:linum/core/balance/domain/models/transaction.dart';
+import 'package:linum/core/categories/core/presentation/category_service.dart';
 import 'package:linum/core/categories/core/utils/translate_category.dart';
+import 'package:provider/provider.dart';
 
 class TransactionTileTitle extends StatelessWidget {
   final Transaction transaction;
@@ -14,9 +16,13 @@ class TransactionTileTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final categoryIdTranslator = CategoryIdTranslator(
+      categories: context.read<ICategoryService>().getAllCategories(),
+    );
+
     final titleText = transaction.name != ""
         ? transaction.name
-        : translateCategoryId(
+        : categoryIdTranslator.translate(
             transaction.category,
             isExpense: transaction.amount <= 0,
           );

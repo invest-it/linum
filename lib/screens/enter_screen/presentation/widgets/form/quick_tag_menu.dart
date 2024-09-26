@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/enums/entry_type.dart';
-import 'package:linum/core/categories/core/constants/standard_categories.dart';
+import 'package:linum/core/categories/core/presentation/category_service.dart';
 import 'package:linum/core/categories/core/utils/translate_category.dart';
 import 'package:linum/generated/translation_keys.g.dart';
 import 'package:linum/screens/enter_screen/domain/formatting/date_formatter.dart';
@@ -120,9 +120,8 @@ class QuickTagMenu extends StatelessWidget {
             context: context,
             title: tr(translationKeys.enterScreen.menu.category),
             content: CategoryListView(
-              categories: standardCategories.values
-                  .where((element) => element.entryType == entryType)
-                  .toList(),
+              categories: context.read<ICategoryService>()
+                  .getCategoriesForEntryType(entryType).values.toList(),
             ),
           );
         },
