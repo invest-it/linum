@@ -63,15 +63,15 @@ class HighlightTextEditingController extends TextEditingController {
     }
 
     final parser = InputParser(
+      translator: translator,
+      categoryParser: CategoryParser(
+        filter: parsingFilters?.categoryFilter,
         translator: translator,
-        categoryParser: CategoryParser(
-          filter: parsingFilters?.categoryFilter,
-          translator: translator,
-          categories: categories,
-        ),
-    )
-      ..repeatFilter = parsingFilters?.repeatFilter
-      ..dateFilter = parsingFilters?.dateFilter;
+        categories: categories,
+      ),
+      repeatFilter: parsingFilters?.repeatFilter,
+      dateFilter: parsingFilters?.dateFilter,
+    );
     final parsed = parser.parse(newText);
 
     exampleStringBuilder.rebuild(parsed);

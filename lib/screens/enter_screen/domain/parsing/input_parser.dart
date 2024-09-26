@@ -20,11 +20,11 @@ final RegExp trimTagRegex = RegExp("(#)|(@)");
 class InputParser {
   final ITranslator translator;
 
-  CategoryParser categoryParser;
-  Filter<RepeatInterval>? repeatFilter;
-  Filter<ParsableDate>? dateFilter;
+  final CategoryParser categoryParser;
+  final Filter<RepeatInterval>? repeatFilter;
+  final Filter<ParsableDate>? dateFilter;
 
-  StructuredParsedDataBuilder? _parsedDataBuilder;
+  late final StructuredParsedDataBuilder? _parsedDataBuilder;
 
   InputParser({
     required this.translator,
