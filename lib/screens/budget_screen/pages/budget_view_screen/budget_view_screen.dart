@@ -14,14 +14,6 @@ class BudgetViewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.read<BudgetScreenViewModel>();
-    final theme = Theme.of(context);
-    final formatter = CurrencyFormatter(
-      context.locale,
-      symbol: context
-          .watch<ICurrencySettingsService>()
-          .getStandardCurrency()
-          .symbol,
-    );
 
     return FutureBuilder(
       future: Future.wait([

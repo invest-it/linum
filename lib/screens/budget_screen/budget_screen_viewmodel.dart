@@ -50,13 +50,13 @@ class BudgetScreenViewModel extends ChangeNotifier {
     if (mainBudget == null || mainBudget.amount == null) {
       return (
         maxBudget: (incomeStats.upcoming + incomeStats.current).toDouble(),
-        currentExpenses: sumCosts.toDouble(),
+        currentExpenses: -sumCosts.toDouble(),
         isGenerated: true,
       );
     }
     return (
       maxBudget: mainBudget.amount!,
-      currentExpenses: sumCosts.toDouble(),
+      currentExpenses: -sumCosts.toDouble(),
       isGenerated: true,
     );
   }
