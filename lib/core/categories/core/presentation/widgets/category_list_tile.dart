@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:linum/core/categories/core/data/models/category.dart';
+import 'package:linum/core/categories/core/domain/models/category.dart';
 import 'package:linum/core/categories/core/utils/translate_category.dart';
 
 

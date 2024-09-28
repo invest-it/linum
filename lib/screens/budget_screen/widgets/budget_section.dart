@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:linum/core/categories/core/constants/standard_categories.dart';
+import 'package:linum/core/categories/core/presentation/category_service.dart';
 import 'package:linum/screens/budget_screen/models/budget_category.dart';
 import 'package:linum/screens/budget_screen/widgets/budget_form.dart';
 import 'package:linum/screens/budget_screen/widgets/budget_tile.dart';
+import 'package:provider/provider.dart';
 
 class BudgetSection extends StatelessWidget {
   final List<BudgetCategory> budgetCategories;
@@ -11,6 +12,8 @@ class BudgetSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final categories = context.read<ICategoryService>().getAllCategories();
+
     final theme = Theme.of(context);
 
     return SizedBox(
@@ -30,7 +33,7 @@ class BudgetSection extends StatelessWidget {
               Column(
                 children: budgetCategories.map((c) {
                   return BudgetTile(
-                      category: standardCategories[c.categoryId]!,
+                      category: categories[c.categoryId]!,
                       budget: c.budget,
                   );
                 }).toList(),

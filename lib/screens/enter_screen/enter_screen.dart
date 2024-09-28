@@ -56,6 +56,7 @@ class EnterScreen extends StatelessWidget {
   ) {
     if (transaction != null) {
       return EnterScreenViewModel.fromTransaction(
+        context: context,
         transaction: transaction!,
         parentalSerialTransaction: snapshot.data,
         actions: _setupTransactionActions(context),
@@ -63,11 +64,13 @@ class EnterScreen extends StatelessWidget {
     }
     if (serialTransaction != null) {
       return EnterScreenViewModel.fromSerialTransaction(
+        context: context,
         serialTransaction: serialTransaction!,
         actions: _setupSerialTransactionActions(context),
       );
     }
     return EnterScreenViewModel.empty(
+      context: context,
       actions: _setupEmptyActions(context),
     );
   }

@@ -24,7 +24,6 @@ class StatisticServiceImpl with ChangeNotifier implements IStatisticsService {
     _balanceDataService.addListener(_onBalanceChange);
     _algorithmService.addListener(_onAlgorithmChange);
     _exchangeRateService.addListener(_onCurrencyChange);
-    // TODO: Test if this works
   }
 
   @override

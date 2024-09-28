@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:linum/core/budget/domain/adapter/budget_adapter.dart';
 import 'package:linum/core/budget/domain/models/budget.dart';
 import 'package:linum/core/budget/domain/models/budget_exception.dart';
 import 'package:linum/core/budget/domain/models/changes.dart';
 import 'package:linum/core/budget/domain/models/main_budget.dart';
 import 'package:linum/core/budget/domain/models/main_budget_exception.dart';
+import 'package:linum/core/budget/ports/adapter/budget_adapter.dart';
 import 'package:logger/logger.dart';
 
 class FirebaseBudgetAdapter extends IBudgetAdapter {

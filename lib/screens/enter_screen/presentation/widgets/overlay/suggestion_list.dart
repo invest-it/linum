@@ -1,9 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/core/categories/core/presentation/category_service.dart';
 import 'package:linum/screens/enter_screen/domain/models/suggestion.dart';
 import 'package:linum/screens/enter_screen/domain/models/suggestion_filters.dart';
-import 'package:linum/screens/enter_screen/domain/suggesting/get_sub_suggestions.dart';
+import 'package:linum/screens/enter_screen/domain/suggesting/sub_suggestion_generator.dart';
 import 'package:linum/screens/enter_screen/presentation/widgets/overlay/suggestion_list_item.dart';
+import 'package:provider/provider.dart';
 
 void _onSelection(
   Suggestion suggestion,
@@ -87,6 +89,7 @@ class _SubSuggestionsList extends StatelessWidget {
   final Suggestion flagSuggestion;
   final double maxHeight;
   final ParsingFilters? parsingFilters;
+
   final void Function(
     Suggestion suggestion,
     Suggestion? parentSuggestion,
@@ -102,10 +105,12 @@ class _SubSuggestionsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final subSuggestions = getSubSuggestions(
-        flagSuggestion.flag!,
-        filters: parsingFilters,
-    ); // TODO: HIDE FROM PRESENTATION
+    final subSuggestions = SubSuggestionsGenerator(
+      categories: context.read<ICategoryService>().getSuggestableCategories(),
+    ).generate(
+      flagSuggestion.flag!,
+      filters: parsingFilters,
+    );
 
     return DecoratedBox(
       decoration: BoxDecoration(

@@ -1,5 +1,6 @@
-import 'package:linum/core/categories/core/constants/standard_categories.dart';
-import 'package:linum/core/categories/core/data/models/category.dart';
+import 'package:linum/core/categories/core/domain/models/category.dart';
+import 'package:linum/core/categories/core/domain/service_impl/category_service_standard_impl.dart';
+import 'package:linum/core/categories/core/domain/types/category_map.dart';
 import 'package:linum/features/currencies/core/constants/standard_currencies.dart';
 import 'package:linum/screens/enter_screen/domain/models/structured_parsed_data.dart';
 import 'package:linum/screens/enter_screen/domain/parsing/date_parser.dart';
@@ -11,11 +12,14 @@ List<StructuredParsedData> generateInputParserData() {
   final List<StructuredParsedData> testInputs = [];
   final dateParser = DateParser();
 
+  final categoryService = CategoryServiceStandardImpl();
+  final CategoryMap categories = categoryService.getAllCategories();
+
   var builder = StructuredParsedDataBuilder("9 EUR Döner #Food & Drinks")
     ..setAmount("9", 9)
     ..setCurrency("EUR", standardCurrencies["EUR"]!)
     ..setName("Döner")
-    ..setCategory("#Food & Drinks", getCategory("food")!);
+    ..setCategory("#Food & Drinks", categories.getCategory("food")!);
 
   testInputs.add(builder.build());
 
@@ -32,7 +36,7 @@ List<StructuredParsedData> generateInputParserData() {
     ..setCurrency("JPY", standardCurrencies["JPY"]!)
     ..setName("Sushi")
     ..setDate("#tdy", dateParser.parse("tdy") ?? "null")
-    ..setCategory("#cat:Food & Drinks", getCategory("food")!);
+    ..setCategory("#cat:Food & Drinks", categories.getCategory("food")!);
   testInputs.add(builder.build());
 
   builder = StructuredParsedDataBuilder("4200 JPY Sushi #tdy #cat:Food & Drinks")
@@ -40,25 +44,28 @@ List<StructuredParsedData> generateInputParserData() {
     ..setCurrency("JPY", standardCurrencies["JPY"]!)
     ..setName("Sushi")
     ..setDate("#tdy", dateParser.parse("tdy") ?? "null")
-    ..setCategory("#cat:Food & Drinks", getCategory("food")!);
+    ..setCategory("#cat:Food & Drinks", categories.getCategory("food")!);
   testInputs.add(builder.build());
 
   return testInputs;
 }
 
 Map<String, Category?> getCategoryParserTestData(String? filterType) {
+  final categoryService = CategoryServiceStandardImpl();
+  final CategoryMap categories = categoryService.getAllCategories();
+
   final expenseCategories = <String, Category?>{
     // Expense
-    "house": standardCategories["house"],
-    "Home & Living": standardCategories["house"],
-    "Lifestyle": standardCategories["lifestyle"],
+    "house": categories["house"],
+    "Home & Living": categories["house"],
+    "Lifestyle": categories["lifestyle"],
   };
 
   final incomeCategories = <String, Category?>{
     // Income
-    "Side Job": standardCategories["sidejob"],
-    "Child Support": standardCategories["childsupport"],
-    "Investments": standardCategories["investments"],
+    "Side Job": categories["sidejob"],
+    "Child Support": categories["childsupport"],
+    "Investments": categories["investments"],
   };
 
   assert(filterType == "expense" || filterType == "income" || filterType == null);

@@ -2,7 +2,7 @@ import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/common/interfaces/translator.dart';
 import 'package:linum/core/balance/domain/models/serial_transaction.dart';
 import 'package:linum/core/balance/domain/models/transaction.dart';
-import 'package:linum/core/categories/core/constants/standard_categories.dart';
+import 'package:linum/core/categories/core/domain/types/category_map.dart';
 import 'package:linum/core/repeating/enums/repeat_interval.dart';
 import 'package:linum/core/repeating/models/repeat_configuration.dart';
 import 'package:linum/features/currencies/core/data/models/currency.dart';
@@ -16,11 +16,13 @@ class InitialFormDataBuilder {
   final ITranslator translator;
 
   Map<String, Currency> currencies;
+  CategoryMap categories;
   Map<RepeatInterval, RepeatConfiguration> repeatConfigurations;
   EntryType entryType = EntryType.unknown;
 
   InitialFormDataBuilder({
     required this.currencies,
+    required this.categories,
     required this.repeatConfigurations,
     required this.translator,
   });
@@ -71,7 +73,7 @@ class InitialFormDataBuilder {
 
   EnterScreenFormData build() {
 
-    final category = getCategory(categoryKey, entryType: entryType);
+    final category = categories.getCategory(categoryKey, entryType: entryType);
     final selectedOptions = SelectedOptions(
       currency: currency,
       category: category,

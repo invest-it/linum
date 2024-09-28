@@ -1,4 +1,4 @@
-import 'package:linum/core/categories/core/data/models/category.dart';
+import 'package:linum/core/categories/core/domain/models/category.dart';
 import 'package:linum/core/repeating/models/repeat_configuration.dart';
 import 'package:linum/features/currencies/core/data/models/currency.dart';
 import 'package:linum/screens/enter_screen/presentation/models/enter_screen_form_data.dart';

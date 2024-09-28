@@ -1,4 +1,4 @@
-import 'package:linum/core/categories/core/data/models/category.dart';
+import 'package:linum/core/categories/core/domain/models/category.dart';
 
 class CategorySettings {
   final Category expenseCategory;

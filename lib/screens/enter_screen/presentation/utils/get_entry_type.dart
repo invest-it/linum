@@ -1,9 +1,10 @@
 import 'package:linum/common/enums/entry_type.dart';
 import 'package:linum/core/balance/domain/models/serial_transaction.dart';
 import 'package:linum/core/balance/domain/models/transaction.dart';
-import 'package:linum/core/categories/core/constants/standard_categories.dart';
+import 'package:linum/core/categories/core/domain/types/category_map.dart';
 
 EntryType getEntryType({
+  required CategoryMap categories,
   Transaction? transaction,
   SerialTransaction? serialTransaction,
 }) {
@@ -14,7 +15,7 @@ EntryType getEntryType({
     if (transaction.amount > 0) {
       return EntryType.income;
     }
-    final category = standardCategories[transaction.category];
+    final category = categories[transaction.category];
     return category?.entryType ?? EntryType.unknown;
   }
   if (serialTransaction != null) {
@@ -25,7 +26,7 @@ EntryType getEntryType({
     if (serialTransaction.amount > 0) {
       return EntryType.income;
     }
-    final category = standardCategories[serialTransaction.category];
+    final category = categories[serialTransaction.category];
     return category?.entryType ?? EntryType.unknown;
   }
   return EntryType.unknown;

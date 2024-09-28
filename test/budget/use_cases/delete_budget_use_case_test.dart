@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:linum/common/interfaces/time_span.dart';
+import 'package:linum/core/budget/domain/enums/budget_change_mode.dart';
 import 'package:linum/core/budget/domain/repositories/budget_repository_dummy.dart';
 import 'package:linum/core/budget/domain/use_cases/delete_budget_use_case.dart';
-import 'package:linum/core/budget/enums/budget_change_mode.dart';
 
 import '../utils/budget_generator.dart';
 import '../utils/expect_same_month.dart';

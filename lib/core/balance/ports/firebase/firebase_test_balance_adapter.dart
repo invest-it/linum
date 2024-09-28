@@ -52,42 +52,25 @@ class FirebaseTestBalanceAdapter implements IBalanceDataAdapter {
 
   @override
   Future<List<SerialTransaction>> getAllSerialTransactions() async {
-    final data = doc;
-    if (data == null) {
-      return [];
-    }
-    return data.serialTransactions;
+    return doc.serialTransactions;
   }
 
   @override
   Future<List<SerialTransaction>> getAllSerialTransactionsForMonth(DateTime month) async {
-    final data = doc;
-
-    if (data == null) {
-      return [];
-    }
-    return data.serialTransactions
+    return doc.serialTransactions
         .where((s) => s.containsDate(month))
         .toList();
   }
 
   @override
   Future<List<Transaction>> getAllTransactions() async {
-    final data = doc;
-    if (data == null) {
-      return [];
-    }
-    return data.transactions;
+    return doc.transactions;
   }
 
   @override
   Future<List<Transaction>> getAllTransactionsForMonth(DateTime month) async {
-    final data = doc;
-    if (data == null) {
-      return [];
-    }
     final yMMM = Jiffy.parseFromDateTime(month).yMMM;
-    return data.transactions
+    return doc.transactions
         .where((t) => Jiffy.parseFromDateTime(t.date).yMMM == yMMM)
         .toList();
   }

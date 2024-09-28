@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/common/utils/silent_scroll.dart';
-import 'package:linum/core/categories/core/constants/standard_categories.dart';
+import 'package:linum/core/categories/core/presentation/category_service.dart';
 import 'package:linum/core/design/layout/enums/screen_fraction_enum.dart';
 import 'package:linum/core/design/layout/utils/layout_helpers.dart';
 import 'package:linum/features/currencies/core/utils/currency_formatter.dart';
@@ -60,7 +60,8 @@ class CategoryStatsDetailsViewItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    final category = standardCategories[stat.categoryId];
+    final category = context.read<ICategoryService>()
+        .getCategoryByKey(stat.categoryId);
     if (category == null) {
       Logger().log(Level.error, "Category is null. This is not supposed to happen");
       return const Row();
