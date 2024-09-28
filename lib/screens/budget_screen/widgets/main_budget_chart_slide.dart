@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:linum/common/widgets/month_slide.dart';
 import 'package:linum/screens/budget_screen/budget_screen_viewmodel.dart';
-import 'package:linum/screens/budget_screen/pages/budget_view_screen/widgets/main_budget_chart.dart';
 import 'package:provider/provider.dart';
 
 class MainBudgetChartSlide extends StatelessWidget {

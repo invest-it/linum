@@ -22,23 +22,22 @@ class BudgetViewScreen extends StatelessWidget {
       ]),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return Column(
-            children: [
-              MainBudgetChart(
-                data: (snapshot.requireData[1] as MainBudgetChartData),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: snapshot.requireData.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return SubBudgetTile(
-                      budgetData: (snapshot.requireData[0]
-                          as List<BudgetViewData>)[index],
-                    );
-                  },
-                ),
-              )
-            ],
+          return ListView.builder(
+            itemCount: snapshot.requireData.length+1,
+            itemBuilder: (BuildContext context, int index) {
+              if (index == 0) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: MainBudgetChart(
+                    data: (snapshot.requireData[1] as MainBudgetChartData),
+                  ),
+                );
+              }
+              return SubBudgetTile(
+                budgetData: (snapshot.requireData[0]
+                    as List<BudgetViewData>)[index-1],
+              );
+            },
           );
         }
         return const LoadingSpinner();
