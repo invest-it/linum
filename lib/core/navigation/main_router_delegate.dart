@@ -135,8 +135,12 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
 
   }
 
-  Widget _awaitServicesReady(BuildContext context, Widget Function(BuildContext context) callback) {
+  Widget _awaitServicesReady(BuildContext context, AuthenticationService auth, Widget Function(BuildContext context) callback) {
     if (_servicesReady) {
+      return callback(context);
+    }
+
+    if (!auth.isLoggedIn) {
       return callback(context);
     }
 
@@ -180,13 +184,13 @@ class MainRouterDelegate extends RouterDelegate<MainRoute>
         future: pinCodeProvider.initializeIsPINSet(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return _awaitServicesReady(context, _buildNavigator);
+            return _awaitServicesReady(context, auth, _buildNavigator);
           }
           return const LoadingScaffold();
         },
       );
     } else {
-      return _awaitServicesReady(context, _buildNavigator);
+      return _awaitServicesReady(context, auth, _buildNavigator);
     }
   }
 
