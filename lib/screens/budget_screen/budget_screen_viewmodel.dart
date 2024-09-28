@@ -7,6 +7,8 @@ import 'package:linum/core/stats/presentation/statistics_service.dart';
 import 'package:linum/screens/budget_screen/budget_routes.dart';
 import 'package:linum/screens/budget_screen/pages/budget_view_screen/widgets/sub_budget_tile.dart';
 
+typedef MainBudgetChartData = ({double maxBudget, double currentExpenses, bool isGenerated});
+
 class BudgetScreenViewModel extends ChangeNotifier {
   // final StatisticalCalculations calculations;
   final IBudgetService _service;
@@ -30,6 +32,10 @@ class BudgetScreenViewModel extends ChangeNotifier {
 
   String getInitialRoute() {
     return BudgetRoutes.view;
+  }
+
+  Future<MainBudgetChartData> getMainBudgetChartData(DateTime date) async {
+    
   }
 
   Future<List<BudgetViewData>> getBudgetViewData(DateTime date) async {
