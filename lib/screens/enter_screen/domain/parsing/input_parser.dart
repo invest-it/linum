@@ -24,7 +24,7 @@ class InputParser {
   final Filter<RepeatInterval>? repeatFilter;
   final Filter<ParsableDate>? dateFilter;
 
-  late final StructuredParsedDataBuilder? _parsedDataBuilder;
+  late StructuredParsedDataBuilder? _parsedDataBuilder;
 
   InputParser({
     required this.translator,

@@ -1,4 +1,5 @@
 import 'package:linum/core/categories/core/domain/models/category.dart';
+import 'package:linum/core/categories/core/domain/service_impl/category_service_standard_impl.dart';
 import 'package:linum/core/categories/core/domain/types/category_map.dart';
 import 'package:linum/features/currencies/core/constants/standard_currencies.dart';
 import 'package:linum/screens/enter_screen/domain/models/structured_parsed_data.dart';
@@ -10,8 +11,9 @@ import 'package:linum/screens/enter_screen/domain/parsing/structured_parsed_data
 List<StructuredParsedData> generateInputParserData() {
   final List<StructuredParsedData> testInputs = [];
   final dateParser = DateParser();
-  
-  final CategoryMap categories = {}; // TODO: Use Service or some sort of dummy
+
+  final categoryService = CategoryServiceStandardImpl();
+  final CategoryMap categories = categoryService.getAllCategories();
 
   var builder = StructuredParsedDataBuilder("9 EUR Döner #Food & Drinks")
     ..setAmount("9", 9)
@@ -49,8 +51,9 @@ List<StructuredParsedData> generateInputParserData() {
 }
 
 Map<String, Category?> getCategoryParserTestData(String? filterType) {
-  final CategoryMap categories = {}; // TODO: Use Service or some sort of dummy
-  
+  final categoryService = CategoryServiceStandardImpl();
+  final CategoryMap categories = categoryService.getAllCategories();
+
   final expenseCategories = <String, Category?>{
     // Expense
     "house": categories["house"],
