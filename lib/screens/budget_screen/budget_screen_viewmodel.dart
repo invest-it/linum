@@ -104,7 +104,9 @@ class BudgetScreenViewModel extends ChangeNotifier {
         upcomingExpenses: upcomingExpenses,
         currentExpenses: currentExpenses,
         cap: _calculateBudgetCap(
-            budget.cap, (income.current + income.upcoming).toDouble()),
+          budget.cap,
+          (income.current + income.upcoming).toDouble(),
+        ),
         categories: catData,
       );
       return viewData;

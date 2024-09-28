@@ -120,7 +120,7 @@ class _SubBudgetTileState extends State<SubBudgetTile> {
               child: LinearProgressIndicator(
                 backgroundColor: Colors.black12,
                 color: theme.colorScheme.primary,
-                value: -widget.budgetData.totalExpenses / widget.budgetData.cap,
+                value: -widget.budgetData.totalExpenses / (widget.budgetData.cap == 0 ? 1 : widget.budgetData.cap),
                 borderRadius: const BorderRadius.all(Radius.circular(10.0)),
               ),
             ),
