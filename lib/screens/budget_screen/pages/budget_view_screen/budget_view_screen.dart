@@ -5,7 +5,7 @@ import 'package:linum/features/currencies/core/utils/currency_formatter.dart';
 import 'package:linum/features/currencies/settings/presentation/currency_settings_service.dart';
 import 'package:linum/screens/budget_screen/budget_screen_viewmodel.dart';
 import 'package:linum/screens/budget_screen/pages/budget_view_screen/widgets/sub_budget_tile.dart';
-import 'package:linum/screens/budget_screen/widgets/main_budget_chart.dart';
+import 'package:linum/screens/budget_screen/pages/budget_view_screen/widgets/main_budget_chart.dart';
 import 'package:provider/provider.dart';
 
 class BudgetViewScreen extends StatelessWidget {

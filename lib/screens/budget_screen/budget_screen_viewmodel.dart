@@ -8,7 +8,7 @@ import 'package:linum/core/stats/domain/models/income_statistic.dart';
 import 'package:linum/core/stats/presentation/statistics_service.dart';
 import 'package:linum/screens/budget_screen/budget_routes.dart';
 import 'package:linum/screens/budget_screen/pages/budget_view_screen/widgets/sub_budget_tile.dart';
-import 'package:linum/screens/budget_screen/widgets/main_budget_chart.dart';
+import 'package:linum/screens/budget_screen/pages/budget_view_screen/widgets/main_budget_chart.dart';
 
 class BudgetScreenViewModel extends ChangeNotifier {
   // final StatisticalCalculations calculations;
