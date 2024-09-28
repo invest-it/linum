@@ -12,14 +12,13 @@ class GradientInfo {
   final List<ui.Color> colors;
 
   GradientInfo({required this.stops, required this.colors});
-
 }
 
 class RadialProgressPainter extends CustomPainter {
   final Color? progressColor;
   final GradientInfo? progressGradientInfo;
-  final startAngle = 4/5*pi;
-  final maxSweepAngle = 7/5*pi;
+  final startAngle = 4 / 5 * pi;
+  final maxSweepAngle = 7 / 5 * pi;
   final TextStyle? labelStyle;
   final double progress; // 0.0 -> 1.0
   final String labelLeft;
@@ -29,7 +28,6 @@ class RadialProgressPainter extends CustomPainter {
   final String centerSub;
   final TextStyle? centerSubStyle;
   final String? progressLabel;
-  
 
   RadialProgressPainter({
     this.progressColor,
@@ -53,7 +51,7 @@ class RadialProgressPainter extends CustomPainter {
   }
 
   double _calculateProgressSweepAngle() {
-    final angle = maxSweepAngle*progress;
+    final angle = maxSweepAngle * progress;
     if (angle > maxSweepAngle) {
       return maxSweepAngle;
     }
@@ -61,12 +59,12 @@ class RadialProgressPainter extends CustomPainter {
   }
 
   ui.Paragraph _buildParagraph(
-      Size size,
-      String content,
-      TextAlign align,
-      TextStyle? style,
-      {ui.TextDirection? direction = ui.TextDirection.ltr,}
-  ) {
+    Size size,
+    String content,
+    TextAlign align,
+    TextStyle? style, {
+    ui.TextDirection? direction = ui.TextDirection.ltr,
+  }) {
     final paragraphBuilder = ui.ParagraphBuilder(
       ui.ParagraphStyle(
         fontSize: style?.fontSize,
@@ -85,7 +83,8 @@ class RadialProgressPainter extends CustomPainter {
     return paragraphBuilder.build();
   }
 
-  ui.Paragraph _buildLabelParagraph(Size size, String content, TextAlign align) {
+  ui.Paragraph _buildLabelParagraph(
+      Size size, String content, TextAlign align) {
     final paragraph = _buildParagraph(size, content, align, labelStyle);
 
     paragraph.layout(ui.ParagraphConstraints(width: size.width / 2));
@@ -94,7 +93,8 @@ class RadialProgressPainter extends CustomPainter {
   }
 
   ui.Paragraph _buildCenterParagraph(Size size, String content) {
-    final paragraph = _buildParagraph(size, content, TextAlign.center, centerStyle);
+    final paragraph =
+        _buildParagraph(size, content, TextAlign.center, centerStyle);
 
     paragraph.layout(ui.ParagraphConstraints(width: size.width));
 
@@ -102,11 +102,10 @@ class RadialProgressPainter extends CustomPainter {
   }
 
   Size _calculateTextSize(
-      String text,
-      TextStyle? style, {
-        ui.TextDirection? direction = ui.TextDirection.ltr,
-      }
-  ) {
+    String text,
+    TextStyle? style, {
+    ui.TextDirection? direction = ui.TextDirection.ltr,
+  }) {
     final TextPainter textPainter = TextPainter(
       text: TextSpan(text: text, style: style),
       textDirection: direction,
@@ -120,14 +119,12 @@ class RadialProgressPainter extends CustomPainter {
     final diagonal = size.width;
     final radius = size.width / 2;
 
-    final backgroundPaint = _createBasePaint()
-      ..color = Colors.black12;
-
+    final backgroundPaint = _createBasePaint()..color = Colors.black12;
 
     // TODO: add gradient
 
     const paragraphMarginTop = 8.0;
-    
+
     final progressSweepAngle = _calculateProgressSweepAngle();
     final progressPaint = _createBasePaint();
 
@@ -145,41 +142,44 @@ class RadialProgressPainter extends CustomPainter {
       ).createShader(boundingRect);
     }
 
-
-    canvas.drawArc(boundingRect, startAngle,  maxSweepAngle, false, backgroundPaint);
-    canvas.drawArc(boundingRect, startAngle, progressSweepAngle, false, progressPaint);
+    canvas.drawArc(
+        boundingRect, startAngle, maxSweepAngle, false, backgroundPaint);
+    canvas.drawArc(
+        boundingRect, startAngle, progressSweepAngle, false, progressPaint);
     canvas.drawParagraph(
-        _buildLabelParagraph(size, labelLeft, TextAlign.start),
-        Offset(0, 4/5 * diagonal + paragraphMarginTop),
+      _buildLabelParagraph(size, labelLeft, TextAlign.start),
+      Offset(0, 4 / 5 * diagonal + paragraphMarginTop),
     );
     canvas.drawParagraph(
-        _buildLabelParagraph(size, labelRight, TextAlign.end),
-        Offset(radius, 4/5 * diagonal + paragraphMarginTop),
+      _buildLabelParagraph(size, labelRight, TextAlign.end),
+      Offset(radius, 4 / 5 * diagonal + paragraphMarginTop),
     );
     canvas.drawParagraph(
       _buildCenterParagraph(size, center),
       Offset(0.0, radius - _calculateTextSize(center, centerStyle).height / 2),
     );
 
-
     if (progressLabel != null) {
       // TODO: This is not ready set, but will probably be removed anyways
       final r = radius + 6.0;
-      final labelSize = _calculateTextSize(progressLabel!, labelStyle, direction: ui.TextDirection.rtl);
+      final labelSize = _calculateTextSize(progressLabel!, labelStyle,
+          direction: ui.TextDirection.rtl);
       canvas.drawParagraph(
-        _buildParagraph(size, progressLabel!, TextAlign.end, labelStyle, direction: ui.TextDirection.rtl)
+        _buildParagraph(size, progressLabel!, TextAlign.end, labelStyle,
+            direction: ui.TextDirection.rtl)
           ..layout(ui.ParagraphConstraints(width: labelSize.width)),
-        Offset(r + r * cos(progressSweepAngle + startAngle) - labelSize.width, r + r * sin(progressSweepAngle + startAngle) - labelSize.height),
+        Offset(r + r * cos(progressSweepAngle + startAngle) - labelSize.width,
+            r + r * sin(progressSweepAngle + startAngle) - labelSize.height),
       );
     }
 
-
     canvas.drawParagraph(
-      _buildParagraph(size, centerSub.toUpperCase(), TextAlign.center, centerSubStyle)
+      _buildParagraph(
+          size, centerSub.toUpperCase(), TextAlign.center, centerSubStyle)
         ..layout(ui.ParagraphConstraints(width: diagonal)),
       Offset(
-          0.0,
-          radius + _calculateTextSize(center, centerStyle).height / 2,
+        0.0,
+        radius + _calculateTextSize(center, centerStyle).height / 2,
       ),
     );
   }
@@ -188,23 +188,29 @@ class RadialProgressPainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return false;
   }
-
 }
 
+typedef MainBudgetChartData = ({
+  double maxBudget,
+  double currentExpenses,
+  bool isGenerated
+});
 
 class MainBudgetChart extends StatelessWidget {
-  final double maxBudget;
-  final double currentExpenses;
-  const MainBudgetChart({super.key, required this.maxBudget, required this.currentExpenses});
-  // TODO: add support for percentages
+  final MainBudgetChartData data;
 
+  const MainBudgetChart({super.key, required this.data});
+  // TODO: add support for percentages
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final formatter = CurrencyFormatter(
       context.locale,
-      symbol: context.watch<ICurrencySettingsService>().getStandardCurrency().symbol,
+      symbol: context
+          .watch<ICurrencySettingsService>()
+          .getStandardCurrency()
+          .symbol,
     );
 
     return LayoutBuilder(
@@ -223,19 +229,24 @@ class MainBudgetChart extends StatelessWidget {
                     Colors.red,
                   ],
                   stops: [
-                    0.8, 1.0,
+                    0.8,
+                    1.0,
                   ],
                 ),
-                progress: currentExpenses / maxBudget,
-                labelStyle: theme.textTheme.labelMedium?.copyWith(color: Colors.black),
-                labelRight: formatter.format(maxBudget),
+                progress: data.currentExpenses / data.maxBudget,
+                labelStyle:
+                    theme.textTheme.labelMedium?.copyWith(color: Colors.black),
+                labelRight: formatter.format(data.maxBudget),
                 labelLeft: formatter.format(0.0),
-                centerStyle: theme.textTheme.headlineLarge?.copyWith(color: Colors.black),
-                center: formatter.format(maxBudget - currentExpenses),
+                centerStyle: theme.textTheme.headlineLarge
+                    ?.copyWith(color: Colors.black),
+                center: formatter.format(data.maxBudget - data.currentExpenses),
                 centerSub: "Remaining",
-                centerSubStyle: theme.textTheme.labelMedium?.copyWith(color: Colors.black),
+                centerSubStyle:
+                    theme.textTheme.labelMedium?.copyWith(color: Colors.black),
               ),
-              size: Size(constraints.maxWidth * 2/3, constraints.maxWidth * 2/3),
+              size: Size(
+                  constraints.maxWidth * 2 / 3, constraints.maxWidth * 2 / 3),
             ),
           ),
         );
