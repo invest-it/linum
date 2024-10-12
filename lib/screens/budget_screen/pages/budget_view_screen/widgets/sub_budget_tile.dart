@@ -40,7 +40,8 @@ class _SubBudgetTileState extends State<SubBudgetTile> {
   List<CategoryViewData> categories = [];
 
   final animationDuration = 150;
-  late final stepDuration = animationDuration ~/ widget.budgetData.categories.length;
+  late final stepDuration =
+      animationDuration ~/ widget.budgetData.categories.length;
 
   Future<void> _showCategories() async {
     for (final cat in widget.budgetData.categories) {
@@ -48,7 +49,7 @@ class _SubBudgetTileState extends State<SubBudgetTile> {
         categories.add(cat);
         // categories = [...categories, cat];
       });
-      await Future.delayed(Duration(milliseconds: stepDuration), (){});
+      await Future.delayed(Duration(milliseconds: stepDuration), () {});
     }
   }
 
@@ -57,10 +58,9 @@ class _SubBudgetTileState extends State<SubBudgetTile> {
       setState(() {
         categories.removeLast();
       });
-      await Future.delayed(Duration(milliseconds: stepDuration), (){});
+      await Future.delayed(Duration(milliseconds: stepDuration), () {});
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +74,18 @@ class _SubBudgetTileState extends State<SubBudgetTile> {
     );
 
     final categoryService = context.read<ICategoryService>();
+    final value = -widget.budgetData.totalExpenses /
+        (widget.budgetData.cap == 0 ? 1 : widget.budgetData.cap);
+
+    var color = theme.colorScheme.primary;
+
+    if (value >= 1) {
+      color = theme.colorScheme.error;
+    } else if (value >= 0.75) {
+      color = Colors.orange;
+    } else if (value >= 0.5) {
+      color = Colors.yellow;
+    }
 
     return Card.outlined(
       child: Padding(
@@ -119,8 +131,8 @@ class _SubBudgetTileState extends State<SubBudgetTile> {
               padding: const EdgeInsets.only(top: 12.0, bottom: 4.0),
               child: LinearProgressIndicator(
                 backgroundColor: Colors.black12,
-                color: theme.colorScheme.primary,
-                value: -widget.budgetData.totalExpenses / (widget.budgetData.cap == 0 ? 1 : widget.budgetData.cap),
+                color: color,
+                value: value,
                 borderRadius: const BorderRadius.all(Radius.circular(10.0)),
               ),
             ),
@@ -128,31 +140,42 @@ class _SubBudgetTileState extends State<SubBudgetTile> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                    "${formatter.format(widget.budgetData.cap + widget.budgetData.totalExpenses)} remaining",
-                    style: theme.textTheme.labelMedium,),
-                Text(formatter.format(widget.budgetData.cap),
-                    style: theme.textTheme.labelMedium,),
+                  "${formatter.format(widget.budgetData.cap + widget.budgetData.totalExpenses)} remaining",
+                  style: theme.textTheme.labelMedium,
+                ),
+                Text(
+                  formatter.format(widget.budgetData.cap),
+                  style: theme.textTheme.labelMedium,
+                ),
               ],
             ),
             if (isOpen) const Divider(),
             AnimatedSize(
               alignment: Alignment.topLeft,
               duration: const Duration(milliseconds: 150),
-              child: isOpen ? Column(
-                children: categories.map((item) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                            categoryService.getCategoryByKey(item.name)?.label.tr() ?? item.name,),
-                        Text(formatter.format(item.expenses.current + item.expenses.upcoming)),
-                      ],
-                    ),
-                  );
-                }).toList(),
-              ) : Container(),
+              child: isOpen
+                  ? Column(
+                      children: categories.map((item) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                categoryService
+                                        .getCategoryByKey(item.name)
+                                        ?.label
+                                        .tr() ??
+                                    item.name,
+                              ),
+                              Text(formatter.format(item.expenses.current +
+                                  item.expenses.upcoming)),
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                    )
+                  : Container(),
             ),
           ],
         ),

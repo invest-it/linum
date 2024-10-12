@@ -6,7 +6,7 @@ final budgetDummyData = [
   Budget(
     name: "Traveling",
     cap: BudgetCap(
-      value: 0.6,
+      value: 0.2,
       type: CapType.percentage,
     ),
     categories: [
@@ -18,7 +18,7 @@ final budgetDummyData = [
   Budget(
     name: "Lifestyle",
     cap: BudgetCap(
-      value: .5,
+      value: 0.8,
       type: CapType.percentage,
     ),
     categories: [
